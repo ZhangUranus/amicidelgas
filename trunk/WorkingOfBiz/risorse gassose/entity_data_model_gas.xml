@@ -53,7 +53,7 @@
       <prim-key field="username" />
     </entity>
     
-    <entity entity-name="Utente" package-name="" title="" copyright="" author="" version="">
+    <entity entity-name="Utente" table-name="Utente" package-name="" title="" copyright="" author="" version="">
       <description></description>
       <field name="codicefiscale" type="short-varchar"></field>
       <field name="idcomune" type="id"></field>
@@ -66,43 +66,126 @@
       <field name="pathquestionario" type="very-long"></field>
       <field name="indirizzo" type="long-varchar"></field>
       <prim-key field="codicefiscale" />
-      <relation type="one" rel-entity-name="OtherSampleEntity">
-        <key-map field-name="foreignKeyOne" rel-field-name="primaryKeyOne" />
+      <relation type="one" title="has_comune" rel-entity-name="Comune">
+        <key-map field-name="idcomune" rel-field-name="idcomune" />
       </relation>
-      <relation type="one" title="Self" rel-entity-name="SampleEntity">
-        <key-map field-name="primaryKeyFieldOne" />
-        <key-map field-name="primaryKeyFieldTwo" />
+      <relation type="one" title="has_username" rel-entity-name="Account">
+        <key-map field-name="username" />
       </relation>
     </entity>
     
-    <entity entity-name="Articolo" package-name="" title="" copyright="" author="" version="">
+    <entity entity-name="Patente" table-name="Patente" package-name="" title="" copyright="" author="" version="">
       <description></description>
-      <field name="idarticolo" type="numeric"></field>
-
+      <field name="idpatente" type="id-ne"></field>
+      <field name="codicefiscale" type="short-varchar"></field>
+      <field name="tipo" type="very-short"></field>
+      <prim-key field="idpatente" />
+      <relation type="one" title="has_utente" rel-entity-name="Utente">
+        <key-map field-name="codicefiscale" rel-field-name="codicefiscale" />
+      </relation>
+    </entity>
+    
+    <entity entity-name="Ruolo" table-name="Ruolo" package-name="" title="" copyright="" author="" version="">
+      <description></description>
+      <field name="idruolo" type="id-ne"></field>
+      <field name="username" type="short-varchar"></field>
+      <field name="tipo" type="long-varchar"></field>
+      <prim-key field="idruolo" />
+      <relation type="one" title="has_utente" rel-entity-name="Utente">
+        <key-map field-name="username" rel-field-name="username" />
+      </relation>
+    </entity>
+    
+    <entity entity-name="Gas"  table-name="Gas" package-name="" title="" copyright="" author="" version="">
+      <description></description>
+      <field name="idgas" type="id-ne"></field>
+      <field name="nome" type="short-varchar"></field>
+      <field name="descrizione" type="very-long"></field>
+      <prim-key field="idgas" />
+    </entity>
+    
+    <entity entity-name="PuntiDiConsegna" table-name="PuntiDiConsegna" package-name="" title="" copyright="" author="" version="">
+      <description></description>
+      <field name="idpunticonsegna" type="id-ne"></field>
+      <field name="idcomune" type="id"></field>
+      <field name="indirizzo" type="very-long"></field>
+      <field name="coordinate" type="numeric"></field>
+      <prim-key field="idpunticonsegna" />
+      <relation type="one" title="has_comune" rel-entity-name="Comune">
+        <key-map field-name="idcomune" rel-field-name="idcomune" />
+      </relation>
+    </entity>
+    
+    <entity entity-name="Articolo" table-name="Articolo" package-name="" title="" copyright="" author="" version="">
+      <description></description>
+      <field name="idarticolo" type="id-ne"></field>
       <field name="codiceesterno" type="short-varchar"></field>
       <field name="descrizione" type="very-long"></field>
+      <prim-key field="idarticolo" />
     </entity>
     
-    <entity entity-name="Cybercontadino" package-name="" title="" copyright="" author="" version="">
+    <entity entity-name="Ordine" table-name="Ordine" package-name="" title="" copyright="" author="" version="">
       <description></description>
-      <field name="partitaiva" type="numeric"></field>
-      <field name="idarticolo" type="numeric"></field>
+      <field name="idordine" type="id-ne"></field>
       <field name="username" type="short-varchar"></field>
-      <field name="comuneIdcomune" type="numeric"></field>
+      <field name="idarticolo" type="id"></field>
+      <field name="datarichiesta" type="date-time"></field>
+      <field name="pendente" type="numeric"></field>
+      <field name="quantita" type="numeric"></field>
+      <field name="quantitaminutente" type="numeric"></field>
+      <field name="datamassimaconsegna" type="date-time"></field>
+      <prim-key field="idordine" />
+      <relation type="one" title="has_account" rel-entity-name="Account">
+        <key-map field-name="username" rel-field-name="username" />
+      </relation>
+      <relation type="one" title="has_articolo" rel-entity-name="Articolo">
+        <key-map field-name="idarticolo" rel-field-name="idarticolo" />
+      </relation>
+    </entity>
+    
+    <entity entity-name="Cybercontadino" table-name="Cybercontadino" package-name="" title="" copyright="" author="" version="">
+      <description></description>
+      <field name="partitaiva" type="id-ne"></field>
+      <field name="idarticolo" type="id"></field>
+      <field name="username" type="short-varchar"></field>
+      <field name="comuneIdcomune" type="id"></field>
       <field name="nomepresidente" type="short-varchar"></field>
       <field name="indirizzo" type="long-varchar"></field>
-
       <field name="cognomepresidente" type="short-varchar"></field>
       <field name="nomeazienda" type="short-varchar"></field>
       <field name="pathquestionario" type="very-long"></field>
       <field name="urlwisdl" type="very-long"></field>
       <field name="descrizioneazienda" type="very-long"></field>
+      <prim-key field="partitaiva" />
+      <relation type="one" title="has_account" rel-entity-name="Account">
+        <key-map field-name="username" rel-field-name="username" />
+      </relation>
+      <relation type="one" title="has_articolo" rel-entity-name="Articolo">
+        <key-map field-name="idarticolo" rel-field-name="idarticolo" />
+      </relation>
+      <relation type="one" title="has_comune" rel-entity-name="Comune">
+        <key-map field-name="idcomune" rel-field-name="idcomune" />
+      </relation>
     </entity>
-    <entity entity-name="Feedbacknegativo" package-name="" title="" copyright="" author="" version="">
+    
+    <entity entity-name="Itinerario" table-name="Itinerario" package-name="" title="" copyright="" author="" version="">
       <description></description>
-      <field name="idfeedback" type="numeric"></field>
-
-      <field name="idordine" type="numeric"></field>
+      <field name="iditinerario" type="id-ne"></field>
+      <field name="username" type="short-varchar"></field>
+      <field name="datapartenza" type="date-time"></field>
+      <field name="dataconsegna" type="date-time"></field>
+      <field name="documentazione" type="very-long"></field>
+      <field name="datacreazione" type="date-time"></field>
+      <prim-key field="iditinerario" />
+      <relation type="one" title="has_account" rel-entity-name="Account">
+        <key-map field-name="username" rel-field-name="username" />
+      </relation>
+    </entity>
+    
+    <entity entity-name="Feedbacknegativo" table-name="Feedbacknegativo" package-name="" title="" copyright="" author="" version="">
+      <description></description>
+      <field name="idfeedback" type="id-ne"></field>
+      <field name="idordine" type="id"></field>
       <field name="validatore" type="short-varchar"></field>
       <field name="segnalatore" type="short-varchar"></field>
       <field name="destinatario" type="short-varchar"></field>
@@ -110,73 +193,62 @@
       <field name="descrizione" type="very-long"></field>
       <field name="datavalidazione" type="date"></field>
       <field name="datasegnalazione" type="date"></field>
+      <prim-key field="idfeedback" />
+      <relation type="one" title="has_segnalatore" rel-entity-name="Account">
+        <key-map field-name="segnalatore" rel-field-name="username" />
+      </relation>
+      <relation type="one" title="has_destinatario" rel-entity-name="Account">
+        <key-map field-name="destinatario" rel-field-name="username" />
+      </relation>
+      <relation type="one" title="has_ordine" rel-entity-name="Ordine">
+        <key-map field-name="idordine" rel-field-name="idordine" />
+      </relation>
+      <relation type="one" title="has_validatore" rel-entity-name="Account">
+        <key-map field-name="validatore" rel-field-name="username" />
+      </relation>
     </entity>
 
-    <entity entity-name="Gas" package-name="" title="" copyright="" author="" version="">
+	<entity entity-name="ItinerarioHasOrdine" table-name="ItinerarioHasOrdine" package-name="" title="" copyright="" author="" version="">
       <description></description>
-      <field name="idgas" type="numeric"></field>
-      <field name="nome" type="short-varchar"></field>
-      <field name="descrizione" type="very-long"></field>
+      <field name="idordine" type="id-ne"></field>
+      <field name="iditinerario" type="id-ne"></field>
+      <prim-key field="idordine" />
+      <prim-key field="iditinerario" />
+      <relation type="one" title="has_ordine" rel-entity-name="Ordine">
+        <key-map field-name="idordine" rel-field-name="idordine" />
+      </relation>
+      <relation type="one" title="has_itinerario" rel-entity-name="Itinerario">
+        <key-map field-name="iditinerario" rel-field-name="iditinerario" />
+      </relation>
     </entity>
-    <entity entity-name="Itinerario" package-name="" title="" copyright="" author="" version="">
+    
+    
+    <entity entity-name="ItinerarioHasCybercontadino" table-name="ItinerarioHasCybercontadino" package-name="" title="" copyright="" author="" version="">
       <description></description>
-      <field name="iditinerario" type="numeric"></field>
-
-      <field name="username" type="short-varchar"></field>
-      <field name="datapartenza" type="date-time"></field>
-      <field name="dataconsegna" type="date-time"></field>
-      <field name="documentazione" type="very-long"></field>
-      <field name="datacreazione" type="date-time"></field>
+      <field name="iditinerario" type="id-ne"></field>
+      <field name="partitaiva" type="id-ne"></field>
+      <prim-key field="partitaiva" />
+      <prim-key field="iditinerario" />
+      <relation type="one" title="has_contadino" rel-entity-name="Cybercontadino">
+        <key-map field-name="partitaiva" rel-field-name="partitaiva" />
+      </relation>
+      <relation type="one" title="has_itinerario" rel-entity-name="Itinerario">
+        <key-map field-name="iditinerario" rel-field-name="iditinerario" />
+      </relation>
     </entity>
-    <entity entity-name="ItinerarioHasCybercontadino" package-name="" title="" copyright="" author="" version="">
+    
+    <entity entity-name="ItinerarioHasPuntiDiConsegna" table-name="ItinerarioHasPuntiDiConsegna" package-name="" title="" copyright="" author="" version="">
       <description></description>
-      <field name="iditinerario" type="numeric"></field>
-
-      <field name="partitaiva" type="numeric"></field>
-    </entity>
-    <entity entity-name="ItinerarioHasOrdine" package-name="" title="" copyright="" author="" version="">
-      <description></description>
-      <field name="idordine" type="numeric"></field>
-      <field name="iditinerario" type="numeric"></field>
-    </entity>
-    <entity entity-name="ItinerarioHasPunti di consegna" package-name="" title="" copyright="" author="" version="">
-      <description></description>
-
-      <field name="idpunticonsegna" type="numeric"></field>
-      <field name="iditinerario" type="numeric"></field>
-    </entity>
-    <entity entity-name="Ordine" package-name="" title="" copyright="" author="" version="">
-      <description></description>
-      <field name="idordine" type="numeric"></field>
-      <field name="username" type="short-varchar"></field>
-      <field name="idarticolo" type="numeric"></field>
-      <field name="datarichiesta" type="date-time"></field>
-
-      <field name="pendente" type="numeric"></field>
-      <field name="quantita" type="numeric"></field>
-      <field name="quantitaminutente" type="numeric"></field>
-      <field name="datamassimaconsegna" type="date-time"></field>
-    </entity>
-    <entity entity-name="Patente" package-name="" title="" copyright="" author="" version="">
-      <description></description>
-      <field name="idpatente" type="numeric"></field>
-      <field name="codicefiscale" type="short-varchar"></field>
-
-      <field name="tipo" type="very-short"></field>
-    </entity>
-    <entity entity-name="PuntiDiConsegna" package-name="" title="" copyright="" author="" version="">
-      <description></description>
-      <field name="idpunticonsegna" type="numeric"></field>
-      <field name="idcomune" type="numeric"></field>
-      <field name="indirizzo" type="very-long"></field>
-      <field name="coordinate" type="numeric"></field>
-    </entity>
-
-    <entity entity-name="Ruolo" package-name="" title="" copyright="" author="" version="">
-      <description></description>
-      <field name="idruolo" type="numeric"></field>
-      <field name="username" type="short-varchar"></field>
-      <field name="tipo" type="long-varchar"></field>
-    </entity>
+      <field name="idpunticonsegna" type="id-ne"></field>
+      <field name="iditinerario" type="id-ne"></field>
+      <prim-key field="idpunticonsegna" />
+      <prim-key field="iditinerario" />
+      <relation type="one" title="has_puntidiconsegna" rel-entity-name="PuntiDiConsegna">
+        <key-map field-name="idpunticonsegna" rel-field-name="idpunticonsegna" />
+      </relation>
+      <relation type="one" title="has_itinerario" rel-entity-name="Itinerario">
+        <key-map field-name="iditinerario" rel-field-name="iditinerario" />
+      </relation>
+    </entity>  
     
 </entitymodel>
