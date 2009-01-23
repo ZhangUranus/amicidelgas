@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-engine-xml>
+	<Comune idcomune="1" nomecomune="benevento" provincia="bn" cap="82100" />
+
+</entity-engine-xml>
