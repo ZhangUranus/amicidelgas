@@ -1,0 +1,182 @@
+<entitymodel>
+<!--
+    <entity title="Sample Entity"
+            copyright="Copyright (c) 2001 John Doe Enterprises"
+            author="John Doe" version="1.0"
+            package-name="org.ofbiz.commonapp.sample"
+            entity-name="SampleEntity"
+            table-name="SAMPLE_ENTITY">
+      <field name="primaryKeyFieldOne" col-name="PRIMARY_KEY_FIELD_ONE" type="id-ne"></field>
+      <field name="primaryKeyFieldTwo" type="id-ne"></field>
+      <field name="fieldOne" type="long-varchar"></field>
+      <field name="fieldTwo" type="long-varchar"></field>
+      <field name="foreignKeyOne" type="id"></field>
+      <prim-key field="primaryKeyFieldOne" />
+      <prim-key field="primaryKeyFieldTwo" />
+      <relation type="one" rel-entity-name="OtherSampleEntity">
+        <key-map field-name="foreignKeyOne" rel-field-name="primaryKeyOne" />
+      </relation>
+      <relation type="one" title="Self" rel-entity-name="SampleEntity">
+        <key-map field-name="primaryKeyFieldOne" />
+        <key-map field-name="primaryKeyFieldTwo" />
+      </relation>
+      <relation type="many" title="AllOne" rel-entity-name="SampleEntity">
+        <key-map field-name="primaryKeyFieldOne" />
+      </relation>
+    </entity>
+    -->
+    <description>None</description>
+    <copyright>Copyright 2001-2006 The Apache Software Foundation</copyright>
+    <author>None</author>
+    <version>1.0</version>
+	
+	<entity entity-name="Comune" table-name="Comune" package-name="" title="" copyright="" author="" version="">
+      <description></description>
+      <field name="idcomune" type="id-ne"></field>
+      <field name="nomecomune" type="short-varchar"></field>
+      <field name="provincia" type="short-varchar"></field>
+      <field name="cap" type="numeric"></field>
+	  <prim-key field="idcomune" />
+    </entity>
+
+    <entity entity-name="Account" table-name="Account" package-name="" title="" copyright="" author="" version="">
+      <description></description>
+      <field name="username" type="short-varchar"></field>
+      <field name="pass" type="very-short"></field>
+      <field name="bloccato" type="numeric"></field>
+      <field name="elimato" type="numeric"></field>
+      <field name="cancellato" type="numeric"></field>
+      <field name="attivato" type="numeric"></field>
+      <field name="datarichiesta" type="date"></field>
+      <field name="dataaccettazione" type="date"></field>
+      <field name="feedbackpositivo" type="numeric"></field>
+      <prim-key field="username" />
+    </entity>
+    
+    <entity entity-name="Utente" package-name="" title="" copyright="" author="" version="">
+      <description></description>
+      <field name="codicefiscale" type="short-varchar"></field>
+      <field name="idcomune" type="id"></field>
+      <field name="username" type="short-varchar"></field>
+      <field name="nome" type="short-varchar"></field>
+      <field name="cognome" type="short-varchar"></field>
+      <field name="datanascita" type="date"></field>
+      <field name="luogonascita" type="short-varchar"></field>
+      <field name="sesso" type="numeric"></field>
+      <field name="pathquestionario" type="very-long"></field>
+      <field name="indirizzo" type="long-varchar"></field>
+      <prim-key field="codicefiscale" />
+      <relation type="one" rel-entity-name="OtherSampleEntity">
+        <key-map field-name="foreignKeyOne" rel-field-name="primaryKeyOne" />
+      </relation>
+      <relation type="one" title="Self" rel-entity-name="SampleEntity">
+        <key-map field-name="primaryKeyFieldOne" />
+        <key-map field-name="primaryKeyFieldTwo" />
+      </relation>
+    </entity>
+    
+    <entity entity-name="Articolo" package-name="" title="" copyright="" author="" version="">
+      <description></description>
+      <field name="idarticolo" type="numeric"></field>
+
+      <field name="codiceesterno" type="short-varchar"></field>
+      <field name="descrizione" type="very-long"></field>
+    </entity>
+    
+    <entity entity-name="Cybercontadino" package-name="" title="" copyright="" author="" version="">
+      <description></description>
+      <field name="partitaiva" type="numeric"></field>
+      <field name="idarticolo" type="numeric"></field>
+      <field name="username" type="short-varchar"></field>
+      <field name="comuneIdcomune" type="numeric"></field>
+      <field name="nomepresidente" type="short-varchar"></field>
+      <field name="indirizzo" type="long-varchar"></field>
+
+      <field name="cognomepresidente" type="short-varchar"></field>
+      <field name="nomeazienda" type="short-varchar"></field>
+      <field name="pathquestionario" type="very-long"></field>
+      <field name="urlwisdl" type="very-long"></field>
+      <field name="descrizioneazienda" type="very-long"></field>
+    </entity>
+    <entity entity-name="Feedbacknegativo" package-name="" title="" copyright="" author="" version="">
+      <description></description>
+      <field name="idfeedback" type="numeric"></field>
+
+      <field name="idordine" type="numeric"></field>
+      <field name="validatore" type="short-varchar"></field>
+      <field name="segnalatore" type="short-varchar"></field>
+      <field name="destinatario" type="short-varchar"></field>
+      <field name="analizzato" type="numeric"></field>
+      <field name="descrizione" type="very-long"></field>
+      <field name="datavalidazione" type="date"></field>
+      <field name="datasegnalazione" type="date"></field>
+    </entity>
+
+    <entity entity-name="Gas" package-name="" title="" copyright="" author="" version="">
+      <description></description>
+      <field name="idgas" type="numeric"></field>
+      <field name="nome" type="short-varchar"></field>
+      <field name="descrizione" type="very-long"></field>
+    </entity>
+    <entity entity-name="Itinerario" package-name="" title="" copyright="" author="" version="">
+      <description></description>
+      <field name="iditinerario" type="numeric"></field>
+
+      <field name="username" type="short-varchar"></field>
+      <field name="datapartenza" type="date-time"></field>
+      <field name="dataconsegna" type="date-time"></field>
+      <field name="documentazione" type="very-long"></field>
+      <field name="datacreazione" type="date-time"></field>
+    </entity>
+    <entity entity-name="ItinerarioHasCybercontadino" package-name="" title="" copyright="" author="" version="">
+      <description></description>
+      <field name="iditinerario" type="numeric"></field>
+
+      <field name="partitaiva" type="numeric"></field>
+    </entity>
+    <entity entity-name="ItinerarioHasOrdine" package-name="" title="" copyright="" author="" version="">
+      <description></description>
+      <field name="idordine" type="numeric"></field>
+      <field name="iditinerario" type="numeric"></field>
+    </entity>
+    <entity entity-name="ItinerarioHasPunti di consegna" package-name="" title="" copyright="" author="" version="">
+      <description></description>
+
+      <field name="idpunticonsegna" type="numeric"></field>
+      <field name="iditinerario" type="numeric"></field>
+    </entity>
+    <entity entity-name="Ordine" package-name="" title="" copyright="" author="" version="">
+      <description></description>
+      <field name="idordine" type="numeric"></field>
+      <field name="username" type="short-varchar"></field>
+      <field name="idarticolo" type="numeric"></field>
+      <field name="datarichiesta" type="date-time"></field>
+
+      <field name="pendente" type="numeric"></field>
+      <field name="quantita" type="numeric"></field>
+      <field name="quantitaminutente" type="numeric"></field>
+      <field name="datamassimaconsegna" type="date-time"></field>
+    </entity>
+    <entity entity-name="Patente" package-name="" title="" copyright="" author="" version="">
+      <description></description>
+      <field name="idpatente" type="numeric"></field>
+      <field name="codicefiscale" type="short-varchar"></field>
+
+      <field name="tipo" type="very-short"></field>
+    </entity>
+    <entity entity-name="PuntiDiConsegna" package-name="" title="" copyright="" author="" version="">
+      <description></description>
+      <field name="idpunticonsegna" type="numeric"></field>
+      <field name="idcomune" type="numeric"></field>
+      <field name="indirizzo" type="very-long"></field>
+      <field name="coordinate" type="numeric"></field>
+    </entity>
+
+    <entity entity-name="Ruolo" package-name="" title="" copyright="" author="" version="">
+      <description></description>
+      <field name="idruolo" type="numeric"></field>
+      <field name="username" type="short-varchar"></field>
+      <field name="tipo" type="long-varchar"></field>
+    </entity>
+    
+</entitymodel>
