@@ -1,0 +1,17 @@
+/*
+ * Put this file into your ofbiz/ directory.
+ * Telnet into the bsh port of your OFBiz server (usually, port 9990).  I do this from emacs.
+ * do a 
+ * source("bshcontainer.bsh");
+ * Now you have a delegator, a dispatcher, the basic UtilMisc methods, and a UserLogin for "admin" in your BSH 
+ * session, which you can use to debug your server or try some test code.
+ */
+
+import java.util.*;
+import org.ofbiz.entity.GenericDelegator;
+import org.ofbiz.service.GenericDispatcher;
+import org.ofbiz.base.util.*;
+import org.ofbiz.entity.util.*;
+delegator = GenericDelegator.getGenericDelegator("default");
+dispatcher = GenericDispatcher.getLocalDispatcher("ecommerce", delegator);
+admin = delegator.findByPrimaryKey("UserLogin", UtilMisc.toMap("userLoginId", "admin"));
