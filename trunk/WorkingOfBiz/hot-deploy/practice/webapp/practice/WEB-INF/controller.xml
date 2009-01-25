@@ -14,6 +14,22 @@
            <security https="false" auth="false"/>
            <response name="success" type="view" value="main"/>
        </request-map>
+       
+       <request-map uri="comunebook">
+           <security https="false" auth="false"/>
+           <response name="success" type="view" value="comunebook"/>
+       </request-map>
+       
+       <request-map uri="setcomuni">
+           <security https="false" auth="false"/>
+           <response name="success" type="view" value="setcomuni"/>
+       </request-map>
+       
+       <request-map uri="create">
+       	   <event type="service" invoke="creataProva" />
+           <security https="false" auth="false"/>
+           <response name="success" type="view" value="setcomuni"/>
+       </request-map>
 
        <!-- end of request mappings -->
 

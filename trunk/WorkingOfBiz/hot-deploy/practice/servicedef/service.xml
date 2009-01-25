@@ -3,11 +3,12 @@
 	xsi:noNamespaceSchemaLocation="http://www.ofbiz.org/dtds/services.xsd">
 	<description>Practice service</description>
 	
+	<!-- sarà implementato in java -->
 	<service name="createProva" engine="java"
 		location="org.ofbiz.practice.PracticeService" invoke="createProva">
 		<description>prova</description>
 		<auto-attributes mode="IN" entity-name="Comune" include="nonpk" optional="true"></auto-attributes>
-		<attribute name="nomecomune" mode="OUT" type="String" optional="false"></attribute>
+		<attribute name="idcomune" mode="OUT" type="String" optional="false"></attribute>
 	</service>
 	
 </services> 
