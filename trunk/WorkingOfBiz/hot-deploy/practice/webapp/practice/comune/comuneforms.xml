@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://www.ofbiz.org/dtds/widget-form.xsd">
+	<form name="ComunebookList" type="list" list-name="allComuni">
+		<auto-fields-entity entity-name="HelloPerson" default-field-type="display" />
+		<field name="comuni">
+			<hyperlink target="comuni?IDComune=${idcomune}" description="See hobbies"/>
+		</field>
+	</form>
+	<form name="AddComune" type="single" list-name="createComune">
+		<auto-fields-entity entity-name="Comune" /> <!-- tutti i campi di "comune" diventano automaticamente campi per il form r -->
+		<field name="idcomune"><hidden/></field> <!-- diventa un campo invisibile, nn si vede nel form -->
+		<field name="submitButton" title="add a comune" widget-style="standardSubmit"><submit button-type="button" /></field>
+	</form>
+</forms>
