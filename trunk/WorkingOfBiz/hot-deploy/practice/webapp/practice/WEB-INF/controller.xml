@@ -26,17 +26,20 @@
        </request-map>
        
        <request-map uri="create">
+       	   <security https="false" auth="false"/>
        	   <event type="service" invoke="creataProva" />
-           <security https="false" auth="false"/>
-           <response name="success" type="view" value="setcomuni"/>
+       	   <response name="success" type="view" value="comunebook"/>
+           <response name="error" type="view" value="comunebook"/>       
        </request-map>
 
        <!-- end of request mappings -->
 
        <!-- View Mappings -->
-
+	
+	   <view-map name="error" type="jsp" page="/error/error.jsp"/>
        <view-map name="main" type="screen" page="component://practice/widget/PracticeScreens.xml#main"/>
-
+       <view-map name="comunebook" type="screen" page="component://practice/widget/PracticeScreens.xml#comunebook"/>
+	   <view-map name="setcomuni" type="screen" page="component://practice/widget/PracticeScreens.xml#setcomuni"/>
        <!-- end of view mappings -->
 
 </site-conf>
