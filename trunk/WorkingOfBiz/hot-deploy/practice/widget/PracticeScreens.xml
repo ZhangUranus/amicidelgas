@@ -13,15 +13,15 @@
     <screen name="comunebook">
         <section>
         	<actions>
-        		<entity-condition list="allComuni" entity-name="Comune"><order-by field-name="IDCOMUNE"/></entity-condition>
+        		<entity-condition list="allComuni" entity-name="Comune"><order-by field-name="idcomune"/></entity-condition>
         	</actions>
             <widgets>
             	<decorator-screen name="CommonDecorator">
             		<decorator-section name="body">
             			<label text="prova 1:"/>
-            			<include-form name="ComunebookList" location="component://hello3/webapp/hello3/guestbook/GuestbookForms.xml" />
+            			<include-form name="ComunebookList" location="component://practice/webapp/practice/comune/comuneforms.xml" />
             			<label>Aggiungi un comune</label>
-            			<include-form name="AddComune" location="component://hello3/webapp/hello3/guestbook/GuestbookForms.xml"/>
+            			<include-form name="AddComune" location="component://practice/webapp/practice/comune/comuneforms.xml"/>
             		</decorator-section>
             	</decorator-screen>
             </widgets>
@@ -30,17 +30,17 @@
 	<screen name="setcomuni">
         <section>
         	<actions>
-        		<set field="IDComune" from-field="parameters.idcomune" />
+        		<set field="idcomune" from-field="parameters.idcomune" />
         		<entity-and list="allcomuni2" entity-name="Comune">
-        			<field-map env-name="IDComune"/>
-        			<order-by field-name="IDComune"/>
+        			<field-map env-name="idcomune"/>
+        			<order-by field-name="idcomune"/>
         		</entity-and>
 			</actions>
             <widgets>
             	<decorator-screen name="CommonDecorator">
             		<decorator-section name="body">
             			<label>Comune 1</label>
-            			<include-form name="ComunebookList" location="component://hello3/webapp/hello3/guestbook/GuestbookForms.xml" />
+            			<include-form name="ComunebookList" location="component://practice/webapp/practice/comune/comuneforms.xml" />
 					</decorator-section>
             	</decorator-screen>
             </widgets>
