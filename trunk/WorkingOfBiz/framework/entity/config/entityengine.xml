@@ -281,9 +281,9 @@ access. For a detailed description see the core/docs/entityconfig.html file.
         <read-data reader-name="ext"/>
         <inline-jdbc
                 jdbc-driver="com.mysql.jdbc.Driver"
-                jdbc-uri="jdbc:mysql://localhost/mydb"
+                jdbc-uri="jdbc:mysql://localhost/ofbiz"
                 jdbc-username="root"
-                jdbc-password="valerio"
+                jdbc-password="123456"
                 isolation-level="ReadCommitted"
                 pool-minsize="2"
                 pool-maxsize="250"/>
@@ -308,9 +308,9 @@ access. For a detailed description see the core/docs/entityconfig.html file.
         <read-data reader-name="ext"/>         
         <inline-jdbc                  
                 jdbc-driver="com.mysql.jdbc.Driver"
-                jdbc-uri="jdbc:mysql://localhost/mydbolap?autoReconnect=true"
+                jdbc-uri="jdbc:mysql://localhost/ofbizolap?autoReconnect=true"
                 jdbc-username="root"
-                jdbc-password="valerio"  
+                jdbc-password="123456"  
                 isolation-level="ReadCommitted"
                 pool-minsize="2"
                 pool-maxsize="250"/>               
@@ -337,7 +337,7 @@ access. For a detailed description see the core/docs/entityconfig.html file.
                 jdbc-driver="com.mysql.jdbc.Driver"
                 jdbc-uri="jdbc:mysql://localhost/gas"
                 jdbc-username="root"
-                jdbc-password="valerio"  
+                jdbc-password="123456"  
                 isolation-level="ReadCommitted"
                 pool-minsize="2"
                 pool-maxsize="250"/>               
