@@ -1,0 +1,17 @@
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+        xsi:noNamespaceSchemaLocation="http://www.ofbiz.org/dtds/widget-form.xsd">
+	<form name="UtenteList" type="list" list-name="utenti">
+	<auto-fields-entity entity-name="exampleUtente" default-field-type="display"/>
+	</form>
+	 <form name="WeatherForm" type="single">
+       		 <actions>
+            	<service service-name="getWeather" result-map-name="ResultWeather">
+        			<field-map field-name="location" value="Boston">
+        			</field-map>
+        		</service>
+             </actions>
+            <field name="" parameter-name="textData"><textarea rows="10"/></field>
+            
+            </form>
+            
+</forms>

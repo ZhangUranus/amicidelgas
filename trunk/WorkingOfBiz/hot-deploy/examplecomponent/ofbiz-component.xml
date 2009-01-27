@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ofbiz-component name="examplecomponent"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/ofbiz-component.xsd">
+      <!-- load single or multiple external libraries -->
+    
+      <resource-loader 	name="main" type="component"/>
+    <classpath type="jar" location="build/lib/*"/>
+      
+     <entity-resource type="model" reader-name="main" loader="main" location="entitydef/entitymodel.xml"/>
+     <entity-resource type="data" reader-name="ext" loader="main" location="data/exampleComponentData.xml"/>
+     <entity-resource type="group" reader-name="main" loader="main" location="entitydef/entitygroup.xml"/>
+     <service-resource type="model" loader="main" location="servicedef/services.xml"/> 
+    <webapp name="exampleApplication"
+       title="Example Application"
+       server="default-server"
+       base-permission="OFBTOOLS"
+       location="webapp/exampleApplication"
+       mount-point="/exampleApplication"
+       app-bar-display="false"/> 
+</ofbiz-component>
