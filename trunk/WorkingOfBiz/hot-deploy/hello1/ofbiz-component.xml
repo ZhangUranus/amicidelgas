@@ -11,15 +11,6 @@
     	    mount-point="/hello1"
     	    app-bar-display="false"/>     
 </ofbiz-component>
-<!-- 
-<webapp name="hello1" 
-    	    title="My First OFBiz Application" 
-    	    server="default-server" 
-    	    base-permission="OFBTOOLS"
-    	    location="webapp/helloPage"
-    	    mount-point="/helloPage"
-    	    app-bar-display="false"/>   
- -->
 
 <!--
 What is this file telling OFBiz?
