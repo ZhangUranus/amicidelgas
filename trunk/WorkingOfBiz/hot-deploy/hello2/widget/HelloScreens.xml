@@ -1,21 +1,81 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
         xsi:noNamespaceSchemaLocation="http://www.ofbiz.org/dtds/widget-screen.xsd">
-	<screen name="main2">
+	<screen name="CommonDecorator">
 		<section>
 		<widgets>
-			 <label text="This is first practice"/>
+			<platform-specific><html><html-template location="component://hello2/webapp/hello2/includes/header.ftl"/></html></platform-specific>
+			<decorator-section-include name="body"/>
+			<platform-specific><html><html-template location="component://hello2/webapp/hello2/includes/footer.ftl"/></html></platform-specific>
 		</widgets>
 		</section>
 	</screen>
 	<screen name="main">
 		<section>
 		<widgets>
-			<platform-specific><html><html-template location="component://hello2/webapp/hello2/includes/header.ftl"/></html></platform-specific>
-			
-			<platform-specific><html><html-template location="component://hello2/webapp/hello2/main.ftl"/></html></platform-specific>
-			
-			<platform-specific><html><html-template location="component://hello2/webapp/hello2/includes/footer.ftl"/></html></platform-specific>
+			<decorator-screen name="CommonDecorator">
+				<decorator-section name="body">
+				<platform-specific><html><html-template location="component://hello2/webapp/hello2/main.ftl"/></html></platform-specific>
+				</decorator-section>
+			</decorator-screen>
+		</widgets>
+		</section>
+	</screen>
+	<screen name="people">
+		<section>
+		<actions>
+			<script location="component://hello2/webapp/hello2/WEB-INF/actions/people.bsh"/>
+		</actions>
+		<widgets>
+			<decorator-screen name="CommonDecorator">
+				<decorator-section name="body">
+				<platform-specific><html><html-template location="component://hello2/webapp/hello2/people.ftl"/></html></platform-specific>
+				</decorator-section>
+			</decorator-screen>
+		</widgets>
+		</section>
+	</screen>
+	<screen name="news">
+		<section>
+		<widgets>
+			<decorator-screen name="CommonDecorator">
+				<decorator-section name="body">
+				<platform-specific><html><html-template location="component://hello2/webapp/hello2/news.ftl"/></html></platform-specific>
+				</decorator-section>
+			</decorator-screen>
+		</widgets>
+		</section>
+	</screen>
+	<screen name="weather">
+		<section>
+		<widgets>
+			<decorator-screen name="CommonDecorator">
+				<decorator-section name="body">
+				<platform-specific><html><html-template location="component://hello2/webapp/hello2/weather.ftl"/></html></platform-specific>
+				</decorator-section>
+			</decorator-screen>
+		</widgets>
+		</section>
+	</screen>
+	<screen name="sports">
+		<section>
+		<widgets>
+			<decorator-screen name="CommonDecorator">
+				<decorator-section name="body">
+				<platform-specific><html><html-template location="component://hello2/webapp/hello2/sports.ftl"/></html></platform-specific>
+				</decorator-section>
+			</decorator-screen>
+		</widgets>
+		</section>
+	</screen>
+	<screen name="horoscope">
+		<section>
+		<widgets>
+			<decorator-screen name="CommonDecorator">
+				<decorator-section name="body">
+				<platform-specific><html><html-template location="component://hello2/webapp/hello2/horoscope.ftl"/></html></platform-specific>
+				</decorator-section>
+			</decorator-screen>
 		</widgets>
 		</section>
 	</screen>

@@ -33,11 +33,73 @@
     	<security https="false" auth="false"/>
         <response name="success" type="view" value="main"/>
     </request-map>
+    
+    <request-map uri="news">
+    <!--  Aggiunta da me: <security https="false" auth="false"/> -->
+    	<security https="false" auth="false"/>
+        <response name="success" type="view" value="news"/>
+    </request-map>
+    
+    <request-map uri="weather">
+    <!--  Aggiunta da me: <security https="false" auth="false"/> -->
+    	<security https="false" auth="false"/>
+        <response name="success" type="view" value="weather"/>
+    </request-map>
+    
+    <request-map uri="sports">
+    <!--  Aggiunta da me: <security https="false" auth="false"/> -->
+    	<security https="false" auth="false"/>
+        <response name="success" type="view" value="sports"/>
+    </request-map>
+    
+    <request-map uri="horoscope">
+    <!--  Aggiunta da me: <security https="false" auth="false"/> -->
+    	<security https="false" auth="false"/>
+        <response name="success" type="view" value="horoscope"/>
+    </request-map>
+    
+     <request-map uri="people">
+    <!--  Aggiunta da me: <security https="false" auth="false"/> -->
+    	<security https="false" auth="false"/>
+        <response name="success" type="view" value="people"/>
+    </request-map>
 
     <!-- end of request mappings -->
 
     <!-- View Mappings -->
     <view-map name="error" type ="jsp" page="error/error.jsp"/>
-    <view-map name="main" type="screen" page="component://hello2/widget/HelloScreens.xml#main"/> 
+    <view-map name="main" type="screen" page="component://hello2/widget/HelloScreens.xml#main"/>
+    <view-map name="people" type="screen" page="component://hello2/widget/HelloScreens.xml#people"/>
+    <view-map name="news" type="screen" page="component://hello2/widget/HelloScreens.xml#news"/> 
+    <view-map name="weather" type="screen" page="component://hello2/widget/HelloScreens.xml#weather"/> 
+    <view-map name="sports" type="screen" page="component://hello2/widget/HelloScreens.xml#sports"/> 
+    <view-map name="horoscope" type="screen" page="component://hello2/widget/HelloScreens.xml#horoscope"/>  
     <!-- end of view mappings -->
 </site-conf>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
