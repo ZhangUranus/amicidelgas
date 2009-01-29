@@ -26,7 +26,8 @@ under the License.
 
 
 	<service 	name="getWeather" engine="java" 
-				location="org.ofbiz.examplecomponent.weatherService.WeatherService" invoke="getWeather" auth="false">
+				location="org.ofbiz.examplecomponent.weatherService.WeatherService" invoke="getWeather" auth="false"
+				export="true">
 	<attribute name="location" type="String" mode="IN" optional="false"/>
 	<attribute name="weather" type="String" mode="OUT" optional="false"/>
 	</service>
