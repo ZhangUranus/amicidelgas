@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ofbiz-component name="hello3"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+        xsi:noNamespaceSchemaLocation="http://www.ofbiz.org/dtds/ofbiz-component.xsd">
+    <resource-loader name="main" type="component"/>
+    <!--
+    Script è la cartella che contiene file minilang  
+     -->
+    <classpath type="jar" location="build/lib/*"/> <!--  server se dobbiamo importare librerie esterne -->
+    <classpath type="dir" location="script"/> <!--  server se dobbiamo usare file scritti in Minilang -->
+    
+    <entity-resource type="model" reader-name="main" loader="main" location="entitydef/entitymodel.xml"/>
+	<entity-resource type="group" reader-name="main" loader="main" location="entitydef/entitygroup.xml"/>
+	<entity-resource type="data" reader-name="seed" loader="main" location="data/HobbiesData.xml"/>
+	
+    <webapp name="hello3" 
+    	    title="My Third OFBiz Application" 
+    	    server="default-server" 
+    	    base-permission="OFBTOOLS"
+    	    location="webapp/hello3"
+    	    mount-point="/hello3"
+    	    app-bar-display="false"/>     
+</ofbiz-component>

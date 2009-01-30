@@ -1,273 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-Licensed to the Apache Software Foundation (ASF) under one
-or more contributor license agreements.  See the NOTICE file
-distributed with this work for additional information
-regarding copyright ownership.  The ASF licenses this file
-to you under the Apache License, Version 2.0 (the
-"License"); you may not use this file except in compliance
-with the License.  You may obtain a copy of the License at
-
-http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing,
-software distributed under the License is distributed on an
-"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-KIND, either express or implied.  See the License for the
-specific language governing permissions and limitations
-under the License.
+/**
+ * Copyright (c) 2001-2005 The Open For Business Project - www.ofbiz.org
+ *
+ *  Permission is hereby granted, free of charge, to any person obtaining a
+ *  copy of this software and associated documentation files (the "Software"),
+ *  to deal in the Software without restriction, including without limitation
+ *  the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ *  and/or sell copies of the Software, and to permit persons to whom the
+ *  Software is furnished to do so, subject to the following conditions:
+ *
+ *  The above copyright notice and this permission notice shall be included
+ *  in all copies or substantial portions of the Software.
+ *
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+ *  OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+ *  IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+ *  CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT
+ *  OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR
+ *  THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ *
+ * @author     Si Chen (sichen@opensourcestrategies.com)
+ */
 -->
 
 <entitymodel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
     xsi:noNamespaceSchemaLocation="http://www.ofbiz.org/dtds/entitymodel.xsd">
-  <!-- ========================================================= -->
-  <!-- ======================== Defaults ======================= -->
-  <!-- ========================================================= -->
     <title>Entity of an Open For Business Project Component</title>
-    <description>None</description>
-    <copyright>Copyright 2001-2006 The Apache Software Foundation</copyright>
-    <author>None</author>
-    <version>1.0</version>
 
   <!-- ========================================================= -->
-  <!-- ======================== Data Model ===================== -->
-  <!-- The modules in this file are as follows:                  -->
-  <!--  - org.ofbiz.common.datasource -->
-  <!--  - org.ofbiz.common.enum -->
-  <!--  - org.ofbiz.common.geo -->
-  <!--  - org.ofbiz.common.keyword -->
-  <!--  - org.ofbiz.common.language -->
-  <!--  - org.ofbiz.common.method -->
-  <!--  - org.ofbiz.common.note -->
-  <!--  - org.ofbiz.common.period -->
-  <!--  - org.ofbiz.common.status -->
-  <!--  - org.ofbiz.common.uom -->
+  <!-- org.ofbiz.hello3 -->
   <!-- ========================================================= -->
 
-
-  <!-- ========================================================= -->
-  <!-- org.ofbiz.common.datasource -->
-  <!-- ========================================================= -->
-
-    <entity entity-name="HelloPerson" package-name="org.ofbiz.hello3" title="Entity for storing data about persons">
-      <field name="idcomune" type="id-ne"></field>
-      <field name="nomecomune" type="short-varchar"></field>
-      <field name="provincia" type="short-varchar"></field>
-      <field name="cap" type="numeric"></field>
-	  <prim-key field="idcomune" />
+    <entity entity-name="HelloPerson"
+            package-name="org.ofbiz.hello3"
+            title="Entity for storing data about persons">
+      <field name="helloPersonId" type="id-ne"></field>
+      <field name="firstName" type="id"></field>
+      <field name="middleName" type="id"></field>
+      <field name="lastName" type="id"></field>
+      <field name="comments" type="comment"></field>
+      <prim-key field="helloPersonId"/>
     </entity>
-
-    <entity entity-name="Account" table-name="Account" package-name="org.ofbiz.practice" title="" copyright="" author="" version="">
-      <description></description>
-      <field name="username" type="short-varchar"></field>
-      <field name="pass" type="very-short"></field>
-      <field name="bloccato" type="numeric"></field>
-      <field name="elimato" type="numeric"></field>
-      <field name="cancellato" type="numeric"></field>
-      <field name="attivato" type="numeric"></field>
-      <field name="datarichiesta" type="date"></field>
-      <field name="dataaccettazione" type="date"></field>
-      <field name="feedbackpositivo" type="numeric"></field>
-      <prim-key field="username" />
+    <entity entity-name="HelloHobby"
+            package-name="org.ofbiz.hello3"
+            title="Hobbies available">
+      <field name="helloHobbyId" type="id-ne"></field>
+      <field name="description" type="description"></field>
+      <prim-key field="helloHobbyId"/>
     </entity>
-    
-    <entity entity-name="Utente" table-name="Utente" package-name="org.ofbiz.practice" title="" copyright="" author="" version="">
-      <description></description>
-      <field name="codicefiscale" type="short-varchar"></field>
-      <field name="idcomune" type="id"></field>
-      <field name="username" type="short-varchar"></field>
-      <field name="nome" type="short-varchar"></field>
-      <field name="cognome" type="short-varchar"></field>
-      <field name="datanascita" type="date"></field>
-      <field name="luogonascita" type="short-varchar"></field>
-      <field name="sesso" type="numeric"></field>
-      <field name="pathquestionario" type="very-long"></field>
-      <field name="indirizzo" type="long-varchar"></field>
-      <prim-key field="codicefiscale" />
-      <relation type="one" title="has_comune" rel-entity-name="Comune">
-        <key-map field-name="idcomune" rel-field-name="idcomune" />
+    <entity entity-name="HelloPersonHobby"
+            package-name="org.ofbiz.hello3"
+            title="Entity and ttribute Entity">
+      <field name="helloPersonId" type="id-ne"></field>
+      <field name="helloHobbyId" type="id-ne"></field>
+      <prim-key field="helloPersonId"/>
+      <prim-key field="helloHobbyId"/>
+      <relation type="one" fk-name="HPRSN_PRSN" rel-entity-name="HelloPerson">
+        <key-map field-name="helloPersonId"/>
       </relation>
-      <relation type="one" title="has_username" rel-entity-name="Account">
-        <key-map field-name="username" />
+      <relation type="one" fk-name="HPRSN_HBBY" rel-entity-name="HelloHobby">
+        <key-map field-name="helloHobbyId"/>
       </relation>
     </entity>
-    
-    <entity entity-name="Patente" table-name="Patente" package-name="org.ofbiz.practice" title="" copyright="" author="" version="">
-      <description></description>
-      <field name="idpatente" type="id-ne"></field>
-      <field name="codicefiscale" type="short-varchar"></field>
-      <field name="tipo" type="very-short"></field>
-      <prim-key field="idpatente" />
-      <relation type="one" title="has_utente" rel-entity-name="Utente">
-        <key-map field-name="codicefiscale" rel-field-name="codicefiscale" />
-      </relation>
-    </entity>
-    
-    <entity entity-name="Ruolo" table-name="Ruolo" package-name="org.ofbiz.practice" title="" copyright="" author="" version="">
-      <description></description>
-      <field name="idruolo" type="id-ne"></field>
-      <field name="username" type="short-varchar"></field>
-      <field name="tipo" type="long-varchar"></field>
-      <prim-key field="idruolo" />
-      <relation type="one" title="has_utente" rel-entity-name="Utente">
-        <key-map field-name="username" rel-field-name="username" />
-      </relation>
-    </entity>
-    
-    <entity entity-name="Gas"  table-name="Gas" package-name="org.ofbiz.practice" title="" copyright="" author="" version="">
-      <description></description>
-      <field name="idgas" type="id-ne"></field>
-      <field name="nome" type="short-varchar"></field>
-      <field name="descrizione" type="very-long"></field>
-      <prim-key field="idgas" />
-    </entity>
-    
-    <entity entity-name="PuntiDiConsegna" table-name="PuntiDiConsegna" package-name="org.ofbiz.practice" title="" copyright="" author="" version="">
-      <description></description>
-      <field name="idpunticonsegna" type="id-ne"></field>
-      <field name="idcomune" type="id"></field>
-      <field name="indirizzo" type="very-long"></field>
-      <field name="coordinate" type="numeric"></field>
-      <prim-key field="idpunticonsegna" />
-      <relation type="one" title="has_comune" rel-entity-name="Comune">
-        <key-map field-name="idcomune" rel-field-name="idcomune" />
-      </relation>
-    </entity>
-    
-    <entity entity-name="Articolo" table-name="Articolo" package-name="org.ofbiz.practice" title="" copyright="" author="" version="">
-      <description></description>
-      <field name="idarticolo" type="id-ne"></field>
-      <field name="codiceesterno" type="short-varchar"></field>
-      <field name="descrizione" type="very-long"></field>
-      <prim-key field="idarticolo" />
-    </entity>
-    
-    <entity entity-name="Ordine" table-name="Ordine" package-name="org.ofbiz.practice" title="" copyright="" author="" version="">
-      <description></description>
-      <field name="idordine" type="id-ne"></field>
-      <field name="username" type="short-varchar"></field>
-      <field name="idarticolo" type="id"></field>
-      <field name="datarichiesta" type="date-time"></field>
-      <field name="pendente" type="numeric"></field>
-      <field name="quantita" type="numeric"></field>
-      <field name="quantitaminutente" type="numeric"></field>
-      <field name="datamassimaconsegna" type="date-time"></field>
-      <prim-key field="idordine" />
-      <relation type="one" title="has_account" rel-entity-name="Account">
-        <key-map field-name="username" rel-field-name="username" />
-      </relation>
-      <relation type="one" title="has_articolo" rel-entity-name="Articolo">
-        <key-map field-name="idarticolo" rel-field-name="idarticolo" />
-      </relation>
-    </entity>
-    
-    <entity entity-name="Cybercontadino" table-name="Cybercontadino" package-name="org.ofbiz.practice" title="" copyright="" author="" version="">
-      <description></description>
-      <field name="partitaiva" type="id-ne"></field>
-      <field name="idarticolo" type="id"></field>
-      <field name="username" type="short-varchar"></field>
-      <field name="comuneIdcomune" type="id"></field>
-      <field name="nomepresidente" type="short-varchar"></field>
-      <field name="indirizzo" type="long-varchar"></field>
-      <field name="cognomepresidente" type="short-varchar"></field>
-      <field name="nomeazienda" type="short-varchar"></field>
-      <field name="pathquestionario" type="very-long"></field>
-      <field name="urlwisdl" type="very-long"></field>
-      <field name="descrizioneazienda" type="very-long"></field>
-      <prim-key field="partitaiva" />
-      <relation type="one" title="has_account" rel-entity-name="Account">
-        <key-map field-name="username" rel-field-name="username" />
-      </relation>
-      <relation type="one" title="has_articolo" rel-entity-name="Articolo">
-        <key-map field-name="idarticolo" rel-field-name="idarticolo" />
-      </relation>
-      <relation type="one" title="has_comune" rel-entity-name="Comune">
-        <key-map field-name="idcomune" rel-field-name="idcomune" />
-      </relation>
-    </entity>
-    
-    <entity entity-name="Itinerario" table-name="Itinerario" package-name="org.ofbiz.practice" title="" copyright="" author="" version="">
-      <description></description>
-      <field name="iditinerario" type="id-ne"></field>
-      <field name="username" type="short-varchar"></field>
-      <field name="datapartenza" type="date-time"></field>
-      <field name="dataconsegna" type="date-time"></field>
-      <field name="documentazione" type="very-long"></field>
-      <field name="datacreazione" type="date-time"></field>
-      <prim-key field="iditinerario" />
-      <relation type="one" title="has_account" rel-entity-name="Account">
-        <key-map field-name="username" rel-field-name="username" />
-      </relation>
-    </entity>
-    
-    <entity entity-name="Feedbacknegativo" table-name="Feedbacknegativo" package-name="org.ofbiz.practice" title="" copyright="" author="" version="">
-      <description></description>
-      <field name="idfeedback" type="id-ne"></field>
-      <field name="idordine" type="id"></field>
-      <field name="validatore" type="short-varchar"></field>
-      <field name="segnalatore" type="short-varchar"></field>
-      <field name="destinatario" type="short-varchar"></field>
-      <field name="analizzato" type="numeric"></field>
-      <field name="descrizione" type="very-long"></field>
-      <field name="datavalidazione" type="date"></field>
-      <field name="datasegnalazione" type="date"></field>
-      <prim-key field="idfeedback" />
-      <relation type="one" title="has_segnalatore" rel-entity-name="Account">
-        <key-map field-name="segnalatore" rel-field-name="username" />
-      </relation>
-      <relation type="one" title="has_destinatario" rel-entity-name="Account">
-        <key-map field-name="destinatario" rel-field-name="username" />
-      </relation>
-      <relation type="one" title="has_ordine" rel-entity-name="Ordine">
-        <key-map field-name="idordine" rel-field-name="idordine" />
-      </relation>
-      <relation type="one" title="has_validatore" rel-entity-name="Account">
-        <key-map field-name="validatore" rel-field-name="username" />
-      </relation>
-    </entity>
-
-	<entity entity-name="ItinerarioHasOrdine" table-name="ItinerarioHasOrdine" package-name="org.ofbiz.practice" title="" copyright="" author="" version="">
-      <description></description>
-      <field name="idordine" type="id-ne"></field>
-      <field name="iditinerario" type="id-ne"></field>
-      <prim-key field="idordine" />
-      <prim-key field="iditinerario" />
-      <relation type="one" title="has_ordine" rel-entity-name="Ordine">
-        <key-map field-name="idordine" rel-field-name="idordine" />
-      </relation>
-      <relation type="one" title="has_itinerario" rel-entity-name="Itinerario">
-        <key-map field-name="iditinerario" rel-field-name="iditinerario" />
-      </relation>
-    </entity>
-    
-    
-    <entity entity-name="ItinerarioHasCybercontadino" table-name="ItinerarioHasCybercontadino" package-name="org.ofbiz.practice" title="" copyright="" author="" version="">
-      <description></description>
-      <field name="iditinerario" type="id-ne"></field>
-      <field name="partitaiva" type="id-ne"></field>
-      <prim-key field="partitaiva" />
-      <prim-key field="iditinerario" />
-      <relation type="one" title="has_contadino" rel-entity-name="Cybercontadino">
-        <key-map field-name="partitaiva" rel-field-name="partitaiva" />
-      </relation>
-      <relation type="one" title="has_itinerario" rel-entity-name="Itinerario">
-        <key-map field-name="iditinerario" rel-field-name="iditinerario" />
-      </relation>
-    </entity>
-    
-    <entity entity-name="ItinerarioHasPuntiDiConsegna" table-name="ItinerarioHasPuntiDiConsegna" package-name="org.ofbiz.practice" title="" copyright="" author="" version="">
-      <description></description>
-      <field name="idpunticonsegna" type="id-ne"></field>
-      <field name="iditinerario" type="id-ne"></field>
-      <prim-key field="idpunticonsegna" />
-      <prim-key field="iditinerario" />
-      <relation type="one" title="has_puntidiconsegna" rel-entity-name="PuntiDiConsegna">
-        <key-map field-name="idpunticonsegna" rel-field-name="idpunticonsegna" />
-      </relation>
-      <relation type="one" title="has_itinerario" rel-entity-name="Itinerario">
-        <key-map field-name="iditinerario" rel-field-name="iditinerario" />
-      </relation>
-    </entity>  
-    
-   
 </entitymodel>

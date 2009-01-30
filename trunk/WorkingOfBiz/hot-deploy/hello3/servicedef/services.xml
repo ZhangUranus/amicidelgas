@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright (c) 2001-2005 The Open For Business Project - www.ofbiz.org
+ *
+ *  Permission is hereby granted, free of charge, to any person obtaining a
+ *  copy of this software and associated documentation files (the "Software"),
+ *  to deal in the Software without restriction, including without limitation
+ *  the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ *  and/or sell copies of the Software, and to permit persons to whom the
+ *  Software is furnished to do so, subject to the following conditions:
+ *
+ *  The above copyright notice and this permission notice shall be included
+ *  in all copies or substantial portions of the Software.
+ *
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+ *  OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+ *  IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+ *  CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT
+ *  OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR
+ *  THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ *
+ * @author     Si Chen (sichen@opensourcestrategies.com)
+ *
+ * a few modifications by
+ *              Vincenzo Di Lorenzo   (vinci.dilorenzo@libero.it)
+ *              Giovanni Montella
+ */
+-->
+
+<services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+        xsi:noNamespaceSchemaLocation="http://www.ofbiz.org/dtds/services.xsd">
+    <description>Hello 3 Services</description>
+
+    <!-- this will be implemented in Java -->
+    <!--<service name="createHelloPerson" engine="java" export="true"-->
+     <service name="createHelloPerson" engine="java"
+        location="org.ofbiz.hello3.Hello3Services" invoke="createHelloPerson" auth="false">
+        <description>Create a HelloPerson</description>
+        <auto-attributes mode="IN" entity-name="HelloPerson" include="nonpk" optional="true"/>
+        <attribute name="helloPersonId" mode="OUT" type="String" optional="false"/>
+    </service>
+    
+    
+    <!-- this will be implemented in Java -->
+<!--    <service name="searchHelloPerson" engine="java" export="true"
+        location="org.ofbiz.hello3.Hello3Services" invoke="searchHelloPerson">
+        <description>Search a HelloPerson</description>
+        <attribute name="helloPersonId" mode="IN" type="String" optional="true"/>
+        <!--auto-attributes mode="OUT" entity-name="HelloPerson" include="nonpk" optional="true"/-->
+<!--    <attribute name="helloPersonIdOut" mode="OUT" type="String" optional="false"/>
+        <attribute name="firstName" mode="OUT" type="String" optional="true"/>
+        <attribute name="lastName" mode="OUT" type="String" optional="true"/>
+    </service>    
+
+
+    <!-- this will be implemented in soap engine --> 
+<!--<service name="BabelFishService" engine="soap" export="true"
+        location="http://services.xmethods.net:80/perl/soaplite.cgi" invoke="BabelFish">
+        <description>invoke the remote Web Service from OFBiz</description>
+        <namespace>urn:xmethodsBabelFish</namespace>
+        <attribute name="translationmode" mode="IN" type="String" optional="false"/>
+        <attribute name="sourcedate" mode="IN" type="String" optional="false"/>
+        <attribute name="return" mode="OUT" type="String" optional="false"/>
+    </service>  
+    
+
+    <!-- this will be implemented in OFBiz minilang -->
+    <service name="createHelloPersonHobby" engine="simple" export="true"
+        location="org/ofbiz/hello3/Hello3Services.xml" invoke="createHelloPersonHobby">
+        <description>Create a HelloPersonHobby which links a person and a hobby</description>
+        <auto-attributes mode="IN" entity-name="HelloPersonHobby" include="pk" optional="false"/>
+    </service>
+</services>
