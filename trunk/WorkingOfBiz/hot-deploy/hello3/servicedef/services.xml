@@ -43,29 +43,6 @@
     </service>
     
     
-    <!-- this will be implemented in Java -->
-<!--    <service name="searchHelloPerson" engine="java" export="true"
-        location="org.ofbiz.hello3.Hello3Services" invoke="searchHelloPerson">
-        <description>Search a HelloPerson</description>
-        <attribute name="helloPersonId" mode="IN" type="String" optional="true"/>
-        <!--auto-attributes mode="OUT" entity-name="HelloPerson" include="nonpk" optional="true"/-->
-<!--    <attribute name="helloPersonIdOut" mode="OUT" type="String" optional="false"/>
-        <attribute name="firstName" mode="OUT" type="String" optional="true"/>
-        <attribute name="lastName" mode="OUT" type="String" optional="true"/>
-    </service>    
-
-
-    <!-- this will be implemented in soap engine --> 
-<!--<service name="BabelFishService" engine="soap" export="true"
-        location="http://services.xmethods.net:80/perl/soaplite.cgi" invoke="BabelFish">
-        <description>invoke the remote Web Service from OFBiz</description>
-        <namespace>urn:xmethodsBabelFish</namespace>
-        <attribute name="translationmode" mode="IN" type="String" optional="false"/>
-        <attribute name="sourcedate" mode="IN" type="String" optional="false"/>
-        <attribute name="return" mode="OUT" type="String" optional="false"/>
-    </service>  
-    
-
     <!-- this will be implemented in OFBiz minilang -->
     <service name="createHelloPersonHobby" engine="simple" export="true"
         location="org/ofbiz/hello3/Hello3Services.xml" invoke="createHelloPersonHobby">
