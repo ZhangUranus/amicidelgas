@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page xmlns="http://jboss.com/products/seam/pages"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://jboss.com/products/seam/pages http://jboss.com/products/seam/pages-2.1.xsd"
+      no-conversation-view-id="/PatenteList.xhtml"
+      login-required="true">
+
+   <begin-conversation join="true" flush-mode="MANUAL"/>
+
+   <action execute="#{patenteHome.wire}"/>
+
+   <param name="patenteFrom"/>
+   <param name="patenteIdpatente" value="#{patenteHome.patenteIdpatente}"/>
+   <param name="utenteFrom"/>
+   <param name="utenteCodiceFiscale" value="#{utenteHome.utenteCodiceFiscale}"/>
+   <param name="accountFrom"/>
+   <param name="accountUsername" value="#{accountHome.accountUsername}"/>
+
+   <param name="comuneFrom"/>
+   <param name="comuneIdcomune" value="#{comuneHome.comuneIdcomune}"/>
+
+
+
+
+   <navigation from-action="#{patenteHome.persist}">
+      <rule>
+         <end-conversation/>
+         <redirect view-id="/Patente.xhtml"/>
+      </rule>
+   </navigation>
+
+   <navigation from-action="#{patenteHome.update}">
+      <rule>
+         <end-conversation/>
+         <redirect view-id="/Patente.xhtml"/>
+      </rule>
+   </navigation>
+
+   <navigation from-action="#{patenteHome.remove}">
+      <rule>
+         <end-conversation/>
+         <redirect view-id="/PatenteList.xhtml"/>
+      </rule>
+   </navigation>
+
+</page>

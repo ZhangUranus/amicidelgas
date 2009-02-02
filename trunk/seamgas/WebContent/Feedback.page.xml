@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page xmlns="http://jboss.com/products/seam/pages"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://jboss.com/products/seam/pages http://jboss.com/products/seam/pages-2.1.xsd">
+
+   <param name="feedbackFrom"/>
+   <param name="feedbackIdfeedback" value="#{feedbackHome.feedbackIdfeedback}"/>
+   <param name="accountFrom"/>
+   <param name="accountUsername" value="#{accountHome.accountUsername}"/>
+
+   <param name="ordineFrom"/>
+   <param name="ordineIdordine" value="#{ordineHome.ordineIdordine}"/>
+   <param name="articoloFrom"/>
+   <param name="articoloIdarticolo" value="#{articoloHome.articoloIdarticolo}"/>
+
+
+
+
+</page>

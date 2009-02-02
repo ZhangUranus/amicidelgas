@@ -1,0 +1,83 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:a="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    template="layout/template.xhtml">
+
+<ui:define name="body">
+
+    <h:form id="itinerarioHasPuntiDiConsegna" styleClass="edit">
+
+        <rich:panel>
+            <f:facet name="header">#{itinerarioHasPuntiDiConsegnaHome.managed ? 'Edit' : 'Add'} Itinerario has punti di consegna</f:facet>
+
+
+            <s:decorate id="idpuntiConsegnaField" template="layout/edit.xhtml">
+                <ui:define name="label">Idpunti consegna</ui:define>
+                <h:inputText id="idpuntiConsegna"
+                       required="true"
+                       disabled="#{itinerarioHasPuntiDiConsegnaHome.managed}"
+                          value="#{itinerarioHasPuntiDiConsegnaHome.instance.id.idpuntiConsegna}">
+                    <a:support event="onblur" reRender="idpuntiConsegnaField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+            <s:decorate id="iditinerarioField" template="layout/edit.xhtml">
+                <ui:define name="label">Iditinerario</ui:define>
+                <h:inputText id="iditinerario"
+                       required="true"
+                       disabled="#{itinerarioHasPuntiDiConsegnaHome.managed}"
+                          value="#{itinerarioHasPuntiDiConsegnaHome.instance.id.iditinerario}">
+                    <a:support event="onblur" reRender="iditinerarioField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+            <div style="clear:both">
+                <span class="required">*</span>
+                required fields
+            </div>
+
+        </rich:panel>
+
+        <div class="actionButtons">
+
+            <h:commandButton id="save"
+                          value="Save"
+                         action="#{itinerarioHasPuntiDiConsegnaHome.persist}"
+                       disabled="#{!itinerarioHasPuntiDiConsegnaHome.wired}"
+                       rendered="#{!itinerarioHasPuntiDiConsegnaHome.managed}"/>
+
+            <h:commandButton id="update"
+                          value="Save"
+                         action="#{itinerarioHasPuntiDiConsegnaHome.update}"
+                       rendered="#{itinerarioHasPuntiDiConsegnaHome.managed}"/>
+
+            <h:commandButton id="delete"
+                          value="Delete"
+                         action="#{itinerarioHasPuntiDiConsegnaHome.remove}"
+                      immediate="true"
+                       rendered="#{itinerarioHasPuntiDiConsegnaHome.managed}"/>
+
+            <s:button id="cancelEdit"
+                   value="Cancel"
+             propagation="end"
+                    view="/ItinerarioHasPuntiDiConsegna.xhtml"
+                rendered="#{itinerarioHasPuntiDiConsegnaHome.managed}"/>
+
+            <s:button id="cancelAdd"
+                   value="Cancel"
+             propagation="end"
+                    view="/#{empty itinerarioHasPuntiDiConsegnaFrom ? 'ItinerarioHasPuntiDiConsegnaList' : itinerarioHasPuntiDiConsegnaFrom}.xhtml"
+                rendered="#{!itinerarioHasPuntiDiConsegnaHome.managed}"/>
+
+        </div>
+    </h:form>
+
+</ui:define>
+
+</ui:composition>

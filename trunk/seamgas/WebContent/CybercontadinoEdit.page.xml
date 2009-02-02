@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page xmlns="http://jboss.com/products/seam/pages"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://jboss.com/products/seam/pages http://jboss.com/products/seam/pages-2.1.xsd"
+      no-conversation-view-id="/CybercontadinoList.xhtml"
+      login-required="true">
+
+   <begin-conversation join="true" flush-mode="MANUAL"/>
+
+   <action execute="#{cybercontadinoHome.wire}"/>
+
+   <param name="cybercontadinoFrom"/>
+   <param name="cybercontadinoPartitaIva" value="#{cybercontadinoHome.cybercontadinoPartitaIva}"/>
+   <param name="accountFrom"/>
+   <param name="accountUsername" value="#{accountHome.accountUsername}"/>
+
+   <param name="comuneFrom"/>
+   <param name="comuneIdcomune" value="#{comuneHome.comuneIdcomune}"/>
+
+   <param name="articoloFrom"/>
+   <param name="articoloIdarticolo" value="#{articoloHome.articoloIdarticolo}"/>
+
+
+
+   <navigation from-action="#{cybercontadinoHome.persist}">
+      <rule>
+         <end-conversation/>
+         <redirect view-id="/Cybercontadino.xhtml"/>
+      </rule>
+   </navigation>
+
+   <navigation from-action="#{cybercontadinoHome.update}">
+      <rule>
+         <end-conversation/>
+         <redirect view-id="/Cybercontadino.xhtml"/>
+      </rule>
+   </navigation>
+
+   <navigation from-action="#{cybercontadinoHome.remove}">
+      <rule>
+         <end-conversation/>
+         <redirect view-id="/CybercontadinoList.xhtml"/>
+      </rule>
+   </navigation>
+
+</page>

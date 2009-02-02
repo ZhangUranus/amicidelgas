@@ -1,0 +1,17 @@
+#Sun Feb 01 15:51:22 CET 2009
+action.package=org.domain.seamgas.session
+action.sources=/seamgas-ejb/ejbModule
+eclipse.preferences.version=1
+model.package=org.domain.seamgas.entity
+model.sources=/seamgas-ejb/ejbModule
+seam.ear.project=seamgas-ear
+seam.ejb.project=seamgas-ejb
+seam.project.connection.profile=mysql seam
+seam.project.deployment.type=ear
+seam.project.settings.version=1.1
+seam.project.web.root.folder=/seamgas/WebContent
+seam.runtime.name=seam
+seam.test.creating=true
+seam.test.project=seamgas-test
+test.package=org.domain.seamgas.test
+test.sources=/seamgas-test/test-src
