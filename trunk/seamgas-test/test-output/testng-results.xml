@@ -1,0 +1,26 @@
+<testng-results>
+  <reporter-output>
+  </reporter-output>
+  <suite name="seamgas-test">
+    <groups>
+    </groups>
+    <test name="org.domain.seamgas.test.HelloTest">
+      <class name="org.domain.seamgas.test.HelloTest">
+        <test-method status="PASS" signature="begin()" name="begin" is-config="true" duration-ms="966" started-at="2009-02-02T11:14:24Z" finished-at="2009-02-02T11:14:25Z">
+        </test-method>
+        <test-method status="PASS" signature="startSeam()" name="startSeam" is-config="true" duration-ms="20371" started-at="2009-02-02T11:14:03Z" finished-at="2009-02-02T11:14:23Z">
+        </test-method>
+        <test-method status="PASS" signature="cleanupClass()" name="cleanupClass" is-config="true" duration-ms="1" started-at="2009-02-02T11:14:25Z" finished-at="2009-02-02T11:14:25Z">
+        </test-method>
+        <test-method status="PASS" signature="setupClass()" name="setupClass" is-config="true" duration-ms="141" started-at="2009-02-02T11:14:24Z" finished-at="2009-02-02T11:14:24Z">
+        </test-method>
+        <test-method status="PASS" signature="test_hello()" name="test_hello" duration-ms="211" started-at="2009-02-02T11:14:25Z" finished-at="2009-02-02T11:14:25Z">
+        </test-method>
+        <test-method status="PASS" signature="stopSeam()" name="stopSeam" is-config="true" duration-ms="1" started-at="2009-02-02T11:14:25Z" finished-at="2009-02-02T11:14:25Z">
+        </test-method>
+        <test-method status="PASS" signature="end()" name="end" is-config="true" duration-ms="0" started-at="2009-02-02T11:14:25Z" finished-at="2009-02-02T11:14:25Z">
+        </test-method>
+      </class>
+    </test>
+  </suite>
+</testng-results>
