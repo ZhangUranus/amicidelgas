@@ -1,0 +1,9 @@
+Configurazioni Progetto-Seam:
+1) creare un nuovo utente in MysqlAdmin:
+	user: Gas
+	pass: gas
+2) installare lo script sql in Mysql da utente "root"
+	database_gas
+3) dare tutti i privilegi all'utente "Gas" per il nuovo DB
+4) Il driver jdbc utilizzato è il 5.0, controllare in Properties del progetto nella configurazione di Seam se il tipo di driver coincide
+5) E' VIETATO fare l'upload delle cartelle BUILD che contengono i file .class
