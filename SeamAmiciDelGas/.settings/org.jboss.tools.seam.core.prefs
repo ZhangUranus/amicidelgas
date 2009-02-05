@@ -1,0 +1,17 @@
+#Thu Feb 05 23:24:58 CET 2009
+action.package=org.domain.SeamAmiciDelGas.session
+action.sources=/SeamAmiciDelGas-ejb/ejbModule
+eclipse.preferences.version=1
+model.package=org.domain.SeamAmiciDelGas.entity
+model.sources=/SeamAmiciDelGas-ejb/ejbModule
+seam.ear.project=SeamAmiciDelGas-ear
+seam.ejb.project=SeamAmiciDelGas-ejb
+seam.project.connection.profile=database_gas
+seam.project.deployment.type=ear
+seam.project.settings.version=1.1
+seam.project.web.root.folder=/SeamAmiciDelGas/WebContent
+seam.runtime.name=seam
+seam.test.creating=true
+seam.test.project=SeamAmiciDelGas-test
+test.package=org.domain.SeamAmiciDelGas.test
+test.sources=/SeamAmiciDelGas-test/test-src
