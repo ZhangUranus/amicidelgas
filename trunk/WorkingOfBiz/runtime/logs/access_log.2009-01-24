@@ -1,8 +1,0 @@
-0:0:0:0:0:0:0:1 - - [24/Jan/2009:12:10:32 +0100] "GET / HTTP/1.1" 400 - "-" "Mozilla/5.0 (Windows; U; Windows NT 6.1; it; rv:1.9.1b2) Gecko/20081201 Firefox/3.1b2"
-0:0:0:0:0:0:0:1 - - [24/Jan/2009:12:10:32 +0100] "GET /favicon.ico HTTP/1.1" 400 - "-" "Mozilla/5.0 (Windows; U; Windows NT 6.1; it; rv:1.9.1b2) Gecko/20081201 Firefox/3.1b2"
-0:0:0:0:0:0:0:1 - - [24/Jan/2009:12:10:35 +0100] "GET /favicon.ico HTTP/1.1" 400 - "-" "Mozilla/5.0 (Windows; U; Windows NT 6.1; it; rv:1.9.1b2) Gecko/20081201 Firefox/3.1b2"
-0:0:0:0:0:0:0:1 - - [24/Jan/2009:12:10:37 +0100] "GET /practice/ HTTP/1.1" 302 - "-" "Mozilla/5.0 (Windows; U; Windows NT 6.1; it; rv:1.9.1b2) Gecko/20081201 Firefox/3.1b2"
-0:0:0:0:0:0:0:1 - - [24/Jan/2009:12:11:21 +0100] "GET /practice/control/main HTTP/1.1" 200 957 "-" "Mozilla/5.0 (Windows; U; Windows NT 6.1; it; rv:1.9.1b2) Gecko/20081201 Firefox/3.1b2"
-0:0:0:0:0:0:0:1 - - [24/Jan/2009:12:12:25 +0100] "GET /ecommerce/ HTTP/1.1" 200 961 "-" "Mozilla/5.0 (Windows; U; Windows NT 6.1; it; rv:1.9.1b2) Gecko/20081201 Firefox/3.1b2"
-0:0:0:0:0:0:0:1 - - [24/Jan/2009:12:14:43 +0100] "GET /practice/control/main HTTP/1.1" 200 24 "-" "Mozilla/5.0 (Windows; U; Windows NT 6.1; it; rv:1.9.1b2) Gecko/20081201 Firefox/3.1b2"
-0:0:0:0:0:0:0:1 - - [24/Jan/2009:15:32:32 +0100] "GET /favicon.ico HTTP/1.1" 400 - "-" "Mozilla/5.0 (Windows; U; Windows NT 6.1; it; rv:1.9.1b2) Gecko/20081201 Firefox/3.1b2"

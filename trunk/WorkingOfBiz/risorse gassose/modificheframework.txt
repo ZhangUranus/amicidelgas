@@ -1,5 +1,0 @@
-Cambiata la linea di codice numero 1147 nel file framework/service/src/org.ofbiz.service.ModelService.java
-da 	soapBinding.setStyle("document");
-a	soapBinding.setStyle("rpc");
-MOTIVAZIONE: Lo stile document/literal non è compatibile con la sintassi utilizzata dal generatore di wsdl. Il cambiamento allo
-stile rpc/literal sembra risolvere il problema

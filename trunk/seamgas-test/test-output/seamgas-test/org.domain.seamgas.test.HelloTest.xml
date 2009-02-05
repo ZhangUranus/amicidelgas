@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="org.domain.seamgas.test.HelloTest" failures="0" tests="1" time="1.329" errors="0">
-  <properties/>
-  <testcase name="test_hello" time="0.211" classname="org.domain.seamgas.test.HelloTest"/>
-</testsuite>

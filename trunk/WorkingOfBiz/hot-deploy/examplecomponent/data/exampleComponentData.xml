@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<entity-engine-xml>
-    <exampleUtente codicefiscale="BBBGGG75C21A785K" idcomune="1" username="pippopelo" nome="Pippo" cognome="Pelo" datanascita="2006-04-25" luogonascita="Benevento" sesso="M"/>
-</entity-engine-xml>
-
