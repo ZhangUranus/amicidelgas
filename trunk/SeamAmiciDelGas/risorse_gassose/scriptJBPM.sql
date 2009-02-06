@@ -197,3 +197,11 @@ alter table JBPM_VARIABLEINSTANCE add index FK_VARINST_TKVARMP (TOKENVARIABLEMAP
 alter table JBPM_VARIABLEINSTANCE add index FK_VARINST_PRCINST (PROCESSINSTANCE_), add constraint FK_VARINST_PRCINST foreign key (PROCESSINSTANCE_) references JBPM_PROCESSINSTANCE (ID_);
 alter table JBPM_VARIABLEINSTANCE add index FK_VAR_TSKINST (TASKINSTANCE_), add constraint FK_VAR_TSKINST foreign key (TASKINSTANCE_) references JBPM_TASKINSTANCE (ID_);
 alter table JBPM_VARIABLEINSTANCE add index FK_BYTEINST_ARRAY (BYTEARRAYVALUE_), add constraint FK_BYTEINST_ARRAY foreign key (BYTEARRAYVALUE_) references JBPM_BYTEARRAY (ID_);
+insert into JBPM_ID_USER (ID_, CLASS_, NAME_, EMAIL_, PASSWORD_) 
+       values ('1', 'U', 'user', 'sample.user@sample.domain', 'user');
+insert into JBPM_ID_USER (ID_,CLASS_, NAME_, EMAIL_, PASSWORD_) 
+       values ('2', 'U', 'manager', 'sample.manager@sample.domain', 'manager');
+insert into JBPM_ID_USER (ID_,CLASS_, NAME_, EMAIL_, PASSWORD_) 
+       values ('3', 'U', 'shipper', 'sample.shipper@sample.domain', 'shipper');
+insert into JBPM_ID_USER (ID_,CLASS_, NAME_, EMAIL_, PASSWORD_) 
+       values ('4', 'U', 'admin', 'sample.admin@sample.domain', 'admin');
