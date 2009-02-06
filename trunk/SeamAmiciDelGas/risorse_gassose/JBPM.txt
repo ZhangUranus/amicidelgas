@@ -10,6 +10,6 @@ DOWNLOAD
 	5b) Copiare il contenuto della cartella features in quella omonima di eclipse.
 6) Setting: accedere a Eclipse->Windows->Preferences->Jboss jBPM-> Runtime Locations:
 		4a1) assegnare un nome qualsiasi (es. jbpm-3.1)
-		4a2) indicare il percorso dove si trova JBPM engine (� la cartella jbpm-3.1 ottenuta decomprimendo il file jbpm-3.1.3.zip)
+		4a2) indicare il percorso dove si trova JBPM engine (la cartella jbpm-3.1 ottenuta decomprimendo il file jbpm-3.1.3.zip)
 
 	
