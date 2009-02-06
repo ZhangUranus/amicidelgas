@@ -1,0 +1,16 @@
+Istruzioni jBPM:
+1) Download jbpm-jpdl-suite-3.2.2.zip
+2) Download jbpm-jpdl-designer-site-3.1.6.zip (contiene il plugin di eclipse)
+3) Unzip jbpm-jpdl-designer-site-3.1.6.zip:
+	3a) Copiare il contenuto della cartella plugins in quella omonima di eclipse.
+	3b) Copiare il contenuto della cartella features in quella omonima di eclipse.
+4) Unzip jbpm-jpdl-suite-3.2.2.zip
+	4a) Accedere a Eclipse->Windows->Preferences->Jboss jBPM-> Runtime Locations:
+		4a1) assegnare un nome qualsiasi (es. jbpm-3.2.2)
+		4a2) indicare il percorso dove si trova JBPM engine (è la cartella la cartella JBPM-jPDL-3.2.2 ottenuta decomprimendo il file zip)
+
+5) Eseguire lo script scriptJBPM.sql
+6) Accedere alla cartella \jbpm-jpdl-3.2.2\server\server\jbpm\deploy e copiare il file jbpm-ds.xml (il file è già presente, bisogna sovrascriverlo).
+7) Copiare il driver jdbc (mysql-connector.jar) nella cartella \jbpm-jpdl-3.2.2\server\server\jbpm\lib
+8) 
+	
