@@ -10,3 +10,5 @@ Configurazioni Progetto-Seam:
 6) dare tutti i privilegi all'utente "Gas" per il nuovo DB
 7) Il driver jdbc utilizzato è il 5.0, controllare in Properties del progetto nella configurazione di Seam se il tipo di driver coincide
 8) E' VIETATO fare l'upload delle cartelle BUILD che contengono i file .class
+9) Aggiungere alla configurazione di Jboss 4.2 Server il progetto SeamAmiciDelGas
+10) Copiare il file "SeamAmiciDelGas-ds.xml" che si trova in "resources" nella cartella di deploy di Jboss
