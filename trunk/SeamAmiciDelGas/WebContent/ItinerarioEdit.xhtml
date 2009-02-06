@@ -1,0 +1,108 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:a="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    template="layout/template.xhtml">
+
+<ui:define name="body">
+
+    <h:form id="itinerario" styleClass="edit">
+
+        <rich:panel>
+            <f:facet name="header">#{itinerarioHome.managed ? 'Edit' : 'Add'} Itinerario</f:facet>
+
+
+
+            <s:decorate id="usernameField" template="layout/edit.xhtml">
+                <ui:define name="label">Username</ui:define>
+                <h:inputText id="username"
+                       required="true"
+                           size="20"
+                      maxlength="20"
+                          value="#{itinerarioHome.instance.username}">
+                    <a:support event="onblur" reRender="usernameField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="dataPartenzaField" template="layout/edit.xhtml">
+                <ui:define name="label">Data partenza</ui:define>
+                <rich:calendar id="dataPartenza"
+                       required="true"
+                          value="#{itinerarioHome.instance.dataPartenza}" datePattern="MM/dd/yyyy hh:mm a"/>
+            </s:decorate>
+
+
+            <s:decorate id="dataConsegnaField" template="layout/edit.xhtml">
+                <ui:define name="label">Data consegna</ui:define>
+                <rich:calendar id="dataConsegna"
+                       required="true"
+                          value="#{itinerarioHome.instance.dataConsegna}" datePattern="MM/dd/yyyy hh:mm a"/>
+            </s:decorate>
+
+
+            <s:decorate id="documentazionePathField" template="layout/edit.xhtml">
+                <ui:define name="label">Documentazione path</ui:define>
+                <h:inputTextarea id="documentazionePath"
+                               cols="80"
+                               rows="6"
+                              value="#{itinerarioHome.instance.documentazionePath}"/>
+            </s:decorate>
+
+
+            <s:decorate id="dataCreazioneField" template="layout/edit.xhtml">
+                <ui:define name="label">Data creazione</ui:define>
+                <rich:calendar id="dataCreazione"
+                       required="true"
+                          value="#{itinerarioHome.instance.dataCreazione}" datePattern="MM/dd/yyyy hh:mm a"/>
+            </s:decorate>
+
+            <div style="clear:both">
+                <span class="required">*</span>
+                required fields
+            </div>
+
+        </rich:panel>
+
+        <div class="actionButtons">
+
+            <h:commandButton id="save"
+                          value="Save"
+                         action="#{itinerarioHome.persist}"
+                       disabled="#{!itinerarioHome.wired}"
+                       rendered="#{!itinerarioHome.managed}"/>
+
+            <h:commandButton id="update"
+                          value="Save"
+                         action="#{itinerarioHome.update}"
+                       rendered="#{itinerarioHome.managed}"/>
+
+            <h:commandButton id="delete"
+                          value="Delete"
+                         action="#{itinerarioHome.remove}"
+                      immediate="true"
+                       rendered="#{itinerarioHome.managed}"/>
+
+            <s:button id="cancelEdit"
+                   value="Cancel"
+             propagation="end"
+                    view="/Itinerario.xhtml"
+                rendered="#{itinerarioHome.managed}"/>
+
+            <s:button id="cancelAdd"
+                   value="Cancel"
+             propagation="end"
+                    view="/#{empty itinerarioFrom ? 'ItinerarioList' : itinerarioFrom}.xhtml"
+                rendered="#{!itinerarioHome.managed}"/>
+
+        </div>
+    </h:form>
+
+</ui:define>
+
+</ui:composition>

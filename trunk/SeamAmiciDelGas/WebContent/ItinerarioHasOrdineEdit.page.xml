@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page xmlns="http://jboss.com/products/seam/pages"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://jboss.com/products/seam/pages http://jboss.com/products/seam/pages-2.1.xsd"
+      no-conversation-view-id="/ItinerarioHasOrdineList.xhtml"
+      login-required="true">
+
+   <begin-conversation join="true" flush-mode="MANUAL"/>
+
+   <action execute="#{itinerarioHasOrdineHome.wire}"/>
+
+   <param name="itinerarioHasOrdineFrom"/>
+   <param name="itinerarioHasOrdineIdordine" value="#{itinerarioHasOrdineHome.itinerarioHasOrdineId.idordine}"/>
+   <param name="itinerarioHasOrdineIditinerario" value="#{itinerarioHasOrdineHome.itinerarioHasOrdineId.iditinerario}"/>
+
+
+   <navigation from-action="#{itinerarioHasOrdineHome.persist}">
+      <rule>
+         <end-conversation/>
+         <redirect view-id="/ItinerarioHasOrdine.xhtml"/>
+      </rule>
+   </navigation>
+
+   <navigation from-action="#{itinerarioHasOrdineHome.update}">
+      <rule>
+         <end-conversation/>
+         <redirect view-id="/ItinerarioHasOrdine.xhtml"/>
+      </rule>
+   </navigation>
+
+   <navigation from-action="#{itinerarioHasOrdineHome.remove}">
+      <rule>
+         <end-conversation/>
+         <redirect view-id="/ItinerarioHasOrdineList.xhtml"/>
+      </rule>
+   </navigation>
+
+</page>

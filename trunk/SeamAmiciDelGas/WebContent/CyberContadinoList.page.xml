@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page xmlns="http://jboss.com/products/seam/pages"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://jboss.com/products/seam/pages http://jboss.com/products/seam/pages-2.1.xsd">
+
+   <param name="firstResult" value="#{cyberContadinoList.firstResult}"/>
+   <param name="sort" value="#{cyberContadinoList.orderColumn}"/>
+   <param name="dir" value="#{cyberContadinoList.orderDirection}"/>
+
+   <param name="from"/>
+   <param name="username" value="#{cyberContadinoList.cyberContadino.username}"/>
+   <param name="nomePresidente" value="#{cyberContadinoList.cyberContadino.nomePresidente}"/>
+   <param name="indirizzo" value="#{cyberContadinoList.cyberContadino.indirizzo}"/>
+   <param name="cognomePresidente" value="#{cyberContadinoList.cyberContadino.cognomePresidente}"/>
+   <param name="nomeAzienda" value="#{cyberContadinoList.cyberContadino.nomeAzienda}"/>
+   <param name="pathAsl" value="#{cyberContadinoList.cyberContadino.pathAsl}"/>
+   <param name="urlWsdl" value="#{cyberContadinoList.cyberContadino.urlWsdl}"/>
+   <param name="descrizioneAzienda" value="#{cyberContadinoList.cyberContadino.descrizioneAzienda}"/>
+   <param name="email" value="#{cyberContadinoList.cyberContadino.email}"/>
+
+</page>

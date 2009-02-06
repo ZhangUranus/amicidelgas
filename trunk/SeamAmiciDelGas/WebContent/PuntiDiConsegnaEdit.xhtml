@@ -1,0 +1,92 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:a="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    template="layout/template.xhtml">
+
+<ui:define name="body">
+
+    <h:form id="puntiDiConsegna" styleClass="edit">
+
+        <rich:panel>
+            <f:facet name="header">#{puntiDiConsegnaHome.managed ? 'Edit' : 'Add'} Punti di consegna</f:facet>
+
+
+
+            <s:decorate id="idcomuneField" template="layout/edit.xhtml">
+                <ui:define name="label">Idcomune</ui:define>
+                <h:inputText id="idcomune"
+                       required="true"
+                          value="#{puntiDiConsegnaHome.instance.idcomune}">
+                    <a:support event="onblur" reRender="idcomuneField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="indirizzoField" template="layout/edit.xhtml">
+                <ui:define name="label">Indirizzo</ui:define>
+                <h:inputTextarea id="indirizzo"
+                               cols="80"
+                               rows="6"
+                           required="true"
+                              value="#{puntiDiConsegnaHome.instance.indirizzo}"/>
+            </s:decorate>
+
+
+            <s:decorate id="coordinateField" template="layout/edit.xhtml">
+                <ui:define name="label">Coordinate</ui:define>
+                <h:inputText id="coordinate"
+                          value="#{puntiDiConsegnaHome.instance.coordinate}">
+                    <a:support event="onblur" reRender="coordinateField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+            <div style="clear:both">
+                <span class="required">*</span>
+                required fields
+            </div>
+
+        </rich:panel>
+
+        <div class="actionButtons">
+
+            <h:commandButton id="save"
+                          value="Save"
+                         action="#{puntiDiConsegnaHome.persist}"
+                       disabled="#{!puntiDiConsegnaHome.wired}"
+                       rendered="#{!puntiDiConsegnaHome.managed}"/>
+
+            <h:commandButton id="update"
+                          value="Save"
+                         action="#{puntiDiConsegnaHome.update}"
+                       rendered="#{puntiDiConsegnaHome.managed}"/>
+
+            <h:commandButton id="delete"
+                          value="Delete"
+                         action="#{puntiDiConsegnaHome.remove}"
+                      immediate="true"
+                       rendered="#{puntiDiConsegnaHome.managed}"/>
+
+            <s:button id="cancelEdit"
+                   value="Cancel"
+             propagation="end"
+                    view="/PuntiDiConsegna.xhtml"
+                rendered="#{puntiDiConsegnaHome.managed}"/>
+
+            <s:button id="cancelAdd"
+                   value="Cancel"
+             propagation="end"
+                    view="/#{empty puntiDiConsegnaFrom ? 'PuntiDiConsegnaList' : puntiDiConsegnaFrom}.xhtml"
+                rendered="#{!puntiDiConsegnaHome.managed}"/>
+
+        </div>
+    </h:form>
+
+</ui:define>
+
+</ui:composition>

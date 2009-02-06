@@ -1,0 +1,83 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:a="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    template="layout/template.xhtml">
+
+<ui:define name="body">
+
+    <h:form id="itinerarioHasOrdine" styleClass="edit">
+
+        <rich:panel>
+            <f:facet name="header">#{itinerarioHasOrdineHome.managed ? 'Edit' : 'Add'} Itinerario has ordine</f:facet>
+
+
+            <s:decorate id="idordineField" template="layout/edit.xhtml">
+                <ui:define name="label">Idordine</ui:define>
+                <h:inputText id="idordine"
+                       required="true"
+                       disabled="#{itinerarioHasOrdineHome.managed}"
+                          value="#{itinerarioHasOrdineHome.instance.id.idordine}">
+                    <a:support event="onblur" reRender="idordineField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+            <s:decorate id="iditinerarioField" template="layout/edit.xhtml">
+                <ui:define name="label">Iditinerario</ui:define>
+                <h:inputText id="iditinerario"
+                       required="true"
+                       disabled="#{itinerarioHasOrdineHome.managed}"
+                          value="#{itinerarioHasOrdineHome.instance.id.iditinerario}">
+                    <a:support event="onblur" reRender="iditinerarioField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+            <div style="clear:both">
+                <span class="required">*</span>
+                required fields
+            </div>
+
+        </rich:panel>
+
+        <div class="actionButtons">
+
+            <h:commandButton id="save"
+                          value="Save"
+                         action="#{itinerarioHasOrdineHome.persist}"
+                       disabled="#{!itinerarioHasOrdineHome.wired}"
+                       rendered="#{!itinerarioHasOrdineHome.managed}"/>
+
+            <h:commandButton id="update"
+                          value="Save"
+                         action="#{itinerarioHasOrdineHome.update}"
+                       rendered="#{itinerarioHasOrdineHome.managed}"/>
+
+            <h:commandButton id="delete"
+                          value="Delete"
+                         action="#{itinerarioHasOrdineHome.remove}"
+                      immediate="true"
+                       rendered="#{itinerarioHasOrdineHome.managed}"/>
+
+            <s:button id="cancelEdit"
+                   value="Cancel"
+             propagation="end"
+                    view="/ItinerarioHasOrdine.xhtml"
+                rendered="#{itinerarioHasOrdineHome.managed}"/>
+
+            <s:button id="cancelAdd"
+                   value="Cancel"
+             propagation="end"
+                    view="/#{empty itinerarioHasOrdineFrom ? 'ItinerarioHasOrdineList' : itinerarioHasOrdineFrom}.xhtml"
+                rendered="#{!itinerarioHasOrdineHome.managed}"/>
+
+        </div>
+    </h:form>
+
+</ui:define>
+
+</ui:composition>

@@ -1,0 +1,235 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    template="layout/template.xhtml">
+
+<ui:define name="body">
+
+    <rich:panel>
+        <f:facet name="header">Questionario Details</f:facet>
+
+
+        <s:decorate id="votoProdotti" template="layout/display.xhtml">
+            <ui:define name="label">Voto prodotti</ui:define>
+            <h:outputText value="#{questionarioHome.instance.votoProdotti}"/>
+        </s:decorate>
+
+        <s:decorate id="votoStabile" template="layout/display.xhtml">
+            <ui:define name="label">Voto stabile</ui:define>
+            <h:outputText value="#{questionarioHome.instance.votoStabile}"/>
+        </s:decorate>
+
+        <s:decorate id="votoIgiene" template="layout/display.xhtml">
+            <ui:define name="label">Voto igiene</ui:define>
+            <h:outputText value="#{questionarioHome.instance.votoIgiene}"/>
+        </s:decorate>
+
+        <s:decorate id="votoAllevamento" template="layout/display.xhtml">
+            <ui:define name="label">Voto allevamento</ui:define>
+            <h:outputText value="#{questionarioHome.instance.votoAllevamento}"/>
+        </s:decorate>
+
+        <s:decorate id="votoProfessionalita" template="layout/display.xhtml">
+            <ui:define name="label">Voto professionalita</ui:define>
+            <h:outputText value="#{questionarioHome.instance.votoProfessionalita}"/>
+        </s:decorate>
+
+        <s:decorate id="votoGlobale" template="layout/display.xhtml">
+            <ui:define name="label">Voto globale</ui:define>
+            <h:outputText value="#{questionarioHome.instance.votoGlobale}"/>
+        </s:decorate>
+
+        <s:decorate id="commenti" template="layout/display.xhtml">
+            <ui:define name="label">Commenti</ui:define>
+            <h:outputText value="#{questionarioHome.instance.commenti}"/>
+        </s:decorate>
+
+        <s:decorate id="visionato" template="layout/display.xhtml">
+            <ui:define name="label">Visionato</ui:define>
+            <h:outputText value="#{questionarioHome.instance.visionato}"/>
+        </s:decorate>
+
+        <s:decorate id="dataVisita" template="layout/display.xhtml">
+            <ui:define name="label">Data visita</ui:define>
+            <h:outputText value="#{questionarioHome.instance.dataVisita}">
+                <s:convertDateTime type="date" dateStyle="short"/>
+            </h:outputText>
+        </s:decorate>
+
+        <s:decorate id="dataCompilazione" template="layout/display.xhtml">
+            <ui:define name="label">Data compilazione</ui:define>
+            <h:outputText value="#{questionarioHome.instance.dataCompilazione}">
+                <s:convertDateTime type="both" dateStyle="short"/>
+            </h:outputText>
+        </s:decorate>
+
+        <div style="clear:both"/>
+
+    </rich:panel>
+
+    <div class="actionButtons">
+
+        <s:button view="/QuestionarioEdit.xhtml"
+                    id="edit"
+                 value="Edit"/>
+
+        <s:button view="/#{empty questionarioFrom ? 'QuestionarioList' : questionarioFrom}.xhtml"
+                    id="done"
+                 value="Done"/>
+
+    </div>
+
+    <rich:tabPanel switchType="ajax">
+
+    <rich:tab>
+        <f:facet name="label">
+            <h:panelGroup><h:graphicImage value="/img/manytoone.gif" style="vertical-align: middle; padding-right: 4px;"/>Account</h:panelGroup>
+        </f:facet>
+    <div class="association" id="accountParent">
+
+        <h:outputText value="There is no account associated with this questionario."
+                   rendered="#{questionarioHome.instance.account == null}"/>
+
+        <rich:dataTable var="_account"
+                   value="#{questionarioHome.instance.account}"
+                rendered="#{questionarioHome.instance.account != null}"
+              rowClasses="rvgRowOne,rvgRowTwo"
+                      id="accountTable">
+            <h:column>
+                <f:facet name="header">Username</f:facet>
+                <h:outputText value="#{_account.username}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Pass</f:facet>
+                <h:outputText value="#{_account.pass}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Bloccato</f:facet>
+                <h:outputText value="#{_account.bloccato}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Elimato</f:facet>
+                <h:outputText value="#{_account.elimato}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Cancellato</f:facet>
+                <h:outputText value="#{_account.cancellato}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Attivato</f:facet>
+                <h:outputText value="#{_account.attivato}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Data richiesta</f:facet>
+                <h:outputText value="#{_account.dataRichiesta}">
+                    <s:convertDateTime type="date" dateStyle="short"/>
+                </h:outputText>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Data accettazione</f:facet>
+                <h:outputText value="#{_account.dataAccettazione}">
+                    <s:convertDateTime type="date" dateStyle="short"/>
+                </h:outputText>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Punteggio feedback</f:facet>
+                <h:outputText value="#{_account.punteggioFeedback}"/>
+            </h:column>
+            <h:column styleClass="action">
+                <f:facet name="header">Action</f:facet>
+                <s:link id="viewaccount"
+                     value="View"
+                      view="/Account.xhtml">
+                    <f:param name="accountUsername"
+                           value="#{_account.username}"/>
+                </s:link>
+            </h:column>
+        </rich:dataTable>
+
+    </div>
+    </rich:tab>
+
+    <rich:tab>
+        <f:facet name="label">
+            <h:panelGroup><h:graphicImage value="/img/manytoone.gif" style="vertical-align: middle; padding-right: 4px;"/>Cyber contadino</h:panelGroup>
+        </f:facet>
+    <div class="association" id="cyberContadinoParent">
+
+        <h:outputText value="There is no cyberContadino associated with this questionario."
+                   rendered="#{questionarioHome.instance.cyberContadino == null}"/>
+
+        <rich:dataTable var="_cyberContadino"
+                   value="#{questionarioHome.instance.cyberContadino}"
+                rendered="#{questionarioHome.instance.cyberContadino != null}"
+              rowClasses="rvgRowOne,rvgRowTwo"
+                      id="cyberContadinoTable">
+            <h:column>
+                <f:facet name="header">Partita iva</f:facet>
+                <h:outputText value="#{_cyberContadino.partitaIva}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Username</f:facet>
+                <h:outputText value="#{_cyberContadino.username}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Nome presidente</f:facet>
+                <h:outputText value="#{_cyberContadino.nomePresidente}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Indirizzo</f:facet>
+                <h:outputText value="#{_cyberContadino.indirizzo}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Cognome presidente</f:facet>
+                <h:outputText value="#{_cyberContadino.cognomePresidente}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Nome azienda</f:facet>
+                <h:outputText value="#{_cyberContadino.nomeAzienda}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Path asl</f:facet>
+                <h:outputText value="#{_cyberContadino.pathAsl}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Url wsdl</f:facet>
+                <h:outputText value="#{_cyberContadino.urlWsdl}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Descrizione azienda</f:facet>
+                <h:outputText value="#{_cyberContadino.descrizioneAzienda}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Comune idcomune</f:facet>
+                <h:outputText value="#{_cyberContadino.comuneIdcomune}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Recapito telefonico</f:facet>
+                <h:outputText value="#{_cyberContadino.recapitoTelefonico}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Email</f:facet>
+                <h:outputText value="#{_cyberContadino.email}"/>
+            </h:column>
+            <h:column styleClass="action">
+                <f:facet name="header">Action</f:facet>
+                <s:link id="viewcyberContadino"
+                     value="View"
+                      view="/CyberContadino.xhtml">
+                    <f:param name="cyberContadinoPartitaIva"
+                           value="#{_cyberContadino.partitaIva}"/>
+                </s:link>
+            </h:column>
+        </rich:dataTable>
+
+    </div>
+    </rich:tab>
+</rich:tabPanel>
+</ui:define>
+
+</ui:composition>
