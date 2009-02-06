@@ -1,0 +1,133 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    template="layout/template.xhtml">
+
+<ui:define name="body">
+
+    <h:form id="itinerarioHasCyberContadinoSearch" styleClass="edit">
+
+        <rich:simpleTogglePanel label="ItinerarioHasCyberContadino Search Filter" switchType="ajax">
+
+
+        </rich:simpleTogglePanel>
+
+        <div class="actionButtons">
+            <h:commandButton id="search" value="Search" action="/ItinerarioHasCyberContadinoList.xhtml"/>
+            <s:button id="reset" value="Reset" includePageParams="false"/>
+        </div>
+
+    </h:form>
+
+    <rich:panel>
+        <f:facet name="header">ItinerarioHasCyberContadino Search Results</f:facet>
+    <div class="results" id="itinerarioHasCyberContadinoList">
+
+    <h:outputText value="The itinerarioHasCyberContadino search returned no results."
+               rendered="#{empty itinerarioHasCyberContadinoList.resultList}"/>
+
+    <rich:dataTable id="itinerarioHasCyberContadinoList"
+                var="_itinerarioHasCyberContadino"
+              value="#{itinerarioHasCyberContadinoList.resultList}"
+           rendered="#{not empty itinerarioHasCyberContadinoList.resultList}">
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{itinerarioHasCyberContadinoList}"/>
+                    <ui:param name="propertyLabel" value="Iditinerario"/>
+                    <ui:param name="propertyPath" value="itinerarioHasCyberContadino.id.iditinerario"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_itinerarioHasCyberContadino.id.iditinerario}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{itinerarioHasCyberContadinoList}"/>
+                    <ui:param name="propertyLabel" value="Partita iva"/>
+                    <ui:param name="propertyPath" value="itinerarioHasCyberContadino.id.partitaIva"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_itinerarioHasCyberContadino.id.partitaIva}"/>
+        </h:column>
+        <rich:column styleClass="action">
+            <f:facet name="header">Action</f:facet>
+            <s:link view="/#{empty from ? 'ItinerarioHasCyberContadino' : from}.xhtml"
+                   value="#{empty from ? 'View' : 'Select'}"
+             propagation="#{empty from ? 'none' : 'default'}"
+                      id="itinerarioHasCyberContadino">
+                <f:param name="itinerarioHasCyberContadinoIditinerario"
+                        value="#{_itinerarioHasCyberContadino.id.iditinerario}"/>
+                <f:param name="itinerarioHasCyberContadinoPartitaIva"
+                        value="#{_itinerarioHasCyberContadino.id.partitaIva}"/>
+            </s:link>
+            #{' '}
+            <s:link view="/ItinerarioHasCyberContadinoEdit.xhtml"
+                   value="Edit"
+             propagation="none"
+                      id="itinerarioHasCyberContadinoEdit"
+                rendered="#{empty from}">
+                <f:param name="itinerarioHasCyberContadinoIditinerario"
+                        value="#{_itinerarioHasCyberContadino.id.iditinerario}"/>
+                <f:param name="itinerarioHasCyberContadinoPartitaIva"
+                        value="#{_itinerarioHasCyberContadino.id.partitaIva}"/>
+            </s:link>
+        </rich:column>
+    </rich:dataTable>
+
+    </div>
+    </rich:panel>
+
+    <div class="tableControl">
+
+        <s:link view="/ItinerarioHasCyberContadinoList.xhtml"
+            rendered="#{itinerarioHasCyberContadinoList.previousExists}"
+               value="#{messages.left}#{messages.left} First Page"
+                  id="firstPage">
+          <f:param name="firstResult" value="0"/>
+        </s:link>
+
+        <s:link view="/ItinerarioHasCyberContadinoList.xhtml"
+            rendered="#{itinerarioHasCyberContadinoList.previousExists}"
+               value="#{messages.left} Previous Page"
+                  id="previousPage">
+            <f:param name="firstResult"
+                    value="#{itinerarioHasCyberContadinoList.previousFirstResult}"/>
+        </s:link>
+
+        <s:link view="/ItinerarioHasCyberContadinoList.xhtml"
+            rendered="#{itinerarioHasCyberContadinoList.nextExists}"
+               value="Next Page #{messages.right}"
+                  id="nextPage">
+            <f:param name="firstResult"
+                    value="#{itinerarioHasCyberContadinoList.nextFirstResult}"/>
+        </s:link>
+
+        <s:link view="/ItinerarioHasCyberContadinoList.xhtml"
+            rendered="#{itinerarioHasCyberContadinoList.nextExists}"
+               value="Last Page #{messages.right}#{messages.right}"
+                  id="lastPage">
+            <f:param name="firstResult"
+                    value="#{itinerarioHasCyberContadinoList.lastFirstResult}"/>
+        </s:link>
+
+    </div>
+
+    <s:div styleClass="actionButtons" rendered="#{empty from}">
+        <s:button view="/ItinerarioHasCyberContadinoEdit.xhtml"
+                    id="create"
+           propagation="none"
+                 value="Create itinerarioHasCyberContadino">
+            <f:param name="itinerarioHasCyberContadinoIditinerario"/>
+            <f:param name="itinerarioHasCyberContadinoPartitaIva"/>
+        </s:button>
+    </s:div>
+
+</ui:define>
+
+</ui:composition>

@@ -1,0 +1,100 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:a="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    template="layout/template.xhtml">
+
+<ui:define name="body">
+
+    <h:form id="articolo" styleClass="edit">
+
+        <rich:panel>
+            <f:facet name="header">#{articoloHome.managed ? 'Edit' : 'Add'} Articolo</f:facet>
+
+
+
+            <s:decorate id="codiceEsternoField" template="layout/edit.xhtml">
+                <ui:define name="label">Codice esterno</ui:define>
+                <h:inputText id="codiceEsterno"
+                       required="true"
+                           size="45"
+                      maxlength="45"
+                          value="#{articoloHome.instance.codiceEsterno}">
+                    <a:support event="onblur" reRender="codiceEsternoField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="descrizioneField" template="layout/edit.xhtml">
+                <ui:define name="label">Descrizione</ui:define>
+                <h:inputTextarea id="descrizione"
+                               cols="80"
+                               rows="10"
+                              value="#{articoloHome.instance.descrizione}"/>
+            </s:decorate>
+
+
+            <s:decorate id="prenotazioneLungoTermineField" template="layout/edit.xhtml">
+                <ui:define name="label">Prenotazione lungo termine</ui:define>
+                <h:selectBooleanCheckbox id="prenotazioneLungoTermine"
+                                      value="#{articoloHome.instance.prenotazioneLungoTermine}"/>
+            </s:decorate>
+
+
+            <s:decorate id="cyberContadinoPartitaIvaField" template="layout/edit.xhtml">
+                <ui:define name="label">Cyber contadino partita iva</ui:define>
+                <h:inputText id="cyberContadinoPartitaIva"
+                          value="#{articoloHome.instance.cyberContadinoPartitaIva}">
+                    <a:support event="onblur" reRender="cyberContadinoPartitaIvaField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+            <div style="clear:both">
+                <span class="required">*</span>
+                required fields
+            </div>
+
+        </rich:panel>
+
+        <div class="actionButtons">
+
+            <h:commandButton id="save"
+                          value="Save"
+                         action="#{articoloHome.persist}"
+                       disabled="#{!articoloHome.wired}"
+                       rendered="#{!articoloHome.managed}"/>
+
+            <h:commandButton id="update"
+                          value="Save"
+                         action="#{articoloHome.update}"
+                       rendered="#{articoloHome.managed}"/>
+
+            <h:commandButton id="delete"
+                          value="Delete"
+                         action="#{articoloHome.remove}"
+                      immediate="true"
+                       rendered="#{articoloHome.managed}"/>
+
+            <s:button id="cancelEdit"
+                   value="Cancel"
+             propagation="end"
+                    view="/Articolo.xhtml"
+                rendered="#{articoloHome.managed}"/>
+
+            <s:button id="cancelAdd"
+                   value="Cancel"
+             propagation="end"
+                    view="/#{empty articoloFrom ? 'ArticoloList' : articoloFrom}.xhtml"
+                rendered="#{!articoloHome.managed}"/>
+
+        </div>
+    </h:form>
+
+</ui:define>
+
+</ui:composition>
