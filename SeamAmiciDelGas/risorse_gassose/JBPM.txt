@@ -1,16 +1,22 @@
 Istruzioni jBPM:
-1) Download jbpm-jpdl-suite-3.2.2.zip
-2) Download jbpm-jpdl-designer-site-3.1.6.zip (contiene il plugin di eclipse)
-3) Unzip jbpm-jpdl-designer-site-3.1.6.zip:
+
+DOWNLOAD
+1) Sito dal quale fare il download http://sourceforge.net/project/showfiles.php?group_id=70542&package_id=145174
+2) Download jbpm-3.1.3.zip, jbpm-db-3.1.1.zip, jbpm-staters-kit-3.1.3.zip, jbpm-jpdl-designer-site-3.1.6.zip
+3) Unzip dei file: jbpm-3.1.3, jbpm-db-3.1.1, jbpm-starters-kit-3.1.3, 
+3) Installazione plugin; unzip jbpm-jpdl-designer-site-3.1.6.zip:
 	3a) Copiare il contenuto della cartella plugins in quella omonima di eclipse.
 	3b) Copiare il contenuto della cartella features in quella omonima di eclipse.
-4) Unzip jbpm-jpdl-suite-3.2.2.zip
+4) Setting
 	4a) Accedere a Eclipse->Windows->Preferences->Jboss jBPM-> Runtime Locations:
-		4a1) assegnare un nome qualsiasi (es. jbpm-3.2.2)
-		4a2) indicare il percorso dove si trova JBPM engine (è la cartella la cartella JBPM-jPDL-3.2.2 ottenuta decomprimendo il file zip)
+		4a1) assegnare un nome qualsiasi (es. jbpm-3.1)
+		4a2) indicare il percorso dove si trova JBPM engine (è la cartella jbpm-3.1 ottenuta decomprimendo il file jbpm-3.1.3.zip)
 
-5) Eseguire lo script scriptJBPM.sql
-6) Accedere alla cartella \jbpm-jpdl-3.2.2\server\server\jbpm\deploy e copiare il file jbpm-ds.xml (il file è già presente, bisogna sovrascriverlo).
-7) Copiare il driver jdbc (mysql-connector.jar) nella cartella \jbpm-jpdl-3.2.2\server\server\jbpm\lib
-8) 
+INSTALLAZIONE DATABASE
+1) Eseguire lo script mysql.create.sql
+2) Dare all'utente Gas il permesso di utilizzare il database jbpmdb (con mysql administrator).
+3) Copiare il file jbpm-ds nella cartella \jbpm-starters-kit-3.1.3\jbpm-server\server\jbpm\deploy
+4) Copiare il mysql-connector-java.jar nella directory \jbpm-starters-kit-3.1.3\jbpm-server\server\jbpm\lib
+5) Sostituire il file jboss-service.xml nella directory \jbpm-starters-kit-3.1.3\jbpm-server\server\jbpm\deploy\jbpm.sar\META-INF con quello presente nella cartella risorse_gassose
+6) Sostituire il file jbpm.sar.cfg.jar nella directory \jbpm-starters-kit-3.1.3\jbpm-server\server\jbpm\deploy\jbpm.sar
 	
