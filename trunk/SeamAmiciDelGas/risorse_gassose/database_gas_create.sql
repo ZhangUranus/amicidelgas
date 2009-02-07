@@ -144,7 +144,8 @@ CREATE  TABLE IF NOT EXISTS `database_gas`.`Comune` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 PACK_KEYS = 0
-ROW_FORMAT = DEFAULT;
+ROW_FORMAT = DEFAULT
+ENGINE = InnoDB;
 INSERT INTO `database_gas`.`Comune` (`IDComune`,`provinces_idprovinces`,`Nome`) VALUES
  (1,'PD','ABANO TERME'),
  (2,'TO','ABBADIA ALPINA'),
@@ -10504,7 +10505,8 @@ CREATE  TABLE IF NOT EXISTS `database_gas`.`Utente` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 PACK_KEYS = 0
-ROW_FORMAT = DEFAULT;
+ROW_FORMAT = DEFAULT
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -10551,7 +10553,8 @@ CREATE  TABLE IF NOT EXISTS `database_gas`.`Account` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 PACK_KEYS = 0
-ROW_FORMAT = DEFAULT;
+ROW_FORMAT = DEFAULT
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -10571,7 +10574,8 @@ CREATE  TABLE IF NOT EXISTS `database_gas`.`Patente` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 PACK_KEYS = 0
-ROW_FORMAT = DEFAULT;
+ROW_FORMAT = DEFAULT
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -10591,7 +10595,8 @@ CREATE  TABLE IF NOT EXISTS `database_gas`.`Ruolo` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 PACK_KEYS = 0
-ROW_FORMAT = DEFAULT;
+ROW_FORMAT = DEFAULT
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -10612,7 +10617,8 @@ CREATE  TABLE IF NOT EXISTS `database_gas`.`Punti_di_Consegna` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 PACK_KEYS = 0
-ROW_FORMAT = DEFAULT;
+ROW_FORMAT = DEFAULT
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -10648,7 +10654,8 @@ CREATE  TABLE IF NOT EXISTS `database_gas`.`CyberContadino` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 PACK_KEYS = 0
-ROW_FORMAT = DEFAULT;
+ROW_FORMAT = DEFAULT
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -10671,7 +10678,8 @@ CREATE  TABLE IF NOT EXISTS `database_gas`.`Articolo` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 PACK_KEYS = 0
-ROW_FORMAT = DEFAULT;
+ROW_FORMAT = DEFAULT
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -10704,7 +10712,8 @@ CREATE  TABLE IF NOT EXISTS `database_gas`.`Ordine` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 PACK_KEYS = 0
-ROW_FORMAT = DEFAULT;
+ROW_FORMAT = DEFAULT
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -10727,7 +10736,8 @@ CREATE  TABLE IF NOT EXISTS `database_gas`.`Itinerario` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 PACK_KEYS = 0
-ROW_FORMAT = DEFAULT;
+ROW_FORMAT = DEFAULT
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -10772,7 +10782,8 @@ CREATE  TABLE IF NOT EXISTS `database_gas`.`Feedback` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 PACK_KEYS = 0
-ROW_FORMAT = DEFAULT;
+ROW_FORMAT = DEFAULT
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -10795,7 +10806,8 @@ CREATE  TABLE IF NOT EXISTS `database_gas`.`Itinerario_has_Ordine` (
     FOREIGN KEY (`IDOrdine` )
     REFERENCES `database_gas`.`Ordine` (`IDOrdine` )
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION);
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -10818,7 +10830,8 @@ CREATE  TABLE IF NOT EXISTS `database_gas`.`Itinerario_has_CyberContadino` (
     FOREIGN KEY (`PartitaIVA` )
     REFERENCES `database_gas`.`CyberContadino` (`PartitaIVA` )
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION);
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -10841,7 +10854,8 @@ CREATE  TABLE IF NOT EXISTS `database_gas`.`Itinerario_has_Punti_di_Consegna` (
     FOREIGN KEY (`IDPuntiConsegna` )
     REFERENCES `database_gas`.`Punti_di_Consegna` (`IDPuntiConsegna` )
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION);
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
