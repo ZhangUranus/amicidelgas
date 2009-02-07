@@ -1,3 +1,7 @@
 Purtroppo per compilare il test di junit bisogna usare la jre 1.6.*,
 con la versione 1.5 da problema, :(
 buon divertimento, domani continuo col lavoro e aggiorno man mano.
+
+Il path nel junit per trovare la classe a me da problemi. Per provarla
+sposto la cartella process/src in com.jbay, ovvero dove sta la classe
+di test Junit.
