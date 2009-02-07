@@ -43,8 +43,6 @@ public class AccountHome extends EntityHome<Account> {
 	}
 
 	public boolean isWired() {
-		if (getInstance().getUtente() == null)
-			return false;
 		return true;
 	}
 
@@ -57,39 +55,9 @@ public class AccountHome extends EntityHome<Account> {
 				getInstance().getItinerarios());
 	}
 
-	public List<Questionario> getQuestionarios() {
-		return getInstance() == null ? null : new ArrayList<Questionario>(
-				getInstance().getQuestionarios());
-	}
-
-	public List<Feedback> getFeedbacksForSegnalatore() {
-		return getInstance() == null ? null : new ArrayList<Feedback>(
-				getInstance().getFeedbacksForSegnalatore());
-	}
-
 	public List<Cybercontadino> getCybercontadinos() {
 		return getInstance() == null ? null : new ArrayList<Cybercontadino>(
 				getInstance().getCybercontadinos());
-	}
-
-	public List<Feedback> getFeedbacksForValidatore() {
-		return getInstance() == null ? null : new ArrayList<Feedback>(
-				getInstance().getFeedbacksForValidatore());
-	}
-
-	public List<Feedback> getFeedbacksForSegnalatore_1() {
-		return getInstance() == null ? null : new ArrayList<Feedback>(
-				getInstance().getFeedbacksForSegnalatore_1());
-	}
-
-	public List<Ordine> getOrdines() {
-		return getInstance() == null ? null : new ArrayList<Ordine>(
-				getInstance().getOrdines());
-	}
-
-	public List<Itinerario> getItinerarios_1() {
-		return getInstance() == null ? null : new ArrayList<Itinerario>(
-				getInstance().getItinerarios_1());
 	}
 
 	public List<Ruolo> getRuolos() {
@@ -97,14 +65,9 @@ public class AccountHome extends EntityHome<Account> {
 				getInstance().getRuolos());
 	}
 
-	public List<Cybercontadino> getCybercontadinos_1() {
-		return getInstance() == null ? null : new ArrayList<Cybercontadino>(
-				getInstance().getCybercontadinos_1());
-	}
-
-	public List<Ruolo> getRuolos_1() {
-		return getInstance() == null ? null : new ArrayList<Ruolo>(
-				getInstance().getRuolos_1());
+	public List<Questionario> getQuestionarios() {
+		return getInstance() == null ? null : new ArrayList<Questionario>(
+				getInstance().getQuestionarios());
 	}
 
 	public List<Feedback> getFeedbacksForDestinatario() {
@@ -112,24 +75,19 @@ public class AccountHome extends EntityHome<Account> {
 				getInstance().getFeedbacksForDestinatario());
 	}
 
-	public List<Feedback> getFeedbacksForDestinatario_1() {
+	public List<Feedback> getFeedbacksForSegnalatore() {
 		return getInstance() == null ? null : new ArrayList<Feedback>(
-				getInstance().getFeedbacksForDestinatario_1());
+				getInstance().getFeedbacksForSegnalatore());
 	}
 
-	public List<Feedback> getFeedbacksForValidatore_1() {
+	public List<Feedback> getFeedbacksForValidatore() {
 		return getInstance() == null ? null : new ArrayList<Feedback>(
-				getInstance().getFeedbacksForValidatore_1());
+				getInstance().getFeedbacksForValidatore());
 	}
 
-	public List<Ordine> getOrdines_1() {
+	public List<Ordine> getOrdines() {
 		return getInstance() == null ? null : new ArrayList<Ordine>(
-				getInstance().getOrdines_1());
-	}
-
-	public List<Questionario> getQuestionarios_1() {
-		return getInstance() == null ? null : new ArrayList<Questionario>(
-				getInstance().getQuestionarios_1());
+				getInstance().getOrdines());
 	}
 
 }

@@ -1,6 +1,6 @@
 package org.domain.SeamAmiciDelGas.entity;
 
-// Generated 7-feb-2009 12.59.42 by Hibernate Tools 3.2.2.GA
+// Generated 7-feb-2009 13.24.15 by Hibernate Tools 3.2.2.GA
 
 import java.util.Date;
 import java.util.HashSet;
@@ -30,64 +30,40 @@ public class Account implements java.io.Serializable {
 	private Utente utente;
 	private Pagamentoelettronico pagamentoelettronico;
 	private String pass;
-	private boolean bloccato;
-	private boolean elimato;
-	private boolean cancellato;
-	private boolean attivato;
+	private Boolean bloccato;
+	private Boolean elimato;
+	private Boolean cancellato;
+	private Boolean attivato;
 	private Date dataRichiesta;
 	private Date dataAccettazione;
-	private int punteggioFeedback;
+	private Integer punteggioFeedback;
 	private Set<Itinerario> itinerarios = new HashSet<Itinerario>(0);
-	private Set<Questionario> questionarios = new HashSet<Questionario>(0);
-	private Set<Feedback> feedbacksForSegnalatore = new HashSet<Feedback>(0);
 	private Set<Cybercontadino> cybercontadinos = new HashSet<Cybercontadino>(0);
-	private Set<Feedback> feedbacksForValidatore = new HashSet<Feedback>(0);
-	private Set<Feedback> feedbacksForSegnalatore_1 = new HashSet<Feedback>(0);
-	private Set<Ordine> ordines = new HashSet<Ordine>(0);
-	private Set<Itinerario> itinerarios_1 = new HashSet<Itinerario>(0);
 	private Set<Ruolo> ruolos = new HashSet<Ruolo>(0);
-	private Set<Cybercontadino> cybercontadinos_1 = new HashSet<Cybercontadino>(
-			0);
-	private Set<Ruolo> ruolos_1 = new HashSet<Ruolo>(0);
+	private Set<Questionario> questionarios = new HashSet<Questionario>(0);
 	private Set<Feedback> feedbacksForDestinatario = new HashSet<Feedback>(0);
-	private Set<Feedback> feedbacksForDestinatario_1 = new HashSet<Feedback>(0);
-	private Set<Feedback> feedbacksForValidatore_1 = new HashSet<Feedback>(0);
-	private Set<Ordine> ordines_1 = new HashSet<Ordine>(0);
-	private Set<Questionario> questionarios_1 = new HashSet<Questionario>(0);
+	private Set<Feedback> feedbacksForSegnalatore = new HashSet<Feedback>(0);
+	private Set<Feedback> feedbacksForValidatore = new HashSet<Feedback>(0);
+	private Set<Ordine> ordines = new HashSet<Ordine>(0);
 
 	public Account() {
 	}
 
-	public Account(String username, Utente utente, String pass,
-			boolean bloccato, boolean elimato, boolean cancellato,
-			boolean attivato, Date dataRichiesta, int punteggioFeedback) {
+	public Account(String username, String pass) {
 		this.username = username;
-		this.utente = utente;
 		this.pass = pass;
-		this.bloccato = bloccato;
-		this.elimato = elimato;
-		this.cancellato = cancellato;
-		this.attivato = attivato;
-		this.dataRichiesta = dataRichiesta;
-		this.punteggioFeedback = punteggioFeedback;
 	}
 
 	public Account(String username, Utente utente,
 			Pagamentoelettronico pagamentoelettronico, String pass,
-			boolean bloccato, boolean elimato, boolean cancellato,
-			boolean attivato, Date dataRichiesta, Date dataAccettazione,
-			int punteggioFeedback, Set<Itinerario> itinerarios,
+			Boolean bloccato, Boolean elimato, Boolean cancellato,
+			Boolean attivato, Date dataRichiesta, Date dataAccettazione,
+			Integer punteggioFeedback, Set<Itinerario> itinerarios,
+			Set<Cybercontadino> cybercontadinos, Set<Ruolo> ruolos,
 			Set<Questionario> questionarios,
-			Set<Feedback> feedbacksForSegnalatore,
-			Set<Cybercontadino> cybercontadinos,
-			Set<Feedback> feedbacksForValidatore,
-			Set<Feedback> feedbacksForSegnalatore_1, Set<Ordine> ordines,
-			Set<Itinerario> itinerarios_1, Set<Ruolo> ruolos,
-			Set<Cybercontadino> cybercontadinos_1, Set<Ruolo> ruolos_1,
 			Set<Feedback> feedbacksForDestinatario,
-			Set<Feedback> feedbacksForDestinatario_1,
-			Set<Feedback> feedbacksForValidatore_1, Set<Ordine> ordines_1,
-			Set<Questionario> questionarios_1) {
+			Set<Feedback> feedbacksForSegnalatore,
+			Set<Feedback> feedbacksForValidatore, Set<Ordine> ordines) {
 		this.username = username;
 		this.utente = utente;
 		this.pagamentoelettronico = pagamentoelettronico;
@@ -100,21 +76,13 @@ public class Account implements java.io.Serializable {
 		this.dataAccettazione = dataAccettazione;
 		this.punteggioFeedback = punteggioFeedback;
 		this.itinerarios = itinerarios;
-		this.questionarios = questionarios;
-		this.feedbacksForSegnalatore = feedbacksForSegnalatore;
 		this.cybercontadinos = cybercontadinos;
-		this.feedbacksForValidatore = feedbacksForValidatore;
-		this.feedbacksForSegnalatore_1 = feedbacksForSegnalatore_1;
-		this.ordines = ordines;
-		this.itinerarios_1 = itinerarios_1;
 		this.ruolos = ruolos;
-		this.cybercontadinos_1 = cybercontadinos_1;
-		this.ruolos_1 = ruolos_1;
+		this.questionarios = questionarios;
 		this.feedbacksForDestinatario = feedbacksForDestinatario;
-		this.feedbacksForDestinatario_1 = feedbacksForDestinatario_1;
-		this.feedbacksForValidatore_1 = feedbacksForValidatore_1;
-		this.ordines_1 = ordines_1;
-		this.questionarios_1 = questionarios_1;
+		this.feedbacksForSegnalatore = feedbacksForSegnalatore;
+		this.feedbacksForValidatore = feedbacksForValidatore;
+		this.ordines = ordines;
 	}
 
 	@Id
@@ -130,8 +98,7 @@ public class Account implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "Utente_CodiceFiscale", nullable = false)
-	@NotNull
+	@JoinColumn(name = "Utente_CodiceFiscale")
 	public Utente getUtente() {
 		return this.utente;
 	}
@@ -162,49 +129,44 @@ public class Account implements java.io.Serializable {
 		this.pass = pass;
 	}
 
-	@Column(name = "Bloccato", nullable = false)
-	@NotNull
-	public boolean isBloccato() {
+	@Column(name = "Bloccato")
+	public Boolean getBloccato() {
 		return this.bloccato;
 	}
 
-	public void setBloccato(boolean bloccato) {
+	public void setBloccato(Boolean bloccato) {
 		this.bloccato = bloccato;
 	}
 
-	@Column(name = "Elimato", nullable = false)
-	@NotNull
-	public boolean isElimato() {
+	@Column(name = "Elimato")
+	public Boolean getElimato() {
 		return this.elimato;
 	}
 
-	public void setElimato(boolean elimato) {
+	public void setElimato(Boolean elimato) {
 		this.elimato = elimato;
 	}
 
-	@Column(name = "Cancellato", nullable = false)
-	@NotNull
-	public boolean isCancellato() {
+	@Column(name = "Cancellato")
+	public Boolean getCancellato() {
 		return this.cancellato;
 	}
 
-	public void setCancellato(boolean cancellato) {
+	public void setCancellato(Boolean cancellato) {
 		this.cancellato = cancellato;
 	}
 
-	@Column(name = "Attivato", nullable = false)
-	@NotNull
-	public boolean isAttivato() {
+	@Column(name = "Attivato")
+	public Boolean getAttivato() {
 		return this.attivato;
 	}
 
-	public void setAttivato(boolean attivato) {
+	public void setAttivato(Boolean attivato) {
 		this.attivato = attivato;
 	}
 
 	@Temporal(TemporalType.DATE)
-	@Column(name = "DataRichiesta", nullable = false, length = 10)
-	@NotNull
+	@Column(name = "DataRichiesta", length = 10)
 	public Date getDataRichiesta() {
 		return this.dataRichiesta;
 	}
@@ -223,13 +185,12 @@ public class Account implements java.io.Serializable {
 		this.dataAccettazione = dataAccettazione;
 	}
 
-	@Column(name = "PunteggioFeedback", nullable = false)
-	@NotNull
-	public int getPunteggioFeedback() {
+	@Column(name = "PunteggioFeedback")
+	public Integer getPunteggioFeedback() {
 		return this.punteggioFeedback;
 	}
 
-	public void setPunteggioFeedback(int punteggioFeedback) {
+	public void setPunteggioFeedback(Integer punteggioFeedback) {
 		this.punteggioFeedback = punteggioFeedback;
 	}
 
@@ -243,67 +204,12 @@ public class Account implements java.io.Serializable {
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "account")
-	public Set<Questionario> getQuestionarios() {
-		return this.questionarios;
-	}
-
-	public void setQuestionarios(Set<Questionario> questionarios) {
-		this.questionarios = questionarios;
-	}
-
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "accountBySegnalatore")
-	public Set<Feedback> getFeedbacksForSegnalatore() {
-		return this.feedbacksForSegnalatore;
-	}
-
-	public void setFeedbacksForSegnalatore(Set<Feedback> feedbacksForSegnalatore) {
-		this.feedbacksForSegnalatore = feedbacksForSegnalatore;
-	}
-
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "account")
 	public Set<Cybercontadino> getCybercontadinos() {
 		return this.cybercontadinos;
 	}
 
 	public void setCybercontadinos(Set<Cybercontadino> cybercontadinos) {
 		this.cybercontadinos = cybercontadinos;
-	}
-
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "accountByValidatore")
-	public Set<Feedback> getFeedbacksForValidatore() {
-		return this.feedbacksForValidatore;
-	}
-
-	public void setFeedbacksForValidatore(Set<Feedback> feedbacksForValidatore) {
-		this.feedbacksForValidatore = feedbacksForValidatore;
-	}
-
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "accountBySegnalatore")
-	public Set<Feedback> getFeedbacksForSegnalatore_1() {
-		return this.feedbacksForSegnalatore_1;
-	}
-
-	public void setFeedbacksForSegnalatore_1(
-			Set<Feedback> feedbacksForSegnalatore_1) {
-		this.feedbacksForSegnalatore_1 = feedbacksForSegnalatore_1;
-	}
-
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "account")
-	public Set<Ordine> getOrdines() {
-		return this.ordines;
-	}
-
-	public void setOrdines(Set<Ordine> ordines) {
-		this.ordines = ordines;
-	}
-
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "account")
-	public Set<Itinerario> getItinerarios_1() {
-		return this.itinerarios_1;
-	}
-
-	public void setItinerarios_1(Set<Itinerario> itinerarios_1) {
-		this.itinerarios_1 = itinerarios_1;
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "account")
@@ -316,21 +222,12 @@ public class Account implements java.io.Serializable {
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "account")
-	public Set<Cybercontadino> getCybercontadinos_1() {
-		return this.cybercontadinos_1;
+	public Set<Questionario> getQuestionarios() {
+		return this.questionarios;
 	}
 
-	public void setCybercontadinos_1(Set<Cybercontadino> cybercontadinos_1) {
-		this.cybercontadinos_1 = cybercontadinos_1;
-	}
-
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "account")
-	public Set<Ruolo> getRuolos_1() {
-		return this.ruolos_1;
-	}
-
-	public void setRuolos_1(Set<Ruolo> ruolos_1) {
-		this.ruolos_1 = ruolos_1;
+	public void setQuestionarios(Set<Questionario> questionarios) {
+		this.questionarios = questionarios;
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "accountByDestinatario")
@@ -343,42 +240,31 @@ public class Account implements java.io.Serializable {
 		this.feedbacksForDestinatario = feedbacksForDestinatario;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "accountByDestinatario")
-	public Set<Feedback> getFeedbacksForDestinatario_1() {
-		return this.feedbacksForDestinatario_1;
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "accountBySegnalatore")
+	public Set<Feedback> getFeedbacksForSegnalatore() {
+		return this.feedbacksForSegnalatore;
 	}
 
-	public void setFeedbacksForDestinatario_1(
-			Set<Feedback> feedbacksForDestinatario_1) {
-		this.feedbacksForDestinatario_1 = feedbacksForDestinatario_1;
+	public void setFeedbacksForSegnalatore(Set<Feedback> feedbacksForSegnalatore) {
+		this.feedbacksForSegnalatore = feedbacksForSegnalatore;
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "accountByValidatore")
-	public Set<Feedback> getFeedbacksForValidatore_1() {
-		return this.feedbacksForValidatore_1;
+	public Set<Feedback> getFeedbacksForValidatore() {
+		return this.feedbacksForValidatore;
 	}
 
-	public void setFeedbacksForValidatore_1(
-			Set<Feedback> feedbacksForValidatore_1) {
-		this.feedbacksForValidatore_1 = feedbacksForValidatore_1;
-	}
-
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "account")
-	public Set<Ordine> getOrdines_1() {
-		return this.ordines_1;
-	}
-
-	public void setOrdines_1(Set<Ordine> ordines_1) {
-		this.ordines_1 = ordines_1;
+	public void setFeedbacksForValidatore(Set<Feedback> feedbacksForValidatore) {
+		this.feedbacksForValidatore = feedbacksForValidatore;
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "account")
-	public Set<Questionario> getQuestionarios_1() {
-		return this.questionarios_1;
+	public Set<Ordine> getOrdines() {
+		return this.ordines;
 	}
 
-	public void setQuestionarios_1(Set<Questionario> questionarios_1) {
-		this.questionarios_1 = questionarios_1;
+	public void setOrdines(Set<Ordine> ordines) {
+		this.ordines = ordines;
 	}
 
 }

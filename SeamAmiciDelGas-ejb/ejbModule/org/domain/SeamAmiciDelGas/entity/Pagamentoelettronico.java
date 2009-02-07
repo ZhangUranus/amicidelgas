@@ -1,6 +1,6 @@
 package org.domain.SeamAmiciDelGas.entity;
 
-// Generated 7-feb-2009 12.59.42 by Hibernate Tools 3.2.2.GA
+// Generated 7-feb-2009 13.24.15 by Hibernate Tools 3.2.2.GA
 
 import java.util.HashSet;
 import java.util.Set;
@@ -27,7 +27,6 @@ public class Pagamentoelettronico implements java.io.Serializable {
 	private String tipoCarta;
 	private int numeroCarta;
 	private Set<Account> accounts = new HashSet<Account>(0);
-	private Set<Account> accounts_1 = new HashSet<Account>(0);
 
 	public Pagamentoelettronico() {
 	}
@@ -37,11 +36,10 @@ public class Pagamentoelettronico implements java.io.Serializable {
 	}
 
 	public Pagamentoelettronico(String tipoCarta, int numeroCarta,
-			Set<Account> accounts, Set<Account> accounts_1) {
+			Set<Account> accounts) {
 		this.tipoCarta = tipoCarta;
 		this.numeroCarta = numeroCarta;
 		this.accounts = accounts;
-		this.accounts_1 = accounts_1;
 	}
 
 	@Id
@@ -82,15 +80,6 @@ public class Pagamentoelettronico implements java.io.Serializable {
 
 	public void setAccounts(Set<Account> accounts) {
 		this.accounts = accounts;
-	}
-
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "pagamentoelettronico")
-	public Set<Account> getAccounts_1() {
-		return this.accounts_1;
-	}
-
-	public void setAccounts_1(Set<Account> accounts_1) {
-		this.accounts_1 = accounts_1;
 	}
 
 }

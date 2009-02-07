@@ -1,6 +1,6 @@
 package org.domain.SeamAmiciDelGas.entity;
 
-// Generated 7-feb-2009 12.59.42 by Hibernate Tools 3.2.2.GA
+// Generated 7-feb-2009 13.24.15 by Hibernate Tools 3.2.2.GA
 
 import java.util.Date;
 import java.util.HashSet;
@@ -36,14 +36,9 @@ public class Itinerario implements java.io.Serializable {
 	private String documentazionePath;
 	private Date dataCreazione;
 	private Set<Ordine> ordines = new HashSet<Ordine>(0);
-	private Set<Cybercontadino> cybercontadinos = new HashSet<Cybercontadino>(0);
-	private Set<Ordine> ordines_1 = new HashSet<Ordine>(0);
 	private Set<PuntiDiConsegna> puntiDiConsegnas = new HashSet<PuntiDiConsegna>(
 			0);
-	private Set<Cybercontadino> cybercontadinos_1 = new HashSet<Cybercontadino>(
-			0);
-	private Set<PuntiDiConsegna> puntiDiConsegnas_1 = new HashSet<PuntiDiConsegna>(
-			0);
+	private Set<Cybercontadino> cybercontadinos = new HashSet<Cybercontadino>(0);
 
 	public Itinerario() {
 	}
@@ -58,21 +53,16 @@ public class Itinerario implements java.io.Serializable {
 
 	public Itinerario(Account account, Date dataPartenza, Date dataConsegna,
 			String documentazionePath, Date dataCreazione, Set<Ordine> ordines,
-			Set<Cybercontadino> cybercontadinos, Set<Ordine> ordines_1,
 			Set<PuntiDiConsegna> puntiDiConsegnas,
-			Set<Cybercontadino> cybercontadinos_1,
-			Set<PuntiDiConsegna> puntiDiConsegnas_1) {
+			Set<Cybercontadino> cybercontadinos) {
 		this.account = account;
 		this.dataPartenza = dataPartenza;
 		this.dataConsegna = dataConsegna;
 		this.documentazionePath = documentazionePath;
 		this.dataCreazione = dataCreazione;
 		this.ordines = ordines;
-		this.cybercontadinos = cybercontadinos;
-		this.ordines_1 = ordines_1;
 		this.puntiDiConsegnas = puntiDiConsegnas;
-		this.cybercontadinos_1 = cybercontadinos_1;
-		this.puntiDiConsegnas_1 = puntiDiConsegnas_1;
+		this.cybercontadinos = cybercontadinos;
 	}
 
 	@Id
@@ -149,25 +139,6 @@ public class Itinerario implements java.io.Serializable {
 		this.ordines = ordines;
 	}
 
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinTable(name = "itinerario_has_cybercontadino", catalog = "database_gas", joinColumns = { @JoinColumn(name = "IDItinerario", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "PartitaIVA", nullable = false, updatable = false) })
-	public Set<Cybercontadino> getCybercontadinos() {
-		return this.cybercontadinos;
-	}
-
-	public void setCybercontadinos(Set<Cybercontadino> cybercontadinos) {
-		this.cybercontadinos = cybercontadinos;
-	}
-
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "itinerarios")
-	public Set<Ordine> getOrdines_1() {
-		return this.ordines_1;
-	}
-
-	public void setOrdines_1(Set<Ordine> ordines_1) {
-		this.ordines_1 = ordines_1;
-	}
-
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "itinerarios")
 	public Set<PuntiDiConsegna> getPuntiDiConsegnas() {
 		return this.puntiDiConsegnas;
@@ -179,21 +150,12 @@ public class Itinerario implements java.io.Serializable {
 
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinTable(name = "itinerario_has_cybercontadino", catalog = "database_gas", joinColumns = { @JoinColumn(name = "IDItinerario", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "PartitaIVA", nullable = false, updatable = false) })
-	public Set<Cybercontadino> getCybercontadinos_1() {
-		return this.cybercontadinos_1;
+	public Set<Cybercontadino> getCybercontadinos() {
+		return this.cybercontadinos;
 	}
 
-	public void setCybercontadinos_1(Set<Cybercontadino> cybercontadinos_1) {
-		this.cybercontadinos_1 = cybercontadinos_1;
-	}
-
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "itinerarios")
-	public Set<PuntiDiConsegna> getPuntiDiConsegnas_1() {
-		return this.puntiDiConsegnas_1;
-	}
-
-	public void setPuntiDiConsegnas_1(Set<PuntiDiConsegna> puntiDiConsegnas_1) {
-		this.puntiDiConsegnas_1 = puntiDiConsegnas_1;
+	public void setCybercontadinos(Set<Cybercontadino> cybercontadinos) {
+		this.cybercontadinos = cybercontadinos;
 	}
 
 }

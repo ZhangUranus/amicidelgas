@@ -1,6 +1,6 @@
 package org.domain.SeamAmiciDelGas.entity;
 
-// Generated 7-feb-2009 12.59.42 by Hibernate Tools 3.2.2.GA
+// Generated 7-feb-2009 13.24.15 by Hibernate Tools 3.2.2.GA
 
 import java.util.Date;
 import java.util.HashSet;
@@ -37,12 +37,8 @@ public class Utente implements java.io.Serializable {
 	private String indirizzo;
 	private String recapitoTelefonico;
 	private String email;
-	private String username;
-	private String luogoNascita;
-	private Set<Account> accounts = new HashSet<Account>(0);
 	private Set<Patente> patentes = new HashSet<Patente>(0);
-	private Set<Patente> patentes_1 = new HashSet<Patente>(0);
-	private Set<Account> accounts_1 = new HashSet<Account>(0);
+	private Set<Account> accounts = new HashSet<Account>(0);
 
 	public Utente() {
 	}
@@ -67,9 +63,7 @@ public class Utente implements java.io.Serializable {
 			Comune comuneByIdcomune, String nome, String cognome,
 			Date dataNascita, byte sesso, String pathQuestionario,
 			String indirizzo, String recapitoTelefonico, String email,
-			String username, String luogoNascita, Set<Account> accounts,
-			Set<Patente> patentes, Set<Patente> patentes_1,
-			Set<Account> accounts_1) {
+			Set<Patente> patentes, Set<Account> accounts) {
 		this.codiceFiscale = codiceFiscale;
 		this.comuneByComuneNascita = comuneByComuneNascita;
 		this.comuneByIdcomune = comuneByIdcomune;
@@ -81,12 +75,8 @@ public class Utente implements java.io.Serializable {
 		this.indirizzo = indirizzo;
 		this.recapitoTelefonico = recapitoTelefonico;
 		this.email = email;
-		this.username = username;
-		this.luogoNascita = luogoNascita;
-		this.accounts = accounts;
 		this.patentes = patentes;
-		this.patentes_1 = patentes_1;
-		this.accounts_1 = accounts_1;
+		this.accounts = accounts;
 	}
 
 	@Id
@@ -209,35 +199,6 @@ public class Utente implements java.io.Serializable {
 		this.email = email;
 	}
 
-	@Column(name = "Username", length = 20)
-	@Length(max = 20)
-	public String getUsername() {
-		return this.username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	@Column(name = "LuogoNascita", length = 50)
-	@Length(max = 50)
-	public String getLuogoNascita() {
-		return this.luogoNascita;
-	}
-
-	public void setLuogoNascita(String luogoNascita) {
-		this.luogoNascita = luogoNascita;
-	}
-
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "utente")
-	public Set<Account> getAccounts() {
-		return this.accounts;
-	}
-
-	public void setAccounts(Set<Account> accounts) {
-		this.accounts = accounts;
-	}
-
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "utente")
 	public Set<Patente> getPatentes() {
 		return this.patentes;
@@ -248,21 +209,12 @@ public class Utente implements java.io.Serializable {
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "utente")
-	public Set<Patente> getPatentes_1() {
-		return this.patentes_1;
+	public Set<Account> getAccounts() {
+		return this.accounts;
 	}
 
-	public void setPatentes_1(Set<Patente> patentes_1) {
-		this.patentes_1 = patentes_1;
-	}
-
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "utente")
-	public Set<Account> getAccounts_1() {
-		return this.accounts_1;
-	}
-
-	public void setAccounts_1(Set<Account> accounts_1) {
-		this.accounts_1 = accounts_1;
+	public void setAccounts(Set<Account> accounts) {
+		this.accounts = accounts;
 	}
 
 }

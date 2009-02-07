@@ -40,9 +40,4 @@ public class ProvincesHome extends EntityHome<Provinces> {
 				getInstance().getComunes());
 	}
 
-	public List<Comune> getComunes_1() {
-		return getInstance() == null ? null : new ArrayList<Comune>(
-				getInstance().getComunes_1());
-	}
-
 }

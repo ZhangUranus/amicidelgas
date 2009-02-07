@@ -1,6 +1,6 @@
 package org.domain.SeamAmiciDelGas.entity;
 
-// Generated 7-feb-2009 12.59.42 by Hibernate Tools 3.2.2.GA
+// Generated 7-feb-2009 13.24.15 by Hibernate Tools 3.2.2.GA
 
 import java.util.HashSet;
 import java.util.Set;
@@ -24,7 +24,6 @@ public class Provinces implements java.io.Serializable {
 	private String idprovinces;
 	private String nome;
 	private Set<Comune> comunes = new HashSet<Comune>(0);
-	private Set<Comune> comunes_1 = new HashSet<Comune>(0);
 
 	public Provinces() {
 	}
@@ -34,12 +33,10 @@ public class Provinces implements java.io.Serializable {
 		this.nome = nome;
 	}
 
-	public Provinces(String idprovinces, String nome, Set<Comune> comunes,
-			Set<Comune> comunes_1) {
+	public Provinces(String idprovinces, String nome, Set<Comune> comunes) {
 		this.idprovinces = idprovinces;
 		this.nome = nome;
 		this.comunes = comunes;
-		this.comunes_1 = comunes_1;
 	}
 
 	@Id
@@ -72,15 +69,6 @@ public class Provinces implements java.io.Serializable {
 
 	public void setComunes(Set<Comune> comunes) {
 		this.comunes = comunes;
-	}
-
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "provinces")
-	public Set<Comune> getComunes_1() {
-		return this.comunes_1;
-	}
-
-	public void setComunes_1(Set<Comune> comunes_1) {
-		this.comunes_1 = comunes_1;
 	}
 
 }

@@ -48,9 +48,4 @@ public class ArticoloHome extends EntityHome<Articolo> {
 				getInstance().getOrdines());
 	}
 
-	public List<Ordine> getOrdines_1() {
-		return getInstance() == null ? null : new ArrayList<Ordine>(
-				getInstance().getOrdines_1());
-	}
-
 }

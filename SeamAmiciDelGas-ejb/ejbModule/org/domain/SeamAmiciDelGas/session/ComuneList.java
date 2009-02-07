@@ -10,10 +10,7 @@ public class ComuneList extends EntityQuery<Comune> {
 
 	private static final String EJBQL = "select comune from Comune comune";
 
-	private static final String[] RESTRICTIONS = {
-			"lower(comune.nome) like concat(lower(#{comuneList.comune.nome}),'%')",
-			"lower(comune.nomeComune) like concat(lower(#{comuneList.comune.nomeComune}),'%')",
-			"lower(comune.provincia) like concat(lower(#{comuneList.comune.provincia}),'%')", };
+	private static final String[] RESTRICTIONS = { "lower(comune.nome) like concat(lower(#{comuneList.comune.nome}),'%')", };
 
 	private Comune comune = new Comune();
 

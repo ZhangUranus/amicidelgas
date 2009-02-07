@@ -8,13 +8,13 @@ import org.jboss.seam.framework.EntityHome;
 @Name("feedbackHome")
 public class FeedbackHome extends EntityHome<Feedback> {
 
-	@In(create = true, value="accountHome")
+	@In(create = true, value = "accountHome")
 	AccountHome accountHomeByValidatore;
 	@In(create = true)
 	OrdineHome ordineHome;
-	@In(create = true, value="accountHome")
+	@In(create = true, value = "accountHome")
 	AccountHome accountHomeBySegnalatore;
-	@In(create = true, value="accountHome")
+	@In(create = true, value = "accountHome")
 	AccountHome accountHomeByDestinatario;
 
 	public void setFeedbackIdfeedback(Integer id) {
@@ -33,7 +33,8 @@ public class FeedbackHome extends EntityHome<Feedback> {
 
 	public void wire() {
 		getInstance();
-		Account accountByDestinatario = accountHomeByDestinatario.getDefinedInstance();
+		Account accountByDestinatario = accountHomeByDestinatario
+				.getDefinedInstance();
 		if (accountByDestinatario != null) {
 			getInstance().setAccountByDestinatario(accountByDestinatario);
 		}
@@ -41,11 +42,13 @@ public class FeedbackHome extends EntityHome<Feedback> {
 		if (ordine != null) {
 			getInstance().setOrdine(ordine);
 		}
-		Account accountByValidatore = accountHomeByValidatore.getDefinedInstance();
+		Account accountByValidatore = accountHomeByValidatore
+				.getDefinedInstance();
 		if (accountByValidatore != null) {
 			getInstance().setAccountByValidatore(accountByValidatore);
 		}
-		Account accountBySegnalatore = accountHomeBySegnalatore.getDefinedInstance();
+		Account accountBySegnalatore = accountHomeBySegnalatore
+				.getDefinedInstance();
 		if (accountBySegnalatore != null) {
 			getInstance().setAccountBySegnalatore(accountBySegnalatore);
 		}

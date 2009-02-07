@@ -1,6 +1,6 @@
 package org.domain.SeamAmiciDelGas.entity;
 
-// Generated 7-feb-2009 12.59.42 by Hibernate Tools 3.2.2.GA
+// Generated 7-feb-2009 13.24.15 by Hibernate Tools 3.2.2.GA
 
 import java.util.HashSet;
 import java.util.Set;
@@ -29,18 +29,10 @@ public class Comune implements java.io.Serializable {
 	private Provinces provinces;
 	private String nome;
 	private Integer cap;
-	private String nomeComune;
-	private String provincia;
 	private Set<Utente> utentesForIdcomune = new HashSet<Utente>(0);
 	private Set<Cybercontadino> cybercontadinos = new HashSet<Cybercontadino>(0);
-	private Set<Utente> utentesForIdcomune_1 = new HashSet<Utente>(0);
-	private Set<PuntiDiConsegna> puntiDiConsegnas = new HashSet<PuntiDiConsegna>(
-			0);
 	private Set<Utente> utentesForComuneNascita = new HashSet<Utente>(0);
-	private Set<Cybercontadino> cybercontadinos_1 = new HashSet<Cybercontadino>(
-			0);
-	private Set<Utente> utentesForComuneNascita_1 = new HashSet<Utente>(0);
-	private Set<PuntiDiConsegna> puntiDiConsegnas_1 = new HashSet<PuntiDiConsegna>(
+	private Set<PuntiDiConsegna> puntiDiConsegnas = new HashSet<PuntiDiConsegna>(
 			0);
 
 	public Comune() {
@@ -51,28 +43,17 @@ public class Comune implements java.io.Serializable {
 	}
 
 	public Comune(Provinces provinces, String nome, Integer cap,
-			String nomeComune, String provincia,
 			Set<Utente> utentesForIdcomune,
 			Set<Cybercontadino> cybercontadinos,
-			Set<Utente> utentesForIdcomune_1,
-			Set<PuntiDiConsegna> puntiDiConsegnas,
 			Set<Utente> utentesForComuneNascita,
-			Set<Cybercontadino> cybercontadinos_1,
-			Set<Utente> utentesForComuneNascita_1,
-			Set<PuntiDiConsegna> puntiDiConsegnas_1) {
+			Set<PuntiDiConsegna> puntiDiConsegnas) {
 		this.provinces = provinces;
 		this.nome = nome;
 		this.cap = cap;
-		this.nomeComune = nomeComune;
-		this.provincia = provincia;
 		this.utentesForIdcomune = utentesForIdcomune;
 		this.cybercontadinos = cybercontadinos;
-		this.utentesForIdcomune_1 = utentesForIdcomune_1;
-		this.puntiDiConsegnas = puntiDiConsegnas;
 		this.utentesForComuneNascita = utentesForComuneNascita;
-		this.cybercontadinos_1 = cybercontadinos_1;
-		this.utentesForComuneNascita_1 = utentesForComuneNascita_1;
-		this.puntiDiConsegnas_1 = puntiDiConsegnas_1;
+		this.puntiDiConsegnas = puntiDiConsegnas;
 	}
 
 	@Id
@@ -116,26 +97,6 @@ public class Comune implements java.io.Serializable {
 		this.cap = cap;
 	}
 
-	@Column(name = "NomeComune", length = 50)
-	@Length(max = 50)
-	public String getNomeComune() {
-		return this.nomeComune;
-	}
-
-	public void setNomeComune(String nomeComune) {
-		this.nomeComune = nomeComune;
-	}
-
-	@Column(name = "Provincia", length = 50)
-	@Length(max = 50)
-	public String getProvincia() {
-		return this.provincia;
-	}
-
-	public void setProvincia(String provincia) {
-		this.provincia = provincia;
-	}
-
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "comuneByIdcomune")
 	public Set<Utente> getUtentesForIdcomune() {
 		return this.utentesForIdcomune;
@@ -154,24 +115,6 @@ public class Comune implements java.io.Serializable {
 		this.cybercontadinos = cybercontadinos;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "comuneByIdcomune")
-	public Set<Utente> getUtentesForIdcomune_1() {
-		return this.utentesForIdcomune_1;
-	}
-
-	public void setUtentesForIdcomune_1(Set<Utente> utentesForIdcomune_1) {
-		this.utentesForIdcomune_1 = utentesForIdcomune_1;
-	}
-
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "comune")
-	public Set<PuntiDiConsegna> getPuntiDiConsegnas() {
-		return this.puntiDiConsegnas;
-	}
-
-	public void setPuntiDiConsegnas(Set<PuntiDiConsegna> puntiDiConsegnas) {
-		this.puntiDiConsegnas = puntiDiConsegnas;
-	}
-
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "comuneByComuneNascita")
 	public Set<Utente> getUtentesForComuneNascita() {
 		return this.utentesForComuneNascita;
@@ -182,31 +125,12 @@ public class Comune implements java.io.Serializable {
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "comune")
-	public Set<Cybercontadino> getCybercontadinos_1() {
-		return this.cybercontadinos_1;
+	public Set<PuntiDiConsegna> getPuntiDiConsegnas() {
+		return this.puntiDiConsegnas;
 	}
 
-	public void setCybercontadinos_1(Set<Cybercontadino> cybercontadinos_1) {
-		this.cybercontadinos_1 = cybercontadinos_1;
-	}
-
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "comuneByComuneNascita")
-	public Set<Utente> getUtentesForComuneNascita_1() {
-		return this.utentesForComuneNascita_1;
-	}
-
-	public void setUtentesForComuneNascita_1(
-			Set<Utente> utentesForComuneNascita_1) {
-		this.utentesForComuneNascita_1 = utentesForComuneNascita_1;
-	}
-
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "comune")
-	public Set<PuntiDiConsegna> getPuntiDiConsegnas_1() {
-		return this.puntiDiConsegnas_1;
-	}
-
-	public void setPuntiDiConsegnas_1(Set<PuntiDiConsegna> puntiDiConsegnas_1) {
-		this.puntiDiConsegnas_1 = puntiDiConsegnas_1;
+	public void setPuntiDiConsegnas(Set<PuntiDiConsegna> puntiDiConsegnas) {
+		this.puntiDiConsegnas = puntiDiConsegnas;
 	}
 
 }
