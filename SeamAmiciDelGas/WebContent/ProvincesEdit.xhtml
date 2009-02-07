@@ -42,7 +42,6 @@
             </s:decorate>
 
 
-
             <div style="clear:both">
                 <span class="required">*</span>
                 required fields
@@ -109,68 +108,11 @@
                     <f:facet name="header">Cap</f:facet>
                     <h:outputText value="#{_comune.cap}"/>
                 </rich:column>
-                <rich:column sortBy="#{_comune.nomeComune}">
-                    <f:facet name="header">Nome comune</f:facet>
-                    <h:outputText value="#{_comune.nomeComune}"/>
-                </rich:column>
-                <rich:column sortBy="#{_comune.provincia}">
-                    <f:facet name="header">Provincia</f:facet>
-                    <h:outputText value="#{_comune.provincia}"/>
-                </rich:column>
             </rich:dataTable>
 
         </h:form>
 
         <f:subview rendered="#{provincesHome.managed}" id="comunes">
-        <div class="actionButtons">
-            <s:button id="addcomune"
-                   value="Add comune"
-                    view="/ComuneEdit.xhtml"
-             propagation="none">
-                 <f:param name="provincesIdprovinces"
-                         value="#{provincesHome.instance.idprovinces}"/>
-                 <f:param name="comuneFrom" value="Provinces"/>
-            </s:button>
-        </div>
-        </f:subview>
-    </rich:tab>
-
-    <rich:tab label="Comunes_1">
-        <h:form styleClass="association" id="comunes_1Children">
-
-            <h:outputText value="There are no comunes_1 associated with this provinces."
-                       rendered="#{empty provincesHome.comunes_1}"/>
-
-            <rich:dataTable value="#{provincesHome.comunes_1}"
-                           var="_comune"
-                      rendered="#{not empty provincesHome.comunes_1}"
-                    rowClasses="rvgRowOne,rvgRowTwo"
-                            id="comunes_1Table">
-                <rich:column sortBy="#{_comune.idcomune}">
-                    <f:facet name="header">Idcomune</f:facet>
-                    <h:outputText value="#{_comune.idcomune}"/>
-                </rich:column>
-                <rich:column sortBy="#{_comune.nome}">
-                    <f:facet name="header">Nome</f:facet>
-                    <h:outputText value="#{_comune.nome}"/>
-                </rich:column>
-                <rich:column sortBy="#{_comune.cap}">
-                    <f:facet name="header">Cap</f:facet>
-                    <h:outputText value="#{_comune.cap}"/>
-                </rich:column>
-                <rich:column sortBy="#{_comune.nomeComune}">
-                    <f:facet name="header">Nome comune</f:facet>
-                    <h:outputText value="#{_comune.nomeComune}"/>
-                </rich:column>
-                <rich:column sortBy="#{_comune.provincia}">
-                    <f:facet name="header">Provincia</f:facet>
-                    <h:outputText value="#{_comune.provincia}"/>
-                </rich:column>
-            </rich:dataTable>
-
-        </h:form>
-
-        <f:subview rendered="#{provincesHome.managed}" id="comunes_1">
         <div class="actionButtons">
             <s:button id="addcomune"
                    value="Add comune"
