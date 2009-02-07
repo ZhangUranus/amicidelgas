@@ -1,0 +1,138 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    template="layout/template.xhtml">
+
+<ui:define name="body">
+
+    <h:form id="provincesSearch" styleClass="edit">
+
+        <rich:simpleTogglePanel label="Provinces Search Filter" switchType="ajax">
+
+            <s:decorate template="layout/display.xhtml">
+                <ui:define name="label">Idprovinces</ui:define>
+                <h:inputText id="idprovinces" value="#{provincesList.provinces.idprovinces}"/>
+            </s:decorate>
+
+            <s:decorate template="layout/display.xhtml">
+                <ui:define name="label">Nome</ui:define>
+                <h:inputText id="nome" value="#{provincesList.provinces.nome}"/>
+            </s:decorate>
+
+
+        </rich:simpleTogglePanel>
+
+        <div class="actionButtons">
+            <h:commandButton id="search" value="Search" action="/ProvincesList.xhtml"/>
+            <s:button id="reset" value="Reset" includePageParams="false"/>
+        </div>
+
+    </h:form>
+
+    <rich:panel>
+        <f:facet name="header">Provinces Search Results</f:facet>
+    <div class="results" id="provincesList">
+
+    <h:outputText value="The provinces search returned no results."
+               rendered="#{empty provincesList.resultList}"/>
+
+    <rich:dataTable id="provincesList"
+                var="_provinces"
+              value="#{provincesList.resultList}"
+           rendered="#{not empty provincesList.resultList}">
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{provincesList}"/>
+                    <ui:param name="propertyLabel" value="Idprovinces"/>
+                    <ui:param name="propertyPath" value="provinces.idprovinces"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_provinces.idprovinces}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{provincesList}"/>
+                    <ui:param name="propertyLabel" value="Nome"/>
+                    <ui:param name="propertyPath" value="provinces.nome"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_provinces.nome}"/>
+        </h:column>
+        <rich:column styleClass="action">
+            <f:facet name="header">Action</f:facet>
+            <s:link view="/#{empty from ? 'Provinces' : from}.xhtml"
+                   value="#{empty from ? 'View' : 'Select'}"
+             propagation="#{empty from ? 'none' : 'default'}"
+                      id="provinces">
+                <f:param name="provincesIdprovinces"
+                        value="#{_provinces.idprovinces}"/>
+            </s:link>
+            #{' '}
+            <s:link view="/ProvincesEdit.xhtml"
+                   value="Edit"
+             propagation="none"
+                      id="provincesEdit"
+                rendered="#{empty from}">
+                <f:param name="provincesIdprovinces"
+                        value="#{_provinces.idprovinces}"/>
+            </s:link>
+        </rich:column>
+    </rich:dataTable>
+
+    </div>
+    </rich:panel>
+
+    <div class="tableControl">
+
+        <s:link view="/ProvincesList.xhtml"
+            rendered="#{provincesList.previousExists}"
+               value="#{messages.left}#{messages.left} First Page"
+                  id="firstPage">
+          <f:param name="firstResult" value="0"/>
+        </s:link>
+
+        <s:link view="/ProvincesList.xhtml"
+            rendered="#{provincesList.previousExists}"
+               value="#{messages.left} Previous Page"
+                  id="previousPage">
+            <f:param name="firstResult"
+                    value="#{provincesList.previousFirstResult}"/>
+        </s:link>
+
+        <s:link view="/ProvincesList.xhtml"
+            rendered="#{provincesList.nextExists}"
+               value="Next Page #{messages.right}"
+                  id="nextPage">
+            <f:param name="firstResult"
+                    value="#{provincesList.nextFirstResult}"/>
+        </s:link>
+
+        <s:link view="/ProvincesList.xhtml"
+            rendered="#{provincesList.nextExists}"
+               value="Last Page #{messages.right}#{messages.right}"
+                  id="lastPage">
+            <f:param name="firstResult"
+                    value="#{provincesList.lastFirstResult}"/>
+        </s:link>
+
+    </div>
+
+    <s:div styleClass="actionButtons" rendered="#{empty from}">
+        <s:button view="/ProvincesEdit.xhtml"
+                    id="create"
+           propagation="none"
+                 value="Create provinces">
+            <f:param name="provincesIdprovinces"/>
+        </s:button>
+    </s:div>
+
+</ui:define>
+
+</ui:composition>

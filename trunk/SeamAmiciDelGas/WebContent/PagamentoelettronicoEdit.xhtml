@@ -1,0 +1,226 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:a="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    template="layout/template.xhtml">
+
+<ui:define name="body">
+
+    <h:form id="pagamentoelettronico" styleClass="edit">
+
+        <rich:panel>
+            <f:facet name="header">#{pagamentoelettronicoHome.managed ? 'Edit' : 'Add'} Pagamentoelettronico</f:facet>
+
+
+
+            <s:decorate id="tipoCartaField" template="layout/edit.xhtml">
+                <ui:define name="label">Tipo carta</ui:define>
+                <h:inputText id="tipoCarta"
+                           size="45"
+                      maxlength="45"
+                          value="#{pagamentoelettronicoHome.instance.tipoCarta}">
+                    <a:support event="onblur" reRender="tipoCartaField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="numeroCartaField" template="layout/edit.xhtml">
+                <ui:define name="label">Numero carta</ui:define>
+                <h:inputText id="numeroCarta"
+                       required="true"
+                          value="#{pagamentoelettronicoHome.instance.numeroCarta}">
+                    <a:support event="onblur" reRender="numeroCartaField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+
+            <div style="clear:both">
+                <span class="required">*</span>
+                required fields
+            </div>
+
+        </rich:panel>
+
+        <div class="actionButtons">
+
+            <h:commandButton id="save"
+                          value="Save"
+                         action="#{pagamentoelettronicoHome.persist}"
+                       disabled="#{!pagamentoelettronicoHome.wired}"
+                       rendered="#{!pagamentoelettronicoHome.managed}"/>
+
+            <h:commandButton id="update"
+                          value="Save"
+                         action="#{pagamentoelettronicoHome.update}"
+                       rendered="#{pagamentoelettronicoHome.managed}"/>
+
+            <h:commandButton id="delete"
+                          value="Delete"
+                         action="#{pagamentoelettronicoHome.remove}"
+                      immediate="true"
+                       rendered="#{pagamentoelettronicoHome.managed}"/>
+
+            <s:button id="cancelEdit"
+                   value="Cancel"
+             propagation="end"
+                    view="/Pagamentoelettronico.xhtml"
+                rendered="#{pagamentoelettronicoHome.managed}"/>
+
+            <s:button id="cancelAdd"
+                   value="Cancel"
+             propagation="end"
+                    view="/#{empty pagamentoelettronicoFrom ? 'PagamentoelettronicoList' : pagamentoelettronicoFrom}.xhtml"
+                rendered="#{!pagamentoelettronicoHome.managed}"/>
+
+        </div>
+    </h:form>
+
+<rich:tabPanel switchType="ajax">
+
+    <rich:tab label="Accounts">
+        <h:form styleClass="association" id="accountsChildren">
+
+            <h:outputText value="There are no accounts associated with this pagamentoelettronico."
+                       rendered="#{empty pagamentoelettronicoHome.accounts}"/>
+
+            <rich:dataTable value="#{pagamentoelettronicoHome.accounts}"
+                           var="_account"
+                      rendered="#{not empty pagamentoelettronicoHome.accounts}"
+                    rowClasses="rvgRowOne,rvgRowTwo"
+                            id="accountsTable">
+                <rich:column sortBy="#{_account.username}">
+                    <f:facet name="header">Username</f:facet>
+                    <h:outputText value="#{_account.username}"/>
+                </rich:column>
+                <rich:column sortBy="#{_account.pass}">
+                    <f:facet name="header">Pass</f:facet>
+                    <h:outputText value="#{_account.pass}"/>
+                </rich:column>
+                <rich:column sortBy="#{_account.bloccato}">
+                    <f:facet name="header">Bloccato</f:facet>
+                    <h:outputText value="#{_account.bloccato}"/>
+                </rich:column>
+                <rich:column sortBy="#{_account.elimato}">
+                    <f:facet name="header">Elimato</f:facet>
+                    <h:outputText value="#{_account.elimato}"/>
+                </rich:column>
+                <rich:column sortBy="#{_account.cancellato}">
+                    <f:facet name="header">Cancellato</f:facet>
+                    <h:outputText value="#{_account.cancellato}"/>
+                </rich:column>
+                <rich:column sortBy="#{_account.attivato}">
+                    <f:facet name="header">Attivato</f:facet>
+                    <h:outputText value="#{_account.attivato}"/>
+                </rich:column>
+                <rich:column sortBy="#{_account.dataRichiesta}">
+                    <f:facet name="header">Data richiesta</f:facet>
+                    <h:outputText value="#{_account.dataRichiesta}">
+                        <s:convertDateTime type="date" dateStyle="short"/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_account.dataAccettazione}">
+                    <f:facet name="header">Data accettazione</f:facet>
+                    <h:outputText value="#{_account.dataAccettazione}">
+                        <s:convertDateTime type="date" dateStyle="short"/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_account.punteggioFeedback}">
+                    <f:facet name="header">Punteggio feedback</f:facet>
+                    <h:outputText value="#{_account.punteggioFeedback}"/>
+                </rich:column>
+            </rich:dataTable>
+
+        </h:form>
+
+        <f:subview rendered="#{pagamentoelettronicoHome.managed}" id="accounts">
+        <div class="actionButtons">
+            <s:button id="addaccount"
+                   value="Add account"
+                    view="/AccountEdit.xhtml"
+             propagation="none">
+                 <f:param name="pagamentoelettronicoIdPagamentoElettronico"
+                         value="#{pagamentoelettronicoHome.instance.idPagamentoElettronico}"/>
+                 <f:param name="accountFrom" value="Pagamentoelettronico"/>
+            </s:button>
+        </div>
+        </f:subview>
+    </rich:tab>
+
+    <rich:tab label="Accounts_1">
+        <h:form styleClass="association" id="accounts_1Children">
+
+            <h:outputText value="There are no accounts_1 associated with this pagamentoelettronico."
+                       rendered="#{empty pagamentoelettronicoHome.accounts_1}"/>
+
+            <rich:dataTable value="#{pagamentoelettronicoHome.accounts_1}"
+                           var="_account"
+                      rendered="#{not empty pagamentoelettronicoHome.accounts_1}"
+                    rowClasses="rvgRowOne,rvgRowTwo"
+                            id="accounts_1Table">
+                <rich:column sortBy="#{_account.username}">
+                    <f:facet name="header">Username</f:facet>
+                    <h:outputText value="#{_account.username}"/>
+                </rich:column>
+                <rich:column sortBy="#{_account.pass}">
+                    <f:facet name="header">Pass</f:facet>
+                    <h:outputText value="#{_account.pass}"/>
+                </rich:column>
+                <rich:column sortBy="#{_account.bloccato}">
+                    <f:facet name="header">Bloccato</f:facet>
+                    <h:outputText value="#{_account.bloccato}"/>
+                </rich:column>
+                <rich:column sortBy="#{_account.elimato}">
+                    <f:facet name="header">Elimato</f:facet>
+                    <h:outputText value="#{_account.elimato}"/>
+                </rich:column>
+                <rich:column sortBy="#{_account.cancellato}">
+                    <f:facet name="header">Cancellato</f:facet>
+                    <h:outputText value="#{_account.cancellato}"/>
+                </rich:column>
+                <rich:column sortBy="#{_account.attivato}">
+                    <f:facet name="header">Attivato</f:facet>
+                    <h:outputText value="#{_account.attivato}"/>
+                </rich:column>
+                <rich:column sortBy="#{_account.dataRichiesta}">
+                    <f:facet name="header">Data richiesta</f:facet>
+                    <h:outputText value="#{_account.dataRichiesta}">
+                        <s:convertDateTime type="date" dateStyle="short"/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_account.dataAccettazione}">
+                    <f:facet name="header">Data accettazione</f:facet>
+                    <h:outputText value="#{_account.dataAccettazione}">
+                        <s:convertDateTime type="date" dateStyle="short"/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_account.punteggioFeedback}">
+                    <f:facet name="header">Punteggio feedback</f:facet>
+                    <h:outputText value="#{_account.punteggioFeedback}"/>
+                </rich:column>
+            </rich:dataTable>
+
+        </h:form>
+
+        <f:subview rendered="#{pagamentoelettronicoHome.managed}" id="accounts_1">
+        <div class="actionButtons">
+            <s:button id="addaccount"
+                   value="Add account"
+                    view="/AccountEdit.xhtml"
+             propagation="none">
+                 <f:param name="pagamentoelettronicoIdPagamentoElettronico"
+                         value="#{pagamentoelettronicoHome.instance.idPagamentoElettronico}"/>
+                 <f:param name="accountFrom" value="Pagamentoelettronico"/>
+            </s:button>
+        </div>
+        </f:subview>
+    </rich:tab>
+</rich:tabPanel>
+</ui:define>
+
+</ui:composition>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page xmlns="http://jboss.com/products/seam/pages"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://jboss.com/products/seam/pages http://jboss.com/products/seam/pages-2.1.xsd"
+      no-conversation-view-id="/RuoloList.xhtml"
+      login-required="true">
+
+   <begin-conversation join="true" flush-mode="MANUAL"/>
+
+   <action execute="#{ruoloHome.wire}"/>
+
+   <param name="ruoloFrom"/>
+   <param name="ruoloIdruolo" value="#{ruoloHome.ruoloIdruolo}"/>
+   <param name="accountFrom"/>
+   <param name="accountUsername" value="#{accountHome.accountUsername}"/>
+   <param name="utenteFrom"/>
+   <param name="utenteCodiceFiscale" value="#{utenteHome.utenteCodiceFiscale}"/>
+   <param name="comuneFrom"/>
+   <param name="comuneIdcomune" value="#{comuneHome.comuneIdcomune}"/>
+   <param name="provincesFrom"/>
+   <param name="provincesIdprovinces" value="#{provincesHome.provincesIdprovinces}"/>
+
+
+
+   <param name="pagamentoelettronicoFrom"/>
+   <param name="pagamentoelettronicoIdPagamentoElettronico" value="#{pagamentoelettronicoHome.pagamentoelettronicoIdPagamentoElettronico}"/>
+
+
+
+
+   <navigation from-action="#{ruoloHome.persist}">
+      <rule>
+         <end-conversation/>
+         <redirect view-id="/Ruolo.xhtml"/>
+      </rule>
+   </navigation>
+
+   <navigation from-action="#{ruoloHome.update}">
+      <rule>
+         <end-conversation/>
+         <redirect view-id="/Ruolo.xhtml"/>
+      </rule>
+   </navigation>
+
+   <navigation from-action="#{ruoloHome.remove}">
+      <rule>
+         <end-conversation/>
+         <redirect view-id="/RuoloList.xhtml"/>
+      </rule>
+   </navigation>
+
+</page>

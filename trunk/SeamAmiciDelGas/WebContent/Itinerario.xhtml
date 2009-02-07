@@ -1,0 +1,139 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    template="layout/template.xhtml">
+
+<ui:define name="body">
+
+    <rich:panel>
+        <f:facet name="header">Itinerario Details</f:facet>
+
+
+        <s:decorate id="dataPartenza" template="layout/display.xhtml">
+            <ui:define name="label">Data partenza</ui:define>
+            <h:outputText value="#{itinerarioHome.instance.dataPartenza}">
+                <s:convertDateTime type="both" dateStyle="short"/>
+            </h:outputText>
+        </s:decorate>
+
+        <s:decorate id="dataConsegna" template="layout/display.xhtml">
+            <ui:define name="label">Data consegna</ui:define>
+            <h:outputText value="#{itinerarioHome.instance.dataConsegna}">
+                <s:convertDateTime type="both" dateStyle="short"/>
+            </h:outputText>
+        </s:decorate>
+
+        <s:decorate id="documentazionePath" template="layout/display.xhtml">
+            <ui:define name="label">Documentazione path</ui:define>
+            <h:outputText value="#{itinerarioHome.instance.documentazionePath}"/>
+        </s:decorate>
+
+        <s:decorate id="dataCreazione" template="layout/display.xhtml">
+            <ui:define name="label">Data creazione</ui:define>
+            <h:outputText value="#{itinerarioHome.instance.dataCreazione}">
+                <s:convertDateTime type="both" dateStyle="short"/>
+            </h:outputText>
+        </s:decorate>
+
+        <div style="clear:both"/>
+
+    </rich:panel>
+
+    <div class="actionButtons">
+
+        <s:button view="/ItinerarioEdit.xhtml"
+                    id="edit"
+                 value="Edit"/>
+
+        <s:button view="/#{empty itinerarioFrom ? 'ItinerarioList' : itinerarioFrom}.xhtml"
+                    id="done"
+                 value="Done"/>
+
+    </div>
+
+    <rich:tabPanel switchType="ajax">
+
+    <rich:tab>
+        <f:facet name="label">
+            <h:panelGroup><h:graphicImage value="/img/manytoone.gif" style="vertical-align: middle; padding-right: 4px;"/>Account</h:panelGroup>
+        </f:facet>
+    <div class="association" id="accountParent">
+
+        <h:outputText value="There is no account associated with this itinerario."
+                   rendered="#{itinerarioHome.instance.account == null}"/>
+
+        <rich:dataTable var="_account"
+                   value="#{itinerarioHome.instance.account}"
+                rendered="#{itinerarioHome.instance.account != null}"
+              rowClasses="rvgRowOne,rvgRowTwo"
+                      id="accountTable">
+            <h:column>
+                <f:facet name="header">Username</f:facet>
+                <h:outputText value="#{_account.username}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Utente codice fiscale</f:facet>
+                <h:outputText value="#{_account.utente.codiceFiscale}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Pagamentoelettronico id pagamento elettronico</f:facet>
+                <h:outputText value="#{_account.pagamentoelettronico.idPagamentoElettronico}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Pass</f:facet>
+                <h:outputText value="#{_account.pass}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Bloccato</f:facet>
+                <h:outputText value="#{_account.bloccato}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Elimato</f:facet>
+                <h:outputText value="#{_account.elimato}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Cancellato</f:facet>
+                <h:outputText value="#{_account.cancellato}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Attivato</f:facet>
+                <h:outputText value="#{_account.attivato}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Data richiesta</f:facet>
+                <h:outputText value="#{_account.dataRichiesta}">
+                    <s:convertDateTime type="date" dateStyle="short"/>
+                </h:outputText>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Data accettazione</f:facet>
+                <h:outputText value="#{_account.dataAccettazione}">
+                    <s:convertDateTime type="date" dateStyle="short"/>
+                </h:outputText>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Punteggio feedback</f:facet>
+                <h:outputText value="#{_account.punteggioFeedback}"/>
+            </h:column>
+            <h:column styleClass="action">
+                <f:facet name="header">Action</f:facet>
+                <s:link id="viewaccount"
+                     value="View"
+                      view="/Account.xhtml">
+                    <f:param name="accountUsername"
+                           value="#{_account.username}"/>
+                </s:link>
+            </h:column>
+        </rich:dataTable>
+
+    </div>
+    </rich:tab>
+</rich:tabPanel>
+</ui:define>
+
+</ui:composition>
