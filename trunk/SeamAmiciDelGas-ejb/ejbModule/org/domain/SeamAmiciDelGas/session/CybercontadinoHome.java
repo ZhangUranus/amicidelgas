@@ -58,24 +58,9 @@ public class CybercontadinoHome extends EntityHome<Cybercontadino> {
 				getInstance().getQuestionarios());
 	}
 
-	public List<Questionario> getQuestionarios_1() {
-		return getInstance() == null ? null : new ArrayList<Questionario>(
-				getInstance().getQuestionarios_1());
-	}
-
 	public List<Articolo> getArticolos() {
 		return getInstance() == null ? null : new ArrayList<Articolo>(
 				getInstance().getArticolos());
-	}
-
-	public List<Articolo> getArticolos_1() {
-		return getInstance() == null ? null : new ArrayList<Articolo>(
-				getInstance().getArticolos_1());
-	}
-
-	public List<Questionario> getQuestionarios_2() {
-		return getInstance() == null ? null : new ArrayList<Questionario>(
-				getInstance().getQuestionarios_2());
 	}
 
 }

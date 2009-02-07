@@ -40,9 +40,4 @@ public class PagamentoelettronicoHome extends EntityHome<Pagamentoelettronico> {
 				getInstance().getAccounts());
 	}
 
-	public List<Account> getAccounts_1() {
-		return getInstance() == null ? null : new ArrayList<Account>(
-				getInstance().getAccounts_1());
-	}
-
 }

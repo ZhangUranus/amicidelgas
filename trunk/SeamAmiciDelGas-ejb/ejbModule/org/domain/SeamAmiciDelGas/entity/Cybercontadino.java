@@ -1,6 +1,6 @@
 package org.domain.SeamAmiciDelGas.entity;
 
-// Generated 7-feb-2009 12.59.42 by Hibernate Tools 3.2.2.GA
+// Generated 7-feb-2009 13.24.15 by Hibernate Tools 3.2.2.GA
 
 import java.util.HashSet;
 import java.util.Set;
@@ -37,14 +37,9 @@ public class Cybercontadino implements java.io.Serializable {
 	private int recapitoTelefonico;
 	private String email;
 	private String coordinate;
-	private Integer comuneIdcomune;
 	private Set<Questionario> questionarios = new HashSet<Questionario>(0);
-	private Set<Questionario> questionarios_1 = new HashSet<Questionario>(0);
 	private Set<Itinerario> itinerarios = new HashSet<Itinerario>(0);
-	private Set<Itinerario> itinerarios_1 = new HashSet<Itinerario>(0);
 	private Set<Articolo> articolos = new HashSet<Articolo>(0);
-	private Set<Articolo> articolos_1 = new HashSet<Articolo>(0);
-	private Set<Questionario> questionarios_2 = new HashSet<Questionario>(0);
 
 	public Cybercontadino() {
 	}
@@ -69,11 +64,8 @@ public class Cybercontadino implements java.io.Serializable {
 			String nomePresidente, String indirizzo, String cognomePresidente,
 			String nomeAzienda, String pathAsl, String urlWsdl,
 			String descrizioneAzienda, int recapitoTelefonico, String email,
-			String coordinate, Integer comuneIdcomune,
-			Set<Questionario> questionarios, Set<Questionario> questionarios_1,
-			Set<Itinerario> itinerarios, Set<Itinerario> itinerarios_1,
-			Set<Articolo> articolos, Set<Articolo> articolos_1,
-			Set<Questionario> questionarios_2) {
+			String coordinate, Set<Questionario> questionarios,
+			Set<Itinerario> itinerarios, Set<Articolo> articolos) {
 		this.partitaIva = partitaIva;
 		this.account = account;
 		this.comune = comune;
@@ -87,14 +79,9 @@ public class Cybercontadino implements java.io.Serializable {
 		this.recapitoTelefonico = recapitoTelefonico;
 		this.email = email;
 		this.coordinate = coordinate;
-		this.comuneIdcomune = comuneIdcomune;
 		this.questionarios = questionarios;
-		this.questionarios_1 = questionarios_1;
 		this.itinerarios = itinerarios;
-		this.itinerarios_1 = itinerarios_1;
 		this.articolos = articolos;
-		this.articolos_1 = articolos_1;
-		this.questionarios_2 = questionarios_2;
 	}
 
 	@Id
@@ -236,15 +223,6 @@ public class Cybercontadino implements java.io.Serializable {
 		this.coordinate = coordinate;
 	}
 
-	@Column(name = "Comune_IDComune")
-	public Integer getComuneIdcomune() {
-		return this.comuneIdcomune;
-	}
-
-	public void setComuneIdcomune(Integer comuneIdcomune) {
-		this.comuneIdcomune = comuneIdcomune;
-	}
-
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "cybercontadino")
 	public Set<Questionario> getQuestionarios() {
 		return this.questionarios;
@@ -252,15 +230,6 @@ public class Cybercontadino implements java.io.Serializable {
 
 	public void setQuestionarios(Set<Questionario> questionarios) {
 		this.questionarios = questionarios;
-	}
-
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "cybercontadino")
-	public Set<Questionario> getQuestionarios_1() {
-		return this.questionarios_1;
-	}
-
-	public void setQuestionarios_1(Set<Questionario> questionarios_1) {
-		this.questionarios_1 = questionarios_1;
 	}
 
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "cybercontadinos")
@@ -272,15 +241,6 @@ public class Cybercontadino implements java.io.Serializable {
 		this.itinerarios = itinerarios;
 	}
 
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "cybercontadinos")
-	public Set<Itinerario> getItinerarios_1() {
-		return this.itinerarios_1;
-	}
-
-	public void setItinerarios_1(Set<Itinerario> itinerarios_1) {
-		this.itinerarios_1 = itinerarios_1;
-	}
-
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "cybercontadino")
 	public Set<Articolo> getArticolos() {
 		return this.articolos;
@@ -288,24 +248,6 @@ public class Cybercontadino implements java.io.Serializable {
 
 	public void setArticolos(Set<Articolo> articolos) {
 		this.articolos = articolos;
-	}
-
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "cybercontadino")
-	public Set<Articolo> getArticolos_1() {
-		return this.articolos_1;
-	}
-
-	public void setArticolos_1(Set<Articolo> articolos_1) {
-		this.articolos_1 = articolos_1;
-	}
-
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "cybercontadino")
-	public Set<Questionario> getQuestionarios_2() {
-		return this.questionarios_2;
-	}
-
-	public void setQuestionarios_2(Set<Questionario> questionarios_2) {
-		this.questionarios_2 = questionarios_2;
 	}
 
 }

@@ -53,34 +53,14 @@ public class ComuneHome extends EntityHome<Comune> {
 				getInstance().getCybercontadinos());
 	}
 
-	public List<Utente> getUtentesForIdcomune_1() {
-		return getInstance() == null ? null : new ArrayList<Utente>(
-				getInstance().getUtentesForIdcomune_1());
-	}
-
-	public List<PuntiDiConsegna> getPuntiDiConsegnas() {
-		return getInstance() == null ? null : new ArrayList<PuntiDiConsegna>(
-				getInstance().getPuntiDiConsegnas());
-	}
-
 	public List<Utente> getUtentesForComuneNascita() {
 		return getInstance() == null ? null : new ArrayList<Utente>(
 				getInstance().getUtentesForComuneNascita());
 	}
 
-	public List<Cybercontadino> getCybercontadinos_1() {
-		return getInstance() == null ? null : new ArrayList<Cybercontadino>(
-				getInstance().getCybercontadinos_1());
-	}
-
-	public List<Utente> getUtentesForComuneNascita_1() {
-		return getInstance() == null ? null : new ArrayList<Utente>(
-				getInstance().getUtentesForComuneNascita_1());
-	}
-
-	public List<PuntiDiConsegna> getPuntiDiConsegnas_1() {
+	public List<PuntiDiConsegna> getPuntiDiConsegnas() {
 		return getInstance() == null ? null : new ArrayList<PuntiDiConsegna>(
-				getInstance().getPuntiDiConsegnas_1());
+				getInstance().getPuntiDiConsegnas());
 	}
 
 }

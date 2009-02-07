@@ -10,9 +10,9 @@ import org.jboss.seam.framework.EntityHome;
 @Name("utenteHome")
 public class UtenteHome extends EntityHome<Utente> {
 
-	@In(create = true, value="comuneHome")
+	@In(create = true, value = "comuneHome")
 	ComuneHome comuneHomeByComuneNascita;
-	@In(create = true, value="comuneHome")
+	@In(create = true, value = "comuneHome")
 	ComuneHome comuneHomeByIdcomune;
 
 	public void setUtenteCodiceFiscale(String id) {
@@ -31,7 +31,8 @@ public class UtenteHome extends EntityHome<Utente> {
 
 	public void wire() {
 		getInstance();
-		Comune comuneByComuneNascita = comuneHomeByComuneNascita.getDefinedInstance();
+		Comune comuneByComuneNascita = comuneHomeByComuneNascita
+				.getDefinedInstance();
 		if (comuneByComuneNascita != null) {
 			getInstance().setComuneByComuneNascita(comuneByComuneNascita);
 		}
@@ -63,14 +64,5 @@ public class UtenteHome extends EntityHome<Utente> {
 				getInstance().getPatentes());
 	}
 
-	public List<Patente> getPatentes_1() {
-		return getInstance() == null ? null : new ArrayList<Patente>(
-				getInstance().getPatentes_1());
-	}
-
-	public List<Account> getAccounts_1() {
-		return getInstance() == null ? null : new ArrayList<Account>(
-				getInstance().getAccounts_1());
-	}
 
 }

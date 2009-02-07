@@ -17,9 +17,7 @@ public class UtenteList extends EntityQuery<Utente> {
 			"lower(utente.pathQuestionario) like concat(lower(#{utenteList.utente.pathQuestionario}),'%')",
 			"lower(utente.indirizzo) like concat(lower(#{utenteList.utente.indirizzo}),'%')",
 			"lower(utente.recapitoTelefonico) like concat(lower(#{utenteList.utente.recapitoTelefonico}),'%')",
-			"lower(utente.email) like concat(lower(#{utenteList.utente.email}),'%')",
-			"lower(utente.username) like concat(lower(#{utenteList.utente.username}),'%')",
-			"lower(utente.luogoNascita) like concat(lower(#{utenteList.utente.luogoNascita}),'%')", };
+			"lower(utente.email) like concat(lower(#{utenteList.utente.email}),'%')", };
 
 	private Utente utente = new Utente();
 

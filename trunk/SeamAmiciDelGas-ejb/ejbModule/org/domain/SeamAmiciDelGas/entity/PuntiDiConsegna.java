@@ -1,6 +1,6 @@
 package org.domain.SeamAmiciDelGas.entity;
 
-// Generated 7-feb-2009 12.59.42 by Hibernate Tools 3.2.2.GA
+// Generated 7-feb-2009 13.24.15 by Hibernate Tools 3.2.2.GA
 
 import java.util.HashSet;
 import java.util.Set;
@@ -31,7 +31,6 @@ public class PuntiDiConsegna implements java.io.Serializable {
 	private String indirizzo;
 	private String coordinate;
 	private Set<Itinerario> itinerarios = new HashSet<Itinerario>(0);
-	private Set<Itinerario> itinerarios_1 = new HashSet<Itinerario>(0);
 
 	public PuntiDiConsegna() {
 	}
@@ -42,12 +41,11 @@ public class PuntiDiConsegna implements java.io.Serializable {
 	}
 
 	public PuntiDiConsegna(Comune comune, String indirizzo, String coordinate,
-			Set<Itinerario> itinerarios, Set<Itinerario> itinerarios_1) {
+			Set<Itinerario> itinerarios) {
 		this.comune = comune;
 		this.indirizzo = indirizzo;
 		this.coordinate = coordinate;
 		this.itinerarios = itinerarios;
-		this.itinerarios_1 = itinerarios_1;
 	}
 
 	@Id
@@ -101,16 +99,6 @@ public class PuntiDiConsegna implements java.io.Serializable {
 
 	public void setItinerarios(Set<Itinerario> itinerarios) {
 		this.itinerarios = itinerarios;
-	}
-
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinTable(name = "itinerario_has_punti_di_consegna", catalog = "database_gas", joinColumns = { @JoinColumn(name = "IDPuntiConsegna", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "IDItinerario", nullable = false, updatable = false) })
-	public Set<Itinerario> getItinerarios_1() {
-		return this.itinerarios_1;
-	}
-
-	public void setItinerarios_1(Set<Itinerario> itinerarios_1) {
-		this.itinerarios_1 = itinerarios_1;
 	}
 
 }

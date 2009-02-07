@@ -1,6 +1,6 @@
 package org.domain.SeamAmiciDelGas.entity;
 
-// Generated 7-feb-2009 12.59.42 by Hibernate Tools 3.2.2.GA
+// Generated 7-feb-2009 13.24.15 by Hibernate Tools 3.2.2.GA
 
 import java.util.Date;
 import java.util.HashSet;
@@ -20,7 +20,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import org.hibernate.validator.Length;
 import org.hibernate.validator.NotNull;
 
 /**
@@ -40,12 +39,8 @@ public class Ordine implements java.io.Serializable {
 	private Date dataMassimaConsegna;
 	private Boolean cancellato;
 	private Date dataCancellazioneAccettazione;
-	private String username;
-	private Integer idarticolo;
 	private Set<Feedback> feedbacks = new HashSet<Feedback>(0);
 	private Set<Itinerario> itinerarios = new HashSet<Itinerario>(0);
-	private Set<Feedback> feedbacks_1 = new HashSet<Feedback>(0);
-	private Set<Itinerario> itinerarios_1 = new HashSet<Itinerario>(0);
 
 	public Ordine() {
 	}
@@ -61,10 +56,8 @@ public class Ordine implements java.io.Serializable {
 	public Ordine(Account account, Articolo articolo, Date dataRichiesta,
 			boolean pendente, int quantita, int quantitaMinUtente,
 			Date dataMassimaConsegna, Boolean cancellato,
-			Date dataCancellazioneAccettazione, String username,
-			Integer idarticolo, Set<Feedback> feedbacks,
-			Set<Itinerario> itinerarios, Set<Feedback> feedbacks_1,
-			Set<Itinerario> itinerarios_1) {
+			Date dataCancellazioneAccettazione, Set<Feedback> feedbacks,
+			Set<Itinerario> itinerarios) {
 		this.account = account;
 		this.articolo = articolo;
 		this.dataRichiesta = dataRichiesta;
@@ -74,12 +67,8 @@ public class Ordine implements java.io.Serializable {
 		this.dataMassimaConsegna = dataMassimaConsegna;
 		this.cancellato = cancellato;
 		this.dataCancellazioneAccettazione = dataCancellazioneAccettazione;
-		this.username = username;
-		this.idarticolo = idarticolo;
 		this.feedbacks = feedbacks;
 		this.itinerarios = itinerarios;
-		this.feedbacks_1 = feedbacks_1;
-		this.itinerarios_1 = itinerarios_1;
 	}
 
 	@Id
@@ -184,25 +173,6 @@ public class Ordine implements java.io.Serializable {
 		this.dataCancellazioneAccettazione = dataCancellazioneAccettazione;
 	}
 
-	@Column(name = "Username", length = 20)
-	@Length(max = 20)
-	public String getUsername() {
-		return this.username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	@Column(name = "IDArticolo")
-	public Integer getIdarticolo() {
-		return this.idarticolo;
-	}
-
-	public void setIdarticolo(Integer idarticolo) {
-		this.idarticolo = idarticolo;
-	}
-
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "ordine")
 	public Set<Feedback> getFeedbacks() {
 		return this.feedbacks;
@@ -220,25 +190,6 @@ public class Ordine implements java.io.Serializable {
 
 	public void setItinerarios(Set<Itinerario> itinerarios) {
 		this.itinerarios = itinerarios;
-	}
-
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "ordine")
-	public Set<Feedback> getFeedbacks_1() {
-		return this.feedbacks_1;
-	}
-
-	public void setFeedbacks_1(Set<Feedback> feedbacks_1) {
-		this.feedbacks_1 = feedbacks_1;
-	}
-
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinTable(name = "itinerario_has_ordine", catalog = "database_gas", joinColumns = { @JoinColumn(name = "IDOrdine", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "IDItinerario", nullable = false, updatable = false) })
-	public Set<Itinerario> getItinerarios_1() {
-		return this.itinerarios_1;
-	}
-
-	public void setItinerarios_1(Set<Itinerario> itinerarios_1) {
-		this.itinerarios_1 = itinerarios_1;
 	}
 
 }

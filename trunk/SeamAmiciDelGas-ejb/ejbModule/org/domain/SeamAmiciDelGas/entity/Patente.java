@@ -1,6 +1,6 @@
 package org.domain.SeamAmiciDelGas.entity;
 
-// Generated 7-feb-2009 12.59.42 by Hibernate Tools 3.2.2.GA
+// Generated 7-feb-2009 13.24.15 by Hibernate Tools 3.2.2.GA
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

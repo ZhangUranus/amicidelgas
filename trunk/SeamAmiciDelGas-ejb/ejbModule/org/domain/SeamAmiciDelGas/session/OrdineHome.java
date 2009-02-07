@@ -54,9 +54,4 @@ public class OrdineHome extends EntityHome<Ordine> {
 				getInstance().getFeedbacks());
 	}
 
-	public List<Feedback> getFeedbacks_1() {
-		return getInstance() == null ? null : new ArrayList<Feedback>(
-				getInstance().getFeedbacks_1());
-	}
-
 }

@@ -1,6 +1,6 @@
 package org.domain.SeamAmiciDelGas.entity;
 
-// Generated 7-feb-2009 12.59.42 by Hibernate Tools 3.2.2.GA
+// Generated 7-feb-2009 13.24.15 by Hibernate Tools 3.2.2.GA
 
 import java.util.HashSet;
 import java.util.Set;
@@ -32,7 +32,6 @@ public class Articolo implements java.io.Serializable {
 	private boolean prenotazioneLungoTermine;
 	private Float prezzoDefinitivo;
 	private Set<Ordine> ordines = new HashSet<Ordine>(0);
-	private Set<Ordine> ordines_1 = new HashSet<Ordine>(0);
 
 	public Articolo() {
 	}
@@ -44,14 +43,13 @@ public class Articolo implements java.io.Serializable {
 
 	public Articolo(Cybercontadino cybercontadino, String codiceEsterno,
 			String descrizione, boolean prenotazioneLungoTermine,
-			Float prezzoDefinitivo, Set<Ordine> ordines, Set<Ordine> ordines_1) {
+			Float prezzoDefinitivo, Set<Ordine> ordines) {
 		this.cybercontadino = cybercontadino;
 		this.codiceEsterno = codiceEsterno;
 		this.descrizione = descrizione;
 		this.prenotazioneLungoTermine = prenotazioneLungoTermine;
 		this.prezzoDefinitivo = prezzoDefinitivo;
 		this.ordines = ordines;
-		this.ordines_1 = ordines_1;
 	}
 
 	@Id
@@ -122,15 +120,6 @@ public class Articolo implements java.io.Serializable {
 
 	public void setOrdines(Set<Ordine> ordines) {
 		this.ordines = ordines;
-	}
-
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "articolo")
-	public Set<Ordine> getOrdines_1() {
-		return this.ordines_1;
-	}
-
-	public void setOrdines_1(Set<Ordine> ordines_1) {
-		this.ordines_1 = ordines_1;
 	}
 
 }

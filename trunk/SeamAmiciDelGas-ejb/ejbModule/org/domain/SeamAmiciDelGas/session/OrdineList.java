@@ -10,7 +10,7 @@ public class OrdineList extends EntityQuery<Ordine> {
 
 	private static final String EJBQL = "select ordine from Ordine ordine";
 
-	private static final String[] RESTRICTIONS = { "lower(ordine.username) like concat(lower(#{ordineList.ordine.username}),'%')", };
+	private static final String[] RESTRICTIONS = {};
 
 	private Ordine ordine = new Ordine();
 
