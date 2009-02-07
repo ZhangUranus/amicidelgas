@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process-definition  xmlns="urn:jbpm.org:jpdl-3.2"  name="jbay">
+
+
+	<start-state name="start">
+		<transition to="auction" name="to_auction"></transition>
+	</start-state>
+
+
+	<state name="auction">
+		<transition to="end" name="to_end"></transition>
+	</state>
+
+
+	<end-state name="end"></end-state>
+
+
+</process-definition>
