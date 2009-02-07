@@ -11,5 +11,8 @@ DOWNLOAD
 6) Setting: accedere a Eclipse->Windows->Preferences->Jboss jBPM-> Runtime Locations:
 		4a1) assegnare un nome qualsiasi (es. jbpm-3.1)
 		4a2) indicare il percorso dove si trova JBPM engine (la cartella jbpm-3.1 ottenuta decomprimendo il file jbpm-3.1.3.zip)
+7) Aggiungere la libreria "Activation.jar" nella cartella "lib" di JBPM.
 
 	
+	
+P.S: l'arcano segreto di JBPM. Quando vuoi creare un "Process Definition" e non ti compare..... (to be continued)
