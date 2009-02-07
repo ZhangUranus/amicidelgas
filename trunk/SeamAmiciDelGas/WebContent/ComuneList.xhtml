@@ -19,16 +19,6 @@
                 <h:inputText id="nome" value="#{comuneList.comune.nome}"/>
             </s:decorate>
 
-            <s:decorate template="layout/display.xhtml">
-                <ui:define name="label">Nome comune</ui:define>
-                <h:inputText id="nomeComune" value="#{comuneList.comune.nomeComune}"/>
-            </s:decorate>
-
-            <s:decorate template="layout/display.xhtml">
-                <ui:define name="label">Provincia</ui:define>
-                <h:inputText id="provincia" value="#{comuneList.comune.provincia}"/>
-            </s:decorate>
-
 
         </rich:simpleTogglePanel>
 
@@ -89,26 +79,6 @@
                 </ui:include>
             </f:facet>
             <h:outputText value="#{_comune.cap}"/>
-        </h:column>
-        <h:column>
-            <f:facet name="header">
-                <ui:include src="layout/sort.xhtml">
-                    <ui:param name="entityList" value="#{comuneList}"/>
-                    <ui:param name="propertyLabel" value="Nome comune"/>
-                    <ui:param name="propertyPath" value="comune.nomeComune"/>
-                </ui:include>
-            </f:facet>
-            <h:outputText value="#{_comune.nomeComune}"/>
-        </h:column>
-        <h:column>
-            <f:facet name="header">
-                <ui:include src="layout/sort.xhtml">
-                    <ui:param name="entityList" value="#{comuneList}"/>
-                    <ui:param name="propertyLabel" value="Provincia"/>
-                    <ui:param name="propertyPath" value="comune.provincia"/>
-                </ui:include>
-            </f:facet>
-            <h:outputText value="#{_comune.provincia}"/>
         </h:column>
         <rich:column styleClass="action">
             <f:facet name="header">Action</f:facet>

@@ -8,6 +8,5 @@
    <param name="dir" value="#{ordineList.orderDirection}"/>
 
    <param name="from"/>
-   <param name="username" value="#{ordineList.ordine.username}"/>
 
 </page>

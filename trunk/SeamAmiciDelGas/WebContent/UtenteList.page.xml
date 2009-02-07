@@ -15,7 +15,5 @@
    <param name="indirizzo" value="#{utenteList.utente.indirizzo}"/>
    <param name="recapitoTelefonico" value="#{utenteList.utente.recapitoTelefonico}"/>
    <param name="email" value="#{utenteList.utente.email}"/>
-   <param name="username" value="#{utenteList.utente.username}"/>
-   <param name="luogoNascita" value="#{utenteList.utente.luogoNascita}"/>
 
 </page>

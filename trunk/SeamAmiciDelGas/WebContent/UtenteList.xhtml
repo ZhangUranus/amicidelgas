@@ -49,16 +49,6 @@
                 <h:inputText id="email" value="#{utenteList.utente.email}"/>
             </s:decorate>
 
-            <s:decorate template="layout/display.xhtml">
-                <ui:define name="label">Username</ui:define>
-                <h:inputText id="username" value="#{utenteList.utente.username}"/>
-            </s:decorate>
-
-            <s:decorate template="layout/display.xhtml">
-                <ui:define name="label">Luogo nascita</ui:define>
-                <h:inputText id="luogoNascita" value="#{utenteList.utente.luogoNascita}"/>
-            </s:decorate>
-
 
         </rich:simpleTogglePanel>
 
@@ -191,26 +181,6 @@
                 </ui:include>
             </f:facet>
             <h:outputText value="#{_utente.email}"/>
-        </h:column>
-        <h:column>
-            <f:facet name="header">
-                <ui:include src="layout/sort.xhtml">
-                    <ui:param name="entityList" value="#{utenteList}"/>
-                    <ui:param name="propertyLabel" value="Username"/>
-                    <ui:param name="propertyPath" value="utente.username"/>
-                </ui:include>
-            </f:facet>
-            <h:outputText value="#{_utente.username}"/>
-        </h:column>
-        <h:column>
-            <f:facet name="header">
-                <ui:include src="layout/sort.xhtml">
-                    <ui:param name="entityList" value="#{utenteList}"/>
-                    <ui:param name="propertyLabel" value="Luogo nascita"/>
-                    <ui:param name="propertyPath" value="utente.luogoNascita"/>
-                </ui:include>
-            </f:facet>
-            <h:outputText value="#{_utente.luogoNascita}"/>
         </h:column>
         <rich:column styleClass="action">
             <f:facet name="header">Action</f:facet>

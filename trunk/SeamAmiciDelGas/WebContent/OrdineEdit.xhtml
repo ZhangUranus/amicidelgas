@@ -77,28 +77,6 @@
             </s:decorate>
 
 
-            <s:decorate id="usernameField" template="layout/edit.xhtml">
-                <ui:define name="label">Username</ui:define>
-                <h:inputText id="username"
-                           size="20"
-                      maxlength="20"
-                          value="#{ordineHome.instance.username}">
-                    <a:support event="onblur" reRender="usernameField" bypassUpdates="true" ajaxSingle="true"/>
-                </h:inputText>
-            </s:decorate>
-
-
-            <s:decorate id="idarticoloField" template="layout/edit.xhtml">
-                <ui:define name="label">Idarticolo</ui:define>
-                <h:inputText id="idarticolo"
-                          value="#{ordineHome.instance.idarticolo}">
-                    <a:support event="onblur" reRender="idarticoloField" bypassUpdates="true" ajaxSingle="true"/>
-                </h:inputText>
-            </s:decorate>
-
-
-
-
 
             <div style="clear:both">
                 <span class="required">*</span>
@@ -305,63 +283,6 @@
         </h:form>
 
         <f:subview rendered="#{ordineHome.managed}" id="feedbacks">
-        <div class="actionButtons">
-            <s:button id="addfeedback"
-                   value="Add feedback"
-                    view="/FeedbackEdit.xhtml"
-             propagation="none">
-                 <f:param name="ordineIdordine"
-                         value="#{ordineHome.instance.idordine}"/>
-                 <f:param name="feedbackFrom" value="Ordine"/>
-            </s:button>
-        </div>
-        </f:subview>
-    </rich:tab>
-
-    <rich:tab label="Feedbacks_1">
-        <h:form styleClass="association" id="feedbacks_1Children">
-
-            <h:outputText value="There are no feedbacks_1 associated with this ordine."
-                       rendered="#{empty ordineHome.feedbacks_1}"/>
-
-            <rich:dataTable value="#{ordineHome.feedbacks_1}"
-                           var="_feedback"
-                      rendered="#{not empty ordineHome.feedbacks_1}"
-                    rowClasses="rvgRowOne,rvgRowTwo"
-                            id="feedbacks_1Table">
-                <rich:column sortBy="#{_feedback.idfeedback}">
-                    <f:facet name="header">Idfeedback</f:facet>
-                    <h:outputText value="#{_feedback.idfeedback}"/>
-                </rich:column>
-                <rich:column sortBy="#{_feedback.analizzato}">
-                    <f:facet name="header">Analizzato</f:facet>
-                    <h:outputText value="#{_feedback.analizzato}"/>
-                </rich:column>
-                <rich:column sortBy="#{_feedback.descrizione}">
-                    <f:facet name="header">Descrizione</f:facet>
-                    <h:outputText value="#{_feedback.descrizione}"/>
-                </rich:column>
-                <rich:column sortBy="#{_feedback.dataValidazione}">
-                    <f:facet name="header">Data validazione</f:facet>
-                    <h:outputText value="#{_feedback.dataValidazione}">
-                        <s:convertDateTime type="date" dateStyle="short"/>
-                    </h:outputText>
-                </rich:column>
-                <rich:column sortBy="#{_feedback.dataSegnalazione}">
-                    <f:facet name="header">Data segnalazione</f:facet>
-                    <h:outputText value="#{_feedback.dataSegnalazione}">
-                        <s:convertDateTime type="date" dateStyle="short"/>
-                    </h:outputText>
-                </rich:column>
-                <rich:column sortBy="#{_feedback.punteggio}">
-                    <f:facet name="header">Punteggio</f:facet>
-                    <h:outputText value="#{_feedback.punteggio}"/>
-                </rich:column>
-            </rich:dataTable>
-
-        </h:form>
-
-        <f:subview rendered="#{ordineHome.managed}" id="feedbacks_1">
         <div class="actionButtons">
             <s:button id="addfeedback"
                    value="Add feedback"

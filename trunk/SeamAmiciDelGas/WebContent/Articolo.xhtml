@@ -118,10 +118,6 @@
                 <f:facet name="header">Coordinate</f:facet>
                 <h:outputText value="#{_cybercontadino.coordinate}"/>
             </h:column>
-            <h:column>
-                <f:facet name="header">Comune idcomune</f:facet>
-                <h:outputText value="#{_cybercontadino.comuneIdcomune}"/>
-            </h:column>
             <h:column styleClass="action">
                 <f:facet name="header">Action</f:facet>
                 <s:link id="viewcybercontadino"
@@ -187,99 +183,6 @@
                 <h:outputText value="#{_ordine.dataCancellazioneAccettazione}">
                     <s:convertDateTime type="both" dateStyle="short"/>
                 </h:outputText>
-            </rich:column>
-            <rich:column sortBy="#{_ordine.username}">
-                <f:facet name="header">Username</f:facet>
-                <h:outputText value="#{_ordine.username}"/>
-            </rich:column>
-            <rich:column sortBy="#{_ordine.idarticolo}">
-                <f:facet name="header">Idarticolo</f:facet>
-                <h:outputText value="#{_ordine.idarticolo}"/>
-            </rich:column>
-            <h:column>
-                <f:facet name="header">Action</f:facet>
-                <s:link id="selectordine"
-                     value="Select"
-                      view="/Ordine.xhtml">
-                    <f:param name="ordineIdordine"
-                            value="#{_ordine.idordine}"/>
-                    <f:param name="ordineFrom" value="Articolo"/>
-                </s:link>
-            </h:column>
-        </rich:dataTable>
-
-    </h:form>
-
-    <div class="actionButtons">
-        <s:button
-               value="Add ordine"
-                view="/OrdineEdit.xhtml">
-            <f:param name="articoloIdarticolo"
-                    value="#{articoloHome.instance.idarticolo}"/>
-            <f:param name="ordineFrom" value="Articolo"/>
-        </s:button>
-    </div>
-    </rich:tab>
-
-    <rich:tab>
-        <f:facet name="label">
-            <h:panelGroup><h:graphicImage value="/img/onetomany.gif" style="vertical-align: middle; padding-right: 4px;"/>Ordines_1</h:panelGroup>
-        </f:facet>
-    <h:form styleClass="association" id="ordines_1Children">
-
-        <h:outputText value="There are no ordines_1 associated with this articolo."
-                   rendered="#{empty articoloHome.ordines_1}"/>
-
-        <rich:dataTable value="#{articoloHome.ordines_1}"
-                       var="_ordine"
-                  rendered="#{not empty articoloHome.ordines_1}"
-                rowClasses="rvgRowOne,rvgRowTwo"
-                        id="ordines_1Table">
-            <rich:column sortBy="#{_ordine.idordine}">
-                <f:facet name="header">Idordine</f:facet>
-                <h:outputText value="#{_ordine.idordine}"/>
-            </rich:column>
-            <rich:column sortBy="#{_ordine.dataRichiesta}">
-                <f:facet name="header">Data richiesta</f:facet>
-                <h:outputText value="#{_ordine.dataRichiesta}">
-                    <s:convertDateTime type="both" dateStyle="short"/>
-                </h:outputText>
-            </rich:column>
-            <rich:column sortBy="#{_ordine.pendente}">
-                <f:facet name="header">Pendente</f:facet>
-                <h:outputText value="#{_ordine.pendente}"/>
-            </rich:column>
-            <rich:column sortBy="#{_ordine.quantita}">
-                <f:facet name="header">Quantita</f:facet>
-                <h:outputText value="#{_ordine.quantita}"/>
-            </rich:column>
-            <rich:column sortBy="#{_ordine.quantitaMinUtente}">
-                <f:facet name="header">Quantita min utente</f:facet>
-                <h:outputText value="#{_ordine.quantitaMinUtente}"/>
-            </rich:column>
-            <rich:column sortBy="#{_ordine.dataMassimaConsegna}">
-                <f:facet name="header">Data massima consegna</f:facet>
-                <h:outputText value="#{_ordine.dataMassimaConsegna}">
-                    <s:convertDateTime type="both" dateStyle="short"/>
-                </h:outputText>
-            </rich:column>
-            <rich:column sortBy="#{_ordine.cancellato}">
-                <f:facet name="header">Cancellato</f:facet>
-                <h:outputText value="#{_ordine.cancellato}"/>
-            </rich:column>
-            <rich:column sortBy="#{_ordine.dataCancellazioneAccettazione}">
-                <f:facet name="header">Data cancellazione accettazione</f:facet>
-                <h:outputText value="#{_ordine.dataCancellazioneAccettazione}">
-                    <s:convertDateTime type="both" dateStyle="short"/>
-                </h:outputText>
-            </rich:column>
-            <rich:column sortBy="#{_ordine.username}">
-                <f:facet name="header">Username</f:facet>
-                <h:outputText value="#{_ordine.username}"/>
-            </rich:column>
-            <rich:column sortBy="#{_ordine.idarticolo}">
-                <f:facet name="header">Idarticolo</f:facet>
-                <h:outputText value="#{_ordine.idarticolo}"/>
             </rich:column>
             <h:column>
                 <f:facet name="header">Action</f:facet>

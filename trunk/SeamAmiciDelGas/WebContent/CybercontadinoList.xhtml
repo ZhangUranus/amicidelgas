@@ -210,16 +210,6 @@
             </f:facet>
             <h:outputText value="#{_cybercontadino.coordinate}"/>
         </h:column>
-        <h:column>
-            <f:facet name="header">
-                <ui:include src="layout/sort.xhtml">
-                    <ui:param name="entityList" value="#{cybercontadinoList}"/>
-                    <ui:param name="propertyLabel" value="Comune idcomune"/>
-                    <ui:param name="propertyPath" value="cybercontadino.comuneIdcomune"/>
-                </ui:include>
-            </f:facet>
-            <h:outputText value="#{_cybercontadino.comuneIdcomune}"/>
-        </h:column>
         <rich:column styleClass="action">
             <f:facet name="header">Action</f:facet>
             <s:link view="/#{empty from ? 'Cybercontadino' : from}.xhtml"

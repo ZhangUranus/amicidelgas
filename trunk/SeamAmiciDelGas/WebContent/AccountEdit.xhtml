@@ -47,7 +47,6 @@
             <s:decorate id="bloccatoField" template="layout/edit.xhtml">
                 <ui:define name="label">Bloccato</ui:define>
                 <h:selectBooleanCheckbox id="bloccato"
-                                   required="true"
                                       value="#{accountHome.instance.bloccato}"/>
             </s:decorate>
 
@@ -55,7 +54,6 @@
             <s:decorate id="elimatoField" template="layout/edit.xhtml">
                 <ui:define name="label">Elimato</ui:define>
                 <h:selectBooleanCheckbox id="elimato"
-                                   required="true"
                                       value="#{accountHome.instance.elimato}"/>
             </s:decorate>
 
@@ -63,7 +61,6 @@
             <s:decorate id="cancellatoField" template="layout/edit.xhtml">
                 <ui:define name="label">Cancellato</ui:define>
                 <h:selectBooleanCheckbox id="cancellato"
-                                   required="true"
                                       value="#{accountHome.instance.cancellato}"/>
             </s:decorate>
 
@@ -71,7 +68,6 @@
             <s:decorate id="attivatoField" template="layout/edit.xhtml">
                 <ui:define name="label">Attivato</ui:define>
                 <h:selectBooleanCheckbox id="attivato"
-                                   required="true"
                                       value="#{accountHome.instance.attivato}"/>
             </s:decorate>
 
@@ -79,7 +75,6 @@
             <s:decorate id="dataRichiestaField" template="layout/edit.xhtml">
                 <ui:define name="label">Data richiesta</ui:define>
                 <rich:calendar id="dataRichiesta"
-                       required="true"
                           value="#{accountHome.instance.dataRichiesta}" datePattern="MM/dd/yyyy" />
             </s:decorate>
 
@@ -94,19 +89,10 @@
             <s:decorate id="punteggioFeedbackField" template="layout/edit.xhtml">
                 <ui:define name="label">Punteggio feedback</ui:define>
                 <h:inputText id="punteggioFeedback"
-                       required="true"
                           value="#{accountHome.instance.punteggioFeedback}">
                     <a:support event="onblur" reRender="punteggioFeedbackField" bypassUpdates="true" ajaxSingle="true"/>
                 </h:inputText>
             </s:decorate>
-
-
-
-
-
-
-
-
 
 
 
@@ -159,7 +145,7 @@
 
 <rich:tabPanel switchType="ajax">
 
-    <rich:tab label="Utente *" labelClass="required">
+    <rich:tab label="Utente">
     <div class="association" id="utenteParent">
 
         <h:outputText value="There is no utente associated with this account."
@@ -215,14 +201,6 @@
             <h:column>
                 <f:facet name="header">Email</f:facet>
                 <h:outputText value="#{_utente.email}"/>
-            </h:column>
-            <h:column>
-                <f:facet name="header">Username</f:facet>
-                <h:outputText value="#{_utente.username}"/>
-            </h:column>
-            <h:column>
-                <f:facet name="header">Luogo nascita</f:facet>
-                <h:outputText value="#{_utente.luogoNascita}"/>
             </h:column>
         </rich:dataTable>
 
@@ -326,6 +304,116 @@
         </f:subview>
     </rich:tab>
 
+    <rich:tab label="Cybercontadinos">
+        <h:form styleClass="association" id="cybercontadinosChildren">
+
+            <h:outputText value="There are no cybercontadinos associated with this account."
+                       rendered="#{empty accountHome.cybercontadinos}"/>
+
+            <rich:dataTable value="#{accountHome.cybercontadinos}"
+                           var="_cybercontadino"
+                      rendered="#{not empty accountHome.cybercontadinos}"
+                    rowClasses="rvgRowOne,rvgRowTwo"
+                            id="cybercontadinosTable">
+                <rich:column sortBy="#{_cybercontadino.partitaIva}">
+                    <f:facet name="header">Partita iva</f:facet>
+                    <h:outputText value="#{_cybercontadino.partitaIva}"/>
+                </rich:column>
+                <rich:column sortBy="#{_cybercontadino.nomePresidente}">
+                    <f:facet name="header">Nome presidente</f:facet>
+                    <h:outputText value="#{_cybercontadino.nomePresidente}"/>
+                </rich:column>
+                <rich:column sortBy="#{_cybercontadino.indirizzo}">
+                    <f:facet name="header">Indirizzo</f:facet>
+                    <h:outputText value="#{_cybercontadino.indirizzo}"/>
+                </rich:column>
+                <rich:column sortBy="#{_cybercontadino.cognomePresidente}">
+                    <f:facet name="header">Cognome presidente</f:facet>
+                    <h:outputText value="#{_cybercontadino.cognomePresidente}"/>
+                </rich:column>
+                <rich:column sortBy="#{_cybercontadino.nomeAzienda}">
+                    <f:facet name="header">Nome azienda</f:facet>
+                    <h:outputText value="#{_cybercontadino.nomeAzienda}"/>
+                </rich:column>
+                <rich:column sortBy="#{_cybercontadino.pathAsl}">
+                    <f:facet name="header">Path asl</f:facet>
+                    <h:outputText value="#{_cybercontadino.pathAsl}"/>
+                </rich:column>
+                <rich:column sortBy="#{_cybercontadino.urlWsdl}">
+                    <f:facet name="header">Url wsdl</f:facet>
+                    <h:outputText value="#{_cybercontadino.urlWsdl}"/>
+                </rich:column>
+                <rich:column sortBy="#{_cybercontadino.descrizioneAzienda}">
+                    <f:facet name="header">Descrizione azienda</f:facet>
+                    <h:outputText value="#{_cybercontadino.descrizioneAzienda}"/>
+                </rich:column>
+                <rich:column sortBy="#{_cybercontadino.recapitoTelefonico}">
+                    <f:facet name="header">Recapito telefonico</f:facet>
+                    <h:outputText value="#{_cybercontadino.recapitoTelefonico}"/>
+                </rich:column>
+                <rich:column sortBy="#{_cybercontadino.email}">
+                    <f:facet name="header">Email</f:facet>
+                    <h:outputText value="#{_cybercontadino.email}"/>
+                </rich:column>
+                <rich:column sortBy="#{_cybercontadino.coordinate}">
+                    <f:facet name="header">Coordinate</f:facet>
+                    <h:outputText value="#{_cybercontadino.coordinate}"/>
+                </rich:column>
+            </rich:dataTable>
+
+        </h:form>
+
+        <f:subview rendered="#{accountHome.managed}" id="cybercontadinos">
+        <div class="actionButtons">
+            <s:button id="addcybercontadino"
+                   value="Add cybercontadino"
+                    view="/CybercontadinoEdit.xhtml"
+             propagation="none">
+                 <f:param name="accountUsername"
+                         value="#{accountHome.instance.username}"/>
+                 <f:param name="cybercontadinoFrom" value="Account"/>
+            </s:button>
+        </div>
+        </f:subview>
+    </rich:tab>
+
+    <rich:tab label="Ruolos">
+        <h:form styleClass="association" id="ruolosChildren">
+
+            <h:outputText value="There are no ruolos associated with this account."
+                       rendered="#{empty accountHome.ruolos}"/>
+
+            <rich:dataTable value="#{accountHome.ruolos}"
+                           var="_ruolo"
+                      rendered="#{not empty accountHome.ruolos}"
+                    rowClasses="rvgRowOne,rvgRowTwo"
+                            id="ruolosTable">
+                <rich:column sortBy="#{_ruolo.idruolo}">
+                    <f:facet name="header">Idruolo</f:facet>
+                    <h:outputText value="#{_ruolo.idruolo}"/>
+                </rich:column>
+                <rich:column sortBy="#{_ruolo.tipo}">
+                    <f:facet name="header">Tipo</f:facet>
+                    <h:outputText value="#{_ruolo.tipo}"/>
+                </rich:column>
+            </rich:dataTable>
+
+        </h:form>
+
+        <f:subview rendered="#{accountHome.managed}" id="ruolos">
+        <div class="actionButtons">
+            <s:button id="addruolo"
+                   value="Add ruolo"
+                    view="/RuoloEdit.xhtml"
+             propagation="none">
+                 <f:param name="accountUsername"
+                         value="#{accountHome.instance.username}"/>
+                 <f:param name="ruoloFrom" value="Account"/>
+            </s:button>
+        </div>
+        </f:subview>
+    </rich:tab>
+
     <rich:tab label="Questionarios">
         <h:form styleClass="association" id="questionariosChildren">
 
@@ -403,6 +491,63 @@
         </f:subview>
     </rich:tab>
 
+    <rich:tab label="Feedbacks for destinatario">
+        <h:form styleClass="association" id="feedbacksForDestinatarioChildren">
+
+            <h:outputText value="There are no feedbacksForDestinatario associated with this account."
+                       rendered="#{empty accountHome.feedbacksForDestinatario}"/>
+
+            <rich:dataTable value="#{accountHome.feedbacksForDestinatario}"
+                           var="_feedback"
+                      rendered="#{not empty accountHome.feedbacksForDestinatario}"
+                    rowClasses="rvgRowOne,rvgRowTwo"
+                            id="feedbacksForDestinatarioTable">
+                <rich:column sortBy="#{_feedback.idfeedback}">
+                    <f:facet name="header">Idfeedback</f:facet>
+                    <h:outputText value="#{_feedback.idfeedback}"/>
+                </rich:column>
+                <rich:column sortBy="#{_feedback.analizzato}">
+                    <f:facet name="header">Analizzato</f:facet>
+                    <h:outputText value="#{_feedback.analizzato}"/>
+                </rich:column>
+                <rich:column sortBy="#{_feedback.descrizione}">
+                    <f:facet name="header">Descrizione</f:facet>
+                    <h:outputText value="#{_feedback.descrizione}"/>
+                </rich:column>
+                <rich:column sortBy="#{_feedback.dataValidazione}">
+                    <f:facet name="header">Data validazione</f:facet>
+                    <h:outputText value="#{_feedback.dataValidazione}">
+                        <s:convertDateTime type="date" dateStyle="short"/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_feedback.dataSegnalazione}">
+                    <f:facet name="header">Data segnalazione</f:facet>
+                    <h:outputText value="#{_feedback.dataSegnalazione}">
+                        <s:convertDateTime type="date" dateStyle="short"/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_feedback.punteggio}">
+                    <f:facet name="header">Punteggio</f:facet>
+                    <h:outputText value="#{_feedback.punteggio}"/>
+                </rich:column>
+            </rich:dataTable>
+
+        </h:form>
+
+        <f:subview rendered="#{accountHome.managed}" id="feedbacksForDestinatario">
+        <div class="actionButtons">
+            <s:button id="addfeedback"
+                   value="Add feedback"
+                    view="/FeedbackEdit.xhtml"
+             propagation="none">
+                 <f:param name="accountUsername"
+                         value="#{accountHome.instance.username}"/>
+                 <f:param name="feedbackFrom" value="Account"/>
+            </s:button>
+        </div>
+        </f:subview>
+    </rich:tab>
+
     <rich:tab label="Feedbacks for segnalatore">
         <h:form styleClass="association" id="feedbacksForSegnalatoreChildren">
 
@@ -455,83 +600,6 @@
                  <f:param name="accountUsername"
                          value="#{accountHome.instance.username}"/>
                  <f:param name="feedbackFrom" value="Account"/>
-            </s:button>
-        </div>
-        </f:subview>
-    </rich:tab>
-
-    <rich:tab label="Cybercontadinos">
-        <h:form styleClass="association" id="cybercontadinosChildren">
-
-            <h:outputText value="There are no cybercontadinos associated with this account."
-                       rendered="#{empty accountHome.cybercontadinos}"/>
-
-            <rich:dataTable value="#{accountHome.cybercontadinos}"
-                           var="_cybercontadino"
-                      rendered="#{not empty accountHome.cybercontadinos}"
-                    rowClasses="rvgRowOne,rvgRowTwo"
-                            id="cybercontadinosTable">
-                <rich:column sortBy="#{_cybercontadino.partitaIva}">
-                    <f:facet name="header">Partita iva</f:facet>
-                    <h:outputText value="#{_cybercontadino.partitaIva}"/>
-                </rich:column>
-                <rich:column sortBy="#{_cybercontadino.nomePresidente}">
-                    <f:facet name="header">Nome presidente</f:facet>
-                    <h:outputText value="#{_cybercontadino.nomePresidente}"/>
-                </rich:column>
-                <rich:column sortBy="#{_cybercontadino.indirizzo}">
-                    <f:facet name="header">Indirizzo</f:facet>
-                    <h:outputText value="#{_cybercontadino.indirizzo}"/>
-                </rich:column>
-                <rich:column sortBy="#{_cybercontadino.cognomePresidente}">
-                    <f:facet name="header">Cognome presidente</f:facet>
-                    <h:outputText value="#{_cybercontadino.cognomePresidente}"/>
-                </rich:column>
-                <rich:column sortBy="#{_cybercontadino.nomeAzienda}">
-                    <f:facet name="header">Nome azienda</f:facet>
-                    <h:outputText value="#{_cybercontadino.nomeAzienda}"/>
-                </rich:column>
-                <rich:column sortBy="#{_cybercontadino.pathAsl}">
-                    <f:facet name="header">Path asl</f:facet>
-                    <h:outputText value="#{_cybercontadino.pathAsl}"/>
-                </rich:column>
-                <rich:column sortBy="#{_cybercontadino.urlWsdl}">
-                    <f:facet name="header">Url wsdl</f:facet>
-                    <h:outputText value="#{_cybercontadino.urlWsdl}"/>
-                </rich:column>
-                <rich:column sortBy="#{_cybercontadino.descrizioneAzienda}">
-                    <f:facet name="header">Descrizione azienda</f:facet>
-                    <h:outputText value="#{_cybercontadino.descrizioneAzienda}"/>
-                </rich:column>
-                <rich:column sortBy="#{_cybercontadino.recapitoTelefonico}">
-                    <f:facet name="header">Recapito telefonico</f:facet>
-                    <h:outputText value="#{_cybercontadino.recapitoTelefonico}"/>
-                </rich:column>
-                <rich:column sortBy="#{_cybercontadino.email}">
-                    <f:facet name="header">Email</f:facet>
-                    <h:outputText value="#{_cybercontadino.email}"/>
-                </rich:column>
-                <rich:column sortBy="#{_cybercontadino.coordinate}">
-                    <f:facet name="header">Coordinate</f:facet>
-                    <h:outputText value="#{_cybercontadino.coordinate}"/>
-                </rich:column>
-                <rich:column sortBy="#{_cybercontadino.comuneIdcomune}">
-                    <f:facet name="header">Comune idcomune</f:facet>
-                    <h:outputText value="#{_cybercontadino.comuneIdcomune}"/>
-                </rich:column>
-            </rich:dataTable>
-
-        </h:form>
-
-        <f:subview rendered="#{accountHome.managed}" id="cybercontadinos">
-        <div class="actionButtons">
-            <s:button id="addcybercontadino"
-                   value="Add cybercontadino"
-                    view="/CybercontadinoEdit.xhtml"
-             propagation="none">
-                 <f:param name="accountUsername"
-                         value="#{accountHome.instance.username}"/>
-                 <f:param name="cybercontadinoFrom" value="Account"/>
             </s:button>
         </div>
         </f:subview>
@@ -594,63 +662,6 @@
         </f:subview>
     </rich:tab>
 
-    <rich:tab label="Feedbacks for segnalatore_1">
-        <h:form styleClass="association" id="feedbacksForSegnalatore_1Children">
-
-            <h:outputText value="There are no feedbacksForSegnalatore_1 associated with this account."
-                       rendered="#{empty accountHome.feedbacksForSegnalatore_1}"/>
-
-            <rich:dataTable value="#{accountHome.feedbacksForSegnalatore_1}"
-                           var="_feedback"
-                      rendered="#{not empty accountHome.feedbacksForSegnalatore_1}"
-                    rowClasses="rvgRowOne,rvgRowTwo"
-                            id="feedbacksForSegnalatore_1Table">
-                <rich:column sortBy="#{_feedback.idfeedback}">
-                    <f:facet name="header">Idfeedback</f:facet>
-                    <h:outputText value="#{_feedback.idfeedback}"/>
-                </rich:column>
-                <rich:column sortBy="#{_feedback.analizzato}">
-                    <f:facet name="header">Analizzato</f:facet>
-                    <h:outputText value="#{_feedback.analizzato}"/>
-                </rich:column>
-                <rich:column sortBy="#{_feedback.descrizione}">
-                    <f:facet name="header">Descrizione</f:facet>
-                    <h:outputText value="#{_feedback.descrizione}"/>
-                </rich:column>
-                <rich:column sortBy="#{_feedback.dataValidazione}">
-                    <f:facet name="header">Data validazione</f:facet>
-                    <h:outputText value="#{_feedback.dataValidazione}">
-                        <s:convertDateTime type="date" dateStyle="short"/>
-                    </h:outputText>
-                </rich:column>
-                <rich:column sortBy="#{_feedback.dataSegnalazione}">
-                    <f:facet name="header">Data segnalazione</f:facet>
-                    <h:outputText value="#{_feedback.dataSegnalazione}">
-                        <s:convertDateTime type="date" dateStyle="short"/>
-                    </h:outputText>
-                </rich:column>
-                <rich:column sortBy="#{_feedback.punteggio}">
-                    <f:facet name="header">Punteggio</f:facet>
-                    <h:outputText value="#{_feedback.punteggio}"/>
-                </rich:column>
-            </rich:dataTable>
-
-        </h:form>
-
-        <f:subview rendered="#{accountHome.managed}" id="feedbacksForSegnalatore_1">
-        <div class="actionButtons">
-            <s:button id="addfeedback"
-                   value="Add feedback"
-                    view="/FeedbackEdit.xhtml"
-             propagation="none">
-                 <f:param name="accountUsername"
-                         value="#{accountHome.instance.username}"/>
-                 <f:param name="feedbackFrom" value="Account"/>
-            </s:button>
-        </div>
-        </f:subview>
-    </rich:tab>
-
     <rich:tab label="Ordines">
         <h:form styleClass="association" id="ordinesChildren">
 
@@ -700,14 +711,6 @@
                         <s:convertDateTime type="both" dateStyle="short"/>
                     </h:outputText>
                 </rich:column>
-                <rich:column sortBy="#{_ordine.username}">
-                    <f:facet name="header">Username</f:facet>
-                    <h:outputText value="#{_ordine.username}"/>
-                </rich:column>
-                <rich:column sortBy="#{_ordine.idarticolo}">
-                    <f:facet name="header">Idarticolo</f:facet>
-                    <h:outputText value="#{_ordine.idarticolo}"/>
-                </rich:column>
             </rich:dataTable>
 
         </h:form>
@@ -721,535 +724,6 @@
                  <f:param name="accountUsername"
                          value="#{accountHome.instance.username}"/>
                  <f:param name="ordineFrom" value="Account"/>
-            </s:button>
-        </div>
-        </f:subview>
-    </rich:tab>
-
-    <rich:tab label="Itinerarios_1">
-        <h:form styleClass="association" id="itinerarios_1Children">
-
-            <h:outputText value="There are no itinerarios_1 associated with this account."
-                       rendered="#{empty accountHome.itinerarios_1}"/>
-
-            <rich:dataTable value="#{accountHome.itinerarios_1}"
-                           var="_itinerario"
-                      rendered="#{not empty accountHome.itinerarios_1}"
-                    rowClasses="rvgRowOne,rvgRowTwo"
-                            id="itinerarios_1Table">
-                <rich:column sortBy="#{_itinerario.iditinerario}">
-                    <f:facet name="header">Iditinerario</f:facet>
-                    <h:outputText value="#{_itinerario.iditinerario}"/>
-                </rich:column>
-                <rich:column sortBy="#{_itinerario.dataPartenza}">
-                    <f:facet name="header">Data partenza</f:facet>
-                    <h:outputText value="#{_itinerario.dataPartenza}">
-                        <s:convertDateTime type="both" dateStyle="short"/>
-                    </h:outputText>
-                </rich:column>
-                <rich:column sortBy="#{_itinerario.dataConsegna}">
-                    <f:facet name="header">Data consegna</f:facet>
-                    <h:outputText value="#{_itinerario.dataConsegna}">
-                        <s:convertDateTime type="both" dateStyle="short"/>
-                    </h:outputText>
-                </rich:column>
-                <rich:column sortBy="#{_itinerario.documentazionePath}">
-                    <f:facet name="header">Documentazione path</f:facet>
-                    <h:outputText value="#{_itinerario.documentazionePath}"/>
-                </rich:column>
-                <rich:column sortBy="#{_itinerario.dataCreazione}">
-                    <f:facet name="header">Data creazione</f:facet>
-                    <h:outputText value="#{_itinerario.dataCreazione}">
-                        <s:convertDateTime type="both" dateStyle="short"/>
-                    </h:outputText>
-                </rich:column>
-            </rich:dataTable>
-
-        </h:form>
-
-        <f:subview rendered="#{accountHome.managed}" id="itinerarios_1">
-        <div class="actionButtons">
-            <s:button id="additinerario"
-                   value="Add itinerario"
-                    view="/ItinerarioEdit.xhtml"
-             propagation="none">
-                 <f:param name="accountUsername"
-                         value="#{accountHome.instance.username}"/>
-                 <f:param name="itinerarioFrom" value="Account"/>
-            </s:button>
-        </div>
-        </f:subview>
-    </rich:tab>
-
-    <rich:tab label="Ruolos">
-        <h:form styleClass="association" id="ruolosChildren">
-
-            <h:outputText value="There are no ruolos associated with this account."
-                       rendered="#{empty accountHome.ruolos}"/>
-
-            <rich:dataTable value="#{accountHome.ruolos}"
-                           var="_ruolo"
-                      rendered="#{not empty accountHome.ruolos}"
-                    rowClasses="rvgRowOne,rvgRowTwo"
-                            id="ruolosTable">
-                <rich:column sortBy="#{_ruolo.idruolo}">
-                    <f:facet name="header">Idruolo</f:facet>
-                    <h:outputText value="#{_ruolo.idruolo}"/>
-                </rich:column>
-                <rich:column sortBy="#{_ruolo.tipo}">
-                    <f:facet name="header">Tipo</f:facet>
-                    <h:outputText value="#{_ruolo.tipo}"/>
-                </rich:column>
-            </rich:dataTable>
-
-        </h:form>
-
-        <f:subview rendered="#{accountHome.managed}" id="ruolos">
-        <div class="actionButtons">
-            <s:button id="addruolo"
-                   value="Add ruolo"
-                    view="/RuoloEdit.xhtml"
-             propagation="none">
-                 <f:param name="accountUsername"
-                         value="#{accountHome.instance.username}"/>
-                 <f:param name="ruoloFrom" value="Account"/>
-            </s:button>
-        </div>
-        </f:subview>
-    </rich:tab>
-
-    <rich:tab label="Cybercontadinos_1">
-        <h:form styleClass="association" id="cybercontadinos_1Children">
-
-            <h:outputText value="There are no cybercontadinos_1 associated with this account."
-                       rendered="#{empty accountHome.cybercontadinos_1}"/>
-
-            <rich:dataTable value="#{accountHome.cybercontadinos_1}"
-                           var="_cybercontadino"
-                      rendered="#{not empty accountHome.cybercontadinos_1}"
-                    rowClasses="rvgRowOne,rvgRowTwo"
-                            id="cybercontadinos_1Table">
-                <rich:column sortBy="#{_cybercontadino.partitaIva}">
-                    <f:facet name="header">Partita iva</f:facet>
-                    <h:outputText value="#{_cybercontadino.partitaIva}"/>
-                </rich:column>
-                <rich:column sortBy="#{_cybercontadino.nomePresidente}">
-                    <f:facet name="header">Nome presidente</f:facet>
-                    <h:outputText value="#{_cybercontadino.nomePresidente}"/>
-                </rich:column>
-                <rich:column sortBy="#{_cybercontadino.indirizzo}">
-                    <f:facet name="header">Indirizzo</f:facet>
-                    <h:outputText value="#{_cybercontadino.indirizzo}"/>
-                </rich:column>
-                <rich:column sortBy="#{_cybercontadino.cognomePresidente}">
-                    <f:facet name="header">Cognome presidente</f:facet>
-                    <h:outputText value="#{_cybercontadino.cognomePresidente}"/>
-                </rich:column>
-                <rich:column sortBy="#{_cybercontadino.nomeAzienda}">
-                    <f:facet name="header">Nome azienda</f:facet>
-                    <h:outputText value="#{_cybercontadino.nomeAzienda}"/>
-                </rich:column>
-                <rich:column sortBy="#{_cybercontadino.pathAsl}">
-                    <f:facet name="header">Path asl</f:facet>
-                    <h:outputText value="#{_cybercontadino.pathAsl}"/>
-                </rich:column>
-                <rich:column sortBy="#{_cybercontadino.urlWsdl}">
-                    <f:facet name="header">Url wsdl</f:facet>
-                    <h:outputText value="#{_cybercontadino.urlWsdl}"/>
-                </rich:column>
-                <rich:column sortBy="#{_cybercontadino.descrizioneAzienda}">
-                    <f:facet name="header">Descrizione azienda</f:facet>
-                    <h:outputText value="#{_cybercontadino.descrizioneAzienda}"/>
-                </rich:column>
-                <rich:column sortBy="#{_cybercontadino.recapitoTelefonico}">
-                    <f:facet name="header">Recapito telefonico</f:facet>
-                    <h:outputText value="#{_cybercontadino.recapitoTelefonico}"/>
-                </rich:column>
-                <rich:column sortBy="#{_cybercontadino.email}">
-                    <f:facet name="header">Email</f:facet>
-                    <h:outputText value="#{_cybercontadino.email}"/>
-                </rich:column>
-                <rich:column sortBy="#{_cybercontadino.coordinate}">
-                    <f:facet name="header">Coordinate</f:facet>
-                    <h:outputText value="#{_cybercontadino.coordinate}"/>
-                </rich:column>
-                <rich:column sortBy="#{_cybercontadino.comuneIdcomune}">
-                    <f:facet name="header">Comune idcomune</f:facet>
-                    <h:outputText value="#{_cybercontadino.comuneIdcomune}"/>
-                </rich:column>
-            </rich:dataTable>
-
-        </h:form>
-
-        <f:subview rendered="#{accountHome.managed}" id="cybercontadinos_1">
-        <div class="actionButtons">
-            <s:button id="addcybercontadino"
-                   value="Add cybercontadino"
-                    view="/CybercontadinoEdit.xhtml"
-             propagation="none">
-                 <f:param name="accountUsername"
-                         value="#{accountHome.instance.username}"/>
-                 <f:param name="cybercontadinoFrom" value="Account"/>
-            </s:button>
-        </div>
-        </f:subview>
-    </rich:tab>
-
-    <rich:tab label="Ruolos_1">
-        <h:form styleClass="association" id="ruolos_1Children">
-
-            <h:outputText value="There are no ruolos_1 associated with this account."
-                       rendered="#{empty accountHome.ruolos_1}"/>
-
-            <rich:dataTable value="#{accountHome.ruolos_1}"
-                           var="_ruolo"
-                      rendered="#{not empty accountHome.ruolos_1}"
-                    rowClasses="rvgRowOne,rvgRowTwo"
-                            id="ruolos_1Table">
-                <rich:column sortBy="#{_ruolo.idruolo}">
-                    <f:facet name="header">Idruolo</f:facet>
-                    <h:outputText value="#{_ruolo.idruolo}"/>
-                </rich:column>
-                <rich:column sortBy="#{_ruolo.tipo}">
-                    <f:facet name="header">Tipo</f:facet>
-                    <h:outputText value="#{_ruolo.tipo}"/>
-                </rich:column>
-            </rich:dataTable>
-
-        </h:form>
-
-        <f:subview rendered="#{accountHome.managed}" id="ruolos_1">
-        <div class="actionButtons">
-            <s:button id="addruolo"
-                   value="Add ruolo"
-                    view="/RuoloEdit.xhtml"
-             propagation="none">
-                 <f:param name="accountUsername"
-                         value="#{accountHome.instance.username}"/>
-                 <f:param name="ruoloFrom" value="Account"/>
-            </s:button>
-        </div>
-        </f:subview>
-    </rich:tab>
-
-    <rich:tab label="Feedbacks for destinatario">
-        <h:form styleClass="association" id="feedbacksForDestinatarioChildren">
-
-            <h:outputText value="There are no feedbacksForDestinatario associated with this account."
-                       rendered="#{empty accountHome.feedbacksForDestinatario}"/>
-
-            <rich:dataTable value="#{accountHome.feedbacksForDestinatario}"
-                           var="_feedback"
-                      rendered="#{not empty accountHome.feedbacksForDestinatario}"
-                    rowClasses="rvgRowOne,rvgRowTwo"
-                            id="feedbacksForDestinatarioTable">
-                <rich:column sortBy="#{_feedback.idfeedback}">
-                    <f:facet name="header">Idfeedback</f:facet>
-                    <h:outputText value="#{_feedback.idfeedback}"/>
-                </rich:column>
-                <rich:column sortBy="#{_feedback.analizzato}">
-                    <f:facet name="header">Analizzato</f:facet>
-                    <h:outputText value="#{_feedback.analizzato}"/>
-                </rich:column>
-                <rich:column sortBy="#{_feedback.descrizione}">
-                    <f:facet name="header">Descrizione</f:facet>
-                    <h:outputText value="#{_feedback.descrizione}"/>
-                </rich:column>
-                <rich:column sortBy="#{_feedback.dataValidazione}">
-                    <f:facet name="header">Data validazione</f:facet>
-                    <h:outputText value="#{_feedback.dataValidazione}">
-                        <s:convertDateTime type="date" dateStyle="short"/>
-                    </h:outputText>
-                </rich:column>
-                <rich:column sortBy="#{_feedback.dataSegnalazione}">
-                    <f:facet name="header">Data segnalazione</f:facet>
-                    <h:outputText value="#{_feedback.dataSegnalazione}">
-                        <s:convertDateTime type="date" dateStyle="short"/>
-                    </h:outputText>
-                </rich:column>
-                <rich:column sortBy="#{_feedback.punteggio}">
-                    <f:facet name="header">Punteggio</f:facet>
-                    <h:outputText value="#{_feedback.punteggio}"/>
-                </rich:column>
-            </rich:dataTable>
-
-        </h:form>
-
-        <f:subview rendered="#{accountHome.managed}" id="feedbacksForDestinatario">
-        <div class="actionButtons">
-            <s:button id="addfeedback"
-                   value="Add feedback"
-                    view="/FeedbackEdit.xhtml"
-             propagation="none">
-                 <f:param name="accountUsername"
-                         value="#{accountHome.instance.username}"/>
-                 <f:param name="feedbackFrom" value="Account"/>
-            </s:button>
-        </div>
-        </f:subview>
-    </rich:tab>
-
-    <rich:tab label="Feedbacks for destinatario_1">
-        <h:form styleClass="association" id="feedbacksForDestinatario_1Children">
-
-            <h:outputText value="There are no feedbacksForDestinatario_1 associated with this account."
-                       rendered="#{empty accountHome.feedbacksForDestinatario_1}"/>
-
-            <rich:dataTable value="#{accountHome.feedbacksForDestinatario_1}"
-                           var="_feedback"
-                      rendered="#{not empty accountHome.feedbacksForDestinatario_1}"
-                    rowClasses="rvgRowOne,rvgRowTwo"
-                            id="feedbacksForDestinatario_1Table">
-                <rich:column sortBy="#{_feedback.idfeedback}">
-                    <f:facet name="header">Idfeedback</f:facet>
-                    <h:outputText value="#{_feedback.idfeedback}"/>
-                </rich:column>
-                <rich:column sortBy="#{_feedback.analizzato}">
-                    <f:facet name="header">Analizzato</f:facet>
-                    <h:outputText value="#{_feedback.analizzato}"/>
-                </rich:column>
-                <rich:column sortBy="#{_feedback.descrizione}">
-                    <f:facet name="header">Descrizione</f:facet>
-                    <h:outputText value="#{_feedback.descrizione}"/>
-                </rich:column>
-                <rich:column sortBy="#{_feedback.dataValidazione}">
-                    <f:facet name="header">Data validazione</f:facet>
-                    <h:outputText value="#{_feedback.dataValidazione}">
-                        <s:convertDateTime type="date" dateStyle="short"/>
-                    </h:outputText>
-                </rich:column>
-                <rich:column sortBy="#{_feedback.dataSegnalazione}">
-                    <f:facet name="header">Data segnalazione</f:facet>
-                    <h:outputText value="#{_feedback.dataSegnalazione}">
-                        <s:convertDateTime type="date" dateStyle="short"/>
-                    </h:outputText>
-                </rich:column>
-                <rich:column sortBy="#{_feedback.punteggio}">
-                    <f:facet name="header">Punteggio</f:facet>
-                    <h:outputText value="#{_feedback.punteggio}"/>
-                </rich:column>
-            </rich:dataTable>
-
-        </h:form>
-
-        <f:subview rendered="#{accountHome.managed}" id="feedbacksForDestinatario_1">
-        <div class="actionButtons">
-            <s:button id="addfeedback"
-                   value="Add feedback"
-                    view="/FeedbackEdit.xhtml"
-             propagation="none">
-                 <f:param name="accountUsername"
-                         value="#{accountHome.instance.username}"/>
-                 <f:param name="feedbackFrom" value="Account"/>
-            </s:button>
-        </div>
-        </f:subview>
-    </rich:tab>
-
-    <rich:tab label="Feedbacks for validatore_1">
-        <h:form styleClass="association" id="feedbacksForValidatore_1Children">
-
-            <h:outputText value="There are no feedbacksForValidatore_1 associated with this account."
-                       rendered="#{empty accountHome.feedbacksForValidatore_1}"/>
-
-            <rich:dataTable value="#{accountHome.feedbacksForValidatore_1}"
-                           var="_feedback"
-                      rendered="#{not empty accountHome.feedbacksForValidatore_1}"
-                    rowClasses="rvgRowOne,rvgRowTwo"
-                            id="feedbacksForValidatore_1Table">
-                <rich:column sortBy="#{_feedback.idfeedback}">
-                    <f:facet name="header">Idfeedback</f:facet>
-                    <h:outputText value="#{_feedback.idfeedback}"/>
-                </rich:column>
-                <rich:column sortBy="#{_feedback.analizzato}">
-                    <f:facet name="header">Analizzato</f:facet>
-                    <h:outputText value="#{_feedback.analizzato}"/>
-                </rich:column>
-                <rich:column sortBy="#{_feedback.descrizione}">
-                    <f:facet name="header">Descrizione</f:facet>
-                    <h:outputText value="#{_feedback.descrizione}"/>
-                </rich:column>
-                <rich:column sortBy="#{_feedback.dataValidazione}">
-                    <f:facet name="header">Data validazione</f:facet>
-                    <h:outputText value="#{_feedback.dataValidazione}">
-                        <s:convertDateTime type="date" dateStyle="short"/>
-                    </h:outputText>
-                </rich:column>
-                <rich:column sortBy="#{_feedback.dataSegnalazione}">
-                    <f:facet name="header">Data segnalazione</f:facet>
-                    <h:outputText value="#{_feedback.dataSegnalazione}">
-                        <s:convertDateTime type="date" dateStyle="short"/>
-                    </h:outputText>
-                </rich:column>
-                <rich:column sortBy="#{_feedback.punteggio}">
-                    <f:facet name="header">Punteggio</f:facet>
-                    <h:outputText value="#{_feedback.punteggio}"/>
-                </rich:column>
-            </rich:dataTable>
-
-        </h:form>
-
-        <f:subview rendered="#{accountHome.managed}" id="feedbacksForValidatore_1">
-        <div class="actionButtons">
-            <s:button id="addfeedback"
-                   value="Add feedback"
-                    view="/FeedbackEdit.xhtml"
-             propagation="none">
-                 <f:param name="accountUsername"
-                         value="#{accountHome.instance.username}"/>
-                 <f:param name="feedbackFrom" value="Account"/>
-            </s:button>
-        </div>
-        </f:subview>
-    </rich:tab>
-
-    <rich:tab label="Ordines_1">
-        <h:form styleClass="association" id="ordines_1Children">
-
-            <h:outputText value="There are no ordines_1 associated with this account."
-                       rendered="#{empty accountHome.ordines_1}"/>
-
-            <rich:dataTable value="#{accountHome.ordines_1}"
-                           var="_ordine"
-                      rendered="#{not empty accountHome.ordines_1}"
-                    rowClasses="rvgRowOne,rvgRowTwo"
-                            id="ordines_1Table">
-                <rich:column sortBy="#{_ordine.idordine}">
-                    <f:facet name="header">Idordine</f:facet>
-                    <h:outputText value="#{_ordine.idordine}"/>
-                </rich:column>
-                <rich:column sortBy="#{_ordine.dataRichiesta}">
-                    <f:facet name="header">Data richiesta</f:facet>
-                    <h:outputText value="#{_ordine.dataRichiesta}">
-                        <s:convertDateTime type="both" dateStyle="short"/>
-                    </h:outputText>
-                </rich:column>
-                <rich:column sortBy="#{_ordine.pendente}">
-                    <f:facet name="header">Pendente</f:facet>
-                    <h:outputText value="#{_ordine.pendente}"/>
-                </rich:column>
-                <rich:column sortBy="#{_ordine.quantita}">
-                    <f:facet name="header">Quantita</f:facet>
-                    <h:outputText value="#{_ordine.quantita}"/>
-                </rich:column>
-                <rich:column sortBy="#{_ordine.quantitaMinUtente}">
-                    <f:facet name="header">Quantita min utente</f:facet>
-                    <h:outputText value="#{_ordine.quantitaMinUtente}"/>
-                </rich:column>
-                <rich:column sortBy="#{_ordine.dataMassimaConsegna}">
-                    <f:facet name="header">Data massima consegna</f:facet>
-                    <h:outputText value="#{_ordine.dataMassimaConsegna}">
-                        <s:convertDateTime type="both" dateStyle="short"/>
-                    </h:outputText>
-                </rich:column>
-                <rich:column sortBy="#{_ordine.cancellato}">
-                    <f:facet name="header">Cancellato</f:facet>
-                    <h:outputText value="#{_ordine.cancellato}"/>
-                </rich:column>
-                <rich:column sortBy="#{_ordine.dataCancellazioneAccettazione}">
-                    <f:facet name="header">Data cancellazione accettazione</f:facet>
-                    <h:outputText value="#{_ordine.dataCancellazioneAccettazione}">
-                        <s:convertDateTime type="both" dateStyle="short"/>
-                    </h:outputText>
-                </rich:column>
-                <rich:column sortBy="#{_ordine.username}">
-                    <f:facet name="header">Username</f:facet>
-                    <h:outputText value="#{_ordine.username}"/>
-                </rich:column>
-                <rich:column sortBy="#{_ordine.idarticolo}">
-                    <f:facet name="header">Idarticolo</f:facet>
-                    <h:outputText value="#{_ordine.idarticolo}"/>
-                </rich:column>
-            </rich:dataTable>
-
-        </h:form>
-
-        <f:subview rendered="#{accountHome.managed}" id="ordines_1">
-        <div class="actionButtons">
-            <s:button id="addordine"
-                   value="Add ordine"
-                    view="/OrdineEdit.xhtml"
-             propagation="none">
-                 <f:param name="accountUsername"
-                         value="#{accountHome.instance.username}"/>
-                 <f:param name="ordineFrom" value="Account"/>
-            </s:button>
-        </div>
-        </f:subview>
-    </rich:tab>
-
-    <rich:tab label="Questionarios_1">
-        <h:form styleClass="association" id="questionarios_1Children">
-
-            <h:outputText value="There are no questionarios_1 associated with this account."
-                       rendered="#{empty accountHome.questionarios_1}"/>
-
-            <rich:dataTable value="#{accountHome.questionarios_1}"
-                           var="_questionario"
-                      rendered="#{not empty accountHome.questionarios_1}"
-                    rowClasses="rvgRowOne,rvgRowTwo"
-                            id="questionarios_1Table">
-                <rich:column sortBy="#{_questionario.idquestionario}">
-                    <f:facet name="header">Idquestionario</f:facet>
-                    <h:outputText value="#{_questionario.idquestionario}"/>
-                </rich:column>
-                <rich:column sortBy="#{_questionario.votoProdotti}">
-                    <f:facet name="header">Voto prodotti</f:facet>
-                    <h:outputText value="#{_questionario.votoProdotti}"/>
-                </rich:column>
-                <rich:column sortBy="#{_questionario.votoStabile}">
-                    <f:facet name="header">Voto stabile</f:facet>
-                    <h:outputText value="#{_questionario.votoStabile}"/>
-                </rich:column>
-                <rich:column sortBy="#{_questionario.votoIgiene}">
-                    <f:facet name="header">Voto igiene</f:facet>
-                    <h:outputText value="#{_questionario.votoIgiene}"/>
-                </rich:column>
-                <rich:column sortBy="#{_questionario.votoAllevamento}">
-                    <f:facet name="header">Voto allevamento</f:facet>
-                    <h:outputText value="#{_questionario.votoAllevamento}"/>
-                </rich:column>
-                <rich:column sortBy="#{_questionario.votoProfessionalita}">
-                    <f:facet name="header">Voto professionalita</f:facet>
-                    <h:outputText value="#{_questionario.votoProfessionalita}"/>
-                </rich:column>
-                <rich:column sortBy="#{_questionario.votoGlobale}">
-                    <f:facet name="header">Voto globale</f:facet>
-                    <h:outputText value="#{_questionario.votoGlobale}"/>
-                </rich:column>
-                <rich:column sortBy="#{_questionario.commenti}">
-                    <f:facet name="header">Commenti</f:facet>
-                    <h:outputText value="#{_questionario.commenti}"/>
-                </rich:column>
-                <rich:column sortBy="#{_questionario.visionato}">
-                    <f:facet name="header">Visionato</f:facet>
-                    <h:outputText value="#{_questionario.visionato}"/>
-                </rich:column>
-                <rich:column sortBy="#{_questionario.dataVisita}">
-                    <f:facet name="header">Data visita</f:facet>
-                    <h:outputText value="#{_questionario.dataVisita}">
-                        <s:convertDateTime type="date" dateStyle="short"/>
-                    </h:outputText>
-                </rich:column>
-                <rich:column sortBy="#{_questionario.dataCompilazione}">
-                    <f:facet name="header">Data compilazione</f:facet>
-                    <h:outputText value="#{_questionario.dataCompilazione}">
-                        <s:convertDateTime type="both" dateStyle="short"/>
-                    </h:outputText>
-                </rich:column>
-            </rich:dataTable>
-
-        </h:form>
-
-        <f:subview rendered="#{accountHome.managed}" id="questionarios_1">
-        <div class="actionButtons">
-            <s:button id="addquestionario"
-                   value="Add questionario"
-                    view="/QuestionarioEdit.xhtml"
-             propagation="none">
-                 <f:param name="accountUsername"
-                         value="#{accountHome.instance.username}"/>
-                 <f:param name="questionarioFrom" value="Account"/>
             </s:button>
         </div>
         </f:subview>

@@ -55,16 +55,6 @@
             </h:outputText>
         </s:decorate>
 
-        <s:decorate id="username" template="layout/display.xhtml">
-            <ui:define name="label">Username</ui:define>
-            <h:outputText value="#{ordineHome.instance.username}"/>
-        </s:decorate>
-
-        <s:decorate id="idarticolo" template="layout/display.xhtml">
-            <ui:define name="label">Idarticolo</ui:define>
-            <h:outputText value="#{ordineHome.instance.idarticolo}"/>
-        </s:decorate>
-
         <div style="clear:both"/>
 
     </rich:panel>
@@ -225,73 +215,6 @@
                   rendered="#{not empty ordineHome.feedbacks}"
                 rowClasses="rvgRowOne,rvgRowTwo"
                         id="feedbacksTable">
-            <rich:column sortBy="#{_feedback.idfeedback}">
-                <f:facet name="header">Idfeedback</f:facet>
-                <h:outputText value="#{_feedback.idfeedback}"/>
-            </rich:column>
-            <rich:column sortBy="#{_feedback.analizzato}">
-                <f:facet name="header">Analizzato</f:facet>
-                <h:outputText value="#{_feedback.analizzato}"/>
-            </rich:column>
-            <rich:column sortBy="#{_feedback.descrizione}">
-                <f:facet name="header">Descrizione</f:facet>
-                <h:outputText value="#{_feedback.descrizione}"/>
-            </rich:column>
-            <rich:column sortBy="#{_feedback.dataValidazione}">
-                <f:facet name="header">Data validazione</f:facet>
-                <h:outputText value="#{_feedback.dataValidazione}">
-                    <s:convertDateTime type="date" dateStyle="short"/>
-                </h:outputText>
-            </rich:column>
-            <rich:column sortBy="#{_feedback.dataSegnalazione}">
-                <f:facet name="header">Data segnalazione</f:facet>
-                <h:outputText value="#{_feedback.dataSegnalazione}">
-                    <s:convertDateTime type="date" dateStyle="short"/>
-                </h:outputText>
-            </rich:column>
-            <rich:column sortBy="#{_feedback.punteggio}">
-                <f:facet name="header">Punteggio</f:facet>
-                <h:outputText value="#{_feedback.punteggio}"/>
-            </rich:column>
-            <h:column>
-                <f:facet name="header">Action</f:facet>
-                <s:link id="selectfeedback"
-                     value="Select"
-                      view="/Feedback.xhtml">
-                    <f:param name="feedbackIdfeedback"
-                            value="#{_feedback.idfeedback}"/>
-                    <f:param name="feedbackFrom" value="Ordine"/>
-                </s:link>
-            </h:column>
-        </rich:dataTable>
-
-    </h:form>
-
-    <div class="actionButtons">
-        <s:button
-               value="Add feedback"
-                view="/FeedbackEdit.xhtml">
-            <f:param name="ordineIdordine"
-                    value="#{ordineHome.instance.idordine}"/>
-            <f:param name="feedbackFrom" value="Ordine"/>
-        </s:button>
-    </div>
-    </rich:tab>
-
-    <rich:tab>
-        <f:facet name="label">
-            <h:panelGroup><h:graphicImage value="/img/onetomany.gif" style="vertical-align: middle; padding-right: 4px;"/>Feedbacks_1</h:panelGroup>
-        </f:facet>
-    <h:form styleClass="association" id="feedbacks_1Children">
-
-        <h:outputText value="There are no feedbacks_1 associated with this ordine."
-                   rendered="#{empty ordineHome.feedbacks_1}"/>
-
-        <rich:dataTable value="#{ordineHome.feedbacks_1}"
-                       var="_feedback"
-                  rendered="#{not empty ordineHome.feedbacks_1}"
-                rowClasses="rvgRowOne,rvgRowTwo"
-                        id="feedbacks_1Table">
             <rich:column sortBy="#{_feedback.idfeedback}">
                 <f:facet name="header">Idfeedback</f:facet>
                 <h:outputText value="#{_feedback.idfeedback}"/>

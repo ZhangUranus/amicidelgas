@@ -60,16 +60,6 @@
             <h:outputText value="#{utenteHome.instance.email}"/>
         </s:decorate>
 
-        <s:decorate id="username" template="layout/display.xhtml">
-            <ui:define name="label">Username</ui:define>
-            <h:outputText value="#{utenteHome.instance.username}"/>
-        </s:decorate>
-
-        <s:decorate id="luogoNascita" template="layout/display.xhtml">
-            <ui:define name="label">Luogo nascita</ui:define>
-            <h:outputText value="#{utenteHome.instance.luogoNascita}"/>
-        </s:decorate>
-
         <div style="clear:both"/>
 
     </rich:panel>
@@ -118,14 +108,6 @@
                 <f:facet name="header">Cap</f:facet>
                 <h:outputText value="#{_comune.cap}"/>
             </h:column>
-            <h:column>
-                <f:facet name="header">Nome comune</f:facet>
-                <h:outputText value="#{_comune.nomeComune}"/>
-            </h:column>
-            <h:column>
-                <f:facet name="header">Provincia</f:facet>
-                <h:outputText value="#{_comune.provincia}"/>
-            </h:column>
             <h:column styleClass="action">
                 <f:facet name="header">Action</f:facet>
                 <s:link id="viewcomune"
@@ -170,14 +152,6 @@
                 <f:facet name="header">Cap</f:facet>
                 <h:outputText value="#{_comune.cap}"/>
             </h:column>
-            <h:column>
-                <f:facet name="header">Nome comune</f:facet>
-                <h:outputText value="#{_comune.nomeComune}"/>
-            </h:column>
-            <h:column>
-                <f:facet name="header">Provincia</f:facet>
-                <h:outputText value="#{_comune.provincia}"/>
-            </h:column>
             <h:column styleClass="action">
                 <f:facet name="header">Action</f:facet>
                 <s:link id="viewcomune"
@@ -189,85 +163,6 @@
             </h:column>
         </rich:dataTable>
 
-    </div>
-    </rich:tab>
-
-    <rich:tab>
-        <f:facet name="label">
-            <h:panelGroup><h:graphicImage value="/img/onetomany.gif" style="vertical-align: middle; padding-right: 4px;"/>Accounts</h:panelGroup>
-        </f:facet>
-    <h:form styleClass="association" id="accountsChildren">
-
-        <h:outputText value="There are no accounts associated with this utente."
-                   rendered="#{empty utenteHome.accounts}"/>
-
-        <rich:dataTable value="#{utenteHome.accounts}"
-                       var="_account"
-                  rendered="#{not empty utenteHome.accounts}"
-                rowClasses="rvgRowOne,rvgRowTwo"
-                        id="accountsTable">
-            <rich:column sortBy="#{_account.username}">
-                <f:facet name="header">Username</f:facet>
-                <h:outputText value="#{_account.username}"/>
-            </rich:column>
-            <rich:column sortBy="#{_account.pass}">
-                <f:facet name="header">Pass</f:facet>
-                <h:outputText value="#{_account.pass}"/>
-            </rich:column>
-            <rich:column sortBy="#{_account.bloccato}">
-                <f:facet name="header">Bloccato</f:facet>
-                <h:outputText value="#{_account.bloccato}"/>
-            </rich:column>
-            <rich:column sortBy="#{_account.elimato}">
-                <f:facet name="header">Elimato</f:facet>
-                <h:outputText value="#{_account.elimato}"/>
-            </rich:column>
-            <rich:column sortBy="#{_account.cancellato}">
-                <f:facet name="header">Cancellato</f:facet>
-                <h:outputText value="#{_account.cancellato}"/>
-            </rich:column>
-            <rich:column sortBy="#{_account.attivato}">
-                <f:facet name="header">Attivato</f:facet>
-                <h:outputText value="#{_account.attivato}"/>
-            </rich:column>
-            <rich:column sortBy="#{_account.dataRichiesta}">
-                <f:facet name="header">Data richiesta</f:facet>
-                <h:outputText value="#{_account.dataRichiesta}">
-                    <s:convertDateTime type="date" dateStyle="short"/>
-                </h:outputText>
-            </rich:column>
-            <rich:column sortBy="#{_account.dataAccettazione}">
-                <f:facet name="header">Data accettazione</f:facet>
-                <h:outputText value="#{_account.dataAccettazione}">
-                    <s:convertDateTime type="date" dateStyle="short"/>
-                </h:outputText>
-            </rich:column>
-            <rich:column sortBy="#{_account.punteggioFeedback}">
-                <f:facet name="header">Punteggio feedback</f:facet>
-                <h:outputText value="#{_account.punteggioFeedback}"/>
-            </rich:column>
-            <h:column>
-                <f:facet name="header">Action</f:facet>
-                <s:link id="selectaccount"
-                     value="Select"
-                      view="/Account.xhtml">
-                    <f:param name="accountUsername"
-                            value="#{_account.username}"/>
-                    <f:param name="accountFrom" value="Utente"/>
-                </s:link>
-            </h:column>
-        </rich:dataTable>
-
-    </h:form>
-
-    <div class="actionButtons">
-        <s:button
-               value="Add account"
-                view="/AccountEdit.xhtml">
-            <f:param name="utenteCodiceFiscale"
-                    value="#{utenteHome.instance.codiceFiscale}"/>
-            <f:param name="accountFrom" value="Utente"/>
-        </s:button>
     </div>
     </rich:tab>
 
@@ -320,65 +215,18 @@
 
     <rich:tab>
         <f:facet name="label">
-            <h:panelGroup><h:graphicImage value="/img/onetomany.gif" style="vertical-align: middle; padding-right: 4px;"/>Patentes_1</h:panelGroup>
+            <h:panelGroup><h:graphicImage value="/img/onetomany.gif" style="vertical-align: middle; padding-right: 4px;"/>Accounts</h:panelGroup>
         </f:facet>
-    <h:form styleClass="association" id="patentes_1Children">
+    <h:form styleClass="association" id="accountsChildren">
 
-        <h:outputText value="There are no patentes_1 associated with this utente."
-                   rendered="#{empty utenteHome.patentes_1}"/>
+        <h:outputText value="There are no accounts associated with this utente."
+                   rendered="#{empty utenteHome.accounts}"/>
 
-        <rich:dataTable value="#{utenteHome.patentes_1}"
-                       var="_patente"
-                  rendered="#{not empty utenteHome.patentes_1}"
-                rowClasses="rvgRowOne,rvgRowTwo"
-                        id="patentes_1Table">
-            <rich:column sortBy="#{_patente.idpatente}">
-                <f:facet name="header">Idpatente</f:facet>
-                <h:outputText value="#{_patente.idpatente}"/>
-            </rich:column>
-            <rich:column sortBy="#{_patente.tipo}">
-                <f:facet name="header">Tipo</f:facet>
-                <h:outputText value="#{_patente.tipo}"/>
-            </rich:column>
-            <h:column>
-                <f:facet name="header">Action</f:facet>
-                <s:link id="selectpatente"
-                     value="Select"
-                      view="/Patente.xhtml">
-                    <f:param name="patenteIdpatente"
-                            value="#{_patente.idpatente}"/>
-                    <f:param name="patenteFrom" value="Utente"/>
-                </s:link>
-            </h:column>
-        </rich:dataTable>
-
-    </h:form>
-
-    <div class="actionButtons">
-        <s:button
-               value="Add patente"
-                view="/PatenteEdit.xhtml">
-            <f:param name="utenteCodiceFiscale"
-                    value="#{utenteHome.instance.codiceFiscale}"/>
-            <f:param name="patenteFrom" value="Utente"/>
-        </s:button>
-    </div>
-    </rich:tab>
-
-    <rich:tab>
-        <f:facet name="label">
-            <h:panelGroup><h:graphicImage value="/img/onetomany.gif" style="vertical-align: middle; padding-right: 4px;"/>Accounts_1</h:panelGroup>
-        </f:facet>
-    <h:form styleClass="association" id="accounts_1Children">
-
-        <h:outputText value="There are no accounts_1 associated with this utente."
-                   rendered="#{empty utenteHome.accounts_1}"/>
-
-        <rich:dataTable value="#{utenteHome.accounts_1}"
+        <rich:dataTable value="#{utenteHome.accounts}"
                        var="_account"
-                  rendered="#{not empty utenteHome.accounts_1}"
+                  rendered="#{not empty utenteHome.accounts}"
                 rowClasses="rvgRowOne,rvgRowTwo"
-                        id="accounts_1Table">
+                        id="accountsTable">
             <rich:column sortBy="#{_account.username}">
                 <f:facet name="header">Username</f:facet>
                 <h:outputText value="#{_account.username}"/>
