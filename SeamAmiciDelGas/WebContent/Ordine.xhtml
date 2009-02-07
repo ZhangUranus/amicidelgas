@@ -1,0 +1,350 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    template="layout/template.xhtml">
+
+<ui:define name="body">
+
+    <rich:panel>
+        <f:facet name="header">Ordine Details</f:facet>
+
+
+        <s:decorate id="dataRichiesta" template="layout/display.xhtml">
+            <ui:define name="label">Data richiesta</ui:define>
+            <h:outputText value="#{ordineHome.instance.dataRichiesta}">
+                <s:convertDateTime type="both" dateStyle="short"/>
+            </h:outputText>
+        </s:decorate>
+
+        <s:decorate id="pendente" template="layout/display.xhtml">
+            <ui:define name="label">Pendente</ui:define>
+            <h:outputText value="#{ordineHome.instance.pendente}"/>
+        </s:decorate>
+
+        <s:decorate id="quantita" template="layout/display.xhtml">
+            <ui:define name="label">Quantita</ui:define>
+            <h:outputText value="#{ordineHome.instance.quantita}"/>
+        </s:decorate>
+
+        <s:decorate id="quantitaMinUtente" template="layout/display.xhtml">
+            <ui:define name="label">Quantita min utente</ui:define>
+            <h:outputText value="#{ordineHome.instance.quantitaMinUtente}"/>
+        </s:decorate>
+
+        <s:decorate id="dataMassimaConsegna" template="layout/display.xhtml">
+            <ui:define name="label">Data massima consegna</ui:define>
+            <h:outputText value="#{ordineHome.instance.dataMassimaConsegna}">
+                <s:convertDateTime type="both" dateStyle="short"/>
+            </h:outputText>
+        </s:decorate>
+
+        <s:decorate id="cancellato" template="layout/display.xhtml">
+            <ui:define name="label">Cancellato</ui:define>
+            <h:outputText value="#{ordineHome.instance.cancellato}"/>
+        </s:decorate>
+
+        <s:decorate id="dataCancellazioneAccettazione" template="layout/display.xhtml">
+            <ui:define name="label">Data cancellazione accettazione</ui:define>
+            <h:outputText value="#{ordineHome.instance.dataCancellazioneAccettazione}">
+                <s:convertDateTime type="both" dateStyle="short"/>
+            </h:outputText>
+        </s:decorate>
+
+        <s:decorate id="username" template="layout/display.xhtml">
+            <ui:define name="label">Username</ui:define>
+            <h:outputText value="#{ordineHome.instance.username}"/>
+        </s:decorate>
+
+        <s:decorate id="idarticolo" template="layout/display.xhtml">
+            <ui:define name="label">Idarticolo</ui:define>
+            <h:outputText value="#{ordineHome.instance.idarticolo}"/>
+        </s:decorate>
+
+        <div style="clear:both"/>
+
+    </rich:panel>
+
+    <div class="actionButtons">
+
+        <s:button view="/OrdineEdit.xhtml"
+                    id="edit"
+                 value="Edit"/>
+
+        <s:button view="/#{empty ordineFrom ? 'OrdineList' : ordineFrom}.xhtml"
+                    id="done"
+                 value="Done"/>
+
+    </div>
+
+    <rich:tabPanel switchType="ajax">
+
+    <rich:tab>
+        <f:facet name="label">
+            <h:panelGroup><h:graphicImage value="/img/manytoone.gif" style="vertical-align: middle; padding-right: 4px;"/>Account</h:panelGroup>
+        </f:facet>
+    <div class="association" id="accountParent">
+
+        <h:outputText value="There is no account associated with this ordine."
+                   rendered="#{ordineHome.instance.account == null}"/>
+
+        <rich:dataTable var="_account"
+                   value="#{ordineHome.instance.account}"
+                rendered="#{ordineHome.instance.account != null}"
+              rowClasses="rvgRowOne,rvgRowTwo"
+                      id="accountTable">
+            <h:column>
+                <f:facet name="header">Username</f:facet>
+                <h:outputText value="#{_account.username}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Utente codice fiscale</f:facet>
+                <h:outputText value="#{_account.utente.codiceFiscale}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Pagamentoelettronico id pagamento elettronico</f:facet>
+                <h:outputText value="#{_account.pagamentoelettronico.idPagamentoElettronico}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Pass</f:facet>
+                <h:outputText value="#{_account.pass}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Bloccato</f:facet>
+                <h:outputText value="#{_account.bloccato}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Elimato</f:facet>
+                <h:outputText value="#{_account.elimato}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Cancellato</f:facet>
+                <h:outputText value="#{_account.cancellato}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Attivato</f:facet>
+                <h:outputText value="#{_account.attivato}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Data richiesta</f:facet>
+                <h:outputText value="#{_account.dataRichiesta}">
+                    <s:convertDateTime type="date" dateStyle="short"/>
+                </h:outputText>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Data accettazione</f:facet>
+                <h:outputText value="#{_account.dataAccettazione}">
+                    <s:convertDateTime type="date" dateStyle="short"/>
+                </h:outputText>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Punteggio feedback</f:facet>
+                <h:outputText value="#{_account.punteggioFeedback}"/>
+            </h:column>
+            <h:column styleClass="action">
+                <f:facet name="header">Action</f:facet>
+                <s:link id="viewaccount"
+                     value="View"
+                      view="/Account.xhtml">
+                    <f:param name="accountUsername"
+                           value="#{_account.username}"/>
+                </s:link>
+            </h:column>
+        </rich:dataTable>
+
+    </div>
+    </rich:tab>
+
+    <rich:tab>
+        <f:facet name="label">
+            <h:panelGroup><h:graphicImage value="/img/manytoone.gif" style="vertical-align: middle; padding-right: 4px;"/>Articolo</h:panelGroup>
+        </f:facet>
+    <div class="association" id="articoloParent">
+
+        <h:outputText value="There is no articolo associated with this ordine."
+                   rendered="#{ordineHome.instance.articolo == null}"/>
+
+        <rich:dataTable var="_articolo"
+                   value="#{ordineHome.instance.articolo}"
+                rendered="#{ordineHome.instance.articolo != null}"
+              rowClasses="rvgRowOne,rvgRowTwo"
+                      id="articoloTable">
+            <h:column>
+                <f:facet name="header">Idarticolo</f:facet>
+                <h:outputText value="#{_articolo.idarticolo}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Cybercontadino partita iva</f:facet>
+                <h:outputText value="#{_articolo.cybercontadino.partitaIva}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Codice esterno</f:facet>
+                <h:outputText value="#{_articolo.codiceEsterno}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Descrizione</f:facet>
+                <h:outputText value="#{_articolo.descrizione}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Prenotazione lungo termine</f:facet>
+                <h:outputText value="#{_articolo.prenotazioneLungoTermine}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Prezzo definitivo</f:facet>
+                <h:outputText value="#{_articolo.prezzoDefinitivo}"/>
+            </h:column>
+            <h:column styleClass="action">
+                <f:facet name="header">Action</f:facet>
+                <s:link id="viewarticolo"
+                     value="View"
+                      view="/Articolo.xhtml">
+                    <f:param name="articoloIdarticolo"
+                           value="#{_articolo.idarticolo}"/>
+                </s:link>
+            </h:column>
+        </rich:dataTable>
+
+    </div>
+    </rich:tab>
+
+    <rich:tab>
+        <f:facet name="label">
+            <h:panelGroup><h:graphicImage value="/img/onetomany.gif" style="vertical-align: middle; padding-right: 4px;"/>Feedbacks</h:panelGroup>
+        </f:facet>
+    <h:form styleClass="association" id="feedbacksChildren">
+
+        <h:outputText value="There are no feedbacks associated with this ordine."
+                   rendered="#{empty ordineHome.feedbacks}"/>
+
+        <rich:dataTable value="#{ordineHome.feedbacks}"
+                       var="_feedback"
+                  rendered="#{not empty ordineHome.feedbacks}"
+                rowClasses="rvgRowOne,rvgRowTwo"
+                        id="feedbacksTable">
+            <rich:column sortBy="#{_feedback.idfeedback}">
+                <f:facet name="header">Idfeedback</f:facet>
+                <h:outputText value="#{_feedback.idfeedback}"/>
+            </rich:column>
+            <rich:column sortBy="#{_feedback.analizzato}">
+                <f:facet name="header">Analizzato</f:facet>
+                <h:outputText value="#{_feedback.analizzato}"/>
+            </rich:column>
+            <rich:column sortBy="#{_feedback.descrizione}">
+                <f:facet name="header">Descrizione</f:facet>
+                <h:outputText value="#{_feedback.descrizione}"/>
+            </rich:column>
+            <rich:column sortBy="#{_feedback.dataValidazione}">
+                <f:facet name="header">Data validazione</f:facet>
+                <h:outputText value="#{_feedback.dataValidazione}">
+                    <s:convertDateTime type="date" dateStyle="short"/>
+                </h:outputText>
+            </rich:column>
+            <rich:column sortBy="#{_feedback.dataSegnalazione}">
+                <f:facet name="header">Data segnalazione</f:facet>
+                <h:outputText value="#{_feedback.dataSegnalazione}">
+                    <s:convertDateTime type="date" dateStyle="short"/>
+                </h:outputText>
+            </rich:column>
+            <rich:column sortBy="#{_feedback.punteggio}">
+                <f:facet name="header">Punteggio</f:facet>
+                <h:outputText value="#{_feedback.punteggio}"/>
+            </rich:column>
+            <h:column>
+                <f:facet name="header">Action</f:facet>
+                <s:link id="selectfeedback"
+                     value="Select"
+                      view="/Feedback.xhtml">
+                    <f:param name="feedbackIdfeedback"
+                            value="#{_feedback.idfeedback}"/>
+                    <f:param name="feedbackFrom" value="Ordine"/>
+                </s:link>
+            </h:column>
+        </rich:dataTable>
+
+    </h:form>
+
+    <div class="actionButtons">
+        <s:button
+               value="Add feedback"
+                view="/FeedbackEdit.xhtml">
+            <f:param name="ordineIdordine"
+                    value="#{ordineHome.instance.idordine}"/>
+            <f:param name="feedbackFrom" value="Ordine"/>
+        </s:button>
+    </div>
+    </rich:tab>
+
+    <rich:tab>
+        <f:facet name="label">
+            <h:panelGroup><h:graphicImage value="/img/onetomany.gif" style="vertical-align: middle; padding-right: 4px;"/>Feedbacks_1</h:panelGroup>
+        </f:facet>
+    <h:form styleClass="association" id="feedbacks_1Children">
+
+        <h:outputText value="There are no feedbacks_1 associated with this ordine."
+                   rendered="#{empty ordineHome.feedbacks_1}"/>
+
+        <rich:dataTable value="#{ordineHome.feedbacks_1}"
+                       var="_feedback"
+                  rendered="#{not empty ordineHome.feedbacks_1}"
+                rowClasses="rvgRowOne,rvgRowTwo"
+                        id="feedbacks_1Table">
+            <rich:column sortBy="#{_feedback.idfeedback}">
+                <f:facet name="header">Idfeedback</f:facet>
+                <h:outputText value="#{_feedback.idfeedback}"/>
+            </rich:column>
+            <rich:column sortBy="#{_feedback.analizzato}">
+                <f:facet name="header">Analizzato</f:facet>
+                <h:outputText value="#{_feedback.analizzato}"/>
+            </rich:column>
+            <rich:column sortBy="#{_feedback.descrizione}">
+                <f:facet name="header">Descrizione</f:facet>
+                <h:outputText value="#{_feedback.descrizione}"/>
+            </rich:column>
+            <rich:column sortBy="#{_feedback.dataValidazione}">
+                <f:facet name="header">Data validazione</f:facet>
+                <h:outputText value="#{_feedback.dataValidazione}">
+                    <s:convertDateTime type="date" dateStyle="short"/>
+                </h:outputText>
+            </rich:column>
+            <rich:column sortBy="#{_feedback.dataSegnalazione}">
+                <f:facet name="header">Data segnalazione</f:facet>
+                <h:outputText value="#{_feedback.dataSegnalazione}">
+                    <s:convertDateTime type="date" dateStyle="short"/>
+                </h:outputText>
+            </rich:column>
+            <rich:column sortBy="#{_feedback.punteggio}">
+                <f:facet name="header">Punteggio</f:facet>
+                <h:outputText value="#{_feedback.punteggio}"/>
+            </rich:column>
+            <h:column>
+                <f:facet name="header">Action</f:facet>
+                <s:link id="selectfeedback"
+                     value="Select"
+                      view="/Feedback.xhtml">
+                    <f:param name="feedbackIdfeedback"
+                            value="#{_feedback.idfeedback}"/>
+                    <f:param name="feedbackFrom" value="Ordine"/>
+                </s:link>
+            </h:column>
+        </rich:dataTable>
+
+    </h:form>
+
+    <div class="actionButtons">
+        <s:button
+               value="Add feedback"
+                view="/FeedbackEdit.xhtml">
+            <f:param name="ordineIdordine"
+                    value="#{ordineHome.instance.idordine}"/>
+            <f:param name="feedbackFrom" value="Ordine"/>
+        </s:button>
+    </div>
+    </rich:tab>
+</rich:tabPanel>
+</ui:define>
+
+</ui:composition>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page xmlns="http://jboss.com/products/seam/pages"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://jboss.com/products/seam/pages http://jboss.com/products/seam/pages-2.1.xsd"
+      no-conversation-view-id="/QuestionarioList.xhtml"
+      login-required="true">
+
+   <begin-conversation join="true" flush-mode="MANUAL"/>
+
+   <action execute="#{questionarioHome.wire}"/>
+
+   <param name="questionarioFrom"/>
+   <param name="questionarioIdquestionario" value="#{questionarioHome.questionarioIdquestionario}"/>
+   <param name="accountFrom"/>
+   <param name="accountUsername" value="#{accountHome.accountUsername}"/>
+   <param name="utenteFrom"/>
+   <param name="utenteCodiceFiscale" value="#{utenteHome.utenteCodiceFiscale}"/>
+   <param name="comuneFrom"/>
+   <param name="comuneIdcomune" value="#{comuneHome.comuneIdcomune}"/>
+   <param name="provincesFrom"/>
+   <param name="provincesIdprovinces" value="#{provincesHome.provincesIdprovinces}"/>
+
+
+
+   <param name="pagamentoelettronicoFrom"/>
+   <param name="pagamentoelettronicoIdPagamentoElettronico" value="#{pagamentoelettronicoHome.pagamentoelettronicoIdPagamentoElettronico}"/>
+
+
+   <param name="cybercontadinoFrom"/>
+   <param name="cybercontadinoPartitaIva" value="#{cybercontadinoHome.cybercontadinoPartitaIva}"/>
+
+
+
+   <navigation from-action="#{questionarioHome.persist}">
+      <rule>
+         <end-conversation/>
+         <redirect view-id="/Questionario.xhtml"/>
+      </rule>
+   </navigation>
+
+   <navigation from-action="#{questionarioHome.update}">
+      <rule>
+         <end-conversation/>
+         <redirect view-id="/Questionario.xhtml"/>
+      </rule>
+   </navigation>
+
+   <navigation from-action="#{questionarioHome.remove}">
+      <rule>
+         <end-conversation/>
+         <redirect view-id="/QuestionarioList.xhtml"/>
+      </rule>
+   </navigation>
+
+</page>

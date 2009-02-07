@@ -1,0 +1,164 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    template="layout/template.xhtml">
+
+<ui:define name="body">
+
+    <rich:panel>
+        <f:facet name="header">Provinces Details</f:facet>
+
+        <s:decorate id="idprovinces" template="layout/display.xhtml">
+            <ui:define name="label">Idprovinces</ui:define>
+            <h:outputText value="#{provincesHome.instance.idprovinces}"/>
+        </s:decorate>
+
+        <s:decorate id="nome" template="layout/display.xhtml">
+            <ui:define name="label">Nome</ui:define>
+            <h:outputText value="#{provincesHome.instance.nome}"/>
+        </s:decorate>
+
+        <div style="clear:both"/>
+
+    </rich:panel>
+
+    <div class="actionButtons">
+
+        <s:button view="/ProvincesEdit.xhtml"
+                    id="edit"
+                 value="Edit"/>
+
+        <s:button view="/#{empty provincesFrom ? 'ProvincesList' : provincesFrom}.xhtml"
+                    id="done"
+                 value="Done"/>
+
+    </div>
+
+    <rich:tabPanel switchType="ajax">
+
+    <rich:tab>
+        <f:facet name="label">
+            <h:panelGroup><h:graphicImage value="/img/onetomany.gif" style="vertical-align: middle; padding-right: 4px;"/>Comunes</h:panelGroup>
+        </f:facet>
+    <h:form styleClass="association" id="comunesChildren">
+
+        <h:outputText value="There are no comunes associated with this provinces."
+                   rendered="#{empty provincesHome.comunes}"/>
+
+        <rich:dataTable value="#{provincesHome.comunes}"
+                       var="_comune"
+                  rendered="#{not empty provincesHome.comunes}"
+                rowClasses="rvgRowOne,rvgRowTwo"
+                        id="comunesTable">
+            <rich:column sortBy="#{_comune.idcomune}">
+                <f:facet name="header">Idcomune</f:facet>
+                <h:outputText value="#{_comune.idcomune}"/>
+            </rich:column>
+            <rich:column sortBy="#{_comune.nome}">
+                <f:facet name="header">Nome</f:facet>
+                <h:outputText value="#{_comune.nome}"/>
+            </rich:column>
+            <rich:column sortBy="#{_comune.cap}">
+                <f:facet name="header">Cap</f:facet>
+                <h:outputText value="#{_comune.cap}"/>
+            </rich:column>
+            <rich:column sortBy="#{_comune.nomeComune}">
+                <f:facet name="header">Nome comune</f:facet>
+                <h:outputText value="#{_comune.nomeComune}"/>
+            </rich:column>
+            <rich:column sortBy="#{_comune.provincia}">
+                <f:facet name="header">Provincia</f:facet>
+                <h:outputText value="#{_comune.provincia}"/>
+            </rich:column>
+            <h:column>
+                <f:facet name="header">Action</f:facet>
+                <s:link id="selectcomune"
+                     value="Select"
+                      view="/Comune.xhtml">
+                    <f:param name="comuneIdcomune"
+                            value="#{_comune.idcomune}"/>
+                    <f:param name="comuneFrom" value="Provinces"/>
+                </s:link>
+            </h:column>
+        </rich:dataTable>
+
+    </h:form>
+
+    <div class="actionButtons">
+        <s:button
+               value="Add comune"
+                view="/ComuneEdit.xhtml">
+            <f:param name="provincesIdprovinces"
+                    value="#{provincesHome.instance.idprovinces}"/>
+            <f:param name="comuneFrom" value="Provinces"/>
+        </s:button>
+    </div>
+    </rich:tab>
+
+    <rich:tab>
+        <f:facet name="label">
+            <h:panelGroup><h:graphicImage value="/img/onetomany.gif" style="vertical-align: middle; padding-right: 4px;"/>Comunes_1</h:panelGroup>
+        </f:facet>
+    <h:form styleClass="association" id="comunes_1Children">
+
+        <h:outputText value="There are no comunes_1 associated with this provinces."
+                   rendered="#{empty provincesHome.comunes_1}"/>
+
+        <rich:dataTable value="#{provincesHome.comunes_1}"
+                       var="_comune"
+                  rendered="#{not empty provincesHome.comunes_1}"
+                rowClasses="rvgRowOne,rvgRowTwo"
+                        id="comunes_1Table">
+            <rich:column sortBy="#{_comune.idcomune}">
+                <f:facet name="header">Idcomune</f:facet>
+                <h:outputText value="#{_comune.idcomune}"/>
+            </rich:column>
+            <rich:column sortBy="#{_comune.nome}">
+                <f:facet name="header">Nome</f:facet>
+                <h:outputText value="#{_comune.nome}"/>
+            </rich:column>
+            <rich:column sortBy="#{_comune.cap}">
+                <f:facet name="header">Cap</f:facet>
+                <h:outputText value="#{_comune.cap}"/>
+            </rich:column>
+            <rich:column sortBy="#{_comune.nomeComune}">
+                <f:facet name="header">Nome comune</f:facet>
+                <h:outputText value="#{_comune.nomeComune}"/>
+            </rich:column>
+            <rich:column sortBy="#{_comune.provincia}">
+                <f:facet name="header">Provincia</f:facet>
+                <h:outputText value="#{_comune.provincia}"/>
+            </rich:column>
+            <h:column>
+                <f:facet name="header">Action</f:facet>
+                <s:link id="selectcomune"
+                     value="Select"
+                      view="/Comune.xhtml">
+                    <f:param name="comuneIdcomune"
+                            value="#{_comune.idcomune}"/>
+                    <f:param name="comuneFrom" value="Provinces"/>
+                </s:link>
+            </h:column>
+        </rich:dataTable>
+
+    </h:form>
+
+    <div class="actionButtons">
+        <s:button
+               value="Add comune"
+                view="/ComuneEdit.xhtml">
+            <f:param name="provincesIdprovinces"
+                    value="#{provincesHome.instance.idprovinces}"/>
+            <f:param name="comuneFrom" value="Provinces"/>
+        </s:button>
+    </div>
+    </rich:tab>
+</rich:tabPanel>
+</ui:define>
+
+</ui:composition>
