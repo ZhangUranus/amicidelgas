@@ -56,10 +56,12 @@
 			
 			<s:decorate id="provincesField" template="layout/edit.xhtml">
                 <ui:define name="label">provincia</ui:define>
-                <h:selectOneMenu value="#{richiestaRegistrazione.provincesHome}" suggestionValues="#{bean.suggestions}" directInputSuggestions="true" tabindex="4" required="true">
-			     	<s:selectItems value="#{richiestaRegistrazione.provincesHome.instance}" var="h" label="#{h.nome}" itemValue="#{h}" noSelectionLabel="ops"/>
-			     	<s:convertEntity/>
-				</h:selectOneMenu>
+                <h:selectOneMenu value="#{search.category}" required="true">
+                        <s:convertEntity />
+                        <s:selectItems value="#{allCategories.resultList}" 
+                                       var="category"
+                                       label="#{category.name}"/>
+                </h:selectOneMenu>
             </s:decorate>
 						
 
