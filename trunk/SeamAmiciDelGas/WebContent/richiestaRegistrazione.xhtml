@@ -45,7 +45,7 @@
 			<s:decorate id="codiceFiscaleField" template="layout/edit.xhtml">
                 <ui:define name="label">Codice fiscale</ui:define>
                 <h:inputText id="codiceFiscale"
-                       disabled="#{utenteHome.managed}"
+                       disabled="#{richiestaRegistrazione.utenteHome.managed}"
                        required="true"
                            size="16"
                       maxlength="16"
@@ -53,9 +53,15 @@
                     <a:support event="onblur" reRender="codiceFiscaleField" bypassUpdates="true" ajaxSingle="true"/>
                 </h:inputText>
             </s:decorate>
-
-
-
+			
+			<s:decorate id="provincesField" template="layout/edit.xhtml">
+                <ui:define name="label">provincia</ui:define>
+                <h:selectOneMenu value="#{richiestaRegistrazione.provincesHome}" suggestionValues="#{bean.suggestions}" directInputSuggestions="true" tabindex="4" required="true">
+			     	<s:selectItems value="#{richiestaRegistrazione.provincesHome.instance}" var="h" label="#{h.nome}" itemValue="#{h}" noSelectionLabel="ops"/>
+			     	<s:convertEntity/>
+				</h:selectOneMenu>
+            </s:decorate>
+						
 
             <s:decorate id="nomeField" template="layout/edit.xhtml">
                 <ui:define name="label">Nome</ui:define>
@@ -144,7 +150,7 @@
         </rich:panel>
 
         <div class="actionButtons">
-            <h:commandButton id="richiestaRegistrazione" value="richiestaRegistrazione"
+            <h:commandButton id="richiestaRegistrazione" value="passo 2"
                     action="#{richiestaRegistrazione.richiestaRegistrazione}"/>
         </div>
 
