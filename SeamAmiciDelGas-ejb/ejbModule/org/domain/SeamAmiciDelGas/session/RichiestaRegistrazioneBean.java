@@ -21,6 +21,10 @@ public class RichiestaRegistrazioneBean implements RichiestaRegistrazione
     private UtenteHome utenteHome;
     @In(create = true)
     private AccountHome accountHome;
+    @In(create = true)
+    private ProvincesHome provincesHome;
+    @In(create = true)
+    private ComuneHome comuneHome;
     
     public void richiestaRegistrazione()
     {
@@ -63,6 +67,27 @@ public class RichiestaRegistrazioneBean implements RichiestaRegistrazione
 	}
 	
 	public void dummyAction(){
+		
+	}
+
+
+	public ComuneHome getComuneHome() {
+		return comuneHome;
+	}
+
+
+	public ProvincesHome getProvincesHome() {
+		return provincesHome;
+	}
+
+
+	public void setComuneHome(ComuneHome comuneHome) {
+		this.comuneHome = comuneHome;
+	}
+
+
+	public void setProvincesHome(ProvincesHome provincesHome) {
+		this.provincesHome = provincesHome;
 		
 	}
 }
