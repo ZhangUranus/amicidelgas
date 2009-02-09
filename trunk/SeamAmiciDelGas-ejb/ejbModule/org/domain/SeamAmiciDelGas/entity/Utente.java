@@ -87,7 +87,7 @@ public class Utente implements java.io.Serializable {
 	@Column(name = "CodiceFiscale", unique = true, nullable = false, length = 16)
 	@NotNull
 	@Length(max = 16)
-	@Pattern(regex="^[a-zA-z]{6}[0-9]{2}[a-zA-z][0-9]{2}[a-zA-Z][0-9]{3}[a-zA-Z]$", message="prova") 
+	@Pattern(regex="^[a-zA-z]{6}[0-9]{2}[a-zA-z][0-9]{2}[a-zA-Z][0-9]{3}[a-zA-Z]$", message="formato codice fiscale non corretto") 
 	public String getCodiceFiscale() {
 		return this.codiceFiscale;
 	}
