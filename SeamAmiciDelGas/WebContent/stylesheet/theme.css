@@ -27,6 +27,15 @@ input[type=text], input[type=password], textarea {
 	padding-left: 1px;
 }
 
+.beta{
+	background:transparent;
+	position:fixed;
+	zoom:1;
+	z-index: 110;
+	top: 32px;
+	left: 4px;
+}
+
 .tableControl, .actionButtons {
 	width: 100%;
 }
