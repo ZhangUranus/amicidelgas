@@ -8,6 +8,10 @@ import org.jboss.seam.annotations.Destroy;
 import org.jboss.seam.annotations.Logger;
 import org.jboss.seam.log.Log;
 import org.jboss.seam.international.StatusMessages;
+import org.domain.SeamAmiciDelGas.crud.AccountHome;
+import org.domain.SeamAmiciDelGas.crud.ComuneHome;
+import org.domain.SeamAmiciDelGas.crud.ProvincesHome;
+import org.domain.SeamAmiciDelGas.crud.UtenteHome;
 import org.hibernate.validator.Length;
 
 @Stateful
