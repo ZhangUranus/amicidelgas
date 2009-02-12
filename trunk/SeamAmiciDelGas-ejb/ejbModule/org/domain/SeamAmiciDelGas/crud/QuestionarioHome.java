@@ -1,4 +1,4 @@
-package org.domain.SeamAmiciDelGas.session;
+package org.domain.SeamAmiciDelGas.crud;
 
 import org.domain.SeamAmiciDelGas.entity.*;
 import org.jboss.seam.annotations.In;

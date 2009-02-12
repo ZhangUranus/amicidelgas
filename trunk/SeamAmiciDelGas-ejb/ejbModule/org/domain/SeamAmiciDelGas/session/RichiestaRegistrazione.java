@@ -2,6 +2,11 @@ package org.domain.SeamAmiciDelGas.session;
 
 import javax.ejb.Local;
 
+import org.domain.SeamAmiciDelGas.crud.AccountHome;
+import org.domain.SeamAmiciDelGas.crud.ComuneHome;
+import org.domain.SeamAmiciDelGas.crud.ProvincesHome;
+import org.domain.SeamAmiciDelGas.crud.UtenteHome;
+
 @Local
 public interface RichiestaRegistrazione
 {
