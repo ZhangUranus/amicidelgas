@@ -1,0 +1,62 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:a="http://richfaces.org/a4j"
+    template="layout/template.xhtml">
+
+<ui:define name="body">
+
+    <h:form id="RichiestaInfoAccountForm">
+
+        <rich:panel>
+            <f:facet name="header">Step 2: definisci le informazioni di account</f:facet>
+
+			<s:decorate id="usernameField" template="layout/edit.xhtml">
+                <ui:define name="label">Username</ui:define>
+                <h:inputText id="username"
+                       required="true"
+                           size="20"
+                      maxlength="20"
+                          value="#{newAccount.username}">
+                    <a:support event="onblur" reRender="usernameField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="passField" template="layout/edit.xhtml">
+                <ui:define name="label">Pass</ui:define>
+                <h:inputText id="pass"
+                       required="true"
+                           size="32"
+                      maxlength="32"
+                          value="#{newAccount.pass}">
+                    <a:support event="onblur" reRender="passField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+
+			
+
+            <div style="clear:both">
+                <span class="required">*</span>
+                required fields
+            </div>
+
+        </rich:panel>
+
+        <div class="actionButtons">
+            <h:commandButton id="richiestaRegistrazione" value="richiestaRegistrazione"
+                    action="#{richiestaRegistrazione.richiestaRegistrazione}"  />
+        </div>
+
+    </h:form>
+
+</ui:define>
+
+</ui:composition>
