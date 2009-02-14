@@ -1,0 +1,50 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:a="http://richfaces.org/a4j"
+    template="layout/template.xhtml">
+
+	<ui:define name="body">
+ 		<rich:panel>
+			<h:form id="DefinisciItinerarioForm">
+				<f:facet name="header">Step 1: Inserisci la data della partenza e della consegna:</f:facet>
+				
+				<s:decorate id="dataPartenzaField" template="layout/edit.xhtml">
+                <ui:define name="label">Data Partenza</ui:define>
+                <rich:calendar id="dataPartenza"
+                       required="true"
+                          value="#{newItinerario.dataPartenza}" datePattern="MM/dd/yyyy" />
+            	</s:decorate>
+            	
+            	<s:decorate id="dataConsegnaField" template="layout/edit.xhtml">
+                <ui:define name="label">Data Consegna</ui:define>
+                <rich:calendar id="dataConsegna"
+                       required="true"
+                          value="#{newItinerario.dataConsegna}" datePattern="MM/dd/yyyy" />
+            	</s:decorate>
+            	
+            	<f:facet name="header">Step 2: Ricerca dei fornitori:</f:facet>
+            
+          <h:selectManyListbox value="#{cybercontadinoList.resultList}"
+ 				required="true" style="width: 147px; ">
+ 			<s:selectItems value="#{cybercontadinoList.resultList}" var="_contadino"
+  				label="#{_contadino.nomeAzienda}" noSelectionLabel="-- Select --"/>
+			</h:selectManyListbox>
+         
+         
+
+            <h:commandButton id="definisciItinerario" value="definisciItinerario!"
+                             action="#{definisciItinerario.definisciItinerario}"/>
+            	</h:form>
+         
+
+    </rich:panel>
+
+</ui:define>
+
+</ui:composition>
