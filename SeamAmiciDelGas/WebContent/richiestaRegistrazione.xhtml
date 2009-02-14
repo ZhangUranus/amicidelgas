@@ -53,16 +53,6 @@
                     <a:support event="onblur" reRender="codiceFiscaleField" bypassUpdates="true" ajaxSingle="true"/>
                 </h:inputText>
             </s:decorate>
-			
-			<s:decorate id="provincesField" template="layout/edit.xhtml">
-                <ui:define name="label">provincia</ui:define>
-                <h:selectOneMenu value="#{search.category}" required="true">
-                        <s:convertEntity />
-                        <s:selectItems value="#{allCategories.resultList}" 
-                                       var="category"
-                                       label="#{category.name}"/>
-                </h:selectOneMenu>
-            </s:decorate>
 						
 
             <s:decorate id="nomeField" template="layout/edit.xhtml">

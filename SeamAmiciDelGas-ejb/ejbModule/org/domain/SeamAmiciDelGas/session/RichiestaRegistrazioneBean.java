@@ -50,48 +50,57 @@ public class RichiestaRegistrazioneBean implements RichiestaRegistrazione
     @Destroy @Remove
     public void destroy() {}
 
-
-	public UtenteHome getUtenteHome() {
-		return utenteHome;
-	}
-
-
-	public void setUtenteHome(UtenteHome utenteHome) {
-		this.utenteHome = utenteHome;
-	}
-
-
-	public AccountHome getAccountHome() {
-		return accountHome;
-	}
-
-
-	public void setAccountHome(AccountHome accountHome) {
-		this.accountHome = accountHome;
-	}
 	
 	public void dummyAction(){
 		
 	}
 
 
+	public AccountHome getAccountHome() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
 	public ComuneHome getComuneHome() {
-		return comuneHome;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 
 	public ProvincesHome getProvincesHome() {
-		return provincesHome;
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	public UtenteHome getUtenteHome() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	public void setAccountHome(AccountHome accountHome) {
+		// TODO Auto-generated method stub
+		
 	}
 
 
 	public void setComuneHome(ComuneHome comuneHome) {
-		this.comuneHome = comuneHome;
+		// TODO Auto-generated method stub
+		
 	}
 
 
 	public void setProvincesHome(ProvincesHome provincesHome) {
-		this.provincesHome = provincesHome;
+		// TODO Auto-generated method stub
 		
 	}
+
+
+	public void setUtenteHome(UtenteHome utenteHome) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
