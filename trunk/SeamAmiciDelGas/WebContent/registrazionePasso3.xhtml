@@ -15,7 +15,6 @@
     	<h:form id="passo3Form">
         <f:facet name="header">riepilogo finale</f:facet>
 
-		<f:facet name="header">Dati anagrafici</f:facet>
 		<s:decorate id="codicefiscale" template="layout/display.xhtml">
             <ui:define name="label">codice fiscale</ui:define>
             <h:outputText value="#{newUtente.codiceFiscale}"/>
@@ -66,7 +65,8 @@
             <h:outputText value="#{newUtente.email}"/>
         </s:decorate>
         
-        <f:facet name="header">Dati account</f:facet>
+        <div >Dati account</div>
+        
         <s:decorate id="username" template="layout/display.xhtml">
             <ui:define name="label">username</ui:define>
             <h:outputText value="#{newAccount.username}"/>
