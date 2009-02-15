@@ -15,19 +15,71 @@
     	<h:form id="passo3Form">
         <f:facet name="header">riepilogo finale</f:facet>
 
+		<f:facet name="header">Dati anagrafici</f:facet>
 		<s:decorate id="codicefiscale" template="layout/display.xhtml">
             <ui:define name="label">codice fiscale</ui:define>
             <h:outputText value="#{newUtente.codiceFiscale}"/>
         </s:decorate>
+        
+        <s:decorate id="nome" template="layout/display.xhtml">
+            <ui:define name="label">nome</ui:define>
+            <h:outputText value="#{newUtente.nome}"/>
+        </s:decorate>
+        
+        <s:decorate id="cognome" template="layout/display.xhtml">
+            <ui:define name="label">cognome</ui:define>
+            <h:outputText value="#{newUtente.cognome}"/>
+        </s:decorate>
 
-		<s:decorate id="comunenascita" template="layout/display.xhtml">
-            <ui:define name="label">comune nascita</ui:define>
+		<s:decorate id="datanascita" template="layout/display.xhtml">
+            <ui:define name="label">data di nascita</ui:define>
+            <h:outputText value="#{newUtente.dataNascita}"/>
+        </s:decorate>
+        
+        <s:decorate id="sesso" template="layout/display.xhtml">
+            <ui:define name="label">sesso</ui:define>
+            <h:outputText value="#{newUtente.sesso}"/>
+        </s:decorate>
+        
+        <s:decorate id="comunenascita" template="layout/display.xhtml">
+            <ui:define name="label">comune di nascita</ui:define>
             <h:outputText value="#{newComuneNascita.idcomune}"/>
         </s:decorate>
         
+        <s:decorate id="comuneresidenza" template="layout/display.xhtml">
+            <ui:define name="label">comune di residenza</ui:define>
+            <h:outputText value="#{newComuneResidenza.idcomune}"/>
+        </s:decorate>
+        
+        <s:decorate id="indirizzo" template="layout/display.xhtml">
+            <ui:define name="label">indirizzo</ui:define>
+            <h:outputText value="#{newUtente.indirizzo}"/>
+        </s:decorate>
+        
+        <s:decorate id="recapitotelefonico" template="layout/display.xhtml">
+            <ui:define name="label">recapito telefonico</ui:define>
+            <h:outputText value="#{newUtente.recapitoTelefonico}"/>
+        </s:decorate>
+        
+        <s:decorate id="email" template="layout/display.xhtml">
+            <ui:define name="label">e-mail</ui:define>
+            <h:outputText value="#{newUtente.email}"/>
+        </s:decorate>
+        
+        <f:facet name="header">Dati account</f:facet>
         <s:decorate id="username" template="layout/display.xhtml">
             <ui:define name="label">username</ui:define>
             <h:outputText value="#{newAccount.username}"/>
+        </s:decorate>
+        
+        <s:decorate id="pass" template="layout/display.xhtml">
+            <ui:define name="label">password</ui:define>
+            <h:outputText value="#{newAccount.pass}"/>
+        </s:decorate>
+        
+        <s:decorate id="tipocarta" template="layout/display.xhtml">
+            <ui:define name="label">tipo carta</ui:define>
+            <h:outputText value="#{newPagamento.tipoCarta}"/>
         </s:decorate>
         
         <s:decorate id="numerocarta" template="layout/display.xhtml">
