@@ -19,77 +19,42 @@
 
 <body>
 
-<div align="center" class="beta"><img alt="" src="/SeamAmiciDelGas/img/beta.png"/></div>
-<div align="center" id="dockvaleriobar" class="dockvaleriobar">
-	<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
-		<tr height="24">			
-			<td width="195" background="/SeamAmiciDelGas/img/shadow.png" align="right" valign="bottom">
-				<div class="min"><a href="http://www.mozilla-europe.org/it/products/firefox/" target="_blank" alt="Get FireFox" ><img src="/SeamAmiciDelGas/img/brow_firefox.png" width="27" height="32" border="0" align="middle"/></a></div>
-			</td>
-			<td width="90" background="/SeamAmiciDelGas/img/shadow.png" align="right" valign="bottom">
-				<div class="min"><a href="http://www.apple.com/it/safari/" target="_blank" ><img src="/SeamAmiciDelGas/img/brow_safari.png" width="27" height="32" border="0" align="middle"/></a></div>
-			</td>
-			<td width="100" background="/SeamAmiciDelGas/img/shadow.png" align="right" valign="bottom">
-				<div class="min" style="padding-right: 10px;"><a href="http://www.google.com/chrome" target="_blank" ><img src="/SeamAmiciDelGas/img/brow_chrome.png" width="27" height="32" border="0" align="middle" /></a></div>
-			</td> 
-		</tr>
-		<tr>
-			<td colspan="3" height="8" background="/SeamAmiciDelGas/img/shadow.png"></td>
-		</tr>
-	</table>
-</div>
 <div align="center" id="dockvaleriobar_plus" class="dockvaleriobar_plus">
-<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" id="shadows"> 	    
-    <tr>
-      	<td background="/SeamAmiciDelGas/img/shadow.png">
-          <table width="100%" height="96" border="0" align="center" cellpadding="0" cellspacing="0" id="body" background="/val3rio/img/title_n.png" style="background-repeat: no-repeat; background-position: left; background-position: top; " >
-          	<tr>
-          		<td>
-          		    <table width="100%" height="64" border="0" align="center" cellpadding="0" cellspacing="0" background="/val3rio/img/title_high.png" style="background-repeat: no-repeat; background-position: bottom;" >
-	          		    <tr>   		    	
-	          		    	 <td><ui:include src="menu.xhtml">
-							        <ui:param name="projectName" value="SeamAmiciDelGas"/>
-							    </ui:include>
-							 </td>   	          		      
-	                    </tr>
-	               </table>
-          		</td>
-          	</tr>          
-       	  </table>            
-      	</td>
-    </tr>
-    <tr>
-	    <td height="16" ></td>
-	</tr>
-  </table>
+<ui:include src="menu.xhtml">
+    <ui:param name="projectName" value="SeamAmiciDelGas"/>
+</ui:include>				             
 </div>
 
-<table width="100%" height="400" border="0" align="center" cellpadding="0" cellspacing="0" id="body_inter" >        
-     
-     <tr>
-          <td height="126" >
-          </td>
-     </tr>
-          <tr>                          
-               <td align="center" width="100%" valign="top" bgcolor="#FFFFFF">
-               <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" id="dinamic_body">
-                    <tr>
-                    	<td valign="middle" >  
-                    		<div class="body">
-						    <h:messages id="messages" globalOnly="true" styleClass="message"
-						        errorClass="errormsg" infoClass="infomsg" warnClass="warnmsg"
-						        rendered="#{showGlobalMessages != 'false'}"/>
-						    <ui:insert name="body"/>
-						  	</div>
-						 </td>
-                    </tr>
-                </table>
-               </td>	               
-          </tr>
-     <tr>
-	    <td height="12" colspan="2" background="/val3rio/img/shadow_bottom1.png"></td>
-	</tr>
+<table width="97%" border="0" align="center" cellpadding="0" cellspacing="0" id="body_inter">
+   <tr>
+    <td height="34"></td>
+    <td height="34"></td>
+    <td height="34"></td>
+   </tr>	    
+   <tr>
+    <td width="22" height="22" background="/SeamAmiciDelGas/img/shadow_a.png"></td>
+    <td height="22" background="/SeamAmiciDelGas/img/shadow_top.png"></td>
+    <td width="22" height="22" background="/SeamAmiciDelGas/img/shadow_b.png"></td>
+   </tr>
+   <tr>
+   	<td background="/SeamAmiciDelGas/img/shadow_left.png"></td>	
+     <td background="/SeamAmiciDelGas/img/shadow.png">
+     		<div class="body">
+		    <h:messages id="messages" globalOnly="true" styleClass="message"
+		        errorClass="errormsg" infoClass="infomsg" warnClass="warnmsg"
+		        rendered="#{showGlobalMessages != 'false'}"/>
+		    <ui:insert name="body"/>
+		  	</div>
+     </td>
+     <td background="/SeamAmiciDelGas/img/shadow_right.png" valign="middle"></td>
+   </tr>
+   <tr>
+    <td width="22" height="22" background="/SeamAmiciDelGas/img/shadow_d.png"></td>
+    <td height="22" background="/SeamAmiciDelGas/img/shadow_bottom.png"></td>
+    <td width="22" height="22" background="/SeamAmiciDelGas/img/shadow_c.png"></td>
+   </tr>
 </table>
+
 
 
 </body>

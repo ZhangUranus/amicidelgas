@@ -1,0 +1,101 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:a="http://richfaces.org/a4j"
+    template="layout/template.xhtml">
+
+<ui:define name="body">
+
+    <rich:panel>
+        <f:facet name="header">riepilogo passo 1</f:facet>
+
+		<s:decorate id="codicefiscale" template="layout/display.xhtml">
+            <ui:define name="label">codice fiscale</ui:define>
+            <h:outputText value="#{newUtente.codiceFiscale}"/>
+        </s:decorate>
+
+		<s:decorate id="comunenascita" template="layout/display.xhtml">
+            <ui:define name="label">comune nascita</ui:define>
+            <h:outputText value="#{newComuneNascita.idcomune}"/>
+        </s:decorate>
+
+    </rich:panel>
+    
+    <div style="clear: both"/>
+
+    <rich:panel>
+        <f:facet name="header">Passo 2 - dati pagamento</f:facet>
+
+        <h:form id="passo2Form">
+
+			<s:decorate id="tipopatente" template="layout/edit.xhtml">
+                <ui:define name="label">Patente</ui:define>
+                <h:inputText id="tipopatente"
+                       required="true"
+                           size="2"
+                      maxlength="2"
+                          value="#{newPatente.tipo}">
+                    <a:support event="onblur" reRender="tipopatente" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+            
+            <s:decorate id="tipocarta" template="layout/edit.xhtml">
+                <ui:define name="label">tipo carta</ui:define>
+                <h:inputText id="tipocarta"
+                       required="true"
+                           size="45"
+                      maxlength="45"
+                          value="#{newPagamento.tipoCarta}">
+                    <a:support event="onblur" reRender="tipocarta" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+			<s:decorate id="numerocarta" template="layout/edit.xhtml">
+                <ui:define name="label">Numero carta</ui:define>
+                <h:inputText id="numerocarta"
+                       required="true"
+                           size="16"
+                      maxlength="16"
+                          value="#{newPagamento.numeroCarta}">
+                    <a:support event="onblur" reRender="numerocarta" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+            
+            <s:decorate id="username" template="layout/edit.xhtml">
+                <ui:define name="label">Username</ui:define>
+                <h:inputText id="username"
+                       required="true"
+                           size="20"
+                      maxlength="20"
+                          value="#{newAccount.username}">
+                    <a:support event="onblur" reRender="username" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+            
+            <s:decorate id="password" template="layout/edit.xhtml">
+                <ui:define name="label">Password</ui:define>
+                <h:inputText id="password"
+                       required="true"
+                           size="32"
+                      maxlength="32"
+                          value="#{newAccount.pass}">
+                    <a:support event="onblur" reRender="password" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+            <h:commandButton id="passo3" value="procedi al passo 3" action="passo2Outcome"/>
+
+        </h:form>
+
+    </rich:panel>
+    
+    
+
+</ui:define>
+
+</ui:composition>

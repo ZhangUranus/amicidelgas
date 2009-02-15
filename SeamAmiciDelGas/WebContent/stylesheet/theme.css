@@ -3,6 +3,7 @@ html {
 }
 
 body {
+	background: #CCCCCC;
 	font-size: 12px;
 	margin: 0px;
 }
@@ -32,8 +33,16 @@ input[type=text], input[type=password], textarea {
 	position:fixed;
 	zoom:1;
 	z-index: 110;
-	top: 32px;
+	top: 4px;
 	left: 4px;
+}
+
+.dockvaleriobar_plus{
+	background:transparent;
+	width:100%;
+	position:fixed;
+	z-index: 100;
+	top: 0px;
 }
 
 .tableControl, .actionButtons {
