@@ -62,7 +62,7 @@
             <s:decorate id="sessoField" template="layout/edit.xhtml">
                 <ui:define name="label">Sesso</ui:define>
                 
-              <h:selectOneMenu id="select" value="#{newUtente.sesso}">
+              <h:selectOneMenu id="sessoSelect" value="#{newUtente.sesso}">
               
         		<f:selectItem itemLabel="Maschio" itemValue="false"/>            
         		<f:selectItem itemLabel="Femmina" itemValue="true"/>
@@ -70,7 +70,36 @@
 			  </h:selectOneMenu>
 			 
              </s:decorate>
-
+			
+			
+			<s:decorate id="provinciaField" template="layout/edit.xhtml">
+                <ui:define name="label">Provincia di nascita</ui:define>
+                <h:selectOneMenu 
+                	id="provinciaSelect" 
+                	value="#{newComuneAutoCompleteBean.nomeProvincia}" 
+                >
+                	<s:selectItems var="_provincia" label="#{_provincia.nome}" value="#{provincesList.resultList}"></s:selectItems>
+                	<f:valueChangeListener type="#{newComuneAutoCompleteBean}"/>
+                
+                </h:selectOneMenu>
+               
+             </s:decorate>
+			
+			
+			<s:decorate id="comuneNascitaSuggestionField" template="layout/edit.xhtml">
+                <ui:define name="label">Comune di nascita (suggestion box)</ui:define>
+                <h:inputText id="comuneNascitaSuggestion"/>
+             <rich:suggestionbox id="suggestionBoxId" 
+             		usingSuggestObjects="true"
+                    suggestionAction="#{newComuneAutoCompleteBean.autocomplete}" var="_comuneSugg"
+                    for="comuneNascitaSuggestion" fetchValue="#{_comuneSugg.id}" tokens=",[]">
+                    
+                    <h:column>
+                        <h:outputText value="#{_comuneSugg.nome}" />
+                    </h:column>
+             </rich:suggestionbox>  
+            
+             </s:decorate>
 			<s:decorate id="comunenascitaField" template="layout/edit.xhtml">
                 <ui:define name="label">Comune di nascita</ui:define>
                 <h:inputText id="comunenascita"
@@ -105,7 +134,7 @@
                 </h:inputText>
             </s:decorate>
 
-
+	
             <s:decorate id="recapitoTelefonicoField" template="layout/edit.xhtml">
                 <ui:define name="label">Recapito telefonico</ui:define>
                 <h:inputText id="recapitoTelefonico"
@@ -125,7 +154,7 @@
                            size="70"
                       maxlength="70"
                           value="#{newUtente.email}">
-                    <a:support event="onblur" reRender="emailField" bypassUpdates="true" ajaxSingle="true"/>
+                    <a:support event="onblur"  reRender="emailField" bypassUpdates="true" ajaxSingle="true"/>
                 </h:inputText>
             </s:decorate>
 
