@@ -60,9 +60,9 @@ public class AccountHome extends EntityHome<Account> {
 				getInstance().getCybercontadinos());
 	}
 
-	public List<Ruolo> getRuolos() {
-		return getInstance() == null ? null : new ArrayList<Ruolo>(
-				getInstance().getRuolos());
+	public List<Role> getRoles() {
+		return getInstance() == null ? null : new ArrayList<Role>(
+				getInstance().getRoles());
 	}
 
 	public List<Questionario> getQuestionarios() {
