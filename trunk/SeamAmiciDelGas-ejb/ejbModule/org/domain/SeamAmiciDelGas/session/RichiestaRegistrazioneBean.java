@@ -73,7 +73,7 @@ public class RichiestaRegistrazioneBean implements RichiestaRegistrazione
     	
     	account.setUtente(utente);
     	account.setPagamentoelettronico(pagamento);
-    	account.setAttivato(false);
+    	account.setAttivato(true);
     	account.setBloccato(false);
     	account.setCancellato(false);
     	account.setElimato(false);
