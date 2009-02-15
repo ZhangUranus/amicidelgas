@@ -61,12 +61,15 @@
 
             <s:decorate id="sessoField" template="layout/edit.xhtml">
                 <ui:define name="label">Sesso</ui:define>
-                <h:inputText id="sesso"
-                       required="true"
-                          value="#{newUtente.sesso}">
-                    <a:support event="onblur" reRender="sessoField" bypassUpdates="true" ajaxSingle="true"/>
-                </h:inputText>
-            </s:decorate>
+                
+              <h:selectOneMenu id="select" value="#{newUtente.sesso}">
+              
+        		<f:selectItem itemLabel="Maschio" itemValue="false"/>            
+        		<f:selectItem itemLabel="Femmina" itemValue="true"/>
+        		
+			  </h:selectOneMenu>
+			 
+             </s:decorate>
 
 			<s:decorate id="comunenascitaField" template="layout/edit.xhtml">
                 <ui:define name="label">Comune di nascita</ui:define>
