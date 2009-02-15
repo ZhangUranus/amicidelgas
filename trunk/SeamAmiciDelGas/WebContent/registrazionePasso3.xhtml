@@ -1,0 +1,50 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:a="http://richfaces.org/a4j"
+    template="layout/template.xhtml">
+
+<ui:define name="body">
+
+    <rich:panel>
+    	<h:form id="passo3Form">
+        <f:facet name="header">riepilogo finale</f:facet>
+
+		<s:decorate id="codicefiscale" template="layout/display.xhtml">
+            <ui:define name="label">codice fiscale</ui:define>
+            <h:outputText value="#{newUtente.codiceFiscale}"/>
+        </s:decorate>
+
+		<s:decorate id="comunenascita" template="layout/display.xhtml">
+            <ui:define name="label">comune nascita</ui:define>
+            <h:outputText value="#{newComuneNascita.idcomune}"/>
+        </s:decorate>
+        
+        <s:decorate id="username" template="layout/display.xhtml">
+            <ui:define name="label">username</ui:define>
+            <h:outputText value="#{newAccount.username}"/>
+        </s:decorate>
+        
+        <s:decorate id="numerocarta" template="layout/display.xhtml">
+            <ui:define name="label">numerocarta</ui:define>
+            <h:outputText value="#{newPagamento.numeroCarta}"/>
+        </s:decorate>
+        
+        <s:decorate id="tipo" template="layout/display.xhtml">
+            <ui:define name="label">tipopatente</ui:define>
+            <h:outputText value="#{newPatente.tipo}"/>
+        </s:decorate>
+
+		<h:commandButton id="conferma" value="conferma registrazione" action="#{richiestaRegistrazione.richiestaRegistrazione}"/>
+		
+		</h:form>
+    </rich:panel>
+
+</ui:define>
+
+</ui:composition>

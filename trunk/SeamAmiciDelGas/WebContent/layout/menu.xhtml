@@ -1,74 +1,14 @@
-<rich:toolBar
-    xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:s="http://jboss.com/products/seam/taglib"
-    xmlns:rich="http://richfaces.org/rich">
-    <rich:toolBarGroup>
-        <h:outputText value="#{projectName}:"/>
-        <s:link view="/home.xhtml" value="Home" propagation="none"/>
-    </rich:toolBarGroup>
-    <s:link view="/crud/ItinerarioList.xhtml"
-           value="Itinerario List"
-includePageParams="false"
-     propagation="none"/>
-    <s:link view="/../OrdineList.xhtml"
-           value="Ordine List"
-includePageParams="false"
-     propagation="none"/>
-    <s:link view="/RuoloList.xhtml"
-           value="Ruolo List"
-includePageParams="false"
-     propagation="none"/>
-    <s:link view="/ArticoloList.xhtml"
-           value="Articolo List"
-includePageParams="false"
-     propagation="none"/>
-    <s:link view="/PagamentoelettronicoList.xhtml"
-           value="Pagamentoelettronico List"
-includePageParams="false"
-     propagation="none"/>
-    <s:link view="/FeedbackList.xhtml"
-           value="Feedback List"
-includePageParams="false"
-     propagation="none"/>
-    <s:link view="/AccountList.xhtml"
-           value="Account List"
-includePageParams="false"
-     propagation="none"/>
-    <s:link view="/ProvincesList.xhtml"
-           value="Provinces List"
-includePageParams="false"
-     propagation="none"/>
-    <s:link view="/ComuneList.xhtml"
-           value="Comune List"
-includePageParams="false"
-     propagation="none"/>
-    <s:link view="/PuntiDiConsegnaList.xhtml"
-           value="PuntiDiConsegna List"
-includePageParams="false"
-     propagation="none"/>
-    <s:link view="/UtenteList.xhtml"
-           value="Utente List"
-includePageParams="false"
-     propagation="none"/>
-    <s:link view="/CybercontadinoList.xhtml"
-           value="Cybercontadino List"
-includePageParams="false"
-     propagation="none"/>
-    <s:link view="/PatenteList.xhtml"
-           value="Patente List"
-includePageParams="false"
-     propagation="none"/>
-    <s:link view="/QuestionarioList.xhtml"
-           value="Questionario List"
-includePageParams="false"
-     propagation="none"/>
-    <!-- @newMenuItem@ -->
-    <rich:toolBarGroup location="right">
-        <h:outputText value="signed in as: #{identity.username}" rendered="#{identity.loggedIn}"/>
-        <s:link view="/login.xhtml" value="Login" rendered="#{not identity.loggedIn}" propagation="none"/>
-        <s:link view="/home.xhtml" action="#{identity.logout}" value="Logout" rendered="#{identity.loggedIn}" propagation="none"/>
-    </rich:toolBarGroup>
-</rich:toolBar>
+<table border="0" cellpadding="0" cellspacing="0" id="j_id5" width="100%" height="32" background="/SeamAmiciDelGas/img/shadow.png">
+	<tr valign="middle">
+		<td width="35%">
+		</td>
+		<td width="30%" align="center">
+			SeamAmiciDelGas: 
+			<a href="/SeamAmiciDelGas/home.seam" id="j_id8">Home</a> |
+			<a href="/SeamAmiciDelGas/richiestaRegistrazione.seam" id="j_id9">Registrazione</a> |
+			<a href="/SeamAmiciDelGas/login.seam" id="j_id13">Login</a>
+		</td>
+		<td width="35%">
+		</td>
+	</tr>
+</table>
