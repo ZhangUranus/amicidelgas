@@ -17,6 +17,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.domain.SeamAmiciDelGas.validator.DataAnnotation;
 import org.hibernate.validator.Email;
 import org.hibernate.validator.Length;
 import org.hibernate.validator.NotNull;
@@ -148,6 +149,7 @@ public class Utente implements java.io.Serializable {
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DataNascita", nullable = false, length = 10)
 	@NotNull
+	@DataAnnotation
 	public Date getDataNascita() {
 		return this.dataNascita;
 	}
