@@ -81,10 +81,20 @@
                 <ui:define name="label">Password</ui:define>
                 <h:inputText id="password"
                        required="true"
-                           size="32"
-                      maxlength="32"
-                          value="#{newAccount.pass}">
+                           size="16"
+                      maxlength="16"
+                          value="#{passwordBean.password}">
                     <a:support event="onblur" reRender="password" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+             <s:decorate id="confirmPassword" template="layout/edit.xhtml">
+                <ui:define name="label">Conferma Password</ui:define>
+                <h:inputText id="confirmPassword"
+                       required="true"
+                           size="16"
+                      maxlength="16"
+                          value="#{passwordBean.confirm}">
+                    <a:support event="onblur" reRender="confirmPassword" bypassUpdates="true" ajaxSingle="true"/>
                 </h:inputText>
             </s:decorate>
 
