@@ -14,6 +14,7 @@ import javax.persistence.Version;
 import org.hibernate.validator.Length;
 import org.hibernate.validator.NotNull;
 import org.jboss.seam.annotations.Name;
+import org.jboss.seam.annotations.security.management.RoleName;
 
 @Entity
 @Table(name = "role",  catalog = "database_gas")
@@ -49,7 +50,7 @@ public class Role implements Serializable
 		this.account = account;
 	}
 
-
+	@RoleName
     @Column(name = "name", nullable = false)
     @Length(max = 100)
     public String getName() {
