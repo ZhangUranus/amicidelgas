@@ -88,10 +88,12 @@
                  action="#{newComuneAutoCompleteBean.checkProvincia()}"/>
           
                 <s:selectItems 
+                	noSelectionLabel=" "
                 	var="_provincia" 
+                	hideNoSelectionLabel="true"
                 	label="#{_provincia.nome}" 
                 	value="#{provincesList.resultList}">
-                 
+                 	
                   </s:selectItems>
                 <s:convertEntity></s:convertEntity>
                 </h:selectOneMenu>
@@ -100,28 +102,28 @@
 			
 			<s:decorate id="comuneNascitaSuggestionField" template="layout/edit.xhtml">
                 <ui:define name="label">Comune di nascita (suggestion box)</ui:define>
-                <h:inputText id="comuneNascitaSuggestion"/>
+                <h:inputText 
+                	id="comuneNascitaSuggestion" 
+                	disabled="!#{newComuneAutoCompleteBean.selectedProvincia}"
+               >
+                </h:inputText>
              <rich:suggestionbox id="suggestionBoxId" 
+             		nothingLabel="Nessuna provincia trovata"
              		usingSuggestObjects="true"
-                    suggestionAction="#{newComuneAutoCompleteBean.autocomplete}" var="_comuneSugg"
-                    for="comuneNascitaSuggestion" fetchValue="#{_comuneSugg.id}" tokens=",[]">
+             		suggestionAction="#{newComuneAutoCompleteBean.autocomplete}" var="_comuneSugg"
+                    for="comuneNascitaSuggestion" fetchValue="#{_comuneSugg.nome}" tokens=",[]"
                     
+                    >
+                    <a:support event="onselect" ajaxSingle="true"  
+                 action="#{newComuneAutoCompleteBean.setSelectedComune(_comuneSugg)}"/>
+                 <s:convertEntity></s:convertEntity>
                     <h:column>
                         <h:outputText value="#{_comuneSugg.nome}" />
                     </h:column>
              </rich:suggestionbox>  
             
              </s:decorate>
-			<s:decorate id="comunenascitaField" template="layout/edit.xhtml">
-                <ui:define name="label">Comune di nascita</ui:define>
-                <h:inputText id="comunenascita"
-                       required="true"
-                           size="100"
-                      maxlength="100"
-                          value="#{newComuneNascita.idcomune}">
-                    <a:support event="onblur" reRender="comunenascitaField" bypassUpdates="true" ajaxSingle="true"/>
-                </h:inputText>
-            </s:decorate>
+			
             
             <s:decorate id="comunebyindirizzoField" template="layout/edit.xhtml">
                 <ui:define name="label">residenza</ui:define>

@@ -82,6 +82,12 @@
                 </h:inputText>
             </s:decorate>
 
+			<s:decorate id="verifyCaptchaField" template="layout/edit.xhtml">
+				<ui:define name="label">Security check</ui:define>
+				<h:graphicImage value="/seam/resource/captcha"/>
+				<h:inputText value="#{captcha.response}" required="true"/>
+			</s:decorate>
+
             <h:commandButton id="passo3" value="procedi al passo 3" action="passo2Outcome"/>
 
         </h:form>

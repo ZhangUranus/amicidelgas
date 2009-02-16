@@ -42,8 +42,8 @@ public class RichiestaRegistrazioneBean implements RichiestaRegistrazione
     private Patente patente;
     @In(value="newPagamento")
     private Pagamentoelettronico pagamento;
-    @In(value="newComuneNascita")
-    private Comune comuneNascita;
+    @In(value="newComuneAutoCompleteBean")
+    private ComuneAutoCompleteBean comuneAutoCompleteBean;
     @In(value="newComuneResidenza")
     private Comune comuneResidenza;
     @In(value="passwordBean")
@@ -54,17 +54,19 @@ public class RichiestaRegistrazioneBean implements RichiestaRegistrazione
     
     public void richiestaRegistrazione()
     {
-    	ComuneList comuneList = new ComuneList();
-    	comuneList.setEjbql("select comune from Comune comune where comune.idcomune= 10252");
-//    	comuneList.getComune().setIdcomune(comuneNascita.getIdcomune());
-//    	comuneList.refresh();
-//    	log.error("prova id comune: "+comuneNascita.getIdcomune());
-    	log.error("prova query: "+comuneList.getEjbql());
     	
     	if (!passwordBean.verify()) {
     		FacesMessages.instance()
     		.addToControl("confirm", "value does not match password");
     	}
+    	
+    	ComuneList comuneList = new ComuneList();
+    	comuneList.setEjbql("select comune from Comune comune where comune.idcomune= "+ comuneAutoCompleteBean.getSelectedComune().getId());
+//    	comuneList.getComune().setIdcomune(comuneNascita.getIdcomune());
+//    	comuneList.refresh();
+//    	log.error("prova id comune: "+comuneNascita.getIdcomune());
+    	log.error("prova query: "+comuneList.getEjbql());
+    	
     	account.setPasswordHash(passwordManager.hash(passwordBean.getPassword()));
     	utente.setComuneByComuneNascita(comuneList.getResultList().get(0));
     	

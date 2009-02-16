@@ -40,7 +40,8 @@
    <security:rule-based-permission-resolver security-rules="#{securityRules}"/>
 
    <security:identity authenticate-method="#{authenticator.authenticate}" remember-me="true"/>
-
+	<security:jpa-identity-store
+	user-class="org.domain.SeamAmiciDelGas.entity.Account" role-class="org.domain.SeamAmiciDelGas.entity.Role"/>
    <event type="org.jboss.seam.security.notLoggedIn">
       <action execute="#{redirect.captureCurrentView}"/>
    </event>
