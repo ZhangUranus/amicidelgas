@@ -5,6 +5,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
 import org.domain.SeamAmiciDelGas.entity.Account;
+import org.domain.SeamAmiciDelGas.entity.Role;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Logger;
 import org.jboss.seam.annotations.Name;
@@ -33,6 +34,12 @@ public class Authenticator
         		"select account from Account account where account.username = :username").setParameter("username", credentials.getUsername()).getSingleResult();
         if(!validatePassword(credentials.getPassword(), account))
         	return false;
+        if (account.getRoles() != null) {
+        	for (Role role : account.getRoles()) {
+        	identity.addRole(role.getName());
+        	}
+        }
+        
         return true;
         }
         catch(NoResultException nre){
