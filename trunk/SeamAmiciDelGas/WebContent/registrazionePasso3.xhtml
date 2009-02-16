@@ -42,7 +42,7 @@
         
         <s:decorate id="comunenascita" template="layout/display.xhtml">
             <ui:define name="label">comune di nascita</ui:define>
-            <h:outputText value="#{newComuneNascita.idcomune}"/>
+            <h:outputText value="#{newComuneAutoCompleteBean.selectedComune.id}"/>
         </s:decorate>
         
         <s:decorate id="comuneresidenza" template="layout/display.xhtml">

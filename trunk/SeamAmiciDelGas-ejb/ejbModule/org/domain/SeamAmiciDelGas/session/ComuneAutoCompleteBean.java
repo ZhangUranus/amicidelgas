@@ -31,7 +31,7 @@ public class ComuneAutoCompleteBean{
 	@In(value="comuneList",create=true)
 	private ComuneList comuneList;
 	private List<Comune> autoCompleteList;
-	
+	private myComuneBean selectedComune;
 	private Provinces provincia;
 	
 	public Provinces getProvincia() {
@@ -59,6 +59,10 @@ public class ComuneAutoCompleteBean{
 	 
 	}
 	
+	public boolean isSelectedProvincia(){
+		return provincia!=null;
+	}
+	
 	public List<myComuneBean> autocomplete(Object suggest) {
         
         	comuneList.setEjbql("select comune from Comune comune where comune.provinces.nome='"+provincia.getNome()+"'");
@@ -73,7 +77,7 @@ public class ComuneAutoCompleteBean{
             if ((elem.getNome() != null && elem.getNome().toLowerCase().indexOf(pref.toLowerCase()) == 0) || "".equals(pref))
             {
             	myComuneBean comune= new myComuneBean();
-            	comune.setId(elem.getCap());
+            	comune.setId(elem.getIdcomune());
             	comune.setNome(elem.getNome());
                 result.add(comune);
             }
@@ -97,6 +101,14 @@ public class ComuneAutoCompleteBean{
 			this.nome = nome;
 		}
 		
+	}
+
+	public myComuneBean getSelectedComune() {
+		return selectedComune;
+	}
+
+	public void setSelectedComune(myComuneBean selectedComune) {
+		this.selectedComune = selectedComune;
 	}
 
 	
