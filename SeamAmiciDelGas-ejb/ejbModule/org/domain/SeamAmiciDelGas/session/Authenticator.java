@@ -1,5 +1,10 @@
 package org.domain.SeamAmiciDelGas.session;
 
+import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.PersistenceContext;
+
+import org.domain.SeamAmiciDelGas.entity.Account;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Logger;
 import org.jboss.seam.annotations.Name;
@@ -14,19 +19,40 @@ public class Authenticator
 
     @In Identity identity;
     @In Credentials credentials;
-
+    @In(value="passwordManager",create=true)
+    private PasswordManager passwordManager;
+    @In
+    private EntityManager entityManager;
     public boolean authenticate()
     {
+    	
         log.info("authenticating {0}", credentials.getUsername());
+        try{
+        Account account=(Account) entityManager.createQuery(
+        		"select account from Account account where account.username = :username").setParameter("username", credentials.getUsername()).getSingleResult();
+        if(!validatePassword(credentials.getPassword(), account))
+        	return false;
+        return true;
+        }
+        catch(NoResultException nre){
+        	return false;
+        }
+        
+       /* 
         //write your authentication logic here,
         //return true if the authentication was
         //successful, false otherwise
         if ("admin".equals(credentials.getUsername()))
         {
-            identity.addRole("admin");
+        	identity.addRole("admin");
             return true;
         }
         return false;
+        */
+    }
+    
+    public boolean validatePassword(String password, Account a) {
+    	return passwordManager.hash(password).equals(a.getPasswordHash());
     }
 
 }
