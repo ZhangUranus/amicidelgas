@@ -17,7 +17,7 @@ public class ComuneList extends EntityQuery<Comune> {
 	public ComuneList() {
 		setEjbql(EJBQL);
 		setRestrictionExpressionStrings(Arrays.asList(RESTRICTIONS));
-		setMaxResults(25);
+		setMaxResults(10000);
 	}
 
 	public Comune getComune() {
