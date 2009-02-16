@@ -11,22 +11,6 @@
 
 <ui:define name="body">
 
-    <rich:panel>
-        <f:facet name="header">riepilogo passo 1</f:facet>
-
-		<s:decorate id="codicefiscale" template="layout/display.xhtml">
-            <ui:define name="label">codice fiscale</ui:define>
-            <h:outputText value="#{newUtente.codiceFiscale}"/>
-        </s:decorate>
-
-		<s:decorate id="comunenascita" template="layout/display.xhtml">
-            <ui:define name="label">comune nascita</ui:define>
-            <h:outputText value="#{newComuneNascita.idcomune}"/>
-        </s:decorate>
-
-    </rich:panel>
-    
-    <div style="clear: both"/>
 
     <rich:panel>
         <f:facet name="header">Passo 2 - dati pagamento</f:facet>
