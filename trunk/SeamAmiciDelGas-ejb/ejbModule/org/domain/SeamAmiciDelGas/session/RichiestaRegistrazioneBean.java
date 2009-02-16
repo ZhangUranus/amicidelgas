@@ -51,7 +51,6 @@ public class RichiestaRegistrazioneBean implements RichiestaRegistrazione
     @In(value="passwordManager",create=true)
     private PasswordManager passwordManager;
     @In StatusMessages statusMessages;
-
     
     public void richiestaRegistrazione()
     {
@@ -102,10 +101,9 @@ public class RichiestaRegistrazioneBean implements RichiestaRegistrazione
         statusMessages.add("richiestaRegistrazione");
     }
 
+
     // add additional action methods
 
-    
-    
     @Destroy @Remove
     public void destroy() {}
 
