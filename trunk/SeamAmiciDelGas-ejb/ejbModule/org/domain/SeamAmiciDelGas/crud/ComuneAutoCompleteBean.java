@@ -9,15 +9,20 @@ import javax.faces.event.ValueChangeEvent;
 import javax.faces.event.ValueChangeListener;
 
 import org.domain.SeamAmiciDelGas.entity.Comune;
+import org.domain.SeamAmiciDelGas.entity.Provinces;
+import org.hibernate.validator.Length;
+import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Logger;
 import org.jboss.seam.annotations.Name;
+import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.log.Log;
 
 
 
 @Name("newComuneAutoCompleteBean")
-public class ComuneAutoCompleteBean implements ValueChangeListener{
+@Scope(ScopeType.SESSION)
+public class ComuneAutoCompleteBean{
 	
 	
 	@Logger
@@ -26,30 +31,38 @@ public class ComuneAutoCompleteBean implements ValueChangeListener{
 	private ComuneList comuneList;
 	private List<Comune> autoCompleteList;
 	
-	private String nomeProvincia;
+	private Provinces provincia;
 	
-	public String getNomeProvincia() {
-		return nomeProvincia;
+	public Provinces getProvincia() {
+		return this.provincia;
 	}
 
-	public void setNomeProvincia(String nomeProvincia) {
-		this.nomeProvincia = nomeProvincia;
+	public void setProvincia(Provinces provincia) {
+		this.provincia = provincia;
 	}
 
 	public ComuneAutoCompleteBean(){
 		
 	}
 	
-	public void updateProvincia(ValueChangeEvent event){
-		
+	public void checkProvincia(){
+	log.info("La provincia è "+ provincia.getNome());
+	 log.info("Executing check provincia");
+	 String response=null;
+	 log.info("Provincia is null? ");
+	 if(provincia==null)
+		 response="true";
+	 else
+		 response="false";
+	 log.info("Provincia is null? "+ response);
+	 
 	}
 	
 	public List<myComuneBean> autocomplete(Object suggest) {
-        if(autoCompleteList==null){
-        	comuneList.setEjbql("select comune from Comune comune where comune.provinces.nome="+nomeProvincia);
+        
+        	comuneList.setEjbql("select comune from Comune comune where comune.provinces.nome='"+provincia.getNome()+"'");
         	autoCompleteList= comuneList.getResultList();
-        }
-		String pref = (String)suggest;
+        String pref = (String)suggest;
         
         ArrayList<myComuneBean> result = new ArrayList<myComuneBean>();
 
@@ -85,13 +98,5 @@ public class ComuneAutoCompleteBean implements ValueChangeListener{
 		
 	}
 
-	public void processValueChange(ValueChangeEvent arg0)
-			throws AbortProcessingException {
-		nomeProvincia=(String) event.getNewValue();
-		comuneList.setEjbql("select comune from Comune comune where comune.provinces.nome="+nomeProvincia);
-    	autoCompleteList= comuneList.getResultList();
-    	log.info("Updated provincia nome with value"+ nomeProvincia );
-		
-	}
 	
 }
