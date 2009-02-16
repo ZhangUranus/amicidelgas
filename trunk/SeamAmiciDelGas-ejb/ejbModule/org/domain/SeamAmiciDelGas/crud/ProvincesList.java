@@ -19,7 +19,7 @@ public class ProvincesList extends EntityQuery<Provinces> {
 	public ProvincesList() {
 		setEjbql(EJBQL);
 		setRestrictionExpressionStrings(Arrays.asList(RESTRICTIONS));
-		setMaxResults(25);
+		setMaxResults(110);
 	}
 
 	public Provinces getProvinces() {
