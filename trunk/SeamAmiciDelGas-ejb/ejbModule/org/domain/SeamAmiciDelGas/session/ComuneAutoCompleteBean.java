@@ -1,4 +1,4 @@
-package org.domain.SeamAmiciDelGas.crud;
+package org.domain.SeamAmiciDelGas.session;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -8,6 +8,7 @@ import javax.faces.event.AbortProcessingException;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.event.ValueChangeListener;
 
+import org.domain.SeamAmiciDelGas.crud.ComuneList;
 import org.domain.SeamAmiciDelGas.entity.Comune;
 import org.domain.SeamAmiciDelGas.entity.Provinces;
 import org.hibernate.validator.Length;
