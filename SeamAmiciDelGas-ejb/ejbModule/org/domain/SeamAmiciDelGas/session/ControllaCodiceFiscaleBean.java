@@ -1,7 +1,8 @@
-package org.domain.SeamAmiciDelGas.crud;
+package org.domain.SeamAmiciDelGas.session;
 
 import java.util.List;
 
+import org.domain.SeamAmiciDelGas.crud.UtenteList;
 import org.domain.SeamAmiciDelGas.entity.Utente;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Logger;
