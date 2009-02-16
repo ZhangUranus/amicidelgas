@@ -93,7 +93,7 @@ public class RichiestaRegistrazioneBean implements RichiestaRegistrazione
     	
     	Role role = new Role();
     	role.setAccount(account);
-    	role.setName("prova");
+    	role.setName("utenteGas");
     	em.persist(role);
     	
         // implement your business logic here
