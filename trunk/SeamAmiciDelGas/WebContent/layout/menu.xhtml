@@ -1,15 +1,19 @@
-<table border="0" cellpadding="0" cellspacing="0" id="j_id5" width="100%" height="32" background="/SeamAmiciDelGas/img/shadow.png">
-	<tr valign="middle">
-		<td width="35%">
-		</td>
-		<td width="30%" align="center">
-			SeamAmiciDelGas: 
-			<a href="/SeamAmiciDelGas/home.seam" id="j_id8">Home</a> |
-			<a href="/SeamAmiciDelGas/richiestaRegistrazione.seam" id="j_id9">Registrazione</a> |
-			<a href="/SeamAmiciDelGas/NewItinerario.seam" id="j_id9">Nuovo itinerario</a> |
-			<a href="/SeamAmiciDelGas/login.seam" id="j_id13">Login</a>
-		</td>
-		<td width="35%">
-		</td>
-	</tr>
-</table>
+<rich:toolBar
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:rich="http://richfaces.org/rich">
+    <rich:toolBarGroup>
+        <h:outputText value="#{projectName}:"/>
+        <s:link view="/home.xhtml" value="Home" propagation="none"/>
+    </rich:toolBarGroup>
+			<s:link view="/richiestaRegistrazione.xhtml" value="Registrazione"/>
+	
+	<rich:toolBarGroup location="right">
+        <h:outputText value="signed in as: #{identity.username}" rendered="#{identity.loggedIn}"/>
+        <s:link view="/login.xhtml" value="Login" rendered="#{not identity.loggedIn}" propagation="none"/>
+        <s:link view="/home.xhtml" action="#{identity.logout}" value="Logout" rendered="#{identity.loggedIn}" propagation="none"/>
+    </rich:toolBarGroup>	
+</rich:toolBar>	
