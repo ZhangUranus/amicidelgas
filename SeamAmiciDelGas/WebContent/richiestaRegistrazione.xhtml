@@ -72,17 +72,24 @@
              </s:decorate>
 			
 			
+			
 			<s:decorate id="provinciaField" template="layout/edit.xhtml">
                 <ui:define name="label">Provincia di nascita</ui:define>
                 <h:selectOneMenu 
                 	id="provinciaSelect" 
-                	value="#{newComuneAutoCompleteBean.nomeProvincia}" 
+                	value="#{newComuneAutoCompleteBean.provincia}" 
                 >
-                	<s:selectItems var="_provincia" label="#{_provincia.nome}" value="#{provincesList.resultList}"></s:selectItems>
-                	<f:valueChangeListener type="#{newComuneAutoCompleteBean}"/>
+                 <a:support event="onchange" ajaxSingle="true" reRender="provinciaField" action="#{newComuneAutoCompleteBean.checkProvincia()}"/>
                 
+                <s:selectItems 
+                	var="_provincia" 
+                	label="#{_provincia.nome}" 
+                	value="#{provincesList.resultList}"
+                >
+                 
+                  </s:selectItems>
+                <s:convertEntity></s:convertEntity>
                 </h:selectOneMenu>
-               
              </s:decorate>
 			
 			
