@@ -8,6 +8,7 @@ import org.domain.SeamAmiciDelGas.entity.Account;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Logger;
 import org.jboss.seam.annotations.Name;
+import org.jboss.seam.annotations.Transactional;
 import org.jboss.seam.log.Log;
 import org.jboss.seam.security.Credentials;
 import org.jboss.seam.security.Identity;
@@ -23,7 +24,7 @@ public class Authenticator
     private PasswordManager passwordManager;
     @In
     private EntityManager entityManager;
-    public boolean authenticate()
+    @Transactional public boolean authenticate()
     {
     	
         log.info("authenticating {0}", credentials.getUsername());
