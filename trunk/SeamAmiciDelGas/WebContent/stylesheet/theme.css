@@ -3,7 +3,7 @@ html {
 }
 
 body {
-	background: #CCCCCC;
+	background: url("/SeamAmiciDelGas/img/sfondo.jpg") no-repeat center;
 	font-size: 12px;
 	margin: 0px;
 }
@@ -28,7 +28,7 @@ input[type=text], input[type=password], textarea {
 	padding-left: 1px;
 }
 
-.beta{
+.logo{
 	background:transparent;
 	position:fixed;
 	zoom:1;
