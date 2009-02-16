@@ -22,9 +22,15 @@
                        required="true"
                            size="16"
                       maxlength="16"
-                          value="#{newUtente.codiceFiscale}">
-                    <a:support event="onblur" reRender="codiceFiscaleField" bypassUpdates="true" ajaxSingle="true"/>
+                      value="#{newUtente.codiceFiscale}">
+                    <a:support event="onblur" 
+                    reRender="codiceFiscaleField" 
+                    action="#{newControllaCodiceFiscaleBean.controllaCodiceFiscale()}"
+                    ajaxSingle="true"/>   
                 </h:inputText>
+                <h:outputText value="#{newControllaCodiceFiscaleBean.myResponse}" 
+                style="color:red;"/>
+                
             </s:decorate>
 
 			<s:decorate id="nomeField" template="layout/edit.xhtml">
@@ -76,16 +82,15 @@
 			<s:decorate id="provinciaField" template="layout/edit.xhtml">
                 <ui:define name="label">Provincia di nascita</ui:define>
                 <h:selectOneMenu 
-                	id="provinciaSelect" 
-                	value="#{newComuneAutoCompleteBean.provincia}" 
-                >
-                 <a:support event="onchange" ajaxSingle="true" reRender="provinciaField" action="#{newComuneAutoCompleteBean.checkProvincia()}"/>
-                
+                	id="provinciaSelect"
+                	value="#{newComuneAutoCompleteBean.provincia}">
+                 <a:support event="onchange" ajaxSingle="true" reRender="provinciaField" 
+                 action="#{newComuneAutoCompleteBean.checkProvincia()}"/>
+          
                 <s:selectItems 
                 	var="_provincia" 
                 	label="#{_provincia.nome}" 
-                	value="#{provincesList.resultList}"
-                >
+                	value="#{provincesList.resultList}">
                  
                   </s:selectItems>
                 <s:convertEntity></s:convertEntity>
