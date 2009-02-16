@@ -22,6 +22,7 @@ import org.jboss.seam.annotations.Logger;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.log.Log;
 import org.jboss.seam.ScopeType;
+import org.jboss.seam.faces.FacesMessages;
 import org.jboss.seam.international.StatusMessages;
 
 @Stateful
@@ -45,7 +46,10 @@ public class RichiestaRegistrazioneBean implements RichiestaRegistrazione
     private Comune comuneNascita;
     @In(value="newComuneResidenza")
     private Comune comuneResidenza;
-    
+    @In(value="passwordBean")
+    private PasswordBean passwordBean;
+    @In(value="passwordManager",create=true)
+    private PasswordManager passwordManager;
     @In StatusMessages statusMessages;
 
     
@@ -58,6 +62,11 @@ public class RichiestaRegistrazioneBean implements RichiestaRegistrazione
 //    	log.error("prova id comune: "+comuneNascita.getIdcomune());
     	log.error("prova query: "+comuneList.getEjbql());
     	
+    	if (!passwordBean.verify()) {
+    		FacesMessages.instance()
+    		.addToControl("confirm", "value does not match password");
+    	}
+    	account.setPasswordHash(passwordManager.hash(passwordBean.getPassword()));
     	utente.setComuneByComuneNascita(comuneList.getResultList().get(0));
     	
     	comuneList = new ComuneList();
@@ -73,7 +82,7 @@ public class RichiestaRegistrazioneBean implements RichiestaRegistrazione
     	
     	account.setUtente(utente);
     	account.setPagamentoelettronico(pagamento);
-    	account.setAttivato(true);
+    	account.setAttivato(false);
     	account.setBloccato(false);
     	account.setCancellato(false);
     	account.setElimato(false);
