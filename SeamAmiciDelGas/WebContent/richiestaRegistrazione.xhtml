@@ -14,7 +14,7 @@
 	<h:form id="richiestaRegistrazioneForm">
 	
     <rich:panel>
-        <f:facet name="header">Passo 1 - richiesta registrazione</f:facet>    
+        <f:facet name="header">Passo 1 - Richiesta registrazione</f:facet>    
 
 			<s:decorate id="codiceFiscaleField" template="layout/edit.xhtml">
                 <ui:define name="label">Codice fiscale</ui:define>
@@ -69,7 +69,6 @@
                 <ui:define name="label">Sesso</ui:define>
                 
               <h:selectOneMenu id="sessoSelect" value="#{newUtente.sesso}">
-              
         		<f:selectItem itemLabel="Maschio" itemValue="false"/>            
         		<f:selectItem itemLabel="Femmina" itemValue="true"/>
         		
@@ -88,7 +87,7 @@
                  action="#{newComuneAutoCompleteBean.checkProvincia()}"/>
           
                 <s:selectItems 
-                	noSelectionLabel=" "
+                	noSelectionLabel="-- Select --"
                 	var="_provincia" 
                 	hideNoSelectionLabel="true"
                 	label="#{_provincia.nome}" 
@@ -126,7 +125,7 @@
 			
             
             <s:decorate id="comunebyindirizzoField" template="layout/edit.xhtml">
-                <ui:define name="label">residenza</ui:define>
+                <ui:define name="label">Residenza</ui:define>
                 <h:inputText id="comunebyindirizzo"
                        required="true"
                            size="100"
@@ -174,7 +173,7 @@
 
 			<div style="clear:both">
                 <span class="required">*</span>
-                campi richiesti
+                Campi richiesti
             </div>
 
 	</rich:panel>
