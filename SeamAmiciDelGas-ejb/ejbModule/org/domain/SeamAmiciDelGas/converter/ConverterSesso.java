@@ -17,8 +17,8 @@ public class ConverterSesso implements Converter {
 	public String getAsString(FacesContext arg0, UIComponent arg1, Object arg2) {
 		
 		try {	
-			Boolean b = (Boolean) arg2;
-			if(b)
+			Character s = (Character) arg2;
+			if(s.charValue()=='M')
 				return "Maschio";
 			return "Femmina";
 		}
