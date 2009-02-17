@@ -17,6 +17,9 @@
         	<h:outputText value="signed in as: #{identity.username}" rendered="#{identity.loggedIn}"/>        
         </td>
         <td height="32">
+        	<s:link view="/editDataUtente.xhtml" value="Dati anagrafici" rendered="#{identity.loggedIn}" propagation="none"/>        
+        </td>
+        <td height="32">
         	<s:link view="/login.xhtml" value="Login" rendered="#{not identity.loggedIn}" propagation="none"/>        
         </td>
         <td height="32">	

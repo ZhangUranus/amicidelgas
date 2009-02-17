@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:a="http://richfaces.org/a4j"
+    template="layout/template.xhtml">
+
+	<ui:define name="body">
+		<rich:dataTable value="#{utenteOperation.dati}" var="_dati" id="table" ajaxKeys="#{dataTableScrollerBean.keys}" width="700" rows="10">
+			<f:facet name="header">
+				<h:outputText value="Dati anagrafici dell'utente #{identity.username}" />
+			</f:facet>
+				<rich:column >
+					<f:facet name="header">
+						<h:outputText value="Campo" />
+					</f:facet>
+					<h:outputText value="#{_dati.campo}" id="campo" />
+        		</rich:column>
+        			
+        		<rich:column>
+					<f:facet name="header">
+						<h:outputText value="Value" />
+					</f:facet>
+					<h:outputText value="#{_dati.value}" id="value" />
+        		</rich:column>
+        		
+        		<rich:column>
+					<f:facet name="header">
+						<h:outputText value="Modifica" />
+					</f:facet>
+        		</rich:column>
+					
+			<f:facet name="footer"><h:outputText value="" /></f:facet>
+		</rich:dataTable>
+		 
+	
+	
+	</ui:define>
+
+</ui:composition>
