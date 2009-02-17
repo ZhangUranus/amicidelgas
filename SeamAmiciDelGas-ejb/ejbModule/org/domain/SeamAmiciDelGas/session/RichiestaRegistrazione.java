@@ -7,7 +7,7 @@ import javax.faces.event.ActionEvent;
 public interface RichiestaRegistrazione
 {
     // seam-gen method
-    public void richiestaRegistrazione();
+    public boolean richiestaRegistrazione();
     // add additional interface methods here
     
     public void destroy();
