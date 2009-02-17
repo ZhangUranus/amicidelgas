@@ -1,0 +1,43 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:a="http://richfaces.org/a4j"
+    template="layout/template.xhtml">
+
+<ui:define name="body">
+
+    <rich:panel>
+    	<h:form id="passo4Form">
+        <f:facet name="header">Richiesta registrazione inoltrata</f:facet>
+
+
+        
+        <s:decorate id="nome" template="layout/display.xhtml">
+            <ui:define name="label">Ciao </ui:define>
+            <h:outputText value="#{newUtente.nome}"/>
+        </s:decorate>
+        
+
+        
+        <s:decorate id="email" template="layout/display.xhtml">
+            <ui:define name="label">ti verrà inviata una notifica alla tua e-mail:</ui:define>
+            <h:outputText value="#{newUtente.email}"/>
+        </s:decorate>
+        
+        <s:decorate id="nome" template="layout/display.xhtml">
+            <ui:define name="label">per informarti dell'avvenuta registrazione.</ui:define>
+        </s:decorate>
+
+		<h:commandButton id="Home" value="ritorna_home" action="passo4Outcome"/>
+		
+		</h:form>
+    </rich:panel>
+
+</ui:define>
+
+</ui:composition>

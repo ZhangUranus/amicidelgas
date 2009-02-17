@@ -61,7 +61,9 @@
                 <ui:define name="label">Data nascita</ui:define>
                 <rich:calendar id="dataNascita"
                        required="true"
-                          value="#{newUtente.dataNascita}" datePattern="MM/dd/yyyy" />
+                       value="#{newUtente.dataNascita}" datePattern="MM/dd/yyyy">
+                   <a:support event="onchange" reRender="dataNascitaField" bypassUpdates="true" ajaxSingle="true"/>
+                </rich:calendar>
             </s:decorate>
 
 
