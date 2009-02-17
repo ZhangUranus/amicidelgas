@@ -12,7 +12,7 @@ public class AccountList extends EntityQuery<Account> {
 
 	private static final String[] RESTRICTIONS = {
 			"lower(account.username) like concat(lower(#{accountList.account.username}),'%')",
-			"lower(account.pass) like concat(lower(#{accountList.account.pass}),'%')", };
+			"lower(account.passwordHash) like concat(lower(#{accountList.account.passwordHash}),'%')", };
 
 	private Account account = new Account();
 
