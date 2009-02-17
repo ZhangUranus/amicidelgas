@@ -11,8 +11,9 @@
 
 <ui:define name="body">
 
+	<h:form id="passo3Form">
     <rich:panel>
-    	<h:form id="passo3Form">
+    	
         <f:facet name="header">riepilogo finale</f:facet>
 
 		<s:decorate id="codicefiscale" template="layout/display.xhtml">
@@ -91,11 +92,15 @@
             <ui:define name="label">tipopatente</ui:define>
             <h:outputText value="#{newPatente.tipo}"/>
         </s:decorate>
-
-		<h:commandButton id="conferma" value="conferma registrazione" action="#{richiestaRegistrazione.richiestaRegistrazione}"/>
 		
-		</h:form>
+		
     </rich:panel>
+    
+    <div class="actionButtons">
+			<h:commandButton id="conferma" value="conferma registrazione" action="#{richiestaRegistrazione.richiestaRegistrazione}"/>
+        </div>
+    
+    </h:form>
 
 </ui:define>
 

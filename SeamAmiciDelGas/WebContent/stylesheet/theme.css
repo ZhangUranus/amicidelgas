@@ -3,7 +3,7 @@ html {
 }
 
 body {
-	background: url("/SeamAmiciDelGas/img/sfondo.jpg") no-repeat center;
+	background: #b0b0b0 url("/SeamAmiciDelGas/img/sfondo.jpg") no-repeat center;
 	font-size: 12px;
 	margin: 0px;
 }
