@@ -41,7 +41,7 @@ public class Utente implements java.io.Serializable {
 	private String nome;
 	private String cognome;
 	private Date dataNascita;
-	private boolean sesso;
+	private char sesso;
 	private String pathQuestionario;
 	private String indirizzo;
 	private String recapitoTelefonico;
@@ -55,7 +55,7 @@ public class Utente implements java.io.Serializable {
 
 	public Utente(String codiceFiscale, Comune comuneByComuneNascita,
 			Comune comuneByIdcomune, String nome, String cognome,
-			Date dataNascita, boolean sesso, String indirizzo,
+			Date dataNascita, char sesso, String indirizzo,
 			String recapitoTelefonico, String email) {
 		this.codiceFiscale = codiceFiscale;
 		this.comuneByComuneNascita = comuneByComuneNascita;
@@ -71,7 +71,7 @@ public class Utente implements java.io.Serializable {
 
 	public Utente(String codiceFiscale, Comune comuneByComuneNascita,
 			Comune comuneByIdcomune, String nome, String cognome,
-			Date dataNascita, boolean sesso, String pathQuestionario,
+			Date dataNascita, char sesso, String pathQuestionario,
 			String indirizzo, String recapitoTelefonico, String email,
 			Set<Patente> patentes, Set<Account> accounts) {
 		this.codiceFiscale = codiceFiscale;
@@ -160,11 +160,11 @@ public class Utente implements java.io.Serializable {
 
 	@Column(name = "Sesso", nullable = false)
 	@NotNull
-	public boolean getSesso() {
+	public char getSesso() {
 		return this.sesso;
 	}
 
-	public void setSesso(boolean sesso) {
+	public void setSesso(char sesso) {
 		this.sesso = sesso;
 	}
 
