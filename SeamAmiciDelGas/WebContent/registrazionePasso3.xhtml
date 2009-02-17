@@ -37,8 +37,10 @@
         </s:decorate>
         
         <s:decorate id="sesso" template="layout/display.xhtml">
-            <ui:define name="label">sesso</ui:define>
-            <h:outputText value="#{newUtente.sesso}"/>
+            <ui:define name="label">Sesso</ui:define>
+            <h:outputText value="#{newUtente.sesso}">
+            <f:converter converterId="ConverterSesso"/>
+            </h:outputText>
         </s:decorate>
         
         <s:decorate id="provincianascita" template="layout/display.xhtml">
