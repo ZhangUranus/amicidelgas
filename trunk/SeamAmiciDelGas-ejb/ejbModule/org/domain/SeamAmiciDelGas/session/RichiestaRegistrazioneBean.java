@@ -20,6 +20,7 @@ import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Logger;
 import org.jboss.seam.annotations.Scope;
+import org.jboss.seam.annotations.Transactional;
 import org.jboss.seam.log.Log;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.faces.FacesMessages;
@@ -52,7 +53,7 @@ public class RichiestaRegistrazioneBean implements RichiestaRegistrazione
     private PasswordManager passwordManager;
     @In StatusMessages statusMessages;
     
-    public void richiestaRegistrazione()
+    @Transactional public void richiestaRegistrazione()
     {
     	
     	if (!passwordBean.verify()) {
