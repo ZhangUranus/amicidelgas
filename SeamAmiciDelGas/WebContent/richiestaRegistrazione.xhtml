@@ -25,10 +25,10 @@
                       value="#{newUtente.codiceFiscale}">
                     <a:support event="onblur" 
                     reRender="codiceFiscaleField" 
-                    action="#{newControllaCodiceFiscaleBean.controllaCodiceFiscale()}"
+                    action="#{newControlloBean.controllaCodiceFiscale()}"
                     ajaxSingle="true"/>   
                 </h:inputText>
-                <h:outputText value="#{newControllaCodiceFiscaleBean.myResponse}" 
+                <h:outputText value="#{newControlloBean.myResponseCodiceFiscale}" 
                 style="color:red;"/>
                 
             </s:decorate>
@@ -214,8 +214,13 @@
                            size="70"
                       maxlength="70"
                           value="#{newUtente.email}">
-                    <a:support event="onblur"  reRender="emailField" bypassUpdates="true" ajaxSingle="true"/>
+                    <a:support event="onblur" 
+                    reRender="emailField" 
+                    action="#{newControlloBean.controllaEmail()}"
+                    ajaxSingle="true"/>   
                 </h:inputText>
+                <h:outputText value="#{newControlloBean.myResponseEmail}"
+                style="color:red;"/>
             </s:decorate>
 
 			<div style="clear:both">
