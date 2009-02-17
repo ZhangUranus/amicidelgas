@@ -10551,7 +10551,9 @@ COMMIT;
 /*!40000 ALTER TABLE `role` DISABLE KEYS */;
 SET AUTOCOMMIT=0;
 INSERT INTO `role` (`id`,`name`,`Username`) VALUES 
- (1,'utenteGas','admin');
+ (1,'utenteGas','admin'),
+ (2,'mediatore','admin'),
+ (3,'admin','admin');
 COMMIT;
 /*!40000 ALTER TABLE `role` ENABLE KEYS */;
 
