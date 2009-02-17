@@ -43,10 +43,10 @@ public class RichiestaRegistrazioneBean implements RichiestaRegistrazione
     private Patente patente;
     @In(value="newPagamento")
     private Pagamentoelettronico pagamento;
-    @In(value="newComuneAutoCompleteBean")
-    private ComuneAutoCompleteBean comuneAutoCompleteBean;
-    @In(value="newComuneResidenza")
-    private Comune comuneResidenza;
+    @In(value="newComuneProvinciaBean")
+    private ComuneProvinciaBean comuneProvinciaBean;
+    @In(value="newComuneProvinciaResidenzaBean")
+    private ComuneProvinciaBean comuneProvinciaResidenzaBean;
     @In(value="passwordBean")
     private PasswordBean passwordBean;
     @In(value="passwordManager",create=true)
@@ -62,7 +62,7 @@ public class RichiestaRegistrazioneBean implements RichiestaRegistrazione
     	}
     	
     	ComuneList comuneList = new ComuneList();
-    	comuneList.setEjbql("select comune from Comune comune where comune.idcomune= "+ comuneAutoCompleteBean.getSelectedComune().getId());
+    	comuneList.setEjbql("select comune from Comune comune where comune.idcomune= "+ comuneProvinciaBean.getComune().getId());
 //    	comuneList.getComune().setIdcomune(comuneNascita.getIdcomune());
 //    	comuneList.refresh();
 //    	log.error("prova id comune: "+comuneNascita.getIdcomune());
@@ -72,7 +72,7 @@ public class RichiestaRegistrazioneBean implements RichiestaRegistrazione
     	utente.setComuneByComuneNascita(comuneList.getResultList().get(0));
     	
     	comuneList = new ComuneList();
-    	comuneList.setEjbql("select comune from Comune comune where comune.idcomune= 10252");
+    	comuneList.setEjbql("select comune from Comune comune where comune.idcomune= "+comuneProvinciaResidenzaBean.getComune().getId());
     	
     	utente.setComuneByIdcomune(comuneList.getResultList().get(0));
     	
