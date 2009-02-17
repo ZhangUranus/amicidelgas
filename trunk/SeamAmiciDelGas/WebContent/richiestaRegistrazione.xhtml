@@ -84,18 +84,17 @@
                 <ui:define name="label">Provincia di nascita</ui:define>
                 <h:selectOneMenu 
                 	id="provinciaSelect"
-                	value="#{newComuneAutoCompleteBean.provincia}">
+                	value="#{newComuneProvinciaBean.provincia}">
                  <a:support event="onchange" ajaxSingle="true" reRender="provinciaField" 
-                 action="#{newComuneAutoCompleteBean.checkProvincia()}"/>
+                 />
           
                 <s:selectItems 
-                	noSelectionLabel="-- Select --"
+                	noSelectionLabel="Seleziona una provincia"
                 	var="_provincia" 
-                	hideNoSelectionLabel="true"
+                	hideNoSelectionLabel="false"
                 	label="#{_provincia.nome}" 
                 	value="#{provincesList.resultList}">
-                 	
-                  </s:selectItems>
+                </s:selectItems>
                 <s:convertEntity></s:convertEntity>
                 </h:selectOneMenu>
              </s:decorate>
@@ -104,19 +103,26 @@
 			<s:decorate id="comuneNascitaSuggestionField" template="layout/edit.xhtml">
                 <ui:define name="label">Comune di nascita (suggestion box)</ui:define>
                 <h:inputText 
-                	id="comuneNascitaSuggestion" 
-                	disabled="!#{newComuneAutoCompleteBean.selectedProvincia}"
+                	id="comuneNascitaSuggestion"
+               		value="Seleziona prima una provincia"
+               		onclick="resetValue()"
                >
                 </h:inputText>
-             <rich:suggestionbox id="suggestionBoxId" 
-             		nothingLabel="Nessuna provincia trovata"
+                <script type="text/javascript">
+				<!--
+					function resetValue(){
+						document.getElementById('richiestaRegistrazioneForm:comuneNascitaSuggestionField:comuneNascitaSuggestion').value="";
+					}
+				//-->
+				</script>
+             <rich:suggestionbox id="suggestionBoxId"
+             	 	nothingLabel="Nessun comune trovato per la provincia selezionata"
              		usingSuggestObjects="true"
-             		suggestionAction="#{newComuneAutoCompleteBean.autocomplete}" var="_comuneSugg"
+             		suggestionAction="#{newComuneProvinciaBean.autocomplete}" var="_comuneSugg"
                     for="comuneNascitaSuggestion" fetchValue="#{_comuneSugg.nome}" tokens=",[]"
-                    
                     >
                     <a:support event="onselect" ajaxSingle="true"  
-                 action="#{newComuneAutoCompleteBean.setSelectedComune(_comuneSugg)}"/>
+                 	action="#{newComuneProvinciaBean.setComune(_comuneSugg)}"/>
                  <s:convertEntity></s:convertEntity>
                     <h:column>
                         <h:outputText value="#{_comuneSugg.nome}" />
@@ -126,18 +132,57 @@
              </s:decorate>
 			
             
-            <s:decorate id="comunebyindirizzoField" template="layout/edit.xhtml">
-                <ui:define name="label">Residenza</ui:define>
-                <h:inputText id="comunebyindirizzo"
-                       required="true"
-                           size="100"
-                      maxlength="100"
-                          value="#{newComuneResidenza.idcomune}">
-                    <a:support event="onblur" reRender="comunebyindirizzoField" bypassUpdates="true" ajaxSingle="true"/>
+            <s:decorate id="provinciaResidenzaField" template="layout/edit.xhtml">
+                <ui:define name="label">Provincia di residenza</ui:define>
+                <h:selectOneMenu 
+                	id="provinciaResidenzaSelect"
+                	value="#{newComuneProvinciaResidenzaBean.provincia}">
+                 <a:support event="onchange" ajaxSingle="true" reRender="provinciaResidenzaField" 
+                 />
+          
+                <s:selectItems 
+                	noSelectionLabel="Seleziona una provincia"
+                	var="_provinciaResidenza" 
+                	hideNoSelectionLabel="false"
+                	label="#{_provinciaResidenza.nome}" 
+                	value="#{provincesList.resultList}">
+                </s:selectItems>
+                <s:convertEntity></s:convertEntity>
+                </h:selectOneMenu>
+             </s:decorate>
+			
+			
+			<s:decorate id="comuneResidenzaSuggestionField" template="layout/edit.xhtml">
+                <ui:define name="label">Comune di Residenza (suggestion box)</ui:define>
+                <h:inputText 
+                	id="comuneResidenzaSuggestion"
+               		value="Seleziona prima una provincia"
+               		onclick="resetResidenzaValue()"
+               >
                 </h:inputText>
-            </s:decorate>
-
-           
+                <script type="text/javascript">
+				<!--
+					function resetResidenzaValue(){
+						document.getElementById('richiestaRegistrazioneForm:comuneResidenzaSuggestionField:comuneResidenzaSuggestion').value="";
+					}
+				//-->
+				</script>
+             <rich:suggestionbox id="suggestionBoxResidenzaId"
+             	 	nothingLabel="Nessun comune trovato per la provincia selezionata"
+             		usingSuggestObjects="true"
+             		suggestionAction="#{newComuneProvinciaResidenzaBean.autocomplete}" var="_comuneResidenzaSugg"
+                    for="comuneResidenzaSuggestion" fetchValue="#{_comuneResidenzaSugg.nome}" tokens=",[]"
+                    >
+                    <a:support event="onselect" ajaxSingle="true"  
+                 	action="#{newComuneProvinciaResidenzaBean.setComune(_comuneResidenzaSugg)}"/>
+                 <s:convertEntity></s:convertEntity>
+                    <h:column>
+                        <h:outputText value="#{_comuneResidenzaSugg.nome}" />
+                    </h:column>
+             </rich:suggestionbox>  
+            
+             </s:decorate>
+            
             <s:decorate id="indirizzoField" template="layout/edit.xhtml">
                 <ui:define name="label">Indirizzo</ui:define>
                 <h:inputText id="indirizzo"
