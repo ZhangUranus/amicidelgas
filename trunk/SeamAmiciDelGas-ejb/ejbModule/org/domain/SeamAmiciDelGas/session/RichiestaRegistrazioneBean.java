@@ -19,6 +19,7 @@ import org.jboss.seam.annotations.Destroy;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Logger;
+import org.jboss.seam.annotations.Out;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.annotations.Transactional;
 import org.jboss.seam.log.Log;
@@ -36,6 +37,7 @@ public class RichiestaRegistrazioneBean implements RichiestaRegistrazione
     @PersistenceContext
     private EntityManager em;
     @In(value="newUtente")
+    @Out(value="utenteCreato")
     private Utente utente;
     @In(value="newAccount")
     private Account account;
@@ -53,7 +55,7 @@ public class RichiestaRegistrazioneBean implements RichiestaRegistrazione
     private PasswordManager passwordManager;
     @In StatusMessages statusMessages;
     
-    @Transactional public void richiestaRegistrazione()
+    @Transactional public boolean richiestaRegistrazione()
     {
     	
     	if (!passwordBean.verify()) {
@@ -101,7 +103,9 @@ public class RichiestaRegistrazioneBean implements RichiestaRegistrazione
     	
         // implement your business logic here
         log.info("richiestaRegistrazione.richiestaRegistrazione() action called");
-        statusMessages.add("richiestaRegistrazione");
+        statusMessages.add("Avvenuta Registrazione");
+        
+        return true;
     }
 
 
