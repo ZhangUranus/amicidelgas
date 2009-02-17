@@ -9,5 +9,7 @@ public interface RichiestaRegistrazione
     // seam-gen method
     public void richiestaRegistrazione();
     // add additional interface methods here
+    
+    public void destroy();
 
 }
