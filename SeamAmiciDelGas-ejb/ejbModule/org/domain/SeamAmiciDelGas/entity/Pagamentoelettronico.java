@@ -15,7 +15,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import org.hibernate.validator.Length;
 import org.hibernate.validator.NotNull;
-import org.hibernate.validator.CreditCardNumber;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
@@ -71,7 +70,6 @@ public class Pagamentoelettronico implements java.io.Serializable {
 
 	@Column(name = "numero_carta", nullable = false)
 	@NotNull
-	@CreditCardNumber
 	public int getNumeroCarta() {
 		return this.numeroCarta;
 	}
