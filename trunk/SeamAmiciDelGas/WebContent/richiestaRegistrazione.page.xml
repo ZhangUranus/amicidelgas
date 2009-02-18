@@ -9,7 +9,10 @@
    <navigation>
       <rule if-outcome="passo1Outcome">
          
-         <redirect view-id="/registrazionePasso2.xhtml"/>
+         <redirect view-id="/registrazionePasso2.xhtml">
+         	<param name="from" value="utente" />
+         </redirect>
+         
       </rule>
    </navigation>
 </page>

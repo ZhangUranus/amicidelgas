@@ -5,11 +5,15 @@
       no-conversation-view-id="/registrazionePasso2.xhtml"
       login-required="false">
       
-      
+
+   
    <navigation>
       <rule if-outcome="passo2Outcome">
          
-         <redirect view-id="/registrazionePasso3.xhtml"/>
+         <redirect view-id="/registrazionePasso3.xhtml">
+         	<param name="from" value="contadino"/>
+         </redirect>
       </rule>
+      
    </navigation>
 </page>
