@@ -6,9 +6,11 @@ import javax.persistence.PersistenceContext;
 
 import org.domain.SeamAmiciDelGas.entity.Account;
 import org.domain.SeamAmiciDelGas.entity.Role;
+import org.domain.SeamAmiciDelGas.entity.Utente;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Logger;
 import org.jboss.seam.annotations.Name;
+import org.jboss.seam.annotations.Out;
 import org.jboss.seam.annotations.Transactional;
 import org.jboss.seam.log.Log;
 import org.jboss.seam.security.Credentials;
@@ -21,6 +23,8 @@ public class Authenticator
 
     @In Identity identity;
     @In Credentials credentials;
+    @Out(value="currentUser")
+    private Utente utente;
     @In(value="passwordManager",create=true)
     private PasswordManager passwordManager;
     @In
@@ -37,8 +41,13 @@ public class Authenticator
         if (account.getRoles() != null) {
         	for (Role role : account.getRoles()) {
         	identity.addRole(role.getName());
+        	
         	}
+        	
         }
+        
+        utente = account.getUtente();
+    	log.info("UTENTE "+utente.getNome()+" "+utente.getEmail());
         
         return true;
         }

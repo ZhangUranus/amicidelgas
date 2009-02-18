@@ -30,11 +30,12 @@
             </s:decorate>
             
             <s:decorate id="tipocarta" template="layout/edit.xhtml">
-                <ui:define name="label">tipo carta</ui:define>
+                <ui:define name="label">Carta di credito</ui:define>
                 <h:selectOneRadio value="#{newPagamento.tipoCarta}" required="yes" requiredMessage="true">
-				  <f:selectItem itemLabel="Visa" itemValue="Visa"/>
-				  <f:selectItem itemLabel="MasterCard" itemValue="MasterCard" />
-				  <f:selectItem itemLabel="PayPal" itemValue="PayPal"/>
+				  <f:selectItem itemLabel="  " itemValue="Visa" ><img src="img/creditcard_visa.png" /></f:selectItem>
+				  <f:selectItem itemLabel="  " itemValue="MasterCard" ><img src="img/creditcard_mastercard.png" /></f:selectItem>
+				  <f:selectItem itemLabel="  " itemValue="AmericanExpress"><img src="img/creditcard_american_express.png" /></f:selectItem>
+				  <f:selectItem itemLabel="  " itemValue="PayPal"><img src="img/creditcard_paypal.png"/></f:selectItem>
 				</h:selectOneRadio>
             </s:decorate>
 
@@ -73,9 +74,9 @@
 						
 						if (one != two) {
 							document.getElementById('passo2Form:confirmPassword:confirmPassword').value = "";
-							document.getElementById('passo2Form:controlloPassword:controlloPassword').innerHTML = "le due password non corrispondono ";
+							document.getElementById('passo2Form:controlloPassword:controlloPassword').innerHTML = "<img src=\"img/not_valid.png\"/>";
 						} else {
-							document.getElementById('passo2Form:controlloPassword:controlloPassword').innerHTML = "Ok! ";
+							document.getElementById('passo2Form:controlloPassword:controlloPassword').innerHTML = "<img src=\"img/accepted.png\"/>";
 						}
 					}
 				//-->
