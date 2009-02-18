@@ -98,6 +98,9 @@ input[type=text], input[type=password], textarea {
 	font-size: 12px;
 }
 
+.colore_1 {	color: #0000CC;}
+.explorer{ font-size: 14px; color: #666666;}
+
 .message li {
 	background: no-repeat left center;
 	padding-top: 1px;

@@ -22,6 +22,7 @@ import org.hibernate.validator.Length;
 import org.hibernate.validator.NotNull;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.Name;
+import org.jboss.seam.annotations.Role;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.annotations.security.management.UserPassword;
 import org.jboss.seam.annotations.security.management.UserPrincipal;
@@ -32,6 +33,7 @@ import org.jboss.seam.annotations.security.management.UserRoles;
  */
 @Entity
 @Table(name = "account", catalog = "database_gas")
+@Role(name = "currentAccount", scope = ScopeType.SESSION)
 @Name(value="newAccount")
 @Scope(value=ScopeType.SESSION)
 public class Account implements java.io.Serializable {
@@ -49,7 +51,7 @@ public class Account implements java.io.Serializable {
 	private Integer punteggioFeedback;
 	private Set<Itinerario> itinerarios = new HashSet<Itinerario>(0);
 	private Set<Cybercontadino> cybercontadinos = new HashSet<Cybercontadino>(0);
-	private Set<Role> roles = new HashSet<Role>(0);
+	private Set<org.domain.SeamAmiciDelGas.entity.Role> roles = new HashSet<org.domain.SeamAmiciDelGas.entity.Role>(0);
 	private Set<Questionario> questionarios = new HashSet<Questionario>(0);
 	private Set<Feedback> feedbacksForDestinatario = new HashSet<Feedback>(0);
 	private Set<Feedback> feedbacksForSegnalatore = new HashSet<Feedback>(0);
@@ -69,7 +71,7 @@ public class Account implements java.io.Serializable {
 			Boolean bloccato, Boolean elimato, Boolean cancellato,
 			Boolean attivato, Date dataRichiesta, Date dataAccettazione,
 			Integer punteggioFeedback, Set<Itinerario> itinerarios,
-			Set<Cybercontadino> cybercontadinos, Set<Role> roles,
+			Set<Cybercontadino> cybercontadinos, Set<org.domain.SeamAmiciDelGas.entity.Role> roles,
 			Set<Questionario> questionarios,
 			Set<Feedback> feedbacksForDestinatario,
 			Set<Feedback> feedbacksForSegnalatore,
@@ -226,11 +228,11 @@ public class Account implements java.io.Serializable {
 
 	@UserRoles
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "account")
-	public Set<Role> getRoles() {
+	public Set<org.domain.SeamAmiciDelGas.entity.Role> getRoles() {
 		return this.roles;
 	}
 
-	public void setRoles(Set<Role> roles) {
+	public void setRoles(Set<org.domain.SeamAmiciDelGas.entity.Role> roles) {
 		this.roles = roles;
 	}
 
