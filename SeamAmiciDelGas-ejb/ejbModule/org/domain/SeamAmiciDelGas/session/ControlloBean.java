@@ -2,7 +2,9 @@ package org.domain.SeamAmiciDelGas.session;
 
 import java.util.List;
 
+import org.domain.SeamAmiciDelGas.crud.AccountList;
 import org.domain.SeamAmiciDelGas.crud.UtenteList;
+import org.domain.SeamAmiciDelGas.entity.Account;
 import org.domain.SeamAmiciDelGas.entity.Utente;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Logger;
@@ -20,7 +22,11 @@ public class ControlloBean {
 	
 	@In(value="newUtente")
 	private Utente utente;
+	@In(value="newAccount")
+	private Account account;
 	
+	@In(value="accountList",create=true)
+	private AccountList accountList;
 	@In(value="utenteList",create=true)
 	private UtenteList utenteList;
 	
@@ -68,6 +74,30 @@ public class ControlloBean {
 
 	public void setMyResponseEmail(String myResponseEmail) {
 		this.myResponseEmail = myResponseEmail;
+	}
+	
+	/*
+	 * Controlla se esiste la user-name
+	 */
+	private String myResponseUserName;
+	
+	public void controllaUserName()
+	{
+		log.info(account.getUsername());
+		accountList.setEjbql("select account from Account account where account.username='"+account.getUsername()+"'");
+		List<Account> lu = accountList.getResultList();
+		if(!lu.isEmpty())
+			myResponseUserName = "  Username non disponbile";
+		else
+			myResponseUserName  = null;
+	}
+
+	public String getMyResponseUserName() {
+		return myResponseUserName;
+	}
+
+	public void setMyResponseUserName(String myResponseUserName) {
+		this.myResponseUserName = myResponseUserName;
 	}
 
 }
