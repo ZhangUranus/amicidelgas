@@ -98,7 +98,7 @@ input[type=text], input[type=password], textarea {
 	font-size: 12px;
 }
 
-.colore_1 {	color: #0000CC;}
+.colore_1 {	font-size: 14px; color: #0000CC;}
 .explorer{ font-size: 14px; color: #666666;}
 
 .message li {
