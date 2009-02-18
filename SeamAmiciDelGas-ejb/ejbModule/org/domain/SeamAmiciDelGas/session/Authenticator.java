@@ -23,8 +23,10 @@ public class Authenticator
 
     @In Identity identity;
     @In Credentials credentials;
-    @Out(value="currentUser")
+    @Out(value="currentUser", required = false)
     private Utente utente;
+    @Out(value="currentAccount", required = false)
+    private Account account;
     @In(value="passwordManager",create=true)
     private PasswordManager passwordManager;
     @In
@@ -34,7 +36,7 @@ public class Authenticator
     	
         log.info("authenticating {0}", credentials.getUsername());
         try{
-        Account account=(Account) entityManager.createQuery(
+        account=(Account) entityManager.createQuery(
         		"select account from Account account where account.username = :username").setParameter("username", credentials.getUsername()).getSingleResult();
         if(!validatePassword(credentials.getPassword(), account))
         	return false;
