@@ -49,7 +49,7 @@
       <action execute="#{redirect.returnToCapturedView}"/>
    </event>
 
-   <mail:mail-session host="localhost" port="2525" username="test" password="test" />
+  <mail:mail-session session-jndi-name="java:/Mail"/>
    
    
    <component name="passwordManager">
