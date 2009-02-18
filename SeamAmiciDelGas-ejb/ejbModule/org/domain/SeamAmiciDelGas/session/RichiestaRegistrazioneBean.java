@@ -8,6 +8,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.domain.SeamAmiciDelGas.action.RegistrationMailer;
 import org.domain.SeamAmiciDelGas.crud.ComuneList;
 import org.domain.SeamAmiciDelGas.entity.Account;
 import org.domain.SeamAmiciDelGas.entity.Comune;
@@ -53,6 +54,8 @@ public class RichiestaRegistrazioneBean implements RichiestaRegistrazione
     private PasswordBean passwordBean;
     @In(value="passwordManager",create=true)
     private PasswordManager passwordManager;
+    @In(value="registrationMailer",create=true)
+    private RegistrationMailer registrationMailer;
     @In StatusMessages statusMessages;
     
     @Transactional public boolean richiestaRegistrazione()
@@ -100,6 +103,8 @@ public class RichiestaRegistrazioneBean implements RichiestaRegistrazione
     	role.setAccount(account);
     	role.setName("utenteGas");
     	em.persist(role);
+    	
+    	//registrationMailer.sendWelcomeEmail();
     	
         // implement your business logic here
         log.info("richiestaRegistrazione.richiestaRegistrazione() action called");
