@@ -20,9 +20,9 @@ public class ControlloBean {
 	@Logger
 	private Log log;
 	
-	@In(value="newUtente")
+	@In(value="newUtente", create=true)
 	private Utente utente;
-	@In(value="newAccount")
+	@In(value="newAccount", create=true)
 	private Account account;
 	
 	@In(value="accountList",create=true)
