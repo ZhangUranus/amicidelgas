@@ -20,7 +20,7 @@
                 <ui:define name="label">Codice fiscale</ui:define>
                 <h:inputText id="codiceFiscale"
                        required="true"
-                           size="16"
+                           size="32"
                       maxlength="16"
                       value="#{newUtente.codiceFiscale}">
                     <a:support event="onblur" 
@@ -37,7 +37,7 @@
                 <ui:define name="label">Nome</ui:define>
                 <h:inputText id="nome"
                        required="true"
-                           size="50"
+                           size="32"
                       maxlength="50"
                           value="#{newUtente.nome}">
                     <a:support event="onblur" reRender="nomeField" bypassUpdates="true" ajaxSingle="true"/>
@@ -49,7 +49,7 @@
                 <ui:define name="label">Cognome</ui:define>
                 <h:inputText id="cognome"
                        required="true"
-                           size="50"
+                           size="32"
                       maxlength="50"
                           value="#{newUtente.cognome}">
                     <a:support event="onblur" reRender="cognomeField" bypassUpdates="true" ajaxSingle="true"/>
@@ -104,6 +104,7 @@
                 <ui:define name="label">Comune di nascita</ui:define>
                 <h:inputText 
                 	id="comuneNascitaSuggestion"
+                	size="32"
                		value="Seleziona prima una provincia"
                		onclick="resetValue()"
                >
@@ -157,6 +158,7 @@
                 <h:inputText 
                 	id="comuneResidenzaSuggestion"
                		value="Seleziona prima una provincia"
+               		size="32"
                		onclick="resetResidenzaValue()"
                >
                 </h:inputText>
@@ -187,7 +189,7 @@
                 <ui:define name="label">Indirizzo</ui:define>
                 <h:inputText id="indirizzo"
                        required="true"
-                           size="100"
+                           size="32"
                       maxlength="100"
                           value="#{newUtente.indirizzo}">
                     <a:support event="onblur" reRender="indirizzoField" bypassUpdates="true" ajaxSingle="true"/>
@@ -199,7 +201,7 @@
                 <ui:define name="label">Recapito telefonico</ui:define>
                 <h:inputText id="recapitoTelefonico"
                        required="true"
-                           size="45"
+                           size="32"
                       maxlength="45"
                           value="#{newUtente.recapitoTelefonico}">
                     <a:support event="onblur" reRender="recapitoTelefonicoField" bypassUpdates="true" ajaxSingle="true"/>
@@ -211,7 +213,7 @@
                 <ui:define name="label">Email</ui:define>
                 <h:inputText id="email"
                        required="true"
-                           size="70"
+                           size="32"
                       maxlength="70"
                           value="#{newUtente.email}">
                     <a:support event="onblur" 

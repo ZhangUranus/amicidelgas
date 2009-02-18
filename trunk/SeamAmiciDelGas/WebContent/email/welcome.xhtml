@@ -1,0 +1,26 @@
+<m:message xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:m="http://jboss.com/products/seam/mail" importance="normal">
+	<m:header name="X-Composed-By" value="JBoss Seam" />
+	<m:from name="Open 18" address="members@seamamicidelgas.org" />
+	<m:replyTo address="noreply@seamamicidelgas.org" />
+	<m:to name="#{newUtente.nome}">#{newUtente.email}</m:to>
+	<m:bcc>valerio.ops@gmail.com</m:bcc>
+	<m:subject>SeamAmiciDelGas - Informazioni sulla registrazione</m:subject>
+	<m:body>
+		<html>
+		<body>
+		<p>#{newGolfer.name},</p>
+		<p><b>Welcome to the <span style="color: green;">SeamAmiciDel<strong>GAS</strong> community!</span></b></p>
+			Grazie per esserti registrato. 
+			Sotto sono riportate le tue informazioni sull'account. Conservale con cura oppure usa GMail!
+
+			Username: #{newAccount.username}
+			Password: #{newAccount.passwordHash}
+			La tua password è stata criptata nel nostro database
+
+		<p>Sarai presto contattato dai nostri operatori per concordare una data per l'intervista.</p>
+		<p>SeamAmiciDelGAS <img border="0" src="/SeamAmiciDelGas/img/logo.png" align="middle" /></p>
+		</body>
+		</html>
+	</m:body>
+</m:message>
