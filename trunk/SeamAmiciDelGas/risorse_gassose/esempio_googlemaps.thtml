@@ -1,0 +1,976 @@
+<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAA4wu7YDe2ZU4e-Kva_PBTwhS-DTQ9iFK62fYqayROZM9v4K1ooxTa-f9YzXh9C1ZxrZaHIrMKNppttQ"
+      type="text/javascript"></script>
+<script type="text/javascript"><!--
+var geocoder;
+
+	function Indirizzo(via,comune,provincia,categoria_mark,categoria_mark2,categoria_mark3){
+		this.via = via;
+		this.comune = comune;
+		this.provincia = provincia;
+		this.categoria_mark = categoria_mark;
+		this.categoria_mark2 = categoria_mark2;
+		this.categoria_mark3 = categoria_mark3;
+		
+		this.getCognomeNome = function(){
+		if (categoria_mark3!=null) return categoria_mark + "," + categoria_mark2+ "," + categoria_mark3;
+			return categoria_mark + "," + categoria_mark2;
+		}
+		
+		this.getAddress = function (){
+			return via+", "+ comune +" (" + provincia +")";	
+		}
+		this.getComune = function(){
+			return comune +" (" + provincia +")";
+		}
+	}
+    function load() {
+      if (GBrowserIsCompatible()) {
+
+        map = new GMap2(document.getElementById("map1"));
+		map.enableDoubleClickZoom();
+		map.enableContinuousZoom();
+        map.setCenter(new GLatLng(42.1290, 14.7814), 6);
+		map.addControl(new GSmallMapControl());
+        map.addControl(new GMapTypeControl());
+		// Create our "tiny" marker icon
+        var blueIcon = new GIcon(G_DEFAULT_ICON);
+        blueIcon.image = "http://gmaps-samples.googlecode.com/svn/trunk/markers/blue/blank.png";
+		
+		// Set up our GMarkerOptions object
+		markerOptions = { 
+		//icon:blueIcon 
+		clickable:true
+		};
+
+        // Add 10 markers to the map at random locations
+        var bounds = map.getBounds();
+        var southWest = bounds.getSouthWest();
+        var northEast = bounds.getNorthEast();
+        var lngSpan = northEast.lng() - southWest.lng();
+        var latSpan = northEast.lat() - southWest.lat();
+		var geocoder = null;
+		var addressPoint=null;
+		
+		//geocoder
+		geocoder = new GClientGeocoder();
+		
+		var count = store.getCount();
+		
+		address=new Array(count);
+		users = new Array(count);
+		
+		if(count > 10) count = 10;
+		
+		//address=null;
+		for(i=0; i<count; i++ ){
+			
+			obj = store.getAt(i);
+			if(obj == null) alert(i);
+			comune = obj.get('comune');
+			via = obj.get('via');
+			provincia = obj.get('provincia');
+			categoria_mark = obj.get('categoria');
+			categoria_mark2 = obj.get('categoria2');
+			categoria_mark3 = obj.get('categoria3');
+			var indirizzo = new Indirizzo(via,comune,provincia,categoria_mark ,categoria_mark2,categoria_mark3);
+
+			geocoder.getLocations(indirizzo.getAddress(), getCallBackFor(indirizzo,0));			
+      	}
+    }
+    }
+    
+    function getCallBackFor(indirizzo,codice){
+				return (function(data, response){
+					if(data.Status.code == "200"){
+						point = data.Placemark[0].Point.coordinates;
+						
+						var point2 = new GLatLng(point[1],point[0]);
+						var mark = new GMarker(point2, {title: indirizzo.getCognomeNome()});
+						map.addOverlay(mark);
+						
+						mark.bindInfoWindowHtml('<b>Donazione - SantaClaus</b><p>'+ mark.getTitle() +'</p><p><div align=\"center\" class=\"colore_avviso\">'+indirizzo.getAddress()+'</div></p>');
+								
+						GEvent.addListener(mark, "infowindowopen", function() {
+							//mark.openInfoWindowHtml('<b>Utente - SantaClaus</b><p> indirizzo </p><p><div align=\"center\" class=\"colore_avviso\">utut</div></p>');
+							map.setZoom(16);
+							map.panTo(mark.getPoint());
+							map.panDirection(0, 1);
+						});
+						//GEvent.addListener(mark, "infowindowopen", function() {map.setZoom(16); map.panTo(point);});
+						GEvent.addListener(mark, "infowindowclose", function() {map.setZoom(8); map.panTo(mark.getPoint());});
+						//GEvent.addListener(mark, "dblclick", function() {map.setZoom(16); map.panTo(point);});
+					}
+					else if(data.Status.code =="602" && codice == 0){
+						new GClientGeocoder().getLocations(indirizzo.getComune(), getCallBackFor(indirizzo,1));
+					}
+				});
+			}		
+    --></script> 
+//fine
+	
+<script type="text/javascript"><!--
+var grid4, gridX, store, storeX, idArticle,idRicevuta, idAssignation, form_cancella, id_cancella, form_assegna, assegna, modifica_butt, rimuovi_butt;
+var bottomBar, bottomBarX;
+var ricerca, categorie, condizione, provincia, testo_ricerca;
+Ext.onReady(function(){
+
+    Ext.QuickTips.init();
+    
+    Ext.BLANK_IMAGE_URL = '/santaclaus/images/default/s.gif';
+    
+    var xg = Ext.grid;
+    var xg2 = Ext.grid;
+
+    // shared reader
+    store = new Ext.data.Store({
+        // load using script tags for cross domain, if the data in on the same domain as
+        // this page, an HttpProxy would be better
+        proxy: new Ext.data.ScriptTagProxy({
+        	method: 'POST',
+            url: 'http://<?php echo($_SERVER['HTTP_HOST']);?>/santaclaus/article/search'
+        }),
+
+        // create reader that reads the Topic records
+        reader: new Ext.data.JsonReader({
+            root: 'articoli',
+            id: 'Article.id',
+            totalProperty: 'totalCount',
+            ricerca: 'ricerca',
+            elementi: 'elementi',
+            fields: [
+        	    {name: 'id', mapping: 'Article.id'},
+           		{name: 'categoria', mapping: 'Cat.cat1'},
+           		{name: 'categoria2', mapping: 'Cat.cat2'},
+           		{name: 'categoria3', mapping: 'Cat.cat3'},
+           		{name: 'colore', mapping: 'Article.colore'},
+           		{name: 'taglia', mapping: 'Article.taglia'},
+           		{name: 'condizione', mapping: 'Article.condizione'},
+           		{name: 'descrizione', mapping: 'Article.descrizione'},
+           		{name: 'comune', mapping: 'Comune.nome'},
+           		{name: 'provincia', mapping: 'Comune.province_id'},
+           		{name: 'via', mapping: 'Residence.via'},
+           		{name: 'foto', mapping: 'Article.foto'},
+           		{name: 'nome', mapping: 'User.nome'},
+           		{name: 'cognome', mapping: 'User.cognome'},
+           		{name: 'colore', mapping: 'Article.colore'},
+                {name: 'quantita', mapping: 'Article.quantita', type: 'int'},
+                {name: 'disponibilita', mapping: 'Article.disponibilita', type: 'int'},
+                {name: 'dataInserimento', mapping: 'Donation.data_2', type: 'date', dateFormat: 'Y-m-d H:i:s'},
+                {name: 'dataScadenza', mapping: 'Donation.data_max', type: 'date', dateFormat: 'Y-m-d'},
+                {name: 'dataVerifica', mapping: 'Donation.data_verifica', type: 'date', dateFormat: 'Y-m-d H:i:s'}
+            ]
+        }),
+
+        // turn on remote sorting
+        remoteSort: true
+    });
+    store.setDefaultSort('dataInserimento', 'desc');
+
+    // Grid
+    var expander = new xg.RowExpander({
+        tpl : new Ext.Template(
+        	'<div>'+
+        	'<table width="98%" border="0" cellspacing="0" cellpadding="0" align="center" >'+
+				  '<tr>'+
+				    '<td width="8" height="8" background="/santaclaus/img/icon_corner_a.png"></td>'+
+				    '<td colspan="3" height="8" background="/santaclaus/img/icon_top.png"></td>'+
+				    '<td width="8" height="8" background="/santaclaus/img/icon_corner_b.png"></td>'+
+				  '</tr>'+
+				  '<tr>'+
+				    '<td background="/santaclaus/img/icon_left.png"></td>'+
+				    '<td width="28%" valign="middle" bgcolor="#FFFFFF"><div class="max" align="center">Utente:</div></td>'+
+				    '<td width="40%" valign="middle" bgcolor="#FFFFFF"><div class="max" align="center">Descrizione:</div></td>'+
+				    '<td valign="middle" bgcolor="#FFFFFF"><div class="max" align="center">Foto:</div></td>'+
+				    '<td background="/santaclaus/img/icon_right.png"></td>'+
+				  '</tr>'+
+				  '<tr>'+
+				    '<td background="/santaclaus/img/icon_left.png"></td>'+
+				    '<td bgcolor="#FFFFFF"><div class="colore_info" align="center">{cognome} {nome}</div></td>'+
+				    '<td rowspan="3" bgcolor="#FFFFFF"><div class="colore_info" align="center">{descrizione}</div></td>'+
+					'<td bgcolor="#FFFFFF"><div align="center">'+
+					'<a href="/santaclaus/img/uploads/{foto}" rel="lightbox" title="{descrizione}">'+
+					'<img alt="foto" border="0" src="/santaclaus/thumbs/index?src=/img/uploads/{foto}"/></a></div></td>'+
+				    '<td background="/santaclaus/img/icon_right.png"></td>'+
+				  '</tr>'+
+				  '<tr>'+
+				    '<td background="/santaclaus/img/icon_left.png"></td>'+
+				  	'<td valign="middle" bgcolor="#FFFFFF"><div class="max" align="center">Ubicazione:</div></td>'+
+				    '<td valign="middle" bgcolor="#FFFFFF"><div class="max" align="center">Colore:</div></td>'+
+				    '<td background="/santaclaus/img/icon_right.png"></td>'+
+				  '</tr>'+
+				  '<tr>'+
+				    '<td background="/santaclaus/img/icon_left.png"></td>'+
+				  	'<td bgcolor="#FFFFFF"><div class="colore_info" align="center">{comune} ({provincia})</div></td>'+
+				    '<td bgcolor="#FFFFFF"><div align="center"><div style="position:relative;width:10pt;height:10pt;border-style:solid;border-width:1pt;border-color:#000000;background-color:#{colore};"></div></div></td>'+
+				    '<td background="/santaclaus/img/icon_right.png"></td>'+
+				  '</tr>'+
+				  '<tr>'+
+				    '<td width="8" height="8" background="/santaclaus/img/icon_corner_d.png"></td>'+
+				    '<td colspan="3" height="8" background="/santaclaus/img/icon_bottom.png"></td>'+
+				    '<td width="8" height="8" background="/santaclaus/img/icon_corner_c.png"></td>'+
+				  '</tr>'+
+				'</table>'+
+            '</div>'
+        )
+    });
+    
+    storeX = new Ext.data.Store({
+        // load using script tags for cross domain, if the data in on the same domain as
+        // this page, an HttpProxy would be better
+        proxy: new Ext.data.ScriptTagProxy({
+        	method: 'POST',
+            url: 'http://<?php echo($_SERVER['HTTP_HOST']);?>/santaclaus/article/searchAssignation'
+        }),
+
+        // create reader that reads the Topic records
+        reader: new Ext.data.JsonReader({
+            root: 'assegnazioni',
+            id: 'Assignation.id',
+            totalProperty: 'totalCount',
+            fields: [
+        	    {name: 'idX', mapping: 'Assignation.id'},
+        	    {name: 'dataAssegnazioneX', mapping: 'Assignation.data_assegnazione', type: 'date', dateFormat: 'Y-m-d H:i:s'},
+           		{name: 'ricevutaX', mapping: 'Assignation.path_ricevuta'},
+           		{name: 'categoriaX', mapping: 'Cat.cat1'},
+           		{name: 'categoria2X', mapping: 'Cat.cat2'},
+           		{name: 'categoria3X', mapping: 'Cat.cat3'},
+           		{name: 'valore2X', mapping: 'Cat.valore2'},
+           		{name: 'valore3X', mapping: 'Cat.valore3'},
+           		{name: 'fotoX', mapping: 'Article.foto'},
+           		{name: 'descrizioneX', mapping: 'Article.descrizione'},
+           		{name: 'comuneX', mapping: 'Comune.nome'},
+           		{name: 'provinciaX', mapping: 'Comune.province_id'},
+           		{name: 'viaX', mapping: 'Residence.via'},
+           		{name: 'nomeX', mapping: 'User.nome'},
+           		{name: 'cognomeX', mapping: 'User.cognome'},
+                {name: 'quantitaX', mapping: 'Assignation.quantita_assegnazione', type: 'int'}
+            ]
+        }),
+
+        // turn on remote sorting
+        remoteSort: true
+    });
+    storeX.setDefaultSort('dataAssegnazioneX', 'desc');
+
+    // Grid
+    var expanderX = new xg2.RowExpander({
+        tpl : new Ext.Template(
+        	'<div>'+
+        	'<table width="96%" border="0" cellspacing="0" cellpadding="0" align="center" >'+
+				  '<tr>'+
+				    '<td width="8" height="8" background="/santaclaus/img/icon_corner_a.png"></td>'+
+				    '<td colspan="3" height="8" background="/santaclaus/img/icon_top.png"></td>'+
+				    '<td width="8" height="8" background="/santaclaus/img/icon_corner_b.png"></td>'+
+				  '</tr>'+
+				  '<tr>'+
+				    '<td background="/santaclaus/img/icon_left.png"></td>'+
+				    '<td width="28%" valign="middle" bgcolor="#FFFFFF"><div class="max" align="center">Residenza utente:</div></td>'+
+				    '<td width="40%" valign="middle" bgcolor="#FFFFFF"><div class="max" align="center">Descrizione articolo:</div></td>'+
+				    '<td valign="middle" bgcolor="#FFFFFF"><div class="max" align="center">Foto articolo:</div></td>'+
+				    '<td background="/santaclaus/img/icon_right.png"></td>'+
+				  '</tr>'+
+				  '<tr>'+
+				    '<td background="/santaclaus/img/icon_left.png"></td>'+
+				    '<td bgcolor="#FFFFFF"><div class="colore_info" align="center">{viaX}, {comuneX} ({provinciaX})</div></td>'+
+				    '<td bgcolor="#FFFFFF"><div class="colore_info" align="center">{descrizioneX}</div></td>'+
+					'<td bgcolor="#FFFFFF"><div align="center">'+
+					'<a href="/santaclaus/img/uploads/{foto}" rel="lightbox" title="{descrizioneX}">'+
+					'<img alt="foto" border="0" src="/santaclaus/thumbs/index?src=/img/uploads/{fotoX}"/></a></div></td>'+
+				    '<td background="/santaclaus/img/icon_right.png"></td>'+
+				  '</tr>'+
+				  '<tr>'+
+				    '<td width="8" height="8" background="/santaclaus/img/icon_corner_d.png"></td>'+
+				    '<td colspan="3" height="8" background="/santaclaus/img/icon_bottom.png"></td>'+
+				    '<td width="8" height="8" background="/santaclaus/img/icon_corner_c.png"></td>'+
+				  '</tr>'+
+				'</table>'+
+            '</div>'
+        )
+    });
+    
+    function formatData(date){
+    	return dataVerifica.format("d/m/Y")
+    }
+
+    // coloriamo le caselle
+    function datascadenza(val){
+        return '<span style="color:red;">' + val + '</span>'; 
+    }
+
+    // coloriamo le caselle
+    function quantita(val){
+        if(val > 3){
+            return '<div align="center" style="color:green;">' + val + '</div>';
+        }else if(val <= 3 && val > 0){
+            return '<div align="center" style="color:orange;">' + val + '</div>';
+        }else if((val==null) ||(val ==0)){
+        	return '<div align="center" style="color:red;"> 0 </div>';
+        }
+        return val;
+    }
+    
+    function quantitaX(val){
+        if(val == 1){
+            return '<div align="center" style="color:orange;">' + val + '</div>';
+        }else if((val==null) ||(val ==0)){
+        	return '<div align="center" style="color:red;"> 0 </div>';
+        }else {
+            return '<div align="center" style="color:green;">' + val + '</div>';
+        }    
+            
+        return val;
+    }
+    
+    viewricevuta = new Ext.Button({
+            text:'Vedi ricevuta',
+            tooltip:'Visualizza la ricevuta dell\'articolo selezionato',
+            iconCls:'viewricevuta',
+            hidden: true,
+            handler : function(){
+           		 if(idRicevuta != null){
+            		Ext.MessageBox.alert("Ricevuta", "Vedi ricevuta.");
+				}else{
+					Ext.MessageBox.alert("Attenzione", "Selezionare l'articolo per visualizzare la ricevuta.");
+				}
+			}
+		});
+		
+	addricevuta = new Ext.Button({
+            text:'Aggiungi ricevuta (Cooming soon)',
+            tooltip:'Aggiungi ricevuta all\'articolo selezionato',
+            iconCls:'add',
+            hidden: true,
+            handler : function(){
+			}
+		});	
+    
+    assegna = new Ext.Button({
+            text:'Assegna donazione',
+            tooltip:'Assegna gli articoli che hai selezionato',
+            iconCls:'ass',
+            disabled: true,
+            handler : function(){
+           		 if(idArticle != null){
+            		id_assegna.setValue(idArticle);
+					form_assegna.submit();
+					//alert(id_modifica.getValue());
+				}else{
+					Ext.MessageBox.alert("Attenzione", "Selezionare l'articolo da assegnare.");
+				}
+			}
+		});
+		
+	modifica_butt = new Ext.Button({
+            text:'Modifica Donazione',
+            tooltip:'Seleziona un articolo e poi premi Modifica',
+            iconCls:'option',
+            disabled: true,
+            handler : function(e,val,sel){
+            	if(idArticle != null){
+            		id_modifica.setValue(idArticle);
+					form_modifica.submit();
+					//alert(id_modifica.getValue());
+				}else{
+					Ext.MessageBox.alert("Attenzione", "Selezionare l'articolo da modificare");
+				}
+			}
+        });
+        
+	rimuovi_butt = new Ext.Button({
+            text:'Rimuovi Donazione',
+            tooltip:'Rimuovi la donazione che hai selezionato',
+            iconCls:'remove',
+            disabled: true,
+            handler : function(e,val,sel){
+            	if(idArticle != null){
+        			Ext.MessageBox.confirm('Confirm', 'Attenzione, la rimozione dell\'articolo è permanente.<br>Procedere con la rimozione?', deleteItem);
+				}else{
+					Ext.MessageBox.alert("Attenzione", "Selezionare l'articolo da cancellare");
+				}
+			}
+        });
+    
+    function formatNome(val,p,r){
+        	return val +' '+ r.data.nome;
+    }
+    
+    function formatNomeX(val,p,r){
+        	return val +' '+ r.data.nomeX;
+    }
+    
+    function small(val){
+        	return '<span align="center" class="small">'+val+'</span>';
+    }
+    
+    function isVerificato(val){
+    	if(val != ""){
+    		return '<span style="color:green;">'+val.format("d/m/Y")+'</span>';
+    	}else{
+    		return '<span style="color:red;">NO</span>';
+    	}
+    }
+    
+    function ricevuta(val){
+    	if(val == null){
+    		return '<span align="center" class="min">nessuna</span>';
+    	}else{
+    		return '<span align="center" class="color_1">presente</span>';
+    	}
+    }
+    
+    function euro(val,p,r){
+	    if(r.data.valore3X == null){
+	    	if(val > 0){
+	    		return '<span align="center" class="color_1">'+val+' € </span>';
+	    	}else{
+	    		return '<span align="center" class="color_1">-</span>';
+	    	}
+	    
+	    } else {
+	    	if(r.data.valore3X > 0){
+	    		return '<span align="center" class="color_1">'+r.data.valore3X+' € </span>';
+	    	}else{
+	    		return '<span align="center" class="color_1">-</span>';
+	    	}
+	    }
+    }
+    
+    function renderCategorie(val,p,r){
+    	if(r.data.categoria3==null){
+    		return val + ' -> ' + r.data.categoria2;
+    	} else {
+    		return val + ' -> ' + r.data.categoria2 + ' -> ' + r.data.categoria3;
+    	}
+	
+    }
+    
+    function renderCategorieX(val,p,r){
+    	if(r.data.categoria3X==null){
+    		return val + ' -> ' + r.data.categoria2X;
+    	} else {
+    		return val + ' -> ' + r.data.categoria2X + ' -> ' + r.data.categoria3X;
+    	}
+	
+    }
+    
+    bottomBar = new Ext.PagingToolbar({
+            pageSize: 10,
+            store: store,
+            displayInfo: true,
+            displayMsg: 'Visualizzazione donazioni {0} - {1} di {2}',
+            emptyMsg: "Nessuna donazione da mostrare"
+        });
+        
+    bottomBarX = new Ext.PagingToolbar({
+            pageSize: 10,
+            store: storeX,
+            displayInfo: true,
+            displayMsg: 'Visualizzazione donazioni effettuate {0} - {1} di {2}',
+            emptyMsg: "Nessuna donazione da mostrare"
+        });
+    
+    //var sm = new xg.CheckboxSelectionModel();
+    grid4 = new xg.GridPanel({
+        id:'button-grid',
+        store: store,
+        cm: new xg.ColumnModel([
+            //sm,
+            expander,
+            {id:'codice',header: "cod.", width: 35, sortable: true, dataIndex: 'id'},
+            {id:'categoria',header: "categoria", width: 230, sortable: true, renderer: renderCategorie, dataIndex: 'categoria'},
+            {id:'condizione',header: "condizione", width: 70, sortable: true, dataIndex: 'condizione'},
+            {header: "disponibili", width: 75, sortable: true, renderer: quantita, dataIndex: 'disponibilita'},
+            {header: "donato il", width: 75, sortable: true, renderer: Ext.util.Format.dateRenderer('d/m/Y'), dataIndex: 'dataInserimento'},
+            {header: "scade", width: 75, sortable: true, renderer: Ext.util.Format.dateRenderer('d/m/Y'), dataIndex: 'dataScadenza'},
+            {header: "verificato", width: 70, sortable: true, renderer: isVerificato, dataIndex: 'dataVerifica'}
+        ]),
+        //sm: sm,
+
+		viewConfig: {
+            forceFit:true
+        },
+	
+        // inline toolbars
+        tbar:[{
+            text:'Aggiungi una donazione',
+            tooltip:'Aggiungi una nuova donazione',
+            iconCls:'add',
+            handler : function(){
+            	location.href="/santaclaus/article/post_articolouser";
+            }
+        }, '-', modifica_butt,'-',rimuovi_butt,'-',assegna
+        ],
+        
+        bbar:bottomBar,
+        
+        //width:630, //settare la larghezza a seconda del contenuto dinamico
+        autoHeight: true,
+        
+        plugins: expander,
+        //collapsible: true,
+        //animCollapse: false,
+        autoExpandColumn: 'categoria',
+        
+        frame:true,
+        title:'Donazioni - Visualizzazione Risultati ricerca: ',
+        iconCls:'icon-grid',
+        renderTo: document.getElementById('l100')
+    });
+    grid4.on('rowClick',function(grid,row,e){
+	    	idArticle = store.getAt(row).get('id');
+	    	<?php if(is_numeric(array_search(8,$permessi2))) echo "modifica_butt.enable();";?>
+	    	<?php if(is_numeric(array_search(9,$permessi2))) echo "rimuovi_butt.enable();";?>
+
+	    	if(store.getAt(row).get('disponibilita') == "0"){
+	    		assegna.disable();
+	    	}else assegna.enable();
+	    	<?php if(is_numeric(array_search(10,$permessi2))) echo "assegna.enable();"; else  echo "assegna.disable();";?>
+    	});
+    
+    //store.load({params:{start:0, limit:2}});
+    store.load();
+    
+    
+    gridX = new xg.GridPanel({
+        id:'idgridX',
+        store: storeX,
+        cm: new xg.ColumnModel([
+            //sm,
+            expanderX,
+            {header: "categoria", width: 220, sortable: true, renderer: renderCategorieX, dataIndex: 'categoriaX'},
+            {header: "donato il", width: 75, sortable: true, renderer: Ext.util.Format.dateRenderer('d/m/Y'), dataIndex: 'dataAssegnazioneX'},
+            {header: "donato a", width: 150, sortable: true, renderer: formatNomeX, dataIndex: 'cognomeX'},
+            {header: "quantità", width: 60, sortable: true, renderer: quantitaX, dataIndex: 'quantitaX'},
+            {header: "prov.", width: 40, sortable: true, renderer: small, dataIndex: 'provinciaX'},
+            {header: "valore €", width: 55, sortable: true, renderer: euro, dataIndex: 'valore2X'},
+            {header: "ricevuta", width: 70, sortable: true, renderer: ricevuta, dataIndex: 'ricevutaX'}
+        ]),
+        //sm: sm,
+
+		viewConfig: {
+            forceFit:true
+        },
+	
+        // inline toolbars
+        tbar:[{
+            text:'Movimento finanziario',
+            tooltip:'visualizza la stima di traffico monetario effettuato',
+            iconCls:'money',
+            handler : function(){
+            	Ext.MessageBox.alert("Stima movimento finanziario", "Totale stima movimento finanziario "+storeX.reader.jsonData.solditotali+"€");
+            	
+            }
+        }, '-', viewricevuta,'-',addricevuta
+        ],
+        
+        bbar:bottomBarX,
+        
+        //width:630, //settare la larghezza a seconda del contenuto dinamico
+        autoHeight: true,
+        
+        plugins: expanderX,
+        //collapsible: true,
+        //animCollapse: false,
+        autoExpandColumn: 'categoria',
+        
+        frame:true,
+        title:'Donazioni - Visualizzazione Donazioni Effettuate ',
+        iconCls:'icon-grid',
+        renderTo: document.getElementById('assX')
+    });
+    gridX.on('rowClick',function(grid,row,e){
+	    	//idAssignation = storeX.getAt(row).get('idX');
+	    	idRicevuta = storeX.getAt(row).get('ricevutaX');
+	    	
+	    	if(storeX.getAt(row).get('ricevutaX') == null){
+	    		viewricevuta.disable();
+	    	}else viewricevuta.enable();
+    	});
+    //store.load({params:{start:0, limit:2}});
+    
+    
+    /*****************************/
+    categoria = new Ext.form.ComboBox({
+	    typeAhead: true,
+	    triggerAction: 'all',
+	    transform:'categoria',
+	    forceSelection:true
+	});
+	
+	ricerca = new Ext.form.Field({
+		applyTo: 'ricerca'
+	});
+	
+	condizione = new Ext.form.ComboBox({
+	    triggerAction: 'all',
+	    transform:'condizione',
+	    forceSelection:true
+	});
+	
+	provincia = new Ext.form.ComboBox({
+	    typeAhead: true,
+	    triggerAction: 'all',
+	    transform:'provincia',
+	    forceSelection:true
+	});
+	
+	var form_modifica = new Ext.form.BasicForm(
+		'form_modifica',
+		{
+		standardSubmit: true //post di tipo SINCRONO (di default è ajax asincrono)
+		}
+	);
+	var id_modifica = new Ext.form.Field({
+		applyTo: 'id_modifica'
+	});
+	form_modifica.add(id_modifica);
+	
+	form_cancella = new Ext.form.BasicForm(
+		'form_cancella',
+		{
+		standardSubmit: true //post di tipo SINCRONO (di default è ajax asincrono)
+		}
+	);
+	id_cancella = new Ext.form.Field({
+		applyTo: 'id_cancella'
+	});
+	form_cancella.add(id_cancella);
+	
+	var form_assegna = new Ext.form.BasicForm(
+		'form_assegna',
+		{
+		standardSubmit: true //post di tipo SINCRONO (di default è ajax asincrono)
+		}
+	);
+	var id_assegna = new Ext.form.Field({
+		applyTo: 'id_assegna'
+	});
+	form_assegna.add(id_assegna);
+	
+	var tabs = new Ext.TabPanel({
+        renderTo: 'tabs1',
+        activeTab: 0,
+        frame:true,
+        defaults:{autoHeight: true},
+        items:[
+        {
+        		title:'Elenco Ricerca',
+        		iconCls:'mygrid',
+                contentEl:'l100'
+            },{
+                title: 'Mappa Donazioni',
+                iconCls:'myearth',
+                listeners: {activate: handleActivate},
+                contentEl:'map'
+                //autoLoad:'/santaclaus/files/googlemap.thtml'
+            },{
+            	title:'Elenco Assegnazioni',
+        		iconCls:'mylist',
+        		listeners: {activate: handleAss},
+                contentEl:'assX'
+            }
+        ]
+    });
+
+});
+    function handleActivate(tab){
+        load();
+    }
+
+function handleAss(tab){
+        storeX.load();
+        
+    } 
+    
+function doSearch(){
+	store.baseParams = {
+		ricerca:ricerca.getValue(),
+		condizione:condizione.getValue(),
+		categoria:categoria.getValue(),
+		provincia:provincia.getValue()};
+	store.load({
+		callback:function(){}
+		}
+		);
+	
+}
+
+function deleteItem(btn){
+	if(btn == 'yes'){
+		id_cancella.setValue(idArticle);
+		form_cancella.submit();
+	}
+}
+
+function avanzata(a, check){
+	if(check){
+		testo_ricerca = ricerca.getValue();
+		ricerca.setValue('');
+		ricerca.disable();
+	}
+	else{
+		ricerca.setValue(testo_ricerca);
+		ricerca.enable();
+	}
+	Ext.get(a).setVisible(true);
+	document.getElementById("avanzata").style.height=60;
+	TabDispaly(a,check);
+}
+window.onunload = function(){
+	GUnload();
+}
+
+--></script>
+<script
+	type="text/javascript"
+	src="/santaclaus/js/scriptaculous.js?load=effects,builder"></script>
+<script
+	type="text/javascript" src="/santaclaus/js/lightbox.js"></script>
+<link
+	rel="stylesheet" href="/santaclaus/css/lightbox.css" type="text/css"
+	media="screen" />
+<table width="100%" border="0" align="center" cellpadding="0"
+	cellspacing="0" bgcolor="#FFFFFF">
+	<tr>
+		<td width="10" height="10"
+			background="/santaclaus/img/shadow_corner_a4.png"></td>
+		<td height="10" background="/santaclaus/img/shadow_top4.png"></td>
+		<td width="10" height="10"
+			background="/santaclaus/img/shadow_corner_b4.png"></td>
+	</tr>
+	<tr>
+		<td background="/santaclaus/img/shadow_ovest4.png"></td>
+		<td bgcolor="#EEEEEE">
+		<div align="left" class="max">| <?php echo $homeUser; ?> | <a
+			href="/santaclaus/accounts">HomePage</a> -> Gestione Donazioni
+		Sistema -></div>
+		</td>
+		<td background="/santaclaus/img/shadow_est4.png"></td>
+	</tr>
+	<tr>
+		<td width="10" height="10"
+			background="/santaclaus/img/shadow_corner_d4.png"></td>
+		<td height="10" background="/santaclaus/img/shadow_bottom4.png"></td>
+		<td width="10" height="10"
+			background="/santaclaus/img/shadow_corner_c4.png"></td>
+	</tr>
+     <tr>
+    <td colspan="3" height="6"></td>
+  </tr>
+  	<tr>
+	   <td colspan="3">
+		<?php if(!empty($avviso)){ ?>
+	    <table width="80%" border="0" cellspacing="0" cellpadding="0" align="center" >
+		  <tr>
+		    <td width="8" height="8" background="/santaclaus/img/icon_corner_a_i.png"></td>
+		    <td colspan="3" height="8" background="/santaclaus/img/icon_top_i.png"></td>
+		    <td width="8" height="8" background="/santaclaus/img/icon_corner_b_i.png"></td>
+		  </tr>
+		  <tr>
+		    <td background="/santaclaus/img/icon_left_i.png"></td>
+		    <td width="28" valign="middle" bgcolor="#FFE8A7"><img align="middle" border="0" src="/santaclaus/img/message.png"/></td>
+		    <td valign="middle" bgcolor="#FFE8A7"><div class="colore_avviso" align="center"><?php echo $avviso; ?></div></td>
+		    <td width="28" bgcolor="#FFE8A7"></td>
+		    <td background="/santaclaus/img/icon_right_i.png"></td>
+		  </tr>
+		  <tr>
+		    <td width="8" height="8" background="/santaclaus/img/icon_corner_d_i.png"></td>
+		    <td colspan="3" height="8" background="/santaclaus/img/icon_bottom_i.png"></td>
+		    <td width="8" height="8" background="/santaclaus/img/icon_corner_c_i.png"></td>
+		  </tr>
+		</table>
+		<?php } ?>
+		</td>
+	</tr>
+   <tr>
+    <td colspan="3" height="6"></td>
+  </tr>
+	<tr>
+		<td colspan="3">
+		<table valign="middle" width="100%" border="0" align="center"
+			cellpadding="4" cellspacing="4" bgcolor="#FFFFFF">
+			<tr>
+				<td height="8"></td>
+			</tr>
+			<tr>
+				<td>
+				<div id="tabs1" align="center">
+				<div id="l100" align="left" >
+				<form method="post"
+					action="<?php echo $html->url('/article/search')?>"
+					id="form_ricerca">
+				<table width="100%">
+				<tr>
+					<td>				
+					<table width="100%" class="tbl1" border="0" cellpadding="2" cellspacing="4">
+						<tr>
+							<td width="30%" align="right" valign="middle" class="max">Filtro:</td>
+							<td width="50%" valign="middle"><input type="text" name="ricerca" id="ricerca"></td>
+							<td valign="middle">
+								<button onclick="doSearch()" value="Ricerca" type="button"><img
+									src="/santaclaus/img/find.png" width="24" height="24"
+									title="Ricerca" alt="Ricerca">
+								<div class="min">Ricerca</div>
+								</button>
+							</td>
+						</tr>
+						<tr>
+							<td align="center" class="max">Ricerca Avanzata:</td>
+							<td colspan="2"><input type="checkbox" onclick="avanzata('avanzata',this.checked);" /></td>
+						</tr>
+					</table>
+					</td>
+				</tr>
+				<tr>
+					<td>
+					<div id="avanzata" style="visibility: hidden; overflow:hidden; height: 0px;">				
+					<table  width="80%" align="left" class="tbl1" border="0" cellpadding="2" cellspacing="4" >
+						<tr>
+							<td width="20%" align="right" class="max">Categoria:</td>
+							<td width="30%" ><select name="categoria" id="categoria">
+								<option value=""></option>
+								<?php
+								$id1="";
+								$id2="";
+								foreach ($categories as $cat):
+								$indice = "cat_view";
+								if(empty($cat[$indice]))
+								$indice = 0;
+	
+								if($id1 != $cat[$indice]['id1']){
+									$id1 = $cat[$indice]['id1'];
+									$cat_id = $cat[$indice]['id1'];
+									$cat_value = $cat[$indice]['cat1']
+									?>
+								<option value="<?php echo $cat_id;?>"><?php echo $cat_value;?></option>
+								<?php
+	}
+	if($id2 != $cat[$indice]['id2']){
+	$id2 = $cat[$indice]['id2'];
+	$cat_id = $cat[$indice]['id2'];
+	$cat_value = $cat[$indice]['cat1'] . " -> " .$cat[$indice]['cat2']
+	?>
+								<option value="<?php echo $cat_id;?>"><?php echo $cat_value;?></option>
+								<?php
+	}
+	if($cat[$indice]['id3'] != ""){
+	$cat_id = $cat[$indice]['id3'];
+	$cat_value = $cat[$indice]['cat1'] . " -> " . $cat[$indice]['cat2'] . " -> " . $cat[$indice]['cat3'];
+	}else{
+	$cat_id = $cat[$indice]['id2'];
+	$cat_value = $cat[$indice]['cat1'] . " -> " . $cat[$indice]['cat2'];
+	}
+	?>
+								<option value="<?php echo $cat_id;?>"><?php echo $cat_value;?></option>
+								<?php endforeach; ?>
+							</select></td>
+							<td width="30%"></td>
+							<td width="20%"></td>
+						</tr>
+						<tr>
+							<td align="right" class="max">Condizione:</td>
+							<td><select name="condizione" id="condizione">
+								<option value=""></option>
+								<option value="nuovo">Nuovo</option>
+								<option value="usato">Usato</option>
+							</select></td>
+							<td align="right" class="max">Luogo:</td>
+							<td><select name="provincia" id="provincia">
+								<option value=""></option>
+								<?php foreach ($provinces as $province): ?>
+								<option value="<?php echo $province["Province"]["id"];?>"><?php echo $province["Province"]["id"]. " - " . $province["Province"]["nome"];?></option>
+								<?php endforeach; ?>
+							</select></td>
+						</tr>
+					</table>
+					</div>
+					</td>
+				</tr>
+				</table>	
+				</form>
+				</div>
+
+				<div id="map" class="x-hide-display">
+					<table valign="middle" width="100%" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">
+							<tr>
+								<td>
+								<table id="problem" style="display: none" width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+									<tr>
+										<td width="8" height="8"
+											background="/santaclaus/img/icon_corner_a_i.png"></td>
+										<td height="8" background="/santaclaus/img/icon_top_i.png"></td>
+										<td width="8" height="8"
+											background="/santaclaus/img/icon_corner_b_i.png"></td>
+									</tr>
+									<tr>
+										<td background="/santaclaus/img/icon_left_i.png"></td>
+										<td valign="middle" bgcolor="#FFE8A7">
+										<div class="colore_avviso" align="justify"><b>Problema di compatibilità:</b> per visualizzare correttamente la mappa è necessario un browser compatibile, provare con Firefox o Safari | <a href="http://www.spreadfirefox.com/node&id=0&t=312"><img align="middle" border="0" alt="Firefox 3" title="Firefox 3" src="http://sfx-images.mozilla.org/affiliates/Buttons/firefox3/FF3_80x15_o.png"/></a></div>
+										</td>
+										<td background="/santaclaus/img/icon_right_i.png"></td>
+									</tr>
+									<tr>
+										<td width="8" height="8"
+											background="/santaclaus/img/icon_corner_d_i.png"></td>
+										<td height="8" background="/santaclaus/img/icon_bottom_i.png"></td>
+										<td width="8" height="8"
+											background="/santaclaus/img/icon_corner_c_i.png"></td>
+									</tr>
+								</table>
+								<div id="map1" style="width: 100%; height: 360px"></div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+								<table id="nota" style="display: none" width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+									<tr>
+										<td width="8" height="8"
+											background="/santaclaus/img/icon_corner_a_i.png"></td>
+										<td height="8" background="/santaclaus/img/icon_top_i.png"></td>
+										<td width="8" height="8"
+											background="/santaclaus/img/icon_corner_b_i.png"></td>
+									</tr>
+									<tr>
+										<td background="/santaclaus/img/icon_left_i.png"></td>
+										<td valign="middle" bgcolor="#FFE8A7">
+										<div class="colore_avviso" align="center"><b>Attenzione:</b> i risultati della visualizzazione sulla mappa dipendono dalla correttezza degli indirrizzi inseriti e dal motore di indicizzazione di google maps</div>
+										</td>
+										<td background="/santaclaus/img/icon_right_i.png"></td>
+									</tr>
+									<tr>
+										<td width="8" height="8"
+											background="/santaclaus/img/icon_corner_d_i.png"></td>
+										<td height="8" background="/santaclaus/img/icon_bottom_i.png"></td>
+										<td width="8" height="8"
+											background="/santaclaus/img/icon_corner_c_i.png"></td>
+									</tr>
+								</table>
+								</td>
+							</tr>
+							<script type="text/javascript" language="javascript">
+										        var uA = navigator.userAgent;
+										        if (uA.indexOf("MSIE") > -1){
+										        	document.getElementById('problem').style.display = "block";
+										        } else{
+										        	document.getElementById('nota').style.display = "block";
+										        }
+										</script>			
+						</table>
+					</div>
+				</div>
+				<div id="assX" class="x-hide-display" align="left"></div>
+				</td>
+			</tr>
+		</table>
+		</td>
+	</tr>
+</table>
+<form method="post" action="/santaclaus/article/edit" id="form_modifica">
+<input type="hidden" name="data[Article][id]" value="" id="id_modifica" />
+</form>
+<form method="post" action="/santaclaus/article/remove"
+	id="form_cancella"><input type="hidden" name="data[Article][id]"
+	value="" id="id_cancella" /></form>
+<form method="post" action="/santaclaus/article/assignation"
+	id="form_assegna"><input type="hidden" name="data[Article][id]"
+	value="" id="id_assegna" /></form>
