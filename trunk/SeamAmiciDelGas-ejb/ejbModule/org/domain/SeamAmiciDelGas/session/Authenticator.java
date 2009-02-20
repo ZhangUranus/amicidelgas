@@ -49,7 +49,7 @@ public class Authenticator
         }
         
         utente = account.getUtente();
-    	log.info("UTENTE "+utente.getNome()+" "+utente.getEmail());
+    	//log.info("UTENTE "+utente.getNome()+" "+utente.getEmail());
         
         return true;
         }
