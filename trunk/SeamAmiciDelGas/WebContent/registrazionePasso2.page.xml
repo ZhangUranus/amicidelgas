@@ -5,15 +5,14 @@
       no-conversation-view-id="/registrazionePasso2.xhtml"
       login-required="false">
       
-
+<!-- <rule if-outcome="passo2Outcome"
+			if="#{!empty newCybercontadino}">
+			<redirect view-id="/registrazioneCybercontadinoPasso3.xhtml"/>
+		</rule> -->
    
-   <navigation>
-      <rule if-outcome="passo2Outcome">
-         
-         <redirect view-id="/registrazionePasso3.xhtml">
-         	<param name="from" value="contadino"/>
-         </redirect>
-      </rule>
-      
-   </navigation>
+	<navigation>
+		<rule if-outcome="passo2Outcome">
+			<redirect view-id="/registrazionePasso3.xhtml"/>
+		</rule>
+	</navigation>
 </page>
