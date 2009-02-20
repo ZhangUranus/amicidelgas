@@ -22,11 +22,16 @@
 				  </tr>
 				  <tr>			    
 					<td valign="top"><div align="center" >
-						<h:graphicImage value="/img/star_full.png" rendered="#{accountHome.instance.punteggioFeedback > 0}" />
-						<h:graphicImage value="/img/star_full.png" rendered="#{accountHome.instance.punteggioFeedback > 1}" />
-						<h:graphicImage value="/img/star_full.png" rendered="#{accountHome.instance.punteggioFeedback > 2}" />
-						<h:graphicImage value="/img/star_full.png" rendered="#{accountHome.instance.punteggioFeedback > 3}" />
-						<h:graphicImage value="/img/star_full.png" rendered="#{accountHome.instance.punteggioFeedback > 4}" />
+						<h:graphicImage value="/img/star_full.png" rendered="#{accountHome.instance.punteggioFeedback > 0.5}" />
+						<h:graphicImage value="/img/star_full.png" rendered="#{accountHome.instance.punteggioFeedback > 1.5}" />
+						<h:graphicImage value="/img/star_full.png" rendered="#{accountHome.instance.punteggioFeedback > 2.5}" />
+						<h:graphicImage value="/img/star_full.png" rendered="#{accountHome.instance.punteggioFeedback > 3.5}" />
+						<h:graphicImage value="/img/star_full.png" rendered="#{accountHome.instance.punteggioFeedback > 4.5}" />
+						<h:graphicImage value="/img/star_half.png" rendered="#{accountHome.instance.punteggioFeedback == 0.5}" />
+						<h:graphicImage value="/img/star_half.png" rendered="#{accountHome.instance.punteggioFeedback == 1.5}" />
+						<h:graphicImage value="/img/star_half.png" rendered="#{accountHome.instance.punteggioFeedback == 2.5}" />
+						<h:graphicImage value="/img/star_half.png" rendered="#{accountHome.instance.punteggioFeedback == 3.5}" />
+						<h:graphicImage value="/img/star_half.png" rendered="#{accountHome.instance.punteggioFeedback == 4.5}" />
 						<h:graphicImage value="/img/star_empty.png" rendered="#{!(accountHome.instance.punteggioFeedback > 0)}" />
 						<h:graphicImage value="/img/star_empty.png" rendered="#{!(accountHome.instance.punteggioFeedback > 1)}" />
 						<h:graphicImage value="/img/star_empty.png" rendered="#{!(accountHome.instance.punteggioFeedback > 2)}" />
@@ -87,7 +92,9 @@
 				<span id="riepilogoDati">
 					<li>Codice fiscale: #{utenteHome.instance.codiceFiscale}</li>
 	                <li>Punteggio feedback: <b></b> </li>
-	                <li>Data Richiesta Account: <b>#{accountHome.instance.dataRichiesta}</b></li>
+	                <li>Data Richiesta Account: <b><h:outputText value="#{accountHome.instance.dataRichiesta}">
+							<f:convertDateTime type="date" dateStyle="medium" locale="Locale.ITALY"/>
+						</h:outputText></b></li>
 	                <li>Data Attivazione Account: <b>#{accountHome.instance.dataAccettazione}</b></li>
 					<li>E-mail: #{utenteHome.instance.email}</li>
 	                <li>Telefono: #{utenteHome.instance.recapitoTelefonico}</li>
