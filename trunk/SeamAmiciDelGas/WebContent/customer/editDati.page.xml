@@ -12,5 +12,9 @@
 
    <param name="utenteFrom"/>
    <param name="utenteCodiceFiscale" value="#{utenteHome.utenteCodiceFiscale}"/>
-	
+   
+   <param name="accountFrom"/>
+   <param name="accountUsername" value="#{accountHome.accountUsername}"/>
+
+	<restrict>#{s:hasRole('utenteGas')}</restrict>  	
 </page>

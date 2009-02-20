@@ -48,7 +48,7 @@ public class Account implements java.io.Serializable {
 	private Boolean attivato;
 	private Date dataRichiesta;
 	private Date dataAccettazione;
-	private Integer punteggioFeedback;
+	private Float punteggioFeedback;
 	private Set<Itinerario> itinerarios = new HashSet<Itinerario>(0);
 	private Set<Cybercontadino> cybercontadinos = new HashSet<Cybercontadino>(0);
 	private Set<org.domain.SeamAmiciDelGas.entity.Role> roles = new HashSet<org.domain.SeamAmiciDelGas.entity.Role>(0);
@@ -70,7 +70,7 @@ public class Account implements java.io.Serializable {
 			Pagamentoelettronico pagamentoelettronico, String passwordHash,
 			Boolean bloccato, Boolean elimato, Boolean cancellato,
 			Boolean attivato, Date dataRichiesta, Date dataAccettazione,
-			Integer punteggioFeedback, Set<Itinerario> itinerarios,
+			Float punteggioFeedback, Set<Itinerario> itinerarios,
 			Set<Cybercontadino> cybercontadinos, Set<org.domain.SeamAmiciDelGas.entity.Role> roles,
 			Set<Questionario> questionarios,
 			Set<Feedback> feedbacksForDestinatario,
@@ -200,11 +200,11 @@ public class Account implements java.io.Serializable {
 	}
 
 	@Column(name = "PunteggioFeedback")
-	public Integer getPunteggioFeedback() {
+	public Float getPunteggioFeedback() {
 		return this.punteggioFeedback;
 	}
 
-	public void setPunteggioFeedback(Integer punteggioFeedback) {
+	public void setPunteggioFeedback(Float punteggioFeedback) {
 		this.punteggioFeedback = punteggioFeedback;
 	}
 

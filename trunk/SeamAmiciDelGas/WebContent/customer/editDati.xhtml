@@ -10,49 +10,138 @@
 
 	<ui:define name="body">
 	
-	<h:form>
-        <a:region>
-		<rich:dataTable value="#{utenteHome.instance}" var="_dati" id="table" width="80%">
-			<f:facet name="header">
-				<h:outputText value="Riepilogo Contatti dell'utente #{_dati.nome}" />
-			</f:facet>
-				<rich:column >
-					<f:facet name="header">
-						<h:outputText value="E-mail" />
-					</f:facet>
-					<h:outputText value="#{_dati.email}" id="email" />
-        		</rich:column>
-        			
-        		<rich:column>
-					<f:facet name="header">
-						<h:outputText value="Indirizzo" />
-					</f:facet>
-					<h:outputText value="#{_dati.indirizzo}" id="indirizzo" />
-        		</rich:column>
-        		
-        		<rich:column>
-					<f:facet name="header">
-						<h:outputText value="Telefono" />
-					</f:facet>
-					<h:outputText value="#{_dati.recapitoTelefonico}" id="telefono" />
-        		</rich:column>
-        		
-        		<rich:column>
-	                <f:facet name="header">
-	                        Azioni
-	                </f:facet>
-	                <a:commandLink ajaxSingle="true" id="editlink"
-	                    oncomplete="#{rich:component('editPanel')}.show()">
-	                    <h:graphicImage value="/img/modifica_mini.png" style="border:0"/>
-	                    
-	                </a:commandLink>
-	                <rich:toolTip for="editlink" value="Modifica Recapiti"/>
-	            </rich:column>     		
-        		
-		</rich:dataTable>
-		</a:region>
-    </h:form>
-		 
+	<table width="96%" border="0" cellspacing="0" cellpadding="0" align="center" >
+		<tr>
+			<td width="45%" align="center">
+				<table width="100%" border="0" cellspacing="4" cellpadding="0" align="center" >
+				  <tr>			    
+				    <td valign="top"><div align="center" ><b>Riepilogo dati personali</b></div></td>			      
+				  </tr>
+				  <tr>			    
+				    <td width="160" align="center"><a href="categories"><img alt="statistiche" border="0" src="/SeamAmiciDelGas/img/contatti.png"/></a></td>
+				  </tr>
+				  <tr>			    
+					<td valign="top"><div align="center" >
+						<h:graphicImage value="/img/star_full.png" rendered="#{accountHome.instance.punteggioFeedback > 0}" />
+						<h:graphicImage value="/img/star_full.png" rendered="#{accountHome.instance.punteggioFeedback > 1}" />
+						<h:graphicImage value="/img/star_full.png" rendered="#{accountHome.instance.punteggioFeedback > 2}" />
+						<h:graphicImage value="/img/star_full.png" rendered="#{accountHome.instance.punteggioFeedback > 3}" />
+						<h:graphicImage value="/img/star_full.png" rendered="#{accountHome.instance.punteggioFeedback > 4}" />
+						<h:graphicImage value="/img/star_empty.png" rendered="#{!(accountHome.instance.punteggioFeedback > 0)}" />
+						<h:graphicImage value="/img/star_empty.png" rendered="#{!(accountHome.instance.punteggioFeedback > 1)}" />
+						<h:graphicImage value="/img/star_empty.png" rendered="#{!(accountHome.instance.punteggioFeedback > 2)}" />
+						<h:graphicImage value="/img/star_empty.png" rendered="#{!(accountHome.instance.punteggioFeedback > 3)}" />
+						<h:graphicImage value="/img/star_empty.png" rendered="#{!(accountHome.instance.punteggioFeedback > 4)}" />
+					</div></td>
+				  </tr>				  
+				</table>
+			</td>
+			<td width="10%">
+			</td>
+			<td width="45%">
+				<div class="colore_1" align="center">Modifica Contatti</div>
+				<h:form>
+			        <a:region>
+					<rich:dataTable value="#{utenteHome.instance}" var="_dati" id="table" width="80%">
+							<rich:column >
+								<f:facet name="header">
+									<h:outputText value="E-mail" />
+								</f:facet>
+								<h:outputText value="#{_dati.email}" id="email" />
+			        		</rich:column>
+			        			
+			        		<rich:column>
+								<f:facet name="header">
+									<h:outputText value="Indirizzo" />
+								</f:facet>
+								<h:outputText value="#{_dati.indirizzo}" id="indirizzo" />
+			        		</rich:column>
+			        		
+			        		<rich:column>
+								<f:facet name="header">
+									<h:outputText value="Telefono" />
+								</f:facet>
+								<h:outputText value="#{_dati.recapitoTelefonico}" id="telefono" />
+			        		</rich:column>
+			        		
+			        		<rich:column align="center">
+				                <f:facet name="header">
+				                        Azioni
+				                </f:facet>
+				                <a:commandLink ajaxSingle="true" id="editlink"
+				                    oncomplete="#{rich:component('editPanel')}.show()">
+				                    <h:graphicImage value="/img/modifica_mini.png" style="border:0"/>
+				                </a:commandLink>
+				                <rich:toolTip for="editlink" value="Modifica Recapiti"/>
+				            </rich:column>     			
+					</rich:dataTable>
+					</a:region>
+			    </h:form>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="3" height="16"></td>
+		</tr>
+		<tr>
+			<td width="45%">
+				<span id="riepilogoDati">
+					<li>Codice fiscale: #{utenteHome.instance.codiceFiscale}</li>
+	                <li>Punteggio feedback: <b></b> </li>
+	                <li>Data Richiesta Account: <b>#{accountHome.instance.dataRichiesta}</b></li>
+	                <li>Data Attivazione Account: <b>#{accountHome.instance.dataAccettazione}</b></li>
+					<li>E-mail: #{utenteHome.instance.email}</li>
+	                <li>Telefono: #{utenteHome.instance.recapitoTelefonico}</li>
+	                <li>Indirizzo: #{utenteHome.instance.indirizzo}</li>
+	                <li>Tipo di carta: #{accountHome.instance.pagamentoelettronico.tipoCarta}</li>
+	                <li>Numero della carta: #{accountHome.instance.pagamentoelettronico.numeroCarta}</li>
+                </span>
+			</td>
+			<td width="10%">
+			</td>
+			<td width="45%">
+				<div class="colore_1" align="center">Modifica Dati Pagamento</div>
+				<h:form>
+			        <a:region>
+					<rich:dataTable value="#{utenteHome.instance}" var="_dati" id="table" width="80%">
+							<rich:column >
+								<f:facet name="header">
+									<h:outputText value="E-mail" />
+								</f:facet>
+								<h:outputText value="#{_dati.email}" id="email" />
+			        		</rich:column>
+			        			
+			        		<rich:column>
+								<f:facet name="header">
+									<h:outputText value="Indirizzo" />
+								</f:facet>
+								<h:outputText value="#{_dati.indirizzo}" id="indirizzo" />
+			        		</rich:column>
+			        		
+			        		<rich:column>
+								<f:facet name="header">
+									<h:outputText value="Telefono" />
+								</f:facet>
+								<h:outputText value="#{_dati.recapitoTelefonico}" id="telefono" />
+			        		</rich:column>
+			        		
+			        		<rich:column  align="center">
+				                <f:facet name="header">
+				                        Azioni
+				                </f:facet>
+				                <a:commandLink ajaxSingle="true" id="editlink"
+				                    oncomplete="#{rich:component('editPanel')}.show()">
+				                    <h:graphicImage value="/img/modifica_mini.png" style="border:0"/>
+				                    
+				                </a:commandLink>
+				                <rich:toolTip for="editlink" value="Modifica dati di pagamento"/>
+				            </rich:column>     		
+			        		
+					</rich:dataTable>
+					</a:region>
+			    </h:form>
+			</td>
+		</tr>
+	</table>
 		 
 		 <rich:modalPanel id="editPanel" autosized="true" width="500">
 	        <f:facet name="header">
@@ -72,7 +161,12 @@
 	            <a:outputPanel ajaxRendered="true">
 	                <h:panelGrid columns="2">
 	                    <h:outputText value="E-mail"/>
-	                    <h:inputText id="campo-email" value="#{utenteHome.instance.email}" required="true" />
+	                    <h:inputText id="campo-email" value="#{utenteHome.instance.email}" required="true" >
+	                    	<a:support event="onblur" 
+		                    reRender="campo-email" 
+		                    action="#{newControlloBean.controllaEmail()}"
+		                    ajaxSingle="true"/> 
+	                    </h:inputText>
 	                    <h:outputText value="Indirizzo" />
 	                    <h:inputText id="campo-indirizzo" value="#{utenteHome.instance.indirizzo}" required="true" />
 	                    <h:outputText value="Telefono" />
@@ -82,7 +176,7 @@
 	            </a:outputPanel>
 	            <a:commandButton value="Salva"
 	                action="#{utenteHome.update()}"
-	                reRender="email, indirizzo, telefono"
+	                reRender="email, indirizzo, telefono, riepilogoDati"
 	                oncomplete="#{rich:component('editPanel')}.hide();" />
 	            </h:panelGrid>  
 	        </h:form>
