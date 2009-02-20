@@ -5,25 +5,13 @@ import org.domain.SeamAmiciDelGas.entity.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
-import javax.ejb.TransactionManagement;
-import javax.ejb.TransactionManagementType;
-import javax.persistence.EntityManager;
-
-import org.jboss.mq.pm.jdbc2.PersistenceManager;
-import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Logger;
 import org.jboss.seam.annotations.Name;
-import org.jboss.seam.annotations.Scope;
-import org.jboss.seam.annotations.Transactional;
 import org.jboss.seam.framework.EntityHome;
 import org.jboss.seam.log.Log;
-import org.jboss.seam.persistence.EntityManagerFactory;
 
 @Name("utenteHome")
-@Scope(ScopeType.SESSION)
 public class UtenteHome extends EntityHome<Utente> {
 	
 	@Logger private Log log;
