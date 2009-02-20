@@ -46,7 +46,16 @@
 					    <td valign="bottom"><div align="left" class="colore_1"><a href="#">I tuoi dati</a></div></td>			      
 					  </tr>
 					  <tr>
-					    <td valign="top"><div align="left" class="explorer">Visualizza e modifica i tuoi dati, cancella il tuo account</div></td>
+					    <td valign="top"><div align="left" class="explorer">
+					    	<s:link view="/customer/editDati.xhtml"
+				                   value="Visualizza e modifica i tuoi dati, cancella il tuo account"
+				             propagation="none"
+				                      id="utenteEdit"
+				                rendered="#{empty from}">
+				                <f:param name="utenteCodiceFiscale"
+				                        value="#{currentUser.codiceFiscale}"/>
+				            </s:link>
+					    </div></td>
 					  </tr>
 					</table>
 				</td>
@@ -57,7 +66,7 @@
 					    <td valign="bottom"><div align="left" class="colore_1"><a href="#">Configurazione portale</a></div></td>			      
 					  </tr>
 					  <tr>
-					    <td valign="top"><div align="left" class="explorer">Configura i parametri del portale santaclaus</div></td>
+					    <td valign="top"><div align="left" class="explorer">Configura i parametri </div></td>
 					  </tr>
 					</table>
 				</td>
@@ -68,7 +77,7 @@
 					    <td valign="bottom"><div align="left" class="colore_1"><a href="#">Configurazione portale</a></div></td>			      
 					  </tr>
 					  <tr>
-					    <td valign="top"><div align="left" class="explorer">Configura i parametri del portale santaclaus</div></td>
+					    <td valign="top"><div align="left" class="explorer">Configura i parametri </div></td>
 					  </tr>
 					</table>
 				</td>
@@ -79,7 +88,7 @@
 					    <td valign="bottom"><div align="left" class="colore_1"><a href="#">Configurazione portale</a></div></td>			      
 					  </tr>
 					  <tr>
-					    <td valign="top"><div align="left" class="explorer">Configura i parametri del portale santaclaus</div></td>
+					    <td valign="top"><div align="left" class="explorer">Configura i </div></td>
 					  </tr>
 					</table>
 				</td>
