@@ -1,0 +1,65 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:a="http://richfaces.org/a4j"
+    template="layout/template.xhtml">
+
+		
+		<ui:define name="body">
+		<h:form id="browseForm">
+		<rich:panel>
+
+			<s:decorate id="contadinoField" template="layout/edit.xhtml">
+				<ui:define name="label">Seleziona il fornitore per visualizzare il catalogo</ui:define>
+				<h:selectOneMenu id="fornitoreSelect"
+								 value="#{catalogService.contadino}"
+								 
+				> 
+					<s:selectItems noSelectionLabel="Seleziona un fornitore"
+						hideNoSelectionLabel="false" var="_contadino"
+						label="#{_contadino.nomeAzienda}"
+						value="#{cybercontadinoList.resultList}"
+					>
+					</s:selectItems>
+				<a:support event="onfocus" action="#{catalogService.getCategories(catalogService.contadino)}" reRender="browseForm:categoriesField" bypassUpdates="true" ajaxSingle="true"/>
+				</h:selectOneMenu>
+			</s:decorate>
+			
+			<s:decorate id="categoriesField" template="layout/edit.xhtml">
+			<ui:define name="label">Categorie</ui:define>	
+				<rich:dataList
+					var="_category"
+					id="categoriesDataList"
+					
+					value="#{categories}">
+					
+					<h:outputText value="#{_category}"/>
+					
+				</rich:dataList>
+				<a:support event="onfocus" action="#{catalogService.getCategories(catalogService.contadino)}" reRender="browseForm:categoriesField" bypassUpdates="true" ajaxSingle="true"/>
+				
+			</s:decorate>
+			
+			<s:decorate id="categoriesField" template="layout/edit.xhtml">
+			<ui:define name="label">Categorie</ui:define>	
+				<rich:dataTable
+					var="_item"
+					id="itemsDataTable"
+					value="#{items}">
+					<h:outputText value="#{_category}"/>
+				</rich:dataTable>
+			</s:decorate>
+			
+			
+		</rich:panel>
+</h:form>
+		</ui:define>
+
+
+</ui:composition>
+
