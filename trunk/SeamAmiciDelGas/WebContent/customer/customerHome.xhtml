@@ -12,43 +12,102 @@
 
 		<table width="96%" border="0" cellspacing="0" cellpadding="0" align="center" >
 			<tr>
-				<td colspan="4">
-					<table width="90%" border="0" cellspacing="4" cellpadding="0" align="right" >
+				<td colspan="3">
+					<table width="90%" border="0" cellspacing="4" cellpadding="0" align="left" >
 					  <tr>			    
 					    <td rowspan="2" width="160" align="left"><a href="categories"><img alt="statistiche" border="0" src="/SeamAmiciDelGas/img/contatti.png"/></a></td>
-					    <td valign="bottom"><div align="left" class="colore_1">Bentornato <b>#{currentUser.nome} #{currentUser.cognome}</b></div></td>			      
-					  	<td valign="bottom"><div align="left" class="colore_1">I tuoi Contatti</div></td>			      
+					    <td valign="top"><div align="left" class="colore_1">Bentornato <b>#{currentUser.nome} #{currentUser.cognome}</b></div></td>			      
+					  	<td valign="top"><div align="left" class="colore_1">I tuoi ruoli</div></td>			      
 					  </tr>
 					  <tr>
 					    <td valign="top"><div align="left" class="explorer">
-							<li>Codice fiscale: #{currentUser.codiceFiscale}</li>
-                        	<li>Punteggio feedback: <b>#{currentAccount.punteggioFeedback}</b> </li>
-                        	<li>Data Attivazione: <b>#{currentAccount.dataAccettazione}</b> </li>
-						</div></td>
-						<td valign="top"><div align="left" class="explorer">
-							<li>E-mail: #{currentUser.email}</li>
+					    	<h:graphicImage value="/img/star_full.png" rendered="#{currentAccount.punteggioFeedback > 0.5}" />
+							<h:graphicImage value="/img/star_full.png" rendered="#{currentAccount.punteggioFeedback > 1.5}" />
+							<h:graphicImage value="/img/star_full.png" rendered="#{currentAccount.punteggioFeedback > 2.5}" />
+							<h:graphicImage value="/img/star_full.png" rendered="#{currentAccount.punteggioFeedback > 3.5}" />
+							<h:graphicImage value="/img/star_full.png" rendered="#{currentAccount.punteggioFeedback > 4.5}" />
+							<h:graphicImage value="/img/star_half.png" rendered="#{currentAccount.punteggioFeedback == 0.5}" />
+							<h:graphicImage value="/img/star_half.png" rendered="#{currentAccount.punteggioFeedback == 1.5}" />
+							<h:graphicImage value="/img/star_half.png" rendered="#{currentAccount.punteggioFeedback == 2.5}" />
+							<h:graphicImage value="/img/star_half.png" rendered="#{currentAccount.punteggioFeedback == 3.5}" />
+							<h:graphicImage value="/img/star_half.png" rendered="#{currentAccount.punteggioFeedback == 4.5}" />
+							<h:graphicImage value="/img/star_empty.png" rendered="#{!(currentAccount.punteggioFeedback > 0)}" />
+							<h:graphicImage value="/img/star_empty.png" rendered="#{!(currentAccount.punteggioFeedback > 1)}" />
+							<h:graphicImage value="/img/star_empty.png" rendered="#{!(currentAccount.punteggioFeedback > 2)}" />
+							<h:graphicImage value="/img/star_empty.png" rendered="#{!(currentAccount.punteggioFeedback > 3)}" />
+							<h:graphicImage value="/img/star_empty.png" rendered="#{!(currentAccount.punteggioFeedback > 4)}" />
+							<li>Codice fiscale: #{currentUser.codiceFiscale}</li>                        	
+                        	<li>Data Attivazione: <b>#{currentAccount.dataAccettazione}</b></li>
+                        	<hr noshade="noshade" width="85%" align="left"/>
+                        	<span class="colore_1">I tuoi contatti</span>
+                        	<li>E-mail: #{currentUser.email}</li>
                         	<li>Telefono: #{currentUser.recapitoTelefonico}</li>
                         	<li>Indirizzo: #{currentUser.indirizzo}</li>
+						</div></td>
+						<td valign="top"><div align="left" class="explorer">
+							<li>TODO - lista dinamica</li>
+                        	<li>Amministratore</li>
+                        	<li>Mediatore</li>
+                        	<li>Customer</li>
+                        	<p></p>
+                        	<h:outputText rendered="#{(currentAccount.punteggioFeedback > 3.5)}"  >
+                        		Proponiti come driver <img src="/SeamAmiciDelGas/img/driver_mini.png" border="0" align="middle"/>
+                        	</h:outputText>
 						</div></td>
 					  </tr>
 					</table>	
 				</td>
-			</tr>
-			<tr>
-				<td colspan="4" height="16"><hr />	
+				<td >
+					<table width="100%" border="0" cellspacing="0" cellpadding="0" align="right" >
+					   <tr>
+					    <td width="22" height="22" background="/SeamAmiciDelGas/img/shadow_a1.png"></td>
+					    <td height="22" background="/SeamAmiciDelGas/img/shadow_top1.png"></td>
+					    <td width="22" height="22" background="/SeamAmiciDelGas/img/shadow_b1.png"></td>
+					   </tr>
+					   <tr>
+					   	<td background="/SeamAmiciDelGas/img/shadow_left1.png"></td>	
+					     <td background="/SeamAmiciDelGas/img/shadow1.png">
+								<div align="center" >TODO notifiche ed eventi
+									<li>notifica1</li>
+                        			<li>notifica2</li>
+                        			<li>notifica3</li>
+                        			<li>notifica4</li>
+                        			<li>notifica5</li>
+								</div>			    
+					     </td>
+					     <td background="/SeamAmiciDelGas/img/shadow_right1.png" valign="middle"></td>
+					   </tr>
+					   <tr>
+					    <td width="22" height="22" background="/SeamAmiciDelGas/img/shadow_d1.png"></td>
+					    <td height="22" background="/SeamAmiciDelGas/img/shadow_bottom1.png"></td>
+					    <td width="22" height="22" background="/SeamAmiciDelGas/img/shadow_c1.png"></td>
+					   </tr>
+					</table>	
 				</td>
 			</tr>
 			<tr>
-				<td>
-					<table width="25%" border="0" cellspacing="0" cellpadding="0" align="center" >
+				<td colspan="4" height="16"><hr noshade="noshade" />	
+				</td>
+			</tr>
+			<tr>
+				<td width="25%">
+					<table width="98%" border="0" cellspacing="2" cellpadding="0" align="center" >
 					  <tr>			    
-					    <td rowspan="2" align="left"><a href="categories"><img alt="statistiche" border="0" src="/SeamAmiciDelGas/img/modifica.png"/></a></td>
-					    <td valign="bottom"><div align="left" class="colore_1"><a href="#">I tuoi dati</a></div></td>			      
-					  </tr>
-					  <tr>
-					    <td valign="top"><div align="left" class="explorer">
+					    <td rowspan="2" align="left">
 					    	<s:link view="/customer/editDati.xhtml"
-				                   value="Visualizza e modifica i tuoi dati, cancella il tuo account"
+				             propagation="none"
+				                      id="utenteEdit"
+				                rendered="#{empty from}">
+				                <f:param name="utenteCodiceFiscale"
+				                        value="#{currentUser.codiceFiscale}"/>
+				                <f:param name="accountUsername"
+				                        value="#{currentAccount.username}"/>
+					    	<img alt="statistiche" border="0" src="/SeamAmiciDelGas/img/modifica.png"/>
+					    	</s:link>
+					    	</td>
+					    <td valign="bottom"><div align="left" class="colore_1">
+					    	<s:link view="/customer/editDati.xhtml"
+				                   value="Profilo"
 				             propagation="none"
 				                      id="utenteEdit"
 				                rendered="#{empty from}">
@@ -57,12 +116,15 @@
 				                <f:param name="accountUsername"
 				                        value="#{currentAccount.username}"/>
 				            </s:link>
-					    </div></td>
+					    	</div></td>			      
+					  </tr>
+					  <tr>
+					    <td valign="top"><div align="left" class="explorer">Visualizza e modifica i tuoi dati, cancella il tuo account</div></td>
 					  </tr>
 					</table>
 				</td>
-				<td>
-					<table width="25%" border="0" cellspacing="0" cellpadding="0" align="center" >
+				<td width="25%">
+					<table width="98%" border="0" cellspacing="2" cellpadding="0" align="center" >
 					  <tr>			    
 					    <td rowspan="2" align="left"><a href="categories"><img alt="statistiche" border="0" src="/img/ico_config.jpg"/></a></td>
 					    <td valign="bottom"><div align="left" class="colore_1"><a href="#">Configurazione portale</a></div></td>			      
@@ -72,8 +134,8 @@
 					  </tr>
 					</table>
 				</td>
-				<td>
-					<table width="25%" border="0" cellspacing="0" cellpadding="0" align="center" >
+				<td width="25%">
+					<table width="98%" border="0" cellspacing="2" cellpadding="0" align="center" >
 					  <tr>			    
 					    <td rowspan="2" align="left"><a href="categories"><img alt="statistiche" border="0" src="/img/ico_config.jpg"/></a></td>
 					    <td valign="bottom"><div align="left" class="colore_1"><a href="#">Configurazione portale</a></div></td>			      
@@ -83,8 +145,8 @@
 					  </tr>
 					</table>
 				</td>
-				<td>
-					<table width="25%" border="0" cellspacing="0" cellpadding="0" align="center" >
+				<td width="25%">
+					<table width="98%" border="0" cellspacing="2" cellpadding="0" align="center" >
 					  <tr>			    
 					    <td rowspan="2" align="left"><a href="categories"><img alt="statistiche" border="0" src="/img/ico_config.jpg"/></a></td>
 					    <td valign="bottom"><div align="left" class="colore_1"><a href="#">Configurazione portale</a></div></td>			      
