@@ -157,7 +157,44 @@
 					</table>
 				</td>
 			</tr>
+		<tr>
+			<td width="25%">
+					<table width="98%" border="0" cellspacing="2" cellpadding="0" align="center" >
+					  <tr>			    
+					    <td rowspan="2" align="left">
+					    	<s:link view="/admin/editDatiUtenti.xhtml"
+				             propagation="none"
+				                      id="editDatiUtentiRegistrati"
+				                rendered="#{empty from}">
+				                <f:param name="utenteCodiceFiscale"
+				                        value="#{currentUser.codiceFiscale}"/>
+				                <f:param name="accountUsername"
+				                        value="#{currentAccount.username}"/>
+					    	<img alt="statistiche" border="0" src="/SeamAmiciDelGas/img/modifica.png"/>
+					    	</s:link>
+					    	</td>
+					    <td valign="bottom"><div align="left" class="colore_1">
+					    	<s:link view="/admin/editDatiUtenti.xhtml"
+				                   value="Utenti registrati"
+				             propagation="none"
+				                      id="editDatiUtentiRegistrati"
+				                rendered="#{empty from}">
+				                <f:param name="utenteCodiceFiscale"
+				                        value="#{currentUser.codiceFiscale}"/>
+				                <f:param name="accountUsername"
+				                        value="#{currentAccount.username}"/>
+				            </s:link>
+					    	</div></td>			      
+					  </tr>
+					  <tr>
+					    <td valign="top"><div align="left" class="explorer">Visualizza e modifica i dati degli utenti</div></td>
+					  </tr>
+					</table>
+				</td>
+			</tr>
+			
 		</table>
+		
 
     </ui:define>
 </ui:composition>
