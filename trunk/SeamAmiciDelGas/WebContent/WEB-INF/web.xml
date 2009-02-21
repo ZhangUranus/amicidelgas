@@ -24,7 +24,7 @@
    </context-param>
 
    <!-- Change load strategy to DEFAULT to disable sending scripts/styles as packs -->
-
+	
    <context-param>
       <param-name>org.richfaces.LoadStyleStrategy</param-name>
       <param-value>ALL</param-value>
@@ -40,10 +40,21 @@
    <listener>
       <listener-class>org.jboss.seam.servlet.SeamListener</listener-class>
    </listener>
-
+   
+<!-- createTempFiles e maxRequestSize sono i parametri utilizzati per fare l'upload dei file -->
+   
    <filter>
       <filter-name>Seam Filter</filter-name>
       <filter-class>org.jboss.seam.servlet.SeamFilter</filter-class>
+      <init-param>
+                <param-name>createTempFiles</param-name>
+                <param-value>false</param-value>
+        </init-param>
+        <init-param>
+                <param-name>maxRequestSize</param-name>
+                <param-value>200000</param-value>
+        </init-param>
+      
    </filter>
 
    <filter-mapping>
