@@ -39,11 +39,9 @@ public class LoginSelectBean{
 	public String calculateMaxRole()
 	{
 		Iterator<Role> iter = account.getRoles().iterator();
-		log.error("Vediamo se funge");
 		while(iter.hasNext())
 		{
 			Role r = iter.next();
-			log.error("******************admin ??" +r.getName());
 			if(r.getName().equals("admin"))
 				return "admin";
 		}
@@ -58,11 +56,9 @@ public class LoginSelectBean{
 		while(iter.hasNext())
 		{
 			Role r = iter.next();
-			log.error("******************utenteGas ??" +r.getName());
 			if(r.getName().equals("utenteGas"))
 				return "utenteGas";
 		}
-		log.error("******************null null*****************+" );
 		return "null";
 	}
 
