@@ -13,6 +13,8 @@ import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.validator.Digits;
 import org.hibernate.validator.Length;
 import org.hibernate.validator.NotNull;
 import org.jboss.seam.ScopeType;
@@ -30,17 +32,17 @@ public class Pagamentoelettronico implements java.io.Serializable {
 
 	private Integer idPagamentoElettronico;
 	private String tipoCarta;
-	private int numeroCarta;
+	private String numeroCarta;
 	private Set<Account> accounts = new HashSet<Account>(0);
 
 	public Pagamentoelettronico() {
 	}
 
-	public Pagamentoelettronico(int numeroCarta) {
+	public Pagamentoelettronico(String numeroCarta) {
 		this.numeroCarta = numeroCarta;
 	}
 
-	public Pagamentoelettronico(String tipoCarta, int numeroCarta,
+	public Pagamentoelettronico(String tipoCarta, String numeroCarta,
 			Set<Account> accounts) {
 		this.tipoCarta = tipoCarta;
 		this.numeroCarta = numeroCarta;
@@ -70,11 +72,12 @@ public class Pagamentoelettronico implements java.io.Serializable {
 
 	@Column(name = "numero_carta", nullable = false)
 	@NotNull
-	public int getNumeroCarta() {
+	@Digits(integerDigits=16)
+	public String getNumeroCarta() {
 		return this.numeroCarta;
 	}
 
-	public void setNumeroCarta(int numeroCarta) {
+	public void setNumeroCarta(String numeroCarta) {
 		this.numeroCarta = numeroCarta;
 	}
 

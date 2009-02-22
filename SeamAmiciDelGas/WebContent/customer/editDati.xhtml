@@ -109,26 +109,19 @@
 				<div class="colore_1" align="center">Modifica Dati Pagamento</div>
 				<h:form>
 			        <a:region>
-					<rich:dataTable value="#{utenteHome.instance}" var="_dati" id="table" width="80%">
+					<rich:dataTable value="#{accountHome.instance}" var="_dati" id="table" width="80%">
 							<rich:column >
 								<f:facet name="header">
-									<h:outputText value="E-mail" />
+									<h:outputText value="Tipo Carta" />
 								</f:facet>
-								<h:outputText value="#{_dati.email}" id="email" />
+								<h:outputText value="#{_dati.pagamentoelettronico.tipoCarta}" id="email" />
 			        		</rich:column>
 			        			
 			        		<rich:column>
 								<f:facet name="header">
-									<h:outputText value="Indirizzo" />
+									<h:outputText value="Numero Carta" />
 								</f:facet>
-								<h:outputText value="#{_dati.indirizzo}" id="indirizzo" />
-			        		</rich:column>
-			        		
-			        		<rich:column>
-								<f:facet name="header">
-									<h:outputText value="Telefono" />
-								</f:facet>
-								<h:outputText value="#{_dati.recapitoTelefonico}" id="telefono" />
+								<h:outputText value="#{_dati.pagamentoelettronico.numeroCarta}" id="indirizzo" />
 			        		</rich:column>
 			        		
 			        		<rich:column  align="center">
@@ -136,7 +129,7 @@
 				                        Azioni
 				                </f:facet>
 				                <a:commandLink ajaxSingle="true" id="editlink"
-				                    oncomplete="#{rich:component('editPanel')}.show()">
+				                    oncomplete="#{rich:component('editPagamento')}.show()">
 				                    <h:graphicImage value="/img/modifica_mini.png" style="border:0"/>
 				                    
 				                </a:commandLink>
@@ -149,8 +142,49 @@
 			</td>
 		</tr>
 	</table>
+	
+		<rich:modalPanel id="editPagamento" autosized="true" width="400">
+	        <f:facet name="header">
+	            <h:outputText value="Modifica i dati di pagamento elettronico" />
+	        </f:facet>
+	        <f:facet name="controls">
+	            <h:panelGroup>
+	                <h:graphicImage value="/img/close.png"
+	                    id="hidelink0" />
+	                <rich:componentControl for="editPagamento" attachTo="hidelink0"
+	                    operation="hide" event="onclick" />
+	            </h:panelGroup>
+	        </f:facet>
+	        <h:form>
+	            <rich:messages style="color:red;"></rich:messages>
+	            <h:panelGrid columns="1">
+	            <a:outputPanel ajaxRendered="true">
+	                <h:panelGrid columns="2">
+	                    <h:outputText value="Tipo carta"/>
+						<table><tbody>
+							<tr>
+								<td><input type="radio" name="#{newPagamento.tipoCarta}" id="j_id65:j_id71:0" value="Visa"/><label for="j_id65:j_id71:0"/><img align="middle" src="/SeamAmiciDelGas/img/creditcard_visa.png"/></td>
+								<td><input type="radio" name="#{newPagamento.tipoCarta}" id="j_id65:j_id71:1" value="MasterCard"/><label for="j_id65:j_id71:1"/><img align="middle" src="/SeamAmiciDelGas/img/creditcard_mastercard.png"/></td>
+								<td><input type="radio" name="#{newPagamento.tipoCarta}" id="j_id65:j_id71:2" value="AmericanExpress"/><label for="j_id65:j_id71:2"/><img align="middle" src="/SeamAmiciDelGas/img/creditcard_american_express.png"/></td>
+								<td><input type="radio" name="#{newPagamento.tipoCarta}" id="j_id65:j_id71:3" value="PayPal"/><label for="j_id65:j_id71:3"><img align="middle" src="/SeamAmiciDelGas/img/creditcard_paypal.png"/></label></td>
+							</tr>
+							</tbody>
+						</table> 
+	                    
+	                    <h:outputText value="Numero carta" />
+	                    <h:inputText id="campo-numerocarta" value="#{accountHome.instance.pagamentoelettronico.numeroCarta}" required="true" size="16" maxlength="16" />
+	                </h:panelGrid>
+	                <rich:message showSummary="true" showDetail="false" for="campo-tipocarta"/>
+	            </a:outputPanel>
+	            <a:commandButton value="Salva"
+	                action="#{accountHome.update()}"
+	                reRender="email, indirizzo, telefono, riepilogoDati"
+	                oncomplete="#{rich:component('editPagamento')}.hide();" />
+	            </h:panelGrid>  
+	        </h:form>
+	    </rich:modalPanel>
 		 
-		 <rich:modalPanel id="editPanel" autosized="true" width="500">
+		 <rich:modalPanel id="editPanel" autosized="true" width="400">
 	        <f:facet name="header">
 	            <h:outputText value="Modifica i recapiti telefonici" />
 	        </f:facet>
@@ -168,22 +202,22 @@
 	            <a:outputPanel ajaxRendered="true">
 	                <h:panelGrid columns="2">
 	                    <h:outputText value="E-mail"/>
-	                    <h:inputText id="campo-email" value="#{utenteHome.instance.email}" required="true" >
+	                    <h:inputText id="campo-email" value="#{utenteHome.instance.email}" required="true" size="32" maxlength="70">
 	                    	<a:support event="onblur" 
 		                    reRender="campo-email" 
 		                    action="#{newControlloBean.controllaEmail()}"
 		                    ajaxSingle="true"/> 
 	                    </h:inputText>
 	                    <h:outputText value="Indirizzo" />
-	                    <h:inputText id="campo-indirizzo" value="#{utenteHome.instance.indirizzo}" required="true" />
+	                    <h:inputText id="campo-indirizzo" value="#{utenteHome.instance.indirizzo}" required="true" size="32" maxlength="100" />
 	                    <h:outputText value="Telefono" />
-	                    <h:inputText id="campo-telefono" value="#{utenteHome.instance.recapitoTelefonico}" required="true"/>
+	                    <h:inputText id="campo-telefono" value="#{utenteHome.instance.recapitoTelefonico}" required="true" size="32" maxlength="45"/>
 	                </h:panelGrid>
-	                <rich:message showSummary="true" showDetail="false" for="email"/>
+	                <rich:message showSummary="true" showDetail="false" for="campo-email"/>
 	            </a:outputPanel>
 	            <a:commandButton value="Salva"
 	                action="#{utenteHome.update()}"
-	                reRender="email, indirizzo, telefono, riepilogoDati"
+	                reRender="campo-email, campo-indirizzo, campo-telefono, riepilogoDati"
 	                oncomplete="#{rich:component('editPanel')}.hide();" />
 	            </h:panelGrid>  
 	        </h:form>

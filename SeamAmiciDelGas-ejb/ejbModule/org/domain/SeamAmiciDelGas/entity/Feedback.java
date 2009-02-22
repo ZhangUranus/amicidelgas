@@ -33,7 +33,7 @@ public class Feedback implements java.io.Serializable {
 	private String descrizione;
 	private Date dataValidazione;
 	private Date dataSegnalazione;
-	private Integer punteggio;
+	private float punteggio;
 
 	public Feedback() {
 	}
@@ -53,7 +53,7 @@ public class Feedback implements java.io.Serializable {
 	public Feedback(Account accountByDestinatario, Ordine ordine,
 			Account accountByValidatore, Account accountBySegnalatore,
 			boolean analizzato, String descrizione, Date dataValidazione,
-			Date dataSegnalazione, Integer punteggio) {
+			Date dataSegnalazione, float punteggio) {
 		this.accountByDestinatario = accountByDestinatario;
 		this.ordine = ordine;
 		this.accountByValidatore = accountByValidatore;
@@ -163,11 +163,11 @@ public class Feedback implements java.io.Serializable {
 	}
 
 	@Column(name = "Punteggio")
-	public Integer getPunteggio() {
+	public float getPunteggio() {
 		return this.punteggio;
 	}
 
-	public void setPunteggio(Integer punteggio) {
+	public void setPunteggio(float punteggio) {
 		this.punteggio = punteggio;
 	}
 
