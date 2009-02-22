@@ -96,7 +96,7 @@ public class RichiestaRegistrazioneBean implements RichiestaRegistrazione
     	Date date = new Date();
     	date.setTime(System.currentTimeMillis());
     	account.setDataRichiesta(date);
-    	account.setPunteggioFeedback(3);
+    	account.setPunteggioFeedback(new Float(3.0));
     	em.persist(account);
     	
     	Role role = new Role();
