@@ -1,0 +1,136 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:a="http://richfaces.org/a4j"
+    template="/layout/template.xhtml">
+    
+	<ui:define name="body">
+	
+
+		<div class="colore_1" align="center">Richieste Registrazioni Customer</div>
+			<h:form>
+		        <a:region>
+			    	<rich:dataTable value="#{accountBean.richiesteCustomer}" var="_accountRichiesta" id="table1" rows="5" width="50%">
+			    		
+			    		<rich:column>
+							<f:facet name="header">
+								<h:outputText value="Username" />
+							</f:facet>
+								<h:outputText value="#{_accountRichiesta.username}" id="username" />
+		        		</rich:column>
+			        		
+			        	<rich:column >
+							<f:facet name="header">
+								<h:outputText value="Cognome" />
+							</f:facet>
+								<h:outputText value="#{_accountRichiesta.utente.cognome}" id="cognome" />
+		        		</rich:column>
+		        		
+		        		<rich:column >
+							<f:facet name="header">
+								<h:outputText value="Nome" />
+							</f:facet>
+								<h:outputText value="#{_accountRichiesta.utente.nome}" id="nome" />
+		        		</rich:column>
+		        		
+		        		<rich:column >
+							<f:facet name="header">
+								<h:outputText value="Comune" />
+							</f:facet>
+								<h:outputText value="#{_accountRichiesta.utente.comuneByIdcomune.nome}" id="comune" />
+		        		</rich:column>	
+			    
+		    			<rich:column >
+							<f:facet name="header">
+								<h:outputText value="Data Richiesta" />
+							</f:facet>
+								<h:outputText value="#{_accountRichiesta.dataRichiesta}" id="dataRichiesta">
+								<f:convertDateTime type="date" dateStyle="medium" locale="Locale.ITALY"/>
+								</h:outputText>
+		        		</rich:column>
+			    
+			    		<rich:column >
+							<f:facet name="header">
+								<h:outputText value="E-mail" />
+							</f:facet>
+								<h:outputText value="#{_accountRichiesta.utente.email}" id="email" />
+		        		</rich:column>
+		        		
+		        		<rich:column align="center">
+			                <f:facet name="header">
+		                        Contatta
+			                </f:facet>
+			                <a:commandLink ajaxSingle="true" id="contattaCustomerlink"
+			                    oncomplete="#{rich:component('contattaCustomerPanel')}.show()">
+				                    <h:graphicImage value="/img/email.jpg" style="border:" width="41" height="32"/>
+				                </a:commandLink>
+				                <rich:toolTip for="contattaCustomerlink" value="Contatta l'utente"/>
+				            </rich:column>
+		        		
+		        		<rich:column align="center">
+			                <f:facet name="header">
+		                        Azione
+			                </f:facet>
+			                <a:commandLink ajaxSingle="true" id="richiestaCustomerLink"
+			                    oncomplete="#{rich:component('richiestaCustomerPanel')}.show()">
+			                    	<f:setPropertyActionListener value="#{_accountRichiesta}" target="#{accountBean.currentCustomer}" />
+				                    <h:graphicImage value="/img/modifica_mini.png" style="border:0" />
+				                </a:commandLink>
+				                <rich:toolTip for="editlink" value="valuta la richiesta di registrazione"/>
+				            </rich:column>
+		        		
+		        		
+		        		<f:facet name="footer">
+                			<td width="45%" align="center">
+                				<rich:datascroller renderIfSinglePage="false" maxPages="8"/>
+                			</td>
+            			</f:facet>
+			    	</rich:dataTable>    
+		        </a:region>
+		    </h:form>
+		
+			<rich:modalPanel id="richiestaCustomerPanel" autosized="true" width="500">
+	        	<f:facet name="header">
+	            	<h:outputText value="Valuta la richiesta di registrazione di #{accountBean.currentCustomer.utente.cognome} #{accountBean.currentCustomer.utente.nome}" />
+	        	</f:facet>
+	        	<f:facet name="controls">
+	            	<h:panelGroup>
+	                	<h:graphicImage value="/img/close.png"
+	                    	id="hidelink" />
+	               	 	<rich:componentControl for="richiestaCustomerPanel" attachTo="hidelink"
+	                    	operation="hide" event="onclick" />
+	            	</h:panelGroup>
+	        	</f:facet>
+	        	<span id="riepilogoDati">
+	        		<li>Username: #{accountBean.currentCustomer.username}</li>
+					<li>Codice fiscale: #{accountBean.currentCustomer.utente.codiceFiscale}</li>
+					<li>Cognome: #{accountBean.currentCustomer.utente.cognome}</li>
+					<li>Nome: #{accountBean.currentCustomer.utente.nome}</li>
+	                <li>Data Richiesta Account: <b><h:outputText value="#{accountBean.currentCustomer.dataRichiesta}">
+							<f:convertDateTime type="date" dateStyle="medium" locale="Locale.ITALY"/>
+						</h:outputText></b></li>
+					<li>E-mail: #{accountBean.currentCustomer.utente.email}</li>
+	                <li>Telefono: #{accountBean.currentCustomer.utente.recapitoTelefonico}</li>
+	                <li>Indirizzo: #{accountBean.currentCustomer.utente.indirizzo}</li>
+	                <li>Tipo di carta: #{accountBean.currentCustomer.pagamentoelettronico.tipoCarta}</li>
+	                <li>Numero della carta: #{accountBean.currentCustomer.pagamentoelettronico.numeroCarta}</li>
+                </span>
+	            <a:commandButton value="Accetta richiesta"
+	                action="#{accountBean.accettaRegistrazioneCustomer()}"
+	                reRender="table1"
+	                oncomplete="#{rich:component('richiestaCustomerPanel')}.hide();" />
+	    </rich:modalPanel>
+		
+		<rich:modalPanel id="contattaCustomerPanel" autosized="true" width="500">
+	        	<f:facet name="header">
+	            	<h:outputText value="Contatta #{accountBean.currentCustomer.utente.cognome} #{accountBean.currentCustomer.utente.nome}" />
+	        	</f:facet>
+       	</rich:modalPanel>
+	
+	</ui:define>    
+    
+</ui:composition>
