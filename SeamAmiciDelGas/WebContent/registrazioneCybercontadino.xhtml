@@ -25,10 +25,10 @@
                       value="#{newCybercontadino.partitaIva}">
                     <a:support event="onblur" 
                     reRender="partitaIvaField" 
-                    action="#{newControllaPartitaIva.controllaPartitaIva()}"
+                    action="#{newControlloBean.controllaPartitaIva()}"
                     ajaxSingle="true"/>   
                 </h:inputText>
-                <h:outputText value="#{newControllaPartitaIva.myResponse}" 
+                <h:outputText value="#{newControlloBean.myResponsePartitaIva}" 
                 style="color:red;"/>
                 
             </s:decorate>
