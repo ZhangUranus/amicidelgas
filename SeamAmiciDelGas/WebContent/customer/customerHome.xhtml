@@ -6,6 +6,7 @@
     xmlns:f="http://java.sun.com/jsf/core"
     xmlns:h="http://java.sun.com/jsf/html"
     xmlns:rich="http://richfaces.org/rich"
+    xmlns:a="http://richfaces.org/a4j"
     template="/layout/template.xhtml">
 
     <ui:define name="body">
@@ -45,14 +46,20 @@
                         	<li>Indirizzo: #{currentUser.indirizzo}</li>
 						</div></td>
 						<td valign="top"><div align="left" class="explorer">
-							<li>TODO - lista dinamica</li>
-                        	<li>Amministratore</li>
-                        	<li>Mediatore</li>
-                        	<li>Customer</li>
+							<a:repeat var="_ruolo" value="#{rolesPerAccount.resultList}">
+							<li><h:outputText value="#{_ruolo.name}"/></li>
+							</a:repeat>
                         	<p></p>
+                        	<s:button
+                        		
+                        	    rendered="#{(currentAccount.punteggioFeedback >= 3.5)}"
+                        	    action="#{richiestaDriver.richiestaDriver()}" 
+                        	    value="Proponiti come driver" />
+                        	<!-- 
                         	<h:outputText rendered="#{(currentAccount.punteggioFeedback > 3.5)}"  >
                         		Proponiti come driver <img src="/SeamAmiciDelGas/img/driver_mini.png" border="0" align="middle"/>
                         	</h:outputText>
+                        	 -->
 						</div></td>
 					  </tr>
 					</table>	
