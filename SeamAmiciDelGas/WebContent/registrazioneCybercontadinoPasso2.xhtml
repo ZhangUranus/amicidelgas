@@ -98,18 +98,17 @@
             
             <s:decorate id="uploadFile" template="layout/edit.xhtml">
             	<ui:define name="label">Aggiungi documentazione ASL</ui:define>
-	            <h:panelGrid columns="2" columnClasses="top,top">
+	       <h:panelGrid columns="2" columnClasses="top,top">
 	            <rich:fileUpload
+	            id="upload"
 	            	addControlLabel="Add file..."
-	            	listHeight="150px"
-	            	listWidth="400px"
-	            	clearAllControlLabel="Clear all" 
-	            	clearControlLabel="Clear"
+	            	listHeight="100px"
+	            	listWidth="350px"
+	            	clearAllControlLabel="Clear ffffall" 
                     stopEntryControlLabel="Stop process" 
                     uploadControlLabel="Upload file" 
 	            	fileUploadListener="#{newFileUpload.listener}"
 	                maxFilesQuantity="#{newFileUpload.uploadsAvailable}"
-	                id="upload"
 	                immediateUpload="#{newFileUpload.autoUpload}"
 	                acceptedTypes="doc, pdf, docx, ppt, zip" 
 	                allowFlash="#{newFileUpload.useFlash}"
@@ -117,50 +116,33 @@
 	                <f:facet name="label">
                 	<h:outputText value="{_KB}KB from {KB}KB uploaded --- {mm}:{ss}" />
 					</f:facet>
-	                <a:support event="onuploadcomplete" reRender="info" />
+					<a:support event="onuploadcomplete" reRender="info" bypassUpdates="true" ajaxSingle="true"/>
 	            </rich:fileUpload>
+	            
 	            <h:panelGroup id="info">
-	                <rich:panel bodyClass="info">
-	                    <f:facet name="header">
-	                        <h:outputText value="Uploaded Files Info" />
-	                    </f:facet>
-	                    <h:outputText value="No files currently uploaded"
-	                        rendered="#{newFileUpload.size==0}" />
-	                    <rich:dataGrid columns="1" value="#{newFileUpload.files}"
-	                        var="file" rowKeyVar="row">
-	                        <rich:panel bodyClass="rich-laguna-panel-no-header">
-	                            <h:panelGrid columns="2">
-	                                <a:mediaOutput element="img" mimeType="image/jpeg"
-	                                    createContent="#{newFileUpload.paint}" value="#{row}"
-	                                    style="width:50px; height:50px;" cacheable="false">
-	                                    <f:param value="#{newFileUpload.timeStamp}" name="time"/>  
-	                                </a:mediaOutput>
-	                                <h:panelGrid columns="2">
-	                                    <h:outputText value="File Name:" />
-	                                    <h:outputText value="#{file.name}" />
-	                                    <h:outputText value="File Length(bytes):" />
-	                                    <h:outputText value="#{file.length}" />
-	                                </h:panelGrid>
-	                            </h:panelGrid>
-	                        </rich:panel>
-	                    </rich:dataGrid>
-	                </rich:panel>
-	                <rich:spacer height="3"/>
-	                <br />
-	                <a:commandButton action="#{newFileUpload.clearUploadData}"
-	                    reRender="info, upload" value="Clear Uploaded Data"
-	                    rendered="#{newFileUpload.size>0}" />
-	            </h:panelGroup>
-	        </h:panelGrid>
-          </s:decorate>
-            
+                <rich:panel bodyClass="info">
+                    <f:facet name="header">
+                        <h:outputText value="Uploaded Files Info" />
+                    </f:facet>
+                    <h:outputText value="No files currently uploaded"
+                        rendered="#{newFileUpload.size==0}" />
+                     <h:panelGrid columns="2" endered="#{newFileUpload.size==0}">
+                                    <h:outputText value="File Name:" />
+                                    <h:outputText value="#{file.name}" />
+                                    <h:outputText value="File Length(bytes):" />
+                                    <h:outputText value="#{file.length}" />
+                                </h:panelGrid>
+                </rich:panel>
+                <rich:spacer height="3"/>
+                <br />
+                <a:commandButton action="#{newFileUpload.clearUploadData}"
+                    reRender="info, upload" value="Clear Uploaded Data"
+                    rendered="#{newFileUpload.size>0}" bypassUpdates="true" ajaxSingle="true" />
+            </h:panelGroup>
+        </h:panelGrid>
 
-			<s:decorate id="verifyCaptchaField" template="layout/edit.xhtml">
-				<ui:define name="label">Security check</ui:define>
-				<h:graphicImage value="/seam/resource/captcha"/>
-				<h:inputText value="#{captcha.response}" required="true"/>
-			</s:decorate>
-			
+          </s:decorate>
+
 			<div style="clear:both">
                 <span class="required">*</span>
                 Campi richiesti
