@@ -10,11 +10,10 @@
     
 	<ui:define name="body">
 	
-
 		<div class="colore_1" align="center">Richieste Registrazioni Customer</div>
 			<h:form>
 		        <a:region>
-			    	<rich:dataTable value="#{accountBean.richiesteCustomer}" var="_accountRichiesta" id="table1" rows="5" width="50%">
+			    	<rich:dataTable value="#{accountBean.richiesteCustomer}" var="_accountRichiesta" id="table1" rows="1" width="50%">
 			    		
 			    		<rich:column>
 							<f:facet name="header">
@@ -62,13 +61,13 @@
 		        		
 		        		<rich:column align="center">
 			                <f:facet name="header">
-		                        Contatta
+		                        Notifica
 			                </f:facet>
 			                <a:commandLink ajaxSingle="true" id="contattaCustomerlink"
 			                    oncomplete="#{rich:component('contattaCustomerPanel')}.show()">
 				                    <h:graphicImage value="/img/email.jpg" style="border:" width="41" height="32"/>
 				                </a:commandLink>
-				                <rich:toolTip for="contattaCustomerlink" value="Contatta l'utente"/>
+				                <rich:toolTip for="contattaCustomerlink" value="Invia una notifica all'utente"/>
 				            </rich:column>
 		        		
 		        		<rich:column align="center">
@@ -80,22 +79,17 @@
 			                    	<f:setPropertyActionListener value="#{_accountRichiesta}" target="#{accountBean.currentCustomer}" />
 				                    <h:graphicImage value="/img/modifica_mini.png" style="border:0" />
 				                </a:commandLink>
-				                <rich:toolTip for="editlink" value="valuta la richiesta di registrazione"/>
+				                <rich:toolTip for="richiestaCustomerLink" value="valuta la richiesta di registrazione"/>
 				            </rich:column>
-		        		
-		        		
-		        		<f:facet name="footer">
-                			<td width="45%" align="center">
-                				<rich:datascroller renderIfSinglePage="false" maxPages="8"/>
-                			</td>
-            			</f:facet>
-			    	</rich:dataTable>    
+               
+			    	</rich:dataTable>
+			    	<rich:datascroller align="center" for="table1" id="sc1" rendered="true"/>    
 		        </a:region>
 		    </h:form>
 		
 			<rich:modalPanel id="richiestaCustomerPanel" autosized="true" width="500">
 	        	<f:facet name="header">
-	            	<h:outputText value="Valuta la richiesta di registrazione di #{accountBean.currentCustomer.utente.cognome} #{accountBean.currentCustomer.utente.nome}" />
+	            	<h:outputText value="Valuta la richiesta di registrazione" />
 	        	</f:facet>
 	        	<f:facet name="controls">
 	            	<h:panelGroup>
@@ -105,24 +99,43 @@
 	                    	operation="hide" event="onclick" />
 	            	</h:panelGroup>
 	        	</f:facet>
-	        	<span id="riepilogoDati">
-	        		<li>Username: #{accountBean.currentCustomer.username}</li>
-					<li>Codice fiscale: #{accountBean.currentCustomer.utente.codiceFiscale}</li>
-					<li>Cognome: #{accountBean.currentCustomer.utente.cognome}</li>
-					<li>Nome: #{accountBean.currentCustomer.utente.nome}</li>
-	                <li>Data Richiesta Account: <b><h:outputText value="#{accountBean.currentCustomer.dataRichiesta}">
-							<f:convertDateTime type="date" dateStyle="medium" locale="Locale.ITALY"/>
-						</h:outputText></b></li>
-					<li>E-mail: #{accountBean.currentCustomer.utente.email}</li>
-	                <li>Telefono: #{accountBean.currentCustomer.utente.recapitoTelefonico}</li>
-	                <li>Indirizzo: #{accountBean.currentCustomer.utente.indirizzo}</li>
-	                <li>Tipo di carta: #{accountBean.currentCustomer.pagamentoelettronico.tipoCarta}</li>
-	                <li>Numero della carta: #{accountBean.currentCustomer.pagamentoelettronico.numeroCarta}</li>
-                </span>
-	            <a:commandButton value="Accetta richiesta"
-	                action="#{accountBean.accettaRegistrazioneCustomer()}"
-	                reRender="table1"
-	                oncomplete="#{rich:component('richiestaCustomerPanel')}.hide();" />
+	        	<h:panelGrid columns="1">
+	        		<a:outputPanel ajaxRendered="true">
+	        			<h:panelGrid columns="2">
+	        				<h:outputText><b>Username: </b></h:outputText>
+	        				<h:outputText value="#{accountBean.currentCustomer.username}"/>
+	        				<h:outputText><b>Codice fiscale: </b></h:outputText>
+	        				<h:outputText value="#{accountBean.currentCustomer.utente.codiceFiscale}"/>
+	        				<h:outputText><b>Cognome: </b></h:outputText>
+	        				<h:outputText value="#{accountBean.currentCustomer.utente.cognome}"/>
+	        				<h:outputText><b>Nome: </b></h:outputText>
+	        				<h:outputText value="#{accountBean.currentCustomer.utente.nome}"/>
+	        				<h:outputText><b>Data Richiesta Account: </b></h:outputText>
+	        				<h:outputText value="#{accountBean.currentCustomer.dataRichiesta}">
+	        					<f:convertDateTime type="date" dateStyle="medium" locale="Locale.ITALY"/>
+							</h:outputText>
+							<h:outputText><b>E-mail: </b></h:outputText>
+							<h:outputText value="#{accountBean.currentCustomer.utente.email}"/>
+							<h:outputText><b>Telefono: </b></h:outputText>
+							<h:outputText value="#{accountBean.currentCustomer.utente.recapitoTelefonico}"/>
+							<h:outputText><b>Indirizzo: </b></h:outputText>
+							<h:outputText value="#{accountBean.currentCustomer.utente.indirizzo}"/>
+							<h:outputText><b>Tipo di carta: </b></h:outputText>
+							<h:outputText value="#{accountBean.currentCustomer.pagamentoelettronico.tipoCarta}"/>
+							<h:outputText><b>Numero della carta: </b></h:outputText>
+							<h:outputText value="#{accountBean.currentCustomer.pagamentoelettronico.numeroCarta}"/>
+	        				<a:commandButton bypassUpdates="true" ajaxSingle="true" value="Accetta richiesta"
+	                			action="#{accountBean.accettaRegistrazioneCustomer}"
+	                			reRender="table1, sc1"
+	                			oncomplete="#{rich:component('richiestaCustomerPanel')}.hide();" />
+                			<a:commandButton bypassUpdates="true" ajaxSingle="true" value="Rifiuta richiesta"
+	                			action="#{accountBean.accettaRegistrazioneCustomer}"
+	                			reRender="table1, sc1"
+	                			oncomplete="#{rich:component('richiestaCustomerPanel')}.hide();" />
+	        			</h:panelGrid>
+	        		</a:outputPanel>
+                	
+                </h:panelGrid>
 	    </rich:modalPanel>
 		
 		<rich:modalPanel id="contattaCustomerPanel" autosized="true" width="500">
