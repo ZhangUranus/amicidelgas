@@ -88,20 +88,18 @@
 			<td colspan="3" height="16"></td>
 		</tr>
 		<tr>
-			<td width="45%">
-				<span id="riepilogoDati">
-					<li>Codice fiscale: #{utenteHome.instance.codiceFiscale}</li>
-	                <li>Punteggio feedback: <b></b> </li>
-	                <li>Data Richiesta Account: <b><h:outputText value="#{accountHome.instance.dataRichiesta}">
-							<f:convertDateTime type="date" dateStyle="medium" locale="Locale.ITALY"/>
-						</h:outputText></b></li>
-	                <li>Data Attivazione Account: <b>#{accountHome.instance.dataAccettazione}</b></li>
-					<li>E-mail: #{utenteHome.instance.email}</li>
-	                <li>Telefono: #{utenteHome.instance.recapitoTelefonico}</li>
-	                <li>Indirizzo: #{utenteHome.instance.indirizzo}</li>
-	                <li>Tipo di carta: #{accountHome.instance.pagamentoelettronico.tipoCarta}</li>
-	                <li>Numero della carta: #{accountHome.instance.pagamentoelettronico.numeroCarta}</li>
-                </span>
+			<td width="45%">				
+				<li>Codice fiscale: #{utenteHome.instance.codiceFiscale}</li>
+                <li>Punteggio feedback: <b></b> </li>
+                <li>Data Richiesta Account: <b><h:outputText value="#{accountHome.instance.dataRichiesta}">
+						<f:convertDateTime type="date" dateStyle="medium" locale="Locale.ITALY"/>
+					</h:outputText></b></li>
+                <li>Data Attivazione Account: <b>#{accountHome.instance.dataAccettazione}</b></li>
+				<li>E-mail: <h:outputText id="out_email" value="#{utenteHome.instance.email}"/></li>
+                <li>Telefono: <h:outputText id="out_telefono" value="#{utenteHome.instance.recapitoTelefonico}"/></li>
+                <li>Indirizzo: <h:outputText id="out_indirizzo" value="#{utenteHome.instance.indirizzo}"/></li>
+                <li>Tipo di carta: <h:outputText id="out_tipocarta" value="#{accountHome.instance.pagamentoelettronico.tipoCarta}"/></li>
+                <li>Numero della carta: <h:outputText id="out_numerocarta" value="#{accountHome.instance.pagamentoelettronico.numeroCarta}"/></li>     
 			</td>
 			<td width="10%">
 			</td>
@@ -114,14 +112,14 @@
 								<f:facet name="header">
 									<h:outputText value="Tipo Carta" />
 								</f:facet>
-								<h:outputText value="#{_dati.pagamentoelettronico.tipoCarta}" id="email" />
+								<h:outputText value="#{_dati.pagamentoelettronico.tipoCarta}" id="tipocarta" />
 			        		</rich:column>
 			        			
 			        		<rich:column>
 								<f:facet name="header">
 									<h:outputText value="Numero Carta" />
 								</f:facet>
-								<h:outputText value="#{_dati.pagamentoelettronico.numeroCarta}" id="indirizzo" />
+								<h:outputText value="#{_dati.pagamentoelettronico.numeroCarta}" id="numerocarta" />
 			        		</rich:column>
 			        		
 			        		<rich:column  align="center">
@@ -163,10 +161,10 @@
 	                    <h:outputText value="Tipo carta"/>
 						<table><tbody>
 							<tr>
-								<td><input type="radio" name="#{newPagamento.tipoCarta}" id="j_id65:j_id71:0" value="Visa"/><label for="j_id65:j_id71:0"/><img align="middle" src="/SeamAmiciDelGas/img/creditcard_visa.png"/></td>
-								<td><input type="radio" name="#{newPagamento.tipoCarta}" id="j_id65:j_id71:1" value="MasterCard"/><label for="j_id65:j_id71:1"/><img align="middle" src="/SeamAmiciDelGas/img/creditcard_mastercard.png"/></td>
-								<td><input type="radio" name="#{newPagamento.tipoCarta}" id="j_id65:j_id71:2" value="AmericanExpress"/><label for="j_id65:j_id71:2"/><img align="middle" src="/SeamAmiciDelGas/img/creditcard_american_express.png"/></td>
-								<td><input type="radio" name="#{newPagamento.tipoCarta}" id="j_id65:j_id71:3" value="PayPal"/><label for="j_id65:j_id71:3"><img align="middle" src="/SeamAmiciDelGas/img/creditcard_paypal.png"/></label></td>
+								<td><input type="radio" name="#{accountHome.instance.pagamentoelettronico.tipoCarta}" id="j_id65:j_id71:0" value="Visa"/><label for="j_id65:j_id71:0"/><img align="middle" src="/SeamAmiciDelGas/img/creditcard_visa.png"/></td>
+								<td><input type="radio" name="j_id65:j_id71" id="j_id65:j_id71:1" value="MasterCard"/><label for="j_id65:j_id71:1"/><img align="middle" src="/SeamAmiciDelGas/img/creditcard_mastercard.png"/></td>
+								<td><input type="radio" name="#{accountHome.instance.pagamentoelettronico.tipoCarta}" id="j_id65:j_id71:2" value="AmericanExpress"/><label for="j_id65:j_id71:2"/><img align="middle" src="/SeamAmiciDelGas/img/creditcard_american_express.png"/></td>
+								<td><input type="radio" name="j_id65:j_id71" id="j_id65:j_id71:3" value="PayPal"/><label for="j_id65:j_id71:3"><img align="middle" src="/SeamAmiciDelGas/img/creditcard_paypal.png"/></label></td>
 							</tr>
 							</tbody>
 						</table> 
@@ -178,13 +176,13 @@
 	            </a:outputPanel>
 	            <a:commandButton value="Salva"
 	                action="#{accountHome.update()}"
-	                reRender="email, indirizzo, telefono, riepilogoDati"
+	                reRender="numerocarta, tipocarta, out_numerocarta, out_tipocarta"
 	                oncomplete="#{rich:component('editPagamento')}.hide();" />
 	            </h:panelGrid>  
 	        </h:form>
 	    </rich:modalPanel>
 		 
-		 <rich:modalPanel id="editPanel" autosized="true" width="400">
+		 <rich:modalPanel id="editPanel" autosized="true" width="500">
 	        <f:facet name="header">
 	            <h:outputText value="Modifica i recapiti telefonici" />
 	        </f:facet>
@@ -201,23 +199,47 @@
 	            <h:panelGrid columns="1">
 	            <a:outputPanel ajaxRendered="true">
 	                <h:panelGrid columns="2">
-	                    <h:outputText value="E-mail"/>
-	                    <h:inputText id="campo-email" value="#{utenteHome.instance.email}" required="true" size="32" maxlength="70">
-	                    	<a:support event="onblur" 
-		                    reRender="campo-email" 
-		                    action="#{newControlloBean.controllaEmail()}"
-		                    ajaxSingle="true"/> 
-	                    </h:inputText>
-	                    <h:outputText value="Indirizzo" />
-	                    <h:inputText id="campo-indirizzo" value="#{utenteHome.instance.indirizzo}" required="true" size="32" maxlength="100" />
-	                    <h:outputText value="Telefono" />
-	                    <h:inputText id="campo-telefono" value="#{utenteHome.instance.recapitoTelefonico}" required="true" size="32" maxlength="45"/>
+	                	<s:decorate id="emailField" template="/layout/edit.xhtml">
+			                <ui:define name="label">E-mail</ui:define>
+			                <h:inputText id="email"
+			                       required="true"
+			                           size="32"
+			                      maxlength="70"
+			                          value="#{utenteHome.instance.email}">
+			                    <a:support event="onblur" 
+			                    reRender="emailField" 
+			                    action="#{newControlloBean.controllaEmail()}"
+			                    ajaxSingle="true"/>   
+			                </h:inputText>
+			                <h:outputText value="#{newControlloBean.myResponseEmail}"
+			                style="color:red;"/>
+			            </s:decorate>
+			            <s:decorate id="indirizzoField" template="/layout/edit.xhtml">
+			                <ui:define name="label">Indirizzo</ui:define>
+			                <h:inputText id="indirizzo"
+			                       required="true"
+			                           size="32"
+			                      maxlength="100"
+			                          value="#{utenteHome.instance.indirizzo}">
+			                    <a:support event="onblur" reRender="indirizzoField" bypassUpdates="true" ajaxSingle="true"/>
+			                </h:inputText>
+			            </s:decorate>
+			            <s:decorate id="recapitoTelefonicoField" template="/layout/edit.xhtml">
+			                <ui:define name="label">Recapito telefonico</ui:define>
+			                <h:inputText id="recapitoTelefonico"
+			                       required="true"
+			                           size="32"
+			                      maxlength="45"
+			                          value="#{utenteHome.instance.recapitoTelefonico}">
+			                    <a:support event="onblur" reRender="recapitoTelefonicoField" bypassUpdates="true" ajaxSingle="true"/>
+			                </h:inputText>
+			            </s:decorate>
 	                </h:panelGrid>
 	                <rich:message showSummary="true" showDetail="false" for="campo-email"/>
 	            </a:outputPanel>
 	            <a:commandButton value="Salva"
 	                action="#{utenteHome.update()}"
-	                reRender="campo-email, campo-indirizzo, campo-telefono, riepilogoDati"
+	                reRender="emailField, indirizzoField, recapitoTelefonicoField, out_email, out_telefono, out_indirizzo"
 	                oncomplete="#{rich:component('editPanel')}.hide();" />
 	            </h:panelGrid>  
 	        </h:form>
