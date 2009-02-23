@@ -36,7 +36,7 @@ public class ControlloBean {
 	@In(value="utenteList",create=true)
 	private UtenteList utenteList;
 	
-	@In(value="newCybercontadino")
+	@In(value="newCybercontadino" ,create=true)
 	private Cybercontadino contadino;
 	
 	@In(value="cybercontadinoList",create=true)
