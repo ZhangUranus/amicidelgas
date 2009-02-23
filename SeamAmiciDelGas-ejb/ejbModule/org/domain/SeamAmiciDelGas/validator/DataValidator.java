@@ -5,9 +5,7 @@ import java.lang.annotation.Annotation;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-import org.domain.SeamAmiciDelGas.entity.Utente;
 import org.hibernate.validator.Validator;
-import org.jboss.seam.annotations.In;
 
 
 //La classe validator per il campo data nascita

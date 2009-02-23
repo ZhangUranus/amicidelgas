@@ -8,8 +8,6 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Documented;
 import org.hibernate.validator.ValidatorClass;
-import org.jboss.seam.ScopeType;
-import org.jboss.seam.annotations.Scope;
 
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
