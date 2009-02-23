@@ -9,18 +9,19 @@ import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Out;
 import org.jboss.seam.annotations.Scope;
-@Name("catalogService")
-@Scope(ScopeType.SESSION)
+
 public class CatalogNoServiceImpl implements CatalogInterface{
 
 	@Out(value="categories") private List categories;
 	@Out(value="items") private List items;
-	
+	@Out(value="itemsForCategory") private List itemsForCategory;
 	private Cybercontadino contadino;
 	private String currentCategory;
 	
 	public CatalogNoServiceImpl(){
 		categories= new ArrayList<String>();
+		categories.add("cibo");
+		categories.add("bevande");
 		ItemImpl t1= new ItemImpl();
 		t1.setId("01");
 		t1.setCategory("cibo");
@@ -34,14 +35,12 @@ public class CatalogNoServiceImpl implements CatalogInterface{
 		t2.setName("Nero d'avola");
 		t2.setPrezzo(3.50);
 		items= new ArrayList<Item>();
-		
 		items.add(t1);
 		items.add(t2);
+		itemsForCategory= new ArrayList<Item>();
 	}
 	
 	public String[] getCategories(String idContadino) {
-		categories.add("cibo");
-		categories.add("bevande");
 		
 		return (String[]) categories.toArray(new String[categories.size()]);
 	}
@@ -55,14 +54,14 @@ public class CatalogNoServiceImpl implements CatalogInterface{
 	}
 
 	public Item[] getItemsForCategory(String idContadino, String category) {
-		List<Item> resultList= new ArrayList<Item>();
+		itemsForCategory= new ArrayList<Item>();
 		Iterator<Item> it= items.iterator();
 		while(it.hasNext()){
 			Item item=it.next();
 			if(item.getCategory().equalsIgnoreCase(category))
-				resultList.add(item);
+				itemsForCategory.add(item);
 		}
-		return (Item[]) resultList.toArray(new Item[resultList.size()]);
+		return (Item[]) itemsForCategory.toArray(new Item[itemsForCategory.size()]);
 	}
 
 	public Cybercontadino getContadino() {
