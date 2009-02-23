@@ -3,8 +3,10 @@
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns:s="http://jboss.com/products/seam/taglib"
       xsi:schemaLocation="http://jboss.com/products/seam/pages http://jboss.com/products/seam/pages-2.1.xsd"
-      no-conversation-view-id="/customerHome.xhtml"
+      no-conversation-view-id="/editDati.xhtml"
       login-required="true">
+    
+   <begin-conversation join="true" flush-mode="MANUAL"/>
 
    <param name="utenteFrom"/>
    <param name="utenteCodiceFiscale" value="#{utenteHome.utenteCodiceFiscale}"/>
@@ -12,7 +14,5 @@
    <param name="accountFrom"/>
    <param name="accountUsername" value="#{accountHome.accountUsername}"/>
 
-
-<restrict>#{s:hasRole('admin')}</restrict>      
-
+	<restrict>#{s:hasRole('admin')}</restrict>  	
 </page>
