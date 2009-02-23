@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process-definition  xmlns=""  name="becomeDriver">
+
+
+	<start-state name="Proponiti come driver">
+		<transition to="Richiesta driver" name="notify"></transition>
+	</start-state>
+
+
+	<task-node name="Richiesta driver">
+		<task name="Conferma la richiesta">
+			<assignment pooled-actors="mediatore"></assignment>
+		</task>
+		<transition to="accettata" name="approva"></transition>
+		<transition to="rifiutata" name="rifiuta"></transition>
+	</task-node>
+
+
+	<end-state name="rifiutata"></end-state>
+
+	<end-state name="accettata"></end-state>
+
+
+</process-definition>
