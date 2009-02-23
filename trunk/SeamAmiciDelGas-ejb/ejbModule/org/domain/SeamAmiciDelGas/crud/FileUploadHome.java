@@ -5,7 +5,7 @@ import org.jboss.seam.annotations.Begin;
 import org.jboss.seam.annotations.web.RequestParameter;
 import org.jboss.seam.framework.EntityHome;
 
-import org.domain.SeamAmiciDelGas.entity.FileUpload;
+import org.domain.SeamAmiciDelGas.session.FileUpload;
 
 @Name("fileUploadHome")
 public class FileUploadHome extends EntityHome<FileUpload>

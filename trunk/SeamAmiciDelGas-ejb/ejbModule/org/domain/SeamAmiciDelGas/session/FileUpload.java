@@ -1,38 +1,37 @@
-package org.domain.SeamAmiciDelGas.entity;
+package org.domain.SeamAmiciDelGas.session;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.Serializable;
-import java.util.ArrayList;
+import java.io.*;
 
-import javax.persistence.Entity;
+
 import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
-import javax.persistence.Table;
 import javax.persistence.Version;
-
-import org.domain.SeamAmiciDelGas.session.File;
 import org.hibernate.validator.Length;
-import org.jboss.seam.annotations.Logger;
+import org.jboss.seam.ScopeType;
+
 import org.jboss.seam.annotations.Name;
-import org.jboss.seam.log.Log;
+import org.jboss.seam.annotations.Scope;
 import org.richfaces.event.UploadEvent;
 import org.richfaces.model.UploadItem;
 
 
 
-@Entity
 @Name("newFileUpload")
+@Scope(value=ScopeType.SESSION)
 //@Table(name = "fileupload", catalog = "database_gas")
 public class FileUpload implements Serializable
 {
 	
-    // seam-gen attributes (you should probably edit these)
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	// seam-gen attributes (you should probably edit these)
     private Long id;
     private Integer version;
     private String name;
-    private String savePath; 
-    private String filepath; 
+    private String savePath ;
+    private String filepath = System.getProperty("user.home")+"/Desktop/fileupload/"; 
     private String filename; 
     private String contentType;
     private int length;
@@ -40,10 +39,11 @@ public class FileUpload implements Serializable
     private boolean useFlash = false;
     private int size;
     
-    private int uploadsAvailable = 5;
+    private int uploadsAvailable = 1;
     private boolean autoUpload = false;
     
-    private ArrayList<File> files = new ArrayList<File>();
+    //private ArrayList<File> file = new ArrayList<File>();
+    private File file;
 
     // add additional entity attributes
 
@@ -78,35 +78,26 @@ public class FileUpload implements Serializable
     
     public void listener(UploadEvent event) throws IOException
     {
-    	System.out.println("in listener");
     	UploadItem item = event.getUploadItem();
-    	System.out.println("in listener11111");
- 	    File file = new File();
- 	   System.out.println("in listener2222222"+item.getData().length);
- 	  System.out.println("in listener2222222"+item.getFileName());
- 	  file.setName(item.getFileName());
- 	   System.out.println("in listener3333333333");
- 	   file.setLength(item.getData().length);
- 	   System.out.println("in listener444444444");
-	    file.setData(item.getData());
-	    System.out.println("in listener55555555555");
- 	    files.add(file);
- 	   System.out.println("in listener666666666");
+    	filename=item.getFileName();
+    	file = new File(filepath+filename);
+    	length = item.getData().length;
+    	PrintStream f = new PrintStream(new FileOutputStream(file));
+    	f.write(item.getData());
+    	f.flush();
 	    uploadsAvailable--;
-	    System.out.println("in listener777777777");
-    }
-    
-    public void paint(OutputStream outputStream, Object obj) throws IOException
-    {
-    	outputStream.write((byte[])obj);
-    	System.out.println("FileUploadBean.paint()"); 
-
+	    size=1;
     }
     
     public void clearUploadData()
     {
-    	files.clear();
-    	setUploadsAvailable(5);
+    	//files.clear();
+    	System.out.println("cancello?");
+    	System.out.println(file.exists());
+    	file.delete();
+    	
+    	uploadsAvailable = 1;
+    	size = 0;
     }
 
 	public String getSavePath() {
@@ -148,7 +139,7 @@ public class FileUpload implements Serializable
 	public void setAutoUpload(boolean autoUpload) {
 		this.autoUpload = autoUpload;
 	}
-
+/*
 	public ArrayList<File> getFiles() {
 		return files;
 	}
@@ -156,7 +147,16 @@ public class FileUpload implements Serializable
 	public void setFiles(ArrayList<File> files) {
 		this.files = files;
 	}
+*/
+	
+	public File getFile() {
+		return file;
+	}
 
+	public void setFile(File file) {
+		this.file = file;
+	}
+	
 	public String getFilename() {
 		return filename;
 	}
@@ -190,15 +190,19 @@ public class FileUpload implements Serializable
 	}
 
 	public int getSize() 
-	{
+	{/*
 		if (getFiles().size() > 0)
 			return getFiles().size(); 
 		else
-			return 0;
+			return 0;*/
+		return size;
 	}
 
 	public void setSize(int size) {
 		this.size = size;
 	}
-
+	/*
+	@Destroy @Remove
+    public void destroy() {}
+*/
 }
