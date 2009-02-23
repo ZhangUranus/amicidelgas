@@ -12,6 +12,7 @@ import org.jboss.seam.annotations.Logger;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Out;
 import org.jboss.seam.annotations.Transactional;
+import org.jboss.seam.bpm.Actor;
 import org.jboss.seam.log.Log;
 import org.jboss.seam.security.Credentials;
 import org.jboss.seam.security.Identity;
@@ -21,8 +22,9 @@ public class Authenticator
 {
     @Logger private Log log;
 
-    @In Identity identity;
-    @In Credentials credentials;
+    @In private Identity identity;
+    @In private Credentials credentials;
+    @In private Actor actor;
     @Out(value="currentUser", required = false)
     private Utente utente;
     @Out(value="currentAccount", required = false)
@@ -40,10 +42,11 @@ public class Authenticator
         		"select account from Account account where account.username = :username").setParameter("username", credentials.getUsername()).getSingleResult();
         if(!validatePassword(credentials.getPassword(), account))
         	return false;
+        actor.setId(credentials.getUsername());
         if (account.getRoles() != null) {
         	for (Role role : account.getRoles()) {
         	identity.addRole(role.getName());
-        	
+        	actor.getGroupActorIds().add(role.getName());
         	}
         	
         }
