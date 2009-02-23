@@ -7,8 +7,8 @@
       
       
    <navigation>
-      <rule if-outcome="passo1Outcome">
-         <redirect view-id="/registrazioneCybercontadinoPasso2.xhtml">
+      <rule if-outcome="passo2Outcome">
+         <redirect view-id="/registrazioneCybercontadinoPasso3.xhtml">
          </redirect>
       </rule>
    </navigation>
