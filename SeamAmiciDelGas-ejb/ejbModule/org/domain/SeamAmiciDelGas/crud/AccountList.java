@@ -1,18 +1,26 @@
 package org.domain.SeamAmiciDelGas.crud;
 
 import org.domain.SeamAmiciDelGas.entity.*;
+import org.jboss.seam.ScopeType;
+import org.jboss.seam.annotations.In;
+import org.jboss.seam.annotations.Logger;
 import org.jboss.seam.annotations.Name;
+import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.framework.EntityQuery;
+import org.jboss.seam.log.Log;
+
 import java.util.Arrays;
+
 
 @Name("accountList")
 public class AccountList extends EntityQuery<Account> {
-
+	
 	private static final String EJBQL = "select account from Account account";
 
 	private static final String[] RESTRICTIONS = {
 			"lower(account.username) like concat(lower(#{accountList.account.username}),'%')",
 			"lower(account.passwordHash) like concat(lower(#{accountList.account.passwordHash}),'%')",
+			"account.punteggioFeedback  >= #{accountList.account.punteggioFeedback}",
 			"lower(utente.cognome) like concat(lower(#{utenteList.utente.cognome}),'%')",
 			"lower(utente.nome) like concat(lower(#{utenteList.utente.nome}),'%')",};
 
@@ -21,6 +29,7 @@ public class AccountList extends EntityQuery<Account> {
 	public AccountList() {
 		setEjbql(EJBQL);
 		setRestrictionExpressionStrings(Arrays.asList(RESTRICTIONS));
+		
 		setMaxResults(25);
 	}
 
