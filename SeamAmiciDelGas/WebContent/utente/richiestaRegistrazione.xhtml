@@ -7,7 +7,7 @@
     xmlns:h="http://java.sun.com/jsf/html"
     xmlns:rich="http://richfaces.org/rich"
     xmlns:a="http://richfaces.org/a4j"
-    template="layout/template.xhtml">
+    template="/layout/template.xhtml">
 
 <ui:define name="body">
 
@@ -16,7 +16,7 @@
     <rich:panel>
         <f:facet name="header">Passo 1 - Richiesta registrazione</f:facet>    
 
-			<s:decorate id="codiceFiscaleField" template="layout/edit.xhtml">
+			<s:decorate id="codiceFiscaleField" template="/layout/edit.xhtml">
                 <ui:define name="label">Codice fiscale</ui:define>
                 <h:inputText id="codiceFiscale"
                        required="true"
@@ -33,7 +33,7 @@
                 
             </s:decorate>
 
-			<s:decorate id="nomeField" template="layout/edit.xhtml">
+			<s:decorate id="nomeField" template="/layout/edit.xhtml">
                 <ui:define name="label">Nome</ui:define>
                 <h:inputText id="nome"
                        required="true"
@@ -45,7 +45,7 @@
             </s:decorate>
 
 
-            <s:decorate id="cognomeField" template="layout/edit.xhtml">
+            <s:decorate id="cognomeField" template="/layout/edit.xhtml">
                 <ui:define name="label">Cognome</ui:define>
                 <h:inputText id="cognome"
                        required="true"
@@ -57,7 +57,7 @@
             </s:decorate>
 
 
-            <s:decorate id="dataNascitaField" template="layout/edit.xhtml">
+            <s:decorate id="dataNascitaField" template="/layout/edit.xhtml">
                 <ui:define name="label">Data nascita</ui:define>
                 <rich:calendar id="dataNascita"
                        required="true"
@@ -67,7 +67,7 @@
             </s:decorate>
 
 
-            <s:decorate id="sessoField" template="layout/edit.xhtml">
+            <s:decorate id="sessoField" template="/layout/edit.xhtml">
                 <ui:define name="label">Sesso</ui:define>
                 
               <h:selectOneMenu id="sessoSelect" value="#{newUtente.sesso}">
@@ -80,7 +80,7 @@
 			
 			
 			
-			<s:decorate id="provinciaField" template="layout/edit.xhtml">
+			<s:decorate id="provinciaField" template="/layout/edit.xhtml">
                 <ui:define name="label">Provincia di nascita</ui:define>
                 <h:selectOneMenu 
                 	id="provinciaSelect"
@@ -100,7 +100,7 @@
              </s:decorate>
 			
 			
-			<s:decorate id="comuneNascitaSuggestionField" template="layout/edit.xhtml">
+			<s:decorate id="comuneNascitaSuggestionField" template="/layout/edit.xhtml">
                 <ui:define name="label">Comune di nascita</ui:define>
                 <h:inputText 
                 	id="comuneNascitaSuggestion"
@@ -133,7 +133,7 @@
              </s:decorate>
 			
             
-            <s:decorate id="provinciaResidenzaField" template="layout/edit.xhtml">
+            <s:decorate id="provinciaResidenzaField" template="/layout/edit.xhtml">
                 <ui:define name="label">Provincia di residenza</ui:define>
                 <h:selectOneMenu 
                 	id="provinciaResidenzaSelect"
@@ -153,7 +153,7 @@
              </s:decorate>
 			
 			
-			<s:decorate id="comuneResidenzaSuggestionField" template="layout/edit.xhtml">
+			<s:decorate id="comuneResidenzaSuggestionField" template="/layout/edit.xhtml">
                 <ui:define name="label">Comune di Residenza</ui:define>
                 <h:inputText 
                 	id="comuneResidenzaSuggestion"
@@ -185,7 +185,7 @@
             
              </s:decorate>
             
-            <s:decorate id="indirizzoField" template="layout/edit.xhtml">
+            <s:decorate id="indirizzoField" template="/layout/edit.xhtml">
                 <ui:define name="label">Indirizzo</ui:define>
                 <h:inputText id="indirizzo"
                        required="true"
@@ -197,7 +197,7 @@
             </s:decorate>
 
 	
-            <s:decorate id="recapitoTelefonicoField" template="layout/edit.xhtml">
+            <s:decorate id="recapitoTelefonicoField" template="/layout/edit.xhtml">
                 <ui:define name="label">Recapito telefonico</ui:define>
                 <h:inputText id="recapitoTelefonico"
                        required="true"
@@ -209,7 +209,7 @@
             </s:decorate>
 
 
-            <s:decorate id="emailField" template="layout/edit.xhtml">
+            <s:decorate id="emailField" template="/layout/edit.xhtml">
                 <ui:define name="label">Email</ui:define>
                 <h:inputText id="email"
                        required="true"

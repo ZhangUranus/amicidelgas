@@ -7,7 +7,7 @@
     xmlns:h="http://java.sun.com/jsf/html"
     xmlns:rich="http://richfaces.org/rich"
     xmlns:a="http://richfaces.org/a4j"
-    template="layout/template.xhtml">
+    template="/layout/template.xhtml">
 
 <ui:define name="body">
 <h:form id="passo4Form">
@@ -15,17 +15,17 @@
     	
         <f:facet name="header">Richiesta registrazione inoltrata</f:facet>
         
-        <s:decorate id="nome" template="layout/display.xhtml">
+        <s:decorate id="nome" template="/layout/display.xhtml">
             <ui:define name="label">Ciao </ui:define>
             <h:outputText value="#{utenteCreato.nome}"/>
         </s:decorate>
      
-        <s:decorate id="email" template="layout/display.xhtml">
+        <s:decorate id="email" template="/layout/display.xhtml">
             <ui:define name="label">ti verra inviata una notifica alla tua e-mail:</ui:define>
             <h:outputText value="#{utenteCreato.email}"/>
         </s:decorate>
         
-        <s:decorate id="info" template="layout/display.xhtml">
+        <s:decorate id="info" template="/layout/display.xhtml">
             <ui:define name="label">per informarti dell'avvenuta registrazione.</ui:define>
         </s:decorate>
 
