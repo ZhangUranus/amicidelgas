@@ -20,59 +20,15 @@ import org.richfaces.model.UploadItem;
 //@Table(name = "fileupload", catalog = "database_gas")
 public class FileUpload implements Serializable
 {
-	
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	// seam-gen attributes (you should probably edit these)
-    private Long id;
-    private Integer version;
-    private String name;
     private String savePath;
     private String filepath = System.getProperty("user.home")+"/Desktop/fileupload/"; 
     private String filename; 
     private int length;
     private boolean useFlash = false;
     private int size;
-    
     private int uploadsAvailable = 1;
     private boolean autoUpload = false;
-    
-  //  private ArrayList<File> files = new ArrayList<File>();
     private File file;
-
-    // add additional entity attributes
-
-    // seam-gen attribute getters/setters with annotations (you probably should edit)
-
-    @Id @GeneratedValue
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    @Version
-    public Integer getVersion() {
-        return version;
-    }
-
-    private void setVersion(Integer version) {
-        this.version = version;
-    }
-
-    @Length(max = 100)
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-    
     public void listener(UploadEvent event) throws IOException
     {
     	UploadItem item = event.getUploadItem();
@@ -87,6 +43,14 @@ public class FileUpload implements Serializable
 	    uploadsAvailable--;
 	    size=1;
 	    //size=files.size();
+    }
+    
+    public String action()
+    {
+    	if(file != null)
+    		return "passo2Outcome";
+    	return null;
+    	
     }
     
     public void clearUploadData()
@@ -140,7 +104,7 @@ public class FileUpload implements Serializable
 	public void setFile(File file) {
 		this.file = file;
 	}
-	
+	@NotNull
 	public String getFilename() {
 	
 		return filename;

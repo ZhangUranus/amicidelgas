@@ -46,7 +46,7 @@ public class RegistrazioneCybercontadinoBean implements RegistrazioneCybercontad
     
     @In StatusMessages statusMessages;
 
-    @Transactional public boolean registrazioneCyberContadino()
+    @Transactional public boolean registrazioneCybercontadino()
     {  
     	/*
         if (!passwordBean.verify()) {
