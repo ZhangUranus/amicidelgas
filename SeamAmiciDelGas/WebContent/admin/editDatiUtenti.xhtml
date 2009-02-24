@@ -21,13 +21,6 @@
 		             </s:decorate>
 		            </td>
 		            
-		            <td width="25%">
-					 <s:decorate template="/layout/display.xhtml">
-		                <ui:define name="label">feedback (nnfunge)</ui:define>
-		                <h:inputText id="feedback" value="#{accountList.account.punteggioFeedback}"/>
-		             </s:decorate>
-		            </td>
-
 					<td width="25%">
 					 <s:decorate template="/layout/display.xhtml">
 		                <ui:define name="label">Cognome</ui:define>
@@ -40,6 +33,13 @@
 		                <ui:define name="label">Nome</ui:define>
 		                <h:inputText id="nome" value="#{utenteList.utente.nome}"/>
 		             </s:decorate>
+		            </td>
+		            
+		            <td width="25%">
+		             <s:decorate template="/layout/display.xhtml">
+		              <ui:define name="label">Feedback >=</ui:define>
+			             <h:inputText id="feedback" value="#{accountList.account.punteggioFeedback}"/>
+			         </s:decorate>
 		            </td>
 		   		</table>
 		   		
