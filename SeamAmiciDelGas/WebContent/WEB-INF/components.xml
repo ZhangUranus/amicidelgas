@@ -65,7 +65,7 @@
 	<!-- For use with jBPM pageflow or process management -->
 	<bpm:jbpm>
 		<bpm:process-definitions>
-			<value>processes/becomeDriver/processDefinition.xml</value>
+			<value>processes/becomeDriver/processdefinition.xml</value>
 
 		</bpm:process-definitions>
 		<bpm:pageflow-definitions></bpm:pageflow-definitions>

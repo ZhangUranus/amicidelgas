@@ -8,10 +8,10 @@
       
    <navigation>
       <rule if-outcome="passoUtente">
-         <redirect view-id="/richiestaRegistrazione.xhtml"/>
+         <redirect view-id="/utente/richiestaRegistrazione.xhtml"/>
       </rule>
       <rule if-outcome="passoCybercontadino">
-         <redirect view-id="/registrazioneCybercontadino.xhtml"/>
+         <redirect view-id="/contadino/registrazioneCybercontadino.xhtml"/>
       </rule>
    </navigation>
 </page>

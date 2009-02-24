@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <page login-required="false"
- no-conversation-view-id="/registrazionePasso3.xhtml"
+ no-conversation-view-id="/utente/registrazionePasso3.xhtml"
  xmlns="http://jboss.com/products/seam/pages"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jboss.com/products/seam/pages http://jboss.com/products/seam/pages-2.1.xsd">
  <navigation from-action="#{richiestaRegistrazione.richiestaRegistrazione}">
   <rule>
-   <redirect view-id="/registrazionePasso4.xhtml"/>
+   <redirect view-id="/utente/registrazionePasso4.xhtml"/>
   </rule>
  </navigation>
 </page>
