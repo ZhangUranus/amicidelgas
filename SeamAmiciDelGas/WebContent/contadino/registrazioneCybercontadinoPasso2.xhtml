@@ -17,7 +17,7 @@
             
             <s:decorate id="tipocartaField" template="/layout/edit.xhtml">
                 <ui:define name="label">Carta di credito</ui:define>
-                <h:selectOneRadio value="#{newPagamento.tipoCarta}" required="yes" requiredMessage="true">
+                <h:selectOneRadio value="#{newPagamento.tipoCarta}" required="true" requiredMessage="Scegliere il tipo di carta di credito">
 				  <f:selectItem itemLabel="  " itemValue="Visa" ><img src="/SeamAmiciDelGas/img/creditcard_visa.png" /></f:selectItem>
 				  <f:selectItem itemLabel="  " itemValue="MasterCard" ><img src="/SeamAmiciDelGas/img/creditcard_mastercard.png" /></f:selectItem>
 				  <f:selectItem itemLabel="  " itemValue="AmericanExpress"><img src="/SeamAmiciDelGas/img/creditcard_american_express.png" /></f:selectItem>
@@ -29,7 +29,7 @@
                 <ui:define name="label">Numero carta</ui:define>
                 <h:inputText id="numerocarta"
                        required="true"
-                           size="20"
+                           size="24"
                       maxlength="16"
                           value="#{newPagamento.numeroCarta}">
                     <a:support event="onblur" reRender="numerocartaField" bypassUpdates="true" ajaxSingle="true"/>
@@ -40,7 +40,7 @@
                 <ui:define name="label">Username</ui:define>
                 <h:inputText id="username"
                        required="true"
-                           size="20"
+                           size="24"
                       maxlength="20"
                           value="#{newAccount.username}">
                     <a:support event="onblur" 
@@ -72,7 +72,7 @@
                 <ui:define name="label">Password</ui:define>
                 <h:inputText id="password"
                        required="true"
-                           size="20"
+                           size="24"
                       maxlength="16"
                           value="#{passwordBean.password}">
                     <a:support event="onblur" reRender="passwordField" bypassUpdates="true" ajaxSingle="true"/>
@@ -83,7 +83,7 @@
                 <h:inputText id="confirmPassword"
                 		onblur="verificaPassword()"
                        required="true"
-                           size="20"
+                           size="24"
                       maxlength="16"
                           value="#{passwordBean.confirm}"
                           >
@@ -100,7 +100,7 @@
                 <ui:define name="label">Inserisci l'url del WSDL</ui:define>
                 <h:inputText id="wsdl"
                        required="true"
-                           size="20"
+                           size="92"
                       maxlength="100"
                           value="#{newCybercontadino.urlWsdl}">
                     <a:support event="onblur" reRender="urlWsdlField" bypassUpdates="true" ajaxSingle="true"/>
@@ -109,11 +109,11 @@
             
             <s:decorate id="uploadFileField" template="/layout/edit.xhtml">
             	<ui:define name="label">Aggiungi documentazione ASL</ui:define>
-	       <h:panelGrid columns="2" columnClasses="top,top">
+	       <h:panelGrid columns="3" columnClasses="top,top">
 	            <rich:fileUpload
 	            id="upload"
 	            	addControlLabel="Add file..."
-	            	listHeight="100px"
+	            	listHeight="60px"
 	            	listWidth="350px"
 	            	clearAllControlLabel="Clear all" 
                     stopEntryControlLabel="Stop process" 
@@ -123,7 +123,7 @@
 	                immediateUpload="#{newFileUpload.autoUpload}"
 	                acceptedTypes="doc, pdf, docx, ppt, zip" 
 	                allowFlash="#{newFileUpload.useFlash}"
-	                required="true"
+	                required="true" 
 	                >
 	                <f:facet name="label">
                 	<h:outputText value="{_KB}KB from {KB}KB uploaded --- {mm}:{ss}" />
@@ -131,23 +131,20 @@
 					<a:support event="onuploadcomplete" reRender="info" bypassUpdates="true" ajaxSingle="true"/>
 	            </rich:fileUpload>
 	            
-	            <h:panelGroup id="info">
-                <rich:panel bodyClass="info">
+	            <h:panelGroup id="info" >
+                <rich:panel bodyClass="info" style="width:300px; height:100px;">
                     <f:facet name="header">
                         <h:outputText value="Uploaded Files Info" />
                     </f:facet>
                     <h:outputText value="No files currently uploaded"
                         rendered="#{newFileUpload.size==0}" />
                      <h:panelGrid columns="2" rendered="#{newFileUpload.size>0}">
-             
-                                    <h:outputText value="File Name:" />
+                                    <h:outputText value="File Name: " />
                                     <h:outputText value="#{newFileUpload.filename}" />
-                                    <h:outputText value="File Length(bytes):" />
+                                    <h:outputText value="File Length(bytes): " />
                                     <h:outputText value="#{newFileUpload.length}" />
                                 </h:panelGrid>
                 </rich:panel>
-                <rich:spacer height="3"/>
-                <br />
                 <a:commandButton action="#{newFileUpload.clearUploadData}"
                     reRender="info, upload" value="Clear Uploaded Data"
                     rendered="#{newFileUpload.size>0}" bypassUpdates="true" ajaxSingle="true" />
@@ -155,6 +152,13 @@
         </h:panelGrid>
 
           </s:decorate>
+          
+          
+          <s:decorate id="verifyCaptchaField" template="/layout/edit.xhtml">
+				<ui:define name="label">Security check</ui:define>
+				<h:graphicImage value="/seam/resource/captcha"/>
+				<h:inputText value="#{captcha.response}" required="true"/>
+			</s:decorate>
 
 			<div style="clear:both">
                 <span class="required">*</span>
@@ -164,7 +168,7 @@
     </rich:panel>
     
     	<div class="actionButtons">
-            <h:commandButton id="passo3" value="procedi al passo 3" action="passo2Outcome"/>
+            <h:commandButton id="passo3" value="procedi al passo 3" action="#{newFileUpload.action}"/>
         </div>
     
     </h:form>

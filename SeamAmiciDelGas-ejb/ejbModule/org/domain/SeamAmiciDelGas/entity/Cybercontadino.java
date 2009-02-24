@@ -188,6 +188,7 @@ public class Cybercontadino implements java.io.Serializable {
 	}
 
 	@Column(name = "UrlWSDL", length = 500)
+	@NotNull
 	@Length(max = 500)
 	public String getUrlWsdl() {
 		return this.urlWsdl;

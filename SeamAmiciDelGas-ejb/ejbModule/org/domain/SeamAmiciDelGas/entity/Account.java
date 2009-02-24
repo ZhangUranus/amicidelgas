@@ -100,7 +100,7 @@ public class Account implements java.io.Serializable {
 	@Id
 	@Column(name = "Username", unique = true, nullable = false, length = 20)
 	@NotNull
-	@Length(max = 20)
+	@Length(max = 20 , min= 4)
 	@UserPrincipal
 	public String getUsername() {
 		return this.username;
@@ -133,7 +133,7 @@ public class Account implements java.io.Serializable {
 
 	@Column(name = "passwordHash", nullable = false, length = 40)
 	@NotNull
-	@Length(max = 40)
+	@Length(max = 40 , min = 6)
 	@UserPassword(hash="SHA")
 	public String getPasswordHash() {
 		return this.passwordHash;

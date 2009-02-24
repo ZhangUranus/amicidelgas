@@ -8,7 +8,7 @@ import org.jboss.seam.annotations.Scope;
 @Name("passwordBean")
 @Scope(ScopeType.SESSION)
 public class PasswordBean {
-	@Length(max=16)
+	@Length(max=16 , min=6)
 	private String password;
 	
 	@Length(max=16)

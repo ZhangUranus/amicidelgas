@@ -6,7 +6,7 @@ import javax.ejb.Local;
 public interface RegistrazioneCybercontadino
 {
     // seam-gen method
-    public boolean registrazioneCyberContadino();
+    public boolean registrazioneCybercontadino();
 
     // add additional interface methods here
     public void destroy();
