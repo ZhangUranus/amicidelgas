@@ -98,13 +98,14 @@
             
             <s:decorate id="uploadFile" template="layout/edit.xhtml">
             	<ui:define name="label">Aggiungi documentazione ASL</ui:define>
+            	<ui:define name="label">Aggiungi WSDL</ui:define>
 	       <h:panelGrid columns="2" columnClasses="top,top">
 	            <rich:fileUpload
 	            id="upload"
 	            	addControlLabel="Add file..."
 	            	listHeight="100px"
 	            	listWidth="350px"
-	            	clearAllControlLabel="Clear ffffall" 
+	            	clearAllControlLabel="Clear all" 
                     stopEntryControlLabel="Stop process" 
                     uploadControlLabel="Upload file" 
 	            	fileUploadListener="#{newFileUpload.listener}"
@@ -126,12 +127,16 @@
                     </f:facet>
                     <h:outputText value="No files currently uploaded"
                         rendered="#{newFileUpload.size==0}" />
-                     <h:panelGrid columns="2" endered="#{newFileUpload.size==0}">
+                        <rich:dataGrid columns="1" value="#{newFileUpload.files}"
+                        var="file" rowKeyVar="row">
+                     <h:panelGrid columns="2" rendered="#{!(newFileUpload.size==0)}">
+             
                                     <h:outputText value="File Name:" />
                                     <h:outputText value="#{file.name}" />
                                     <h:outputText value="File Length(bytes):" />
                                     <h:outputText value="#{file.length}" />
                                 </h:panelGrid>
+                                </rich:dataGrid>
                 </rich:panel>
                 <rich:spacer height="3"/>
                 <br />
