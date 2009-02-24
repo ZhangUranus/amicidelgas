@@ -13,7 +13,7 @@
 		<div class="colore_1" align="center">Richieste Registrazioni Customer</div>
 			<h:form>
 		        <a:region>
-			    	<rich:dataTable value="#{accountBean.richiesteCustomer}" var="_accountRichiesta" id="table1" rows="1" width="50%">
+			    	<rich:dataTable value="#{accountBean.richiesteCustomer}" var="_accountRichiesta" id="table1" rows="5" width="50%">
 			    		
 			    		<rich:column>
 							<f:facet name="header">
@@ -79,7 +79,7 @@
 			                    	<f:setPropertyActionListener value="#{_accountRichiesta}" target="#{accountBean.currentCustomer}" />
 				                    <h:graphicImage value="/img/modifica_mini.png" style="border:0" />
 				                </a:commandLink>
-				                <rich:toolTip for="richiestaCustomerLink" value="valuta la richiesta di registrazione"/>
+				                <rich:toolTip for="richiestaCustomerLink" value="Valuta la richiesta di registrazione"/>
 				            </rich:column>
                
 			    	</rich:dataTable>
@@ -99,6 +99,7 @@
 	                    	operation="hide" event="onclick" />
 	            	</h:panelGroup>
 	        	</f:facet>
+	        	<h:form>
 	        	<h:panelGrid columns="1">
 	        		<a:outputPanel ajaxRendered="true">
 	        			<h:panelGrid columns="2">
@@ -127,21 +128,84 @@
 	        				<a:commandButton bypassUpdates="true" ajaxSingle="true" value="Accetta richiesta"
 	                			action="#{accountBean.accettaRegistrazioneCustomer}"
 	                			reRender="table1, sc1"
-	                			oncomplete="#{rich:component('richiestaCustomerPanel')}.hide();" />
+	                			oncomplete="#{rich:component('richiestaCustomerPanel')}.hide(); if (#{accountBean.updeted==true})  #{rich:component('richiestaAccettataCustomerPanel')}.show(); if (#{accountBean.updeted==false}) #{rich:component('errorePanel')}.show();" />
                 			<a:commandButton bypassUpdates="true" ajaxSingle="true" value="Rifiuta richiesta"
-	                			action="#{accountBean.accettaRegistrazioneCustomer}"
+	                			action="#{accountBean.rifiutaRegistrazioneCustomer}"
 	                			reRender="table1, sc1"
-	                			oncomplete="#{rich:component('richiestaCustomerPanel')}.hide();" />
+	                			oncomplete="#{rich:component('richiestaCustomerPanel')}.hide(); if (#{accountBean.updeted==true}) #{rich:component('richiestaRifiutataCustomerPanel')}.show(); if (#{accountBean.updeted==false}) #{rich:component('errorePanel')}.show();" />
 	        			</h:panelGrid>
 	        		</a:outputPanel>
-                	
                 </h:panelGrid>
+                </h:form>
 	    </rich:modalPanel>
 		
 		<rich:modalPanel id="contattaCustomerPanel" autosized="true" width="500">
 	        	<f:facet name="header">
 	            	<h:outputText value="Contatta #{accountBean.currentCustomer.utente.cognome} #{accountBean.currentCustomer.utente.nome}" />
 	        	</f:facet>
+	        	<f:facet name="controls">
+            	<h:panelGroup>
+                	<h:graphicImage value="/img/close.png"
+                    	id="hidelink1" />
+               	 	<rich:componentControl for="contattaCustomerPanel" attachTo="hidelink1"
+                    	operation="hide" event="onclick" />
+            	</h:panelGroup>
+        	</f:facet>
+       	</rich:modalPanel>
+       	
+       	<rich:modalPanel id="richiestaAccettataCustomerPanel" autosized="true" width="350">
+       		<f:facet name="header">
+            	<h:outputText value="Esito operazione" />
+        	</f:facet>
+       		<f:facet name="controls">
+            	<h:panelGroup>
+                	<h:graphicImage value="/img/close.png"
+                    	id="hidelink2" />
+               	 	<rich:componentControl for="richiestaAccettataCustomerPanel" attachTo="hidelink2"
+                    	operation="hide" event="onclick" />
+            	</h:panelGroup>
+        	</f:facet>
+	        <h:panelGrid columns="1">
+	        	<a:outputPanel ajaxRendered="true">
+	        		<h:outputText value="L'account dell'utente #{accountBean.currentCustomer.utente.cognome} #{accountBean.currentCustomer.utente.nome} e' stato attivato con successo"/>
+       			</a:outputPanel>
+       		</h:panelGrid>
+       	</rich:modalPanel>
+       	
+       	<rich:modalPanel id="richiestaRifiutataCustomerPanel" autosized="true" width="350">
+       		<f:facet name="header">
+            	<h:outputText value="Esito operazione" />
+        	</f:facet>
+       		<f:facet name="controls">
+            	<h:panelGroup>
+                	<h:graphicImage value="/img/close.png"
+                    	id="hidelink3" />
+               	 	<rich:componentControl for="richiestaRifiutataCustomerPanel" attachTo="hidelink3"
+                    	operation="hide" event="onclick" />
+            	</h:panelGroup>
+        	</f:facet>
+	        <h:panelGrid columns="1">
+	        	<a:outputPanel ajaxRendered="true">
+	        		<h:outputText value="L'account dell'utente #{accountBean.currentCustomer.utente.cognome} #{accountBean.currentCustomer.utente.nome} e' stato eliminato con successo"/>
+       			</a:outputPanel>
+       		</h:panelGrid>
+       	</rich:modalPanel>
+       	
+       	<rich:modalPanel id="errorePanel" autosized="true" width="300">
+	        	<f:facet name="header">
+	            	<h:outputText value="Errore" />
+	        	</f:facet>
+	        	<f:facet name="controls">
+            	<h:panelGroup>
+                	<h:graphicImage value="/img/close.png"
+                    	id="hidelink4" />
+               	 	<rich:componentControl for="errorePanel" attachTo="hidelink4"
+                    	operation="hide" event="onclick" />
+            	</h:panelGroup>
+        	</f:facet>
+        	<h:panelGrid columns="1">
+        		<h:outputText value="Aggiornamento non eseguito"/>
+       		</h:panelGrid>
        	</rich:modalPanel>
 	
 	</ui:define>    
