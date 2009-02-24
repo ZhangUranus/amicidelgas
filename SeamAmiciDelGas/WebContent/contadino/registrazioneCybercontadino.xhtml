@@ -1,0 +1,179 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:a="http://richfaces.org/a4j"
+    template="layout/template.xhtml">
+
+<ui:define name="body">
+
+	<h:form id="registrazioneCybercontadinoForm">
+
+    <rich:panel>
+        <f:facet name="header">Passo 1 - Richiesta registrazione</f:facet>
+        
+        <s:decorate id="partitaIvaField" template="layout/edit.xhtml">
+                <ui:define name="label">Partita IVA</ui:define>
+                <h:inputText id="partitaIva"
+                       required="true"
+                           size="32"
+                      maxlength="11"
+                      value="#{newCybercontadino.partitaIva}">
+                    <a:support event="onblur" 
+                    reRender="partitaIvaField" 
+                    action="#{newControlloBean.controllaPartitaIva()}"
+                    ajaxSingle="true"/>   
+                </h:inputText>
+                <h:outputText value="#{newControlloBean.myResponsePartitaIva}" 
+                style="color:red;"/>
+                
+            </s:decorate>
+
+			<s:decorate id="nomeAziendaField" template="layout/edit.xhtml">
+                <ui:define name="label">Nome Azienda</ui:define>
+                <h:inputText id="nomeAzienda"
+                       required="true"
+                           size="32"
+                      maxlength="50"
+                          value="#{newCybercontadino.nomeAzienda}">
+                    <a:support event="onblur" reRender="nomeAziendaField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+                <rich:message for="nomeAziendaField">
+                        <f:facet name="passedMarker">
+                            <h:graphicImage  value="/images/ajax/passed.gif" /> 
+                        </f:facet>
+                        <f:facet name="errorMarker">
+                            <h:graphicImage value="/images/ajax/error.gif" />   
+                        </f:facet>
+                    </rich:message>
+            </s:decorate>
+
+
+            <s:decorate id="nomePresidenteField" template="layout/edit.xhtml">
+                <ui:define name="label">Nome del Presidente</ui:define>
+                <h:inputText id="nomePresidente"
+                       required="true"
+                           size="32"
+                      maxlength="50"
+                          value="#{newCybercontadino.nomePresidente}">
+                    <a:support event="onblur" reRender="nomePresidenteField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+            
+            <s:decorate id="cognomePresidenteField" template="layout/edit.xhtml">
+                <ui:define name="label">Cognome del Presidente</ui:define>
+                <h:inputText id="cognomePresidente"
+                       required="true"
+                           size="32"
+                      maxlength="50"
+                          value="#{newCybercontadino.cognomePresidente}">
+                    <a:support event="onblur" reRender="cognomePresidenteField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+			
+			<s:decorate id="provinciaField" template="layout/edit.xhtml">
+                <ui:define name="label">Provincia di residenza</ui:define>
+                <h:selectOneMenu 
+                	id="provinciaSelect"
+                	value="#{newComuneProvinciaBean.provincia}">
+                 <a:support event="onchange" ajaxSingle="true" reRender="provinciaField" 
+                 />
+          
+                <s:selectItems 
+                	noSelectionLabel="Seleziona una provincia"
+                	var="_provinciaResidenza" 
+                	hideNoSelectionLabel="false"
+                	label="#{_provinciaResidenza.nome}" 
+                	value="#{provincesList.resultList}">
+                </s:selectItems>
+                <s:convertEntity></s:convertEntity>
+                </h:selectOneMenu>
+             </s:decorate>
+			
+			
+			<s:decorate id="comuneSuggestionField" template="layout/edit.xhtml">
+                <ui:define name="label">Comune di Residenza (suggestion box)</ui:define>
+                <h:inputText 
+                	id="comuneSuggestion"
+                	size="32"
+               		value="Seleziona prima una provincia"
+               		onclick="resetValue()"
+               >
+                </h:inputText>
+                <script type="text/javascript">
+				<!--
+					function resetValue(){
+						document.getElementById('registrazioneCybercontadinoForm:comuneSuggestionField:comuneSuggestion').value="";
+					}
+				//-->
+				</script>
+             <rich:suggestionbox id="suggestionBoxId"
+             	 	nothingLabel="Nessun comune trovato per la provincia selezionata"
+             		usingSuggestObjects="true"
+             		suggestionAction="#{newComuneProvinciaBean.autocomplete}" var="_comuneSugg"
+                    for="comuneSuggestion" fetchValue="#{_comuneSugg.nome}" tokens=",[]"
+                    >
+                    <a:support event="onselect" ajaxSingle="true"  
+                 	action="#{newComuneProvinciaBean.setComune(_comuneSugg)}"/>
+                 <s:convertEntity></s:convertEntity>
+                    <h:column>
+                        <h:outputText value="#{_comuneSugg.nome}" />
+                    </h:column>
+             </rich:suggestionbox>  
+            
+             </s:decorate>
+			
+            <s:decorate id="indirizzoField" template="layout/edit.xhtml">
+                <ui:define name="label">Indirizzo</ui:define>
+                <h:inputText id="indirizzo"
+                       required="true"
+                           size="32"
+                      maxlength="100"
+                          value="#{newCybercontadino.indirizzo}">
+                    <a:support event="onblur" reRender="indirizzoField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+	
+            <s:decorate id="recapitoTelefonicoField" template="layout/edit.xhtml">
+                <ui:define name="label">Recapito telefonico</ui:define>
+                <h:inputText id="recapitoTelefonico"
+                       required="true"
+                           size="32"
+                      maxlength="45"
+                          value="#{newCybercontadino.recapitoTelefonico}">
+                    <a:support event="onblur" reRender="recapitoTelefonicoField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="emailField" template="layout/edit.xhtml">
+                <ui:define name="label">Email</ui:define>
+                <h:inputText id="email"
+                       required="true"
+                           size="32"
+                      maxlength="70"
+                          value="#{newCybercontadino.email}">
+                    <a:support event="onblur"  reRender="emailField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+			<div style="clear:both">
+                <span class="required">*</span>
+                Campi richiesti
+            </div>
+
+	</rich:panel>
+
+
+            <h:commandButton id="passo1" value="procedi al passo2" action="passo1Outcome"/>
+
+     </h:form>
+
+</ui:define>
+
+</ui:composition>
