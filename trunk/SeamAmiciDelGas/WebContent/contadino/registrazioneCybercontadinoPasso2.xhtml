@@ -6,7 +6,7 @@
     xmlns:h="http://java.sun.com/jsf/html"
     xmlns:rich="http://richfaces.org/rich"
     xmlns:a="http://richfaces.org/a4j"
-    template="layout/template.xhtml">
+    template="/layout/template.xhtml">
 
 <ui:define name="body">
 
@@ -15,28 +15,28 @@
     <rich:panel>
         <f:facet name="header">Passo 2 - Dati Account</f:facet>
             
-            <s:decorate id="tipocarta" template="layout/edit.xhtml">
+            <s:decorate id="tipocartaField" template="/layout/edit.xhtml">
                 <ui:define name="label">Carta di credito</ui:define>
                 <h:selectOneRadio value="#{newPagamento.tipoCarta}" required="yes" requiredMessage="true">
-				  <f:selectItem itemLabel="  " itemValue="Visa" ><img src="img/creditcard_visa.png" /></f:selectItem>
-				  <f:selectItem itemLabel="  " itemValue="MasterCard" ><img src="img/creditcard_mastercard.png" /></f:selectItem>
-				  <f:selectItem itemLabel="  " itemValue="AmericanExpress"><img src="img/creditcard_american_express.png" /></f:selectItem>
-				  <f:selectItem itemLabel="  " itemValue="PayPal"><img src="img/creditcard_paypal.png"/></f:selectItem>
+				  <f:selectItem itemLabel="  " itemValue="Visa" ><img src="/SeamAmiciDelGas/img/creditcard_visa.png" /></f:selectItem>
+				  <f:selectItem itemLabel="  " itemValue="MasterCard" ><img src="/SeamAmiciDelGas/img/creditcard_mastercard.png" /></f:selectItem>
+				  <f:selectItem itemLabel="  " itemValue="AmericanExpress"><img src="/SeamAmiciDelGas/img/creditcard_american_express.png" /></f:selectItem>
+				  <f:selectItem itemLabel="  " itemValue="PayPal"><img src="/SeamAmiciDelGas/img/creditcard_paypal.png"/></f:selectItem>
 				</h:selectOneRadio>
             </s:decorate>
 
-			<s:decorate id="numerocarta" template="layout/edit.xhtml">
+			<s:decorate id="numerocartaField" template="/layout/edit.xhtml">
                 <ui:define name="label">Numero carta</ui:define>
                 <h:inputText id="numerocarta"
                        required="true"
-                           size="16"
+                           size="20"
                       maxlength="16"
                           value="#{newPagamento.numeroCarta}">
-                    <a:support event="onblur" reRender="numerocarta" bypassUpdates="true" ajaxSingle="true"/>
+                    <a:support event="onblur" reRender="numerocartaField" bypassUpdates="true" ajaxSingle="true"/>
                 </h:inputText>
             </s:decorate>
             
-            <s:decorate id="username" template="layout/edit.xhtml">
+            <s:decorate id="usernameField" template="/layout/edit.xhtml">
                 <ui:define name="label">Username</ui:define>
                 <h:inputText id="username"
                        required="true"
@@ -44,7 +44,7 @@
                       maxlength="20"
                           value="#{newAccount.username}">
                     <a:support event="onblur" 
-                    reRender="username" 
+                    reRender="usernameField" 
                     action="#{newControlloBean.controllaUserName()}"
                     ajaxSingle="true"/>   
                 </h:inputText>
@@ -55,50 +55,60 @@
             <script type="text/javascript">
 				<!--
 					function verificaPassword(){
-						var one = document.getElementById('passo2Form:password:password').value;
-						var two = document.getElementById('passo2Form:confirmPassword:confirmPassword').value;
+						var one = document.getElementById('passo2Form:passwordField:password').value;
+						var two = document.getElementById('passo2Form:confirmPasswordField:confirmPassword').value;
 						
 						if (one != two) {
-							document.getElementById('passo2Form:confirmPassword:confirmPassword').value = "";
-							document.getElementById('passo2Form:controlloPassword:controlloPassword').innerHTML = "<img src=\"img/not_valid.png\"/>";
+							document.getElementById('passo2Form:confirmPasswordField:confirmPassword').value = "";
+							document.getElementById('passo2Form:controlloPasswordField:controlloPassword').innerHTML = "<img src=\"/SeamAmiciDelGas/img/not_valid.png\"/>";
 						} else {
-							document.getElementById('passo2Form:controlloPassword:controlloPassword').innerHTML = "<img src=\"img/accepted.png\"/>";
+							document.getElementById('passo2Form:controlloPasswordField:controlloPassword').innerHTML = "<img src=\"/SeamAmiciDelGas/img/accepted.png\"/>";
 						}
 					}
 				//-->
 				</script>
             
-            <s:decorate id="password" template="layout/edit.xhtml">
+            <s:decorate id="passwordField" template="/layout/edit.xhtml">
                 <ui:define name="label">Password</ui:define>
                 <h:inputText id="password"
                        required="true"
-                           size="16"
+                           size="20"
                       maxlength="16"
                           value="#{passwordBean.password}">
-                    <a:support event="onblur" reRender="password" bypassUpdates="true" ajaxSingle="true"/>
+                    <a:support event="onblur" reRender="passwordField" bypassUpdates="true" ajaxSingle="true"/>
                 </h:inputText>
             </s:decorate>
-             <s:decorate id="confirmPassword" template="layout/edit.xhtml">
+             <s:decorate id="confirmPasswordField" template="/layout/edit.xhtml">
                 <ui:define name="label">Conferma Password</ui:define>
                 <h:inputText id="confirmPassword"
                 		onblur="verificaPassword()"
                        required="true"
-                           size="16"
+                           size="20"
                       maxlength="16"
                           value="#{passwordBean.confirm}"
                           >
-                    <a:support event="onblur" reRender="confirmPassword" bypassUpdates="true" ajaxSingle="true"/>
+                    <a:support event="onblur" reRender="confirmPasswordField" bypassUpdates="true" ajaxSingle="true"/>
                 </h:inputText>
             </s:decorate>
             
-            <s:decorate id="controlloPassword" template="layout/edit.xhtml">
+            <s:decorate id="controlloPasswordField" template="/layout/edit.xhtml">
                 <ui:define name="label">Controllo password</ui:define>
                 <h:outputText id="controlloPassword" value="...in attesa" />
             </s:decorate>
             
-            <s:decorate id="uploadFile" template="layout/edit.xhtml">
+            <s:decorate id="urlWsdlField" template="/layout/edit.xhtml">
+                <ui:define name="label">Inserisci l'url del WSDL</ui:define>
+                <h:inputText id="wsdl"
+                       required="true"
+                           size="20"
+                      maxlength="100"
+                          value="#{newCybercontadino.urlWsdl}">
+                    <a:support event="onblur" reRender="urlWsdlField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+            
+            <s:decorate id="uploadFileField" template="/layout/edit.xhtml">
             	<ui:define name="label">Aggiungi documentazione ASL</ui:define>
-            	<ui:define name="label">Aggiungi WSDL</ui:define>
 	       <h:panelGrid columns="2" columnClasses="top,top">
 	            <rich:fileUpload
 	            id="upload"
@@ -113,6 +123,7 @@
 	                immediateUpload="#{newFileUpload.autoUpload}"
 	                acceptedTypes="doc, pdf, docx, ppt, zip" 
 	                allowFlash="#{newFileUpload.useFlash}"
+	                required="true"
 	                >
 	                <f:facet name="label">
                 	<h:outputText value="{_KB}KB from {KB}KB uploaded --- {mm}:{ss}" />
@@ -127,16 +138,13 @@
                     </f:facet>
                     <h:outputText value="No files currently uploaded"
                         rendered="#{newFileUpload.size==0}" />
-                        <rich:dataGrid columns="1" value="#{newFileUpload.files}"
-                        var="file" rowKeyVar="row">
-                     <h:panelGrid columns="2" rendered="#{!(newFileUpload.size==0)}">
+                     <h:panelGrid columns="2" rendered="#{newFileUpload.size>0}">
              
                                     <h:outputText value="File Name:" />
-                                    <h:outputText value="#{file.name}" />
+                                    <h:outputText value="#{newFileUpload.filename}" />
                                     <h:outputText value="File Length(bytes):" />
-                                    <h:outputText value="#{file.length}" />
+                                    <h:outputText value="#{newFileUpload.length}" />
                                 </h:panelGrid>
-                                </rich:dataGrid>
                 </rich:panel>
                 <rich:spacer height="3"/>
                 <br />

@@ -7,7 +7,7 @@
     xmlns:h="http://java.sun.com/jsf/html"
     xmlns:rich="http://richfaces.org/rich"
     xmlns:a="http://richfaces.org/a4j"
-    template="layout/template.xhtml">
+    template="/layout/template.xhtml">
 
 <ui:define name="body">
 
@@ -18,39 +18,39 @@
 
         
 
-			<s:decorate id="tipopatente" template="layout/edit.xhtml">
+			<s:decorate id="tipopatenteField" template="/layout/edit.xhtml">
                 <ui:define name="label">Patente</ui:define>
                 <h:inputText id="tipopatente"
                        required="true"
                            size="2"
                       maxlength="2"
                           value="#{newPatente.tipo}">
-                    <a:support event="onblur" reRender="tipopatente" bypassUpdates="true" ajaxSingle="true"/>
+                    <a:support event="onblur" reRender="tipopatenteField" bypassUpdates="true" ajaxSingle="true"/>
                 </h:inputText>
             </s:decorate>
             
-            <s:decorate id="tipocarta" template="layout/edit.xhtml">
+            <s:decorate id="tipocartaField" template="/layout/edit.xhtml">
                 <ui:define name="label">Carta di credito</ui:define>
                 <h:selectOneRadio value="#{newPagamento.tipoCarta}" required="yes" requiredMessage="true">
-				  <f:selectItem itemLabel="  " itemValue="Visa" ><img src="img/creditcard_visa.png" /></f:selectItem>
-				  <f:selectItem itemLabel="  " itemValue="MasterCard" ><img src="img/creditcard_mastercard.png" /></f:selectItem>
-				  <f:selectItem itemLabel="  " itemValue="AmericanExpress"><img src="img/creditcard_american_express.png" /></f:selectItem>
-				  <f:selectItem itemLabel="  " itemValue="PayPal"><img src="img/creditcard_paypal.png"/></f:selectItem>
+				  <f:selectItem itemLabel="  " itemValue="Visa" ><img src="/SeamAmiciDelGas/img/creditcard_visa.png" /></f:selectItem>
+				  <f:selectItem itemLabel="  " itemValue="MasterCard" ><img src="/SeamAmiciDelGas/img/creditcard_mastercard.png" /></f:selectItem>
+				  <f:selectItem itemLabel="  " itemValue="AmericanExpress"><img src="/SeamAmiciDelGas/img/creditcard_american_express.png" /></f:selectItem>
+				  <f:selectItem itemLabel="  " itemValue="PayPal"><img src="/SeamAmiciDelGas/img/creditcard_paypal.png"/></f:selectItem>
 				</h:selectOneRadio>
             </s:decorate>
 
-			<s:decorate id="numerocarta" template="layout/edit.xhtml">
+			<s:decorate id="numerocartaField" template="/layout/edit.xhtml">
                 <ui:define name="label">Numero carta</ui:define>
                 <h:inputText id="numerocarta"
                        required="true"
                            size="16"
                       maxlength="16"
                           value="#{newPagamento.numeroCarta}">
-                    <a:support event="onblur" reRender="numerocarta" bypassUpdates="true" ajaxSingle="true"/>
+                    <a:support event="onblur" reRender="numerocartaField" bypassUpdates="true" ajaxSingle="true"/>
                 </h:inputText>
             </s:decorate>
             
-            <s:decorate id="username" template="layout/edit.xhtml">
+            <s:decorate id="usernameField" template="/layout/edit.xhtml">
                 <ui:define name="label">Username</ui:define>
                 <h:inputText id="username"
                        required="true"
@@ -58,7 +58,7 @@
                       maxlength="20"
                           value="#{newAccount.username}">
                     <a:support event="onblur" 
-                    reRender="username" 
+                    reRender="usernameField" 
                     action="#{newControlloBean.controllaUserName()}"
                     ajaxSingle="true"/>   
                 </h:inputText>
@@ -74,25 +74,25 @@
 						
 						if (one != two) {
 							document.getElementById('passo2Form:confirmPassword:confirmPassword').value = "";
-							document.getElementById('passo2Form:controlloPassword:controlloPassword').innerHTML = "<img src=\"img/not_valid.png\"/>";
+							document.getElementById('passo2Form:controlloPassword:controlloPassword').innerHTML = "<img src=\"/SeamAmiciDelGas/img/not_valid.png\"/>";
 						} else {
-							document.getElementById('passo2Form:controlloPassword:controlloPassword').innerHTML = "<img src=\"img/accepted.png\"/>";
+							document.getElementById('passo2Form:controlloPassword:controlloPassword').innerHTML = "<img src=\"/SeamAmiciDelGas/img/accepted.png\"/>";
 						}
 					}
 				//-->
 				</script>
             
-            <s:decorate id="password" template="layout/edit.xhtml">
+            <s:decorate id="passwordField" template="/layout/edit.xhtml">
                 <ui:define name="label">Password</ui:define>
                 <h:inputText id="password"
                        required="true"
                            size="16"
                       maxlength="16"
                           value="#{passwordBean.password}">
-                    <a:support event="onblur" reRender="password" bypassUpdates="true" ajaxSingle="true"/>
+                    <a:support event="onblur" reRender="passwordField" bypassUpdates="true" ajaxSingle="true"/>
                 </h:inputText>
             </s:decorate>
-             <s:decorate id="confirmPassword" template="layout/edit.xhtml">
+             <s:decorate id="confirmPasswordField" template="/layout/edit.xhtml">
                 <ui:define name="label">Conferma Password</ui:define>
                 <h:inputText id="confirmPassword"
                 		onblur="verificaPassword()"
@@ -101,18 +101,18 @@
                       maxlength="16"
                           value="#{passwordBean.confirm}"
                           >
-                    <a:support event="onblur" reRender="confirmPassword" bypassUpdates="true" ajaxSingle="true"/>
+                    <a:support event="onblur" reRender="confirmPasswordField" bypassUpdates="true" ajaxSingle="true"/>
                 </h:inputText>
             </s:decorate>
             
-            <s:decorate id="controlloPassword" template="layout/edit.xhtml">
+            <s:decorate id="controlloPasswordField" template="/layout/edit.xhtml">
                 <ui:define name="label">controllo password</ui:define>
                 <h:outputText id="controlloPassword" value="...in attesa" />
             </s:decorate>
             
             
 
-			<s:decorate id="verifyCaptchaField" template="layout/edit.xhtml">
+			<s:decorate id="verifyCaptchaField" template="/layout/edit.xhtml">
 				<ui:define name="label">Security check</ui:define>
 				<h:graphicImage value="/seam/resource/captcha"/>
 				<h:inputText value="#{captcha.response}" required="true"/>

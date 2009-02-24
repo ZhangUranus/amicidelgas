@@ -6,13 +6,13 @@
     xmlns:h="http://java.sun.com/jsf/html"
     xmlns:rich="http://richfaces.org/rich"
     xmlns:a="http://richfaces.org/a4j"
-    template="layout/template.xhtml">
+    template="/layout/template.xhtml">
 
 <ui:define name="body">
 
 <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAA9kD5_OmN0uEDmhZR1SpkhQLRfBUDvGNHCcx6kAPzaLMZO9K4BQY3rNdRxgSHx9ShvHtxi2RXo5rCw"
       type="text/javascript"></script>
-<script type="text/javascript">
+<script type="text/javascript"><!--
 var geocoder;
 
 function Indirizzo(via,comune,provincia,categoria_mark,categoria_mark2,categoria_mark3){
@@ -82,8 +82,8 @@ function Indirizzo(via,comune,provincia,categoria_mark,categoria_mark2,categoria
 					var point2 = new GLatLng(point[1],point[0]);
 					var mark = new GMarker(point2, {title: indirizzo.getCognomeNome()});
 					map.addOverlay(mark);
-					
-					mark.bindInfoWindowHtml('<b>Ubicazione azienda</b><p>'+ mark.getTitle() +'</p><p><div align=\"center\" class=\"colore_1\">'+indirizzo.getAddress()+'</div></p>');
+					map.panTo(mark.getPoint());
+					mark.bindInfoWindowHtml('<b>Sede azienda</b><p>'+ mark.getTitle() +'</p><p><div align=\"center\" class=\"colore_1\">'+indirizzo.getAddress()+'</div></p>');
 							
 					GEvent.addListener(mark, "infowindowopen", function() {
 						map.setZoom(16);
@@ -111,85 +111,78 @@ window.onload = function(){
     	
         <f:facet name="header">Riepilogo finale</f:facet>
 
-		<s:decorate id="codicefiscale" template="layout/display.xhtml">
+		<s:decorate id="codicefiscale" template="/layout/display.xhtml">
             <ui:define name="label">Partita IVA</ui:define>
             <h:outputText value="#{newCybercontadino.partitaIva}"/>
         </s:decorate>
         
-        <s:decorate id="nomeAzienda" template="layout/display.xhtml">
-            <ui:define name="label">Nome dell'Azienda</ui:define>
+        <s:decorate id="nomeAzienda" template="/layout/display.xhtml">
+            <ui:define name="label">Nome dell'azienda</ui:define>
             <h:outputText value="#{newCybercontadino.nomeAzienda}"/>
         </s:decorate>
         
-        <s:decorate id="nomePresidente" template="layout/display.xhtml">
-            <ui:define name="label">Nome Presidente</ui:define>
+        <s:decorate id="nomePresidente" template="/layout/display.xhtml">
+            <ui:define name="label">Nome presidente</ui:define>
             <h:outputText value="#{newCybercontadino.nomePresidente}"/>
         </s:decorate>
         
-        <s:decorate id="cognomePresidente" template="layout/display.xhtml">
-            <ui:define name="label">Cognome Presidente</ui:define>
+        <s:decorate id="cognomePresidente" template="/layout/display.xhtml">
+            <ui:define name="label">Cognome presidente</ui:define>
             <h:outputText value="#{newCybercontadino.cognomePresidente}"/>
         </s:decorate>
 
-		<s:decorate id="datanascita" template="layout/display.xhtml">
-            <ui:define name="label">data di nascita</ui:define>
-            <h:outputText value="#{newCybercontadino.dataNascita}"/>
-        </s:decorate>
-        
-        <s:decorate id="provincianascita" template="layout/display.xhtml">
+        <s:decorate id="provincianascita" template="/layout/display.xhtml">
             <ui:define name="label">Provincia di residenza</ui:define>
             <h:outputText value="#{newComuneProvinciaBean.provincia.nome}"/>
         </s:decorate>
         
-        <s:decorate id="comunenascita" template="layout/display.xhtml">
+        <s:decorate id="comunenascita" template="/layout/display.xhtml">
             <ui:define name="label">Sede Azienda</ui:define>
             <h:outputText value="#{newComuneProvinciaBean.comune.nome}"/>
         </s:decorate>
         
-        <s:decorate id="indirizzo" template="layout/display.xhtml">
-            <ui:define name="label">Indirizzo della sede</ui:define>
-            <h:outputText value="#{newCybercontadino.indirizzo}"/>
-        </s:decorate>
-        
-        <s:decorate id="recapitotelefonico" template="layout/display.xhtml">
-            <ui:define name="label">recapito telefonico</ui:define>
+        <s:decorate id="recapitotelefonico" template="/layout/display.xhtml">
+            <ui:define name="label">Recapito telefonico</ui:define>
             <h:outputText value="#{newCybercontadino.recapitoTelefonico}"/>
         </s:decorate>
         
-        <s:decorate id="email" template="layout/display.xhtml">
+        <s:decorate id="email" template="/layout/display.xhtml">
             <ui:define name="label">E-mail</ui:define>
             <h:outputText value="#{newCybercontadino.email}"/>
         </s:decorate>
         
-        <s:decorate id="username" template="layout/display.xhtml">
+        <s:decorate id="username" template="/layout/display.xhtml">
             <ui:define name="label">Username</ui:define>
-            <h:outputText value="#{newCybercontadino.username}"/>
+            <h:outputText value="#{newAccount.username}"/>
         </s:decorate>
         
-        <s:decorate id="password" template="layout/display.xhtml">
+        <s:decorate id="password" template="/layout/display.xhtml">
             <ui:define name="label">Password</ui:define>
             <h:outputText value="#{passwordBean.password}"/>
         </s:decorate>
         
-        <s:decorate id="tipocarta" template="layout/display.xhtml">
+        <s:decorate id="tipocarta" template="/layout/display.xhtml">
             <ui:define name="label">Tipo carta</ui:define>
             <h:outputText value="#{newPagamento.tipoCarta}"/>
         </s:decorate>
         
-        <s:decorate id="numerocarta" template="layout/display.xhtml">
-            <ui:define name="label">Numerocarta</ui:define>
-            <h:outputText  value="#{newPagamento.numeroCarta.substring(0, newPagamento.numeroCarta.length-3)}-xxx" />  
+        <s:decorate id="numerocarta" template="/layout/display.xhtml">
+            <ui:define name="label">Numero carta</ui:define>
+            <h:outputText  value="XXXX XXXX XXXX #{newPagamento.numeroCarta.substring(11, 15)}" />  
         </s:decorate>
       
-        <s:decorate id="tipo" template="layout/display.xhtml">
-            <ui:define name="label">Gmap: posizione azienda</ui:define>
-            <h:outputText >
-            	<s:div >
-					<div id="map1" align="center" style="width: 60%; height: 300px"></div>
-				</s:div>
-            </h:outputText>
-        </s:decorate>
-		
+      	<s:decorate id="posizione" template="/layout/display.xhtml">
+     		<ui:define name="label">Gmap: posizione azienda</ui:define>
+     	</s:decorate>
+     
+     
+           <s:decorate id="indirizzo" style="clear:both" >
+             <br />
+			<div id="map1"  align="right" style="width: 60%; height: 300px"></div>
+			<br />
+		</s:decorate>	
+	
+
 		<div style="clear:both">
                 <span class="required">*</span>
                 Campi richiesti
@@ -198,7 +191,7 @@ window.onload = function(){
     </rich:panel>
     
     <div class="actionButtons">
-			<h:commandButton id="conferma" value="conferma registrazione" action="#{richiestaRegistrazione.richiestaRegistrazione}"/>
+			<h:commandButton id="conferma" value="conferma registrazione" action="#{registrazioneCybercontadino.registrazioneCybercontadino}"/>
         </div>
     
     </h:form>
