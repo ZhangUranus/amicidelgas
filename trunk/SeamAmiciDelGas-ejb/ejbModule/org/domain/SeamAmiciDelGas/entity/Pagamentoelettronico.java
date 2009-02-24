@@ -17,6 +17,7 @@ import javax.persistence.Table;
 import org.hibernate.validator.Digits;
 import org.hibernate.validator.Length;
 import org.hibernate.validator.NotNull;
+import org.hibernate.validator.Pattern;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
@@ -72,7 +73,7 @@ public class Pagamentoelettronico implements java.io.Serializable {
 
 	@Column(name = "numero_carta", nullable = false)
 	@NotNull
-	@Digits(integerDigits=16)
+	@Pattern(regex="^[0-9]{16}$", message="Lunghezza numero carta non corretto") 
 	public String getNumeroCarta() {
 		return this.numeroCarta;
 	}

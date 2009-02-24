@@ -8,6 +8,7 @@ import javax.persistence.PersistenceContext;
 import org.domain.SeamAmiciDelGas.entity.Account;
 import org.domain.SeamAmiciDelGas.entity.Comune;
 import org.domain.SeamAmiciDelGas.entity.Cybercontadino;
+import org.domain.SeamAmiciDelGas.entity.Pagamentoelettronico;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.Destroy;
 import org.jboss.seam.annotations.Name;
@@ -39,6 +40,8 @@ public class RegistrazioneCybercontadinoBean implements RegistrazioneCybercontad
     private PasswordManager passwordManager;
     @In(value="newFileUpload", create=true)
     private FileUpload fileUpload;
+    @In(value="newPagamento", create=true)
+    private Pagamentoelettronico pagamento;
     
     
     @In StatusMessages statusMessages;

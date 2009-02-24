@@ -1,12 +1,11 @@
 package org.domain.SeamAmiciDelGas.session;
 
 import java.io.*;
-
-
 import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Version;
 import org.hibernate.validator.Length;
+import org.hibernate.validator.NotNull;
 import org.jboss.seam.ScopeType;
 
 import org.jboss.seam.annotations.Name;
@@ -30,19 +29,17 @@ public class FileUpload implements Serializable
     private Long id;
     private Integer version;
     private String name;
-    private String savePath ;
+    private String savePath;
     private String filepath = System.getProperty("user.home")+"/Desktop/fileupload/"; 
     private String filename; 
-    private String contentType;
     private int length;
-    private long timeStamp;
     private boolean useFlash = false;
     private int size;
     
     private int uploadsAvailable = 1;
     private boolean autoUpload = false;
     
-    //private ArrayList<File> file = new ArrayList<File>();
+  //  private ArrayList<File> files = new ArrayList<File>();
     private File file;
 
     // add additional entity attributes
@@ -80,33 +77,28 @@ public class FileUpload implements Serializable
     {
     	UploadItem item = event.getUploadItem();
     	filename=item.getFileName();
-    	file = new File(filepath+filename);
+    	savePath = filepath+filename;
+    	file = new File(savePath);
     	length = item.getData().length;
     	PrintStream f = new PrintStream(new FileOutputStream(file));
     	f.write(item.getData());
     	f.flush();
+    	//files.add(file);
 	    uploadsAvailable--;
 	    size=1;
+	    //size=files.size();
     }
     
     public void clearUploadData()
     {
     	//files.clear();
     	System.out.println("cancello?");
-    	System.out.println(file.exists());
-    	file.delete();
     	
-    	uploadsAvailable = 1;
+    	file.delete();
+    	//files.clear();
+    	uploadsAvailable++;
     	size = 0;
     }
-
-	public String getSavePath() {
-		return savePath;
-	}
-
-	public void setSavePath(String savePath) {
-		this.savePath = savePath;
-	}
 
 	public String getFilepath() {
 		return filepath;
@@ -114,14 +106,6 @@ public class FileUpload implements Serializable
 
 	public void setFilepath(String filepath) {
 		this.filepath = filepath;
-	}
-
-	public String getContentType() {
-		return contentType;
-	}
-
-	public void setContentType(String contentType) {
-		this.contentType = contentType;
 	}
 
 	public int getUploadsAvailable() {
@@ -158,6 +142,7 @@ public class FileUpload implements Serializable
 	}
 	
 	public String getFilename() {
+	
 		return filename;
 	}
 
@@ -172,15 +157,7 @@ public class FileUpload implements Serializable
 	public void setLength(int length) {
 		this.length = length;
 	}
-
-	public long getTimeStamp() {
-		return System.currentTimeMillis();  
-	}
-
-	public void setTimeStamp(long timeStamp) {
-		this.timeStamp = timeStamp;
-	}
-
+	
 	public boolean isUseFlash() {
 		return useFlash;
 	}
@@ -190,19 +167,24 @@ public class FileUpload implements Serializable
 	}
 
 	public int getSize() 
-	{/*
-		if (getFiles().size() > 0)
+	{
+	/*	if (getFiles().size() > 0)
 			return getFiles().size(); 
 		else
-			return 0;*/
+			return 0;
+*/
 		return size;
 	}
 
 	public void setSize(int size) {
 		this.size = size;
 	}
-	/*
-	@Destroy @Remove
-    public void destroy() {}
-*/
+
+	public void setSavePath(String savePath) {
+		this.savePath = savePath;
+	}
+	@NotNull
+	public String getSavePath() {
+		return savePath;
+	}
 }
