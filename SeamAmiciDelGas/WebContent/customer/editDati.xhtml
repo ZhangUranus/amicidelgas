@@ -88,18 +88,20 @@
 			<td colspan="3" height="16"></td>
 		</tr>
 		<tr>
-			<td width="45%">				
-				<li>Codice fiscale: #{utenteHome.instance.codiceFiscale}</li>
-                <li>Punteggio feedback: <b></b> </li>
-                <li>Data Richiesta Account: <b><h:outputText value="#{accountHome.instance.dataRichiesta}">
-						<f:convertDateTime type="date" dateStyle="medium" locale="Locale.ITALY"/>
-					</h:outputText></b></li>
-                <li>Data Attivazione Account: <b>#{accountHome.instance.dataAccettazione}</b></li>
-				<li>E-mail: <h:outputText id="out_email" value="#{utenteHome.instance.email}"/></li>
-                <li>Telefono: <h:outputText id="out_telefono" value="#{utenteHome.instance.recapitoTelefonico}"/></li>
-                <li>Indirizzo: <h:outputText id="out_indirizzo" value="#{utenteHome.instance.indirizzo}"/></li>
-                <li>Tipo di carta: <h:outputText id="out_tipocarta" value="#{accountHome.instance.pagamentoelettronico.tipoCarta}"/></li>
-                <li>Numero della carta: <h:outputText id="out_numerocarta" value="#{accountHome.instance.pagamentoelettronico.numeroCarta}"/></li>     
+			<td width="45%">
+				<span id="riepilogoDati">
+					<li>Codice fiscale: #{utenteHome.instance.codiceFiscale.toUpperCase()}</li>
+	                <li>Punteggio feedback: <b>#{accountHome.instance.punteggioFeedback}</b> </li>
+	                <li>Data Richiesta Account: <b><h:outputText value="#{accountHome.instance.dataRichiesta}">
+							<f:convertDateTime type="date" dateStyle="medium" locale="Locale.ITALY"/>
+						</h:outputText></b></li>
+	                <li>Data Attivazione Account: <b>#{empty accountHome.instance.dataAccettazione ? 'ancora in attesa': accountHome.instance.dataAccettazione }</b></li>
+					<li>E-mail: #{utenteHome.instance.email}</li>
+	                <li>Telefono: #{utenteHome.instance.recapitoTelefonico}</li>
+	                <li>Indirizzo: #{utenteHome.instance.indirizzo}</li>
+	                <li>Tipo di carta: #{accountHome.instance.pagamentoelettronico.tipoCarta}</li>
+	                <li>Numero della carta: #{accountHome.instance.pagamentoelettronico.numeroCarta}</li>
+                </span>
 			</td>
 			<td width="10%">
 			</td>
