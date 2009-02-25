@@ -84,6 +84,7 @@ function Indirizzo(via,comune,provincia,categoria_mark,categoria_mark2,categoria
 					var mark = new GMarker(point2, {title: indirizzo.getCognomeNome()});
 					map.addOverlay(mark);
 					map.panTo(mark.getPoint());
+					setCoordinate();
 					mark.bindInfoWindowHtml('<b>Sede azienda</b><p>'+ mark.getTitle() +'</p><p><div align=\"center\" class=\"colore_1\">'+indirizzo.getAddress()+'</div></p>');
 							
 					GEvent.addListener(mark, "infowindowopen", function() {
@@ -105,6 +106,7 @@ window.onunload = function(){
 }
 window.onload = function(){
 	load();
+	
 }		
    --></script>
 
@@ -177,8 +179,6 @@ window.onload = function(){
                 	id="coordinate"
                 	value="#{newCybercontadino.coordinate}"
           >
-                
-         <a:support event="onsubmit" action="setCoordinate()"/>
          </h:inputHidden> 
                 <script type="text/javascript">
 				<!--
