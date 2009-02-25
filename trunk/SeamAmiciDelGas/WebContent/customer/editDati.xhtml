@@ -167,7 +167,8 @@
 							<h:outputText id="out_indirizzo" value="#{utenteHome.instance.indirizzo}"/><br/>
 							<h:outputText id="out_tipocarta" value="#{accountHome.instance.pagamentoelettronico.tipoCarta}"/><br/>
 							<h:outputText id="out_numerocarta" value="#{accountHome.instance.pagamentoelettronico.numeroCarta}"/><br/>
-							<h:outputText id="out_tipo" value="#{patenteHome.instance.idpatente}"/><br/>							
+							<a:repeat id="repeat_patente" var="_patente" value="#{utenteHome.patentes}" ><h:outputText id="out_tipo" value="#{_patente.tipo}"/><br/></a:repeat>
+														
 						</td>
 					</tr>
 				</table>				
@@ -197,16 +198,11 @@
 				                <f:facet name="header">
 				                        Azioni
 				                </f:facet>
-				                <a:commandLink ajaxSingle="true" id="editpatente"
-				                    oncomplete="#{rich:component('editPatente')}.show()">
-				                    <h:graphicImage value="/img/modifica_mini.png" style="border:0"/>
-				                    
-				                </a:commandLink>
-				                <rich:toolTip for="editpatente" value="Modifica il tipo di patente"/>
 				                <a:commandLink ajaxSingle="true" id="cancelpatente"
 				                    oncomplete="#{rich:component('deletePanel')}.show()">
 				                    <h:graphicImage value="/img/cancel.png" style="border:0"/>
-				                    
+				                    <f:setPropertyActionListener value="#{_dati.idpatente}"
+                        				target="#{patenteHome.id}" />
 				                </a:commandLink>
 				                <rich:toolTip for="cancelpatente" value="Elimina questa patente"/>
 				            </rich:column>     		
@@ -337,9 +333,9 @@
 	                    <tr>
 	                        <td align="center" width="50%">
 	                <a:commandButton value="Yes" ajaxSingle="true"
-	                    action="#{utenteHome.patentes.remove()}"
+	                    action="#{patenteHome.remove()}"
 	                    oncomplete="#{rich:component('deletePanel')}.hide();"
-	                    reRender="table" />
+	                    reRender="table_patente, repeat_patente" />
 	                        </td>
 	                        <td align="center" width="50%">
 	                <a:commandButton value="Elimina"
