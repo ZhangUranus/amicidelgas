@@ -1,25 +1,24 @@
 package org.domain.SeamAmiciDelGas.session;
 
 import java.util.GregorianCalendar;
-import java.util.Iterator;
 import java.util.List;
 
-import javax.persistence.EntityManager;
-
+import org.domain.SeamAmiciDelGas.crud.AccountHome;
+import org.domain.SeamAmiciDelGas.crud.AccountList;
+import org.domain.SeamAmiciDelGas.crud.CybercontadinoList;
+import org.domain.SeamAmiciDelGas.crud.RoleList;
+import org.domain.SeamAmiciDelGas.entity.Account;
+import org.domain.SeamAmiciDelGas.entity.Cybercontadino;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Logger;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.log.Log;
-import org.domain.SeamAmiciDelGas.crud.AccountHome;
-import org.domain.SeamAmiciDelGas.crud.AccountList;
-import org.domain.SeamAmiciDelGas.crud.RoleList;
-import org.domain.SeamAmiciDelGas.entity.Account;
 
-@Name(value="accountBean")
+@Name(value="richiesteRegistrazioniBean")
 @Scope(ScopeType.SESSION)
-public class AccountBean {
+public class RichiesteRegistrazioniBean {
 
 	@Logger
 	private Log log;
@@ -33,14 +32,27 @@ public class AccountBean {
 	@In(value="accountHome", create=true)
 	private AccountHome accountHome;
 	
+	/*
+	@In(value="cybercontadinolist", create=true)
+	private CybercontadinoList cybercontadinoList;
+	*/
 	private Account currentCustomer;
 	
+	private Cybercontadino currentContadino;
+	
 	private List<Account> richiesteCustomer;
+	
+	private List<Cybercontadino> richiesteCyberContadini;
 	
 	private boolean updeted = false;
 
 	public boolean isUpdeted() {
 		return updeted;
+	}
+
+	public void setRichiesteCyberContadini(
+			List<Cybercontadino> richiesteCyberContadini) {
+		this.richiesteCyberContadini = richiesteCyberContadini;
 	}
 
 	public void setUpdeted(boolean updeted) {
@@ -49,10 +61,19 @@ public class AccountBean {
 
 	//seleziono gli utenti customer che sono nello stato attivato 0 bloccato 0 eliminato 0
 	public List<Account> getRichiesteCustomer() {
-		accountList.setEjbql("select account from Role role where role.account.username not in (select role1.account from Role role1 where role1.name='admin' or role1.name='mediatore') and role.account.attivato='false' and role.account.bloccato='false' and role.account.elimato='false'");
+		accountList.setEjbql("select account from Role role where role.account.username not in (select role1.account from Role role1 where role1.name='admin' or role1.name='mediatore' or role1.name='utenteContadino') and role.account.attivato='false' and role.account.bloccato='false' and role.account.elimato='false'");
 		richiesteCustomer = accountList.getResultList();
 		return richiesteCustomer;
 	}
+	
+	//seleziono i cybercontadini che sono nello stato attivato 0 bloccato 0 eliminato 0
+	/*
+	public List<Cybercontadino> getRichiesteCyberContadini() {
+		cybercontadinoList.setEjbql("select cyber from cybercontadino cyber where cyber.account.attivato='false' and cyber.account.bloccato='false' and cyber.account.elimato='false'");
+		richiesteCyberContadini = cybercontadinoList.getResultList();
+		return richiesteCyberContadini;
+	}
+	*/
 	
 	public void reset() {
 		accountHome.setAccountUsername("emanuele");
@@ -127,4 +148,5 @@ public class AccountBean {
 		this.currentCustomer = currentCustomer;
 	}
 
+	
 }
