@@ -13,7 +13,7 @@
 		<div class="colore_1" align="center">Richieste Registrazioni Customer</div>
 			<h:form>
 		        <a:region>
-			    	<rich:dataTable value="#{accountBean.richiesteCustomer}" var="_accountRichiesta" id="table1" rows="5" width="50%">
+			    	<rich:dataTable value="#{gestioneRegistrazioniBean.richiesteCustomer}" var="_accountRichiesta" id="table1" rows="5" width="50%">
 			    		
 			    		<rich:column>
 							<f:facet name="header">
@@ -76,7 +76,7 @@
 			                </f:facet>
 			                <a:commandLink ajaxSingle="true" id="richiestaCustomerLink"
 			                    oncomplete="#{rich:component('richiestaCustomerPanel')}.show()">
-			                    	<f:setPropertyActionListener value="#{_accountRichiesta}" target="#{accountBean.currentCustomer}" />
+			                    	<f:setPropertyActionListener value="#{_accountRichiesta}" target="#{gestioneRegistrazioniBean.currentCustomer}" />
 				                    <h:graphicImage value="/img/modifica_mini.png" style="border:0" />
 				                </a:commandLink>
 				                <rich:toolTip for="richiestaCustomerLink" value="Valuta la richiesta di registrazione"/>
@@ -86,6 +86,13 @@
 			    	<rich:datascroller align="center" for="table1" id="sc1" rendered="true"/>    
 		        </a:region>
 		    </h:form>
+		      
+		    <br/>
+		    <br/>
+		    <br/>
+		    <br/>
+		    
+		    
 		
 			<rich:modalPanel id="richiestaCustomerPanel" autosized="true" width="500">
 	        	<f:facet name="header">
@@ -104,35 +111,35 @@
 	        		<a:outputPanel ajaxRendered="true">
 	        			<h:panelGrid columns="2">
 	        				<h:outputText><b>Username: </b></h:outputText>
-	        				<h:outputText value="#{accountBean.currentCustomer.username}"/>
+	        				<h:outputText value="#{gestioneRegistrazioniBean.currentCustomer.username}"/>
 	        				<h:outputText><b>Codice fiscale: </b></h:outputText>
-	        				<h:outputText value="#{accountBean.currentCustomer.utente.codiceFiscale}"/>
+	        				<h:outputText value="#{gestioneRegistrazioniBean.currentCustomer.utente.codiceFiscale}"/>
 	        				<h:outputText><b>Cognome: </b></h:outputText>
-	        				<h:outputText value="#{accountBean.currentCustomer.utente.cognome}"/>
+	        				<h:outputText value="#{gestioneRegistrazioniBean.currentCustomer.utente.cognome}"/>
 	        				<h:outputText><b>Nome: </b></h:outputText>
-	        				<h:outputText value="#{accountBean.currentCustomer.utente.nome}"/>
+	        				<h:outputText value="#{gestioneRegistrazioniBean.currentCustomer.utente.nome}"/>
 	        				<h:outputText><b>Data Richiesta Account: </b></h:outputText>
-	        				<h:outputText value="#{accountBean.currentCustomer.dataRichiesta}">
+	        				<h:outputText value="#{gestioneRegistrazioniBean.currentCustomer.dataRichiesta}">
 	        					<f:convertDateTime type="date" dateStyle="medium" locale="Locale.ITALY"/>
 							</h:outputText>
 							<h:outputText><b>E-mail: </b></h:outputText>
-							<h:outputText value="#{accountBean.currentCustomer.utente.email}"/>
+							<h:outputText value="#{gestioneRegistrazioniBean.currentCustomer.utente.email}"/>
 							<h:outputText><b>Telefono: </b></h:outputText>
-							<h:outputText value="#{accountBean.currentCustomer.utente.recapitoTelefonico}"/>
+							<h:outputText value="#{gestioneRegistrazioniBean.currentCustomer.utente.recapitoTelefonico}"/>
 							<h:outputText><b>Indirizzo: </b></h:outputText>
-							<h:outputText value="#{accountBean.currentCustomer.utente.indirizzo}"/>
+							<h:outputText value="#{gestioneRegistrazioniBean.currentCustomer.utente.indirizzo}"/>
 							<h:outputText><b>Tipo di carta: </b></h:outputText>
-							<h:outputText value="#{accountBean.currentCustomer.pagamentoelettronico.tipoCarta}"/>
+							<h:outputText value="#{gestioneRegistrazioniBean.currentCustomer.pagamentoelettronico.tipoCarta}"/>
 							<h:outputText><b>Numero della carta: </b></h:outputText>
-							<h:outputText value="#{accountBean.currentCustomer.pagamentoelettronico.numeroCarta}"/>
+							<h:outputText value="#{gestioneRegistrazioniBean.currentCustomer.pagamentoelettronico.numeroCarta}"/>
 	        				<a:commandButton bypassUpdates="true" ajaxSingle="true" value="Accetta richiesta"
-	                			action="#{accountBean.accettaRegistrazioneCustomer}"
+	                			action="#{gestioneRegistrazioniBean.accettaRegistrazioneCustomer}"
 	                			reRender="table1, sc1"
-	                			oncomplete="#{rich:component('richiestaCustomerPanel')}.hide(); if (#{accountBean.updeted==true})  #{rich:component('richiestaAccettataCustomerPanel')}.show(); if (#{accountBean.updeted==false}) #{rich:component('errorePanel')}.show();" />
+	                			oncomplete="#{rich:component('richiestaCustomerPanel')}.hide(); if (#{gestioneRegistrazioniBean.updeted==true})  #{rich:component('richiestaAccettataCustomerPanel')}.show(); if (#{gestioneRegistrazioniBean.updeted==false}) #{rich:component('errorePanel')}.show();" />
                 			<a:commandButton bypassUpdates="true" ajaxSingle="true" value="Rifiuta richiesta"
-	                			action="#{accountBean.rifiutaRegistrazioneCustomer}"
+	                			action="#{accettaRegistrazioniBean.rifiutaRegistrazioneCustomer}"
 	                			reRender="table1, sc1"
-	                			oncomplete="#{rich:component('richiestaCustomerPanel')}.hide(); if (#{accountBean.updeted==true}) #{rich:component('richiestaRifiutataCustomerPanel')}.show(); if (#{accountBean.updeted==false}) #{rich:component('errorePanel')}.show();" />
+	                			oncomplete="#{rich:component('richiestaCustomerPanel')}.hide(); if (#{gestioneRegistrazioniBean.updeted==true}) #{rich:component('richiestaRifiutataCustomerPanel')}.show(); if (#{gestioneRegistrazioniBean.updeted==false}) #{rich:component('errorePanel')}.show();" />
 	        			</h:panelGrid>
 	        		</a:outputPanel>
                 </h:panelGrid>
@@ -141,7 +148,7 @@
 		
 		<rich:modalPanel id="contattaCustomerPanel" autosized="true" width="500">
 	        	<f:facet name="header">
-	            	<h:outputText value="Contatta #{accountBean.currentCustomer.utente.cognome} #{accountBean.currentCustomer.utente.nome}" />
+	            	<h:outputText value="Contatta #{gestioneRegistrazioniBean.currentCustomer.utente.cognome} #{gestioneRegistrazioniBean.currentCustomer.utente.nome}" />
 	        	</f:facet>
 	        	<f:facet name="controls">
             	<h:panelGroup>
@@ -167,7 +174,7 @@
         	</f:facet>
 	        <h:panelGrid columns="1">
 	        	<a:outputPanel ajaxRendered="true">
-	        		<h:outputText value="L'account dell'utente #{accountBean.currentCustomer.utente.cognome} #{accountBean.currentCustomer.utente.nome} e' stato attivato con successo"/>
+	        		<h:outputText value="L'account dell'utente #{gestioneRegistrazioniBean.currentCustomer.utente.cognome} #{gestioneRegistrazioniBean.currentCustomer.utente.nome} e' stato attivato con successo"/>
        			</a:outputPanel>
        		</h:panelGrid>
        	</rich:modalPanel>
@@ -186,7 +193,7 @@
         	</f:facet>
 	        <h:panelGrid columns="1">
 	        	<a:outputPanel ajaxRendered="true">
-	        		<h:outputText value="L'account dell'utente #{accountBean.currentCustomer.utente.cognome} #{accountBean.currentCustomer.utente.nome} e' stato eliminato con successo"/>
+	        		<h:outputText value="L'account dell'utente #{gestioneRegistrazioniBean.currentCustomer.utente.cognome} #{gestioneRegistrazioniBean.currentCustomer.utente.nome} e' stato eliminato con successo"/>
        			</a:outputPanel>
        		</h:panelGrid>
        	</rich:modalPanel>
@@ -206,6 +213,20 @@
         	<h:panelGrid columns="1">
         		<h:outputText value="Aggiornamento non eseguito"/>
        		</h:panelGrid>
+       	</rich:modalPanel>
+       	
+       	<rich:modalPanel id="contattaContadinoPanel" autosized="true" width="500">
+	        	<f:facet name="header">
+	            	<h:outputText value="Contatta #{gestioneRegistrazioniBean.currentCustomer.utente.cognome} #{gestioneRegistrazioniBean.currentCustomer.utente.nome}" />
+	        	</f:facet>
+	        	<f:facet name="controls">
+            	<h:panelGroup>
+                	<h:graphicImage value="/img/close.png"
+                    	id="hidelink5" />
+               	 	<rich:componentControl for="contattaContadinoPanel" attachTo="hidelink5"
+                    	operation="hide" event="onclick" />
+            	</h:panelGroup>
+        	</f:facet>
        	</rich:modalPanel>
 	
 	</ui:define>    

@@ -16,9 +16,9 @@ import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.log.Log;
 
-@Name(value="richiesteRegistrazioniBean")
+@Name(value="gestioneRegistrazioniBean")
 @Scope(ScopeType.SESSION)
-public class RichiesteRegistrazioniBean {
+public class GestioneRegistrazioniBean {
 
 	@Logger
 	private Log log;
@@ -32,17 +32,16 @@ public class RichiesteRegistrazioniBean {
 	@In(value="accountHome", create=true)
 	private AccountHome accountHome;
 	
-	/*
-	@In(value="cybercontadinolist", create=true)
+	@In(value="cybercontadinoList", create=true)
 	private CybercontadinoList cybercontadinoList;
-	*/
+	
 	private Account currentCustomer;
 	
 	private Cybercontadino currentContadino;
 	
 	private List<Account> richiesteCustomer;
 	
-	private List<Cybercontadino> richiesteCyberContadini;
+	private List<Cybercontadino> richiesteContadini;
 	
 	private boolean updeted = false;
 
@@ -50,10 +49,6 @@ public class RichiesteRegistrazioniBean {
 		return updeted;
 	}
 
-	public void setRichiesteCyberContadini(
-			List<Cybercontadino> richiesteCyberContadini) {
-		this.richiesteCyberContadini = richiesteCyberContadini;
-	}
 
 	public void setUpdeted(boolean updeted) {
 		this.updeted = updeted;
@@ -65,15 +60,6 @@ public class RichiesteRegistrazioniBean {
 		richiesteCustomer = accountList.getResultList();
 		return richiesteCustomer;
 	}
-	
-	//seleziono i cybercontadini che sono nello stato attivato 0 bloccato 0 eliminato 0
-	/*
-	public List<Cybercontadino> getRichiesteCyberContadini() {
-		cybercontadinoList.setEjbql("select cyber from cybercontadino cyber where cyber.account.attivato='false' and cyber.account.bloccato='false' and cyber.account.elimato='false'");
-		richiesteCyberContadini = cybercontadinoList.getResultList();
-		return richiesteCyberContadini;
-	}
-	*/
 	
 	public void reset() {
 		accountHome.setAccountUsername("emanuele");
@@ -146,6 +132,18 @@ public class RichiesteRegistrazioniBean {
 
 	public void setCurrentCustomer(Account currentCustomer) {
 		this.currentCustomer = currentCustomer;
+	}
+
+
+	public List<Cybercontadino> getRichiesteContadini() {
+		cybercontadinoList.setEjbql("select cyber from CyberContadino cyber where cyber.account.attivato='false' and cyber.account.bloccato='false' and cyber.account.elimato='false'");
+		richiesteContadini = cybercontadinoList.getResultList();
+		return richiesteContadini;
+	}
+
+
+	public void setRichiesteContadini(List<Cybercontadino> richiesteContadini) {
+		this.richiesteContadini = richiesteContadini;
 	}
 
 	
