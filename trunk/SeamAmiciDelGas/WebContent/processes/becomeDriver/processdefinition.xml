@@ -12,14 +12,28 @@
 		<task name="Conferma la richiesta">
 			<assignment pooled-actors="mediatore"></assignment>
 		</task>
-		<transition to="accettata" name="approva"></transition>
-		<transition to="rifiutata" name="rifiuta"></transition>
+		<transition to="Notifica Approvazione" name="approva"></transition>
+		<transition to="Notifica Rifiuto" name="rifiuta"></transition>
+	</task-node>
+
+	<task-node name="Notifica Approvazione">
+		<task name="Ricevi il messaggio di approvazione">
+			<assignment actor-id="#{notificaDecisioneDriver.recipient}"></assignment>
+		</task>
+		<transition to="Richiesta accettata" name="acknowledge"></transition>
+	</task-node>
+
+	<task-node name="Notifica Rifiuto">
+		<task name="Ricevi il messaggio di rifiuto">
+			<assignment actor-id="#{notificaDecisioneDriver.recipient}"></assignment>
+		</task>
+		<transition to="Richiesta rifiutata" name="acknowledge"></transition>
 	</task-node>
 
 
-	<end-state name="rifiutata"></end-state>
+	<end-state name="Richiesta accettata"></end-state>
 
-	<end-state name="accettata"></end-state>
+	<end-state name="Richiesta rifiutata"></end-state>
 
 
 </process-definition>

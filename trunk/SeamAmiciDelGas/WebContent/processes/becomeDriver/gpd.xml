@@ -14,6 +14,16 @@
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="rifiutata" x="389" y="385" width="132" height="36"/>
-  <node name="accettata" x="128" y="384" width="132" height="36"/>
+  <node name="Richiesta accettata" x="115" y="439" width="132" height="36"/>
+  <node name="Notifica Approvazione" x="124" y="329" width="151" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="Notifica Rifiuto" x="396" y="333" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="Richiesta rifiutata" x="402" y="437" width="132" height="36"/>
 </root-container>
