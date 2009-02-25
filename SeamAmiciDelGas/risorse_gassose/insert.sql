@@ -18,7 +18,7 @@ USE database_gas;
 
 /*!40000 ALTER TABLE `account` DISABLE KEYS */;
 SET AUTOCOMMIT=0;
-INSERT INTO `account` (`Username`,`passwordHash`,`Bloccato`,`Elimato`,`Cancellato`,`Attivato`,`DataRichiesta`,`DataAccettazione`,`PunteggioFeedback`,`Utente_CodiceFiscale`,`PagamentoElettronico_idPagamentoElettronico`) VALUES 
+INSERT INTO `account` (`Username`,`passwordHash`,`Bloccato`,`Elimato`,`Cancellato`,`Attivato`,`DataRichiesta`,`DataAccettazione`,`PunteggioFeedback`,`Utente_CodiceFiscale`,`PagamentoElettronico_idPagamentoElettronico`) VALUES
  ('admin','8ff430762890cbf91b3af84032d6f3ceda61644f',0x00,0x00,0x00,0x00,'2009-02-17',NULL,3,'gasgas00f03f123y',1);
 COMMIT;
 /*!40000 ALTER TABLE `account` ENABLE KEYS */;
@@ -10564,7 +10564,64 @@ INSERT INTO `utente` (`CodiceFiscale`,`Nome`,`Indirizzo`,`RecapitoTelefonico`,`e
  ('gasgas00f03f123y','admin_gas','Labis','666','comelatua@undominio.com','admin_gas','1989-02-14','M',NULL,10252,10252);
 COMMIT;
 /*!40000 ALTER TABLE `utente` ENABLE KEYS */;
+INSERT INTO `utente` (`CodiceFiscale`,`Nome`,`Indirizzo`,`RecapitoTelefonico`,`email`,`Cognome`,`DataNascita`,`Sesso`,`PathQuestionario`,`Comune_nascita`,`IDComune`) VALUES ('aaaaaa12b33d111a', 'Zlatan', 'via S.Siro', '2222', 'ibra@inter.it', 'Ibrahimovic', '1981-02-11', 'M', NULL, 7, 204);
+INSERT INTO `utente` (`CodiceFiscale`,`Nome`,`Indirizzo`,`RecapitoTelefonico`,`email`,`Cognome`,`DataNascita`,`Sesso`,`PathQuestionario`,`Comune_nascita`,`IDComune`) VALUES ('antodf12b32b111g', 'Esteban', 'via S.Siro', '2222', 'esteban@inter.it', 'Cambiasso', '1978-02-11', 'M', NULL, 6, 204);
+INSERT INTO `utente` (`CodiceFiscale`,`Nome`,`Indirizzo`,`RecapitoTelefonico`,`email`,`Cognome`,`DataNascita`,`Sesso`,`PathQuestionario`,`Comune_nascita`,`IDComune`) VALUES ('FFFFFF23r23r234r', 'Jose', 'via S.Siro', '2222', 'jose@inter.it', 'Mourinho', '1981-02-11', 'M', NULL, 7, 204);
+INSERT INTO `utente` (`CodiceFiscale`,`Nome`,`Indirizzo`,`RecapitoTelefonico`,`email`,`Cognome`,`DataNascita`,`Sesso`,`PathQuestionario`,`Comune_nascita`,`IDComune`) VALUES ('ssssss34f35f354d', 'Tyson', 'via S.Siro', '2222', 'tyson@inter.it', 'Rivas', '1981-02-11', 'M', NULL, 7, 204);
+INSERT INTO `utente` (`CodiceFiscale`,`Nome`,`Indirizzo`,`RecapitoTelefonico`,`email`,`Cognome`,`DataNascita`,`Sesso`,`PathQuestionario`,`Comune_nascita`,`IDComune`) VALUES ('ffdgat12d15h134u', 'Giorgio', 'via S.Siro', '2222', 'giorgio@inter.it', 'Pantano', '1981-02-11', 'M', NULL, 7, 204);
 
+INSERT INTO `pagamentoelettronico` (`idPagamentoElettronico`, `tipo_carta`, `numero_carta`) VALUES (2, 'visa', '1234123456765444');
+INSERT INTO `pagamentoelettronico` (`idPagamentoElettronico`, `tipo_carta`, `numero_carta`) VALUES (3, 'visa', '1284123456765444');
+INSERT INTO `pagamentoelettronico` (`idPagamentoElettronico`, `tipo_carta`, `numero_carta`) VALUES (4, 'visa', '1134123456765444');
+INSERT INTO `pagamentoelettronico` (`idPagamentoElettronico`, `tipo_carta`, `numero_carta`) VALUES (5, 'visa', '1234723456765444');
+INSERT INTO `pagamentoelettronico` (`idPagamentoElettronico`, `tipo_carta`, `numero_carta`) VALUES (6, 'visa', '1234123455765444');
+INSERT INTO `pagamentoelettronico` (`idPagamentoElettronico`, `tipo_carta`, `numero_carta`) VALUES (7, 'visa', '1234720056765444');
+INSERT INTO `pagamentoelettronico` (`idPagamentoElettronico`, `tipo_carta`, `numero_carta`) VALUES (8, 'visa', '1234123095765444');
+
+INSERT INTO `account` (`Username`,`passwordHash`,`Bloccato`,`Elimato`,`Cancellato`,`Attivato`,`DataRichiesta`,`DataAccettazione`,`PunteggioFeedback`,`Utente_CodiceFiscale`,`PagamentoElettronico_idPagamentoElettronico`) VALUES
+ ('zlatan','8ff430762890cbf91b3af84032d6f3ceda61644f',0x00,0x00,0x00,0x00,'2009-02-17',NULL,3,'aaaaaa12b33d111a',2);
+INSERT INTO `account` (`Username`,`passwordHash`,`Bloccato`,`Elimato`,`Cancellato`,`Attivato`,`DataRichiesta`,`DataAccettazione`,`PunteggioFeedback`,`Utente_CodiceFiscale`,`PagamentoElettronico_idPagamentoElettronico`) VALUES
+ ('esteban','8ff430762890cbf91b3af84032d6f3ceda61644f',0x00,0x00,0x00,0x00,'2009-02-17',NULL,3,'antodf12b32b111g',3);
+INSERT INTO `account` (`Username`,`passwordHash`,`Bloccato`,`Elimato`,`Cancellato`,`Attivato`,`DataRichiesta`,`DataAccettazione`,`PunteggioFeedback`,`Utente_CodiceFiscale`,`PagamentoElettronico_idPagamentoElettronico`) VALUES
+ ('jose','8ff430762890cbf91b3af84032d6f3ceda61644f',0x00,0x00,0x00,0x00,'2009-02-17',NULL,3,'FFFFFF23r23r234r',4);
+INSERT INTO `account` (`Username`,`passwordHash`,`Bloccato`,`Elimato`,`Cancellato`,`Attivato`,`DataRichiesta`,`DataAccettazione`,`PunteggioFeedback`,`Utente_CodiceFiscale`,`PagamentoElettronico_idPagamentoElettronico`) VALUES
+ ('tyson','8ff430762890cbf91b3af84032d6f3ceda61644f',0x00,0x00,0x00,0x00,'2009-02-17',NULL,3,'ssssss34f35f354d',5);
+INSERT INTO `account` (`Username`,`passwordHash`,`Bloccato`,`Elimato`,`Cancellato`,`Attivato`,`DataRichiesta`,`DataAccettazione`,`PunteggioFeedback`,`Utente_CodiceFiscale`,`PagamentoElettronico_idPagamentoElettronico`) VALUES
+ ('giorgio','8ff430762890cbf91b3af84032d6f3ceda61644f',0x00,0x00,0x00,0x00,'2009-02-17',NULL,3,'ffdgat12d15h134u',6);
+
+
+INSERT INTO `patente` (`IDPatente`, `Tipo`, `CodiceFiscale`) VALUES (2, 'A', 'aaaaaa12b33d111a');
+INSERT INTO `patente` (`IDPatente`, `Tipo`, `CodiceFiscale`) VALUES (3, 'A', 'antodf12b32b111g');
+INSERT INTO `patente` (`IDPatente`, `Tipo`, `CodiceFiscale`) VALUES (4, 'A', 'FFFFFF23r23r234r');
+INSERT INTO `patente` (`IDPatente`, `Tipo`, `CodiceFiscale`) VALUES (5, 'A', 'ssssss34f35f354d');
+INSERT INTO `patente` (`IDPatente`, `Tipo`, `CodiceFiscale`) VALUES (6, 'A', 'ffdgat12d15h134u');
+
+INSERT INTO `role` (`id`,`name`,`Username`) VALUES
+ (4,'utenteGas','zlatan');
+INSERT INTO `role` (`id`,`name`,`Username`) VALUES
+ (5,'utenteGas','esteban');
+INSERT INTO `role` (`id`,`name`,`Username`) VALUES
+ (6,'utenteGas','jose');
+INSERT INTO `role` (`id`,`name`,`Username`) VALUES
+ (7,'utenteGas','tyson');
+INSERT INTO `role` (`id`,`name`,`Username`) VALUES
+ (8,'utenteGas','giorgio');
+
+
+INSERT INTO `account` (`Username`,`passwordHash`,`Bloccato`,`Elimato`,`Cancellato`,`Attivato`,`DataRichiesta`,`DataAccettazione`,`PunteggioFeedback`,`Utente_CodiceFiscale`,`PagamentoElettronico_idPagamentoElettronico`) VALUES
+ ('ranieri','8ff430762890cbf91b3af84032d6f3ceda61644f',0x00,0x00,0x00,0x00,'2009-02-17',NULL,3,NULL,7);
+INSERT INTO `account` (`Username`,`passwordHash`,`Bloccato`,`Elimato`,`Cancellato`,`Attivato`,`DataRichiesta`,`DataAccettazione`,`PunteggioFeedback`,`Utente_CodiceFiscale`,`PagamentoElettronico_idPagamentoElettronico`) VALUES
+ ('sissoko','8ff430762890cbf91b3af84032d6f3ceda61644f',0x00,0x00,0x00,0x00,'2009-02-17',NULL,3,NULL,8);
+
+INSERT INTO `cybercontadino` (`PartitaIVA`,`NomePresidente`,`Indirizzo`,`CognomePresidente`,`NomeAzienda`,`PathASL`,`URLWSDL`,`DescrizioneAzienda`,`recapito_telefonico`,`email`,`Coordinate`, `Username`, `Comune_ubicazione`) VALUES
+(01139780629, 'Massimo', 'via via', 'Ranieri', 'Pummarole', 'sssssss', 'ssss', 'sssss', 973692, 'ranieri@napoli.it', 'eeweew', 'ranieri', 1);
+INSERT INTO `cybercontadino` (`PartitaIVA`,`NomePresidente`,`Indirizzo`,`CognomePresidente`,`NomeAzienda`,`PathASL`,`URLWSDL`,`DescrizioneAzienda`,`recapito_telefonico`,`email`,`Coordinate`, `Username`, `Comune_ubicazione`) VALUES
+(01435650625, 'Mohamed', 'via via', 'Sissoko', 'Patate', 'sssssss', 'ssss', 'sssss', 973692, 'sissoko@napoli.it', 'kjbdsds', 'sissoko', 1);
+
+INSERT INTO `role` (`id`,`name`,`Username`) VALUES
+ (9,'utenteContadino','ranieri');
+INSERT INTO `role` (`id`,`name`,`Username`) VALUES
+ (10,'utenteContadino','sissoko');
 
 
 
