@@ -71,6 +71,7 @@
 		<bpm:pageflow-definitions></bpm:pageflow-definitions>
 	</bpm:jbpm>
 	<factory name="driverRequests" value="#{pooledTaskInstanceList}" />
+	<factory name="userTasks" value="#{taskInstanceList}" />
 	<framework:entity-query name="rolesPerAccount" scope="conversation"
 		ejbql="select role from Role role join role.account account">
 		<framework:restrictions>
