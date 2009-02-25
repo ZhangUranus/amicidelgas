@@ -1,27 +1,35 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:s="http://jboss.com/products/seam/taglib"
-    xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:rich="http://richfaces.org/rich"
-    xmlns:a="http://richfaces.org/a4j"
-    template="/layout/template.xhtml">
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a="http://richfaces.org/a4j" template="/layout/template.xhtml">
 
-<ui:define name="body">
+	<ui:define name="body">
 
-<h3>Driver Requests</h3>
-<h:dataTable var="_task" value="#{driverRequests}"
-rendered="#{identity.loggedIn and not empty driverRequests}">
-<h:column>
-Driver request from #{_task.variables.nomeRichiedente}.
-</h:column>
-<h:column>
-<s:button action="#{richiestaDriverDecision.reject()}" taskInstance="#{_task}" value="Reject"/>
-</h:column>
-<h:column>
-<s:button action="#{richiestaDriverDecision.approve()}" taskInstance="#{_task}" value="Approve"/>
-</h:column>
-</h:dataTable>
-</ui:define>
-	</ui:composition>
+		<h3>Driver Requests</h3>
+		<h:form id="richiesteDriverForm">
+			<h:dataTable id="requestTable" var="_task"
+				value="#{pooledTaskInstanceList}"
+				rendered="#{identity.loggedIn and not empty pooledTaskInstanceList}">
+				<h:column>Driver request from #{_task.variables.nomeRichiedente}.</h:column>
+				<h:column>
+					<s:button action="#{richiestaDriverDecision.approve}"
+						taskInstance="#{_task}" value="Approve" />
+				</h:column>
+				<h:column>
+						<s:button action="#{richiestaDriverDecision.reject}"
+						taskInstance="#{_task}" value="Reject" />
+				</h:column>
+				
+				<h:column>Allega un messaggio alla tua decisione</h:column>
+				<h:column>
+					<h:inputTextarea value="#{richiestaDriverDecision.msg}" />
+					<h:commandButton action="update" value="Aggiorna il messaggio" />
+				</h:column>
+			</h:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>
