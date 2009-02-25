@@ -75,6 +75,18 @@
 					   	<td background="/SeamAmiciDelGas/img/shadow_left1.png"></td>	
 					     <td background="/SeamAmiciDelGas/img/shadow1.png">
 								<div align="center" >TODO notifiche ed eventi
+									<rich:dataTable var="_task" value="#{userTasks}"
+							rendered="#{identity.loggedIn and not empty userTasks}">
+							<h:column>
+								<f:facet name="header">Message</f:facet>
+												#{_task.variables.notificaDecisioneDriver.content}
+									</h:column>
+							<h:column>
+								<f:facet name="header">Action</f:facet>
+								<s:link action="#{richiestaDriverAck.acknowledge}" taskInstance="#{_task}"
+									value="Acknowledge" />
+							</h:column>
+						</rich:dataTable>
 									<li>notifica1</li>
                         			<li>notifica2</li>
                         			<li>notifica3</li>
@@ -109,8 +121,6 @@
 				                        value="#{currentUser.codiceFiscale}"/>
 				                <f:param name="accountUsername"
 				                        value="#{currentAccount.username}"/>
-				                <f:param name="accountPatente"
-				                        value="#{currentUser.patentes.iterator().next().idpatente}"/>
 					    	<img alt="statistiche" border="0" src="/SeamAmiciDelGas/img/modifica.png"/>
 					    	</s:link>
 					    	</td>
