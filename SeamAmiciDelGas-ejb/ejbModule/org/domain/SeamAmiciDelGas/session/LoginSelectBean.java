@@ -31,7 +31,7 @@ public class LoginSelectBean{
 	
 	
 	private String maxRole;
-	@In(value="currentAccount")
+	@In(value="currentAccount", create=true)
 	private Account account;
 	@Logger
 	private Log log;

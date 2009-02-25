@@ -49,7 +49,7 @@ public class Account implements java.io.Serializable {
 	private Date dataRichiesta;
 	private Date dataAccettazione;
 	private float punteggioFeedback;
-	private float fondo;
+	private float fondo = 0.0f;
 	private Set<Itinerario> itinerarios = new HashSet<Itinerario>(0);
 	private Set<Cybercontadino> cybercontadinos = new HashSet<Cybercontadino>(0);
 	private Set<org.domain.SeamAmiciDelGas.entity.Role> roles = new HashSet<org.domain.SeamAmiciDelGas.entity.Role>(0);
