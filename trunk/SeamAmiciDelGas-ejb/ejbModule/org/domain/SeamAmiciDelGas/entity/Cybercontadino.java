@@ -35,7 +35,7 @@ import org.jboss.seam.annotations.Scope;
 @Scope(value=ScopeType.SESSION)
 public class Cybercontadino implements java.io.Serializable {
 
-	private String partitaIva;;
+	private String partitaIva;
 	private Account account;
 	private Comune comune;
 	private String nomePresidente;
@@ -231,6 +231,7 @@ public class Cybercontadino implements java.io.Serializable {
 
 	@Column(name = "Coordinate", length = 500)
 	@Length(max = 500)
+	@NotNull
 	public String getCoordinate() {
 		return this.coordinate;
 	}

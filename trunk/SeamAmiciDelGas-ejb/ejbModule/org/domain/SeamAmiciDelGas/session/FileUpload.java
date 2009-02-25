@@ -10,6 +10,7 @@ import org.jboss.seam.ScopeType;
 
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
+import org.jboss.seam.faces.FacesMessages;
 import org.richfaces.event.UploadEvent;
 import org.richfaces.model.UploadItem;
 
@@ -21,7 +22,7 @@ import org.richfaces.model.UploadItem;
 public class FileUpload implements Serializable
 {
     private String savePath;
-    private String filepath = System.getProperty("user.home")+"/Desktop/fileupload/"; 
+    private String filepath = System.getProperty("user.home")+"/"; 
     private String filename; 
     private int length;
     private boolean useFlash = false;
@@ -49,6 +50,11 @@ public class FileUpload implements Serializable
     {
     	if(file != null)
     		return "passo2Outcome";
+    	else
+    	{
+    		FacesMessages.instance()
+    		.addToControl("confirm", "Aggiungere la documentazione ASL");
+    	}
     	return null;
     	
     }
