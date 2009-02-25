@@ -71,13 +71,13 @@
 			        		
 			        		<rich:column align="center">
 				                <f:facet name="header">
-				                        Azioni
+				                        Modifica
 				                </f:facet>
-				                <a:commandLink ajaxSingle="true" id="editlink"
+				                <a:commandLink ajaxSingle="true" id="editcontatti"
 				                    oncomplete="#{rich:component('editPanel')}.show()">
 				                    <h:graphicImage value="/img/modifica_mini.png" style="border:0"/>
 				                </a:commandLink>
-				                <rich:toolTip for="editlink" value="Modifica Recapiti"/>
+				                <rich:toolTip for="editcontatti" value="Modifica Recapiti"/>
 				            </rich:column>     			
 					</rich:dataTable>
 					</a:region>
@@ -88,18 +88,25 @@
 			<td colspan="3" height="16"></td>
 		</tr>
 		<tr>
-			<td width="45%">				
-				<li>Codice fiscale: #{utenteHome.instance.codiceFiscale.toUpperCase()}</li>
-                <li>Punteggio feedback: <b>#{accountHome.instance.punteggioFeedback}</b> </li>
-                <li>Data Richiesta Account: <b><h:outputText value="#{accountHome.instance.dataRichiesta}">
-						<f:convertDateTime type="date" dateStyle="medium" locale="Locale.ITALY"/>
-					</h:outputText></b></li>
-                <li>Data Attivazione Account: <b>#{empty accountHome.instance.dataAccettazione ? 'ancora in attesa': accountHome.instance.dataAccettazione }</b></li>
-				<li>E-mail: <h:outputText id="out_email" value="#{utenteHome.instance.email}"/></li>
-                <li>Telefono: <h:outputText id="out_telefono" value="#{utenteHome.instance.recapitoTelefonico}"/></li>
-                <li>Indirizzo: <h:outputText id="out_indirizzo" value="#{utenteHome.instance.indirizzo}"/></li>
-                <li>Tipo di carta: <h:outputText id="out_tipocarta" value="#{accountHome.instance.pagamentoelettronico.tipoCarta}"/></li>
-                <li>Numero della carta: <h:outputText id="out_numerocarta" value="#{accountHome.instance.pagamentoelettronico.numeroCarta}"/></li>     
+			<td width="45%">
+				<table width="90%" align="center" cellpadding="0" cellspacing="0" border="0">
+					<tr>
+						<td width="40%">
+							<li>Codice fiscale: </li>
+                			<li>Punteggio feedback: </li>
+                			<li>Data Richiesta Account: </li>
+                			<li>Data Attivazione Account: </li>   
+						</td>
+						<td width="60%" align="left">
+							#{utenteHome.instance.codiceFiscale.toUpperCase()}<br/>
+							<b>#{accountHome.instance.punteggioFeedback}</b><br/>
+							<b><h:outputText value="#{accountHome.instance.dataRichiesta}">
+								<f:convertDateTime type="date" dateStyle="medium" locale="Locale.ITALY"/>
+								</h:outputText></b><br/>
+							<b>#{empty accountHome.instance.dataAccettazione ? 'ancora in attesa': accountHome.instance.dataAccettazione }</b><br/>
+						</td>
+					</tr>
+				</table>	
 			</td>
 			<td width="10%">
 			</td>
@@ -124,14 +131,84 @@
 			        		
 			        		<rich:column  align="center">
 				                <f:facet name="header">
-				                        Azioni
+				                        Modifica
 				                </f:facet>
-				                <a:commandLink ajaxSingle="true" id="editlink"
+				                <a:commandLink ajaxSingle="true" id="editpagamento"
 				                    oncomplete="#{rich:component('editPagamento')}.show()">
 				                    <h:graphicImage value="/img/modifica_mini.png" style="border:0"/>
 				                    
 				                </a:commandLink>
-				                <rich:toolTip for="editlink" value="Modifica dati di pagamento"/>
+				                <rich:toolTip for="editpagamento" value="Modifica dati di pagamento"/>
+				            </rich:column>     		
+			        		
+					</rich:dataTable>
+					</a:region>
+			    </h:form>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="3" height="16"></td>
+		</tr>
+		<tr>
+			<td width="45%">
+				<table width="90%" align="center" cellpadding="0" cellspacing="0" border="0">
+					<tr>
+						<td width="40%">
+							<li>E-mail: </li>
+                			<li>Telefono: </li>
+                			<li>Indirizzo: </li>
+                			<li>Tipo di carta: </li>
+                			<li>Numero della carta: </li>
+                			<li>Patente: </li>     
+						</td>
+						<td width="60%" align="left">
+							<h:outputText id="out_email" value="#{utenteHome.instance.email}"/><br/>
+							<h:outputText id="out_telefono" value="#{utenteHome.instance.recapitoTelefonico}"/><br/>
+							<h:outputText id="out_indirizzo" value="#{utenteHome.instance.indirizzo}"/><br/>
+							<h:outputText id="out_tipocarta" value="#{accountHome.instance.pagamentoelettronico.tipoCarta}"/><br/>
+							<h:outputText id="out_numerocarta" value="#{accountHome.instance.pagamentoelettronico.numeroCarta}"/><br/>
+							<h:outputText id="out_tipo" value="#{patenteHome.instance.idpatente}"/><br/>							
+						</td>
+					</tr>
+				</table>				
+			</td>
+			<td width="10%">
+			</td>
+			<td width="45%">
+				<div class="colore_1" align="center">Modifica Dati Patente</div>
+				<h:form>
+			        <a:region>
+			        <div align="center">
+						<a:commandLink ajaxSingle="true" id="addpatente" 
+						     oncomplete="#{rich:component('addPatente')}.show()">
+		                    <h:graphicImage value="/img/add.png" style="border:0"/>
+		                </a:commandLink>
+		                <rich:toolTip for="addpatente" value="Aggiungi una patente"/>
+					</div>
+					<rich:dataTable value="#{utenteHome.patentes}" var="_dati" id="table_patente" width="80%">
+							<rich:column >
+								<f:facet name="header">
+									<h:outputText value="Tipo Patente" />
+								</f:facet>
+								<h:outputText value="#{_dati.tipo}" id="tipopatente" />
+			        		</rich:column>
+			        		
+			        		<rich:column  align="center">
+				                <f:facet name="header">
+				                        Azioni
+				                </f:facet>
+				                <a:commandLink ajaxSingle="true" id="editpatente"
+				                    oncomplete="#{rich:component('editPatente')}.show()">
+				                    <h:graphicImage value="/img/modifica_mini.png" style="border:0"/>
+				                    
+				                </a:commandLink>
+				                <rich:toolTip for="editpatente" value="Modifica il tipo di patente"/>
+				                <a:commandLink ajaxSingle="true" id="cancelpatente"
+				                    oncomplete="#{rich:component('deletePanel')}.show()">
+				                    <h:graphicImage value="/img/cancel.png" style="border:0"/>
+				                    
+				                </a:commandLink>
+				                <rich:toolTip for="cancelpatente" value="Elimina questa patente"/>
 				            </rich:column>     		
 			        		
 					</rich:dataTable>
@@ -159,16 +236,12 @@
 	            <a:outputPanel ajaxRendered="true">
 	                <h:panelGrid columns="2">
 	                    <h:outputText value="Tipo carta"/>
-						<table><tbody>
-							<tr>
-								<td><input type="radio" name="#{accountHome.instance.pagamentoelettronico.tipoCarta}" id="j_id65:j_id71:0" value="Visa"/><label for="j_id65:j_id71:0"/><img align="middle" src="/SeamAmiciDelGas/img/creditcard_visa.png"/></td>
-								<td><input type="radio" name="j_id65:j_id71" id="j_id65:j_id71:1" value="MasterCard"/><label for="j_id65:j_id71:1"/><img align="middle" src="/SeamAmiciDelGas/img/creditcard_mastercard.png"/></td>
-								<td><input type="radio" name="#{accountHome.instance.pagamentoelettronico.tipoCarta}" id="j_id65:j_id71:2" value="AmericanExpress"/><label for="j_id65:j_id71:2"/><img align="middle" src="/SeamAmiciDelGas/img/creditcard_american_express.png"/></td>
-								<td><input type="radio" name="j_id65:j_id71" id="j_id65:j_id71:3" value="PayPal"/><label for="j_id65:j_id71:3"><img align="middle" src="/SeamAmiciDelGas/img/creditcard_paypal.png"/></label></td>
-							</tr>
-							</tbody>
-						</table> 
-	                    
+		                <h:selectOneRadio value="#{accountHome.instance.pagamentoelettronico.tipoCarta}" required="yes" requiredMessage="true">
+						  <f:selectItem itemLabel="  Visa" itemValue="Visa" ><img src="/SeamAmiciDelGas/img/creditcard_visa.png" /></f:selectItem>
+						  <f:selectItem itemLabel="  MCard" itemValue="MasterCard" ><img src="/SeamAmiciDelGas/img/creditcard_mastercard.png" /></f:selectItem>
+						  <f:selectItem itemLabel="  AmeEx" itemValue="AmericanExpress"><img src="/SeamAmiciDelGas/img/creditcard_american_express.png" /></f:selectItem>
+						  <f:selectItem itemLabel="  PayPal" itemValue="PayPal"><img src="/SeamAmiciDelGas/img/creditcard_paypal.png"/></f:selectItem>
+						</h:selectOneRadio>	                    
 	                    <h:outputText value="Numero carta" />
 	                    <h:inputText id="campo-numerocarta" value="#{accountHome.instance.pagamentoelettronico.numeroCarta}" required="true" size="16" maxlength="16" />
 	                </h:panelGrid>
@@ -244,6 +317,39 @@
 	            </h:panelGrid>  
 	        </h:form>
 	    </rich:modalPanel> 
+		
+		<rich:modalPanel id="deletePanel" autosized="true" width="200">
+	        <f:facet name="header">
+	            <h:outputText value="Vuoi eliminare questa patente?"
+	                style="padding-right:15px;" />
+	        </f:facet>
+	        <f:facet name="controls">
+	            <h:panelGroup>
+	                <h:graphicImage value="/img/close.png"
+	                    styleClass="hidelink" id="hidelink2" />
+	                <rich:componentControl for="deletePanel" attachTo="hidelink2"
+	                    operation="hide" event="onclick" />
+	            </h:panelGroup>
+	        </f:facet>
+	        <h:form>
+	            <table width="100%">
+	                <tbody>
+	                    <tr>
+	                        <td align="center" width="50%">
+	                <a:commandButton value="Yes" ajaxSingle="true"
+	                    action="#{utenteHome.patentes.remove()}"
+	                    oncomplete="#{rich:component('deletePanel')}.hide();"
+	                    reRender="table" />
+	                        </td>
+	                        <td align="center" width="50%">
+	                <a:commandButton value="Elimina"
+	                    onclick="#{rich:component('deletePanel')}.hide();return false;" />
+	                        </td>
+	                    </tr>
+	                </tbody>
+	            </table>
+	        </h:form>
+	    </rich:modalPanel>
 	
 	    <a:status onstart="#{rich:component('wait')}.show()" onstop="#{rich:component('wait')}.hide()"/>
 	    <rich:modalPanel id="wait" autosized="true" width="200" height="120" moveable="false" resizeable="false">
