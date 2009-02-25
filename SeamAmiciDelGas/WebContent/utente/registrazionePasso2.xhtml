@@ -31,7 +31,7 @@
             
             <s:decorate id="tipocartaField" template="/layout/edit.xhtml">
                 <ui:define name="label">Carta di credito</ui:define>
-                <h:selectOneRadio value="#{newPagamento.tipoCarta}" required="yes" requiredMessage="true">
+                <h:selectOneRadio value="#{newPagamento.tipoCarta}" required="true" requiredMessage="Inserire numero carta di credito">
 				  <f:selectItem itemLabel="  " itemValue="Visa" ><img src="/SeamAmiciDelGas/img/creditcard_visa.png" /></f:selectItem>
 				  <f:selectItem itemLabel="  " itemValue="MasterCard" ><img src="/SeamAmiciDelGas/img/creditcard_mastercard.png" /></f:selectItem>
 				  <f:selectItem itemLabel="  " itemValue="AmericanExpress"><img src="/SeamAmiciDelGas/img/creditcard_american_express.png" /></f:selectItem>

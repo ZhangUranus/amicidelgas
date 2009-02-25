@@ -58,7 +58,7 @@
 						var one = document.getElementById('passo2Form:passwordField:password').value;
 						var two = document.getElementById('passo2Form:confirmPasswordField:confirmPassword').value;
 						
-						if (one != two) {
+						if ((one != two) && (one!=null) ) {
 							document.getElementById('passo2Form:confirmPasswordField:confirmPassword').value = "";
 							document.getElementById('passo2Form:controlloPasswordField:controlloPassword').innerHTML = "<img src=\"/SeamAmiciDelGas/img/not_valid.png\"/>";
 						} else {
