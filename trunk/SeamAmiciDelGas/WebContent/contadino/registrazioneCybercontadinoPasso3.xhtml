@@ -14,6 +14,7 @@
       type="text/javascript"></script>
 <script type="text/javascript"><!--
 var geocoder;
+var point;
 
 function Indirizzo(via,comune,provincia,categoria_mark,categoria_mark2,categoria_mark3){
 	this.via = via;
@@ -100,16 +101,11 @@ function Indirizzo(via,comune,provincia,categoria_mark,categoria_mark2,categoria
 		
 window.onunload = function(){
 	GUnload();
+	
 }
 window.onload = function(){
 	load();
 }		
-
-
-function dammiCoordinate()
-{
-	   return geocorder;
-}
    --></script>
 
 	<h:form id="passo3Form">
@@ -176,6 +172,22 @@ function dammiCoordinate()
             <ui:define name="label">Numero carta</ui:define>
             <h:outputText  value="XXXX XXXX XXXX #{newPagamento.numeroCarta.substring(11, 15)}" />  
         </s:decorate>
+        <s:decorate id="coordinateField" template="/layout/display.xhtml">
+        <h:inputHidden 
+                	id="coordinate"
+                	value="#{newCybercontadino.coordinate}"
+          >
+                
+         <a:support event="onsubmit" action="setCoordinate()"/>
+         </h:inputHidden> 
+                <script type="text/javascript">
+				<!--
+					function setCoordinate(){
+						document.getElementById('passo3Form:coordinateField:coordinate').value=point;
+					}
+				//-->
+				</script>
+				</s:decorate>
       
       	<s:decorate id="posizione" template="/layout/display.xhtml">
      		<ui:define name="label">Gmap: posizione azienda</ui:define>
@@ -194,6 +206,8 @@ function dammiCoordinate()
             </div>
 		
     </rich:panel>
+    
+    
     
     <div class="actionButtons">
 			<h:commandButton id="conferma" value="conferma registrazione" action="#{registrazioneCybercontadino.registrazioneCybercontadino}"/>
