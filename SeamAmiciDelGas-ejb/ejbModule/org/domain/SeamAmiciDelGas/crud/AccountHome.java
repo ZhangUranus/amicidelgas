@@ -30,6 +30,7 @@ public class AccountHome extends EntityHome<Account> {
 	}
 
 	public void wire() {
+		
 		getInstance();
 		Utente utente = utenteHome.getDefinedInstance();
 		if (utente != null) {
