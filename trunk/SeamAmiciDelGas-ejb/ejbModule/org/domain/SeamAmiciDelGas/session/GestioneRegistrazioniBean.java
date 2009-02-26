@@ -1,14 +1,19 @@
 package org.domain.SeamAmiciDelGas.session;
 
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.domain.SeamAmiciDelGas.crud.AccountHome;
 import org.domain.SeamAmiciDelGas.crud.AccountList;
 import org.domain.SeamAmiciDelGas.crud.CybercontadinoList;
 import org.domain.SeamAmiciDelGas.crud.RoleList;
+import org.domain.SeamAmiciDelGas.crud.UtenteList;
 import org.domain.SeamAmiciDelGas.entity.Account;
 import org.domain.SeamAmiciDelGas.entity.Cybercontadino;
+import org.domain.SeamAmiciDelGas.entity.Utente;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Logger;
@@ -26,14 +31,14 @@ public class GestioneRegistrazioniBean {
 	@In(value="accountList",create=true)
 	private AccountList accountList;
 	
-	@In(value="roleList",create=true)
-	private RoleList roleList;
-	
 	@In(value="accountHome", create=true)
 	private AccountHome accountHome;
 	
 	@In(value="cybercontadinoList", create=true)
 	private CybercontadinoList cybercontadinoList;
+	
+	@In(value="utenteList", create=true)
+	private UtenteList utenteList;
 	
 	private Account currentCustomer;
 	
@@ -42,6 +47,8 @@ public class GestioneRegistrazioniBean {
 	private List<Account> richiesteCustomer;
 	
 	private List<Cybercontadino> richiesteContadini;
+	
+	private ArrayList<String> possibiliInviati;
 	
 	private boolean updeted = false;
 
@@ -136,7 +143,7 @@ public class GestioneRegistrazioniBean {
 
 
 	public List<Cybercontadino> getRichiesteContadini() {
-		cybercontadinoList.setEjbql("select cyber from CyberContadino cyber where cyber.account.attivato='false' and cyber.account.bloccato='false' and cyber.account.elimato='false'");
+		cybercontadinoList.setEjbql("select cyber from Cybercontadino cyber where cyber.account.attivato='false' and cyber.account.bloccato='false' and cyber.account.elimato='false'");
 		richiesteContadini = cybercontadinoList.getResultList();
 		return richiesteContadini;
 	}
@@ -144,6 +151,35 @@ public class GestioneRegistrazioniBean {
 
 	public void setRichiesteContadini(List<Cybercontadino> richiesteContadini) {
 		this.richiesteContadini = richiesteContadini;
+	}
+
+
+	public Cybercontadino getCurrentContadino() {
+		return currentContadino;
+	}
+
+
+	public void setCurrentContadino(Cybercontadino currentContadino) {
+		this.currentContadino = currentContadino;
+	}
+
+	//seleziona i possibili inviati per recarsi in una azienda
+	public ArrayList<String> getPossibiliInviati() {
+		utenteList.setEjbql("select utente from Account account where account not in (select role1.account from Role role1 where role1.name='admin' or role1.name='mediatore' or role1.name='utenteContadino') and account.attivato='true' and account.bloccato='false' and account.elimato='false'");
+		List<Utente> uts = utenteList.getResultList();
+		Iterator<Utente> it = uts.iterator();
+		possibiliInviati = new ArrayList<String>();
+		Utente ut;
+		while (it.hasNext()) {
+			ut = it.next();
+			possibiliInviati.add(ut.getCognome()+" "+ut.getNome());
+		}
+		return possibiliInviati;
+	}
+
+
+	public void setPossibiliInviati(ArrayList<String> possibiliInviati) {
+		this.possibiliInviati = possibiliInviati;
 	}
 
 	

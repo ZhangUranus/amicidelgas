@@ -92,7 +92,85 @@
 		    <br/>
 		    <br/>
 		    
-		    
+		    <div class="colore_1" align="center">Richieste Registrazioni CyberContadino</div>
+			<h:form>
+		        <a:region>
+			    	<rich:dataTable value="#{gestioneRegistrazioniBean.richiesteContadini}" var="_contadinoRichiesta" id="table2" rows="5" width="50%">
+		       			
+		       			<rich:column>
+							<f:facet name="header">
+								<h:outputText value="Username" />
+							</f:facet>
+								<h:outputText value="#{_contadinoRichiesta.account.username}" id="usernameContadino" />
+		        		</rich:column>
+		        		
+		        		<rich:column>
+							<f:facet name="header">
+								<h:outputText value="Nome Azienda" />
+							</f:facet>
+								<h:outputText value="#{_contadinoRichiesta.nomeAzienda}" id="nomeAzienda" />
+		        		</rich:column>
+		       			
+		       			<rich:column>
+							<f:facet name="header">
+								<h:outputText value="Presidente" />
+							</f:facet>
+								<h:outputText value="#{_contadinoRichiesta.nomePresidente} #{_contadinoRichiesta.cognomePresidente}" id="presidente" />
+		        		</rich:column>
+		       			
+		       			<rich:column>
+							<f:facet name="header">
+								<h:outputText value="Comune" />
+							</f:facet>
+								<h:outputText value="#{_contadinoRichiesta.comune.nome}" id="comuneContadino" />
+		        		</rich:column>
+		        		
+		        		<rich:column>
+							<f:facet name="header">
+								<h:outputText value="email" />
+							</f:facet>
+								<h:outputText value="#{_contadinoRichiesta.email}" id="emailContadino" />
+		        		</rich:column>
+		        		
+		        		<rich:column align="center">
+			                <f:facet name="header">
+		                        Notifica
+			                </f:facet>
+			                <a:commandLink ajaxSingle="true" id="contattaContadinolink"
+			                    oncomplete="#{rich:component('contattaContadinoPanel')}.show()">
+				                    <f:setPropertyActionListener value="#{_contadinoRichiesta}" target="#{gestioneRegistrazioniBean.currentContadino}" />
+				                    <h:graphicImage value="/img/email.jpg" style="border:" width="41" height="32"/>
+				                </a:commandLink>
+				                <rich:toolTip for="contattaContadinolink" value="Invia una notifica al contadino"/>
+			            </rich:column>
+		       			
+		       			<rich:column align="center">
+			                <f:facet name="header">
+		                        Inviati
+			                </f:facet>
+			                <a:commandLink ajaxSingle="true" id="inviatilink"
+			                    oncomplete="#{rich:component('selezionaInviatiPanel')}.show()">
+				                    <f:setPropertyActionListener value="#{_contadinoRichiesta}" target="#{gestioneRegistrazioniBean.currentContadino}" />
+				                    <h:graphicImage value="/img/inviati.gif" style="border:" width="54" height="43"/>
+				                </a:commandLink>
+				                <rich:toolTip for="inviatilink" value="Seleziona inviati"/>
+			            </rich:column>
+		       			
+		       			<rich:column align="center">
+			                <f:facet name="header">
+		                        Admin
+			                </f:facet>
+			                <a:commandLink ajaxSingle="true" id="adminlink"
+			                    oncomplete="#{rich:component('notificaAdminPanel')}.show()">
+				                    <f:setPropertyActionListener value="#{_contadinoRichiesta}" target="#{gestioneRegistrazioniBean.currentContadino}" />
+				                    <h:graphicImage value="/img/email.jpg" style="border:" width="41" height="32"/>
+				                </a:commandLink>
+				                <rich:toolTip for="adminlink" value="Invia una notifica all'amministratore"/>
+			            </rich:column>
+		       		</rich:dataTable>
+		       		<rich:datascroller align="center" for="table2" id="sc2" rendered="true"/>
+	       		</a:region>
+       		</h:form>	    
 		
 			<rich:modalPanel id="richiestaCustomerPanel" autosized="true" width="500">
 	        	<f:facet name="header">
@@ -215,9 +293,10 @@
        		</h:panelGrid>
        	</rich:modalPanel>
        	
+       	<a:outputPanel ajaxRendered="true">
        	<rich:modalPanel id="contattaContadinoPanel" autosized="true" width="500">
 	        	<f:facet name="header">
-	            	<h:outputText value="Contatta #{gestioneRegistrazioniBean.currentCustomer.utente.cognome} #{gestioneRegistrazioniBean.currentCustomer.utente.nome}" />
+	            	<h:outputText value="Contatta l'azienda #{gestioneRegistrazioniBean.currentContadino.nomeAzienda}" />
 	        	</f:facet>
 	        	<f:facet name="controls">
             	<h:panelGroup>
@@ -228,6 +307,40 @@
             	</h:panelGroup>
         	</f:facet>
        	</rich:modalPanel>
+       	</a:outputPanel>
+	
+	<a:outputPanel ajaxRendered="true">
+	<rich:modalPanel id="selezionaInviatiPanel" autosized="true" width="500">
+        	<f:facet name="header">
+            	<h:outputText value="Seleziona gli inviati per visitare l'azienda #{gestioneRegistrazioniBean.currentContadino.nomeAzienda}" />
+        	</f:facet>
+        	<f:facet name="controls">
+           	<h:panelGroup>
+               	<h:graphicImage value="/img/close.png"
+                   	id="hidelink6" />
+              	 	<rich:componentControl for="selezionaInviatiPanel" attachTo="hidelink6"
+                   	operation="hide" event="onclick" />
+           	</h:panelGroup>
+       		</f:facet>
+       		
+   	</rich:modalPanel>
+   	</a:outputPanel>
+       	
+	<a:outputPanel ajaxRendered="true">
+	<rich:modalPanel id="notificaAdminPanel" autosized="true" width="700">
+	        	<f:facet name="header">
+	            	<h:outputText value="Invia una notifica all'admin per suggerire l'attivazione/disattivazione dell'azienda #{gestioneRegistrazioniBean.currentContadino.nomeAzienda}" />
+	        	</f:facet>
+	        	<f:facet name="controls">
+            	<h:panelGroup>
+                	<h:graphicImage value="/img/close.png"
+                    	id="hidelink7" />
+               	 	<rich:componentControl for="notificaAdminPanel" attachTo="hidelink7"
+                    	operation="hide" event="onclick" />
+            	</h:panelGroup>
+        	</f:facet>
+     </rich:modalPanel>
+     </a:outputPanel>
 	
 	</ui:define>    
     
