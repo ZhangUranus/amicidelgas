@@ -5,10 +5,10 @@
 
    <navigation from-action="#{identity.login}">
    			<rule if="#{loginSelectBean.calculateMaxRole() == 'admin'}">
-	             <redirect view-id="/admin/adminHome.xhtml"/>
+	             <redirect view-id="/customer/customerHome.xhtml"/>
 	  		</rule>
-	  		<rule if="#{loginSelectBean.calculateMaxRole() == 'moderatore'}">
-	             <redirect view-id="/moderatore/moderatoreHome.xhtml"/>
+	  		<rule if="#{loginSelectBean.calculateMaxRole() == 'mediatore'}">
+	             <redirect view-id="/mediatore/mediatoreHome.xhtml"/>
 	  		</rule>
       		<rule if="#{loginSelectBean.calculateMaxRole() == 'utenteGas'}">
 	             <redirect view-id="/customer/customerHome.xhtml"/>
