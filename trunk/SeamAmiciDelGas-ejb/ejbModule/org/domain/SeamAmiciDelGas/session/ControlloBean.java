@@ -52,7 +52,7 @@ public class ControlloBean {
 		utenteList.setEjbql("select utente from Utente utente where utente.codiceFiscale='"+utente.getCodiceFiscale()+"'");
 		List<Utente> lu = utenteList.getResultList();
 		if(!lu.isEmpty())
-			myResponseCodiceFiscale = "  Il codice fiscale inserito ï¿½ giï¿½ presente nel database";
+			myResponseCodiceFiscale = "  Il codice fiscale inserito è già presente nel database";
 		else
 			myResponseCodiceFiscale  = null;
 	}
@@ -75,7 +75,7 @@ public class ControlloBean {
 		utenteList.setEjbql("select utente from Utente utente where utente.email='"+utente.getEmail()+"'");
 		List<Utente> lu = utenteList.getResultList();
 		if(!lu.isEmpty())
-			myResponseEmail = "  L'email inserita ï¿½ giï¿½ presente nel database";
+			myResponseEmail = "  L'email inserita è già presente nel database";
 		else
 			myResponseEmail  = null;
 	}
@@ -136,6 +136,18 @@ public class ControlloBean {
 
 	public void setMyResponsePartitaIva(String myResponsePartitaIva) {
 		this.myResponsePartitaIva = myResponsePartitaIva;
+	}
+	
+	//prima di procedere al passo 2 della registrazione
+	//controllo che non ci siano nel database già le stesse informazioni
+	//come il codice fiscale, email.
+	public String controlloPresenzaDatiDatabase()
+	{
+		if(myResponseCodiceFiscale==null && myResponseEmail==null)
+			return "passo1Outcome"; //posso procedere con la registrazione passo2 :-)
+		else
+			return null;//uno dei due campi o tutti e due sono già presenti del database
+			
 	}
 
 }
