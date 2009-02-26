@@ -138,9 +138,8 @@ public class ControlloBean {
 		this.myResponsePartitaIva = myResponsePartitaIva;
 	}
 	
-	//prima di procedere al passo 2 della registrazione
-	//controllo che non ci siano nel database già le stesse informazioni
-	//come il codice fiscale, email.
+	//se i dati come codice fiscale ed email sono gia' presenti
+	//nel database non faccio procedere al passo 2 della registrazione
 	public String controlloPresenzaDatiDatabase()
 	{
 		if(myResponseCodiceFiscale==null && myResponseEmail==null)
