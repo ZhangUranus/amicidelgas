@@ -16,7 +16,11 @@
 				<td colspan="3">
 					<table width="90%" border="0" cellspacing="4" cellpadding="0" align="left" >
 					  <tr>			    
-					    <td rowspan="2" width="160" align="left"><a href="categories"><img alt="statistiche" border="0" src="/SeamAmiciDelGas/img/contatti.png"/></a></td>
+					    <td rowspan="2" width="160" align="left">
+					    	<s:decorate rendered="#{loginSelectBean.calculateMaxRole()=='admin'}"><a href="categories"><img alt="statistiche" border="0" src="/SeamAmiciDelGas/img/admin/president.jpg"/></a></s:decorate>
+					    	<s:decorate rendered="#{loginSelectBean.calculateMaxRole()=='mediatore'}"><a href="categories"><img alt="statistiche" border="0" src="/SeamAmiciDelGas/img/contatti.png"/></a></s:decorate>
+					    	<s:decorate rendered="#{loginSelectBean.calculateMaxRole()=='utenteGas'}"><a href="categories"><img alt="statistiche" border="0" src="/SeamAmiciDelGas/img/contatti.png"/></a></s:decorate>
+					    </td>
 					    <td valign="top"><div align="left" class="colore_1">Bentornato <b>#{currentUser.nome} #{currentUser.cognome}</b></div></td>			      
 					  	<td valign="top"><div align="left" class="colore_1">I tuoi ruoli</div></td>			      
 					  </tr>
