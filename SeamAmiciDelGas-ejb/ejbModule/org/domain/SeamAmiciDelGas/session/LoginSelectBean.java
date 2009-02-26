@@ -1,19 +1,9 @@
 package org.domain.SeamAmiciDelGas.session;
 
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
-import javax.faces.event.AbortProcessingException;
-import javax.faces.event.ValueChangeEvent;
-import javax.faces.event.ValueChangeListener;
-
-import org.domain.SeamAmiciDelGas.crud.ComuneList;
 import org.domain.SeamAmiciDelGas.entity.Account;
-import org.domain.SeamAmiciDelGas.entity.Comune;
-import org.domain.SeamAmiciDelGas.entity.Provinces;
 import org.domain.SeamAmiciDelGas.entity.Role;
-import org.hibernate.validator.Length;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Logger;
@@ -49,8 +39,8 @@ public class LoginSelectBean{
 		while(iter.hasNext())
 		{
 			Role r = iter.next();
-			if(r.getName().equals("moderatore"))
-				return "moderatore";
+			if(r.getName().equals("mediatore"))
+				return "mediatore";
 		}
 		iter = account.getRoles().iterator();
 		while(iter.hasNext())
