@@ -113,7 +113,7 @@ window.onload = function(){
 	<h:form id="passo3Form">
     <rich:panel>
     	
-        <f:facet name="header">Riepilogo finale</f:facet>
+        <f:facet name="header">Richiesta registrazione: Passo 3 - Riepilogo Dati</f:facet>
 
 		<s:decorate id="codicefiscale" template="/layout/display.xhtml">
             <ui:define name="label">Partita IVA</ui:define>
@@ -121,32 +121,32 @@ window.onload = function(){
         </s:decorate>
         
         <s:decorate id="nomeAzienda" template="/layout/display.xhtml">
-            <ui:define name="label">Nome dell'azienda</ui:define>
+            <ui:define name="label">Nome Azienda</ui:define>
             <h:outputText value="#{newCybercontadino.nomeAzienda}"/>
         </s:decorate>
         
         <s:decorate id="nomePresidente" template="/layout/display.xhtml">
-            <ui:define name="label">Nome presidente</ui:define>
+            <ui:define name="label">Nome Presidente</ui:define>
             <h:outputText value="#{newCybercontadino.nomePresidente}"/>
         </s:decorate>
         
         <s:decorate id="cognomePresidente" template="/layout/display.xhtml">
-            <ui:define name="label">Cognome presidente</ui:define>
+            <ui:define name="label">Cognome Presidente</ui:define>
             <h:outputText value="#{newCybercontadino.cognomePresidente}"/>
         </s:decorate>
 
         <s:decorate id="provincianascita" template="/layout/display.xhtml">
-            <ui:define name="label">Provincia di residenza</ui:define>
+            <ui:define name="label">Provincia Sede Azienda</ui:define>
             <h:outputText value="#{newComuneProvinciaBean.provincia.nome}"/>
         </s:decorate>
         
         <s:decorate id="comunenascita" template="/layout/display.xhtml">
-            <ui:define name="label">Sede Azienda</ui:define>
+            <ui:define name="label">Comune Sede Azienda</ui:define>
             <h:outputText value="#{newComuneProvinciaBean.comune.nome}"/>
         </s:decorate>
         
         <s:decorate id="recapitotelefonico" template="/layout/display.xhtml">
-            <ui:define name="label">Recapito telefonico</ui:define>
+            <ui:define name="label">Recapito Telefonico</ui:define>
             <h:outputText value="#{newCybercontadino.recapitoTelefonico}"/>
         </s:decorate>
         
@@ -171,7 +171,7 @@ window.onload = function(){
         </s:decorate>
         
         <s:decorate id="numerocarta" template="/layout/display.xhtml">
-            <ui:define name="label">Numero carta</ui:define>
+            <ui:define name="label">Numero Carta Credito</ui:define>
             <h:outputText  value="XXXX XXXX XXXX #{newPagamento.numeroCarta.substring(11, 15)}" />  
         </s:decorate>
         <s:decorate id="coordinateField" template="/layout/display.xhtml">
@@ -183,7 +183,10 @@ window.onload = function(){
                 <script type="text/javascript">
 				<!--
 					function setCoordinate(){
-						document.getElementById('passo3Form:coordinateField:coordinate').value=point;
+					
+						pointString = point.toString()
+						pointSub = pointString.substring(0, (pointString.length-2));
+						document.getElementById('passo3Form:coordinateField:coordinate').value=pointSub;
 					}
 				//-->
 				</script>
@@ -199,11 +202,6 @@ window.onload = function(){
 			<div id="map1"  align="right" style="width: 60%; height: 300px"></div>
 			<br />
 		</s:decorate>	
-	
-		<div style="clear:both">
-                <span class="required">*</span>
-                Campi richiesti
-            </div>
 		
     </rich:panel>
     

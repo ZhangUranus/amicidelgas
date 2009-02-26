@@ -24,6 +24,7 @@ public class FileUpload implements Serializable
     private String savePath;
     private String filepath = System.getProperty("user.home")+"/"; 
     private String filename; 
+    private String errore;
     private int length;
     private boolean useFlash = false;
     private int size;
@@ -46,26 +47,9 @@ public class FileUpload implements Serializable
 	    //size=files.size();
     }
     
-    public String action()
-    {
-    	if(file != null)
-    		return "passo2Outcome";
-    	else
-    	{
-    		FacesMessages.instance()
-    		.addToControl("confirm", "Aggiungere la documentazione ASL");
-    	}
-    	return null;
-    	
-    }
-    
     public void clearUploadData()
-    {
-    	//files.clear();
-    	System.out.println("cancello?");
-    	
+    {	
     	file.delete();
-    	//files.clear();
     	uploadsAvailable++;
     	size = 0;
     }
@@ -93,15 +77,6 @@ public class FileUpload implements Serializable
 	public void setAutoUpload(boolean autoUpload) {
 		this.autoUpload = autoUpload;
 	}
-/*
-	public ArrayList<File> getFiles() {
-		return files;
-	}
-
-	public void setFiles(ArrayList<File> files) {
-		this.files = files;
-	}
-*/
 	
 	public File getFile() {
 		return file;
@@ -156,5 +131,13 @@ public class FileUpload implements Serializable
 	@NotNull
 	public String getSavePath() {
 		return savePath;
+	}
+
+	public void setErrore(String errore) {
+		this.errore = errore;
+	}
+
+	public String getErrore() {
+		return errore;
 	}
 }

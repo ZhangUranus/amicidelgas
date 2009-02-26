@@ -14,12 +14,13 @@
 	<h:form id="registrazioneCybercontadinoForm">
 
     <rich:panel>
-        <f:facet name="header">Passo 1 - Richiesta registrazione</f:facet>
+        <f:facet name="header">Richiesta registrazione: Passo 1 - Dati Azienda</f:facet>
         
         <s:decorate id="partitaIvaField" template="/layout/edit.xhtml">
                 <ui:define name="label">Partita IVA</ui:define>
                 <h:inputText id="partitaIva"
                        required="true"
+                       requiredMessage="Inserire la partita IVA"
                            size="32"
                       maxlength="11"
                       value="#{newCybercontadino.partitaIva}">
@@ -29,7 +30,7 @@
                     ajaxSingle="true"/>   
                 </h:inputText>
                 <h:outputText value="#{newControlloBean.myResponsePartitaIva}" 
-                style="color:red;"/>
+                style="color:red;" />
                 
             </s:decorate>
 
@@ -37,6 +38,7 @@
                 <ui:define name="label">Nome Azienda</ui:define>
                 <h:inputText id="nomeAzienda"
                        required="true"
+                       requiredMessage="Inserire il nome dell'azienda"
                            size="32"
                       maxlength="50"
                           value="#{newCybercontadino.nomeAzienda}">
@@ -46,9 +48,10 @@
 
 
             <s:decorate id="nomePresidenteField" template="/layout/edit.xhtml">
-                <ui:define name="label">Nome del Presidente</ui:define>
+                <ui:define name="label">Nome Presidente</ui:define>
                 <h:inputText id="nomePresidente"
                        required="true"
+                       requiredMessage="Inserire il nome del presidente dell'azienda"
                            size="32"
                       maxlength="50"
                           value="#{newCybercontadino.nomePresidente}">
@@ -57,9 +60,10 @@
             </s:decorate>
             
             <s:decorate id="cognomePresidenteField" template="/layout/edit.xhtml">
-                <ui:define name="label">Cognome del Presidente</ui:define>
+                <ui:define name="label">Cognome Presidente</ui:define>
                 <h:inputText id="cognomePresidente"
                        required="true"
+                       requiredMessage="Inserire il cognome del presidente dell'azienda"
                            size="32"
                       maxlength="50"
                           value="#{newCybercontadino.cognomePresidente}">
@@ -68,10 +72,13 @@
             </s:decorate>
 			
 			<s:decorate id="provinciaField" template="/layout/edit.xhtml">
-                <ui:define name="label">Provincia di residenza</ui:define>
+                <ui:define name="label">Provincia Sede Azienda</ui:define>
                 <h:selectOneMenu 
                 	id="provinciaSelect"
-                	value="#{newComuneProvinciaBean.provincia}">
+                	value="#{newComuneProvinciaBean.provincia}"
+                	required="true"
+                	requiredMessage="Inserire la provincia della sede dell'azienda"
+                	>
                  <a:support event="onchange" ajaxSingle="true" reRender="provinciaField" 
                  />
           
@@ -88,11 +95,13 @@
 			
 			
 			<s:decorate id="comuneSuggestionField" template="/layout/edit.xhtml">
-                <ui:define name="label">Comune di Residenza (suggestion box)</ui:define>
+                <ui:define name="label">Comune Sede Azienda (suggestion box)</ui:define>
                 <h:inputText 
                 	id="comuneSuggestion"
                 	size="32"
                		value="Seleziona prima una provincia"
+               		required="true"
+               		requiredMessage="Inserire il comune dove risiede l'azienda"
                		onclick="resetValue()"
                >
                 </h:inputText>
@@ -123,6 +132,7 @@
                 <ui:define name="label">Indirizzo</ui:define>
                 <h:inputText id="indirizzo"
                        required="true"
+                       requiredMessage="Inserire l'indirizzo dell'azienda"
                            size="32"
                       maxlength="100"
                           value="#{newCybercontadino.indirizzo}">
@@ -132,9 +142,10 @@
 
 	
             <s:decorate id="recapitoTelefonicoField" template="/layout/edit.xhtml">
-                <ui:define name="label">Recapito telefonico</ui:define>
+                <ui:define name="label">Recapito Telefonico</ui:define>
                 <h:inputText id="recapitoTelefonico"
                        required="true"
+                       requiredMessage="Inserire il recapito telefonico per l'azienda"
                            size="32"
                       maxlength="45"
                           value="#{newCybercontadino.recapitoTelefonico}">
@@ -147,6 +158,7 @@
                 <ui:define name="label">Email</ui:define>
                 <h:inputText id="email"
                        required="true"
+                       requiredMessage="Inserire un'email valida per confermare la registrazione"
                            size="32"
                       maxlength="70"
                           value="#{newCybercontadino.email}">
@@ -156,13 +168,13 @@
 
 			<div style="clear:both">
                 <span class="required">*</span>
-                Campi richiesti
+                Campi Richiesti
             </div>
 
 	</rich:panel>
 
 
-            <h:commandButton id="passo1" value="procedi al passo2" action="passo1Outcome"/>
+            <h:commandButton id="passo1" value="procedi al passo2" action="#{newControlloBean.action}"/>
 
      </h:form>
 

@@ -2,6 +2,9 @@ package org.domain.SeamAmiciDelGas.session;
 
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
+import javax.faces.validator.ValidatorException;
+
 import org.domain.SeamAmiciDelGas.crud.AccountList;
 import org.domain.SeamAmiciDelGas.crud.CybercontadinoList;
 import org.domain.SeamAmiciDelGas.crud.UtenteList;
@@ -12,8 +15,11 @@ import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Logger;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
+import org.jboss.seam.annotations.faces.Validator;
+import org.jboss.seam.annotations.intercept.BypassInterceptors;
 import org.jboss.seam.international.StatusMessages;
 import org.jboss.seam.log.Log;
+import org.jboss.seam.Component;
 import org.jboss.seam.ScopeType;
 
 @Name(value="newControlloBean")
@@ -21,11 +27,7 @@ import org.jboss.seam.ScopeType;
 public class ControlloBean {
 
 	@Logger
-	private Log log;
-	
-	@In 
-    StatusMessages statusMessages;
-	
+	private Log log;	
 	@In(value="newUtente", create=true)
 	private Utente utente;
 	@In(value="newAccount", create=true)
@@ -52,7 +54,7 @@ public class ControlloBean {
 		utenteList.setEjbql("select utente from Utente utente where utente.codiceFiscale='"+utente.getCodiceFiscale()+"'");
 		List<Utente> lu = utenteList.getResultList();
 		if(!lu.isEmpty())
-			myResponseCodiceFiscale = "  Il codice fiscale inserito è già presente nel database";
+			myResponseCodiceFiscale = "  Il codice fiscale inserito ï¿½ giï¿½ presente nel database";
 		else
 			myResponseCodiceFiscale  = null;
 	}
@@ -75,7 +77,7 @@ public class ControlloBean {
 		utenteList.setEjbql("select utente from Utente utente where utente.email='"+utente.getEmail()+"'");
 		List<Utente> lu = utenteList.getResultList();
 		if(!lu.isEmpty())
-			myResponseEmail = "  L'email inserita è già presente nel database";
+			myResponseEmail = "  L'email inserita ï¿½ giï¿½ presente nel database";
 		else
 			myResponseEmail  = null;
 	}
@@ -99,7 +101,9 @@ public class ControlloBean {
 		accountList.setEjbql("select account from Account account where account.username='"+account.getUsername()+"'");
 		List<Account> lu = accountList.getResultList();
 		if(!lu.isEmpty())
+		{
 			myResponseUserName = "  Username non disponbile";
+		}
 		else
 			myResponseUserName  = null;
 	}
@@ -119,7 +123,6 @@ public class ControlloBean {
     {
         // implement your business logic here
         log.info("ControllaParitaIva.controllaParitaIva() action called");
-        statusMessages.add("controllaParitaIva");
         contadinoList.setEjbql("select contadino from Cybercontadino contadino where contadino.partitaIva='"+contadino.getPartitaIva()+"'");
 		List<Cybercontadino> lu = contadinoList.getResultList();
 		if(!lu.isEmpty())
@@ -145,7 +148,16 @@ public class ControlloBean {
 		if(myResponseCodiceFiscale==null && myResponseEmail==null)
 			return "passo1Outcome"; //posso procedere con la registrazione passo2 :-)
 		else
-			return null;//uno dei due campi o tutti e due sono già presenti del database
+			return null;//uno dei due campi o tutti e due sono giï¿½ presenti del database
+			
+	}
+	
+	public String action()
+	{
+		if(myResponsePartitaIva==null && myResponseEmail==null)
+			return "passo1Outcome"; //posso procedere con la registrazione passo2 :-)
+		else
+			return null;//uno dei due campi o tutti e due sono giï¿½ presenti del database
 			
 	}
 

@@ -13,10 +13,10 @@
 	<h:form id="passo2Form">
 
     <rich:panel>
-        <f:facet name="header">Passo 2 - Dati Account</f:facet>
+        <f:facet name="header">Richiesta registrazione: Passo 2 - Dati Account</f:facet>
             
             <s:decorate id="tipocartaField" template="/layout/edit.xhtml">
-                <ui:define name="label">Carta di credito</ui:define>
+                <ui:define name="label">Carta di Credito</ui:define>
                 <h:selectOneRadio value="#{newPagamento.tipoCarta}" required="true" requiredMessage="Scegliere il tipo di carta di credito">
 				  <f:selectItem itemLabel="  " itemValue="Visa" ><img src="/SeamAmiciDelGas/img/creditcard_visa.png" /></f:selectItem>
 				  <f:selectItem itemLabel="  " itemValue="MasterCard" ><img src="/SeamAmiciDelGas/img/creditcard_mastercard.png" /></f:selectItem>
@@ -26,9 +26,10 @@
             </s:decorate>
 
 			<s:decorate id="numerocartaField" template="/layout/edit.xhtml">
-                <ui:define name="label">Numero carta</ui:define>
+                <ui:define name="label">Numero Carta</ui:define>
                 <h:inputText id="numerocarta"
                        required="true"
+                       requiredMessage="Inserire il numero della carta di credito"
                            size="24"
                       maxlength="16"
                           value="#{newPagamento.numeroCarta}">
@@ -40,16 +41,18 @@
                 <ui:define name="label">Username</ui:define>
                 <h:inputText id="username"
                        required="true"
+                       requiredMessage="Inserire un'username valido"
                            size="24"
                       maxlength="20"
-                          value="#{newAccount.username}">
+                          value="#{newAccount.username}"
+                          >
                     <a:support event="onblur" 
                     reRender="usernameField" 
                     action="#{newControlloBean.controllaUserName()}"
                     ajaxSingle="true"/>   
                 </h:inputText>
-                <h:outputText value="#{newControlloBean.myResponseUserName}" 
-                style="color:red;"/>
+              <h:outputText value="#{newControlloBean.myResponseUserName}" 
+                style="color:red;" />
             </s:decorate>
             
             <script type="text/javascript">
@@ -58,7 +61,7 @@
 						var one = document.getElementById('passo2Form:passwordField:password').value;
 						var two = document.getElementById('passo2Form:confirmPasswordField:confirmPassword').value;
 						
-						if ((one != two) && (one!=null) ) {
+						if ((one != two) || (one == "") ) {
 							document.getElementById('passo2Form:confirmPasswordField:confirmPassword').value = "";
 							document.getElementById('passo2Form:controlloPasswordField:controlloPassword').innerHTML = "<img src=\"/SeamAmiciDelGas/img/not_valid.png\"/>";
 						} else {
@@ -72,6 +75,7 @@
                 <ui:define name="label">Password</ui:define>
                 <h:inputText id="password"
                        required="true"
+                       requiredMessage="Inserire una password valida"
                            size="24"
                       maxlength="16"
                           value="#{passwordBean.password}">
@@ -83,6 +87,7 @@
                 <h:inputText id="confirmPassword"
                 		onblur="verificaPassword()"
                        required="true"
+                       requiredMessage="Ripetere la password"
                            size="24"
                       maxlength="16"
                           value="#{passwordBean.confirm}"
@@ -92,14 +97,15 @@
             </s:decorate>
             
             <s:decorate id="controlloPasswordField" template="/layout/edit.xhtml">
-                <ui:define name="label">Controllo password</ui:define>
+                <ui:define name="label">Controllo Password</ui:define>
                 <h:outputText id="controlloPassword" value="...in attesa" />
             </s:decorate>
             
             <s:decorate id="urlWsdlField" template="/layout/edit.xhtml">
-                <ui:define name="label">Inserisci l'url del WSDL</ui:define>
+                <ui:define name="label">Url WSDL</ui:define>
                 <h:inputText id="wsdl"
                        required="true"
+                       requiredMessage="Inserire l'url del WSDL"
                            size="92"
                       maxlength="100"
                           value="#{newCybercontadino.urlWsdl}">
@@ -107,8 +113,9 @@
                 </h:inputText>
             </s:decorate>
             
+            
             <s:decorate id="uploadFileField" template="/layout/edit.xhtml">
-            	<ui:define name="label">Aggiungi documentazione ASL</ui:define>
+            	<ui:define name="label">Documentazione ASL</ui:define>
 	       <h:panelGrid columns="3" columnClasses="top,top">
 	            <rich:fileUpload
 	            id="upload"
@@ -124,6 +131,7 @@
 	                acceptedTypes="doc, pdf, docx, ppt, zip" 
 	                allowFlash="#{newFileUpload.useFlash}"
 	                required="true" 
+	                requiredMessage="Inserire la documentazione ASL richiesta"
 	                >
 	                <f:facet name="label">
                 	<h:outputText value="{_KB}KB from {KB}KB uploaded --- {mm}:{ss}" />
@@ -153,22 +161,26 @@
 
           </s:decorate>
           
+          <s:decorate id="erroreField" template="/layout/edit.xhtml">
+            <h:outputText styleClass="errors" value="#{newFileUpload.errore}" />
+            </s:decorate>
           
           <s:decorate id="verifyCaptchaField" template="/layout/edit.xhtml">
-				<ui:define name="label">Security check</ui:define>
+				<ui:define name="label">Security Check</ui:define>
 				<h:graphicImage value="/seam/resource/captcha"/>
-				<h:inputText value="#{captcha.response}" required="true"/>
+				<h:inputText value="#{captcha.response}" required="true"
+				requiredMessage="Inserire la somma dei numeri per continuare la registrazione"/>
 			</s:decorate>
 
 			<div style="clear:both">
                 <span class="required">*</span>
-                Campi richiesti
+                Campi Richiesti
             </div>
 
     </rich:panel>
     
     	<div class="actionButtons">
-            <h:commandButton id="passo3" value="procedi al passo 3" action="#{newFileUpload.action}"/>
+            <h:commandButton id="passo3" value="procedi al passo 3" action="#{registrazioneCybercontadino.action}"/>
         </div>
     
     </h:form>

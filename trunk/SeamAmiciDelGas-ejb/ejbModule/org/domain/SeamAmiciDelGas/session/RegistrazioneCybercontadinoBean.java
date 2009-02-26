@@ -51,6 +51,8 @@ public class RegistrazioneCybercontadinoBean implements RegistrazioneCybercontad
     private FileUpload fileUpload;
     @In(value="newPagamento", create=true)
     private Pagamentoelettronico pagamento;
+    @In(value="newControlloBean", create=true)
+    private ControlloBean controllo;
 //   @In(value="registrationMailer",create=true)
 //    private RegistrationMailer registrationMailer;
     
@@ -106,6 +108,26 @@ public class RegistrazioneCybercontadinoBean implements RegistrazioneCybercontad
         statusMessages.add("Avvenuta Registrazione Cybercontadino");
         
     	return true;
+    }
+    
+    public String action()
+    {
+    	if(fileUpload.getFile() != null && controllo.getMyResponseUserName()== null)
+    	{
+    		fileUpload.setErrore(null);
+    		return "passo2Outcome";
+    	}	
+    	if(controllo.getMyResponseUserName()!= null)
+    	{
+    		return null;
+    	}
+    	else
+    	{
+    		fileUpload.setErrore("Aggiungere la documentazione ASL");
+    		//errore="Aggiungere la documentazione ASL";
+    		return null;
+    	}
+    	
     }
 
     // add additional action methods
