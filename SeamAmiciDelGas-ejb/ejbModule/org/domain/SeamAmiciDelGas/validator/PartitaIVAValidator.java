@@ -2,16 +2,17 @@ package org.domain.SeamAmiciDelGas.validator;
 
 import java.io.Serializable;
 import java.lang.annotation.Annotation;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.hibernate.validator.Validator;
 
 
 public class PartitaIVAValidator implements Validator, Serializable
 {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3599243249440591195L;
 
 	public void initialize(PartitaIVA arg0) {
 		// TODO Auto-generated method stub

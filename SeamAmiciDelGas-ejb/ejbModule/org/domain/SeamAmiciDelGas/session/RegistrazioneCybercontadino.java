@@ -7,6 +7,8 @@ public interface RegistrazioneCybercontadino
 {
     // seam-gen method
     public boolean registrazioneCybercontadino();
+    
+    public String action();
 
     // add additional interface methods here
     public void destroy();
