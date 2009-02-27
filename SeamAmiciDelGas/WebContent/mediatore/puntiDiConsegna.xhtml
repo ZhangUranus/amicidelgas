@@ -1,0 +1,155 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:a="http://richfaces.org/a4j"
+    template="/layout/template.xhtml">
+
+	<ui:define name="body">
+	
+	<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAA9kD5_OmN0uEDmhZR1SpkhQLRfBUDvGNHCcx6kAPzaLMZO9K4BQY3rNdRxgSHx9ShvHtxi2RXo5rCw"
+      type="text/javascript"></script>
+<script type="text/javascript"><!--
+var geocoder;
+var point;
+
+function Indirizzo(via,comune,provincia,categoria_mark,categoria_mark2,categoria_mark3){
+	this.via = via;
+	this.comune = comune;
+	this.provincia = provincia;
+	this.categoria_mark = categoria_mark;
+	this.categoria_mark2 = categoria_mark2;
+	this.categoria_mark3 = categoria_mark3;
+	
+	this.getCognomeNome = function(){
+	if (categoria_mark3!=null) return categoria_mark + "," + categoria_mark2+ "," + categoria_mark3;
+		return categoria_mark + "," + categoria_mark2;
+	}
+	
+	this.getAddress = function (){
+		return via+", "+ comune +" (" + provincia +")";	
+	}
+	this.getComune = function(){
+		return comune +" (" + provincia +")";
+	}
+}
+   function load() {
+     if (GBrowserIsCompatible()) {
+
+       map = new GMap2(document.getElementById("map1"));
+	map.enableDoubleClickZoom();
+	map.enableContinuousZoom();
+       map.setCenter(new GLatLng(41.134193, 14.775925), 13);
+	map.addControl(new GSmallMapControl());
+       map.addControl(new GMapTypeControl());
+	// Create our "tiny" marker icon
+       var blueIcon = new GIcon(G_DEFAULT_ICON);
+       blueIcon.image = "http://gmaps-samples.googlecode.com/svn/trunk/markers/blue/blank.png";
+	
+	// Set up our GMarkerOptions object
+	markerOptions = { 
+	//icon:blueIcon ,
+	clickable:true
+	};
+
+       // Add 10 markers to the map at random locations
+       var bounds = map.getBounds();
+       var southWest = bounds.getSouthWest();
+       var northEast = bounds.getNorthEast();
+       var lngSpan = northEast.lng() - southWest.lng();
+       var latSpan = northEast.lat() - southWest.lat();
+	var geocoder = null;
+	var addressPoint=null;
+	
+	//geocoder
+	geocoder = new GClientGeocoder();
+
+	var count = parseInt("#{puntiDiConsegnaList.resultList.size()}");
+
+	//address=null;
+	for(i=0; i<count; i++ ){
+		
+		var indirizzo = new Indirizzo("#{newPuntoDiConsegna.indirizzo}","#{newPuntiDiConsegna.comune.nome}","#{newPuntiDiConsegna.comune.provinces.nome}");
+
+		geocoder.getLocations(indirizzo.getAddress(), getCallBackFor(indirizzo,0));				
+  	}
+	
+     	
+   }
+   }
+   
+   function getCallBackFor(indirizzo,codice){
+			return (function(data, response){
+				if(data.Status.code == "200"){
+					point = data.Placemark[0].Point.coordinates;
+					
+					var point2 = new GLatLng(point[1],point[0]);
+					var mark = new GMarker(point2, {title: indirizzo.getCognomeNome()});
+					map.addOverlay(mark);
+					map.panTo(mark.getPoint());
+					mark.bindInfoWindowHtml('<b>Punto di Consegna</b><p>'+ mark.getTitle() +'</p><p><div align=\"center\" class=\"colore_1\">'+indirizzo.getAddress()+'</div></p>');
+							
+					GEvent.addListener(mark, "infowindowopen", function() {
+						map.setZoom(16);
+						map.panTo(mark.getPoint());
+						map.panDirection(0, 1);
+					});
+					GEvent.addListener(mark, "infowindowclose", function() {map.setZoom(13); map.panTo(mark.getPoint());});
+				}
+				else if(data.Status.code =="602" && codice == 0){
+					new GClientGeocoder().getLocations(indirizzo.getComune(), getCallBackFor(indirizzo,1));
+				}
+			});
+		}
+		
+window.onunload = function(){
+	GUnload();
+	
+}
+window.onload = function(){
+	load();
+	
+}		
+   --></script>
+	
+	<table width="96%" border="0" cellspacing="0" cellpadding="0" align="center" >
+		<tr>
+			<td>
+				<div>Succegirmenti Punti di Consegna</div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<table width="98%" border="0" cellspacing="4" cellpadding="0" align="center">
+					<tr>
+						<td width="50%">
+							<div id="map1"  align="right" style="width: 60%; height: 300px"></div>
+						</td>
+						<td width="50%">
+							<table width="98%" border="0" cellspacing="4" cellpadding="0" align="center">
+								<tr>
+									<td>
+									Pulsante Aggiungi
+									</td>
+								</tr>
+								<tr>
+									<td>
+									Data Table
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+			</td>
+		
+		</tr>
+	
+	
+	
+	</table>
+	</ui:define>
+</ui:composition>
