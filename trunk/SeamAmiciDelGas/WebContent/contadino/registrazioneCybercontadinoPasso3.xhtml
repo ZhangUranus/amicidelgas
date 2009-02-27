@@ -15,6 +15,7 @@
 <script type="text/javascript"><!--
 var geocoder;
 var point;
+var gasIcon;
 
 function Indirizzo(via,comune,provincia,categoria_mark,categoria_mark2,categoria_mark3){
 	this.via = via;
@@ -46,12 +47,20 @@ function Indirizzo(via,comune,provincia,categoria_mark,categoria_mark2,categoria
 	map.addControl(new GSmallMapControl());
        map.addControl(new GMapTypeControl());
 	// Create our "tiny" marker icon
-       var blueIcon = new GIcon(G_DEFAULT_ICON);
-       blueIcon.image = "http://gmaps-samples.googlecode.com/svn/trunk/markers/blue/blank.png";
+    //   var blueIcon = new GIcon();
+     // blueIcon.image = "http://gmaps-samples.googlecode.com/svn/trunk/markers/blue/blank.png";
+     gasIcon = new GIcon();
+     gasIcon.image= "/SeamAmiciDelGas/img/gmap_fiamma.png";
+     gasIcon.shadow="/SeamAmiciDelGas/img/gmap_fiamma_ombra.png";
+     gasIcon.iconSize= new GSize(18 , 28);
+    gasIcon.iconAnchor = new GPoint(5, 34);
+    gasIcon.infoWindowAnchor = new GPoint(5, 2);
+    gasIcon.infoShadowAnchor = new GPoint(14, 25);
 	
 	// Set up our GMarkerOptions object
 	markerOptions = { 
-	//icon:blueIcon 
+//	icon:blueIcon ,
+	icon:gasIcon ,
 	clickable:true
 	};
 
@@ -81,7 +90,7 @@ function Indirizzo(via,comune,provincia,categoria_mark,categoria_mark2,categoria
 					point = data.Placemark[0].Point.coordinates;
 					
 					var point2 = new GLatLng(point[1],point[0]);
-					var mark = new GMarker(point2, {title: indirizzo.getCognomeNome()});
+					var mark = new GMarker(point2, {title: indirizzo.getCognomeNome() , icon:gasIcon} );
 					map.addOverlay(mark);
 					map.panTo(mark.getPoint());
 					setCoordinate();
