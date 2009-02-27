@@ -66,7 +66,7 @@
 	<bpm:jbpm>
 		<bpm:process-definitions>
 			<value>processes/becomeDriver/processdefinition.xml</value>
-
+			<value>processes/notificatore/processdefinition.xml</value>
 		</bpm:process-definitions>
 		<bpm:pageflow-definitions></bpm:pageflow-definitions>
 	</bpm:jbpm>
