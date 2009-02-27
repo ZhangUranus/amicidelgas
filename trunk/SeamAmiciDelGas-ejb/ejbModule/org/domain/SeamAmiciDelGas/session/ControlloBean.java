@@ -154,7 +154,7 @@ public class ControlloBean {
 	
 	public String action()
 	{
-		if(myResponsePartitaIva==null && myResponseEmail==null)
+		if(myResponsePartitaIva==null)
 			return "passo1Outcome"; //posso procedere con la registrazione passo2 :-)
 		else
 			return null;//uno dei due campi o tutti e due sono gi� presenti del database
