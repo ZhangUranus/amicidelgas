@@ -80,7 +80,7 @@
 				                    <h:graphicImage value="/img/modifica_mini.png" style="border:0" />
 				                </a:commandLink>
 				                <rich:toolTip for="richiestaCustomerLink" value="Valuta la richiesta di registrazione"/>
-				            </rich:column>
+			            </rich:column>
                
 			    	</rich:dataTable>
 			    	<rich:datascroller align="center" for="table1" id="sc1" rendered="true"/>    
@@ -111,40 +111,32 @@
 								<h:outputText value="#{_contadinoRichiesta.nomeAzienda}" id="nomeAzienda" />
 		        		</rich:column>
 		       			
-		       			<rich:column>
-							<f:facet name="header">
-								<h:outputText value="Presidente" />
-							</f:facet>
-								<h:outputText value="#{_contadinoRichiesta.nomePresidente} #{_contadinoRichiesta.cognomePresidente}" id="presidente" />
-		        		</rich:column>
-		       			
-		       			<rich:column>
-							<f:facet name="header">
-								<h:outputText value="Comune" />
-							</f:facet>
-								<h:outputText value="#{_contadinoRichiesta.comune.nome}" id="comuneContadino" />
-		        		</rich:column>
-		        		
-		        		<rich:column>
-							<f:facet name="header">
-								<h:outputText value="email" />
-							</f:facet>
-								<h:outputText value="#{_contadinoRichiesta.email}" id="emailContadino" />
-		        		</rich:column>
+		       		       			
+		       			<rich:column align="center">
+			                <f:facet name="header">
+		                        Dettagli
+			                </f:facet>
+			                <a:commandLink ajaxSingle="true" id="dettagliContadinoLink"
+			                    oncomplete="#{rich:component('dettagliContadinoPanel')}.show()">
+			                    	<f:setPropertyActionListener value="#{_contadinoRichiesta}" target="#{gestioneRegistrazioniBean.currentContadino}" />
+				                    <h:graphicImage value="/img/modifica_mini.png" style="border:0" />
+				                </a:commandLink>
+				                <rich:toolTip for="dettagliContadinoLink" value="Visualizza i dati del cyber contadino"/>
+				            </rich:column>
 		        		
 		        		<rich:column align="center">
 			                <f:facet name="header">
-		                        Notifica
+		                        Notifica Utenti
 			                </f:facet>
-			                <a:commandLink ajaxSingle="true" id="contattaContadinolink"
-			                    oncomplete="#{rich:component('contattaContadinoPanel')}.show()">
+			                <a:commandLink ajaxSingle="true" id="requestInviatilink"
+			                    oncomplete="#{rich:component('requestInviatiPanel')}.show()">
 				                    <f:setPropertyActionListener value="#{_contadinoRichiesta}" target="#{gestioneRegistrazioniBean.currentContadino}" />
 				                    <h:graphicImage value="/img/email.jpg" style="border:" width="41" height="32"/>
 				                </a:commandLink>
-				                <rich:toolTip for="contattaContadinolink" value="Invia una notifica al contadino"/>
+				                <rich:toolTip for="requestInviatilink" value="Proponi agli utenti Gas di diventare inviati"/>
 			            </rich:column>
-		       			
-		       			<rich:column align="center">
+			            
+			            <rich:column align="center">
 			                <f:facet name="header">
 		                        Inviati
 			                </f:facet>
@@ -155,7 +147,21 @@
 				                </a:commandLink>
 				                <rich:toolTip for="inviatilink" value="Seleziona inviati"/>
 			            </rich:column>
+		        		
+		        		<rich:column align="center">
+			                <f:facet name="header">
+		                        Notifica Contadino
+			                </f:facet>
+			                <a:commandLink ajaxSingle="true" id="contattaContadinolink"
+			                    oncomplete="#{rich:component('contattaContadinoPanel')}.show()">
+				                    <f:setPropertyActionListener value="#{_contadinoRichiesta}" target="#{gestioneRegistrazioniBean.currentContadino}" />
+				                    <h:graphicImage value="/img/email.jpg" style="border:" width="41" height="32"/>
+				                </a:commandLink>
+				                <rich:toolTip for="contattaContadinolink" value="Invia una notifica al contadino"/>
+			            </rich:column>
+		       						       			    			
 		       			
+		       					       			
 		       			<rich:column align="center">
 			                <f:facet name="header">
 		                        Admin
@@ -340,6 +346,61 @@
             	</h:panelGroup>
         	</f:facet>
      </rich:modalPanel>
+     </a:outputPanel>
+     
+     <a:outputPanel ajaxRendered="true">
+       	<rich:modalPanel id="dettagliContadinoPanel" autosized="true" width="500">
+	        	<f:facet name="header">
+	            	<h:outputText value="Informazioni dell'azienda #{gestioneRegistrazioniBean.currentContadino.nomeAzienda}" />
+	        	</f:facet>
+	        	<f:facet name="controls">
+            	<h:panelGroup>
+                	<h:graphicImage value="/img/close.png"
+                    	id="hidelink8" />
+               	 	<rich:componentControl for="dettagliContadinoPanel" attachTo="hidelink8"
+                    	operation="hide" event="onclick" />
+            	</h:panelGroup>
+        	</f:facet>
+        	<h:form>
+	        	<h:panelGrid columns="1">
+	        		<a:outputPanel ajaxRendered="true">
+	        			<h:panelGrid columns="2">
+	        				<h:outputText><b>Presidente: </b></h:outputText>
+	        				<h:outputText value="#{gestioneRegistrazioniBean.currentContadino.nomePresidente} #{gestioneRegistrazioniBean.currentContadino.cognomePresidente}"/>
+	        				<h:outputText><b>Partita IVA: </b></h:outputText>
+	        				<h:outputText value="#{gestioneRegistrazioniBean.currentContadino.partitaIva}"/>
+	        				<h:outputText><b>Comune : </b></h:outputText>
+	        				<h:outputText value="#{gestioneRegistrazioniBean.currentContadino.comune.nome}"/>
+	        				<h:outputText><b>Indirizzo: </b></h:outputText>
+	        				<h:outputText value="#{gestioneRegistrazioniBean.currentContadino.indirizzo}"/>
+	        				<h:outputText><b>E-mail: </b></h:outputText>
+							<h:outputText value="#{gestioneRegistrazioniBean.currentContadino.email}"/>
+							<h:outputText><b>Telefono: </b></h:outputText>
+							<h:outputText value="#{gestioneRegistrazioniBean.currentContadino.recapitoTelefonico}"/>
+							<h:outputText><b>Descrizione azienda: </b></h:outputText>
+							<h:outputText value="#{gestioneRegistrazioniBean.currentContadino.descrizioneAzienda}"/>
+						</h:panelGrid>
+	        		</a:outputPanel>
+                </h:panelGrid>
+                </h:form>
+       	</rich:modalPanel>
+       	</a:outputPanel>
+       	
+       	
+       	<a:outputPanel ajaxRendered="true">
+		<rich:modalPanel id="selezionaInviatiPanel" autosized="true" width="800">
+	        	<f:facet name="header">
+	            	<h:outputText value="Seleziona gli inviati tra gli utenti che hanno dato la disponibilita'  a visitare l'azienda #{gestioneRegistrazioniBean.currentContadino.nomeAzienda}" />
+	        	</f:facet>
+	        	<f:facet name="controls">
+            	<h:panelGroup>
+                	<h:graphicImage value="/img/close.png"
+                    	id="hidelink9" />
+               	 	<rich:componentControl for="selezionaInviatiPanel" attachTo="hidelink9"
+                    	operation="hide" event="onclick" />
+            	</h:panelGroup>
+        		</f:facet>
+     	</rich:modalPanel>
      </a:outputPanel>
 	
 	</ui:define>    
