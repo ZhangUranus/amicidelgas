@@ -95,20 +95,21 @@
 		    <div class="colore_1" align="center">Richieste Registrazioni CyberContadino</div>
 			<h:form>
 		        <a:region>
-			    	<rich:dataTable value="#{gestioneRegistrazioniBean.richiesteContadini}" var="_contadinoRichiesta" id="table2" rows="5" width="50%">
+			    	<rich:dataTable  value="#{pooledTaskInstanceListForType['crea_visita']}"
+			    	 var="_task" id="table2" rows="5" width="50%">
 		       			
 		       			<rich:column>
 							<f:facet name="header">
 								<h:outputText value="Username" />
 							</f:facet>
-								<h:outputText value="#{_contadinoRichiesta.account.username}" id="usernameContadino" />
+								<h:outputText value="#{_task.variables.contadinoCreato.account.username}" id="usernameContadino" />
 		        		</rich:column>
 		        		
 		        		<rich:column>
 							<f:facet name="header">
 								<h:outputText value="Nome Azienda" />
 							</f:facet>
-								<h:outputText value="#{_contadinoRichiesta.nomeAzienda}" id="nomeAzienda" />
+								<h:outputText value="#{_task.variables.contadinoCreato.nomeAzienda}" id="nomeAzienda" />
 		        		</rich:column>
 		       			
 		       		       			
@@ -118,7 +119,7 @@
 			                </f:facet>
 			                <a:commandLink ajaxSingle="true" id="dettagliContadinoLink"
 			                    oncomplete="#{rich:component('dettagliContadinoPanel')}.show()">
-			                    	<f:setPropertyActionListener value="#{_contadinoRichiesta}" target="#{gestioneRegistrazioniBean.currentContadino}" />
+			                    	<f:setPropertyActionListener value="#{_task.variables.contadinoCreato}" target="#{gestioneRegistrazioniBean.currentContadino}" />
 				                    <h:graphicImage value="/img/modifica_mini.png" style="border:0" />
 				                </a:commandLink>
 				                <rich:toolTip for="dettagliContadinoLink" value="Visualizza i dati del cyber contadino"/>
@@ -126,52 +127,15 @@
 		        		
 		        		<rich:column align="center">
 			                <f:facet name="header">
-		                        Notifica Utenti
+		                        Crea visita azienda
 			                </f:facet>
 			                <a:commandLink ajaxSingle="true" id="requestInviatilink"
-			                    oncomplete="#{rich:component('requestInviatiPanel')}.show()">
-				                    <f:setPropertyActionListener value="#{_contadinoRichiesta}" target="#{gestioneRegistrazioniBean.currentContadino}" />
+			                	oncomplete="#{rich:component('creaVisitaAziendaPanel')}.show()">
+				                    <f:setPropertyActionListener value="#{_task.variables.contadinoCreato}" target="#{processoRegistrazione.contadinoCorrente}" />
+				                    <f:setPropertyActionListener value="#{_task}" target="#{processoRegistrazione.taskCorrente}" />
 				                    <h:graphicImage value="/img/email.jpg" style="border:" width="41" height="32"/>
 				                </a:commandLink>
 				                <rich:toolTip for="requestInviatilink" value="Proponi agli utenti Gas di diventare inviati"/>
-			            </rich:column>
-			            
-			            <rich:column align="center">
-			                <f:facet name="header">
-		                        Inviati
-			                </f:facet>
-			                <a:commandLink ajaxSingle="true" id="inviatilink"
-			                    oncomplete="#{rich:component('selezionaInviatiPanel')}.show()">
-				                    <f:setPropertyActionListener value="#{_contadinoRichiesta}" target="#{gestioneRegistrazioniBean.currentContadino}" />
-				                    <h:graphicImage value="/img/inviati.gif" style="border:" width="54" height="43"/>
-				                </a:commandLink>
-				                <rich:toolTip for="inviatilink" value="Seleziona inviati"/>
-			            </rich:column>
-		        		
-		        		<rich:column align="center">
-			                <f:facet name="header">
-		                        Notifica Contadino
-			                </f:facet>
-			                <a:commandLink ajaxSingle="true" id="contattaContadinolink"
-			                    oncomplete="#{rich:component('contattaContadinoPanel')}.show()">
-				                    <f:setPropertyActionListener value="#{_contadinoRichiesta}" target="#{gestioneRegistrazioniBean.currentContadino}" />
-				                    <h:graphicImage value="/img/email.jpg" style="border:" width="41" height="32"/>
-				                </a:commandLink>
-				                <rich:toolTip for="contattaContadinolink" value="Invia una notifica al contadino"/>
-			            </rich:column>
-		       						       			    			
-		       			
-		       					       			
-		       			<rich:column align="center">
-			                <f:facet name="header">
-		                        Admin
-			                </f:facet>
-			                <a:commandLink ajaxSingle="true" id="adminlink"
-			                    oncomplete="#{rich:component('notificaAdminPanel')}.show()">
-				                    <f:setPropertyActionListener value="#{_contadinoRichiesta}" target="#{gestioneRegistrazioniBean.currentContadino}" />
-				                    <h:graphicImage value="/img/email.jpg" style="border:" width="41" height="32"/>
-				                </a:commandLink>
-				                <rich:toolTip for="adminlink" value="Invia una notifica all'amministratore"/>
 			            </rich:column>
 		       		</rich:dataTable>
 		       		<rich:datascroller align="center" for="table2" id="sc2" rendered="true"/>
@@ -388,20 +352,47 @@
        	
        	
        	<a:outputPanel ajaxRendered="true">
-		<rich:modalPanel id="selezionaInviatiPanel" autosized="true" width="800">
-	        	<f:facet name="header">
-	            	<h:outputText value="Seleziona gli inviati tra gli utenti che hanno dato la disponibilita'  a visitare l'azienda #{gestioneRegistrazioniBean.currentContadino.nomeAzienda}" />
-	        	</f:facet>
-	        	<f:facet name="controls">
-            	<h:panelGroup>
-                	<h:graphicImage value="/img/close.png"
-                    	id="hidelink9" />
-               	 	<rich:componentControl for="selezionaInviatiPanel" attachTo="hidelink9"
-                    	operation="hide" event="onclick" />
-            	</h:panelGroup>
-        		</f:facet>
-     	</rich:modalPanel>
-     </a:outputPanel>
+       	 <rich:modalPanel id="creaVisitaAziendaPanel" autosized="true" width="500">
+	        <f:facet name="header">
+	            <h:outputText value="Crea la visita all'azienda del cybercontadino" />
+	        </f:facet>
+	        <f:facet name="controls">
+	            <h:panelGroup>
+	                <h:graphicImage value="/img/close.png"
+	                    id="hideVisitaAziendaLink" />
+	                <rich:componentControl for="creaVisitaAziendaPanel" attachTo="hideVisitaAziendaLink"
+	                    operation="hide" event="onclick" />
+	            </h:panelGroup>
+	        </f:facet>
+	        <h:form>
+	            <rich:messages style="color:red;"></rich:messages>
+	            <a:outputPanel ajaxRendered="true">
+	                <h:panelGrid columns="2">
+	                	<s:decorate id="dataVisitaField" template="/layout/edit.xhtml">
+			                <ui:define name="label">Data proposta</ui:define>
+			                 <rich:calendar id="dataVisita"
+                       			required="true"
+                       			value="#{processoRegistrazione.dataProposta}" datePattern="MM/dd/yyyy">
+                       			<a:support event="onclick" action=#{processoRegistrazione.update} reRender="dataOut"</a:support>
+                  			</rich:calendar>
+                  			<h:outputText id="dataOut" value="Data selezionata: #{processoRegistrazione.dataProposta}" />
+			            </s:decorate>
+			       </h:panelGrid>
+	                <rich:message showSummary="true" showDetail="false" for="dataVisitaField"/>
+	            </a:outputPanel>
+	            <s:button value="Invia richiesta di visita" 
+	            	taskInstance="#{processoRegistrazione.taskCorrente}" 
+	            	action="#{processoRegistrazione.creaVisita()}"
+	            		
+	            >
+	            <a:support event="onclick" action=#{processoRegistrazione.update}</a:support>
+	            </s:button>
+	            
+	            <a:commandButton action="updateData" immediate="false" value="Aggiorna la data" />
+	        	
+	        </h:form>
+	    </rich:modalPanel> 
+       	</a:outputPanel>
 	
 	</ui:define>    
     
