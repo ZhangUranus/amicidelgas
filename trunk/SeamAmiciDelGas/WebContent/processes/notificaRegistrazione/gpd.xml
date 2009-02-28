@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<root-container name="notificaRegistrazione" width="996" height="681">
+<root-container name="notificaRegistrazione" width="1374" height="717">
   <node name="Richiesta registrazione" x="179" y="10" width="192" height="36">
     <edge>
       <label x="5" y="-10"/>
@@ -10,55 +10,48 @@
     <edge>
       <label x="5" y="-10"/>
     </edge>
+  </node>
+  <node name="partecipa al gruppo" x="252" y="155" width="251" height="36">
     <edge>
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="partecipa al gruppo" x="55" y="161" width="251" height="36">
+  <node name="Seleziona Inviati" x="316" y="235" width="132" height="36">
     <edge>
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="Seleziona Inviati" x="98" y="256" width="132" height="36">
-    <edge>
-      <label x="5" y="-10"/>
-    </edge>
-    <edge>
-      <label x="5" y="-10"/>
-    </edge>
-  </node>
-  <node name="Conferma" x="90" y="364" width="132" height="36">
+  <node name="Conferma" x="596" y="324" width="132" height="36">
     <edge>
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="EmailAppuntamentoAzienda" x="546" y="137" width="254" height="35">
-    <edge>
-      <label x="5" y="-10"/>
-      <bendpoint w1="-51" h1="101" w2="220" h2="155"/>
-    </edge>
-  </node>
-  <node name="Aspetta Timer per compilare questionario" x="408" y="303" width="270" height="52">
+  <node name="EmailAppuntamentoAzienda" x="732" y="160" width="254" height="35">
     <edge>
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="Riempire questionario" x="115" y="428" width="212" height="36">
+  <node name="Aspetta Timer per compilare questionario" x="542" y="408" width="270" height="52">
     <edge>
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="Aspetta che tutti i questionari siano compilati" x="449" y="457" width="132" height="36">
+  <node name="Riempire questionario" x="143" y="409" width="212" height="36">
     <edge>
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="Controlla Registrazione Contadino" x="29" y="532" width="234" height="36">
+  <node name="Aspetta che tutti i questionari siano compilati" x="497" y="487" width="323" height="36">
     <edge>
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="AccettaRifiuta" x="391" y="554" width="132" height="36">
+  <node name="Controlla Registrazione Contadino" x="142" y="567" width="234" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="AccettaRifiuta" x="432" y="625" width="132" height="36">
     <edge>
       <label x="5" y="-10"/>
     </edge>
@@ -66,11 +59,24 @@
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="EmailRegistrazione" x="647" y="570" width="132" height="36">
+  <node name="EmailRegistrazione" x="750" y="636" width="132" height="36">
     <edge>
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="Contadino Rifiutato" x="159" y="607" width="132" height="36"/>
-  <node name="Contadino Accettato" x="382" y="644" width="132" height="36"/>
+  <node name="Contadino Rifiutato" x="194" y="680" width="132" height="36"/>
+  <node name="Contadino Accettato" x="1004" y="642" width="132" height="36"/>
+  <node name="fork1" x="514" y="84" width="252" height="24">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="join1" x="518" y="278" width="252" height="24">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
 </root-container>
