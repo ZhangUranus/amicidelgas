@@ -104,7 +104,7 @@ public class RichiestaRegistrazioneBean implements RichiestaRegistrazione
     	role.setName("utenteGas");
     	em.persist(role);
     	
-    	//registrationMailer.sendWelcomeEmail();
+    	registrationMailer.sendWelcomeEmail();
     	
         // implement your business logic here
         log.info("richiestaRegistrazione.richiestaRegistrazione() action called");

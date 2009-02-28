@@ -9,8 +9,8 @@
 
 
 	<task-node name="Crea Evento Azienda da visitare">
-		<transition to="partecipa al gruppo" name="notificaInviati"></transition>
-		<transition to="EmailAppuntamentoAzienda" name="inviaAppuntamento"></transition>
+		<task name="crea_visita"></task>
+		<transition to="fork1"></transition>
 	</task-node>
 
 	<task-node name="partecipa al gruppo">
@@ -18,8 +18,7 @@
 	</task-node>
 
 	<task-node name="Seleziona Inviati">
-		<transition to="Conferma" name="notificaInfo"></transition>
-		<transition to="EmailAppuntamentoAzienda" name="to contadino mail"></transition>
+		<transition to="join1" name="notifica_info"></transition>
 	</task-node>
 
 	<task-node name="Conferma">
@@ -27,7 +26,7 @@
 	</task-node>
 
 	<mail-node name="EmailAppuntamentoAzienda">
-		<transition to="Crea Evento Azienda da visitare" name="rispostaContadino"></transition>
+		<transition to="join1"></transition>
 	</mail-node>
 
 	<state name="Aspetta Timer per compilare questionario">
@@ -54,6 +53,15 @@
 	<mail-node name="EmailRegistrazione">
 		<transition to="Contadino Accettato" name="ok"></transition>
 	</mail-node>
+
+	<fork name="fork1">
+		<transition to="partecipa al gruppo" name="notifica_inviati"></transition>
+		<transition to="EmailAppuntamentoAzienda" name="to EmailAppuntamentoAzienda"></transition>
+	</fork>
+
+	<join name="join1">
+		<transition to="Conferma"></transition>
+	</join>
 
 
 	<end-state name="Contadino Rifiutato"></end-state>
