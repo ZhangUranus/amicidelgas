@@ -15,6 +15,7 @@ import org.domain.SeamAmiciDelGas.entity.Comune;
 import org.domain.SeamAmiciDelGas.entity.Cybercontadino;
 import org.domain.SeamAmiciDelGas.entity.Pagamentoelettronico;
 import org.domain.SeamAmiciDelGas.entity.Role;
+import org.domain.SeamAmiciDelGas.processes.ProcessoRegistrazione;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.Destroy;
 import org.jboss.seam.annotations.Name;
@@ -53,6 +54,8 @@ public class RegistrazioneCybercontadinoBean implements RegistrazioneCybercontad
     private Pagamentoelettronico pagamento;
     @In(value="newControlloBean", create=true)
     private ControlloBean controllo;
+    @In(value="processoRegistrazione",create=true)
+    private ProcessoRegistrazione processo;
 //   @In(value="registrationMailer",create=true)
 //    private RegistrationMailer registrationMailer;
     
@@ -107,6 +110,7 @@ public class RegistrazioneCybercontadinoBean implements RegistrazioneCybercontad
     	log.info("registrazionecubercontadino.registrazionecybercontadino() action called");
         statusMessages.add("Avvenuta Registrazione Cybercontadino");
         
+        processo.inviaRegistrazione();
     	return true;
     }
     
