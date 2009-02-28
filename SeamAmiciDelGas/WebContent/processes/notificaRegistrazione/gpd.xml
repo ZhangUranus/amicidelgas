@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root-container name="notificaRegistrazione" width="996" height="681">
+  <node name="Richiesta registrazione" x="179" y="10" width="192" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="Crea Evento Azienda da visitare" x="157" y="86" width="240" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="partecipa al gruppo" x="55" y="161" width="251" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="Seleziona Inviati" x="98" y="256" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="Conferma" x="90" y="364" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="EmailAppuntamentoAzienda" x="546" y="137" width="254" height="35">
+    <edge>
+      <label x="5" y="-10"/>
+      <bendpoint w1="-51" h1="101" w2="220" h2="155"/>
+    </edge>
+  </node>
+  <node name="Aspetta Timer per compilare questionario" x="408" y="303" width="270" height="52">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="Riempire questionario" x="115" y="428" width="212" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="Aspetta che tutti i questionari siano compilati" x="449" y="457" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="Controlla Registrazione Contadino" x="29" y="532" width="234" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="AccettaRifiuta" x="391" y="554" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="EmailRegistrazione" x="647" y="570" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="Contadino Rifiutato" x="159" y="607" width="132" height="36"/>
+  <node name="Contadino Accettato" x="382" y="644" width="132" height="36"/>
+</root-container>

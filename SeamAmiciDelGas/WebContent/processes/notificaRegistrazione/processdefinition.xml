@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process-definition  xmlns=""  name="notificaRegistrazione">
+
+
+	<start-state name="Richiesta registrazione">
+		<transition to="Crea Evento Azienda da visitare" name="inviaRegistrazione"></transition>
+	</start-state>
+
+
+	<task-node name="Crea Evento Azienda da visitare">
+		<transition to="partecipa al gruppo" name="notificaInviati"></transition>
+		<transition to="EmailAppuntamentoAzienda" name="inviaAppuntamento"></transition>
+	</task-node>
+
+	<task-node name="partecipa al gruppo">
+		<transition to="Seleziona Inviati" name="notificaMediatore"></transition>
+	</task-node>
+
+	<task-node name="Seleziona Inviati">
+		<transition to="Conferma" name="notificaInfo"></transition>
+		<transition to="EmailAppuntamentoAzienda" name="to contadino mail"></transition>
+	</task-node>
+
+	<task-node name="Conferma">
+		<transition to="Aspetta Timer per compilare questionario"></transition>
+	</task-node>
+
+	<mail-node name="EmailAppuntamentoAzienda">
+		<transition to="Crea Evento Azienda da visitare" name="rispostaContadino"></transition>
+	</mail-node>
+
+	<state name="Aspetta Timer per compilare questionario">
+		<transition to="Riempire questionario" name="notificaUtenti"></transition>
+	</state>
+
+	<task-node name="Riempire questionario">
+		<transition to="Aspetta che tutti i questionari siano compilati"></transition>
+	</task-node>
+
+	<state name="Aspetta che tutti i questionari siano compilati">
+		<transition to="Controlla Registrazione Contadino" name="notificaAdmin"></transition>
+	</state>
+
+	<task-node name="Controlla Registrazione Contadino">
+		<transition to="AccettaRifiuta"></transition>
+	</task-node>
+
+	<decision name="AccettaRifiuta">
+		<transition to="Contadino Rifiutato" name="Rifiuta"></transition>
+		<transition to="EmailRegistrazione" name="accetta"></transition>
+	</decision>
+
+	<mail-node name="EmailRegistrazione">
+		<transition to="Contadino Accettato" name="ok"></transition>
+	</mail-node>
+
+
+	<end-state name="Contadino Rifiutato"></end-state>
+
+	<end-state name="Contadino Accettato"></end-state>
+
+
+</process-definition>
