@@ -9,27 +9,41 @@
 
 
 	<task-node name="Crea Evento Azienda da visitare">
-		<task name="crea_visita"></task>
+		<task name="crea_visita">
+			<assignment pooled-actors="mediatore"></assignment>
+		</task>
 		<transition to="fork1"></transition>
 	</task-node>
 
 	<task-node name="partecipa al gruppo">
-		<transition to="Seleziona Inviati" name="notificaMediatore"></transition>
+		<task name="partecipa_alla_visita">
+			<assignment pooled-actors="utenteGas"></assignment>
+		</task>
+		<event type="task-create">
+			<action name="ChangeTaskDate" expression="#{changeDateActionHandler.execute()}"></action>
+		</event>
+		<transition to="accetta altri utenti" name="partecipa"></transition>
 	</task-node>
 
-	<task-node name="Seleziona Inviati">
-		<transition to="join1" name="notifica_info"></transition>
-	</task-node>
+	<mail-node name="EmailAppuntamentoAzienda" to="#{contadinoCreato.email}">
+		<subject>
+			Proposta Visita azienda
+		</subject>
+		<text>
+Questo messaggio è generato automaticamente dal gruppo gas
+a cui ha fatto richiesta di adesione. Per accettare la registrazione,
+il gruppo gas richiede una visita alla vostra azienda. Il gas 
+gradirebbe effettuare una visita il giorno #{dataProposta}.
+Ci comunichi se la data scelta è disponibile o un'altra data in
+cui il nostro gruppo di inviati possa visitare la vostra azienda.
+Cordiali saluti.
 
-	<task-node name="Conferma">
-		<transition to="Aspetta Timer per compilare questionario"></transition>
-	</task-node>
-
-	<mail-node name="EmailAppuntamentoAzienda">
+		</text>
 		<transition to="join1"></transition>
 	</mail-node>
 
 	<state name="Aspetta Timer per compilare questionario">
+		<event type="timer"></event>
 		<transition to="Riempire questionario" name="notificaUtenti"></transition>
 	</state>
 
@@ -54,14 +68,25 @@
 		<transition to="Contadino Accettato" name="ok"></transition>
 	</mail-node>
 
+	<join name="join1">
+		<transition to="Aspetta Timer per compilare questionario">
+			<create-timer duedate="" name="timerVisita"></create-timer>
+		</transition>
+	</join>
+
 	<fork name="fork1">
-		<transition to="partecipa al gruppo" name="notifica_inviati"></transition>
 		<transition to="EmailAppuntamentoAzienda" name="to EmailAppuntamentoAzienda"></transition>
+		<transition to="accetta altri utenti" name="accetta utenti"></transition>
 	</fork>
 
-	<join name="join1">
-		<transition to="Conferma"></transition>
-	</join>
+	<decision name="accetta altri utenti">
+		<transition to="partecipa al gruppo" name="posti disponibili">
+			<condition expression="#{!(postiOccupati >= 3)}"></condition>
+		</transition>
+		<transition to="join1" name="posti esauriti">
+			<condition expression="#{postiOccupati ==3}"></condition>
+		</transition>
+	</decision>
 
 
 	<end-state name="Contadino Rifiutato"></end-state>
