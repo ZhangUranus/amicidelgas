@@ -42,12 +42,11 @@ public class GestioneEditUtentiBean {
 	
 	public List<Account> getAccountFiltredList() {
 		
-		accountList.setEjbql("select account from Account account where account.utente is not null ");
+		accountList.setEjbql("select account from Account account");
 		String s = "%";
 		String[] RESTRICTIONS = {
 				"lower(account.username) like concat(lower(#{gestioneEditUtentiBean.accountList.account.username}),'%')",
-				"lower(utente.cognome) like concat(lower(#{gestioneEditUtentiBean.utenteList.utente.cognome}),'%')",
-				"lower(utente.nome) like concat(lower(#{gestioneEditUtentiBean.utenteList.utente.nome}),'%')",
+				"utente !=null",
 				"account.punteggioFeedback >= #{gestioneEditUtentiBean.accountList.account.punteggioFeedback}",};
 				
 		accountList.setRestrictionExpressionStrings(Arrays.asList(RESTRICTIONS));

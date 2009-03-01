@@ -38,7 +38,7 @@ public class RegistrazioneCybercontadinoBean implements RegistrazioneCybercontad
     @PersistenceContext
     private EntityManager em;
     @In(value="newCybercontadino")
-    @Out(value="contadinoCreato")
+    @Out(value="contadinoCreato", scope= ScopeType.BUSINESS_PROCESS)
     private Cybercontadino contadino;
     @In(value="newAccount")
     private Account account;
@@ -62,7 +62,7 @@ public class RegistrazioneCybercontadinoBean implements RegistrazioneCybercontad
     
     @In StatusMessages statusMessages;
 
-    @Transactional public boolean registrazioneCybercontadino()
+    @Transactional public boolean registraCybercontadino()
     {  
     	
         if (!passwordBean.verify()) {
@@ -107,11 +107,18 @@ public class RegistrazioneCybercontadinoBean implements RegistrazioneCybercontad
     	
     	
     	// implement your business logic here
-    	log.info("registrazionecubercontadino.registrazionecybercontadino() action called");
+    	log.info("registrazionecybercontadino.registrazionecybercontadino() action called");
         statusMessages.add("Avvenuta Registrazione Cybercontadino");
         
-        processo.inviaRegistrazione();
-    	return true;
+        return true;
+    }
+    
+    public boolean registrazioneCybercontadino()
+    {  
+    	boolean retValue=this.registraCybercontadino();
+    	if(retValue)
+    		processo.inviaRegistrazione();	
+    	return retValue;
     }
     
     public String action()
