@@ -1,6 +1,7 @@
 package org.domain.SeamAmiciDelGas.processes;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -38,8 +39,9 @@ public class MultipleNotifyActionHandler implements Serializable{
 	    Iterator<String> it=recipients.iterator();
 	    while(it.hasNext()){
 	    	TaskInstance ti = tmi.createTaskInstance(receiveMessage,executionContext);
-	    	Map tokenVariables=pi.getContextInstance().getTokenVariableMap(token).getVariableInstances();
-	    	ti.addVariableInstance((VariableInstance) tokenVariables.get("notifyMessage"));
+	    	Map tokenVariables=pi.getContextInstance().getTokenVariableMap(token).getVariables();
+	    	//ti.setVariableLocally("notifyMessage", tokenVariables.get("notifyMessage"));
+	    	ti.setVariableLocally("notifyMessage", tokenVariables.get("notifyMessage"));
 	    	ti.setActorId(it.next());
 	    }
 	}
