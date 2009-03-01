@@ -1,32 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<root-container name="notificaRegistrazione" width="1374" height="717">
+<root-container name="notificaRegistrazione" width="1137" height="717">
   <node name="Richiesta registrazione" x="179" y="10" width="192" height="36">
     <edge>
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="Crea Evento Azienda da visitare" x="157" y="86" width="240" height="36">
+  <node name="Crea Evento Azienda da visitare" x="156" y="110" width="240" height="36">
     <edge>
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="partecipa al gruppo" x="252" y="155" width="251" height="36">
+  <node name="partecipa al gruppo" x="101" y="303" width="251" height="36">
     <edge>
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="Seleziona Inviati" x="316" y="235" width="132" height="36">
-    <edge>
-      <label x="5" y="-10"/>
-    </edge>
-  </node>
-  <node name="Conferma" x="596" y="324" width="132" height="36">
-    <edge>
-      <label x="5" y="-10"/>
-    </edge>
-  </node>
-  <node name="EmailAppuntamentoAzienda" x="732" y="160" width="254" height="35">
+  <node name="EmailAppuntamentoAzienda" x="709" y="162" width="254" height="35">
     <edge>
       <label x="5" y="-10"/>
     </edge>
@@ -64,8 +54,11 @@
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="Contadino Rifiutato" x="194" y="680" width="132" height="36"/>
-  <node name="Contadino Accettato" x="1004" y="642" width="132" height="36"/>
+  <node name="join1" x="518" y="278" width="252" height="24">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
   <node name="fork1" x="514" y="84" width="252" height="24">
     <edge>
       <label x="5" y="-10"/>
@@ -74,9 +67,14 @@
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="join1" x="518" y="278" width="252" height="24">
+  <node name="accetta altri utenti" x="378" y="169" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
     <edge>
       <label x="5" y="-10"/>
     </edge>
   </node>
+  <node name="Contadino Rifiutato" x="194" y="680" width="132" height="36"/>
+  <node name="Contadino Accettato" x="1004" y="642" width="132" height="36"/>
 </root-container>
