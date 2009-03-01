@@ -15,6 +15,9 @@
     <service name="authentication" factory="org.jbpm.security.authentication.DefaultAuthenticationServiceFactory"/>
   </jbpm-context>
   <string name="resource.hibernate.cfg.xml" value="jbpm-hibernate.cfg.xml"/>
- <!--  <string name="jbpm.mail.smtp.host" value="mail.example.com"/>
-  <string name="jbpm.mail.from.address" value="noreply@example.com"/>-->
+  <string name="jbpm.mail.smtp.host" value="out.alice.it"/>
+  <string name="jbpm.mail.smtp.auth" value="false"/>
+  <string name="jbpm.mail.from.address" value="noreply@seamamicidelgas.org"/>
+   <string name="jbpm.mail.smtp.starttls.enable" value="true" />
+  
 </jbpm-configuration>
