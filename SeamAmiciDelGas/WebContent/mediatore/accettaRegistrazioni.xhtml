@@ -373,8 +373,11 @@
 			                 <rich:calendar id="dataVisita"
                        			required="true"
                        			value="#{processoRegistrazione.dataProposta}" datePattern="MM/dd/yyyy">
-                       			<a:support event="onclick" action=#{processoRegistrazione.update} reRender="dataOut"</a:support>
+                       			<a:support event="oncollapse" action="#{processoRegistrazione.update()}" reRender="dataVisitaField,dataOut" limitToList="true"></a:support>
                   			</rich:calendar>
+                  			<!-- 	<h:inputText value="Prendi il valore della data">
+                  					<a:support event="onfocus" action="#{processoRegistrazione.update()}" reRender="dataVisita,dataOut" limitToList="true"></a:support>
+                  				</h:inputText> -->
                   			<h:outputText id="dataOut" value="Data selezionata: #{processoRegistrazione.dataProposta}" />
 			            </s:decorate>
 			       </h:panelGrid>
@@ -385,12 +388,10 @@
 	            	action="#{processoRegistrazione.creaVisita()}"
 	            		
 	            >
-	            <a:support event="onclick" action=#{processoRegistrazione.update}</a:support>
+	            <a:support event="onclick" action="#{processoRegistrazione.update}"></a:support>
 	            </s:button>
 	            
-	            <a:commandButton action="updateData" immediate="false" value="Aggiorna la data" />
-	        	
-	        </h:form>
+	   </h:form>
 	    </rich:modalPanel> 
        	</a:outputPanel>
 	
