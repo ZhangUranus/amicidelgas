@@ -13,7 +13,7 @@
         	<s:link view="/home.xhtml" value="Home" propagation="none"/>
         </td>
         <td height="32">
-   			<s:link view="/registrazione.xhtml" value="Registrazione" propagation="none"/>
+   			<s:link view="/registrazione.xhtml" rendered="#{!identity.loggedIn}" value="Registrazione" propagation="none"/>
         </td>
         <td height="32">
         	<h:outputText value="signed in as: #{identity.username}" rendered="#{identity.loggedIn}"/>        
