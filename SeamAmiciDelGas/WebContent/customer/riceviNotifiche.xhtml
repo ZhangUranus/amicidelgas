@@ -1,0 +1,35 @@
+<table align="center" width="100%" cellpadding="2" cellspacing="0" border="0" style="background: url('/SeamAmiciDelGas/img/shadow.png');"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:rich="http://richfaces.org/rich">
+    <tr align="center">
+    <td>
+    Notifiche personali
+    </td>
+    	<td width="64">	
+    		<rich:dataTable var="_task" value="#{taskInstanceList}" >
+    		<rich:column>Contenuto:</rich:column>
+    		<rich:column><h:outputText value="#{_task.variables.notifyMessage.content}" /></rich:column>
+    		<rich:column><s:button taskInstance="#{_task}" action="#{notifyBean.receive}" value="Ok"></s:button></rich:column>
+    		
+    		</rich:dataTable>
+    	</td>
+        
+    </tr>
+     <tr align="center">
+      <td>
+    Notifiche di gruppo
+    </td>
+    	<td width="64">	
+    		<rich:dataTable var="_task" value="#{pooledTaskInstanceList}" >
+    		<rich:column>Contenuto:</rich:column>
+    		<rich:column><h:outputText value="#{_task.variables.notifyMessage.content}" /></rich:column>
+    		<rich:column><s:button taskInstance="#{_task}" action="#{notifyBean.receive}" value="Ok"></s:button></rich:column>
+    		</rich:dataTable>
+    	</td>
+        
+    </tr>	
+</table >	
