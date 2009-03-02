@@ -66,6 +66,8 @@ public class RichiestaRegistrazioneBean implements RichiestaRegistrazione
     		.addToControl("confirm", "value does not match password");
     	}
     	
+    	
+    	
     	ComuneList comuneList = new ComuneList();
     	comuneList.setEjbql("select comune from Comune comune where comune.idcomune= "+ comuneProvinciaBean.getComune().getId());
 //    	comuneList.getComune().setIdcomune(comuneNascita.getIdcomune());

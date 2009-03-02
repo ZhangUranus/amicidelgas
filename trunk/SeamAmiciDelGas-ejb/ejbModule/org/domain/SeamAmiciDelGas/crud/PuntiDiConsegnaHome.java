@@ -1,6 +1,7 @@
 package org.domain.SeamAmiciDelGas.crud;
 
 import org.domain.SeamAmiciDelGas.entity.*;
+import org.domain.SeamAmiciDelGas.session.ComuneProvinciaBean;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.framework.EntityHome;
@@ -42,5 +43,6 @@ public class PuntiDiConsegnaHome extends EntityHome<PuntiDiConsegna> {
 	public PuntiDiConsegna getDefinedInstance() {
 		return isIdDefined() ? getInstance() : null;
 	}
+	
 
 }

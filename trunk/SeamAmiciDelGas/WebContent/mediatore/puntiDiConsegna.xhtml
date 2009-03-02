@@ -9,116 +9,23 @@
     template="/layout/template.xhtml">
 
 	<ui:define name="body">
-	
-	<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAA9kD5_OmN0uEDmhZR1SpkhQLRfBUDvGNHCcx6kAPzaLMZO9K4BQY3rNdRxgSHx9ShvHtxi2RXo5rCw"
+
+<script type="text/javascript" src="/SeamAmiciDelGas/js/gmap.js"></script>
+<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAA9kD5_OmN0uEDmhZR1SpkhQLRfBUDvGNHCcx6kAPzaLMZO9K4BQY3rNdRxgSHx9ShvHtxi2RXo5rCw"
       type="text/javascript"></script>
 <script type="text/javascript"><!--
-var geocoder;
-var point;
-
-function Indirizzo(via,comune,provincia,categoria_mark,categoria_mark2,categoria_mark3){
-	this.via = via;
-	this.comune = comune;
-	this.provincia = provincia;
-	this.categoria_mark = categoria_mark;
-	this.categoria_mark2 = categoria_mark2;
-	this.categoria_mark3 = categoria_mark3;
-	
-	this.getCognomeNome = function(){
-	if (categoria_mark3!=null) return categoria_mark + "," + categoria_mark2+ "," + categoria_mark3;
-		return categoria_mark + "," + categoria_mark2;
-	}
-	
-	this.getAddress = function (){
-		return via+", "+ comune +" (" + provincia +")";	
-	}
-	this.getComune = function(){
-		return comune +" (" + provincia +")";
-	}
-}
-   function load() {
-     if (GBrowserIsCompatible()) {
-
-       map = new GMap2(document.getElementById("map1"));
-	map.enableDoubleClickZoom();
-	map.enableContinuousZoom();
-       map.setCenter(new GLatLng(41.134193, 14.775925), 13);
-	map.addControl(new GSmallMapControl());
-       map.addControl(new GMapTypeControl());
-	// Create our "tiny" marker icon
-       var blueIcon = new GIcon(G_DEFAULT_ICON);
-       blueIcon.image = "http://gmaps-samples.googlecode.com/svn/trunk/markers/blue/blank.png";
-	
-	// Set up our GMarkerOptions object
-	markerOptions = { 
-	//icon:blueIcon ,
-	clickable:true
-	};
-
-       // Add 10 markers to the map at random locations
-       var bounds = map.getBounds();
-       var southWest = bounds.getSouthWest();
-       var northEast = bounds.getNorthEast();
-       var lngSpan = northEast.lng() - southWest.lng();
-       var latSpan = northEast.lat() - southWest.lat();
-	var geocoder = null;
-	var addressPoint=null;
-	
-	//geocoder
-	geocoder = new GClientGeocoder();
-
-	var count = parseInt("#{puntiDiConsegnaList.resultList.size()}");
-
-	//address=null;
-	for(i=0; i<count; i++ ){
-		
-		var indirizzo = new Indirizzo("#{newPuntoDiConsegna.indirizzo}","#{newPuntiDiConsegna.comune.nome}","#{newPuntiDiConsegna.comune.provinces.nome}");
-
-		geocoder.getLocations(indirizzo.getAddress(), getCallBackFor(indirizzo,0));				
-  	}
-	
-     	
-   }
-   }
-   
-   function getCallBackFor(indirizzo,codice){
-			return (function(data, response){
-				if(data.Status.code == "200"){
-					point = data.Placemark[0].Point.coordinates;
-					
-					var point2 = new GLatLng(point[1],point[0]);
-					var mark = new GMarker(point2, {title: indirizzo.getCognomeNome()});
-					map.addOverlay(mark);
-					map.panTo(mark.getPoint());
-					mark.bindInfoWindowHtml('<b>Punto di Consegna</b><p>'+ mark.getTitle() +'</p><p><div align=\"center\" class=\"colore_1\">'+indirizzo.getAddress()+'</div></p>');
-							
-					GEvent.addListener(mark, "infowindowopen", function() {
-						map.setZoom(16);
-						map.panTo(mark.getPoint());
-						map.panDirection(0, 1);
-					});
-					GEvent.addListener(mark, "infowindowclose", function() {map.setZoom(13); map.panTo(mark.getPoint());});
-				}
-				else if(data.Status.code =="602" && codice == 0){
-					new GClientGeocoder().getLocations(indirizzo.getComune(), getCallBackFor(indirizzo,1));
-				}
-			});
-		}
-		
 window.onunload = function(){
 	GUnload();
-	
 }
 window.onload = function(){
 	load();
-	
 }		
-   --></script>
-	
+--></script>
+
 	<table width="96%" border="0" cellspacing="0" cellpadding="0" align="center" >
 		<tr>
 			<td>
-				<div>Succegirmenti Punti di Consegna</div>
+				<div align="center">hint Punti di Consegna</div>
 			</td>
 		</tr>
 		<tr>
@@ -126,30 +33,183 @@ window.onload = function(){
 				<table width="98%" border="0" cellspacing="4" cellpadding="0" align="center">
 					<tr>
 						<td width="50%">
-							<div id="map1"  align="right" style="width: 60%; height: 300px"></div>
+							<div id="map1"  align="right" style="width: 90%; height: 320px"></div>
 						</td>
 						<td width="50%">
 							<table width="98%" border="0" cellspacing="4" cellpadding="0" align="center">
 								<tr>
 									<td>
-									Pulsante Aggiungi
+										<h:form id="addPuntoDiConsegnaForm">	
+									    <rich:panel>
+									        <f:facet name="header">Punto di consegna per la provincia di Benevento</f:facet>    
+												
+												<s:decorate id="comunePuntoField" template="/layout/edit.xhtml">
+									                <ui:define name="label">Comune della provincia di bn</ui:define>
+									                <h:inputText 
+									                	id="comunePunto"
+									                	size="50"
+									               		value="Scrivere un comune (suggerimenti attivi)"
+									               		required="true"
+               											requiredMessage="Inserire il comune dove posizionare il punto di consegna"
+									               		onclick="resetValue()">
+									                </h:inputText>
+									                <script type="text/javascript">
+													<!--
+														function resetValue(){
+															document.getElementById('addPuntoDiConsegnaForm:comunePuntoField:comunePunto').value="";
+														}
+													//-->
+													</script>
+									             <rich:suggestionbox id="suggestionBoxId"
+									             		size="50"
+									             	 	nothingLabel="Nessun comune trovato per la provincia selezionata"
+									             		usingSuggestObjects="true"
+									             		suggestionAction="#{newComuneProvinciaBean.autocompleteForBenevento}" var="_comuneSugg"
+									                    for="comunePunto" fetchValue="#{_comuneSugg.nome}" tokens=",[]"
+									                    >
+									                    <a:support event="onselect" ajaxSingle="true"  
+									                 	action="#{newComuneProvinciaBean.setComune(_comuneSugg)}"/>
+									                 <s:convertEntity></s:convertEntity>
+									                    <h:column>
+									                        <h:outputText value="#{_comuneSugg.nome}" />
+									                    </h:column>
+									             </rich:suggestionbox>  
+									             </s:decorate>
+												
+									            
+									            <s:decorate id="indirizzoField" template="/layout/edit.xhtml">
+									                <ui:define name="label">Indirizzo (via)</ui:define>
+									                <h:inputText id="indirizzo"
+									                       required="true"
+									                           size="50"
+									                      maxlength="100"
+									                          value="#{newPuntiDiConsegna.indirizzo}">
+									                    <a:support event="onblur" reRender="indirizzoField" bypassUpdates="true" ajaxSingle="true"/>
+									                </h:inputText>
+									            </s:decorate>
+									
+											<div style="clear:both">
+									                <span class="required">*</span>
+									                Campi richiesti
+									            </div>
+									            
+									            <s:button action="#{addPuntiDiConsegna.persistExtend()}" value="Aggiungi punto di consegna" >
+									            	<a:support event="onclick" reRender="table_punti_consegna, addPuntoDiConsegnaForm" bypassUpdates="true" ajaxSingle="true" limitToList="true" >
+									            		porcata('#{newPuntiDiConsegna.indirizzo}','#{_comuneSugg.nome}','BENEVENTO');
+									            	</a:support>
+									            </s:button>
+									            
+									            <!--  <a:commandButton value="Aggiungi punto di consegna"
+									                action="#{addPuntiDiConsegna.persistExtend()}" oncomplete="porcata('#{newPuntiDiConsegna.indirizzo}','#{_comuneSugg.nome}','BENEVENTO');"
+									                reRender="table_punti_consegna, addPuntoDiConsegnaForm" bypassUpdates="true" ajaxSingle="true" />-->
+									
+										</rich:panel>   
+									    </h:form>
+										
+									</td>
+								</tr>
+								<tr>
+									<td	height="16">									
 									</td>
 								</tr>
 								<tr>
 									<td>
-									Data Table
+										<a:region>
+										<rich:dataTable value="#{puntiDiConsegnaList.resultList}" var="_dati" id="table_punti_consegna" width="100%">
+											<rich:column >
+												<f:facet name="header">
+													<h:outputText value="Indirizzo" />
+												</f:facet>
+												<h:outputText value="#{_dati.indirizzo}" id="indirizzo" />
+							        		</rich:column>
+							        		
+							        		<rich:column >
+												<f:facet name="header">
+													<h:outputText value="Comune" />
+												</f:facet>
+												<h:outputText value="#{_dati.comune.nome}" id="comune" />
+							        		</rich:column>
+							        		
+							        		<rich:column >
+												<f:facet name="header">
+													<h:outputText value="Provincia" />
+												</f:facet>
+												<h:outputText value="#{_dati.comune.provinces.idprovinces}" id="provincia" />
+							        		</rich:column>
+							        		
+							        		<rich:column  align="center">
+								                <f:facet name="header">
+								                        Azioni
+								                </f:facet>
+								                <a:commandLink ajaxSingle="true" id="modificaPunto"
+								                    oncomplete="#{rich:component('modificaPuntoPanel')}.show()">
+								                    <h:graphicImage value="/img/modifica_24px.png" style="border:0"/>
+								                    <f:setPropertyActionListener value="#{_dati}"
+				                        				target="#{puntiDiConsegnaHome}" />
+								                </a:commandLink>
+								                <rich:toolTip for="modificaPunto" value="Modifica questa punto di consegna"/>
+								                <a:commandLink ajaxSingle="true" id="cancelPunto"
+								                    oncomplete="#{rich:component('deletePuntoPanel')}.show()">
+								                    <h:graphicImage value="/img/cancel_24px.png" style="border:0"/>
+								                    <f:setPropertyActionListener value="#{_dati.idpuntiConsegna}"
+				                        				target="#{puntiDiConsegnaHome.id}" />
+								                </a:commandLink>
+								                <rich:toolTip for="cancelPunto" value="Elimina questa punto di consegna"/>
+								            </rich:column> 
+									</rich:dataTable>
+									</a:region>
 									</td>
 								</tr>
 							</table>
 						</td>
 					</tr>
 				</table>
-			</td>
-		
+			</td>	
 		</tr>
-	
-	
-	
 	</table>
+	
+	<ui:repeat value="#{puntiDiConsegnaList.resultList}" var="_punto">
+<script type="text/javascript"><!--
+	load();
+	porcata("#{_punto.indirizzo}","#{_punto.comune.nome}","#{_punto.comune.provinces.nome}");	
+--></script>
+</ui:repeat>
+	
+	<rich:modalPanel id="deletePuntoPanel" autosized="true" width="200">
+      <f:facet name="header">
+          <h:outputText value="Vuoi eliminare questo punto di consegna?"
+              style="padding-right:15px;" />
+      </f:facet>
+      <f:facet name="controls">
+          <h:panelGroup>
+              <h:graphicImage value="/img/close.png"
+                  styleClass="hidelink" id="hidelinkDelete" />
+              <rich:componentControl for="deletePuntoPanel" attachTo="hidelinkDelete"
+                  operation="hide" event="onclick" />
+          </h:panelGroup>
+      </f:facet>
+      <h:form>
+          <table width="100%">
+              <tbody>
+                  <tr>
+                      <td align="center" width="45%">
+              <a:commandButton value="Si" ajaxSingle="true"
+                  action="#{puntiDiConsegnaHome.remove()}"
+                  oncomplete="#{rich:component('deletePuntoPanel')}.hide();"
+                  reRender="table_punti_consegna" />
+                      </td>
+                      <td width="10%"></td>
+                      <td align="center" width="45%">
+              <a:commandButton value="No"
+                  onclick="#{rich:component('deletePuntoPanel')}.hide();return false;" />
+                      </td>
+                  </tr>
+              </tbody>
+          </table>
+      </h:form>
+  </rich:modalPanel>
+  
+
+	
 	</ui:define>
 </ui:composition>

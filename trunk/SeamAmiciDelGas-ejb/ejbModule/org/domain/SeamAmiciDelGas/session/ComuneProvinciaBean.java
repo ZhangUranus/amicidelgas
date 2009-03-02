@@ -72,6 +72,28 @@ public class ComuneProvinciaBean{
         return result;
     }
 	
+	public List<myComuneBean> autocompleteForBenevento(Object suggest) {
+		
+        comuneList.setEjbql("select comune from Comune comune where comune.provinces.nome='Benevento'");
+        autoCompleteList= comuneList.getResultList();
+        String pref = (String)suggest;
+        
+        ArrayList<myComuneBean> result = new ArrayList<myComuneBean>();
+
+        Iterator<Comune> iterator = autoCompleteList.iterator();
+        while (iterator.hasNext()) {
+            Comune elem =  iterator.next();
+            if ((elem.getNome() != null && elem.getNome().toLowerCase().indexOf(pref.toLowerCase()) == 0) || "".equals(pref))
+            {
+            	myComuneBean comune= new myComuneBean();
+            	comune.setId(elem.getIdcomune());
+            	comune.setNome(elem.getNome());
+                result.add(comune);
+            }
+        }
+        return result;
+    }
+	
 	public class myComuneBean{
 		private Integer id;
 		private String nome;
