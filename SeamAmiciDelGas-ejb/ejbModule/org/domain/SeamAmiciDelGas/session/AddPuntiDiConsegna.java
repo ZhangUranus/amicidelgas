@@ -12,5 +12,4 @@ public interface AddPuntiDiConsegna
 
     public boolean persistExtend();
     
-    public void destroy();
 }
