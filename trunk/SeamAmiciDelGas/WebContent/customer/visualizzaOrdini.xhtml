@@ -1,0 +1,72 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:a="http://richfaces.org/a4j"
+    template="/layout/template.xhtml">
+
+	<ui:define name="body">
+		
+		<h:form id="filtraOrdini" styleClass="edit">
+			<rich:simpleTogglePanel label="Filtra Ordini" switchType="ajax">
+				
+				<table>
+					<td width="25%">
+					 <s:decorate template="/layout/display.xhtml">
+		                <ui:define name="label">Tipi di ordine</ui:define>
+		                <h:selectOneMenu value="#{ordineBean.tipoOrdine}" required="true" title="seleziona il tipo di ordine che vuoi visualizzare" style=" width : 149px;">
+		                	<a:support event="onchange" ajaxSingle="true" reRender="table" />
+		                	<f:selectItem itemLabel="Tutti" itemValue="1"/>
+		                	<f:selectItem itemLabel="Ordini Pendenti" itemValue="2"/>
+		                	<f:selectItem itemLabel="Ordini Conclusi" itemValue="3"/>
+		                </h:selectOneMenu>
+		             </s:decorate>
+		            </td>
+				</table>	
+			
+			</rich:simpleTogglePanel>
+			
+		</h:form>
+		<br/>
+		<br/>
+		<rich:panel>
+			<f:facet name="header">Ordini effettuati dall'utente #{identity.username}</f:facet>
+				<h:form>
+		        	<a:region>
+			    		<rich:dataTable value="#{ordineBean.ordini}" var="_ordine" id="table" rows="20" width="50%">
+							
+							<rich:column>
+								<f:facet name="header">
+									<h:outputText value="Prodotto" />
+								</f:facet>
+								<h:outputText value="#{_ordine.articolo.codiceEsterno}" id="prodotto" />
+		        			</rich:column>
+		        			
+		        			<rich:column>
+								<f:facet name="header">
+									<h:outputText value="Data Richiesta" />
+								</f:facet>
+								<h:outputText value="#{_ordine.dataRichiesta}" id="dataRichiesta">
+									<f:convertDateTime type="date" dateStyle="medium" locale="Locale.ITALY"/>
+								</h:outputText>	
+		        			</rich:column>
+							
+							<rich:column>
+								<f:facet name="header">
+									<h:outputText value="Contadino" />
+								</f:facet>
+								<h:outputText value="#{_ordine.articolo.cybercontadino.nomePresidente} #{_ordine.articolo.cybercontadino.cognomePresidente}" id="contadino" />
+		        			</rich:column>
+							
+						</rich:dataTable>
+						<rich:datascroller align="center" for="table" id="sc" rendered="true"/>
+					</a:region>
+				</h:form>
+		</rich:panel>
+	</ui:define>
+
+</ui:composition>
