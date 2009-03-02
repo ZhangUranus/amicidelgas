@@ -13,16 +13,42 @@
             <f:facet name="header">
                 <h:outputText value="Come ti vuoi registrare ?"/>
             </f:facet>
-            <h:panelGrid columns="12">
+            <h:panelGrid columns="3">
             <a:form ajaxSubmit="true" reRender="name">
-                <h:panelGrid>
-                    <h:commandButton value="Registrazione Cybercontadino" action="passoCybercontadino" />
-                </h:panelGrid>
+            	<p align="justify"><strong>Registrati come customer</strong>
+            	 <br/>
+            	 <br/>
+            	 <p class="colore_1" align="center"><strong>Funzionalita'</strong></p>
+            	 <p>1) accesso ai cataloghi dei contadini registrati al GAS</p>
+            	 <p>2) ordinazione e acquisto dei prodotti</p>
+            	 <p>3) assegnamento feedback al termine di un acquisto</p>
+            	 <p>4) proporsi come driver</p>
+            	 <p class="colore_1" align="center"><strong>Requisiti</strong></p>
+            	 <p>1) devi essere maggiorenne</p>
+            	 <p>2) devi essere possessore di una carta di credito</p>
+            	 </p>
+            	 <h:graphicImage align="center" value="/img/customer.jpg" style="border:" width="176" height="170"/>
+            	 <br/>                 
+                 <h:commandButton align="center" value="Registrazione Customer" action="passoUtente" />
             </a:form>
+            <td width="199" style=" height : 113px;"/>
             <a:form ajaxSubmit="true" reRender="name">
-                <h:panelGrid>
-                    <h:commandButton value="Registrazione Utente" action="passoUtente" />
-                </h:panelGrid>
+                <p align="justify"><strong>Registrati come cyber contadino</strong>
+            	 <br/>
+            	 <br/>
+            	 <p class="colore_1" align="center"><strong>Funzionalita'</strong></p>
+            	 <p>1) pubblicazione del wsdl</p>
+            	 <p>2) assegnamento feedback al termine di un vendita</p>
+            	 <p>3) proporsi come driver per gli ordini relativi ai propri prodotti</p>
+            	 <p class="colore_1" align="center"><strong>Requisiti</strong></p>
+            	 <p>1) devi essere possessore di partita IVA</p>
+            	 <p>2) devi essere possessore di un ERP</p>
+            	 <p>3) devi avere un certificato ASL</p>
+            	 </p>
+            	 <h:graphicImage align="center" value="/img/contadino.gif" style="border:" width="142" height="148"/>
+   				<br/>
+   				<br/>
+   				<h:commandButton align="center" value="Registrazione Cybercontadino" action="passoCybercontadino" />
             </a:form>
             </h:panelGrid>
         </rich:panel>
