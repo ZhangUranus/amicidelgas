@@ -6,134 +6,155 @@
     xmlns:f="http://java.sun.com/jsf/core"
     xmlns:h="http://java.sun.com/jsf/html"
     xmlns:rich="http://richfaces.org/rich"
+    xmlns:a="http://richfaces.org/a4j"
     template="/layout/template.xhtml">
 
 	<ui:define name="body">
-
-	    <h:form id="accountSearch" styleClass="edit">
-		  
-	        <rich:simpleTogglePanel label="Utente Search Filter" switchType="ajax">
-				<table>
-					<td width="25%">
-					 <s:decorate template="/layout/display.xhtml">
-		                <ui:define name="label">Username</ui:define>
-		                <h:inputText id="username" value="#{accountListExtended.account.username}"/>
-		             </s:decorate>
-		            </td>
-		            <!-- 
-		            <td width="25%">
-		             <s:decorate template="/layout/display.xhtml">
-		                <ui:define name="label">Cognome</ui:define>
-		                <h:inputText id="cognome" value="#{utenteList.utente.cognome}"/>
-		             </s:decorate>
-				    </td>
-				    
-				    <td width="25%">
-		             <s:decorate template="/layout/display.xhtml">
-		                <ui:define name="label">Nome</ui:define>
-		                <h:inputText id="nome" value="#{utenteList.utente.nome}"/>
-		             </s:decorate>
-				    </td>
-				     
-				    <td width="25%">
-		             <s:decorate template="/layout/display.xhtml">
-		                <ui:define name="label">Feedback >= </ui:define>
-		                <h:inputText id="punteggioFeedback" value="#{accountListExtended.account.punteggioFeedback}"/>
-		             </s:decorate>
-				    </td>
-		            -->
-				</table>
-	        </rich:simpleTogglePanel>
-		  
-	        <div class="actionButtons">
-	            <h:commandButton id="search" value="Search" action="admin/editDatiUtenti.xhtml"/>
-	            <s:button id="reset" value="Reset" includePageParams="false"/>
-	            
-	        </div>
 	
-	    </h:form>
 
-
- 		<rich:panel>
-          <f:facet name="header">Account Utente Search Results</f:facet>
-    		<div class="results" id="accountListExtended">
-
-			    <rich:dataTable id="accountListExtended"
-			                var="_accountVar" 
-			              value="#{accountListExtended.resultList}"
-			              rendered="#{not empty accountListExtended.resultList}">
-			              
-			     <h:column>          
-				     <f:facet name="header">
+			<h:form id="accountSearch" styleClass="edit">
+		        <rich:simpleTogglePanel label="Utente Search Filter" switchType="ajax">
+					<table>
+						<td width="25%">
+						 <s:decorate template="/layout/display.xhtml">
+			                <ui:define name="label">Username</ui:define>
+			                <h:inputText id="username" value="#{accountListExtended.account.username}"/>
+			             </s:decorate>
+			            </td>
+		
+			            <td width="25%">
+			             <s:decorate template="/layout/display.xhtml">
+			                <ui:define name="label">Cognome</ui:define>
+			                <h:inputText id="cognome" value="#{utenteList.utente.cognome}"/>
+			             </s:decorate>
+					    </td>
+					    
+					    <td width="25%">
+			             <s:decorate template="/layout/display.xhtml">
+			                <ui:define name="label">Nome</ui:define>
+			                <h:inputText id="nome" value="#{utenteList.utente.nome}"/>
+			             </s:decorate>
+					    </td>
+					     
+					    <td width="25%">
+			             <s:decorate template="/layout/display.xhtml">
+			                <ui:define name="label">Feedback >= </ui:define>
+			                <h:inputText id="punteggioFeedback" value="#{accountListExtended.account.punteggioFeedback}"/>
+			             </s:decorate>
+					    </td>
+					</table>
+		        </rich:simpleTogglePanel>
+			  
+		        <div class="actionButtons">   
+		            <h:commandButton value="Search" id="search" action="admin/editDatiUtenti.xhtml"/>  
+		            <s:button id="reset" value="Reset" includePageParams="false"/>
+		        </div>
+		    </h:form>
+		    
+		    <rich:panel>
+		         <f:facet name="header">Account Utente Search Results</f:facet>
+		   		<div class="results" id="accountListExtended">
+		
+				    <rich:dataTable id="myAccountListExtended"
+				                var="_accountVar"
+				                value="#{accountListExtended.resultList}"
+				              rendered="#{not empty accountListExtended.resultList}">
+				              
+				     <h:column>          
+					     <f:facet name="header">
+				                <ui:include src="/layout/sort.xhtml">
+				                    <ui:param name="entityList" value="#{accountListExtended}"/>
+				                    <ui:param name="propertyLabel" value="Username"/>
+				                    <ui:param name="propertyPath" value="account.username"/>
+				                </ui:include>
+				          </f:facet>         
+				          <h:outputText value="#{_accountVar.username}"/>
+			         </h:column>
+			         
+			         <h:column>          
+					     <f:facet name="header">
+				                <ui:include src="/layout/sort.xhtml">
+				                    <ui:param name="entityList" value="#{accountListExtended}"/>
+				                    <ui:param name="propertyLabel" value="Cognome"/>
+				                    <ui:param name="propertyPath" value="account.utente.cognome"/>
+				                </ui:include>
+				          </f:facet>         
+				          <h:outputText value="#{_accountVar.utente.cognome}"/>
+			         </h:column>
+			         
+			         <h:column>
+			            <f:facet name="header">
 			                <ui:include src="/layout/sort.xhtml">
 			                    <ui:param name="entityList" value="#{accountListExtended}"/>
-			                    <ui:param name="propertyLabel" value="Username"/>
-			                    <ui:param name="propertyPath" value="#{account.username}"/>
+			                    <ui:param name="propertyLabel" value="Nome"/>
+			                    <ui:param name="propertyPath" value="account.utente.nome"/>
 			                </ui:include>
-			          </f:facet>         
-			          <h:outputText value="#{_accountVar.username}"/>
-		         </h:column>
-		         
-		          <rich:column styleClass="action">
-		            <f:facet name="header">Action</f:facet>
-		            <s:link view="/#{empty from ? 'Account' : from}.xhtml"
-		                   value="#{empty from ? 'View' : 'Select'}"
-		             propagation="#{empty from ? 'none' : 'default'}"
-		                      id="account">
-		                <f:param name="username"
-		                        value="#{_accountVar.username}"/>
-		            </s:link>
-		            #{' '}
-		            <s:link view="/customer/editDati.xhtml"
-		                   value="Edit"
-		             propagation="none"
-		                      id="accountPageEdit"
-		                rendered="#{empty from}">
-		                <f:param name="utenteCodiceFiscale"
-		                        value="#{_accountVar.utente.codiceFiscale}"/>
-		                <f:param name="accountUsername"
-		                        value="#{_accountVar.username}"/>
-		            </s:link>
-		        </rich:column>
-			  </rich:dataTable>
-		    </div>
-    	</rich:panel>
-    	
-    	<div class="tableControl">
+			            </f:facet>
+			            <h:outputText value="#{_accountVar.utente.nome}"/>
+			        </h:column>        
+			        
+			        <h:column>
+			            <f:facet name="header">
+			                <ui:include src="/layout/sort.xhtml">
+			                    <ui:param name="entityList" value="#{accountListExtended}"/>
+			                    <ui:param name="propertyLabel" value="Recapito telefonico"/>
+			                    <ui:param name="propertyPath" value="account.utente.recapitoTelefonico"/>
+			                </ui:include>
+			            </f:facet>
+			            <h:outputText value="#{_accountVar.utente.recapitoTelefonico}"/>
+			        </h:column>
+			       
+			        <h:column>
+			            <f:facet name="header">
+			                <ui:include src="/layout/sort.xhtml">
+			                    <ui:param name="entityList" value="#{accountListExtended}"/>
+			                    <ui:param name="propertyLabel" value="Email"/>
+			                    <ui:param name="propertyPath" value="account.utente.email"/>
+			                </ui:include>
+			            </f:facet>
+			            <h:outputText value="#{_accountVar.utente.email}"/>
+			        </h:column>
+			
+					<h:column>
+			            <f:facet name="header">
+			                <ui:include src="/layout/sort.xhtml">
+			                    <ui:param name="entityList" value="#{accountListExtended}"/>
+			                    <ui:param name="propertyLabel" value="Feedback"/>
+			                    <ui:param name="propertyPath" value="account.punteggioFeedback"/>
+			                </ui:include>
+			            </f:facet>
+			            <h:outputText value="#{_accountVar.punteggioFeedback}"/>
+			        </h:column>
+			         
+			         
+			          <rich:column styleClass="action">
+			            <f:facet name="header">Action</f:facet>
+			            <s:link view="/#{empty from ? 'Account' : from}.xhtml"
+			                   value="#{empty from ? 'View' : 'Select'}"
+			             propagation="#{empty from ? 'none' : 'default'}"
+			                      id="account">
+			                <f:param name="username"
+			                        value="#{_accountVar.username}"/>
+			            </s:link>
+			            #{' '}
+			            <s:link view="/customer/editDati.xhtml"
+			                   value="Edit"
+			             propagation="none"
+			                      id="accountPageEdit"
+			                rendered="#{empty from}">
+			                <f:param name="utenteCodiceFiscale"
+			                        value="#{_accountVar.utente.codiceFiscale}"/>
+			                <f:param name="accountUsername"
+			                        value="#{_accountVar.username}"/>
+			            </s:link>
+			        </rich:column>
+				  </rich:dataTable>
+			    </div>
+		   	</rich:panel>
+		   	
+		   	<s:link view="/admin/editDatiCybercontadino.xhtml">Pagina Cybercontadini</s:link>
+			<img alt="statistiche" border="0" src="/SeamAmiciDelGas/img/contadino.gif" width="5%"/>
 
-	        <s:link view="/editDatiUtenti.xhtml"
-	            rendered="#{accountListExtended.previousExists}"
-	               value="#{messages.left}#{messages.left} First Page"
-	                  id="firstPage">
-	          <f:param name="firstResult" value="0"/>
-	        </s:link>
-
-	        <s:link view="/editDatiUtenti.xhtml"
-	            rendered="#{accountListExtended.previousExists}"
-	               value="#{messages.left} Previous Page"
-	                  id="previousPage">
-	            <f:param name="firstResult"
-	                    value="#{accountListExtended.previousFirstResult}"/>
-	        </s:link>
-
-	        <s:link view="/editDatiUtenti.xhtml"
-	            rendered="#{accountListExtended.nextExists}"
-	               value="Next Page #{messages.right}"
-	                  id="nextPage">
-	            <f:param name="firstResult"
-	                    value="#{accountListExtended.nextFirstResult}"/>
-	        </s:link>
-	
-	        <s:link view="/editDatiUtenti.xhtml"
-	            rendered="#{accountListExtended.nextExists}"
-	               value="Last Page #{messages.right}#{messages.right}"
-	                  id="lastPage">
-	            <f:param name="firstResult"
-	                    value="#{accountListExtended.lastFirstResult}"/>
-	        </s:link>
-
-         </div>
-    	
 	</ui:define>
 
 </ui:composition>
