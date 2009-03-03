@@ -1,11 +1,16 @@
 package org.domain.SeamAmiciDelGas.crud;
 
 import org.domain.SeamAmiciDelGas.entity.*;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+
 import org.jboss.seam.annotations.In;
+import org.jboss.seam.annotations.Logger;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.framework.EntityHome;
+import org.jboss.seam.log.Log;
 
 @Name("cybercontadinoHome")
 public class CybercontadinoHome extends EntityHome<Cybercontadino> {
@@ -14,6 +19,9 @@ public class CybercontadinoHome extends EntityHome<Cybercontadino> {
 	AccountHome accountHome;
 	@In(create = true)
 	ComuneHome comuneHome;
+	
+	@Logger
+	private Log log;
 
 	public void setCybercontadinoPartitaIva(Integer id) {
 		setId(id);
@@ -39,6 +47,17 @@ public class CybercontadinoHome extends EntityHome<Cybercontadino> {
 		if (comune != null) {
 			getInstance().setComune(comune);
 		}
+	}
+	
+	@Override
+	public String remove() {
+		log.info("CONTADINO HOME id: "+getInstance().getPartitaIva());
+		log.info("CONTADINO HOME id: "+getInstance().getCognomePresidente());
+		Account a = getInstance().getAccount();
+		
+		a.setElimato(true);
+		update();
+		return "contadino settato a cancellato";
 	}
 
 	public boolean isWired() {
