@@ -171,63 +171,6 @@
 				<h:inputText value="#{captcha.response}" required="true"
 				requiredMessage="Inserire la somma dei numeri per continuare la registrazione"/>
 			</s:decorate>
-			
-	 <s:decorate id="CalendarField" template="/layout/edit.xhtml">
-			<ui:define name="label">Seleziona le date disponibili</ui:define>
-			<a:commandLink ajaxSingle="true" id="calendarPanel"
-			                    oncomplete="#{rich:component('calendarModelPanel')}.show()">
-			                     <h:graphicImage value="/img/modifica.png"  />
-			                     </a:commandLink>
-			                     <rich:toolTip for="calendarPanel" value="Calendario"/>
-	</s:decorate>
-			
-				
-			 <rich:modalPanel id="calendarModelPanel" autosized="true" width="400">
-			<h:form id="formCalendar">
-			        <rich:messages/>
-			        <a:jsFunction name="ajaxSubmit"  oncomplete="#{rich:component('pannelloCalendario')}.show()" reRender="editContent" />
-			        <rich:calendar value="#{calendarBean.selectedDate}"
-			            popup="false" showApplyButton="false" 
-			            cellWidth="50px" cellHeight="50px" 
-			            boundaryDatesMode="none" showWeeksBar="false" 
-			            dataModel="#{calendarDataModel}" onchanged="if(event.rich.date) {ajaxSubmit();}" oncurrentdateselect="return false" id="organizer" valueChangeListener="#{calendarDataModel.valueChanged}" showFooter="false">
-			            <f:facet name="header">
-			                <h:panelGroup>
-			                    <h:outputText value="Mese Corrente" styleClass="header"/>
-			                </h:panelGroup>
-			            </f:facet>
-			            <a:outputPanel layout="block" id="cell" onclick="#{rich:component('organizer')}.resetSelectedDate()" style="height: 100%;">
-			                <h:panelGrid columns="1">
-			                    <h:outputText value="{day}" style="align:center"/>
-			                    <h:outputText value="{data.shortDescription.escapeHTML()}"/>
-			                    <h:outputText value="{data.description.escapeHTML()}"/>
-			                </h:panelGrid>
-			            </a:outputPanel>
-			        </rich:calendar>
-			    </h:form>
-			    
-			    <button type="button" id="cancelbutton" onclick="#{rich:component('calendarModelPanel')}.hide()">Cancel</button>	 
-</rich:modalPanel>
-
-		<rich:modalPanel id="pannelloCalendario" resizeable="false" >
-			        <f:facet name="header">Modifica giorno:</f:facet>
-			        <f:facet name="controls">
-			            <h:panelGroup>
-			                <h:graphicImage value="/img/close.png" id="hidelink" styleClass="hidelink"/>
-			                <rich:componentControl for="pannelloCalendario" attachTo="hidelink" operation="hide" event="onclick"/>
-			            </h:panelGroup>
-			        </f:facet>
-			        <h:form id="formPannelloCalendario" >
-			            <h:panelGrid columns="2" id="editContent">
-			                <h:outputText value="Short Description:"/>
-			                <h:inputText value="#{calendarDataModel.currentShortDescription}"/>
-			                <h:outputText value="Day Notes:"/>
-			                <h:inputTextarea value="#{calendarDataModel.currentDescription}"/>
-			                <a:commandButton value="Store" action="#{calendarDataModel.storeDayDetails}" id="storebutton" oncomplete="#{rich:component('pannelloCalendario')}.hide()" reRender="organizer"/>
-			                <button type="button" id="cancelbutton" onclick="#{rich:component('pannelloCalendario')}.hide()">Cancel</button>
-			            </h:panelGrid>
-			        </h:form>
-			    </rich:modalPanel>		
 
 			<div style="clear:both">
                 <span class="required">*</span>

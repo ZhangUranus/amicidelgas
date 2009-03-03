@@ -372,12 +372,10 @@
 			                <ui:define name="label">Data proposta</ui:define>
 			                 <rich:calendar id="dataVisita"
                        			required="true"
-                       			value="#{processoRegistrazione.dataProposta}" datePattern="MM/dd/yyyy">
+                       			value="#{processoRegistrazione.dataProposta}" datePattern="MM/dd/yyyy HH:mm">
                        			<a:support event="oncollapse" action="#{processoRegistrazione.update()}" reRender="dataVisitaField,dataOut" limitToList="true"></a:support>
                   			</rich:calendar>
-                  			<!-- 	<h:inputText value="Prendi il valore della data">
-                  					<a:support event="onfocus" action="#{processoRegistrazione.update()}" reRender="dataVisita,dataOut" limitToList="true"></a:support>
-                  				</h:inputText> -->
+                 
                   			<h:outputText id="dataOut" value="Data selezionata: #{processoRegistrazione.dataProposta}" />
 			            </s:decorate>
 			       </h:panelGrid>

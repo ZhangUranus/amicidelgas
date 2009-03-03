@@ -79,8 +79,10 @@
 					   	<td background="/SeamAmiciDelGas/img/shadow_left1.png"></td>	
 					     <td background="/SeamAmiciDelGas/img/shadow1.png">
 								<div align="center" >TODO notifiche ed eventi
-									<rich:dataTable var="_task" value="#{userTasks}"
-							rendered="#{identity.loggedIn and not empty userTasks}">
+						<rich:dataTable  id="requestTable" var="_task"
+									value="#{pooledTaskInstanceList}"
+							rendered="#{identity.loggedIn and not empty pooledTaskInstanceList}"
+							>
 							<h:column>
 								<f:facet name="header">Message</f:facet>
 												#{_task.variables.notificaDecisioneDriver.content}
@@ -90,12 +92,21 @@
 								<s:link action="#{richiestaDriverAck.acknowledge}" taskInstance="#{_task}"
 									value="Acknowledge" />
 							</h:column>
+							<h:column>
+								<f:facet name="header">Message</f:facet>
+												#{_task.variables.notificaUtente.content}
+									</h:column>
+									<h:column>
+								<f:facet name="header">Action</f:facet>
+								<s:link action="#{inviaNotificaRegistrazioni.partecipa_alla_visita}" taskInstance="#{_task}"
+									value="Accetta" />
+							</h:column>
 						</rich:dataTable>
 									<li>notifica1</li>
                         			<li>notifica2</li>
-                        			<li>notifica3</li>
-                        			<li>notifica4</li>
-                        			<li>notifica5</li>
+                        			<li>notifica31</li>
+                        			<li>notifica14</li>
+                        	
 								</div>			    
 					     </td>
 					     <td background="/SeamAmiciDelGas/img/shadow_right1.png" valign="middle"></td>

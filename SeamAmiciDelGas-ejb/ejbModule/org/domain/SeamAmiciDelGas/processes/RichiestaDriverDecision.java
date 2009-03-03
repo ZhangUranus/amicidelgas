@@ -1,9 +1,10 @@
-package org.domain.SeamAmiciDelGas.session;
+package org.domain.SeamAmiciDelGas.processes;
 
 import javax.persistence.EntityManager;
 
 import org.domain.SeamAmiciDelGas.entity.Account;
 import org.domain.SeamAmiciDelGas.entity.Role;
+import org.domain.SeamAmiciDelGas.session.Message;
 import org.jboss.seam.Component;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
@@ -21,7 +22,8 @@ public class RichiestaDriverDecision {
 
 	@In protected FacesMessages facesMessages;
 	@In protected EntityManager entityManager;
-	@Out(value="notificaDecisioneDriver", scope= ScopeType.BUSINESS_PROCESS, required=false)protected Message message;
+	@Out(value="notificaDecisioneDriver", scope= ScopeType.BUSINESS_PROCESS, required=false)
+	protected Message message;
 	private String msg="";
 	
 	
@@ -38,25 +40,25 @@ public class RichiestaDriverDecision {
 		r.setAccount(account);
 		entityManager.persist(r);
 		message= new Message();
-		String approveMsg="La tua richiesta di divenire driver è stata accettata.";
+		String approveMsg="La tua richiesta di divenire driver ï¿½ stata accettata.";
 		if(msg!=null)
 			approveMsg+="Il responsabile ha incluso il seguente messaggio:\n\""+msg+"\"";
 		message.setContent(approveMsg);
 		message.setRecipient(nomeRichiedente);
-		facesMessages.add("L'utente è stato reso driver");
+		facesMessages.add("L'utente ï¿½ stato reso driver");
 	}
 	
 	@BeginTask @EndTask(transition="rifiuta")
 	public void reject(){
 		String nomeRichiedente=(String) Component.getInstance("nomeRichiedente", ScopeType.BUSINESS_PROCESS);
 		message= new Message();
-		String rejectMsg="La tua richiesta di divenire driver è stata rifiutata.";
+		String rejectMsg="La tua richiesta di divenire driver ï¿½ stata rifiutata.";
 		if(msg!=null)
 			rejectMsg+="Il responsabile ha incluso il seguente messaggio:\n\""+msg+"\"";
 		message.setContent(rejectMsg);
 		message.setRecipient(nomeRichiedente);
 		
-		facesMessages.add("La richiesta dell'utente è stata rifiutata");
+		facesMessages.add("La richiesta dell'utente ï¿½ stata rifiutata");
 	}
 	@BypassInterceptors
 	public String getMsg() {

@@ -1,4 +1,4 @@
-package org.domain.SeamAmiciDelGas.session;
+package org.domain.SeamAmiciDelGas.processes;
 
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
@@ -27,7 +27,7 @@ public class RichiestaDriver {
 	public void richiestaDriver(){
 		log.info("E' arrivata la richiesta driver");
 		nomeRichiedente= credentials.getUsername();
-		facesMessages.add("La richiesta è stata inoltrata");
+		facesMessages.add("La richiesta ï¿½ stata inoltrata");
 	}
 	
 	
