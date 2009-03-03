@@ -1,0 +1,12 @@
+
+									            
+									            <!--  <s:button action="#{addPuntiDiConsegna.persistExtend()}" value="Aggiungi punto di consegna" >
+									            	<a:support event="onclick" reRender="table_punti_consegna, addPuntoDiConsegnaForm" bypassUpdates="true" ajaxSingle="true" limitToList="true" >
+									            		porcata('#{newPuntiDiConsegna.indirizzo}','#{_comuneSugg.nome}','BENEVENTO');
+									            	</a:support>
+									            </s:button>-->
+									            
+									            <a:commandButton value="Aggiungi punto di consegna"
+									                action="#{addPuntiDiConsegna.persistExtend()}" oncomplete="porcata('#{newPuntiDiConsegna.indirizzo}','#{_comuneSugg.nome}','BENEVENTO')"
+									                reRender="table_punti_consegna, addPuntoDiConsegnaForm" bypassUpdates="true" ajaxSingle="true" />
+									
