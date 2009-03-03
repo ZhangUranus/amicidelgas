@@ -12,7 +12,10 @@
 		<task name="crea_visita">
 			<assignment pooled-actors="mediatore"></assignment>
 		</task>
-		<transition to="fork1"></transition>
+		<timer duedate="2 minutes" name="Mytime" transition="invia" repeat="yes">
+			<action></action>
+		</timer>
+		<transition to="Fork_diMedda" name="invia"></transition>
 	</task-node>
 
 	<task-node name="partecipa al gruppo">
@@ -25,7 +28,7 @@
 		<transition to="accetta altri utenti" name="partecipa"></transition>
 	</task-node>
 
-	<mail-node name="EmailAppuntamentoAzienda" to="#{contadinoCreato.email}">
+	<mail-node name="EmailAppuntamentoAzienda" to="#{contadinoCreato.email}" async="true">
 		<subject>
 			Proposta Visita azienda
 		</subject>
@@ -43,12 +46,17 @@ Cordiali saluti.
 	</mail-node>
 
 	<state name="Aspetta Timer per compilare questionario">
-		<event type="timer"></event>
+		<timer transition="notificaUtenti" name="AspettaDataQuestionario" duedate="5 minutes" repeat="no">
+			<action async="true"></action>
+		</timer>
 		<transition to="Riempire questionario" name="notificaUtenti"></transition>
 	</state>
 
 	<task-node name="Riempire questionario">
-		<transition to="Aspetta che tutti i questionari siano compilati"></transition>
+		<task name="compilaQuestionario">
+			<assignment pooled-actors="utenteGas"></assignment>
+		</task>
+		<transition to="Aspetta che tutti i questionari siano compilati" name="compila"></transition>
 	</task-node>
 
 	<state name="Aspetta che tutti i questionari siano compilati">
@@ -74,7 +82,7 @@ Cordiali saluti.
 		</transition>
 	</join>
 
-	<fork name="fork1">
+	<fork name="Fork_diMedda">
 		<transition to="EmailAppuntamentoAzienda" name="to EmailAppuntamentoAzienda"></transition>
 		<transition to="accetta altri utenti" name="accetta utenti"></transition>
 	</fork>

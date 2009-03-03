@@ -1,6 +1,4 @@
 package org.domain.SeamAmiciDelGas.session;
-
-
 import java.util.Date;
 
 import javax.ejb.Remove;

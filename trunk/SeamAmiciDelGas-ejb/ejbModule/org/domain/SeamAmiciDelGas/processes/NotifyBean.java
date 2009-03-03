@@ -1,8 +1,9 @@
-package org.domain.SeamAmiciDelGas.session;
+package org.domain.SeamAmiciDelGas.processes;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.domain.SeamAmiciDelGas.session.Message;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Out;

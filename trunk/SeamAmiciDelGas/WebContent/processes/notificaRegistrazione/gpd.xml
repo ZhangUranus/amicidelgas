@@ -11,7 +11,7 @@
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="partecipa al gruppo" x="101" y="303" width="251" height="36">
+  <node name="partecipa al gruppo" x="101" y="303" width="289" height="42">
     <edge>
       <label x="5" y="-10"/>
     </edge>
@@ -54,12 +54,12 @@
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="join1" x="518" y="278" width="252" height="24">
+  <node name="join1" x="561" y="312" width="252" height="24">
     <edge>
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="fork1" x="514" y="84" width="252" height="24">
+  <node name="Fork_diMedda" x="514" y="84" width="252" height="24">
     <edge>
       <label x="5" y="-10"/>
     </edge>
@@ -70,6 +70,7 @@
   <node name="accetta altri utenti" x="378" y="169" width="132" height="36">
     <edge>
       <label x="5" y="-10"/>
+      <bendpoint w1="-229" h1="-6" w2="-11" h2="-140"/>
     </edge>
     <edge>
       <label x="5" y="-10"/>

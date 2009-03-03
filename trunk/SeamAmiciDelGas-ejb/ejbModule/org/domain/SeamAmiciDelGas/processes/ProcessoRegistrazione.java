@@ -1,16 +1,14 @@
 package org.domain.SeamAmiciDelGas.processes;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
 import javax.persistence.EntityManager;
 
-import org.domain.SeamAmiciDelGas.entity.Account;
 import org.domain.SeamAmiciDelGas.entity.Cybercontadino;
-import org.domain.SeamAmiciDelGas.entity.Role;
 import org.domain.SeamAmiciDelGas.session.Message;
-import org.jboss.seam.Component;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Logger;
@@ -36,24 +34,35 @@ public class ProcessoRegistrazione {
 	@In private Credentials credentials;
 	
 	@In protected EntityManager entityManager;
-	@Out(value="notificaMediatore", scope= ScopeType.BUSINESS_PROCESS, required=false)protected Message message;
+	@Out(value="notificaMediatore", scope= ScopeType.BUSINESS_PROCESS, required=false)
+	protected Message message;
 	private String msg="";
 	
+	
+	@Out(value="notificaUtente", scope= ScopeType.BUSINESS_PROCESS, required=false)
+	protected Message messageUtente;
 	
 	@In private FacesMessages facesMessages;
 	
 	@Out(value="nomeContadino",scope=ScopeType.BUSINESS_PROCESS, required=false)
 	private String nomeContadino;
 	
-	
+
 	@Out(value="dataProposta", scope= ScopeType.BUSINESS_PROCESS, required =false)
 	private Date dataProposta;
+	
+	@Out(value="dataQuestionario", scope= ScopeType.BUSINESS_PROCESS, required =false)
+	private Date dataQuestionario ;
 	
 	@Out(value="dataMassimaAccettazione", scope= ScopeType.BUSINESS_PROCESS, required =false)
 	private Date dataMassimaAccettazione;
 	
 	@Out(value="postiOccupati",scope=ScopeType.BUSINESS_PROCESS, required= false)
 	private int postiOccupati;
+	
+	
+	@Out(value="inviati",scope=ScopeType.BUSINESS_PROCESS, required= false)
+	private ArrayList<String> usernameInviati;
 	
 	private Cybercontadino contadinoCorrente;
 	private TaskInstance taskCorrente;
@@ -67,50 +76,27 @@ public class ProcessoRegistrazione {
 	}
 	
 	
-	@BeginTask @EndTask
+	@BeginTask @EndTask(transition="invia")
 	public void creaVisita(){
 		Calendar gc= new GregorianCalendar();
-		gc.setTime(dataProposta);
-		gc.roll(Calendar.DATE, -2);
+		gc.setTime((Date) dataProposta.clone());
+		gc.roll(Calendar.MINUTE, 30);
+		gc.roll(Calendar.HOUR, 5);
+	//	gc.roll(Calendar.DATE, -2);
 		dataMassimaAccettazione= gc.getTime();
 		postiOccupati=0;
+		
+		gc= new GregorianCalendar();
+		gc.setTime((Date) dataProposta.clone());
+		gc.roll(Calendar.DATE, +2);
+		dataQuestionario = gc.getTime();
 		log.info(("Stampa della data proposta: "+this.dataProposta));
+		
+		messageUtente= new Message();
+		String rejectMsg="Andiamo tutti dal cybercontadino.";
+		messageUtente.setContent(rejectMsg);
 	}
 	
-	@BeginTask @EndTask(transition="approva")
-	public void approve(){
-		String nomeRichiedente=(String) Component.getInstance("nomeRichiedente", ScopeType.BUSINESS_PROCESS);
-		
-		Account account = (Account) entityManager.createQuery(
-				"select account from Account account " +
-				"where account.username = #{nomeRichiedente}")
-				.getSingleResult();
-		Role r= new Role();
-		r.setName("driver");
-		r.setAccount(account);
-		entityManager.persist(r);
-		message= new Message();
-		String approveMsg="La tua richiesta di divenire driver ï¿½ stata accettata.";
-		if(msg!=null)
-			approveMsg+="Il responsabile ha incluso il seguente messaggio:\n\""+msg+"\"";
-		message.setContent(approveMsg);
-		message.setRecipient(nomeRichiedente);
-		facesMessages.add("L'utente ï¿½ stato reso driver");
-		
-	}
-	
-	@BeginTask @EndTask(transition="rifiuta")
-	public void reject(){
-		String nomeRichiedente=(String) Component.getInstance("nomeRichiedente", ScopeType.BUSINESS_PROCESS);
-		message= new Message();
-		String rejectMsg="La tua richiesta di divenire driver ï¿½ stata rifiutata.";
-		if(msg!=null)
-			rejectMsg+="Il responsabile ha incluso il seguente messaggio:\n\""+msg+"\"";
-		message.setContent(rejectMsg);
-		message.setRecipient(nomeRichiedente);
-		
-		facesMessages.add("La richiesta dell'utente ï¿½ stata rifiutata");
-	}
 	
 	@BypassInterceptors
 	public String getMsg() {
@@ -153,7 +139,7 @@ public class ProcessoRegistrazione {
 	
 
 	public void update(){
-		log.info("Update- la data corrente è: "+ dataProposta);
+		log.info("Update- la data corrente ï¿½: "+ dataProposta);
 	}
 	
 }
