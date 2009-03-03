@@ -10584,10 +10584,10 @@ COMMIT;
 
 INSERT INTO `account` (`Username`,`passwordHash`,`Bloccato`,`Elimato`,`Cancellato`,`Attivato`,`DataRichiesta`,`DataAccettazione`,`PunteggioFeedback`,`Utente_CodiceFiscale`,`fondo`,`PagamentoElettronico_idPagamentoElettronico`) VALUES
  ('zlatan','8ff430762890cbf91b3af84032d6f3ceda61644f',0x00,0x00,0x00,0x00,'2009-02-17',NULL,3,'aaaaaa12b33d111a',0,2),
- ('esteban','8ff430762890cbf91b3af84032d6f3ceda61644f',0x00,0x00,0x00,0x00,'2009-02-17',NULL,3,'antodf12b32b111g',0,3),
- ('jose','8ff430762890cbf91b3af84032d6f3ceda61644f',0x00,0x00,0x00,0x00,'2009-02-17',NULL,3,'FFFFFF23r23r234r',0,4),
- ('tyson','8ff430762890cbf91b3af84032d6f3ceda61644f',0x00,0x00,0x00,0x00,'2009-02-17',NULL,3,'ssssss34f35f354d',0,5),
- ('giorgio','8ff430762890cbf91b3af84032d6f3ceda61644f',0x00,0x00,0x00,0x00,'2009-02-17',NULL,3,'ffdgat12d15h134u',0,6);
+ ('esteban','8ff430762890cbf91b3af84032d6f3ceda61644f',0x00,0x00,0x00,0x00,'2009-02-17',NULL,2,'antodf12b32b111g',0,3),
+ ('jose','8ff430762890cbf91b3af84032d6f3ceda61644f',0x00,0x00,0x00,0x00,'2009-02-17',NULL,4,'FFFFFF23r23r234r',0,4),
+ ('tyson','8ff430762890cbf91b3af84032d6f3ceda61644f',0x00,0x00,0x00,0x00,'2009-02-17',NULL,5,'ssssss34f35f354d',0,5),
+ ('giorgio','8ff430762890cbf91b3af84032d6f3ceda61644f',0x00,0x00,0x00,0x00,'2009-02-17',NULL,1,'ffdgat12d15h134u',0,6);
 COMMIT;
 
 
