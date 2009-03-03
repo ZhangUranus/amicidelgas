@@ -6,12 +6,12 @@
     xmlns:f="http://java.sun.com/jsf/core"
     xmlns:h="http://java.sun.com/jsf/html"
     xmlns:rich="http://richfaces.org/rich"
+    xmlns:a="http://richfaces.org/a4j"
     template="/layout/template.xhtml">
 
 <ui:define name="body">
 
     <h:form id="cybercontadinoSearch" styleClass="edit">
-
         <rich:simpleTogglePanel label="Cybercontadino Search Filter" switchType="ajax">
 		 <table>
 		  <tr>
@@ -83,161 +83,149 @@
 
     </h:form>
 
-    <rich:panel>
+
         <f:facet name="header">Cybercontadino Search Results</f:facet>
     <div class="results" id="cybercontadinoList">
 
     <h:outputText value="The cybercontadino search returned no results."
                rendered="#{empty cybercontadinoList.resultList}"/>
-
-    <rich:dataTable id="cybercontadinoList"
-                var="_cybercontadino"
-              value="#{cybercontadinoList.resultList}"
-           rendered="#{not empty cybercontadinoList.resultList}">
-        <h:column>
-            <f:facet name="header">
-                <ui:include src="/layout/sort.xhtml">
-                    <ui:param name="entityList" value="#{cybercontadinoList}"/>
-                    <ui:param name="propertyLabel" value="Partita iva"/>
-                    <ui:param name="propertyPath" value="cybercontadino.partitaIva"/>
-                </ui:include>
-            </f:facet>
-            <h:outputText value="#{_cybercontadino.partitaIva}"/>
-        </h:column>
-        <h:column>
-            <f:facet name="header">
-                <ui:include src="/layout/sort.xhtml">
-                    <ui:param name="entityList" value="#{cybercontadinoList}"/>
-                    <ui:param name="propertyLabel" value="Comune"/>
-                    <ui:param name="propertyPath" value="cybercontadino.comune.nome"/>
-                </ui:include>
-            </f:facet>
-            <h:outputText value="#{_cybercontadino.comune.nome}"/>
-        </h:column>
-        <h:column>
-            <f:facet name="header">
-                <ui:include src="/layout/sort.xhtml">
-                    <ui:param name="entityList" value="#{cybercontadinoList}"/>
-                    <ui:param name="propertyLabel" value="Username"/>
-                    <ui:param name="propertyPath" value="cybercontadino.account.username"/>
-                </ui:include>
-            </f:facet>
-            <h:outputText value="#{_cybercontadino.account.username}"/>
-        </h:column>
-        <h:column>
-            <f:facet name="header">
-                <ui:include src="/layout/sort.xhtml">
-                    <ui:param name="entityList" value="#{cybercontadinoList}"/>
-                    <ui:param name="propertyLabel" value="Nome presidente"/>
-                    <ui:param name="propertyPath" value="cybercontadino.nomePresidente"/>
-                </ui:include>
-            </f:facet>
-            <h:outputText value="#{_cybercontadino.nomePresidente}"/>
-        </h:column>
-        <h:column>
-            <f:facet name="header">
-                <ui:include src="/layout/sort.xhtml">
-                    <ui:param name="entityList" value="#{cybercontadinoList}"/>
-                    <ui:param name="propertyLabel" value="Indirizzo"/>
-                    <ui:param name="propertyPath" value="cybercontadino.indirizzo"/>
-                </ui:include>
-            </f:facet>
-            <h:outputText value="#{_cybercontadino.indirizzo}"/>
-        </h:column>
-        <h:column>
-            <f:facet name="header">
-                <ui:include src="/layout/sort.xhtml">
-                    <ui:param name="entityList" value="#{cybercontadinoList}"/>
-                    <ui:param name="propertyLabel" value="Cognome presidente"/>
-                    <ui:param name="propertyPath" value="cybercontadino.cognomePresidente"/>
-                </ui:include>
-            </f:facet>
-            <h:outputText value="#{_cybercontadino.cognomePresidente}"/>
-        </h:column>
-        <h:column>
-            <f:facet name="header">
-                <ui:include src="/layout/sort.xhtml">
-                    <ui:param name="entityList" value="#{cybercontadinoList}"/>
-                    <ui:param name="propertyLabel" value="Nome azienda"/>
-                    <ui:param name="propertyPath" value="cybercontadino.nomeAzienda"/>
-                </ui:include>
-            </f:facet>
-            <h:outputText value="#{_cybercontadino.nomeAzienda}"/>
-        </h:column>
-        <h:column>
-            <f:facet name="header">
-                <ui:include src="/layout/sort.xhtml">
-                    <ui:param name="entityList" value="#{cybercontadinoList}"/>
-                    <ui:param name="propertyLabel" value="Path asl"/>
-                    <ui:param name="propertyPath" value="cybercontadino.pathAsl"/>
-                </ui:include>
-            </f:facet>
-            <h:outputText value="#{_cybercontadino.pathAsl}"/>
-        </h:column>
-        <h:column>
-            <f:facet name="header">
-                <ui:include src="/layout/sort.xhtml">
-                    <ui:param name="entityList" value="#{cybercontadinoList}"/>
-                    <ui:param name="propertyLabel" value="Url wsdl"/>
-                    <ui:param name="propertyPath" value="cybercontadino.urlWsdl"/>
-                </ui:include>
-            </f:facet>
-            <h:outputText value="#{_cybercontadino.urlWsdl}"/>
-        </h:column>
-        <h:column>
-            <f:facet name="header">
-                <ui:include src="/layout/sort.xhtml">
-                    <ui:param name="entityList" value="#{cybercontadinoList}"/>
-                    <ui:param name="propertyLabel" value="Descrizione azienda"/>
-                    <ui:param name="propertyPath" value="cybercontadino.descrizioneAzienda"/>
-                </ui:include>
-            </f:facet>
-            <h:outputText value="#{_cybercontadino.descrizioneAzienda}"/>
-        </h:column>
-        <h:column>
-            <f:facet name="header">
-                <ui:include src="/layout/sort.xhtml">
-                    <ui:param name="entityList" value="#{cybercontadinoList}"/>
-                    <ui:param name="propertyLabel" value="Recapito telefonico"/>
-                    <ui:param name="propertyPath" value="cybercontadino.recapitoTelefonico"/>
-                </ui:include>
-            </f:facet>
-            <h:outputText value="#{_cybercontadino.recapitoTelefonico}"/>
-        </h:column>
-        <h:column>
-            <f:facet name="header">
-                <ui:include src="/layout/sort.xhtml">
-                    <ui:param name="entityList" value="#{cybercontadinoList}"/>
-                    <ui:param name="propertyLabel" value="Email"/>
-                    <ui:param name="propertyPath" value="cybercontadino.email"/>
-                </ui:include>
-            </f:facet>
-            <h:outputText value="#{_cybercontadino.email}"/>
-        </h:column>
-
-        <rich:column styleClass="action">
-            <f:facet name="header">Action</f:facet>
-            <s:link view="/#{empty from ? 'Cybercontadino' : from}.xhtml"
-                   value="#{empty from ? 'View' : 'Select'}"
-             propagation="#{empty from ? 'none' : 'default'}"
-                      id="cybercontadino">
-                <f:param name="cybercontadinoPartitaIva"
-                        value="#{_cybercontadino.partitaIva}"/>
-            </s:link>
-            #{' '}
-            <s:link view="/admin/CybercontadinoEdit.xhtml"
-                   value="Edit"
-             propagation="none"
-                      id="cybercontadinoEdit"
-                rendered="#{empty from}">
-                <f:param name="cybercontadinoPartitaIva"
-                        value="#{_cybercontadino.partitaIva}"/>
-            </s:link>
-        </rich:column>
-    </rich:dataTable>
+	<h:form>
+		<a:region>
+		    <rich:dataTable id="cybercontadinoList"
+		                var="_cybercontadino"
+		              value="#{cybercontadinoList.resultList}"
+		           rendered="#{not empty cybercontadinoList.resultList}">
+		        <rich:column>
+		            <f:facet name="header">
+		                <ui:include src="/layout/sort.xhtml">
+		                    <ui:param name="entityList" value="#{cybercontadinoList}"/>
+		                    <ui:param name="propertyLabel" value="Partita iva"/>
+		                    <ui:param name="propertyPath" value="cybercontadino.partitaIva"/>
+		                </ui:include>
+		            </f:facet>
+		            <h:outputText value="#{_cybercontadino.partitaIva}"/>
+		        </rich:column>
+		        <rich:column>
+		            <f:facet name="header">
+		                <ui:include src="/layout/sort.xhtml">
+		                    <ui:param name="entityList" value="#{cybercontadinoList}"/>
+		                    <ui:param name="propertyLabel" value="Comune"/>
+		                    <ui:param name="propertyPath" value="cybercontadino.comune.nome"/>
+		                </ui:include>
+		            </f:facet>
+		            <h:outputText value="#{_cybercontadino.comune.nome}"/>
+		        </rich:column>
+		        <rich:column>
+		            <f:facet name="header">
+		                <ui:include src="/layout/sort.xhtml">
+		                    <ui:param name="entityList" value="#{cybercontadinoList}"/>
+		                    <ui:param name="propertyLabel" value="Username"/>
+		                    <ui:param name="propertyPath" value="cybercontadino.account.username"/>
+		                </ui:include>
+		            </f:facet>
+		            <h:outputText value="#{_cybercontadino.account.username}"/>
+		        </rich:column>
+		        <rich:column>
+		            <f:facet name="header">
+		                <ui:include src="/layout/sort.xhtml">
+		                    <ui:param name="entityList" value="#{cybercontadinoList}"/>
+		                    <ui:param name="propertyLabel" value="Nome presidente"/>
+		                    <ui:param name="propertyPath" value="cybercontadino.nomePresidente"/>
+		                </ui:include>
+		            </f:facet>
+		            <h:outputText value="#{_cybercontadino.nomePresidente}"/>
+		        </rich:column>
+		        <rich:column>
+		            <f:facet name="header">
+		                <ui:include src="/layout/sort.xhtml">
+		                    <ui:param name="entityList" value="#{cybercontadinoList}"/>
+		                    <ui:param name="propertyLabel" value="Indirizzo"/>
+		                    <ui:param name="propertyPath" value="cybercontadino.indirizzo"/>
+		                </ui:include>
+		            </f:facet>
+		            <h:outputText value="#{_cybercontadino.indirizzo}"/>
+		        </rich:column>
+		        <rich:column>
+		            <f:facet name="header">
+		                <ui:include src="/layout/sort.xhtml">
+		                    <ui:param name="entityList" value="#{cybercontadinoList}"/>
+		                    <ui:param name="propertyLabel" value="Cognome presidente"/>
+		                    <ui:param name="propertyPath" value="cybercontadino.cognomePresidente"/>
+		                </ui:include>
+		            </f:facet>
+		            <h:outputText value="#{_cybercontadino.cognomePresidente}"/>
+		        </rich:column>
+		        <rich:column>
+		            <f:facet name="header">
+		                <ui:include src="/layout/sort.xhtml">
+		                    <ui:param name="entityList" value="#{cybercontadinoList}"/>
+		                    <ui:param name="propertyLabel" value="Nome azienda"/>
+		                    <ui:param name="propertyPath" value="cybercontadino.nomeAzienda"/>
+		                </ui:include>
+		            </f:facet>
+		            <h:outputText value="#{_cybercontadino.nomeAzienda}"/>
+		        </rich:column>
+		        
+		        
+		        <rich:column>
+		            <f:facet name="header">
+		                <ui:include src="/layout/sort.xhtml">
+		                    <ui:param name="entityList" value="#{cybercontadinoList}"/>
+		                    <ui:param name="propertyLabel" value="Descrizione azienda"/>
+		                    <ui:param name="propertyPath" value="cybercontadino.descrizioneAzienda"/>
+		                </ui:include>
+		            </f:facet>
+		            <h:outputText value="#{_cybercontadino.descrizioneAzienda}"/>
+		        </rich:column>
+		        <rich:column>
+		            <f:facet name="header">
+		                <ui:include src="/layout/sort.xhtml">
+		                    <ui:param name="entityList" value="#{cybercontadinoList}"/>
+		                    <ui:param name="propertyLabel" value="Recapito telefonico"/>
+		                    <ui:param name="propertyPath" value="cybercontadino.recapitoTelefonico"/>
+		                </ui:include>
+		            </f:facet>
+		            <h:outputText value="#{_cybercontadino.recapitoTelefonico}"/>
+		        </rich:column>
+		        <rich:column>
+		            <f:facet name="header">
+		                <ui:include src="/layout/sort.xhtml">
+		                    <ui:param name="entityList" value="#{cybercontadinoList}"/>
+		                    <ui:param name="propertyLabel" value="Email"/>
+		                    <ui:param name="propertyPath" value="cybercontadino.email"/>
+		                </ui:include>
+		            </f:facet>
+		            <h:outputText value="#{_cybercontadino.email}"/>
+		        </rich:column>
+		        
+		        <rich:column>
+			            <f:facet name="header">Stato</f:facet>
+			               <div align="center">
+								<h:graphicImage id="nonCancellato" value="/img/contadino50x36.gif" 
+										rendered="#{!_cybercontadino.account.elimato}"/>
+								<rich:toolTip for="nonCancellato" value="Non cancellato"/>
+								<h:graphicImage id="cancellato" value="/img/contadino50x36eliminato.gif" 
+										rendered="#{_cybercontadino.account.elimato}"/>
+								<rich:toolTip for="cancellato" value="Cancellato"/>
+						   </div>
+			        </rich:column>
+		
+		        <rich:column align="center">
+			            <f:facet name="header">Action</f:facet>
+			                <a:commandLink ajaxSingle="true" id="confermaCancellaContadinoLink"
+			                    oncomplete="#{rich:component('confermaCancellaContadino')}.show()">
+				                <h:graphicImage value="/img/cancel.png" style="border:0"/>
+				            	<f:setPropertyActionListener value="#{_cybercontadino.partitaIva}" 
+				            							target="#{cybercontadinoHome.id}" />
+				            </a:commandLink>
+				            <rich:toolTip for="confermaCancellaContadinoLink" value="Cancella il cybercontadino selezionato"/>
+			        </rich:column>
+		    </rich:dataTable>
+		    <rich:datascroller align="center" for="cybercontadinoList" id="sc1" rendered="true"/>
+		 </a:region>
+	</h:form>
 
     </div>
-    </rich:panel>
 
     <div class="tableControl">
 
@@ -274,8 +262,51 @@
 
     </div>
 		
-		<s:link view="/admin/editDatiUtenti.xhtml">Pagina Utenti</s:link>
+		<s:link view="/admin/editDatiCybercontadino.xhtml">Pagina Utenti</s:link>
 		<img alt="statistiche" border="0" src="/SeamAmiciDelGas/img/customer.jpg" width="5%"/>
+		
+		<rich:modalPanel id="confermaCancellaContadino" autosized="true" width="200">
+	        <f:facet name="header">
+	            <h:outputText value="Sei sicuro di voler elimnare questo contadino?"
+	                style="padding-right:15px;" />
+	        </f:facet>
+	        <h:panelGrid columns="1">
+	          <a:outputPanel ajaxRendered="true">
+	            <h:panelGrid columns="2">
+	            	<h:outputText value="PartitaIva: " />
+	            	<h:outputText value="#{cybercontadinoHome.instance.partitaIva}"/>
+	            	<h:outputText value="Cognome presidente: "/>
+	            	<h:outputText value="#{cybercontadinoHome.instance.cognomePresidente}"/>
+	        	</h:panelGrid>
+	          </a:outputPanel>
+	        </h:panelGrid>		
+	        <f:facet name="controls">
+	            <h:panelGroup>
+	                <h:graphicImage value="/img/close.png"
+	                    styleClass="hidelink" id="hidelink2" />
+	                <rich:componentControl for="confermaCancellaContadino" attachTo="hidelink2"
+	                    operation="hide" event="onclick" />
+	            </h:panelGroup>
+	        </f:facet>
+	        <h:form>
+	            <table width="100%">
+	                <tbody>
+	                    <tr>
+                        <td align="center" width="50%">
+			                <a:commandButton value="Si" ajaxSingle="true"
+			                    action="#{cybercontadinoHome.remove()}"
+			                    oncomplete="#{rich:component('confermaCancellaContadino')}.hide();"
+			                    reRender="cybercontadinoList"/>
+                        </td>
+                        <td align="center" width="50%">
+			                <a:commandButton value="Annulla"
+			                    onclick="#{rich:component('confermaCancellaContadino')}.hide();return false;" />
+                        </td>
+	                    </tr>
+	                </tbody>
+	            </table>
+	        </h:form>
+		</rich:modalPanel>
 		
 </ui:define>
 
