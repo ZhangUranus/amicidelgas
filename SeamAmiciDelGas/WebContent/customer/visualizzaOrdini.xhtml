@@ -61,11 +61,78 @@
 								</f:facet>
 								<h:outputText value="#{_ordine.articolo.cybercontadino.nomePresidente} #{_ordine.articolo.cybercontadino.cognomePresidente}" id="contadino" />
 		        			</rich:column>
+		        			
+		        			<rich:column align="center">
+			                	<f:facet name="header">
+		                        	Dettagli
+			                	</f:facet>
+			                	<a:commandLink ajaxSingle="true" id="dettagliLink"
+			                    	oncomplete="#{rich:component('dettagliPanel')}.show()">
+			                    	<f:setPropertyActionListener value="#{_ordine}" target="#{ordineBean.currentOrdine}" />
+				                    <h:graphicImage value="/img/modifica_mini.png" style="border:0" />
+				                </a:commandLink>
+				                <rich:toolTip for="richiestaCustomerLink" value="Visualizza i dettagli dell'ordine"/>
+			            	</rich:column>
+		        			
 							
 						</rich:dataTable>
 						<rich:datascroller align="center" for="table" id="sc" rendered="true"/>
 					</a:region>
 				</h:form>
+				
+				
+		<rich:modalPanel id="dettagliPanel" autosized="true" width="500">
+	        	<f:facet name="header">
+	            	<h:outputText value="" />
+	        	</f:facet>
+	        	<f:facet name="controls">
+	            	<h:panelGroup>
+	                	<h:graphicImage value="/img/close.png"
+	                    	id="hidelink" />
+	               	 	<rich:componentControl for="richiestaCustomerPanel" attachTo="hidelink"
+	                    	operation="hide" event="onclick" />
+	            	</h:panelGroup>
+	        	</f:facet>
+	        	<h:form>
+	        	<h:panelGrid columns="1">
+	        		<a:outputPanel ajaxRendered="true">
+	        			<h:panelGrid columns="2">
+	        				<h:outputText><b>Username: </b></h:outputText>
+	        				<h:outputText value="#{gestioneRegistrazioniBean.currentCustomer.username}"/>
+	        				<h:outputText><b>Codice fiscale: </b></h:outputText>
+	        				<h:outputText value="#{gestioneRegistrazioniBean.currentCustomer.utente.codiceFiscale}"/>
+	        				<h:outputText><b>Cognome: </b></h:outputText>
+	        				<h:outputText value="#{gestioneRegistrazioniBean.currentCustomer.utente.cognome}"/>
+	        				<h:outputText><b>Nome: </b></h:outputText>
+	        				<h:outputText value="#{gestioneRegistrazioniBean.currentCustomer.utente.nome}"/>
+	        				<h:outputText><b>Data Richiesta Account: </b></h:outputText>
+	        				<h:outputText value="#{gestioneRegistrazioniBean.currentCustomer.dataRichiesta}">
+	        					<f:convertDateTime type="date" dateStyle="medium" locale="Locale.ITALY"/>
+							</h:outputText>
+							<h:outputText><b>E-mail: </b></h:outputText>
+							<h:outputText value="#{gestioneRegistrazioniBean.currentCustomer.utente.email}"/>
+							<h:outputText><b>Telefono: </b></h:outputText>
+							<h:outputText value="#{gestioneRegistrazioniBean.currentCustomer.utente.recapitoTelefonico}"/>
+							<h:outputText><b>Indirizzo: </b></h:outputText>
+							<h:outputText value="#{gestioneRegistrazioniBean.currentCustomer.utente.indirizzo}"/>
+							<h:outputText><b>Tipo di carta: </b></h:outputText>
+							<h:outputText value="#{gestioneRegistrazioniBean.currentCustomer.pagamentoelettronico.tipoCarta}"/>
+							<h:outputText><b>Numero della carta: </b></h:outputText>
+							<h:outputText value="#{gestioneRegistrazioniBean.currentCustomer.pagamentoelettronico.numeroCarta}"/>
+	        				<a:commandButton bypassUpdates="true" ajaxSingle="true" value="Accetta richiesta"
+	                			action="#{gestioneRegistrazioniBean.accettaRegistrazioneCustomer}"
+	                			reRender="table1, sc1"
+	                			oncomplete="#{rich:component('richiestaCustomerPanel')}.hide(); if (#{gestioneRegistrazioniBean.updeted==true})  #{rich:component('richiestaAccettataCustomerPanel')}.show(); if (#{gestioneRegistrazioniBean.updeted==false}) #{rich:component('errorePanel')}.show();" />
+                			<a:commandButton bypassUpdates="true" ajaxSingle="true" value="Rifiuta richiesta"
+	                			action="#{accettaRegistrazioniBean.rifiutaRegistrazioneCustomer}"
+	                			reRender="table1, sc1"
+	                			oncomplete="#{rich:component('richiestaCustomerPanel')}.hide(); if (#{gestioneRegistrazioniBean.updeted==true}) #{rich:component('richiestaRifiutataCustomerPanel')}.show(); if (#{gestioneRegistrazioniBean.updeted==false}) #{rich:component('errorePanel')}.show();" />
+	        			</h:panelGrid>
+	        		</a:outputPanel>
+                </h:panelGrid>
+                </h:form>
+	    </rich:modalPanel>
+				
 		</rich:panel>
 	</ui:define>
 

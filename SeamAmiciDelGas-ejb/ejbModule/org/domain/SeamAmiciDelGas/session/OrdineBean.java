@@ -9,6 +9,7 @@ import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.log.Log;
 import org.jboss.seam.security.Credentials;
+import org.jboss.seam.security.Identity;
 import org.domain.SeamAmiciDelGas.crud.AccountList;
 import org.domain.SeamAmiciDelGas.crud.OrdineList;
 import org.domain.SeamAmiciDelGas.entity.Ordine;
@@ -29,6 +30,16 @@ public class OrdineBean {
 	private String tipoOrdine="1";
 	
 	private List<Ordine> ordini;
+	
+	private Ordine currentOrdine;
+
+	public Ordine getCurrentOrdine() {
+		return currentOrdine;
+	}
+
+	public void setCurrentOrdine(Ordine currentOrdine) {
+		this.currentOrdine = currentOrdine;
+	}
 
 	public String getTipoOrdine() {
 		return tipoOrdine;
@@ -44,13 +55,13 @@ public class OrdineBean {
 		log.info("*******"+credentials.getUsername()+"**********");
 		log.info("*******"+tipoOrdine+"**********");
 		if (tipoOrdine.equals("1"))
-			ordineList.setEjbql("select ordine from Ordine ordine where ordine.account.username='"+credentials.getUsername()+"' and ordine.cancellato='false'");
+			ordineList.setEjbql("select ordine from Ordine ordine where ordine.account.username='"+credentials.getUsername()+"' and ordine.cancellato=false");
 		//selezioni gli ordini pendenti
 		if (tipoOrdine.equals("2"))
-			ordineList.setEjbql("select ordine from Ordine ordine where ordine.account.username='"+credentials.getUsername()+"' and ordine.cancellato='false' and ordine.pendente='true'");
+			ordineList.setEjbql("select ordine from Ordine ordine where ordine.account.username='"+credentials.getUsername()+"' and ordine.cancellato=false and ordine.pendente=true");
 		//selezioni gli ordini conclusi
 		if (tipoOrdine.equals("3"))
-			ordineList.setEjbql("select ordine from Ordine ordine where ordine.account.username='"+credentials.getUsername()+"' and ordine.cancellato='false' and ordine.pendente='false'");
+			ordineList.setEjbql("select ordine from Ordine ordine where ordine.account.username='"+credentials.getUsername()+"' and ordine.cancellato=false and ordine.pendente=false");
 		ordini = ordineList.getResultList();
 		return ordini;
 	}
