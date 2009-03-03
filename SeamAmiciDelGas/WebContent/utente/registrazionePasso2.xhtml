@@ -20,13 +20,15 @@
 
 			<s:decorate id="tipopatenteField" template="/layout/edit.xhtml">
                 <ui:define name="label">Patente</ui:define>
-                <h:inputText id="tipopatente"
-                       required="true"
-                           size="2"
-                      maxlength="2"
-                          value="#{newPatente.tipo}">
-                    <a:support event="onblur" reRender="tipopatenteField" bypassUpdates="true" ajaxSingle="true"/>
-                </h:inputText>
+                <h:selectOneMenu" value="#{newPatente.tipo}"  required="true"  requiredMessage="Inserire numero carta di credito">
+                	<f:selectItem itemDisabled="true"   itemLabel="Select-one"/>
+                	<f:selectItem itemLabel=" Nessuna "    itemValue=""/>
+                	<f:selectItem itemLabel=" B " itemValue="B" />
+				  	<f:selectItem itemLabel=" C " itemValue="C" />
+				  	<f:selectItem itemLabel=" D " itemValue="D" />
+				  	<f:selectItem itemLabel=" E " itemValue="E" />
+                </h:selectOneMenu>
+        
             </s:decorate>
             
             <s:decorate id="tipocartaField" template="/layout/edit.xhtml">
