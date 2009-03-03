@@ -1,39 +1,138 @@
-<table align="center" width="100%" cellpadding="2" cellspacing="0" border="0" style="background: url('/SeamAmiciDelGas/img/shadow.png');"
-    xmlns="http://www.w3.org/1999/xhtml"
+<h:form id="formMenu"
+	xmlns="http://www.w3.org/1999/xhtml"
     xmlns:ui="http://java.sun.com/jsf/facelets"
     xmlns:h="http://java.sun.com/jsf/html"
     xmlns:f="http://java.sun.com/jsf/core"
     xmlns:s="http://jboss.com/products/seam/taglib"
     xmlns:rich="http://richfaces.org/rich">
     
-    <tr align="center">
-    	<td width="64">	
-    	</td>
-        <td height="32">
-        	<s:link view="/home.xhtml" value="Gruppo Gas" propagation="none"/>
-        </td>
-        <td height="32">
-        	<s:link view="/customer/customerHome.xhtml" value="Home" rendered="#{identity.loggedIn}" propagation="none"/>
-        </td>
-        <td height="32">
-   			<s:link view="/registrazione.xhtml" rendered="#{!identity.loggedIn}" value="Registrazione" propagation="none"/>
-        </td>
-        <td height="32">
-        	<h:outputText value="signed in as: #{identity.username}" rendered="#{identity.loggedIn}"/>        
-        </td>
-        <td height="32">
-        	<s:link view="/customer/editDati.xhtml" value="Dati anagrafici" rendered="#{identity.loggedIn}" propagation="none"/>        
-        </td>
-        <td height="32">
-        	<s:link view="/login.xhtml" value="Login" rendered="#{not identity.loggedIn}" propagation="none"/>        
-        </td>
-        <td height="32">	
-        	<s:link view="/home.xhtml" action="#{identity.logout}" value="Logout" rendered="#{identity.loggedIn}" propagation="none"/>
-    	</td>
-    	<td height="32">	
-        	<s:link view="/mediatore/accettaRegistrazioni.xhtml" value="Richieste Registrazioni" rendered="#{identity.loggedIn}" propagation="none"/>
-    	</td>
-    	<td width="64">	
-    	</td>
-    </tr>	
-</table >	
+    <rich:toolBar>
+    	<rich:dropDownMenu style=" width : 42px;">	
+       		<h:panelGrid cellpadding="0" cellspacing="0" columns="2"/>
+    	</rich:dropDownMenu>	
+    	
+    	<rich:dropDownMenu style=" width : 58px;">
+    		
+    		<f:facet name="label"> 
+            	<h:panelGroup>	
+                    <h:outputText value="HOME"/>
+                </h:panelGroup>
+      		</f:facet>
+      		
+      		<rich:menuItem submitMode="none">
+                    <s:link view="/home.xhtml" value="HOME GAS" propagation="none"/>
+             </rich:menuItem>
+    		
+    		<rich:menuItem submitMode="none" rendered="#{identity.loggedIn}">
+                    <s:link view="/customer/customerHome.xhtml" value="HOME UTENTE" propagation="none"/>
+             </rich:menuItem>
+    		
+    	</rich:dropDownMenu>	
+        
+        <rich:dropDownMenu style=" width : 114px;" rendered="#{!identity.loggedIn}">
+        	
+        	<f:facet name="label"> 
+    	        <h:panelGroup>
+                      <h:outputText value="USER NON LOGGED"/>
+                </h:panelGroup>
+            </f:facet>
+            
+            <rich:menuItem submitMode="none">
+                    <s:link view="/login.xhtml" value="LOGIN" propagation="none"/>
+             </rich:menuItem>
+        	
+        	<rich:menuItem submitMode="none">
+                    <s:link view="/registrazione.xhtml" value="REGISTRAZIONE" propagation="none"/>
+             </rich:menuItem>        	
+        	
+        </rich:dropDownMenu>	
+    
+    	<rich:dropDownMenu style=" width : 85px;" rendered="#{identity.loggedIn}">
+        	
+        	<f:facet name="label"> 
+    	        <h:panelGroup cellpadding="0" cellspacing="0" columns="2">
+                      <h:outputText value="MEDIATORE" />
+                </h:panelGroup>
+            </f:facet>
+            
+            <rich:menuItem submitMode="none">
+                    <s:link view="/mediatore/accettaRegistrazioni.xhtml" value="RICHIESTE REGISTRAZIONI" propagation="none"/>
+             </rich:menuItem>
+             
+             <rich:menuItem submitMode="none">
+                    <s:link view="/mediatore/puntiDiConsegna.xhtml" value="PUNTI DI CONSEGNA" propagation="none"/>
+             </rich:menuItem>
+             
+             <rich:menuItem submitMode="none">
+                    <s:link view="/mediatore/richiesteDriver.xhtml" value="RICHIESTE DRIVER" propagation="none"/>
+             </rich:menuItem>
+        	
+        </rich:dropDownMenu>
+        
+        <rich:dropDownMenu style=" width : 78px;" rendered="#{identity.loggedIn}">
+        	
+        	<f:facet name="label"> 
+    	        <h:panelGroup cellpadding="0" cellspacing="0" columns="2">
+                      <h:outputText value="CUSTOMER" />
+                </h:panelGroup>
+            </f:facet>
+            
+            <rich:menuItem submitMode="none" >
+                    <s:link view="/customer/visualizzaOrdini.xhtml" value="ORDINI" propagation="none"/>
+             </rich:menuItem>
+        	
+        	 <rich:menuItem submitMode="none" >
+                    <s:link view="/customer/editDati.xhtml" value="PROFILO" propagation="none">
+                    	<f:param name="utenteCodiceFiscale" value="#{currentUser.codiceFiscale}"/>
+		                <f:param name="accountUsername" value="#{currentAccount.username}"/>
+		            </s:link>
+             </rich:menuItem>  	
+        	
+        </rich:dropDownMenu>
+    
+    	<rich:dropDownMenu style=" width : 51px;" rendered="#{identity.loggedIn}">
+        	
+        	<f:facet name="label"> 
+    	        <h:panelGroup cellpadding="0" cellspacing="0" columns="2">
+                      <h:outputText value="ADMIN" />
+                </h:panelGroup>
+            </f:facet>
+            	
+        	
+        </rich:dropDownMenu>
+        
+        <rich:dropDownMenu style=" width : 82px;" rendered="#{identity.loggedIn}">
+        	
+        	<f:facet name="label"> 
+    	        <h:panelGroup cellpadding="0" cellspacing="0" columns="2">
+                      <h:outputText value="CONTADINO"/>
+                </h:panelGroup>
+            </f:facet>
+            	
+        	
+        </rich:dropDownMenu>
+        
+    
+    	<rich:dropDownMenu style=" width : 50px;" rendered="#{identity.loggedIn}">	
+       		
+       		<f:facet name="label"> 
+    	        <h:panelGroup>
+                      <s:link view="/home.xhtml" action="#{identity.logout}" value="LOGOUT" propagation="none"/>
+                </h:panelGroup>
+            </f:facet>
+       		
+    	</rich:dropDownMenu>	
+    
+    	<rich:dropDownMenu style=" width : 50px;" rendered="#{identity.loggedIn}">	
+       		
+       		<f:facet name="label"> 
+    	        <h:panelGroup>
+                      <h:outputText style="color:red" value="LOGGED AS: #{identity.username}" />
+                </h:panelGroup>
+            </f:facet>
+       		
+    	</rich:dropDownMenu>	
+    
+    </rich:toolBar>
+    
+</h:form>
