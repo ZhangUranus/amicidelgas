@@ -10,7 +10,10 @@
     	<td width="64">	
     	</td>
         <td height="32">
-        	<s:link view="/home.xhtml" value="Home" propagation="none"/>
+        	<s:link view="/home.xhtml" value="Gruppo Gas" propagation="none"/>
+        </td>
+        <td height="32">
+        	<s:link view="/customer/customerHome.xhtml" value="Home" rendered="#{identity.loggedIn}" propagation="none"/>
         </td>
         <td height="32">
    			<s:link view="/registrazione.xhtml" rendered="#{!identity.loggedIn}" value="Registrazione" propagation="none"/>

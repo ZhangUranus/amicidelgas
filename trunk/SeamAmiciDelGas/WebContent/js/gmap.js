@@ -21,7 +21,7 @@ function load() {
        	map = new GMap2(document.getElementById("map1"));
 		map.enableDoubleClickZoom();
 		map.enableContinuousZoom();
-       	map.setCenter(new GLatLng(41.134193, 14.775925), 13);
+       	map.setCenter(new GLatLng(41.134193, 14.775925), 12);
 		map.addControl(new GSmallMapControl());
        	map.addControl(new GMapTypeControl());
 		gasIcon = new GIcon();

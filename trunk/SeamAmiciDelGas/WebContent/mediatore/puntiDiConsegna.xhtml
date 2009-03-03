@@ -33,7 +33,7 @@ window.onload = function(){
 				<table width="99%" border="0" cellspacing="4" cellpadding="0" align="center">
 					<tr>
 						<td width="50%">
-							<div id="map1"  align="right" style="width: 96%; height: 340px"></div>
+							<div id="map1"  align="center" style="width: 98%; height: 360px"></div>
 						</td>
 						<td width="50%">
 							<table width="98%" border="0" cellspacing="4" cellpadding="0" align="center">
@@ -81,6 +81,7 @@ window.onload = function(){
 									                <ui:define name="label">Indirizzo (via)</ui:define>
 									                <h:inputText id="indirizzo"
 									                       required="true"
+									                       requiredMessage="Inserire un indirizzo"
 									                           size="50"
 									                      maxlength="100"
 									                          value="#{newPuntiDiConsegna.indirizzo}">
@@ -91,15 +92,13 @@ window.onload = function(){
 											<div style="clear:both">
 									                <span class="required">*</span>
 									                Campi richiesti
-									            </div>
-									            
-									            
-									            
-									            <a:commandButton value="Aggiungi punto di consegna"
-									                action="#{addPuntiDiConsegna.persistExtend()}" oncomplete="porcata('#{newPuntiDiConsegna.indirizzo}','#{_comuneSugg.nome}','BENEVENTO')"
-									                reRender="table_punti_consegna, addPuntoDiConsegnaForm" bypassUpdates="true" ajaxSingle="true" />
-									
+									            </div>				
+									            									            
 										</rich:panel>   
+											<a:commandButton id="addPunti" action="#{addPuntiDiConsegna.persistExtend()}" value="Aggiungi punto di consegna"
+													reRender="table_punti_consegna, addPuntoDiConsegnaForm" bypassUpdates="true" 
+													ajaxSingle="true" limitToList="true"
+													oncomplete="porcata('#{newPuntiDiConsegna.indirizzo}','#{_comuneSugg.nome}','BENEVENTO')"	/>
 									    </h:form>
 										
 									</td>
