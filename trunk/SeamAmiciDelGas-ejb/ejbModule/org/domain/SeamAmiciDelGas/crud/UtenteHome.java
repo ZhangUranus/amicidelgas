@@ -4,6 +4,7 @@ import org.domain.SeamAmiciDelGas.entity.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Logger;
@@ -19,20 +20,6 @@ public class UtenteHome extends EntityHome<Utente> {
 	ComuneHome comuneHomeByComuneNascita;
 	@In(create = true, value = "comuneHome")
 	ComuneHome comuneHomeByIdcomune;
-//	@In
-//    private EntityManager entityManager;
-//	
-//	@In(value="currentUser")
-//    private Utente utente;
-//    
-//	public Utente getUtente() {
-//		return utente;
-//	}
-//
-//
-//	public void setUtente(Utente utente) {
-//		this.utente = utente;
-//	}
 
 	public void setUtenteCodiceFiscale(String id) {
 		setId(id);
@@ -47,7 +34,20 @@ public class UtenteHome extends EntityHome<Utente> {
 		Utente utente = new Utente();
 		return utente;
 	}
+	
+	@Override
+	public String remove() {
+		log.info("UTENTE HOME id: "+this.getUtenteCodiceFiscale());
+		log.info("UTENTE HOME: "+this.getInstance().getCognome());
+		Set<Account> accounts = getInstance().getAccounts();
+		for(Account a : accounts)
+			a.setElimato(true);
+		update();
+		return "utente settato a cancellato";
+	}
 
+
+	
 	public void wire() {
 		getInstance();
 		Comune comuneByComuneNascita = comuneHomeByComuneNascita
@@ -69,25 +69,6 @@ public class UtenteHome extends EntityHome<Utente> {
 		return true;
 	}
 	
-//	public void updateMePlease(){
-//		log.info("update me...");
-//		log.info("> "+utente.getCognome()+" > "+utente.getRecapitoTelefonico());
-//		//update();
-//		
-//		EntityManager em = getEntityManager();
-//
-//		try{
-//		    em.getTransaction().begin();
-//		    Utente user = em.find(Utente.class, utente.getCodiceFiscale());
-//		    user.setEmail(utente.getEmail()); 
-//		    user.setIndirizzo(utente.getIndirizzo());
-//		    user.setRecapitoTelefonico(utente.getRecapitoTelefonico());
-//		    em.getTransaction().commit();
-//		  } finally {
-//			 if (em.getTransaction().isActive()) em.getTransaction().rollback();
-//		    
-//		  }
-//	}
 	public Utente getDefinedInstance() {
 		return isIdDefined() ? getInstance() : null;
 	}
