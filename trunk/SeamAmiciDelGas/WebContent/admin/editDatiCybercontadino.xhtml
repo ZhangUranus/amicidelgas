@@ -18,57 +18,57 @@
 			   <td width="25%">
 	            <s:decorate template="/layout/display.xhtml">
 	                <ui:define name="label">Nome presidente</ui:define>
-	                <h:inputText id="nomePresidente" value="#{cybercontadinoList.cybercontadino.nomePresidente}"/>
+	                <h:inputText id="nomePresidente" value="#{cybercontadinoListExtended.cybercontadino.nomePresidente}"/>
 	            </s:decorate>
 	           </td>
 				
 				<td width="25%">
 	            <s:decorate template="/layout/display.xhtml">
 	                <ui:define name="label">Indirizzo</ui:define>
-	                <h:inputText id="indirizzo" value="#{cybercontadinoList.cybercontadino.indirizzo}"/>
+	                <h:inputText id="indirizzo" value="#{cybercontadinoListExtended.cybercontadino.indirizzo}"/>
 	            </s:decorate>
 				</td>
 				
 				<td width="25%">
 	            <s:decorate template="/layout/display.xhtml">
 	                <ui:define name="label">Cognome presidente</ui:define>
-	                <h:inputText id="cognomePresidente" value="#{cybercontadinoList.cybercontadino.cognomePresidente}"/>
+	                <h:inputText id="cognomePresidente" value="#{cybercontadinoListExtended.cybercontadino.cognomePresidente}"/>
 	            </s:decorate>
 				</td>
 				
 				<td width="25%">
 	            <s:decorate template="/layout/display.xhtml">
 	                <ui:define name="label">Nome azienda</ui:define>
-	                <h:inputText id="nomeAzienda" value="#{cybercontadinoList.cybercontadino.nomeAzienda}"/>
+	                <h:inputText id="nomeAzienda" value="#{cybercontadinoListExtended.cybercontadino.nomeAzienda}"/>
 	            </s:decorate>
 				</td>
 			</tr>
 			<tr>
 				<td width="25%">
 	            <s:decorate template="/layout/display.xhtml">
+	                <ui:define name="label">Username</ui:define>
+	                <h:inputText id="username" value="#{accountList.account.username}"/>
+	            </s:decorate>
+	            </td>
+			
+				<td width="25%">
+	            <s:decorate template="/layout/display.xhtml">
 	                <ui:define name="label">Path asl</ui:define>
-	                <h:inputText id="pathAsl" value="#{cybercontadinoList.cybercontadino.pathAsl}"/>
+	                <h:inputText id="pathAsl" value="#{cybercontadinoListExtended.cybercontadino.pathAsl}"/>
 	            </s:decorate>
 				</td>
 				
 				<td width="25%">
 	            <s:decorate template="/layout/display.xhtml">
 	                <ui:define name="label">Url wsdl</ui:define>
-	                <h:inputText id="urlWsdl" value="#{cybercontadinoList.cybercontadino.urlWsdl}"/>
+	                <h:inputText id="urlWsdl" value="#{cybercontadinoListExtended.cybercontadino.urlWsdl}"/>
 	            </s:decorate>
 				</td>
 				
 				<td width="25%">
 	            <s:decorate template="/layout/display.xhtml">
-	                <ui:define name="label">Descrizione azienda</ui:define>
-	                <h:inputText id="descrizioneAzienda" value="#{cybercontadinoList.cybercontadino.descrizioneAzienda}"/>
-	            </s:decorate>
-	            </td>
-				
-				<td width="25%">
-	            <s:decorate template="/layout/display.xhtml">
 	                <ui:define name="label">Email</ui:define>
-	                <h:inputText id="email" value="#{cybercontadinoList.cybercontadino.email}"/>
+	                <h:inputText id="email" value="#{cybercontadinoListExtended.cybercontadino.email}"/>
 	            </s:decorate>
 	            </td>
             </tr>
@@ -85,20 +85,20 @@
 
 
         <f:facet name="header">Cybercontadino Search Results</f:facet>
-    <div class="results" id="cybercontadinoList">
+    <div class="results" id="cybercontadinoListExtended">
 
     <h:outputText value="The cybercontadino search returned no results."
-               rendered="#{empty cybercontadinoList.resultList}"/>
+               rendered="#{empty cybercontadinoListExtended.resultList}"/>
 	<h:form>
 		<a:region>
-		    <rich:dataTable id="cybercontadinoList"
+		    <rich:dataTable id="cybercontadinoListExtended"
 		                var="_cybercontadino"
-		              value="#{cybercontadinoList.resultList}"
-		           rendered="#{not empty cybercontadinoList.resultList}">
+		              value="#{cybercontadinoListExtended.resultList}"
+		           rendered="#{not empty cybercontadinoListExtended.resultList}">
 		        <rich:column>
 		            <f:facet name="header">
 		                <ui:include src="/layout/sort.xhtml">
-		                    <ui:param name="entityList" value="#{cybercontadinoList}"/>
+		                    <ui:param name="entityList" value="#{cybercontadinoListExtended}"/>
 		                    <ui:param name="propertyLabel" value="Partita iva"/>
 		                    <ui:param name="propertyPath" value="cybercontadino.partitaIva"/>
 		                </ui:include>
@@ -108,7 +108,7 @@
 		        <rich:column>
 		            <f:facet name="header">
 		                <ui:include src="/layout/sort.xhtml">
-		                    <ui:param name="entityList" value="#{cybercontadinoList}"/>
+		                    <ui:param name="entityList" value="#{cybercontadinoListExtended}"/>
 		                    <ui:param name="propertyLabel" value="Comune"/>
 		                    <ui:param name="propertyPath" value="cybercontadino.comune.nome"/>
 		                </ui:include>
@@ -118,7 +118,7 @@
 		        <rich:column>
 		            <f:facet name="header">
 		                <ui:include src="/layout/sort.xhtml">
-		                    <ui:param name="entityList" value="#{cybercontadinoList}"/>
+		                    <ui:param name="entityList" value="#{cybercontadinoListExtended}"/>
 		                    <ui:param name="propertyLabel" value="Username"/>
 		                    <ui:param name="propertyPath" value="cybercontadino.account.username"/>
 		                </ui:include>
@@ -128,7 +128,7 @@
 		        <rich:column>
 		            <f:facet name="header">
 		                <ui:include src="/layout/sort.xhtml">
-		                    <ui:param name="entityList" value="#{cybercontadinoList}"/>
+		                    <ui:param name="entityList" value="#{cybercontadinoListExtended}"/>
 		                    <ui:param name="propertyLabel" value="Nome presidente"/>
 		                    <ui:param name="propertyPath" value="cybercontadino.nomePresidente"/>
 		                </ui:include>
@@ -138,7 +138,7 @@
 		        <rich:column>
 		            <f:facet name="header">
 		                <ui:include src="/layout/sort.xhtml">
-		                    <ui:param name="entityList" value="#{cybercontadinoList}"/>
+		                    <ui:param name="entityList" value="#{cybercontadinoListExtended}"/>
 		                    <ui:param name="propertyLabel" value="Indirizzo"/>
 		                    <ui:param name="propertyPath" value="cybercontadino.indirizzo"/>
 		                </ui:include>
@@ -148,7 +148,7 @@
 		        <rich:column>
 		            <f:facet name="header">
 		                <ui:include src="/layout/sort.xhtml">
-		                    <ui:param name="entityList" value="#{cybercontadinoList}"/>
+		                    <ui:param name="entityList" value="#{cybercontadinoListExtended}"/>
 		                    <ui:param name="propertyLabel" value="Cognome presidente"/>
 		                    <ui:param name="propertyPath" value="cybercontadino.cognomePresidente"/>
 		                </ui:include>
@@ -158,7 +158,7 @@
 		        <rich:column>
 		            <f:facet name="header">
 		                <ui:include src="/layout/sort.xhtml">
-		                    <ui:param name="entityList" value="#{cybercontadinoList}"/>
+		                    <ui:param name="entityList" value="#{cybercontadinoListExtended}"/>
 		                    <ui:param name="propertyLabel" value="Nome azienda"/>
 		                    <ui:param name="propertyPath" value="cybercontadino.nomeAzienda"/>
 		                </ui:include>
@@ -170,7 +170,7 @@
 		        <rich:column>
 		            <f:facet name="header">
 		                <ui:include src="/layout/sort.xhtml">
-		                    <ui:param name="entityList" value="#{cybercontadinoList}"/>
+		                    <ui:param name="entityList" value="#{cybercontadinoListExtended}"/>
 		                    <ui:param name="propertyLabel" value="Descrizione azienda"/>
 		                    <ui:param name="propertyPath" value="cybercontadino.descrizioneAzienda"/>
 		                </ui:include>
@@ -180,7 +180,7 @@
 		        <rich:column>
 		            <f:facet name="header">
 		                <ui:include src="/layout/sort.xhtml">
-		                    <ui:param name="entityList" value="#{cybercontadinoList}"/>
+		                    <ui:param name="entityList" value="#{cybercontadinoListExtended}"/>
 		                    <ui:param name="propertyLabel" value="Recapito telefonico"/>
 		                    <ui:param name="propertyPath" value="cybercontadino.recapitoTelefonico"/>
 		                </ui:include>
@@ -190,7 +190,7 @@
 		        <rich:column>
 		            <f:facet name="header">
 		                <ui:include src="/layout/sort.xhtml">
-		                    <ui:param name="entityList" value="#{cybercontadinoList}"/>
+		                    <ui:param name="entityList" value="#{cybercontadinoListExtended}"/>
 		                    <ui:param name="propertyLabel" value="Email"/>
 		                    <ui:param name="propertyPath" value="cybercontadino.email"/>
 		                </ui:include>
@@ -212,16 +212,16 @@
 		
 		        <rich:column align="center">
 			            <f:facet name="header">Action</f:facet>
-			                <a:commandLink ajaxSingle="true" id="confermaCancellaContadinoLink"
+			                <a:commandLink ajaxSingle="true" id="confermaCancellaContadinoLink" disabled="#{_cybercontadino.account.elimato}"
 			                    oncomplete="#{rich:component('confermaCancellaContadino')}.show()">
 				                <h:graphicImage value="/img/cancel.png" style="border:0"/>
 				            	<f:setPropertyActionListener value="#{_cybercontadino.partitaIva}" 
 				            							target="#{cybercontadinoHome.id}" />
 				            </a:commandLink>
-				            <rich:toolTip for="confermaCancellaContadinoLink" value="Cancella il cybercontadino selezionato"/>
+				            <rich:toolTip for="confermaCancellaContadinoLink" value="Cancella il cybercontadino selezionato" rendered="#{!_cybercontadino.account.elimato}"/>
 			        </rich:column>
 		    </rich:dataTable>
-		    <rich:datascroller align="center" for="cybercontadinoList" id="sc1" rendered="true"/>
+		    <rich:datascroller align="center" for="cybercontadinoListExtended" id="sc1" rendered="true"/>
 		 </a:region>
 	</h:form>
 
@@ -230,39 +230,39 @@
     <div class="tableControl">
 
         <s:link view="/admin/editDatiCybercontadino.xhtml"
-            rendered="#{cybercontadinoList.previousExists}"
+            rendered="#{cybercontadinoListExtended.previousExists}"
                value="#{messages.left}#{messages.left} First Page"
                   id="firstPage">
           <f:param name="firstResult" value="0"/>
         </s:link>
 
         <s:link view="/admin/editDatiCybercontadino.xhtml"
-            rendered="#{cybercontadinoList.previousExists}"
+            rendered="#{cybercontadinoListExtended.previousExists}"
                value="#{messages.left} Previous Page"
                   id="previousPage">
             <f:param name="firstResult"
-                    value="#{cybercontadinoList.previousFirstResult}"/>
+                    value="#{cybercontadinoListExtended.previousFirstResult}"/>
         </s:link>
 
         <s:link view="/admin/editDatiCybercontadino.xhtml"
-            rendered="#{cybercontadinoList.nextExists}"
+            rendered="#{cybercontadinoListExtended.nextExists}"
                value="Next Page #{messages.right}"
                   id="nextPage">
             <f:param name="firstResult"
-                    value="#{cybercontadinoList.nextFirstResult}"/>
+                    value="#{cybercontadinoListExtended.nextFirstResult}"/>
         </s:link>
 
         <s:link view="/admin/editDatiCybercontadino.xhtml"
-            rendered="#{cybercontadinoList.nextExists}"
+            rendered="#{cybercontadinoListExtended.nextExists}"
                value="Last Page #{messages.right}#{messages.right}"
                   id="lastPage">
             <f:param name="firstResult"
-                    value="#{cybercontadinoList.lastFirstResult}"/>
+                    value="#{cybercontadinoListExtended.lastFirstResult}"/>
         </s:link>
 
     </div>
 		
-		<s:link view="/admin/editDatiCybercontadino.xhtml">Pagina Utenti</s:link>
+		<s:link view="/admin/editDatiUtenti.xhtml">Pagina Utenti</s:link>
 		<img alt="statistiche" border="0" src="/SeamAmiciDelGas/img/customer.jpg" width="5%"/>
 		
 		<rich:modalPanel id="confermaCancellaContadino" autosized="true" width="200">
@@ -296,7 +296,7 @@
 			                <a:commandButton value="Si" ajaxSingle="true"
 			                    action="#{cybercontadinoHome.remove()}"
 			                    oncomplete="#{rich:component('confermaCancellaContadino')}.hide();"
-			                    reRender="cybercontadinoList"/>
+			                    reRender="cybercontadinoListExtended"/>
                         </td>
                         <td align="center" width="50%">
 			                <a:commandButton value="Annulla"

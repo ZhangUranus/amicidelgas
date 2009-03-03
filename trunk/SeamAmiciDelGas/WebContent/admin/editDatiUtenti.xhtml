@@ -142,13 +142,13 @@
 			         
 			        <rich:column align="center">
 			            <f:facet name="header">Action</f:facet>
-			                <a:commandLink ajaxSingle="true" id="confermaCancellaUtenteLink"
+			                <a:commandLink ajaxSingle="true" id="confermaCancellaUtenteLink" disabled="#{_accountVar.elimato}"
 			                    oncomplete="#{rich:component('confermaCancellaUtente')}.show()">
 				                <h:graphicImage value="/img/cancel.png" style="border:0"/>
 				            	<f:setPropertyActionListener value="#{_accountVar.utente.codiceFiscale}" 
 				            							target="#{utenteHome.id}" />
 				            </a:commandLink>
-				            <rich:toolTip for="confermaCancellaUtenteLink" value="Cancella l'utente selezionato"/>
+				            <rich:toolTip for="confermaCancellaUtenteLink" value="Cancella l'utente selezionato" rendered="#{!_accountVar.elimato}"/>
 			        </rich:column>
 			        
 				  </rich:dataTable>
