@@ -33,7 +33,7 @@ window.onload = function(){
 				<table width="99%" border="0" cellspacing="4" cellpadding="0" align="center">
 					<tr>
 						<td width="50%">
-							<div id="map1"  align="center" style="width: 98%; height: 360px"></div>
+							<div id="map1"  align="center" style="width: 98%; height: 380px"></div>
 						</td>
 						<td width="50%">
 							<table width="98%" border="0" cellspacing="4" cellpadding="0" align="center">
@@ -95,10 +95,7 @@ window.onload = function(){
 									            </div>				
 									            									            
 										</rich:panel>   
-											<a:commandButton id="addPunti" action="#{addPuntiDiConsegna.persistExtend()}" value="Aggiungi punto di consegna"
-													reRender="table_punti_consegna, addPuntoDiConsegnaForm" bypassUpdates="true" 
-													ajaxSingle="true" limitToList="true"
-													oncomplete="porcata('#{newPuntiDiConsegna.indirizzo}','#{_comuneSugg.nome}','BENEVENTO')"	/>
+											<h:commandButton id="addPunti" action="#{addPuntiDiConsegna.persistExtend()}" value="Aggiungi punto di consegna"/>
 									    </h:form>
 										
 									</td>
@@ -110,48 +107,43 @@ window.onload = function(){
 								<tr>
 									<td>
 										<a:region>
-										<rich:dataTable value="#{puntiDiConsegnaList.resultList}" var="_dati" id="table_punti_consegna" width="100%">
-											<rich:column >
-												<f:facet name="header">
-													<h:outputText value="Indirizzo" />
-												</f:facet>
-												<h:outputText value="#{_dati.indirizzo}" id="indirizzo" />
-							        		</rich:column>
-							        		
-							        		<rich:column >
-												<f:facet name="header">
-													<h:outputText value="Comune" />
-												</f:facet>
-												<h:outputText value="#{_dati.comune.nome}" id="comune" />
-							        		</rich:column>
-							        		
-							        		<rich:column >
-												<f:facet name="header">
-													<h:outputText value="Provincia" />
-												</f:facet>
-												<h:outputText value="#{_dati.comune.provinces.idprovinces}" id="provincia" />
-							        		</rich:column>
-							        		
-							        		<rich:column  align="center">
-								                <f:facet name="header">
-								                        Azioni
-								                </f:facet>
-								                <a:commandLink ajaxSingle="true" id="modificaPunto"
-								                    oncomplete="#{rich:component('modificaPuntoPanel')}.show()">
-								                    <h:graphicImage value="/img/modifica_24px.png" style="border:0"/>
-								                    <f:setPropertyActionListener value="#{_dati}"
-				                        				target="#{puntiDiConsegnaHome}" />
-								                </a:commandLink>
-								                <rich:toolTip for="modificaPunto" value="Modifica questa punto di consegna"/>
-								                <a:commandLink ajaxSingle="true" id="cancelPunto"
-								                    oncomplete="#{rich:component('deletePuntoPanel')}.show()">
-								                    <h:graphicImage value="/img/cancel_24px.png" style="border:0"/>
-								                    <f:setPropertyActionListener value="#{_dati.idpuntiConsegna}"
-				                        				target="#{puntiDiConsegnaHome.id}" />
-								                </a:commandLink>
-								                <rich:toolTip for="cancelPunto" value="Elimina questa punto di consegna"/>
-								            </rich:column> 
-									</rich:dataTable>
+										<h:form>
+											<rich:dataTable value="#{puntiDiConsegnaList.resultList}" var="_dati" id="table_punti_consegna" width="100%">
+												<rich:column >
+													<f:facet name="header">
+														<h:outputText value="Indirizzo" />
+													</f:facet>
+													<h:outputText value="#{_dati.indirizzo}" id="indirizzo" />
+								        		</rich:column>
+								        		
+								        		<rich:column >
+													<f:facet name="header">
+														<h:outputText value="Comune" />
+													</f:facet>
+													<h:outputText value="#{_dati.comune.nome}" id="comune" />
+								        		</rich:column>
+								        		
+								        		<rich:column >
+													<f:facet name="header">
+														<h:outputText value="Provincia" />
+													</f:facet>
+													<h:outputText value="#{_dati.comune.provinces.idprovinces}" id="provincia" />
+								        		</rich:column>
+								        		
+								        		<rich:column  align="center">
+									                <f:facet name="header">
+									                        Azioni
+									                </f:facet>
+									                <a:commandLink ajaxSingle="true" id="cancelPunto"
+									                    oncomplete="#{rich:component('deletePuntoPanel')}.show()">
+									                    <h:graphicImage value="/img/cancel_24px.png" style="border:0"/>
+									                    <f:setPropertyActionListener value="#{_dati.idpuntiConsegna}"
+					                        				target="#{puntiDiConsegnaHome.id}" />
+									                </a:commandLink>
+									                <rich:toolTip for="cancelPunto" value="Elimina questa punto di consegna"/>
+									            </rich:column> 
+										</rich:dataTable>
+									</h:form>
 									</a:region>
 									</td>
 								</tr>
@@ -166,7 +158,7 @@ window.onload = function(){
 	<ui:repeat value="#{puntiDiConsegnaList.resultList}" var="_punto">
 <script type="text/javascript"><!--
 	load();
-	porcata("#{_punto.indirizzo}","#{_punto.comune.nome}","#{_punto.comune.provinces.nome}");	
+	porcata("#{_punto.indirizzo}","#{_punto.comune.nome}","#{_punto.comune.provinces.nome}","#{_punto.idpuntiConsegna}");	
 --></script>
 </ui:repeat>
 	
@@ -190,7 +182,7 @@ window.onload = function(){
                       <td align="center" width="45%">
               <a:commandButton value="Si" ajaxSingle="true"
                   action="#{puntiDiConsegnaHome.remove()}"
-                  oncomplete="#{rich:component('deletePuntoPanel')}.hide();"
+                  oncomplete="#{rich:component('deletePuntoPanel')}.hide();deletePoint('#{puntiDiConsegnaHome.instance.idpuntiConsegna}');"
                   reRender="table_punti_consegna" />
                       </td>
                       <td width="10%"></td>

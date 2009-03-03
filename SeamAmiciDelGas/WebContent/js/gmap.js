@@ -1,6 +1,7 @@
 var geocoder = null;
 var point;
 var gasIcon;
+var markers = new Array();
 
 function Indirizzo(via,comune,provincia){
 	this.via = via;
@@ -21,7 +22,7 @@ function load() {
        	map = new GMap2(document.getElementById("map1"));
 		map.enableDoubleClickZoom();
 		map.enableContinuousZoom();
-       	map.setCenter(new GLatLng(41.134193, 14.775925), 12);
+       	map.setCenter(new GLatLng(41.134193, 14.775925), 13);
 		map.addControl(new GSmallMapControl());
        	map.addControl(new GMapTypeControl());
 		gasIcon = new GIcon();
@@ -51,13 +52,17 @@ function load() {
    	}
    }
    
-   function porcata(get_indirizzo, get_comune, get_provincia){
+   function porcata(get_indirizzo, get_comune, get_provincia, get_id){
    		
 		var indirizzo = new Indirizzo(get_indirizzo, get_comune, get_provincia);
-		geocoder.getLocations(indirizzo.getAddress(), getCallBackFor(indirizzo,0));				
+		geocoder.getLocations(indirizzo.getAddress(), getCallBackFor(indirizzo,0,get_id));				
    }
    
-   function getCallBackFor(indirizzo,codice){
+   function deletePoint(id){
+		map.removeOverlay(markers[id]);
+   }
+   
+   function getCallBackFor(indirizzo,codice, idmark){
 	return (function(data, response){
 		if(data.Status.code == "200"){
 			point = data.Placemark[0].Point.coordinates;
@@ -65,6 +70,8 @@ function load() {
 			var point2 = new GLatLng(point[1],point[0]);
 			var mark = new GMarker(point2, {title: indirizzo.getAddress(), icon:gasIcon});
 			map.addOverlay(mark);
+			markers[idmark] = mark;
+			
 			map.panTo(mark.getPoint());
 			mark.bindInfoWindowHtml('<div align=\"center\"><b>Punto di Consegna</b></div><p><div align=\"center\" class=\"colore_1\">'+indirizzo.getAddress()+'</div></p>');
 					
@@ -76,7 +83,7 @@ function load() {
 			GEvent.addListener(mark, "infowindowclose", function() {map.setZoom(13); map.panTo(mark.getPoint());});
 		}
 		else if(data.Status.code =="602" && codice == 0){
-			new GClientGeocoder().getLocations(indirizzo.getComune(), getCallBackFor(indirizzo,1));
+			new GClientGeocoder().getLocations(indirizzo.getComune(), getCallBackFor(indirizzo,1,idmark));
 		}
 	});
 }
