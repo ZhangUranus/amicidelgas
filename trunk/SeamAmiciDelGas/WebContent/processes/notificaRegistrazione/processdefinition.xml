@@ -12,14 +12,16 @@
 		<task name="crea_visita">
 			<assignment pooled-actors="mediatore"></assignment>
 		</task>
-		<timer duedate="2 minutes" name="Mytime" transition="invia" repeat="yes">
-			<action></action>
-		</timer>
+		<event type="task-create">
+			<create-timer name="ProvaTimer" transaction="invia">
+				<action name="prova" class="org.domain.SeamAmiciDelGas.processes.RemindActor"></action>
+			</create-timer>
+		</event>
 		<transition to="Fork_diMedda" name="invia"></transition>
 	</task-node>
 
 	<task-node name="partecipa al gruppo">
-		<task name="partecipa_alla_visita">
+		<task name="partecipa_alla_visita" duedate="2 minutes">
 			<assignment pooled-actors="utenteGas"></assignment>
 		</task>
 		<event type="task-create">
