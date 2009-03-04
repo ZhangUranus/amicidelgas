@@ -1,5 +1,7 @@
 package org.domain.SeamAmiciDelGas.session;
 
+import java.util.Set;
+
 import org.domain.SeamAmiciDelGas.entity.Account;
 import org.jboss.seam.annotations.Logger;
 import org.jboss.seam.annotations.Name;
@@ -18,10 +20,12 @@ public class NotificaBean {
 	
 	private String gruppoScelto;
 	
-	private Account utenteScelto;
-	
 	private String messaggio;
 	
+	private Set<Account> accountSet;
+	
+	private Account accountSelected;
+
 	public String getMessaggio() {
 		return messaggio;
 	}
@@ -48,12 +52,23 @@ public class NotificaBean {
 		this.gruppoScelto = gruppoScelto;
 	}
 
-	public Account getUtenteScelto() {
-		return utenteScelto;
+	public Set<Account> getAccountSet() {
+		return accountSet;
 	}
 
-	public void setUtenteScelto(Account utenteScelto) {
-		this.utenteScelto = utenteScelto;
+	public void setAccountSet(Set<Account> accountSet) {
+		this.accountSet = accountSet;
+	}
+
+	public Account getAccountSelected() {
+		return accountSelected;
+	}
+
+	public void setAccountSelected(Account accountSelected) {
+		log.info("*******************************");
+		log.info("*********Account selezionato***********");
+		log.info("*******************************");
+		this.accountSelected = accountSelected;
 	}
 	
 	
