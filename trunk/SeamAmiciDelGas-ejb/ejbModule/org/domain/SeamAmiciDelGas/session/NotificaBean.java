@@ -1,5 +1,6 @@
 package org.domain.SeamAmiciDelGas.session;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.domain.SeamAmiciDelGas.entity.Account;
@@ -19,9 +20,10 @@ public class NotificaBean {
 	private String destinatario;
 	private String gruppoScelto;
 	private Account utenteScelto;
+	private Account utenteCancellato;
 	private String messaggio;
 	
-	private List<Account> accountList;
+	private List<Account> myAccountList = new ArrayList<Account>();
 	
 	public NotificaBean() 	{}
 	
@@ -49,12 +51,12 @@ public class NotificaBean {
 		this.gruppoScelto = gruppoScelto;
 	}
 
-	public List<Account> getAccountList() {
-		return accountList;
+	public List<Account> getMyAccountList() {
+		return myAccountList;
 	}
 
-	public void setAccountList(List<Account> accountList) {
-		this.accountList = accountList;
+	public void setMyAccountList(List<Account> myAccountList) {
+		this.myAccountList = myAccountList;
 	}
 
 	public Account getUtenteScelto() {
@@ -63,8 +65,24 @@ public class NotificaBean {
 
 	public void setUtenteScelto(Account utenteScelto) {
 		this.utenteScelto = utenteScelto;
-		log.info("**************** utente = " +utenteScelto.getUsername()); 
-		accountList.add(utenteScelto);
+		for(Account a : myAccountList)
+			if(a.getUsername().equals(utenteScelto.getUsername()))
+				return;
+		myAccountList.add(utenteScelto);
+	}
+
+	public Account getUtenteCancellato() {
+		return utenteCancellato;
+	}
+
+	public void setUtenteCancellato(Account utenteCancellato) {
+		this.utenteCancellato = utenteCancellato;
+		for(Account a : myAccountList)
+			if(a.getUsername().equals(utenteCancellato.getUsername()))
+			{	
+				myAccountList.remove(a);	
+				return;
+			}
 	}
 
 	
