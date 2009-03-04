@@ -1,6 +1,6 @@
 package org.domain.SeamAmiciDelGas.session;
 
-import java.util.Set;
+import java.util.List;
 
 import org.domain.SeamAmiciDelGas.entity.Account;
 import org.jboss.seam.annotations.Logger;
@@ -17,15 +17,14 @@ public class NotificaBean {
 	private Log log;
 	
 	private String destinatario;
-	
 	private String gruppoScelto;
-	
+	private Account utenteScelto;
 	private String messaggio;
 	
-	private Set<Account> accountSet;
+	private List<Account> accountList;
 	
-	private Account accountSelected;
-
+	public NotificaBean() 	{}
+	
 	public String getMessaggio() {
 		return messaggio;
 	}
@@ -42,8 +41,6 @@ public class NotificaBean {
 		this.destinatario = destinatario;
 	}
 
-	public NotificaBean() {}
-
 	public String getGruppoScelto() {
 		return gruppoScelto;
 	}
@@ -52,24 +49,24 @@ public class NotificaBean {
 		this.gruppoScelto = gruppoScelto;
 	}
 
-	public Set<Account> getAccountSet() {
-		return accountSet;
+	public List<Account> getAccountList() {
+		return accountList;
 	}
 
-	public void setAccountSet(Set<Account> accountSet) {
-		this.accountSet = accountSet;
+	public void setAccountList(List<Account> accountList) {
+		this.accountList = accountList;
 	}
 
-	public Account getAccountSelected() {
-		return accountSelected;
+	public Account getUtenteScelto() {
+		return utenteScelto;
 	}
 
-	public void setAccountSelected(Account accountSelected) {
-		log.info("*******************************");
-		log.info("*********Account selezionato***********");
-		log.info("*******************************");
-		this.accountSelected = accountSelected;
+	public void setUtenteScelto(Account utenteScelto) {
+		this.utenteScelto = utenteScelto;
+		log.info("**************** utente = " +utenteScelto.getUsername()); 
+		accountList.add(utenteScelto);
 	}
+
 	
 	
 	
