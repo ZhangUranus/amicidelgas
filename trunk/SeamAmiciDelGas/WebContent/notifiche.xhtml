@@ -1,0 +1,71 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:a="http://richfaces.org/a4j"
+    template="/layout/template.xhtml">
+
+	<ui:define name="body">
+		
+		<h:form id="inviaNotifica" styleClass="edit">
+			<rich:simpleTogglePanel label="Invia Notifica" switchType="ajax">
+				
+			<s:decorate id="destinatarioField" template="/layout/edit.xhtml">
+                <ui:define name="label">Scegli il destinatario</ui:define>
+                <h:selectOneRadio value="#{notificaBean.destinatario}" required="true" requiredMessage="Scegli il destinatario">
+				  <f:selectItem itemLabel="Gruppo" itemValue="gruppo" />
+  				  <f:selectItem itemLabel="Utente" itemValue="utente" />
+				</h:selectOneRadio>
+            </s:decorate>
+			
+			<s:decorate id="gruppoField" rendered="#{notificaBean.destinatario=='gruppo'}">
+				<h:selectOneMenu" value="#{notificaBean.gruppoScelto}"  required="true"  requiredMessage="Seleziona il gruppo a cui vuoi inviare una notifica">
+                	<f:selectItem itemDisabled="true"   itemLabel="Select-one"/>
+                	<f:selectItem itemLabel="Utente Gas" itemValue="utenteGas"/>
+                	<f:selectItem itemLabel="Cyber Contadino" itemValue="utenteContadino" />
+				  	<f:selectItem itemLabel="Mediatore" itemValue="mediatore" />
+				  	<f:selectItem itemLabel="Admin" itemValue="admin" />
+                </h:selectOneMenu>
+			</s:decorate>
+			
+			<s:decorate id="utenteField" rendered="#{notificaBean.destinatario=='utente'}">
+				<h:selectOneMenu id="utenteSelect" value="#{notificaBean.utenteScelto}">
+                 <a:support event="onchange" ajaxSingle="true" reRender="utenteField" />
+                <s:selectItems 
+                	noSelectionLabel="Seleziona un utente"
+                	var="_utente" 
+                	hideNoSelectionLabel="false"
+                	label="#{_utente.username} #{_utente.utente.cognome} #{_utente.utente.nome}" 
+                	value="#{accountList.resultList}">
+                </s:selectItems>
+                </h:selectOneMenu>
+			</s:decorate>
+			
+			 <h:inputText id="messaggio"
+                       required="true"
+                           size="32"
+                      maxlength="70"
+                          value="#{notificaBean.messaggio}"/>
+				
+			</rich:simpleTogglePanel>
+			
+		</h:form>
+		<br/>
+		<br/>
+		<h:form id="notificheRicevute" styleClass="edit">
+			<rich:simpleTogglePanel label="Notifiche Ricevute" switchType="ajax">
+			
+				
+				
+			</rich:simpleTogglePanel>
+			
+		</h:form>
+		
+		
+	</ui:define>
+	
+</ui:composition>
