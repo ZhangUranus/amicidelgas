@@ -156,6 +156,7 @@
 					  </tr>
 					</table>
 				</td>
+				
 				<td width="25%">
 					<table width="98%" border="0" cellspacing="2" cellpadding="0" align="center" >
 					  <tr>			    
@@ -167,17 +168,20 @@
 					  </tr>
 					</table>
 				</td>
-				<td width="25%">
-					<table width="98%" border="0" cellspacing="2" cellpadding="0" align="center" >
-					  <tr>			    
-					    <td rowspan="2" align="left"><a href="/SeamAmiciDelGas/mediatore/puntiDiConsegna.seam"><img alt="statistiche" border="0" src="/img/ico_config.jpg"/></a></td>
-					    <td valign="bottom"><div align="left" class="colore_1"><a href="/SeamAmiciDelGas/mediatore/puntiDiConsegna.seam">Punti di consegna</a></div></td>			      
-					  </tr>
-					  <tr>
-					    <td valign="top"><div align="left" class="explorer">Aggiungi, Modifica, Elimina i Punti di Consegna </div></td>
-					  </tr>
-					</table>
-				</td>
+				
+				<s:decorate rendered="#{loginSelectBean.calculateMaxRole()=='mediatore'} or #{loginSelectBean.calculateMaxRole()=='admin'}">
+					<td width="25%">
+						<table width="98%" border="0" cellspacing="2" cellpadding="0" align="center" >
+						  <tr>			    
+						    <td rowspan="2" align="left"><a href="/SeamAmiciDelGas/mediatore/puntiDiConsegna.seam"><img alt="statistiche" border="0" src="/img/ico_config.jpg"/></a></td>
+						    <td valign="bottom"><div align="left" class="colore_1"><a href="/SeamAmiciDelGas/mediatore/puntiDiConsegna.seam">Punti di consegna</a></div></td>			      
+						  </tr>
+						  <tr>
+						    <td valign="top"><div align="left" class="explorer">Aggiungi, Modifica, Elimina i Punti di Consegna </div></td>
+						  </tr>
+						</table>
+					</td>
+				</s:decorate>
 				<td width="25%">
 					<table width="98%" border="0" cellspacing="2" cellpadding="0" align="center" >
 					  <tr>			    
@@ -190,6 +194,7 @@
 					</table>
 				</td>
 			</tr>
+			
 			
 			
 		<s:decorate rendered="#{loginSelectBean.calculateMaxRole()=='admin'}">	
