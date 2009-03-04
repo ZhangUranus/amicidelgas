@@ -10,12 +10,11 @@
     template="/layout/template.xhtml">
 
 	<ui:define name="body">
-		
+
 		<h:form id="inviaNotifica" styleClass="edit">
 			<rich:simpleTogglePanel label="Invia Notifica" switchType="ajax">
-			<h:panelGrid columns="1">	
+			<h:panelGrid columns="1">
 				<s:decorate id="destinatarioField" template="/layout/edit.xhtml">
-				
 	                <ui:define name="label">Scegli il destinatario</ui:define>
 	                <h:selectOneRadio value="#{notificaBean.destinatario}" required="true" requiredMessage="Scegli il destinatario">
 					  <a:support event="onclick" ajaxSingle="true" reRender="gruppoField, utenteField">	</a:support>
@@ -37,99 +36,102 @@
 				</a:outputPanel>
 				
 				<a:outputPanel ajaxRendered="true">
-					<s:decorate id="utenteField" rendered="#{notificaBean.destinatario=='utente'}">
-						
-			<f:facet name="header">Lista utenti</f:facet>
-		   		<div class="results" id="listaUtenti">
-				<h:form>
-			        <a:region>
-				    <rich:dataTable id="myUtentiList"
-				                var="_accountVar"
-				                value="#{accountListExtended.resultList}"
-				              rendered="#{not empty accountListExtended.resultList}"
-				              rows="5"
-				              rowKeyVar="row">
-			    				              
-				     <rich:column>          
-					     <f:facet name="header">
-				                <ui:include src="/layout/sort.xhtml">
-				                    <ui:param name="entityList" value="#{accountListExtended}"/>
-				                    <ui:param name="propertyLabel" value="Username"/>
-				                    <ui:param name="propertyPath" value="account.username"/>
-				                </ui:include>
-				          </f:facet>         
-				          <h:outputText value="#{_accountVar.username}"/>
-			         </rich:column>
-			         
-			         <rich:column>          
-					     <f:facet name="header">
-				                <ui:include src="/layout/sort.xhtml">
-				                    <ui:param name="entityList" value="#{accountListExtended}"/>
-				                    <ui:param name="propertyLabel" value="Cognome"/>
-				                    <ui:param name="propertyPath" value="account.utente.cognome"/>
-				                </ui:include>
-				          </f:facet>         
-				          <h:outputText value="#{_accountVar.utente.cognome}"/>
-			         </rich:column>
-			         
-			         <rich:column>
-			            <f:facet name="header">
-			                <ui:include src="/layout/sort.xhtml">
-			                    <ui:param name="entityList" value="#{accountListExtended}"/>
-			                    <ui:param name="propertyLabel" value="Nome"/>
-			                    <ui:param name="propertyPath" value="account.utente.nome"/>
-			                </ui:include>
-			            </f:facet>
-			            <h:outputText value="#{_accountVar.utente.nome}"/>
-			        </rich:column>        
-
-			        <rich:column>
-			            <f:facet name="header">Stato</f:facet>
-			               <div align="center">
-								<h:graphicImage id="nonCancellato" value="/img/customer40x50.jpg" rendered="#{!_accountVar.elimato}" width="30%"/>
-									<rich:toolTip for="nonCancellato" value="Utente non cancellato"/>
-								<h:graphicImage id="cancellato" value="/img/customer40x50eliminato.jpg" rendered="#{_accountVar.elimato}" width="30%"/>
-									<rich:toolTip for="cancellato" value="Utente cancellato"/>
-						   </div>
-			        </rich:column>
-			         
-			        <rich:column align="center">
-			            <f:facet name="header">Select</f:facet>
-			                <a:commandLink id="selezionaUtenteLink" ajaxSingle="true" 
-			                rendered="myUtentiListSelezionati">
-								<h:graphicImage id="cancellato2" value="/img/customer40x50eliminato.jpg" rendered="#{_accountVar.elimato}" width="30%"/>
-							<f:setPropertyActionListener value="#{_accountVar}" 
-				            							 target="#{notificaBean.utenteScelto}" />
-							
-							</a:commandLink>
-				            <rich:toolTip for="selezionaUtenteLink" value="Invia notifica all'utente" rendered="#{!_accountVar.elimato}"/>
-			        </rich:column>
-			        
-				  </rich:dataTable>
-				  <rich:datascroller align="center" for="myUtentiList" id="sc1" rendered="true"/>
-				  </a:region>
-				  </h:form>
-			    </div>
-						
-				<s:decorate>
-					<rich:dataTable id="myUtentiListSelezionati"
-				                var="_utenti"
-				                value="#{notificaBean.accountList}"
-				              rendered="#{not empty notificaBean.accountList}"
-				              rows="5"
-				              rowKeyVar="row">
-				              
-				              <rich:column>
-				              		<h:outputText value="#{_utenti.username}"/>
-				              </rich:column>
-				              
-					</rich:dataTable>
-				</s:decorate>	
-						
+				
+				<s:decorate id="utenteField" rendered="#{notificaBean.destinatario=='utente'}">
+				 <h:panelGrid columns="3">
+				  <h:column>		
+			
+				   		<div class="results" id="listaUtenti">
+						<h:form>
+					        <a:region>
+						    <rich:dataTable id="myUtentiList"
+						                var="_accountVar"
+						                value="#{accountListExtended.resultListNotEliminato}"
+						              rendered="#{not empty accountListExtended.resultListNotEliminato}"
+						              rows="5"
+						              rowKeyVar="row">
+					    	<f:facet name="header">Lista utenti</f:facet>		              
+						     <rich:column>          
+							     <f:facet name="header">
+						                <ui:include src="/layout/sort.xhtml">
+						                    <ui:param name="entityList" value="#{accountListExtended}"/>
+						                    <ui:param name="propertyLabel" value="Username"/>
+						                    <ui:param name="propertyPath" value="account.username"/>
+						                </ui:include>
+						          </f:facet>         
+						          <h:outputText value="#{_accountVar.username}"/>
+					         </rich:column>
+					         
+					         <rich:column>          
+							     <f:facet name="header">
+						                <ui:include src="/layout/sort.xhtml">
+						                    <ui:param name="entityList" value="#{accountListExtended}"/>
+						                    <ui:param name="propertyLabel" value="Cognome"/>
+						                    <ui:param name="propertyPath" value="account.utente.cognome"/>
+						                </ui:include>
+						          </f:facet>         
+						          <h:outputText value="#{_accountVar.utente.cognome}"/>
+					         </rich:column>
+					         
+					         <rich:column>
+					            <f:facet name="header">
+					                <ui:include src="/layout/sort.xhtml">
+					                    <ui:param name="entityList" value="#{accountListExtended}"/>
+					                    <ui:param name="propertyLabel" value="Nome"/>
+					                    <ui:param name="propertyPath" value="account.utente.nome"/>
+					                </ui:include>
+					            </f:facet>
+					            <h:outputText value="#{_accountVar.utente.nome}"/>
+					        </rich:column>        
+					         
+					        <rich:column align="center">
+					            <f:facet name="header">Select</f:facet>
+					            <a:commandLink
+					            	ajaxSingle="true"
+					            	oncomplete="#{rich:component('myUtentiListSelezionati')}.show()">
+					            	<h:graphicImage id="selezionaUtenteButton" value="/img/passed.gif" rendered="#{!_accountVar.elimato}" width="30%"/>
+									<f:setPropertyActionListener value="#{_accountVar}" 
+						            							target="#{notificaBean.utenteScelto}" />
+					            </a:commandLink>
+					        </rich:column>
+					        
+						  </rich:dataTable>
+						  <rich:datascroller align="center" for="myUtentiList" id="sc1" rendered="true"/>
+						  </a:region>
+						  </h:form>
+					    </div>
+					</h:column>
+					<h:column><table/></h:column>
+					<h:column>
+						<rich:dataTable id="myUtentiListSelezionati"
+					                var="_utenti"
+					                value="#{notificaBean.myAccountList}"
+					              rendered="#{not empty notificaBean.myAccountList}"
+					              rows="5"
+					              rowKeyVar="row">
+					      	<f:facet name="header">Utenti selezionati</f:facet>        
+				            <rich:column>
+				            	<f:facet name="header">Username</f:facet>
+				              	<h:outputText value="#{_utenti.username}"/>
+				            </rich:column>
+				            <rich:column align="center">
+					            <f:facet name="header">Cancel</f:facet>
+					            	<a:commandLink
+					            		ajaxSingle="true"
+					            		oncomplete="#{rich:component('myUtentiListSelezionati')}.show()">
+					            		<h:graphicImage id="selezionaUtenteButton" value="/img/error1.gif" width="30%"/>
+					            		<f:setPropertyActionListener value="#{_utenti}" 
+						            							target="#{notificaBean.utenteCancellato}" />
+					            	</a:commandLink>
+					        </rich:column>
+						</rich:dataTable>
+					</h:column>
+			</h:panelGrid>
+			
 					</s:decorate>
-				</a:outputPanel>
-				
-				
+				</a:outputPanel>	
+			<br/>
+			<br/>	
 				
 				 <h:inputText id="messaggio"
 	                       required="true"
@@ -140,6 +142,8 @@
 			</rich:simpleTogglePanel>
 			
 		</h:form>
+		
+		
 		<br/>
 		<br/>
 		<h:form id="notificheRicevute" styleClass="edit">
