@@ -68,6 +68,10 @@
                     	<f:param name="utenteCodiceFiscale" value="#{currentUser.codiceFiscale}"/>
 		                <f:param name="accountUsername" value="#{currentAccount.username}"/>
 		            </s:link>
+             </rich:menuItem>
+             
+             <rich:menuItem submitMode="none" >
+                    <s:link view="/notifiche.xhtml" value="NOTIFICHE" propagation="none"/>
              </rich:menuItem>  	
         	
         </rich:dropDownMenu>	
