@@ -372,6 +372,8 @@
 			                <ui:define name="label">Data proposta</ui:define>
 			                 <rich:calendar id="dataVisita"
                        			required="true"
+                       			showApplyButton="true"
+                       			
                        			value="#{processoRegistrazione.dataProposta}" datePattern="MM/dd/yyyy HH:mm">
                        			<a:support event="oncollapse" action="#{processoRegistrazione.update()}" reRender="dataVisitaField,dataOut" limitToList="true"></a:support>
                   			</rich:calendar>

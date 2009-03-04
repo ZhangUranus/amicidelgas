@@ -12,22 +12,18 @@
 		<task name="crea_visita">
 			<assignment pooled-actors="mediatore"></assignment>
 		</task>
-		<event type="task-create">
-			<create-timer name="ProvaTimer" transaction="invia">
-				<action name="prova" class="org.domain.SeamAmiciDelGas.processes.RemindActor"></action>
-			</create-timer>
-		</event>
 		<transition to="Fork_diMedda" name="invia"></transition>
 	</task-node>
 
 	<task-node name="partecipa al gruppo">
-		<task name="partecipa_alla_visita" duedate="2 minutes">
+		<task name="partecipa_alla_visita" >
 			<assignment pooled-actors="utenteGas"></assignment>
 		</task>
 		<event type="task-create">
-			<action name="ChangeTaskDate" expression="#{changeDateActionHandler.execute()}"></action>
+			<action name="SetTimer" expression="#{timerHandler.execute()}"></action>
 		</event>
 		<transition to="accetta altri utenti" name="partecipa"></transition>
+		<transition to="join1" name="time-out"></transition>
 	</task-node>
 
 	<mail-node name="EmailAppuntamentoAzienda" to="#{contadinoCreato.email}" async="true">

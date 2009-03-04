@@ -21,7 +21,9 @@
  */
 package org.domain.SeamAmiciDelGas.processes;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -34,14 +36,24 @@ public class RemindActor implements ActionHandler {
 
   private static final long serialVersionUID = 1L;
   
-  @In(value="dataProva", scope=ScopeType.BUSINESS_PROCESS) 
-  private Date dataProva;
+ // @In(value="dataProva", scope=ScopeType.BUSINESS_PROCESS) 
+ // private Date dataProva;
 
   public void execute(ExecutionContext executionContext) throws Exception {
     
 
-	  System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAaa");
-	  executionContext.getTimer().setDueDate(dataProva);
+	  System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+	  Calendar gc= new GregorianCalendar();
+		//gc.setTime((Date) dataProposta.clone());
+		gc.setTimeInMillis(System.currentTimeMillis());
+		gc.roll(Calendar.MINUTE, 2);
+		//gc.roll(Calendar.HOUR, 5);
+	//	gc.roll(Calendar.DATE, -2);
+		Date dataProva= gc.getTime();
+	  System.out.println(dataProva.toString());
+	 executionContext.getTaskInstance().cancel();
+	//  executionContext.getTask().
+	 System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
     log.info("###############################################");
   //  log.info("### "+actorId+", task '"+taskName+"' is waiting for you.");
     log.info("###############################################");
