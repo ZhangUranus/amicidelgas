@@ -102,6 +102,19 @@
                 </h:panelGroup>
             </f:facet>
             	
+        	<rich:menuItem submitMode="none">
+                    <s:link view="/admin/editDatiUtenti.xhtml" value="UTENTI REGISTRATI" propagation="none">
+             			<f:param name="utenteCodiceFiscale" value="#{currentUser.codiceFiscale}"/>
+		            	<f:param name="accountUsername" value="#{currentAccount.username}"/>
+		            </s:link>
+             </rich:menuItem>
+             
+             <rich:menuItem submitMode="none">
+                    <s:link view="/admin/editDatiCybercontadino.xhtml" value="CONTADINI REGISTRATI" propagation="none">
+             			<f:param name="utenteCodiceFiscale" value="#{currentUser.codiceFiscale}"/>
+		            	<f:param name="accountUsername" value="#{currentAccount.username}"/>
+		            </s:link>
+             </rich:menuItem>
         	
         </rich:dropDownMenu>
         
