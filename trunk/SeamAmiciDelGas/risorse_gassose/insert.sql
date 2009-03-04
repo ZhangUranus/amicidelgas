@@ -10613,8 +10613,8 @@ INSERT INTO `account` (`Username`,`passwordHash`,`Bloccato`,`Elimato`,`Cancellat
 COMMIT;
 
 INSERT INTO `cybercontadino` (`PartitaIVA`,`NomePresidente`,`Indirizzo`,`CognomePresidente`,`NomeAzienda`,`PathASL`,`URLWSDL`,`DescrizioneAzienda`,`recapito_telefonico`,`email`,`Coordinate`, `Username`, `Comune_ubicazione`) VALUES
-(01139780629, 'Massimo', 'via via', 'Ranieri', 'Pummarole', 'sssssss', 'ssss', 'sssss', 973692, 'ranieri@napoli.it', 'eeweew', 'ranieri', 1),
-(01435650625, 'Mohamed', 'via via', 'Sissoko', 'Patate', 'sssssss', 'ssss', 'sssss', 973692, 'sissoko@napoli.it', 'kjbdsds', 'sissoko', 1);
+(01139780629, 'Massimo', 'via via', 'Ranieri', 'Pomodori','asl', 'url-wsdl', 'vendiamo pomodori', 973692, 'ranieri@napoli.it', 'eeweew', 'ranieri', 10252),
+(01435650625, 'Mohamed', 'via via', 'Sissoko', 'Patate', 'asl', 'url-wsdl-patate', 'vendiamo patate', 973692, 'sissoko@napoli.it', 'kjbdsds', 'sissoko', 1);
 COMMIT;
 
 INSERT INTO `role` (`id`,`name`,`Username`) VALUES
