@@ -30,6 +30,7 @@ public class ChangeDateActionHandler implements Serializable{
 	public void execute() {
 		ExecutionContext executionContext = ExecutionContext.currentExecutionContext();
 		TaskInstance t=executionContext.getTaskInstance();
+		
 		t.setDueDate(dataMassimaAccettazione);
 	}
 
