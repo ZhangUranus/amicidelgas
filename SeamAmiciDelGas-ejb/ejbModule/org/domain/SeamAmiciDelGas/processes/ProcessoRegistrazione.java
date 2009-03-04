@@ -57,6 +57,9 @@ public class ProcessoRegistrazione {
 	@Out(value="dataMassimaAccettazione", scope= ScopeType.BUSINESS_PROCESS, required =false)
 	private Date dataMassimaAccettazione;
 	
+	@Out(value="dataProva", scope= ScopeType.BUSINESS_PROCESS, required =false)
+	private Date dataProva;
+	
 	@Out(value="postiOccupati",scope=ScopeType.BUSINESS_PROCESS, required= false)
 	private int postiOccupati;
 	
@@ -73,15 +76,23 @@ public class ProcessoRegistrazione {
 		nomeContadino= credentials.getUsername();
 		
 		facesMessages.add("La richiesta � stata inoltrata");
+		Calendar gc= new GregorianCalendar();
+		//gc.setTime((Date) dataProposta.clone());
+		gc.setTimeInMillis(System.currentTimeMillis());
+		gc.roll(Calendar.MINUTE, 5);
+		//gc.roll(Calendar.HOUR, 5);
+	//	gc.roll(Calendar.DATE, -2);
+		dataProva= gc.getTime();
 	}
 	
 	
 	@BeginTask @EndTask(transition="invia")
 	public void creaVisita(){
 		Calendar gc= new GregorianCalendar();
-		gc.setTime((Date) dataProposta.clone());
-		gc.roll(Calendar.MINUTE, 30);
-		gc.roll(Calendar.HOUR, 5);
+		//gc.setTime((Date) dataProposta.clone());
+		gc.setTimeInMillis(System.currentTimeMillis());
+		gc.roll(Calendar.MINUTE, 2);
+		//gc.roll(Calendar.HOUR, 5);
 	//	gc.roll(Calendar.DATE, -2);
 		dataMassimaAccettazione= gc.getTime();
 		postiOccupati=0;
