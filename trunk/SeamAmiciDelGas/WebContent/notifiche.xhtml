@@ -13,44 +13,70 @@
 		
 		<h:form id="inviaNotifica" styleClass="edit">
 			<rich:simpleTogglePanel label="Invia Notifica" switchType="ajax">
+			<h:panelGrid columns="1">	
+				<s:decorate id="destinatarioField" template="/layout/edit.xhtml">
 				
-			<s:decorate id="destinatarioField" template="/layout/edit.xhtml">
-                <ui:define name="label">Scegli il destinatario</ui:define>
-                <h:selectOneRadio value="#{notificaBean.destinatario}" required="true" requiredMessage="Scegli il destinatario">
-				  <f:selectItem itemLabel="Gruppo" itemValue="gruppo" />
-  				  <f:selectItem itemLabel="Utente" itemValue="utente" />
-				</h:selectOneRadio>
-            </s:decorate>
-			
-			<s:decorate id="gruppoField" rendered="#{notificaBean.destinatario=='gruppo'}">
-				<h:selectOneMenu" value="#{notificaBean.gruppoScelto}"  required="true"  requiredMessage="Seleziona il gruppo a cui vuoi inviare una notifica">
-                	<f:selectItem itemDisabled="true"   itemLabel="Select-one"/>
-                	<f:selectItem itemLabel="Utente Gas" itemValue="utenteGas"/>
-                	<f:selectItem itemLabel="Cyber Contadino" itemValue="utenteContadino" />
-				  	<f:selectItem itemLabel="Mediatore" itemValue="mediatore" />
-				  	<f:selectItem itemLabel="Admin" itemValue="admin" />
-                </h:selectOneMenu>
-			</s:decorate>
-			
-			<s:decorate id="utenteField" rendered="#{notificaBean.destinatario=='utente'}">
-				<h:selectOneMenu id="utenteSelect" value="#{notificaBean.utenteScelto}">
-                 <a:support event="onchange" ajaxSingle="true" reRender="utenteField" />
-                <s:selectItems 
-                	noSelectionLabel="Seleziona un utente"
-                	var="_utente" 
-                	hideNoSelectionLabel="false"
-                	label="#{_utente.username} #{_utente.utente.cognome} #{_utente.utente.nome}" 
-                	value="#{accountList.resultList}">
-                </s:selectItems>
-                </h:selectOneMenu>
-			</s:decorate>
-			
-			 <h:inputText id="messaggio"
-                       required="true"
-                           size="32"
-                      maxlength="70"
-                          value="#{notificaBean.messaggio}"/>
+	                <ui:define name="label">Scegli il destinatario</ui:define>
+	                <h:selectOneRadio value="#{notificaBean.destinatario}" required="true" requiredMessage="Scegli il destinatario">
+					  <a:support event="onclick" ajaxSingle="true" reRender="gruppoField, utenteField">	</a:support>
+					  <f:selectItem itemLabel="Gruppo" itemValue="gruppo" />
+	  				  <f:selectItem itemLabel="Utente" itemValue="utente" />
+					</h:selectOneRadio>
+	            </s:decorate>
 				
+				<a:outputPanel ajaxRendered="true">
+					<s:decorate id="gruppoField" rendered="#{notificaBean.destinatario=='gruppo'}">
+						<h:selectOneMenu value="#{notificaBean.gruppoScelto}"  required="true"  requiredMessage="Seleziona il gruppo a cui vuoi inviare una notifica">
+		                	<f:selectItem itemDisabled="true"   itemLabel="Select-one"/>
+		                	<f:selectItem itemLabel="Utente Gas" itemValue="utenteGas"/>
+		                	<f:selectItem itemLabel="Cyber Contadino" itemValue="utenteContadino" />
+						  	<f:selectItem itemLabel="Mediatore" itemValue="mediatore" />
+						  	<f:selectItem itemLabel="Admin" itemValue="admin" />
+		                </h:selectOneMenu>
+					</s:decorate>
+				</a:outputPanel>
+				
+				<a:outputPanel ajaxRendered="true">
+					<s:decorate id="utenteField" rendered="#{notificaBean.destinatario=='utente'}">
+					<h:form>
+				        <h:panelGrid columns="3" columnClasses="top 50per, top 30per, top 30per" width="100%">
+					        <rich:orderingList id="listUtenti" value="#{accountListExtended.resultList}"  
+					        			var="_account" listHeight="100" listWidth="350"  
+					        			selection="#{notificaBean.accountSelected}">
+					            <rich:column  width="180">
+					            <f:facet name="header">
+					                <h:outputText value="Username" />
+					            </f:facet> 
+					                <h:outputText value="#{_account.username}"></h:outputText>
+					            </rich:column>
+					            <rich:column> 
+					                <f:facet name="header">
+					                    <h:outputText value="Cognome" />
+					                </f:facet>
+					                <h:outputText value="#{_account.utente.cognome}"></h:outputText><br/>
+					            </rich:column>
+					            <rich:column> 
+					                <f:facet name="header">
+					                    <h:outputText value="Nome" />
+					                </f:facet>
+					                <h:outputText value="#{_account.utente.nome}"></h:outputText><br/>
+					            </rich:column>
+					            <a:support event="onclick" ignoreDupResponses="true" requestDelay="500" reRender="outputUtenteScelto"/>
+					        </rich:orderingList>
+					        <rich:panel id="outputUtenteScelto" header="Utente destinatario della notifica" style="width:200px">
+                					<h:outputText value="#{notificaBean.accountSelected.username}"></h:outputText>
+					        </rich:panel>
+					        </h:panelGrid>
+					    </h:form>
+					</s:decorate>
+				</a:outputPanel>
+					
+				 <h:inputText id="messaggio"
+	                       required="true"
+	                           size="32"
+	                      maxlength="70"
+	                          value="#{notificaBean.messaggio}"/>
+			</h:panelGrid>
 			</rich:simpleTogglePanel>
 			
 		</h:form>
@@ -60,8 +86,8 @@
 			<rich:simpleTogglePanel label="Notifiche Ricevute" switchType="ajax">
 			
 				
-				
-			</rich:simpleTogglePanel>
+			</rich:simpleTogglePanel>	
+			
 			
 		</h:form>
 		
