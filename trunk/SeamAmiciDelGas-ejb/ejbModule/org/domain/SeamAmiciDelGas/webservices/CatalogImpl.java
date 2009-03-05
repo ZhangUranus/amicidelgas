@@ -28,7 +28,7 @@ public class CatalogImpl implements CatalogInterface {
 	@Out(value="items") private List<Item> items;
 	@Out(value="itemsForCategory") private List<Item> itemsForCategory;
 	private Cybercontadino contadino;
-	
+	private String category;
 	private CatalogMatchMakerStub cs;
 	public CatalogImpl(){
 		try {
@@ -138,6 +138,14 @@ public class CatalogImpl implements CatalogInterface {
 
 	public void setContadino(Cybercontadino contadino) {
 		this.contadino = contadino;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
 	}
 
 }
