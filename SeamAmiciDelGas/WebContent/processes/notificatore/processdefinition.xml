@@ -4,7 +4,7 @@
 
 
 	<start-state name="notifyMessage">
-		<transition to="route"></transition>
+		<transition to="NotificheSingole"></transition>
 	</start-state>
 
 
@@ -16,22 +16,6 @@
 		</task>
 		<transition to="end-state1" name="ack"></transition>
 	</task-node>
-
-	<task-node name="NotificheDiGruppo">
-		<task name="ReceiveGroupMessage">
-			<assignment expression="zlatan;jose"></assignment>
-		</task>
-		<transition to="end-state1" name="ack"></transition>
-	</task-node>
-
-	<decision name="route">
-		<transition to="NotificheSingole" name="notifySingleMessage">
-			<condition>#{!notifyMessage.broadcast}</condition>
-		</transition>
-		<transition to="NotificheDiGruppo" name="notifyGroupMessage">
-			<condition>#{notifyMessage.broadcast}</condition>
-		</transition>
-	</decision>
 
 
 	<end-state name="end-state1"></end-state>

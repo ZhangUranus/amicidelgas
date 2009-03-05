@@ -44,7 +44,7 @@ public class RichiestaDriverDecision {
 		if(msg!=null)
 			approveMsg+="Il responsabile ha incluso il seguente messaggio:\n\""+msg+"\"";
 		message.setContent(approveMsg);
-		message.setRecipient(nomeRichiedente);
+		message.addRecipient(nomeRichiedente);
 		facesMessages.add("L'utente � stato reso driver");
 	}
 	
@@ -56,7 +56,7 @@ public class RichiestaDriverDecision {
 		if(msg!=null)
 			rejectMsg+="Il responsabile ha incluso il seguente messaggio:\n\""+msg+"\"";
 		message.setContent(rejectMsg);
-		message.setRecipient(nomeRichiedente);
+		message.addRecipient(nomeRichiedente);
 		
 		facesMessages.add("La richiesta dell'utente � stata rifiutata");
 	}

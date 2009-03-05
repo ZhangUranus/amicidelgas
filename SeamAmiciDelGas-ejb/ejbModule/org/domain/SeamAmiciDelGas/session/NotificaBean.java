@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.domain.SeamAmiciDelGas.entity.Account;
+import org.domain.SeamAmiciDelGas.processes.NotifyBean;
+import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Logger;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
@@ -23,6 +25,9 @@ public class NotificaBean {
 	private Account utenteCancellato;
 	private String messaggio;
 	
+	@In(value="notifyBean", create=true)
+	private NotifyBean notifyBean;
+	
 	private List<Account> myAccountList = new ArrayList<Account>();
 	
 	public NotificaBean() 	{}
@@ -33,7 +38,33 @@ public class NotificaBean {
 
 	public void setMessaggio(String messaggio) {
 		this.messaggio = messaggio;
-		log.info("************** "+messaggio +"**************");
+	}
+	
+	public void sendMessagge()
+	{
+		if(destinatario.equals("gruppo"))
+			sendMessageForGroup();
+		else
+			sendMessageForUtente();
+		myAccountList = new ArrayList<Account>();
+		messaggio="";
+	}
+	
+	public void sendMessageForGroup()
+	{
+		notifyBean.setContent(messaggio);
+		notifyBean.addRecipient(gruppoScelto);
+		notifyBean.setBroadcast(true);	
+		notifyBean.notifyMessage();
+	}
+	
+	public void sendMessageForUtente()
+	{
+		notifyBean.setContent(messaggio);
+		for(Account a : myAccountList)
+			notifyBean.addRecipient(a.getUsername());
+		notifyBean.setBroadcast(false);
+		notifyBean.notifyMessage();
 	}
 
 	public String getDestinatario() {
@@ -58,6 +89,11 @@ public class NotificaBean {
 
 	public void setMyAccountList(List<Account> myAccountList) {
 		this.myAccountList = myAccountList;
+	}
+	
+	public void receive()
+	{
+		notifyBean.receive();
 	}
 
 	public Account getUtenteScelto() {
