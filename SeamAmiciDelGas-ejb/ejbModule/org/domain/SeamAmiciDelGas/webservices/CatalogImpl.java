@@ -19,7 +19,7 @@ import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Out;
 import org.jboss.seam.annotations.Scope;
 
-@Name("catalogService")
+//@Name("catalogService")
 @Scope(ScopeType.SESSION)
 public class CatalogImpl implements CatalogInterface {
 

@@ -80,7 +80,13 @@
                     <s:link view="/customer/riceviNotifiche.xhtml" value="NOTIFICHE RICEVUTE (#{pooledTaskInstanceList.size() + taskInstanceList.size()})" propagation="none"/>
                     <f:param name="utenteCodiceFiscale" value="#{currentUser.codiceFiscale}"/>
 		            <f:param name="accountUsername" value="#{currentAccount.username}"/>
-             </rich:menuItem> 	
+             </rich:menuItem> 
+             
+             <rich:menuItem submitMode="none" >
+                    <s:link view="/customer/browseCatalog.xhtml" value="VEDI CATALOGO" propagation="none"/>
+                    <f:param name="utenteCodiceFiscale" value="#{currentUser.codiceFiscale}"/>
+		            <f:param name="accountUsername" value="#{currentAccount.username}"/>
+             </rich:menuItem>	
         	
         </rich:dropDownMenu>	
     

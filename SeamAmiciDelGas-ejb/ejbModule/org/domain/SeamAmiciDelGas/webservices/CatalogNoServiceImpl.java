@@ -6,17 +6,24 @@ import java.util.List;
 
 import org.domain.SeamAmiciDelGas.entity.Cybercontadino;
 import org.jboss.seam.ScopeType;
+import org.jboss.seam.annotations.Logger;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Out;
 import org.jboss.seam.annotations.Scope;
+import org.jboss.seam.log.Log;
 
+@Name("catalogService")
+@Scope(ScopeType.SESSION)
 public class CatalogNoServiceImpl implements CatalogInterface{
 
-	@Out(value="categories") private List categories;
-	@Out(value="items") private List items;
-	@Out(value="itemsForCategory") private List itemsForCategory;
+	@Out(value="categories") private List<String> categories;
+	@Out(value="items") private List<Item> items;
+	@Out(value="itemsForCategory") private List<Item> itemsForCategory;
 	private Cybercontadino contadino;
 	private String currentCategory;
+	
+	@Logger
+	private Log log;
 	
 	public CatalogNoServiceImpl(){
 		categories= new ArrayList<String>();
@@ -54,7 +61,7 @@ public class CatalogNoServiceImpl implements CatalogInterface{
 	}
 
 	public Item[] getItemsForCategory(String idContadino, String category) {
-		itemsForCategory= new ArrayList<Item>();
+		log.info("************DENTROOOO*********");
 		Iterator<Item> it= items.iterator();
 		while(it.hasNext()){
 			Item item=it.next();
@@ -70,6 +77,14 @@ public class CatalogNoServiceImpl implements CatalogInterface{
 
 	public void setContadino(Cybercontadino contadino) {
 		this.contadino = contadino;
+	}
+
+	public String getCurrentCategory() {
+		return currentCategory;
+	}
+
+	public void setCurrentCategory(String currentCategory) {
+		this.currentCategory = currentCategory;
 	}
 
 }
