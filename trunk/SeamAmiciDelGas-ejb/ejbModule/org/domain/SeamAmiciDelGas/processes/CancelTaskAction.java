@@ -3,8 +3,12 @@ package org.domain.SeamAmiciDelGas.processes;
 
 
 
+import org.jboss.seam.ScopeType;
+import org.jboss.seam.annotations.Name;
+import org.jboss.seam.annotations.Scope;
 import org.jbpm.graph.exe.ExecutionContext;
-
+@Name("cancelAction")
+@Scope(ScopeType.BUSINESS_PROCESS)
 public class CancelTaskAction {
 	
 	 /**
@@ -14,9 +18,9 @@ public class CancelTaskAction {
 	 * 
 	 */
 
-	public void execute(ExecutionContext executionContext) throws Exception {
+	public void execute() throws Exception {
 		    
-
+		  ExecutionContext executionContext= ExecutionContext.currentExecutionContext();
 		  System.out.println("Excetute TTTTTTTTTTTTTTTTTTTTTTTTTTT");
 		  executionContext.getTaskInstance().cancel();
 	  }
