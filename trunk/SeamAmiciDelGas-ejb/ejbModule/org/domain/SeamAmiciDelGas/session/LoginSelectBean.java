@@ -34,47 +34,25 @@ public class LoginSelectBean{
 
 	public String calculateMaxRole()
 	{
-		Iterator<Role> iter = account.getRoles().iterator();
-		while(iter.hasNext())
-		{
-			Role r = iter.next();
+		for(Role r : account.getRoles())
 			if(r.getName().equals("admin"))
 				return "admin";
-		}
-		iter = account.getRoles().iterator();
-		while(iter.hasNext())
-		{
-			Role r = iter.next();
+		for(Role r : account.getRoles())
 			if(r.getName().equals("mediatore"))
 				return "mediatore";
-		}
-		iter = account.getRoles().iterator();
-		while(iter.hasNext())
-		{
-			Role r = iter.next();
+		for(Role r : account.getRoles())
 			if(r.getName().equals("utenteContadino"))
 				return "utenteContadino";
-		}
-		iter = account.getRoles().iterator();
-		while(iter.hasNext())
-		{
-			Role r = iter.next();
+		for(Role r : account.getRoles())
 			if(r.getName().equals("utenteGas"))
 				return "utenteGas";
-		}
 		return "null";
 	}
 	
 	public boolean getIsCustomer() {
-		log.info("*******ISCUSTOMER*********");
-		Iterator<Role> iter = account.getRoles().iterator();
-		Role r = null;
-		while(iter.hasNext())
-		{
-			r = iter.next();
+		for(Role r : account.getRoles())
 			if(r.getName().equals("utenteGas") || r.getName().equals("admin") || r.getName().equals("mediatore"))
 				return true;
-		}
 		return false;
 	}
 	

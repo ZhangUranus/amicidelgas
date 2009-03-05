@@ -33,6 +33,7 @@ public class NotificaBean {
 
 	public void setMessaggio(String messaggio) {
 		this.messaggio = messaggio;
+		log.info("************** "+messaggio +"**************");
 	}
 
 	public String getDestinatario() {
