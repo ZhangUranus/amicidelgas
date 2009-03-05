@@ -13,7 +13,7 @@ import org.jboss.seam.log.Log;
 
 
 
-@Name("loginSelectBean")
+@Name("loginSelectBean") 
 @Scope(ScopeType.SESSION)
 public class LoginSelectBean{
 
