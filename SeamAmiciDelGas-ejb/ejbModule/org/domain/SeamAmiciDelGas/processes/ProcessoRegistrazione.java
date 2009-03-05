@@ -73,6 +73,8 @@ public class ProcessoRegistrazione {
 	@CreateProcess(definition="notificaRegistrazione")
 	public void inviaRegistrazione(){
 		//log.info("E' arrivata la richiesta driver");
+		
+		// Discutiamone con antonio probabilmente non serve a nulla.....
 		nomeContadino= credentials.getUsername();
 		
 		facesMessages.add("La richiesta � stata inoltrata");

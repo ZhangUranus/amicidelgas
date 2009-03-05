@@ -1,0 +1,88 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:a="http://richfaces.org/a4j"
+    template="/layout/template.xhtml">
+
+    <ui:define name="body">
+
+		<table width="96%" border="0" cellspacing="0" cellpadding="0" align="center" >
+			<tr>
+				<td colspan="3">
+					<table width="90%" border="0" cellspacing="4" cellpadding="0" align="left" >
+					  <tr>			    
+					    <td rowspan="2" width="160" align="left">
+					    	<s:decorate><img alt="statistiche" border="0" src="/SeamAmiciDelGas/img/president.jpg"/></s:decorate>
+					  	</td>
+					    <td valign="top"><div align="left" class="colore_1">Bentornato <b>#{currentContadino.nomePresidente} #{currentContadino.cognomePresidente}</b></div></td>			      	      
+					  </tr>
+					  <tr>
+					    <td valign="top"><div align="left" class="explorer">
+					    	<h:graphicImage value="/img/star_full.png" rendered="#{currentAccount.punteggioFeedback > 0.5}" />
+							<h:graphicImage value="/img/star_full.png" rendered="#{currentAccount.punteggioFeedback > 1.5}" />
+							<h:graphicImage value="/img/star_full.png" rendered="#{currentAccount.punteggioFeedback > 2.5}" />
+							<h:graphicImage value="/img/star_full.png" rendered="#{currentAccount.punteggioFeedback > 3.5}" />
+							<h:graphicImage value="/img/star_full.png" rendered="#{currentAccount.punteggioFeedback > 4.5}" />
+							<h:graphicImage value="/img/star_half.png" rendered="#{currentAccount.punteggioFeedback == 0.5}" />
+							<h:graphicImage value="/img/star_half.png" rendered="#{currentAccount.punteggioFeedback == 1.5}" />
+							<h:graphicImage value="/img/star_half.png" rendered="#{currentAccount.punteggioFeedback == 2.5}" />
+							<h:graphicImage value="/img/star_half.png" rendered="#{currentAccount.punteggioFeedback == 3.5}" />
+							<h:graphicImage value="/img/star_half.png" rendered="#{currentAccount.punteggioFeedback == 4.5}" />
+							<h:graphicImage value="/img/star_empty.png" rendered="#{!(currentAccount.punteggioFeedback > 0)}" />
+							<h:graphicImage value="/img/star_empty.png" rendered="#{!(currentAccount.punteggioFeedback > 1)}" />
+							<h:graphicImage value="/img/star_empty.png" rendered="#{!(currentAccount.punteggioFeedback > 2)}" />
+							<h:graphicImage value="/img/star_empty.png" rendered="#{!(currentAccount.punteggioFeedback > 3)}" />
+							<h:graphicImage value="/img/star_empty.png" rendered="#{!(currentAccount.punteggioFeedback > 4)}" />
+							<li>Partita IVA: #{currentContadino.partitaIva}</li>                        	
+                        	<li>Data Attivazione: <b>#{currentAccount.dataAccettazione}</b></li>
+                        	<hr noshade="noshade" width="85%" align="left"/>
+                        	<span class="colore_1">I tuoi contatti</span>
+                        	<li>E-mail: #{currentContadino.email}</li>
+                        	<li>Telefono: #{currentContadino.recapitoTelefonico}</li>
+                        	<li>Indirizzo: #{currentContadino.indirizzo}</li>
+						</div></td>
+					  </tr>
+					</table>	
+				</td>
+				<td >
+					<table width="100%" border="0" cellspacing="0" cellpadding="0" align="right" >
+					   <tr>
+					    <td width="22" height="22" background="/SeamAmiciDelGas/img/shadow_a1.png"></td>
+					    <td height="22" background="/SeamAmiciDelGas/img/shadow_top1.png"></td>
+					    <td width="22" height="22" background="/SeamAmiciDelGas/img/shadow_b1.png"></td>
+					   </tr>
+					   <tr>
+					   	<td background="/SeamAmiciDelGas/img/shadow_left1.png"></td>	
+					     <td background="/SeamAmiciDelGas/img/shadow1.png">
+								<div align="center" >TODO notifiche ed eventi
+                        		<s:button
+                        		
+                        	   
+                        	    action="#{registrazioneCybercontadino.testProcesso()}" 
+                        	    value="Inizia processo" />
+								</div>			    
+					     </td>
+					     <td background="/SeamAmiciDelGas/img/shadow_right1.png" valign="middle"></td>
+					   </tr>
+					   <tr>
+					    <td width="22" height="22" background="/SeamAmiciDelGas/img/shadow_d1.png"></td>
+					    <td height="22" background="/SeamAmiciDelGas/img/shadow_bottom1.png"></td>
+					    <td width="22" height="22" background="/SeamAmiciDelGas/img/shadow_c1.png"></td>
+					   </tr>
+					</table>	
+				</td>
+			</tr>
+			<tr>
+				<td colspan="4" height="16"><hr noshade="noshade" />	
+				</td>
+			</tr>
+
+		</table>
+
+    </ui:define>
+</ui:composition>

@@ -1,10 +1,13 @@
 package org.domain.SeamAmiciDelGas.session;
 
+import java.util.Iterator;
+
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
 import org.domain.SeamAmiciDelGas.entity.Account;
+import org.domain.SeamAmiciDelGas.entity.Cybercontadino;
 import org.domain.SeamAmiciDelGas.entity.Role;
 import org.domain.SeamAmiciDelGas.entity.Utente;
 import org.jboss.seam.annotations.In;
@@ -29,6 +32,8 @@ public class Authenticator
     private Utente utente;
     @Out(value="currentAccount", required = false)
     private Account account;
+    @Out(value="currentContadino", required = false)
+    private Cybercontadino contadino;
     @In(value="passwordManager",create=true)
     private PasswordManager passwordManager;
     @In
@@ -51,7 +56,25 @@ public class Authenticator
         	
         }
         
-        utente = account.getUtente();
+        Iterator<Role> iter = account.getRoles().iterator();
+		while(iter.hasNext())
+		{
+			Role r = iter.next();
+			if(r.getName().equals("utenteContadino"))
+			{
+				contadino=(Cybercontadino) entityManager.createQuery(
+	    		"select contadino from Cybercontadino contadino where contadino.account.username = :username").setParameter("username", credentials.getUsername()).getSingleResult();
+	        	System.out.println(contadino.getPartitaIva());
+	        	break;
+			}
+			else
+	        {
+	        	utente = account.getUtente();
+	        	log.info("authenticating {1}", utente.getNome());
+	        	break;
+	        }
+		}
+        
     	//log.info("UTENTE "+utente.getNome()+" "+utente.getEmail());
         
         return true;

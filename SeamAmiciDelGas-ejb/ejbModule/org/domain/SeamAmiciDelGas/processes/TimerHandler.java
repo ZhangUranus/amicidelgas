@@ -48,18 +48,12 @@ public class TimerHandler implements Serializable {
 		 timer.setDueDate(dueDate);
 		 timer.setTaskInstance(t);
 		 timer.setGraphElement(t.getTask().getTaskNode());
-		 timer.setAction(new Action() {
+		// CancelTaskAction act = new CancelTaskAction();
+		 Action azione = new Action();
+		 azione.setActionExpression("org.domain.SeamAmiciDelGas.processes.CancelTaskAction.execute()");
+		 timer.setAction(azione);
 
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = 3893442458445592043L;
-
-			public void execute(ExecutionContext arg0) throws Exception {
-				// TODO Auto-generated method stub
-				arg0.getTaskInstance().cancel();
-				
-			}});
+		 
 		 SchedulerService s = (SchedulerService) executionContext.getJbpmContext().getServices().getService(Services.SERVICENAME_SCHEDULER);
 		 s.createTimer(timer);
 		// t.cancel();
