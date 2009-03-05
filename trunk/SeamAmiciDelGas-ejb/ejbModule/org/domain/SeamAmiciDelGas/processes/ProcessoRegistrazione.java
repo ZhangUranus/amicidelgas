@@ -78,33 +78,33 @@ public class ProcessoRegistrazione {
 		nomeContadino= credentials.getUsername();
 		
 		facesMessages.add("La richiesta � stata inoltrata");
-		Calendar gc= new GregorianCalendar();
+/*		Calendar gc= new GregorianCalendar();
 		//gc.setTime((Date) dataProposta.clone());
 		gc.setTimeInMillis(System.currentTimeMillis());
 		gc.roll(Calendar.MINUTE, 5);
 		//gc.roll(Calendar.HOUR, 5);
 	//	gc.roll(Calendar.DATE, -2);
-		dataProva= gc.getTime();
+		dataProva= gc.getTime();*/
 	}
 	
 	
 	@BeginTask @EndTask(transition="invia")
 	public void creaVisita(){
-		Calendar gc= new GregorianCalendar();
+//		Calendar gc= new GregorianCalendar();
 		//gc.setTime((Date) dataProposta.clone());
-		gc.setTimeInMillis(System.currentTimeMillis());
-		gc.roll(Calendar.MINUTE, 2);
+//		gc.setTimeInMillis(System.currentTimeMillis());
+//		gc.roll(Calendar.MINUTE, 2);
 		//gc.roll(Calendar.HOUR, 5);
 	//	gc.roll(Calendar.DATE, -2);
-		dataMassimaAccettazione= gc.getTime();
+//		dataMassimaAccettazione= gc.getTime();
 		postiOccupati=0;
-		
+/*		
 		gc= new GregorianCalendar();
 		gc.setTime((Date) dataProposta.clone());
 		gc.roll(Calendar.DATE, +2);
 		dataQuestionario = gc.getTime();
 		log.info(("Stampa della data proposta: "+this.dataProposta));
-		
+	*/	
 		messageUtente= new Message();
 		String rejectMsg="Andiamo tutti dal cybercontadino.";
 		messageUtente.setContent(rejectMsg);
