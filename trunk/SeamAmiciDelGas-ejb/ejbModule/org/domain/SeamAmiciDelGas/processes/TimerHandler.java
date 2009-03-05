@@ -3,6 +3,7 @@ package org.domain.SeamAmiciDelGas.processes;
 import java.io.Serializable;
 
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 
 import org.jboss.seam.ScopeType;
@@ -11,6 +12,7 @@ import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
 
 import org.jbpm.graph.def.Action;
+import org.jbpm.graph.def.Node;
 
 import org.jbpm.graph.exe.ExecutionContext;
 import org.jbpm.job.Timer;
@@ -38,21 +40,29 @@ public class TimerHandler implements Serializable {
 			  dueDate.setTime(0);
 		  else 
 			  dueDate.setTime(data);
-		 System.out.println("tempooooooooooo = "+data);
-		  System.out.println("data   : "+dueDate.toString());
+		 
+		  System.out.println("TEMPOOOOOOOOOOOOOOOO: "+dueDate.toString());
 		
 		 TaskInstance t = executionContext.getTaskInstance();
+		 System.out.println("Prelevata l'istanza "+ t.getId()+"del task"+ t.getTask().getName());
 		 Timer timer = new Timer(t.getToken());
 		 timer.setName("TimerPartecipa");
 		 timer.setTransitionName("time-out");
-		 timer.setDueDate(dueDate);
+		 GregorianCalendar gc= new GregorianCalendar();
+		 gc.roll(GregorianCalendar.MINUTE, 1);
+			 timer.setDueDate(gc.getTime());
+			
 		 timer.setTaskInstance(t);
-		 timer.setGraphElement(t.getTask().getTaskNode());
-		// CancelTaskAction act = new CancelTaskAction();
+		 Node currentNode=t.getTask().getTaskNode();
+		 timer.setGraphElement(currentNode);
+		 currentNode.fireEvent("timer-create", executionContext);
+		 CancelTaskAction act = new CancelTaskAction();
 		 Action azione = new Action();
-		 azione.setActionExpression("org.domain.SeamAmiciDelGas.processes.CancelTaskAction.execute()");
+		 azione.setName("Cancella Task");
+		 azione.setActionExpression("#{cancelAction.execute}");
 		 timer.setAction(azione);
-
+		 
+		 executionContext.setTimer(timer);
 		 
 		 SchedulerService s = (SchedulerService) executionContext.getJbpmContext().getServices().getService(Services.SERVICENAME_SCHEDULER);
 		 s.createTimer(timer);
@@ -60,7 +70,7 @@ public class TimerHandler implements Serializable {
 		//  executionContext.getTask().
 		 System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 	 
-
+		 
 	  }
 	  
 }
