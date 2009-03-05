@@ -42,7 +42,10 @@ public class MultipleNotifyActionHandler implements Serializable{
 	    	Map tokenVariables=pi.getContextInstance().getTokenVariableMap(token).getVariables();
 	    	//ti.setVariableLocally("notifyMessage", tokenVariables.get("notifyMessage"));
 	    	ti.setVariableLocally("notifyMessage", tokenVariables.get("notifyMessage"));
-	    	ti.setActorId(it.next());
+	    	if(message.isBroadcast())
+	    		ti.setPooledActors(new String[]{it.next()});
+	    	else
+	    		ti.setActorId(it.next());
 	    }
 	}
 

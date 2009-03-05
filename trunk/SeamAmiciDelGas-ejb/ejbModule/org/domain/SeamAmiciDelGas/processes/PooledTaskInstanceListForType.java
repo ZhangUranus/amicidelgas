@@ -41,7 +41,6 @@ public class PooledTaskInstanceListForType
       
       Map<String, List<TaskInstance>> map = new HashMap<String, List<TaskInstance>>();
       List<TaskInstance> taskInstances = ManagedJbpmContext.instance().getGroupTaskList(groupIds);
-      
       for ( TaskInstance task: taskInstances )
       {
          String name = task.getName();

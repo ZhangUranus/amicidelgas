@@ -12,8 +12,8 @@
 	<ui:define name="body">
 
 		<h:form id="inviaNotifica" styleClass="edit">
-			<rich:simpleTogglePanel label="Invia Notifica" switchType="ajax">
-			<h:panelGrid columns="1">
+			<rich:simpleTogglePanel id = "simpleTogglePanel1" label="Invia Notifica" switchType="ajax">
+			<h:panelGrid id ="panelGrid1" columns="1">
 				<s:decorate id="destinatarioField" template="/layout/edit.xhtml">
 	                <ui:define name="label">Scegli il destinatario</ui:define>
 	                <h:selectOneRadio value="#{notificaBean.destinatario}" required="true" requiredMessage="Scegli il destinatario">
@@ -126,34 +126,34 @@
 					        </rich:column>
 						</rich:dataTable>
 					</h:column>
-			</h:panelGrid>
-			
-					</s:decorate>
-				</a:outputPanel>	
+				</h:panelGrid>
+			</s:decorate>
+		</a:outputPanel>	
 			<br/>
 			<br/>	
-				
-				 <h:inputText id="messaggio"
-	                       required="true"
-	                           size="32"
-	                      maxlength="70"
-	                          value="#{notificaBean.messaggio}"/>
-			</h:panelGrid>
-			</rich:simpleTogglePanel>
 			
+		<table>
+			<td>		
+				 <b>Messaggio da inviare</b>		
+				 <h:inputTextarea id="messaggioDaInviare"
+		                      required="true"
+		                          rows="2" style=" width : 279px; height : 63px;"
+		                	     value="#{notificaBean.messaggio}">
+		        </h:inputTextarea>
+			</td>
+			<td>
+			    <h:commandButton id="cbutton2" value="Invia" action="#{notificaBean.sendMessagge()}">
+			    </h:commandButton>
+			</td>
+      	</table>
+                 
+		</h:panelGrid>
+		</rich:simpleTogglePanel>
 		</h:form>
-		
 		
 		<br/>
 		<br/>
-		<h:form id="notificheRicevute" styleClass="edit">
-			<rich:simpleTogglePanel label="Notifiche Ricevute" switchType="ajax">
-			
-				
-			</rich:simpleTogglePanel>	
-			
-			
-		</h:form>
+		
 		
 		
 	</ui:define>
