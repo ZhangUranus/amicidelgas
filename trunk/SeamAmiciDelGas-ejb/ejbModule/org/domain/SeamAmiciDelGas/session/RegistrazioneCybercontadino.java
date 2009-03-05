@@ -9,6 +9,8 @@ public interface RegistrazioneCybercontadino
     public boolean registrazioneCybercontadino();
     
     public String action();
+    
+    public boolean testProcesso();
 
     // add additional interface methods here
     public void destroy();

@@ -13,6 +13,9 @@
       		<rule if="#{loginSelectBean.calculateMaxRole() == 'utenteGas'}">
 	             <redirect view-id="/customer/customerHome.xhtml"/>
 	  		</rule>
+	  		<rule if="#{loginSelectBean.calculateMaxRole() == 'utenteContadino'}">
+	             <redirect view-id="/contadino/contadinoHome.xhtml"/>
+	  		</rule>
 	  		
    </navigation>
 

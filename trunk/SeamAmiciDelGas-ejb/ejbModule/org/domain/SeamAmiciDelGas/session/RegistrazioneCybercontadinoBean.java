@@ -35,14 +35,14 @@ public class RegistrazioneCybercontadinoBean implements RegistrazioneCybercontad
     
     @PersistenceContext
     private EntityManager em;
-    @In(value="newCybercontadino")
+    @In(value="newCybercontadino" , create=true)
     @Out(value="contadinoCreato", scope= ScopeType.BUSINESS_PROCESS)
     private Cybercontadino contadino;
-    @In(value="newAccount")
+    @In(value="newAccount" , create=true)
     private Account account;
-    @In(value="passwordBean")
+    @In(value="passwordBean" , create=true)
     private PasswordBean passwordBean;
-    @In(value="newComuneProvinciaBean")
+    @In(value="newComuneProvinciaBean" , create=true)
     private ComuneProvinciaBean comuneProvinciaBean;
     @In(value="passwordManager",create=true)
     private PasswordManager passwordManager;
@@ -54,6 +54,8 @@ public class RegistrazioneCybercontadinoBean implements RegistrazioneCybercontad
     private ControlloBean controllo;
     @In(value="processoRegistrazione",create=true)
     private ProcessoRegistrazione processo;
+    @In(value="currentContadino", create=true)
+    private Cybercontadino contadinoCorrente;
 //   @In(value="registrationMailer",create=true)
 //    private RegistrationMailer registrationMailer;
     
@@ -138,7 +140,16 @@ public class RegistrazioneCybercontadinoBean implements RegistrazioneCybercontad
     	}
     	
     }
-
+    
+    // Clelio non lo usare mai!!!
+    public boolean testProcesso()
+    {
+    	log.info("TEstPRocesso chiamato");
+        statusMessages.add("Avviato processo");
+    	contadino = contadinoCorrente;
+    	processo.inviaRegistrazione();
+    	return true;
+    }
     // add additional action methods
     
     @Destroy @Remove
