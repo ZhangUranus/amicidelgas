@@ -1,0 +1,126 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a="http://richfaces.org/a4j" template="/layout/template.xhtml">
+
+	<style>
+.body3 {
+	height: 100px;
+	overflow: auto;
+}
+</style>
+
+	<ui:define name="body">
+		<h:form id="browseForm">
+			<s:decorate id="contadinoField" template="/layout/edit.xhtml">
+				<ui:define name="label">Seleziona il fornitore per visualizzare il catalogo</ui:define>
+				<rich:panel bodyClass="body3">
+				 <rich:datascroller align="left" for="tabellaContadini" />
+					<rich:dataTable id="tabellaContadini" var="_contadino"
+						value="#{cybercontadinoList.resultList}" rows="5">
+						<f:facet name="header">
+							<rich:columnGroup>
+								<rich:column>
+									<h:outputText value="Nome Azienda" />
+								</rich:column>
+								<rich:column>
+									<h:outputText value="Seleziona" />
+								</rich:column>
+							</rich:columnGroup>
+						</f:facet>
+
+						<rich:columnGroup>
+							<rich:column>
+								<h:outputText value="#{_contadino.nomeAzienda}" />
+							</rich:column>
+							<rich:column>
+								<s:button action="updateContadino"
+									value="Seleziona questo fornitore">
+									<f:setPropertyActionListener value="#{_contadino}"
+										target="#{catalogService.contadino}" />
+									<a:support event="onclick" reRender="categoriesField"></a:support>
+								</s:button>
+							</rich:column>
+						</rich:columnGroup>
+					</rich:dataTable>
+				</rich:panel>
+			</s:decorate>
+			
+			<s:decorate id="categoriesField" template="/layout/edit.xhtml">
+				<ui:define name="label">Categorie</ui:define>
+				<rich:panel bodyClass="body3">
+					<a:repeat var="_category" 
+						value="#{catalogService.getCategories(catalogService.contadino)}">
+					<rich:panelMenu  
+							style="border:1px solid #{a4jSkin.panelBorderColor}"
+							value="#{_category}" submitMode="none" direction="bottom-right"
+							jointPoint="tr">
+						<rich:panelMenuItem label="#{_category}">
+							<a:support event="onclick"
+								action="#{catalogService.getItemsForCategory(catalogService.contadino,_category)}"
+								reRender="browseForm:productsField" bypassUpdates="true"
+								ajaxSingle="true">
+								<f:setPropertyActionListener value="#{_category}"
+									target="#{catalogService.category}" />
+							</a:support>
+							</rich:panelMenuItem>
+						</rich:panelMenu>
+					</a:repeat>
+					
+				</rich:panel>
+			</s:decorate>
+
+
+
+			<s:decorate id="productsField" template="/layout/edit.xhtml">
+				<ui:define name="label">Prodotti</ui:define>
+				<rich:dataTable var="_item" id="itemsDataTable"
+					value="#{itemsForCategory}">
+					<f:facet name="header">
+							<rich:columnGroup>
+								<rich:column>
+									<h:outputText value="Nome Prodotto" />
+								</rich:column>
+								<rich:column>
+									<h:outputText value="Descrizione" />
+								</rich:column>
+								<rich:column>
+									<h:outputText value="Prezzo unitario" />
+								</rich:column>
+								<rich:column colspan="2">
+									<h:outputText value="Aggiungi al carrello" />
+								</rich:column>
+								
+							</rich:columnGroup>
+						</f:facet>
+					<rich:column>
+						<h:outputText value="#{_item.name}" />
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{_item.description}" />
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{_item.prezzo}" />
+					</rich:column>
+					<rich:column colspan="2" >
+					<h:panelGroup layout="block">
+					   <rich:inputNumberSpinner value="1" style="height : 15px; width : 20px;"/>
+						<a:commandButton image="/img/shopping_cart.png" style="width : 33px; height : 33px;"></a:commandButton>
+					</h:panelGroup>
+					</rich:column>
+					
+				</rich:dataTable>
+
+			</s:decorate>
+
+		</h:form>
+	</ui:define>
+
+
+</ui:composition>
+
