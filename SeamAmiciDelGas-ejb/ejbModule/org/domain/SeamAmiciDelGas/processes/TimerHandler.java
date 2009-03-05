@@ -38,8 +38,8 @@ public class TimerHandler implements Serializable {
 			  dueDate.setTime(0);
 		  else 
 			  dueDate.setTime(data);
-		 
-		  System.out.println("TEMPOOOOOOOOOOOOOOOO: "+dueDate.toString());
+		 System.out.println("tempooooooooooo = "+data);
+		  System.out.println("data   : "+dueDate.toString());
 		
 		 TaskInstance t = executionContext.getTaskInstance();
 		 Timer timer = new Timer(t.getToken());
