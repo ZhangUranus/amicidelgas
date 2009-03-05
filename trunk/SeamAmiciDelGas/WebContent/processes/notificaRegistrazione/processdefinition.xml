@@ -44,9 +44,6 @@ Cordiali saluti.
 	</mail-node>
 
 	<state name="Aspetta Timer per compilare questionario">
-		<timer transition="notificaUtenti" name="AspettaDataQuestionario" duedate="5 minutes" repeat="no">
-			<action async="true"></action>
-		</timer>
 		<transition to="Riempire questionario" name="notificaUtenti"></transition>
 	</state>
 
@@ -76,7 +73,6 @@ Cordiali saluti.
 
 	<join name="join1">
 		<transition to="Aspetta Timer per compilare questionario">
-			<create-timer duedate="" name="timerVisita"></create-timer>
 		</transition>
 	</join>
 
