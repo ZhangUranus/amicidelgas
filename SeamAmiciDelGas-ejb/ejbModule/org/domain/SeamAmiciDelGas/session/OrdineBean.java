@@ -22,6 +22,8 @@ public class OrdineBean {
 	@Logger
 	private Log log;
 	
+	private String quantita;
+	
 	@In private Credentials credentials;
 	
 	@In(value="ordineList",create=true)
@@ -68,6 +70,21 @@ public class OrdineBean {
 
 	public void setOrdini(List<Ordine> ordini) {
 		this.ordini = ordini;
+	}
+
+	public String getQuantita() {
+		return quantita;
+	}
+
+	public void setQuantita(String quantita) {
+		log.info("************ quantita= "+quantita +"************");
+		this.quantita = quantita;
+	}
+	
+	public void salvaQuantita(String s)
+	{
+		log.info("************ s= "+s +"************");
+		quantita = s;
 	}
 	
 }
