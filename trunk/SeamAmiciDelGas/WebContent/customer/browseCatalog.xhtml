@@ -49,9 +49,11 @@
 			<table>
 			<tr>
 			<td>
+			<a:outputPanel ajaxRendered="true">
 				<rich:dataTable value="#{catalogService.getCategories(catalogService.contadino)}"
 								var="_category"
-								width="20%">
+								width="20%"
+								rendered="#{not empty catalogService.contadino}">
 					<rich:column> 
 					<f:facet name="header">Categoria</f:facet>	
 						<a:commandButton event="onclick" value="#{_category}"
@@ -63,45 +65,47 @@
 						</a:commandButton>
 					</rich:column>	
 				</rich:dataTable>
+			</a:outputPanel>
 			</td>
 			<td>	
-		
 		<s:decorate id="productsField" template="/layout/edit.xhtml">
 				<ui:define name="label">Prodotti</ui:define>
 				<rich:dataTable var="_item" id="itemsDataTable"
 					value="#{catalogService.getItemsForCategory(catalogService.contadino, catalogService.currentCategory)}">
-					<f:facet name="header">
-							<rich:columnGroup>
-								<rich:column>
-									<h:outputText value="Nome Prodotto" />
-								</rich:column>
-								<rich:column>
-									<h:outputText value="Descrizione" />
-								</rich:column>
-								<rich:column>
-									<h:outputText value="Prezzo unitario" />
-								</rich:column>
-								<rich:column colspan="2">
-									<h:outputText value="Aggiungi al carrello" />
-								</rich:column>
-								
-							</rich:columnGroup>
-						</f:facet>
+					
+					<rich:column> 
+						<f:facet name="header">Nome Prodotto</f:facet>
+						<h:outputText value="#{_item.name}"/>
+					</rich:column>
+					
 					<rich:column>
-						<h:outputText value="#{_item.name}" />
-					</rich:column>
+						<f:facet name="header">Descrizione</f:facet>
+						<h:outputText value="#{_item.description}"/>
+					</rich:column>	
+					
 					<rich:column>
-						<h:outputText value="#{_item.description}" />
+						<f:facet name="header">Prezzo unitario</f:facet>
+						<h:outputText value="#{_item.prezzo}"/>
+					</rich:column>		
+					
+					<rich:column colspan="2">
+						<f:facet name="header">Aggiungi al carrello</f:facet>
+				 			<rich:inputNumberSpinner id="inputNumberSpinnerCarrello" 
+				 							minValue="0" maxValue="1000" step="1"
+				 							style="height : 15px; width : 20px;"
+				 						    value="#{ordineBean.quantita}">
+				 				<a:support event="onclick" reRender="valoreCarrelloColumn" ajaxSingle="true"
+				 							/>
+				 			</rich:inputNumberSpinner>						  	
+				  			<a:commandButton image="/img/shopping_cart2.jpg" style="width : 25px; height : 25px;"/>
 					</rich:column>
-					<rich:column>
-						<h:outputText value="#{_item.prezzo}" />
-					</rich:column>
-					<rich:column colspan="2" >
-					<h:panelGroup layout="block">
-					   <rich:inputNumberSpinner value="1" style="height : 15px; width : 20px;"/>
-						<a:commandButton image="/img/shopping_cart.png" style="width : 33px; height : 33px;"></a:commandButton>
-					</h:panelGroup>
-					</rich:column>
+					
+					<rich:column id="valoreCarrelloColumn">
+						<f:facet name="header">Totale per prodotto</f:facet>
+						<a:outputPanel ajaxRendered="true">
+							<h:outputText value="#{ordineBean.quantita}"/>
+						</a:outputPanel>
+					</rich:column>	
 					
 				</rich:dataTable>
 			</s:decorate>
