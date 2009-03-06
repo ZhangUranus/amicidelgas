@@ -17,8 +17,8 @@ import org.jboss.seam.log.Log;
 public class CatalogNoServiceImpl implements CatalogInterface{
 
 	@Out(value="categories") private List<String> categories;
-	@Out(value="items") private List<Item> items;
-	@Out(value="itemsForCategory") private List<Item> itemsForCategory;
+	@Out(value="listaProdotti") private List<Item> listaProdotti;
+	//@Out(value="itemsForCategory") private List<Item> itemsForCategory;
 	private Cybercontadino contadino;
 	private String currentCategory;
 	
@@ -41,14 +41,15 @@ public class CatalogNoServiceImpl implements CatalogInterface{
 		t2.setDescription("Direttamente dalla Sicilia");
 		t2.setName("Nero d'avola");
 		t2.setPrezzo(3.50);
-		items= new ArrayList<Item>();
-		items.add(t1);
-		items.add(t2);
-		itemsForCategory= new ArrayList<Item>();
+		listaProdotti= new ArrayList<Item>();
+		listaProdotti.add(t1);
+		listaProdotti.add(t2);
+		//itemsForCategory= new ArrayList<Item>();
 	}
 	
 	public String[] getCategories(String idContadino) {
-		
+		if(contadino==null)
+			return null;
 		return (String[]) categories.toArray(new String[categories.size()]);
 	}
 
@@ -57,25 +58,28 @@ public class CatalogNoServiceImpl implements CatalogInterface{
 	}
 
 	public Item[] getItems(String idContadino) {
-		return (Item[])items.toArray(new Item[items.size()]);
+		return (Item[])listaProdotti.toArray(new Item[listaProdotti.size()]);
 	}
 
 	public Item[] getItemsForCategory(String idContadino, String category) {
 		log.info("************DENTROOOO*********");
-		Iterator<Item> it= items.iterator();
-		while(it.hasNext()){
-			Item item=it.next();
-			if(item.getCategory().equalsIgnoreCase(category))
-				itemsForCategory.add(item);
-		}
-		return (Item[]) itemsForCategory.toArray(new Item[itemsForCategory.size()]);
+		if(currentCategory==null)
+			return null;
+		List<Item> newItem = new ArrayList<Item>();
+		for(Item it : listaProdotti)
+			if(it.getCategory().equalsIgnoreCase(category))
+				newItem.add(it);
+		
+		return (Item[]) newItem.toArray(new Item[newItem.size()]);
 	}
 
 	public Cybercontadino getContadino() {
+		log.info("************get contadino*********");
 		return contadino;
 	}
 
 	public void setContadino(Cybercontadino contadino) {
+		log.info("************set contadino*********");
 		this.contadino = contadino;
 	}
 
