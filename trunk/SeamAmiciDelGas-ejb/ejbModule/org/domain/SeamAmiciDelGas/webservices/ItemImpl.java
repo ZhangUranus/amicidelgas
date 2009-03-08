@@ -2,8 +2,6 @@ package org.domain.SeamAmiciDelGas.webservices;
 
 import java.io.Serializable;
 
-import org.domain.SeamAmiciDelGas.session.ShoppingCart.ItemQuantita;
-
 public class ItemImpl implements Item, Serializable{
 
 	private String category;

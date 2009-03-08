@@ -34,6 +34,8 @@ public class TakeInHand {
 	
 	public String getHowMuchForItem(Item i)
 	{	//torno la quantita per l'item corrispondente
+		if(i==null)
+			return "0000";
 		for(ItemQuantita iq : itemQuantita)
 		{
 			if(iq.getItem().equals(i))
@@ -44,48 +46,15 @@ public class TakeInHand {
 	
 	public void addHowMuch(Item i, String howMuch)
 	{
+		if(howMuch==null || howMuch.equals("0"))
+			return;
+		
 		//associo la quantita all'item corrispondente
 		for(ItemQuantita it : itemQuantita)
 		{
 			if(it.getItem().equals(i))
-			{
-				if(howMuch==null || howMuch.equals("0"))
-					return;
-				it.setQuantita(Integer.parseInt(howMuch)); return;
-			}
+			{	it.setQuantita(Integer.parseInt(howMuch)); return;	}
 		}
 		itemQuantita.add(new ItemQuantita(i,Integer.parseInt(howMuch)));
-	}
-	
-	
-	public class ItemQuantita
-	{
-		private Item item;
-		private int quantita;
-		public ItemQuantita(Item item, int q)
-		{
-			this.item=item;
-			this.quantita=q;
-		}
-		public Item getItem() {
-			return item;
-		}
-		public void setItem(Item item) {
-			this.item = item;
-		}
-		public int getQuantita() {
-			return quantita;
-		}
-		public void setQuantita(int quantita) {
-			this.quantita = quantita;
-		}
-		public void addQuantita(int quantita)
-		{
-			this.quantita += quantita;
-		}
-		public boolean equals(Object o)
-		{
-			return item.equals((Item)o);
-		}
 	}
 }

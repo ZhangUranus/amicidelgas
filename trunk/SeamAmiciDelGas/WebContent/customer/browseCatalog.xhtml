@@ -126,25 +126,42 @@
 					<tr>
 						<td>
 							<s:decorate id="shoppingcartField" template="/layout/edit.xhtml">
+								<table>
+								<tr>
+								<td>
 									<ui:define name="label">Prodotti nel carrello</ui:define>
 									<rich:dataTable var="_itemCarrello" id="itemsDataTableShoppingCart"
 										value="#{shoppingCart.itemInShoppingCart}">
-										
-									<rich:column>
-											<f:facet name="header">Nome prodotto</f:facet>
-											<h:outputText value="#{_itemCarrello.item.name}"/>
-									</rich:column>	
-									<rich:column>
-											<f:facet name="header">Quantita prodotto</f:facet>
-											<h:outputText value="#{_itemCarrello.quantita}"/>
-									</rich:column>	
-									<rich:column>
-											<f:facet name="header">Prezzo totale per prodotto</f:facet>
-											<h:outputText value="#{_itemCarrello.quantita * _itemCarrello.item.prezzo} euro"/>
-									</rich:column>	
-									
-								
-								</rich:dataTable>
+										<rich:column>
+												<f:facet name="header">Nome prodotto</f:facet>
+												<h:outputText value="#{_itemCarrello.item.name}"/>
+										</rich:column>	
+										<rich:column>
+												<f:facet name="header">Quantita prodotto</f:facet>
+												<h:outputText value="#{_itemCarrello.quantita}"/>
+										</rich:column>	
+										<rich:column>
+												<f:facet name="header">Prezzo totale per prodotto</f:facet>
+												<h:outputText value="#{_itemCarrello.quantita * _itemCarrello.item.prezzo} euro"/>
+										</rich:column>
+										<rich:column>
+												<f:facet name="header">Elimina dal carrello</f:facet>
+												<a:commandButton id="commandButtonShoppingCartDelete" image="/img/shopping_cart2_delete.jpg"
+																  style="width : 25px; height : 25px;">
+								 					<a:support event="onclick" reRender="shoppingcartField" ajaxSingle="true"
+								 						   action="#{shoppingCart.deleteItemInShoppingCart(_itemCarrello.item, takeInHand.getHowMuchForItem(_itemCarrello.item))}"/>
+								 				</a:commandButton>
+								 				<rich:toolTip for="commandButtonShoppingCartDelete" value="Elimina prodotto dal carrello"/>
+										</rich:column>	
+									</rich:dataTable>
+								</td>
+								<td>
+									<b><h:outputText value="TOTALE "/></b>
+									<br/>
+									<h:outputText value="#{shoppingCart.calcolaTotale()} euro"/>
+								</td>
+								</tr>
+							</table>
 							</s:decorate>
 						</td>
 					</tr>
