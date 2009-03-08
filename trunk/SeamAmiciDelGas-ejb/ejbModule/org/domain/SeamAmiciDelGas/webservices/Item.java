@@ -12,5 +12,7 @@ public interface Item {
 	
 	public double getPrezzo();
 	
+	public boolean equals(Object o);
+	
 	
 }
