@@ -1,6 +1,7 @@
 package org.domain.SeamAmiciDelGas.session;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.domain.SeamAmiciDelGas.webservices.Item;
@@ -26,7 +27,7 @@ public class ShoppingCart {
 	
 	public void aggiungiAlCarrello(Item item, String quantita)
 	{	
-		if(quantita==null || quantita.equals("0")) 
+		if(quantita==null || quantita.equals("0") || quantita.equals("")) 
 			return;
 			//itemInShoppingCart.add(new ItemQuantita(item,0));
 		itemInShoppingCart.add(new ItemQuantita(item,Integer.parseInt(quantita)));
@@ -51,11 +52,10 @@ public class ShoppingCart {
 	
 	public void addItemInShoppingCart(Item item, String quantita)
 	{
-		//gestire se il prodotto esiste gia...
+		if(quantita==null || quantita.equals("0") || quantita.equals("")) 
+			return;
 		for(ItemQuantita iq : itemInShoppingCart)
 		{
-			if(quantita==null || quantita.equals("0")) 
-				return;
 			if(iq.getItem().equals(item))
 			{	iq.addQuantita(Integer.parseInt(quantita)); 
 				log.info("******** aggiunto item gia esistente: "+item.getName() +" quantita = "+quantita);
@@ -65,40 +65,33 @@ public class ShoppingCart {
 		itemInShoppingCart.add(new ItemQuantita(item,Integer.parseInt(quantita)));
 	}
 	
-	
-
-	public class ItemQuantita
+	public void deleteItemInShoppingCart(Item item, String quantita)
 	{
-		private Item item;
-		private int quantita;
-		public ItemQuantita(Item item, int q)
+		if(quantita==null || quantita.equals("")) 
+			return;
+		
+		for(int i=0; i<itemInShoppingCart.size(); i++)
 		{
-			this.item=item;
-			this.quantita=q;
+			ItemQuantita iq = itemInShoppingCart.get(i);
+			if(iq.getItem().equals(item))
+			{	
+				itemInShoppingCart.remove(i);
+				log.info("******** eliminato item : "+item.getName() +" quantita = "+quantita);
+				return;	}
+			
 		}
-		public Item getItem() {
-			return item;
-		}
-		public void setItem(Item item) {
-			this.item = item;
-		}
-		public int getQuantita() {
-			return quantita;
-		}
-		public void setQuantita(int quantita) {
-			this.quantita = quantita;
-		}
-		public void addQuantita(int quantita)
-		{
-			this.quantita += quantita;
-		}
-		public boolean equals(Object o)
-		{
-			return item.equals((Item)o);
-		}
+		log.info("******** item non presente : "+item.getName() +" quantita = "+quantita);
 	}
-
 	
+	public String calcolaTotale()
+	{
+		int totale=0;
+		for(ItemQuantita iq : itemInShoppingCart)
+		{
+			totale += ( iq.getItem().getPrezzo() * iq.getQuantita() );
+		}
+		return String.valueOf(totale);
+	}
 }
 
 	
