@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process-definition  xmlns=""  name="myOrderProcessing">
+
+
+	<start-state name="L'utente sottomette un ordine">
+		<transition to="Ordine notificato a driver e contadini"></transition>
+	</start-state>
+
+
+	<task-node name="Ordine notificato a driver e contadini">
+		<transition to="Prova a prenotare l'ordine" name="un driver o un contadino ha preso in carico un ordine"></transition>
+		<transition to="Notifica utente ordine non preso in carico" name="ordine non preso in carico entro datamax"></transition>
+	</task-node>
+
+	<node name="Prova a prenotare l'ordine">
+		<transition to="Notifica utente ordine non disponibile" name="prodotti non disponibili"></transition>
+		<transition to="Notifica utente ordine preso in carico" name="ordine prenotato"></transition>
+	</node>
+
+	<task-node name="Notifica utente ordine non disponibile">
+		<transition to="end-state1" name="l'utente rinuncia all'ordine"></transition>
+		<transition to="Ordine notificato a driver e contadini" name="l'utente modifica l'ordine"></transition>
+	</task-node>
+
+	<task-node name="Notifica utente ordine non preso in carico">
+		<transition to="end-state2"></transition>
+	</task-node>
+
+	<task-node name="Notifica utente ordine preso in carico">
+		<transition to="Attendi data consegna"></transition>
+	</task-node>
+
+	<state name="Attendi data consegna">
+		<transition to="fork1"></transition>
+	</state>
+
+	<task-node name="Rilascia feedback all'utente">
+		<transition to="join1"></transition>
+	</task-node>
+
+	<fork name="fork1">
+		<transition to="Rilascia feedback all'utente" name="to Rilascia feedback all'utente"></transition>
+		<transition to="task-node1" name="to task-node1"></transition>
+	</fork>
+
+	<task-node name="task-node1">
+		<transition to="join1"></transition>
+	</task-node>
+
+	<join name="join1">
+		<transition to="end-state3"></transition>
+	</join>
+
+
+	<end-state name="end-state1"></end-state>
+
+	<end-state name="end-state2"></end-state>
+
+	<end-state name="end-state3"></end-state>
+
+
+</process-definition>
