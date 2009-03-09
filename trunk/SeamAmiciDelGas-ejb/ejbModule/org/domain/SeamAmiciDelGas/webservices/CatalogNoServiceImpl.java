@@ -50,10 +50,27 @@ public class CatalogNoServiceImpl implements CatalogInterface{
 		t3.setDescription("Sempre sicilia");
 		t3.setName("Zibibbo");
 		t3.setPrezzo(4.00);
+		
+		ItemImpl t4= new ItemImpl();
+		t4.setId("04");
+		t4.setCategory("bevande");
+		t4.setDescription("Vino Sardu");
+		t4.setName("Nuragus");
+		t4.setPrezzo(2.25);
+		
+		ItemImpl t5= new ItemImpl();
+		t5.setId("05");
+		t5.setCategory("cibo");
+		t5.setDescription("Panino con la frittataa");
+		t5.setName("Panino");
+		t5.setPrezzo(3.75);
+		
 		listaProdotti= new ArrayList<Item>();
 		listaProdotti.add(t1);
 		listaProdotti.add(t2);
 		listaProdotti.add(t3);
+		listaProdotti.add(t4);
+		listaProdotti.add(t5);
 		//itemsForCategory= new ArrayList<Item>();
 	}
 	
@@ -70,7 +87,6 @@ public class CatalogNoServiceImpl implements CatalogInterface{
 	}
 
 	public Item[] getItemsForCategory(String idContadino, String category) {
-		log.info("************DENTROOOO*********");
 		List<Item> newItem = new ArrayList<Item>();
 		for(Item it : listaProdotti)
 			if(it.getCategory().equalsIgnoreCase(category))
@@ -80,12 +96,10 @@ public class CatalogNoServiceImpl implements CatalogInterface{
 	}
 
 	public Cybercontadino getContadino() {
-		log.info("************get contadino*********");
 		return contadino;
 	}
 
 	public void setContadino(Cybercontadino contadino) {
-		log.info("************set contadino*********");
 		this.contadino = contadino;
 	}
 
