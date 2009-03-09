@@ -23,7 +23,7 @@ public class TakeInHand {
 	public void azzeraHowMuch() {
 		howMuch="0";
 	}
-	
+
 	public String getHowMuch() {
 		return howMuch;
 	}
