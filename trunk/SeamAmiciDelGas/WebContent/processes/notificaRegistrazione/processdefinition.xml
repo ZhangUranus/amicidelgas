@@ -20,7 +20,7 @@
 			<assignment pooled-actors="utenteGas"></assignment>
 		</task>
 		 <event type="timer-create">
-      <action name="timerCreated" class="org.domain.SeamAmiciDelGas.processes.RemindActor">
+      <action name="timerCreated" class="org.domain.SeamAmiciDelGas.processes.ChangeDueDateTimer">
         <timerName>varTimer</timerName>
       </action>
     </event>

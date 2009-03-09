@@ -85,12 +85,14 @@ public class ProcessoRegistrazione {
 		Calendar gc= new GregorianCalendar();
 		gc.setTime((Date) dataProposta.clone());
 		gc.roll(Calendar.DATE, -1);
-		setDataMassimaAccettazione(gc.getTime());
+		dataMassimaAccettazione = gc.getTime();
 		postiOccupati=0;
 		
 		gc= new GregorianCalendar();
 		gc.setTime((Date) dataProposta.clone());
-		gc.roll(Calendar.DATE, +1);
+	//	gc.roll(Calendar.DATE, +1);
+		gc.roll(Calendar.MINUTE, +1);
+		gc.roll(Calendar.DATE, -1);
 		dataQuestionario = gc.getTime();
 		messageUtente= new Message();
 		String rejectMsg="Andiamo tutti dal cybercontadino.";
@@ -140,26 +142,6 @@ public class ProcessoRegistrazione {
 
 	public void update(){
 		log.info("Update- la data corrente �: "+ dataProposta);
-	}
-
-
-	public void setDataQuestionario(Date dataQuestionario) {
-		this.dataQuestionario = dataQuestionario;
-	}
-
-
-	public Date getDataQuestionario() {
-		return dataQuestionario;
-	}
-
-
-	public void setDataMassimaAccettazione(Date dataMassimaAccettazione) {
-		this.dataMassimaAccettazione = dataMassimaAccettazione;
-	}
-
-
-	public Date getDataMassimaAccettazione() {
-		return dataMassimaAccettazione;
 	}
 	
 }
