@@ -23,8 +23,6 @@ public class ItemQuantita
 			return evasioneParziale;
 		}
 		public void setEvasioneParziale(boolean evasioneParziale) {
-			log.info("*******************************");
-			log.info("********EVASIONE PARZIALE******");
 			this.evasioneParziale = evasioneParziale;
 		}
 		public int getQuantitaParziale() {
