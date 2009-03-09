@@ -87,6 +87,10 @@
                     <s:link view="/customer/browseCatalog.xhtml" value="VEDI CATALOGO" propagation="none"/>
                     <f:param name="utenteCodiceFiscale" value="#{currentUser.codiceFiscale}"/>
 		            <f:param name="accountUsername" value="#{currentAccount.username}"/>
+             </rich:menuItem>
+             
+             <rich:menuItem submitMode="none" >
+                    <s:link view="/customer/questionario.xhtml" value="QUESTIONARIO" propagation="none"/>
              </rich:menuItem>	
         	
         </rich:dropDownMenu>	
@@ -212,6 +216,24 @@
 								<rich:column>
 										<f:facet name="header">Prezzo totale per prodotto</f:facet>
 										<h:outputText value="#{_itemCarrello.quantita * _itemCarrello.item.prezzo} euro"/>
+								</rich:column>
+								<rich:column>
+										<f:facet name="header">Evasione Parziale</f:facet>
+										<h:form>
+										<h:selectBooleanCheckbox required="true" value="#{_itemCarrello.evasioneParziale}" > 
+											<a:support event="onclick" ajaxSingle="true" reRendered="qParzialeField"/>
+					  					</h:selectBooleanCheckbox>
+					  					
+				  						<a:outputPanel ajaxRendered="true">
+											<s:decorate id="qParzialeField" rendered="#{_itemCarrello.evasioneParziale}">
+												<rich:inputNumberSpinner id="qParzialeCarrello" 
+									 							minValue="0" maxValue="#{_itemCarrello.quantita}" step="1"
+									 							style="height : 15px; width : 20px;" 
+									 						    value="#{_itemCarrello.quantitaParziale}">
+									 			</rich:inputNumberSpinner>					
+											</s:decorate>
+										</a:outputPanel>
+										</h:form>
 								</rich:column>
 								<rich:column>
 										<f:facet name="header">Elimina dal carrello</f:facet>
