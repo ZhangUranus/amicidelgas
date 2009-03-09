@@ -4,7 +4,8 @@
     xmlns:h="http://java.sun.com/jsf/html"
     xmlns:f="http://java.sun.com/jsf/core"
     xmlns:s="http://jboss.com/products/seam/taglib"
-    xmlns:rich="http://richfaces.org/rich">
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:a="http://richfaces.org/a4j">
     
     <rich:toolBar>
     	<rich:dropDownMenu style=" width : 42px;">	
@@ -147,6 +148,19 @@
         	
         </rich:dropDownMenu>
         
+        <rich:dropDownMenu style=" width : 50px;" rendered="#{identity.loggedIn and loginSelectBean.isCustomer}">	
+       		
+       		<f:facet name="label"> 
+    	        <h:panelGroup>
+    	        	<a:commandLink ajaxSingle="true" id="carrelloLink"
+			                    oncomplete="#{rich:component('carrelloPanel')}.show()">
+ 					<h:graphicImage value="/img/shopping_cart.png" styleClass="pic" width="35" height="28"/>    	        		
+                    </a:commandLink>
+                </h:panelGroup>
+            </f:facet>
+       		
+    	</rich:dropDownMenu>
+        
     
     	<rich:dropDownMenu style=" width : 50px;" rendered="#{identity.loggedIn}">	
        		
@@ -169,5 +183,57 @@
     	</rich:dropDownMenu>	
     
     </rich:toolBar>
+    
+    <rich:modalPanel id="carrelloPanel" autosized="true" width="500">
+       	<f:facet name="header">
+           	<h:outputText value="Visualizzazione carrello" />
+       	</f:facet>
+       	<f:facet name="controls">
+           	<h:panelGroup>
+               	<h:graphicImage value="/img/close.png"
+                   	id="hidelink" />
+              	 	<rich:componentControl for="carrelloPanel" attachTo="hidelink"
+                   	operation="hide" event="onclick" />
+           	</h:panelGroup>
+   	    </f:facet>
+   	    <h:panelGrid columns="1">
+	        	<a:outputPanel ajaxRendered="true">
+			        <b><h:outputText value="Prodotti nel carrello" /></b>
+							<rich:dataTable var="_itemCarrello" id="itemsDataTableShoppingCart"
+								value="#{shoppingCart.itemInShoppingCart}">
+								<rich:column>
+										<f:facet name="header">Nome prodotto</f:facet>
+										<h:outputText value="#{_itemCarrello.item.name}"/>
+								</rich:column>	
+								<rich:column>
+										<f:facet name="header">Quantita prodotto</f:facet>
+										<h:outputText value="#{_itemCarrello.quantita}"/>
+								</rich:column>	
+								<rich:column>
+										<f:facet name="header">Prezzo totale per prodotto</f:facet>
+										<h:outputText value="#{_itemCarrello.quantita * _itemCarrello.item.prezzo} euro"/>
+								</rich:column>
+								<rich:column>
+										<f:facet name="header">Elimina dal carrello</f:facet>
+										<a:commandButton id="commandButtonShoppingCartDelete" image="/img/shopping_cart2_delete.jpg"
+														  style="width : 25px; height : 25px;">
+						 					<a:support event="onclick" reRender="shoppingcartField" ajaxSingle="true"
+						 						   action="#{shoppingCart.deleteItemInShoppingCart(_itemCarrello.item, takeInHand.getHowMuchForItem(_itemCarrello.item))}"/>
+						 				</a:commandButton>
+						 				<rich:toolTip for="commandButtonShoppingCartDelete" value="Elimina prodotto dal carrello"/>
+								</rich:column>	
+							</rich:dataTable>
+						<br/>
+						<h:panelGrid columns="3">
+							<h:outputText><b>TOTALE: </b></h:outputText>
+							<h:outputText value="#{shoppingCart.calcolaTotale()} euro"/>
+						</h:panelGrid>
+						<br/>
+						<a:commandButton bypassUpdates="true" ajaxSingle="true" value="Avvia l'ordine"
+	                			action="#{shoppingCart.calcolaTotale()}"
+	                			oncomplete="#{rich:component('carrelloPanel')}.hide()" />
+				</a:outputPanel>
+			</h:panelGrid>	    
+	</rich:modalPanel>
     
 </h:form>
