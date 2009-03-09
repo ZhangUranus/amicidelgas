@@ -41,10 +41,10 @@
 
 	<fork name="fork1">
 		<transition to="Rilascia feedback all'utente" name="to Rilascia feedback all'utente"></transition>
-		<transition to="task-node1" name="to task-node1"></transition>
+		<transition to="Rilascia feedback al contadino o driver" name="to Rilascia feedback al contadino o driver"></transition>
 	</fork>
 
-	<task-node name="task-node1">
+	<task-node name="Rilascia feedback al contadino o driver">
 		<transition to="join1"></transition>
 	</task-node>
 
