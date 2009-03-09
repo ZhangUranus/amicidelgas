@@ -1,50 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<root-container name="notificaRegistrazione" width="1137" height="717">
+<root-container name="notificaRegistrazione" width="750" height="543">
   <node name="Richiesta registrazione" x="179" y="10" width="192" height="36">
     <edge>
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="Crea Evento Azienda da visitare" x="156" y="110" width="240" height="36">
+  <node name="Crea Evento Azienda da visitare" x="167" y="96" width="240" height="36">
     <edge>
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="partecipa al gruppo" x="101" y="303" width="289" height="42">
-    <edge>
-      <label x="5" y="-10"/>
-    </edge>
-    <edge>
-      <label x="5" y="-10"/>
-    </edge>
-  </node>
-  <node name="EmailAppuntamentoAzienda" x="709" y="162" width="254" height="35">
-    <edge>
-      <label x="5" y="-10"/>
-    </edge>
-  </node>
-  <node name="Aspetta Timer per compilare questionario" x="542" y="408" width="270" height="52">
-    <edge>
-      <label x="5" y="-10"/>
-    </edge>
-  </node>
-  <node name="Riempire questionario" x="143" y="409" width="212" height="36">
-    <edge>
-      <label x="5" y="-10"/>
-    </edge>
-  </node>
-  <node name="Aspetta che tutti i questionari siano compilati" x="497" y="487" width="323" height="36">
-    <edge>
-      <label x="5" y="-10"/>
-    </edge>
-  </node>
-  <node name="Controlla Registrazione Contadino" x="142" y="567" width="234" height="36">
-    <edge>
-      <label x="5" y="-10"/>
-    </edge>
-  </node>
-  <node name="AccettaRifiuta" x="432" y="625" width="132" height="36">
+  <node name="partecipa al gruppo" x="19" y="253" width="289" height="42">
     <edge>
       <label x="5" y="-10"/>
     </edge>
@@ -52,33 +19,37 @@
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="EmailRegistrazione" x="750" y="636" width="132" height="36">
+  <node name="Riempire questionario" x="105" y="377" width="212" height="36">
     <edge>
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="join1" x="561" y="312" width="252" height="24">
+  <node name="accetta altri utenti" x="462" y="198" width="132" height="36">
     <edge>
       <label x="5" y="-10"/>
-    </edge>
-  </node>
-  <node name="Fork_diMedda" x="514" y="84" width="252" height="24">
-    <edge>
-      <label x="5" y="-10"/>
+      <bendpoint w1="-380" h1="-70" w2="-6" h2="-125"/>
     </edge>
     <edge>
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="accetta altri utenti" x="378" y="169" width="132" height="36">
+  <node name="Contadino Accettato" x="186" y="506" width="132" height="36"/>
+  <node name="fork1" x="497" y="144" width="252" height="24">
     <edge>
       <label x="5" y="-10"/>
-      <bendpoint w1="-229" h1="-6" w2="-11" h2="-140"/>
     </edge>
     <edge>
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="Contadino Rifiutato" x="194" y="680" width="132" height="36"/>
-  <node name="Contadino Accettato" x="1004" y="642" width="132" height="36"/>
+  <node name="join1" x="492" y="272" width="252" height="24">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="AspettaNuMumento" x="473" y="371" width="200" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
 </root-container>

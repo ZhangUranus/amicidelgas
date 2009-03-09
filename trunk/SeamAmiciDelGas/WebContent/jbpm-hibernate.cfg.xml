@@ -69,6 +69,9 @@
     <mapping resource="org/jbpm/graph/def/SuperState.hbm.xml"/>
     <mapping resource="org/jbpm/graph/def/ExceptionHandler.hbm.xml"/>
     <mapping resource="org/jbpm/instantiation/Delegation.hbm.xml"/>
+    <!-- 
+    <mapping resource="org/domain/SeamAmiciDelGas/processes/CancelTaskAction.hbm.xml"/>
+     -->
 
     <!-- graph.node mapping files -->
     <mapping resource="org/jbpm/graph/node/StartState.hbm.xml"/>
@@ -169,6 +172,7 @@
     <mapping resource="org/jbpm/taskmgmt/log/SwimlaneLog.hbm.xml"/>
     <mapping resource="org/jbpm/taskmgmt/log/SwimlaneCreateLog.hbm.xml"/>
     <mapping resource="org/jbpm/taskmgmt/log/SwimlaneAssignLog.hbm.xml"/>
+    
     
   </session-factory>
 </hibernate-configuration>

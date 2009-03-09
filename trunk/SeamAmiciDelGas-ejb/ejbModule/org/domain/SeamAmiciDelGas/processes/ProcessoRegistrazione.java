@@ -18,6 +18,7 @@ import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.annotations.bpm.BeginTask;
 import org.jboss.seam.annotations.bpm.CreateProcess;
 import org.jboss.seam.annotations.bpm.EndTask;
+import org.jboss.seam.annotations.bpm.StartTask;
 import org.jboss.seam.annotations.intercept.BypassInterceptors;
 import org.jboss.seam.faces.FacesMessages;
 import org.jboss.seam.log.Log;
@@ -57,9 +58,6 @@ public class ProcessoRegistrazione {
 	@Out(value="dataMassimaAccettazione", scope= ScopeType.BUSINESS_PROCESS, required =false)
 	private Date dataMassimaAccettazione;
 	
-	@Out(value="dataProva", scope= ScopeType.BUSINESS_PROCESS, required =false)
-	private Date dataProva;
-	
 	@Out(value="postiOccupati",scope=ScopeType.BUSINESS_PROCESS, required= false)
 	private int postiOccupati;
 	
@@ -71,40 +69,29 @@ public class ProcessoRegistrazione {
 	private TaskInstance taskCorrente;
 	
 	@CreateProcess(definition="notificaRegistrazione")
-	public void inviaRegistrazione(){
+	public void inviaRegistrazione()
+	{
 		//log.info("E' arrivata la richiesta driver");
 		
 		// Discutiamone con antonio probabilmente non serve a nulla.....
 		nomeContadino= credentials.getUsername();
-		
-		facesMessages.add("La richiesta � stata inoltrata");
-/*		Calendar gc= new GregorianCalendar();
-		//gc.setTime((Date) dataProposta.clone());
-		gc.setTimeInMillis(System.currentTimeMillis());
-		gc.roll(Calendar.MINUTE, 5);
-		//gc.roll(Calendar.HOUR, 5);
-	//	gc.roll(Calendar.DATE, -2);
-		dataProva= gc.getTime();*/
+		facesMessages.add("La richiesta e' stata inoltrata");
 	}
 	
 	
-	@BeginTask @EndTask(transition="invia")
-	public void creaVisita(){
-//		Calendar gc= new GregorianCalendar();
-		//gc.setTime((Date) dataProposta.clone());
-//		gc.setTimeInMillis(System.currentTimeMillis());
-//		gc.roll(Calendar.MINUTE, 2);
-		//gc.roll(Calendar.HOUR, 5);
-	//	gc.roll(Calendar.DATE, -2);
-//		dataMassimaAccettazione= gc.getTime();
+	@StartTask @EndTask(transition="invia")
+	public void creaVisita()
+	{
+		Calendar gc= new GregorianCalendar();
+		gc.setTime((Date) dataProposta.clone());
+		gc.roll(Calendar.DATE, -1);
+		setDataMassimaAccettazione(gc.getTime());
 		postiOccupati=0;
-/*		
+		
 		gc= new GregorianCalendar();
 		gc.setTime((Date) dataProposta.clone());
-		gc.roll(Calendar.DATE, +2);
+		gc.roll(Calendar.DATE, +1);
 		dataQuestionario = gc.getTime();
-		log.info(("Stampa della data proposta: "+this.dataProposta));
-	*/	
 		messageUtente= new Message();
 		String rejectMsg="Andiamo tutti dal cybercontadino.";
 		messageUtente.setContent(rejectMsg);
@@ -153,6 +140,26 @@ public class ProcessoRegistrazione {
 
 	public void update(){
 		log.info("Update- la data corrente �: "+ dataProposta);
+	}
+
+
+	public void setDataQuestionario(Date dataQuestionario) {
+		this.dataQuestionario = dataQuestionario;
+	}
+
+
+	public Date getDataQuestionario() {
+		return dataQuestionario;
+	}
+
+
+	public void setDataMassimaAccettazione(Date dataMassimaAccettazione) {
+		this.dataMassimaAccettazione = dataMassimaAccettazione;
+	}
+
+
+	public Date getDataMassimaAccettazione() {
+		return dataMassimaAccettazione;
 	}
 	
 }

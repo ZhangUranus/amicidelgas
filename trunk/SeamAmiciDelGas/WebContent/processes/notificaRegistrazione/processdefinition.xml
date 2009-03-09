@@ -12,88 +12,68 @@
 		<task name="crea_visita">
 			<assignment pooled-actors="mediatore"></assignment>
 		</task>
-		<transition to="Fork_diMedda" name="invia"></transition>
+		<transition to="fork1" name="invia"></transition>
 	</task-node>
 
 	<task-node name="partecipa al gruppo">
 		<task name="partecipa_alla_visita" >
 			<assignment pooled-actors="utenteGas"></assignment>
 		</task>
-		<event type="task-create">
-			<action name="SetTimer" expression="#{timerHandler.execute()}"></action>
+		 <event type="timer-create">
+      <action name="timerCreated" class="org.domain.SeamAmiciDelGas.processes.RemindActor">
+        <timerName>varTimer</timerName>
+      </action>
+    </event>
+		<event type="node-leave">
+			<action name="SpegniTuttoeVaiAvanti" class="org.domain.SeamAmiciDelGas.processes.CancelTaskAction"></action>
 		</event>
+    <timer duedate="10 years" name="varTimer" transition="time-out">
+      
+    </timer>
 		<transition to="accetta altri utenti" name="partecipa"></transition>
 		<transition to="join1" name="time-out"></transition>
 	</task-node>
 
-	<mail-node name="EmailAppuntamentoAzienda" to="#{contadinoCreato.email}" async="true">
-		<subject>
-			Proposta Visita azienda
-		</subject>
-		<text>
-Questo messaggio è generato automaticamente dal gruppo gas
-a cui ha fatto richiesta di adesione. Per accettare la registrazione,
-il gruppo gas richiede una visita alla vostra azienda. Il gas 
-gradirebbe effettuare una visita il giorno #{dataProposta}.
-Ci comunichi se la data scelta è disponibile o un'altra data in
-cui il nostro gruppo di inviati possa visitare la vostra azienda.
-Cordiali saluti.
-
-		</text>
-		<transition to="join1"></transition>
-	</mail-node>
-
-	<state name="Aspetta Timer per compilare questionario">
-		<transition to="Riempire questionario" name="notificaUtenti"></transition>
-	</state>
-
 	<task-node name="Riempire questionario">
 		<task name="compilaQuestionario">
-			<assignment pooled-actors="utenteGas"></assignment>
+			<assignment pooled-actors="utenteContadino"></assignment>
 		</task>
-		<transition to="Aspetta che tutti i questionari siano compilati" name="compila"></transition>
+		<transition to="Contadino Accettato" name="fine"></transition>
 	</task-node>
-
-	<state name="Aspetta che tutti i questionari siano compilati">
-		<transition to="Controlla Registrazione Contadino" name="notificaAdmin"></transition>
-	</state>
-
-	<task-node name="Controlla Registrazione Contadino">
-		<transition to="AccettaRifiuta"></transition>
-	</task-node>
-
-	<decision name="AccettaRifiuta">
-		<transition to="Contadino Rifiutato" name="Rifiuta"></transition>
-		<transition to="EmailRegistrazione" name="accetta"></transition>
-	</decision>
-
-	<mail-node name="EmailRegistrazione">
-		<transition to="Contadino Accettato" name="ok"></transition>
-	</mail-node>
-
-	<join name="join1">
-		<transition to="Aspetta Timer per compilare questionario">
-		</transition>
-	</join>
-
-	<fork name="Fork_diMedda">
-		<transition to="EmailAppuntamentoAzienda" name="to EmailAppuntamentoAzienda"></transition>
-		<transition to="accetta altri utenti" name="accetta utenti"></transition>
-	</fork>
 
 	<decision name="accetta altri utenti">
 		<transition to="partecipa al gruppo" name="posti disponibili">
-			<condition expression="#{!(postiOccupati >= 3)}"></condition>
+			<condition expression="#{!(postiOccupati &gt;= 3)}"></condition>
 		</transition>
 		<transition to="join1" name="posti esauriti">
 			<condition expression="#{postiOccupati ==3}"></condition>
 		</transition>
 	</decision>
 
+	<fork name="fork1">
+		<transition to="accetta altri utenti"></transition>
+		<transition to="join1" name="to join1"></transition>
+	</fork>
 
-	<end-state name="Contadino Rifiutato"></end-state>
+	<join name="join1">
+		<transition to="AspettaNuMumento" name="to-state"></transition>
+	</join>
+
+	<state name="AspettaNuMumento">
+	<event type="timer-create">
+      <action name="timerState" class="org.domain.SeamAmiciDelGas.processes.TimerHandler">
+        <timerName>timerVar</timerName>
+      </action>
+    </event>
+    <timer duedate="10 years" name="timerVar" transition="questionario">
+      
+    </timer>
+		<transition to="Riempire questionario" name="questionario"></transition>
+	</state>
+
 
 	<end-state name="Contadino Accettato"></end-state>
+
 
 
 </process-definition>

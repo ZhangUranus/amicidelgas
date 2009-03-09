@@ -17,6 +17,7 @@ import org.jboss.seam.annotations.Out;
 
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.annotations.bpm.BeginTask;
+import org.jboss.seam.annotations.bpm.StartTask;
 
 import org.jboss.seam.annotations.bpm.EndTask;
 
@@ -76,7 +77,7 @@ public class InviaNotificaRegistrazioni {
 	
 	
 	
-	@BeginTask @EndTask
+	@StartTask @EndTask(transition="partecipa")
 	public void partecipa_alla_visita()
 	{
 		if(usernameInviati == null)
@@ -98,14 +99,14 @@ public class InviaNotificaRegistrazioni {
 		messageUtente.setContent(rejectMsg);
 		
 	}
-/*	
-	@BeginTask @EndTask(transition="compila")
+	
+	@StartTask @EndTask(transition="compila")
 	public void compilaQuestionario()
 	{
-		log.info(("Stampa qualcosaa: "+this.dataQuestionario));
+		log.info("Stampa qualcosaa: ");
 		
 	}
-	*/
+	
 	
 
 
