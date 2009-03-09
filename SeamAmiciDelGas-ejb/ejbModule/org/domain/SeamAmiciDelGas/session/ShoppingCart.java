@@ -21,6 +21,8 @@ public class ShoppingCart {
 	
 	private String quantita="0";
 	
+	private boolean noSelect=false;
+	
 	List<ItemQuantita> itemInShoppingCart = new ArrayList<ItemQuantita>();
 
 	public ShoppingCart(){}
@@ -41,7 +43,7 @@ public class ShoppingCart {
 		this.itemInShoppingCart = itemInShoppingCart;
 	}
 	
-	public void addItemInShoppingCart(Item item, String quantita)
+	public void addItemInShoppingCart(Item item, String quantita, String contadinoUsername)
 	{
 		if(quantita==null || quantita.equals("0") || quantita.equals("")) 
 			return;
@@ -52,8 +54,8 @@ public class ShoppingCart {
 				log.info("******** aggiunto item gia esistente: "+item.getName() +" quantita = "+quantita);
 				return;	}
 		}
-		log.info("******** aggiunto nuovo item : "+item.getName() +" quantita = "+quantita);
-		itemInShoppingCart.add(new ItemQuantita(item,Integer.parseInt(quantita)));
+		log.info("******** aggiunto nuovo item : "+item.getName() +" quantita = "+quantita +"nome" +contadinoUsername);
+		itemInShoppingCart.add(new ItemQuantita(item,Integer.parseInt(quantita),contadinoUsername));
 	}
 	
 	public void deleteItemInShoppingCart(Item item, String quantita)
@@ -88,6 +90,38 @@ public class ShoppingCart {
 	{
 		//procede all'acquisto dei prodotti nel carrello
 		//svuota il carrello
+		log.info("******** buyAllItem************");
+		List<ItemQuantita> selectedItem = new ArrayList<ItemQuantita>();
+		
+		for(int index=0; index<itemInShoppingCart.size(); index++)//aggiungo i prodotti all'ordine da fare
+		{	
+			ItemQuantita iq=itemInShoppingCart.get(index);
+			if(iq.isCheckedForOrdine())
+			{	selectedItem.add(iq); log.info("******** Item SELEZIONATO "+iq.getItem().getName()+"************");	}
+		}
+		//invia ordine
+		
+		for(int index=0; index<itemInShoppingCart.size(); index++)//elimino i prodotti dalla lista
+		{	
+			ItemQuantita iq=itemInShoppingCart.get(index);
+			if(iq.isCheckedForOrdine())
+			{
+				itemInShoppingCart.remove(index);
+				index=0;
+			}
+		}
+		if (selectedItem.size()==0)
+			noSelect=  true;
+		else
+			noSelect=  false;
+	}
+
+	public boolean isNoSelect() {
+		return noSelect;
+	}
+
+	public void setNoSelect(boolean noSelect) {
+		this.noSelect = noSelect;
 	}
 }
 
