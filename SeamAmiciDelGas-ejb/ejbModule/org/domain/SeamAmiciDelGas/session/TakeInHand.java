@@ -16,11 +16,11 @@ public class TakeInHand {
 	public TakeInHand(){}
 	
 	private String howMuch="0";
+	
 	private List<ItemQuantita> itemQuantita = new ArrayList<ItemQuantita>();
 
 	
-	public void azzeraHowMuch()
-	{
+	public void azzeraHowMuch() {
 		howMuch="0";
 	}
 	
@@ -35,7 +35,7 @@ public class TakeInHand {
 	public String getHowMuchForItem(Item i)
 	{	//torno la quantita per l'item corrispondente
 		if(i==null)
-			return "0000";
+			return "0";
 		for(ItemQuantita iq : itemQuantita)
 		{
 			if(iq.getItem().equals(i))

@@ -19,20 +19,11 @@ public class ShoppingCart {
 	@Logger
 	private Log log;
 	
-	private String quantita;
+	private String quantita="0";
 	
 	List<ItemQuantita> itemInShoppingCart = new ArrayList<ItemQuantita>();
 
 	public ShoppingCart(){}
-	
-	public void aggiungiAlCarrello(Item item, String quantita)
-	{	
-		if(quantita==null || quantita.equals("0") || quantita.equals("")) 
-			return;
-			//itemInShoppingCart.add(new ItemQuantita(item,0));
-		itemInShoppingCart.add(new ItemQuantita(item,Integer.parseInt(quantita)));
-	}
-	
 	
 	public String getQuantita() {
 		return quantita;
@@ -83,14 +74,20 @@ public class ShoppingCart {
 		log.info("******** item non presente : "+item.getName() +" quantita = "+quantita);
 	}
 	
-	public String calcolaTotale()
+	public double calcolaTotale()
 	{
-		int totale=0;
+		double totale=0;
 		for(ItemQuantita iq : itemInShoppingCart)
 		{
 			totale += ( iq.getItem().getPrezzo() * iq.getQuantita() );
 		}
-		return String.valueOf(totale);
+		return totale;
+	}
+	
+	public void buyAllItem()
+	{
+		//procede all'acquisto dei prodotti nel carrello
+		//svuota il carrello
 	}
 }
 
