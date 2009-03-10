@@ -253,9 +253,11 @@
 			                value="#{myOrderProcessing.myOrdine.dataMassima}" datePattern="dd/MM/yyyy"/>
 			    </h:panelGrid>
 					<a:commandButton bypassUpdates="true" ajaxSingle="true" value="Avvia l'ordine"
-               			action="#{shoppingCart.buyAllItem()}" reRender="carrelloPanel,shoppingcartField"
-               			 />
-			</h:panelGrid>	    
+               			action="#{shoppingCart.buyAllItem()}" reRender="carrelloPanel,shoppingcartField">
+               		<a:support event="onclick" reRender="shoppingcartField" ajaxSingle="true"
+               				oncomplete="if (#{shoppingCart.empyShoppingCart==false}) #{rich:component('carrelloPanel')}.show();"/>			 			
+					</a:commandButton>
+				</h:panelGrid>	    
 	</rich:modalPanel>
     
     

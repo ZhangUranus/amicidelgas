@@ -35,6 +35,13 @@ public class ShoppingCart {
 		this.quantita = quantita;
 	}
 
+	public boolean isEmpyShoppingCart()
+	{
+		if(itemInShoppingCart.size()==0)
+			return true;
+		return false;
+	}
+	
 	public List<ItemQuantita> getItemInShoppingCart() {
 		return itemInShoppingCart;
 	}
