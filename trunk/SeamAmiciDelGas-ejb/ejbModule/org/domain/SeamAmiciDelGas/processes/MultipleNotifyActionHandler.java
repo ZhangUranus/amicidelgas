@@ -24,7 +24,8 @@ import org.jbpm.taskmgmt.exe.TaskMgmtInstance;
 @Scope(ScopeType.BUSINESS_PROCESS)
 public class MultipleNotifyActionHandler implements Serializable{
 
-	@In(value="notifyMessage", scope=ScopeType.BUSINESS_PROCESS) private Message message;
+	@In(value="notifyMessage", scope=ScopeType.BUSINESS_PROCESS, required=false) 
+	private Message message;
 	
 	public void execute() {
 		ExecutionContext executionContext = ExecutionContext.currentExecutionContext();

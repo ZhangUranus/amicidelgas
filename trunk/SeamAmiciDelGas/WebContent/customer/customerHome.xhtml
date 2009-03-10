@@ -56,10 +56,10 @@
                         	<p></p>
                         	<s:button
                         		
-                        	    rendered="#{(currentAccount.punteggioFeedback >= 3.5)}"
-                        	    action="#{richiestaDriver.richiestaDriver()}" 
+                        	    rendered="#{(currentAccount.punteggioFeedback >= 2.5)}"
+                        	    action="#{notificaRichiestaRisposta.notificaRequest()}" 
                         	    value="Proponiti come driver" />
-                        	<!-- 
+                        	<!-- Inserire il corpo del messaggio e il destinatario e il broadcast(true) come campi nascosti
                         	<h:outputText rendered="#{(currentAccount.punteggioFeedback > 3.5)}"  >
                         		Proponiti come driver <img src="/SeamAmiciDelGas/img/driver_mini.png" border="0" align="middle"/>
                         	</h:outputText>
@@ -84,12 +84,12 @@
 							rendered="#{identity.loggedIn and not empty pooledTaskInstanceList}">
 							<h:column>
 								<f:facet name="header">Message</f:facet>
-												#{_task.variables.notificaDecisioneDriver.content}
+												#{_task.variables.notifyMessageRequest.content}
 									</h:column>
 							<h:column>
 								<f:facet name="header">Action</f:facet>
-								<s:link action="#{richiestaDriverAck.acknowledge}" taskInstance="#{_task}"
-									value="Acknowledge" />
+								<s:link action="#{inviaRequestReply.riceviMessaggio}" taskInstance="#{_task}"
+									value="Invia Utente" />
 							</h:column>
 							<h:column>
 								<f:facet name="header">Message</f:facet>
@@ -98,7 +98,20 @@
 									<h:column>
 								<f:facet name="header">Action</f:facet>
 								<s:link action="#{inviaNotificaRegistrazioni.partecipa_alla_visita}" taskInstance="#{_task}"
-									value="Accetta" />
+									value="Accetta Visita" />
+							</h:column>
+						</rich:dataTable>
+						<rich:dataTable  id="requestTableFalsa" var="_task2"
+									value="#{taskInstanceList}"
+							rendered="#{identity.loggedIn and not empty taskInstanceList}">
+							<h:column>
+								<f:facet name="header">Message</f:facet>
+												#{_task2.variables.notifyMessageReply.content}
+									</h:column>
+							<h:column>
+								<f:facet name="header">Action</f:facet>
+								<s:link action="#{inviaRequestReply.riceviRisposta}" taskInstance="#{_task2}"
+									value="Invia Fine" />
 							</h:column>
 						</rich:dataTable>
 									<li>notifica1</li>

@@ -6,11 +6,17 @@ import java.util.List;
 
 public class Message implements Serializable{
 
-	
+	private static final long serialVersionUID = 8305655916287583818L;
 	private String content;
 	private boolean broadcast;
 	public List<String> recipients = new ArrayList<String>();
-	public String getContent() { return content; }
+	public String destinatario;
+	
+	
+	
+	public String getContent() { 
+		return content; 
+	}
 	public void setContent(String content) {
 		this.content = content;
 	}
@@ -41,6 +47,12 @@ public class Message implements Serializable{
 	
 	public void setRecipients(List<String> recipients) {
 		this.recipients = recipients;
+	}
+	public String getDestinatario() {
+		return destinatario;
+	}
+	public void setDestinatario(String destinatario) {
+		this.destinatario = destinatario;
 	}
 }
 

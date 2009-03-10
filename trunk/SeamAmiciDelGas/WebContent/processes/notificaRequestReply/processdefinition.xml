@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process-definition  xmlns=""  name="notificaRequestReply">
+
+
+	<start-state name="NotificaRequest" >
+		<transition to="NotificaReply" name="inviaRequest"></transition>
+	</start-state>
+
+
+	<task-node name="NotificaReply" create-tasks="false">
+		<task name="riceviMessaggio" />
+		<event type="node-enter">
+			<action name="CambiaDestinatario" class="org.domain.SeamAmiciDelGas.processes.CambiaDestinatarioHandler"></action>
+		</event>
+		<transition to="VisualizzaReply" name="inviaReply"></transition>
+	</task-node>
+
+	<task-node name="VisualizzaReply">
+		<task name="riceviRisposta">
+			<assignment actor-id="#{notifyMessageReply.destinatario}"></assignment>
+		</task>
+		<transition to="end-state" name="ack"></transition>
+	</task-node>
+
+
+	<end-state name="end-state"></end-state>
+
+
+</process-definition>

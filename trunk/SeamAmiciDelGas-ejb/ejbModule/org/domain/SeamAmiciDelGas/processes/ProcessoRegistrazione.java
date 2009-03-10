@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 
@@ -61,9 +62,14 @@ public class ProcessoRegistrazione {
 	@Out(value="postiOccupati",scope=ScopeType.BUSINESS_PROCESS, required= false)
 	private int postiOccupati;
 	
+	@Out(value="contenutoMessaggio",scope=ScopeType.BUSINESS_PROCESS, required= false)
+	private String contenutoMessaggio;
 	
 	@Out(value="inviati",scope=ScopeType.BUSINESS_PROCESS, required= false)
-	private ArrayList<String> usernameInviati;
+	private List<String> usernameInviati;
+	
+	@Out(value="mioBroadcast",scope=ScopeType.BUSINESS_PROCESS, required= false)
+	private boolean mioBroadcast;
 	
 	private Cybercontadino contadinoCorrente;
 	private TaskInstance taskCorrente;
@@ -76,6 +82,11 @@ public class ProcessoRegistrazione {
 		// Discutiamone con antonio probabilmente non serve a nulla.....
 		nomeContadino= credentials.getUsername();
 		facesMessages.add("La richiesta e' stata inoltrata");
+		usernameInviati = new ArrayList<String>();
+		usernameInviati.add("zlatan");
+		usernameInviati.add("esteban");
+		contenutoMessaggio="Ce la possiamo fare!!!";
+		mioBroadcast=false;
 	}
 	
 	

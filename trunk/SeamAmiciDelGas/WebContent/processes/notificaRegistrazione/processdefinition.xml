@@ -12,7 +12,7 @@
 		<task name="crea_visita">
 			<assignment pooled-actors="mediatore"></assignment>
 		</task>
-		<transition to="fork1" name="invia"></transition>
+		<transition to="SubProcessNotifica" name="invia"></transition>
 	</task-node>
 
 	<task-node name="partecipa al gruppo">
@@ -27,14 +27,12 @@
 		<event type="node-leave">
 			<action name="SpegniTuttoeVaiAvanti" class="org.domain.SeamAmiciDelGas.processes.CancelTaskAction"></action>
 		</event>
-    <timer duedate="10 years" name="varTimer" transition="time-out">
-      
-    </timer>
+    <timer duedate="10 years" name="varTimer" transition="time-out"/>
 		<transition to="accetta altri utenti" name="partecipa"></transition>
 		<transition to="join1" name="time-out"></transition>
 	</task-node>
 
-	<task-node name="Riempire questionario">
+	<task-node name="Riempire questionario (Visualizza Admin)">
 		<task name="compilaQuestionario">
 			<assignment pooled-actors="utenteContadino"></assignment>
 		</task>
@@ -55,21 +53,15 @@
 		<transition to="join1" name="to join1"></transition>
 	</fork>
 
-	<join name="join1">
-		<transition to="AspettaNuMumento" name="to-state"></transition>
-	</join>
+	<join name="join1"></join>
 
-	<state name="AspettaNuMumento">
-	<event type="timer-create">
-      <action name="timerState" class="org.domain.SeamAmiciDelGas.processes.TimerHandler">
-        <timerName>timerVar</timerName>
-      </action>
-    </event>
-    <timer duedate="10 years" name="timerVar" transition="questionario">
-      
-    </timer>
-		<transition to="Riempire questionario" name="questionario"></transition>
-	</state>
+	<process-state name="SubProcessNotifica">
+		<sub-process name="notificatore"></sub-process>
+		<variable access="read" name="inviati" mapped-name="recipients"></variable>
+		<variable access="read" name="contenutoMessaggio" mapped-name="content"></variable>
+		<variable access="read" name="mioBroadcast" mapped-name="broadcast"></variable>
+		<transition to="Riempire questionario (Visualizza Admin)" name="rispostaQuestionario"></transition>
+	</process-state>
 
 
 	<end-state name="Contadino Accettato"></end-state>
