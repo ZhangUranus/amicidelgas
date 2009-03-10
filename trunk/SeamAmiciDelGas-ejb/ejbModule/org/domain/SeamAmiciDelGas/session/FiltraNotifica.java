@@ -24,78 +24,115 @@ public class FiltraNotifica {
 	
 	@In private Credentials credentials;
 	
+	/*
+	 * ritorno il numero di notifiche per singolo utente
+	 */
+	
 	public int numberForSingleForCustomer() {
+		return numberOfTaskForSingle("notifyMessage");
+	}
+
+	public int numberForSingleForDriver() {
+		return numberOfTaskForSingle("notificaDriverContadino");
+	}
+
+	public int numberOfTaskForSingle(String taskType)	{
 		int count = 0;
-		for (TaskInstance ti: taskInstanceList) {
-			if (ti.getVariable("notifyMessage")!=null)
+		for (TaskInstance ti: taskInstanceList)
+			if (ti.getVariable(taskType)!=null)
 				count++;
-		}
 		return count;
 	}
+
+	/*
+	 * ritorno il numero di notifiche per gruppi
+	 */
+	
+	public int numberForGroupForCustomer() 	{
+		return numberOfTaskForGroup("notifyMessage");
+	}
+
+	public int numberForGroupForDriver() {
+		return numberOfTaskForGroup("notificaDriverContadino");
+	}
+	
+	public int numberOfTaskForGroup(String taskType)	{
+		int count = 0;
+		for (TaskInstance ti: pooledTaskInstanceList)
+			if (ti.getVariable(taskType)!=null)
+				count++;
+		return count;
+	}
+	
+	/*
+	 * Ritorno task instance per singolo utente
+	 */
 	
 	public List<TaskInstance> taskInstanceSingleListForCustomer() {
-		List<TaskInstance> tasks = new ArrayList<TaskInstance>();
-		for (TaskInstance ti: taskInstanceList) {
-			if (ti.getVariable("notifyMessage")!=null)
-				tasks.add(ti);
-		}
-		return tasks;
-	}
-	
-	public int numberForGroupForCustomer() {
-		int count = 0;
-		for (TaskInstance ti: pooledTaskInstanceList) {
-			if (ti.getVariable("notifyMessage")!=null)
-				count++;
-		}
-		return count;
-	}
-	
-	public List<TaskInstance> taskInstanceGroupListForCustomer() {
-		List<TaskInstance> tasks = new ArrayList<TaskInstance>();
-		for (TaskInstance ti: pooledTaskInstanceList) {
-			if (ti.getVariable("notifyMessage")!=null)
-				tasks.add(ti);
-		}
-		return tasks;
-	}
-	
-	
-	public int numberForSingleForDriver() {
-		int count = 0;
-		for (TaskInstance ti: taskInstanceList) {
-			if (ti.getVariable("notificaDriverContadino")!=null)
-				count++;
-		}
-		return count;
+		return taskInstanceSingleList("notifyMessage");
 	}
 	
 	public List<TaskInstance> taskInstanceSingleListForDriver() {
+		return taskInstanceSingleList("notificaDriverContadino");
+	}
+	
+	public List<TaskInstance> taskInstanceSingleList(String taskType) {
 		List<TaskInstance> tasks = new ArrayList<TaskInstance>();
 		for (TaskInstance ti: taskInstanceList) {
-			if (ti.getVariable("notificaDriverContadino")!=null)
+			if (ti.getVariable(taskType)!=null)
 				tasks.add(ti);
 		}
 		return tasks;
 	}
 	
-	public int numberForGroupForDriver() {
-		int count = 0;
+	
+	/*
+	 * ritorno task instance per gruppi
+	 */
+	
+	public List<TaskInstance> taskInstanceGroupListForCustomer() {
+		return taskInstanceGroupList("notifyMessage");
+	}
+	
+	public List<TaskInstance> taskInstanceGroupListForDriver() {
+		return taskInstanceGroupList("notificaDriverContadino");
+	}
+	
+	public List<TaskInstance> taskInstanceGroupList(String taskType) {
+		List<TaskInstance> tasks = new ArrayList<TaskInstance>();
 		for (TaskInstance ti: pooledTaskInstanceList) {
-			if (ti.getVariable("notificaDriverContadino")!=null)
+			if (ti.getVariable(taskType)!=null)
+				tasks.add(ti);
+		}
+		return tasks;
+	}
+	
+	/*
+	 * Gestione contadino con filtro sul nome
+	 */
+
+	public List<TaskInstance> taskInstanceSingleListForContadino() {
+		List<TaskInstance> tasks = new ArrayList<TaskInstance>();
+		Message notifica;
+		for (TaskInstance ti: pooledTaskInstanceList) {
+			notifica = (Message) ti.getVariable("notificaDriverContadino");
+			if (notifica!=null && notifica.getRecipients().contains(credentials.getUsername()))
+				tasks.add(ti);
+		}
+		return tasks;
+	}
+	
+	
+	public int numberForSingleForContadino() {
+		int count = 0;
+		Message notifica;
+		for (TaskInstance ti: pooledTaskInstanceList) {
+			notifica = (Message) ti.getVariable("notificaDriverContadino");
+			if (notifica!=null && notifica.getRecipients().contains(credentials.getUsername()))
 				count++;
 		}
 		return count;
 	}
 	
-	public List<TaskInstance> taskInstanceGroupListForDriver() {
-		List<TaskInstance> tasks = new ArrayList<TaskInstance>();
-		for (TaskInstance ti: pooledTaskInstanceList) {
-			if (ti.getVariable("notificaDriverContadino")!=null)
-				tasks.add(ti);
-		}
-		return tasks;
-	}
-	
-	
+
 }

@@ -9,6 +9,10 @@ public class ItemImpl implements Item, Serializable{
 	private String id;
 	private String name;
 	private double prezzo;
+	private String minImageUrl;
+	private String maxImageUrl;
+	
+
 	public String getCategory() {
 		return category;
 	}
@@ -47,6 +51,18 @@ public class ItemImpl implements Item, Serializable{
 			return true;
 		else
 			return false;
+	}
+	public String getMinImageUrl() {
+		return minImageUrl;
+	}
+	public void setMinImageUrl(String minImageUrl) {
+		this.minImageUrl = minImageUrl;
+	}
+	public String getMaxImageUrl() {
+		return maxImageUrl;
+	}
+	public void setMaxImageUrl(String maxImageUrl) {
+		this.maxImageUrl = maxImageUrl;
 	}
 	
 	
