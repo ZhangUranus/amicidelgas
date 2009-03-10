@@ -1,0 +1,62 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:a="http://richfaces.org/a4j"
+    template="/layout/template.xhtml">
+
+	<ui:define name="body">
+		
+			<rich:simpleTogglePanel label="Notifiche Personali">
+						<rich:dataTable id="dataTableUtente" 
+										value="#{taskInstanceList}" var="_task"
+										width="90%" align="center" >
+							<rich:column>
+								<f:facet name="header">Mittente</f:facet>    
+						         <h:outputText value="#{_task.variables.customer}"/>
+							</rich:column>
+							<rich:column>
+								<f:facet name="header">Contenuto messaggio</f:facet>    
+						         <h:outputText value="#{_task.variables.notificaDriverContadino.content}"/>
+							</rich:column>
+							<rich:column width="10%">
+								<s:button taskInstance="#{_task}" action="#{notifyBean.receive()}"
+										  value="Accetta ordine"/>
+							</rich:column>
+						</rich:dataTable>
+				</rich:simpleTogglePanel>
+				
+				<br/><br/><br/>
+				
+				<rich:simpleTogglePanel label="Notifiche di gruppo">
+						<rich:dataTable id="dataTableGroup" 
+									value="#{pooledTaskInstanceList}" var="_pooledTask"
+									width="90%" align="center" >
+							<rich:column>
+								<f:facet name="header">Mittente</f:facet>    
+						         <h:outputText value="#{_pooledTask.variables.customer}"/>
+							</rich:column>
+							<rich:column>
+								<f:facet name="header">Gruppo</f:facet>    
+						         <h:outputText value="Driver"/>
+							</rich:column>
+							<rich:column>
+								<f:facet name="header">Contenuto messaggio</f:facet>    
+						         <h:outputText value="#{_pooledTask.variables.notificaDriverContadino.content}"/>
+							</rich:column>
+							<rich:column width="10%">
+								<s:button taskInstance="#{_pooledTask}" action="#{notifyBean.receive()}"
+										  value="Accetta ordine"/>
+							</rich:column>
+						</rich:dataTable>
+				
+			</rich:simpleTogglePanel>
+		
+		
+	</ui:define>
+	
+</ui:composition>
