@@ -140,7 +140,7 @@
 									<a:commandButton id="commandButtonShoppingCartDelete" image="/img/shopping_cart2_delete.jpg"
 													  style="width : 25px; height : 25px;">
 					 					<a:support event="onclick" reRender="shoppingcartField" ajaxSingle="true"
-					 						   action="#{shoppingCart.deleteItemInShoppingCart(_itemCarrello.item, takeInHand.getHowMuchForItem(_itemCarrello.item))}"/>
+					 						   action="#{shoppingCart.deleteItemInShoppingCart(_itemCarrello.item)}"/>
 					 				</a:commandButton>
 					 				<rich:toolTip for="commandButtonShoppingCartDelete" value="Elimina prodotto dal carrello"/>
 							</rich:column>	
@@ -234,28 +234,30 @@
 						<rich:column>
 								<f:facet name="header">Elimina dal carrello</f:facet>
 								<a:commandButton id="commandButtonShoppingCartDelete" image="/img/shopping_cart2_delete.jpg"
-												  style="width : 25px; height : 25px;">
-				 					<a:support event="onclick" reRender="shoppingcartField,itemsDataTableShoppingCart" ajaxSingle="true"
-				 						   action="#{shoppingCart.deleteItemInShoppingCart(_itemCarrelloCart.item, takeInHand.getHowMuchForItem(_itemCarrelloCart.item))}"/>
-				 				</a:commandButton>
+												  style="width : 25px; height : 25px;" ajaxSingle="true"
+												  reRender="shoppingcartField,itemsDataTableShoppingCart,totaleOutputText" 
+				 						          action="#{shoppingCart.deleteItemInShoppingCart(_itemCarrelloCart.item)}"
+												  oncomplete="if (#{shoppingCart.empyShoppingCart==true}) #{rich:component('carrelloPanel')}.hide();">
+								</a:commandButton>
+
 				 				<rich:toolTip for="commandButtonShoppingCartDelete" value="Elimina prodotto dal carrello"/>
 						</rich:column>	
 					</rich:dataTable>
 				<br/>
 				<h:panelGrid columns="3">
 					<h:outputText><b>TOTALE: </b></h:outputText>
-					<h:outputText value="#{shoppingCart.calcolaTotale()} euro"/>
+					<h:outputText id="totaleOutputText" value="#{shoppingCart.calcolaTotale()} euro"/>
 				</h:panelGrid>
 				<br/>
 				<h:panelGrid columns="2">
 					<h:outputText><b>Data massima d'acquisto</b></h:outputText>
-					<rich:calendar id="calendarDataAcquistoMassima" required="true"
-			                value="#{myOrderProcessing.myOrdine.dataMassima}" datePattern="dd/MM/yyyy"/>
+					<rich:calendar id="calendarDataAcquistoMassima" required="true" enableManualInput="true"
+			                value="#{shoppingCart.dataMassima}" datePattern="dd/MM/yyyy HH:mm"/>
 			    </h:panelGrid>
 					<a:commandButton bypassUpdates="true" ajaxSingle="true" value="Avvia l'ordine"
-               			action="#{shoppingCart.buyAllItem()}" reRender="carrelloPanel,shoppingcartField">
-               		<a:support event="onclick" reRender="shoppingcartField" ajaxSingle="true"
-               				oncomplete="if (#{shoppingCart.empyShoppingCart==false}) #{rich:component('carrelloPanel')}.show();"/>			 			
+               			action="#{shoppingCart.buySelectedItem()}" reRender="shoppingcartField,carrelloPanel"
+               			oncomplete="if (#{shoppingCart.empyShoppingCart==false}) #{rich:component('carrelloPanel')}.show();
+               						if(#{shoppingCart.noSelect==true}) #{rich:component('noSelectPanel')}.show()">			 			
 					</a:commandButton>
 				</h:panelGrid>	    
 	</rich:modalPanel>

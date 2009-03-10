@@ -1,5 +1,6 @@
 package org.domain.SeamAmiciDelGas.session;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -12,7 +13,7 @@ import org.jboss.seam.log.Log;
 
 @Name(value="itemQuantita")
 @Scope(ScopeType.SESSION)
-public class ItemQuantita
+public class ItemQuantita implements Serializable
 	{
 	
 		@Logger

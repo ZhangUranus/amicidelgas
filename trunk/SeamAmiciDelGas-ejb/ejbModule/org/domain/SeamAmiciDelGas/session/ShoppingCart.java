@@ -1,14 +1,20 @@
 package org.domain.SeamAmiciDelGas.session;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import org.domain.SeamAmiciDelGas.processes.NotifyBean;
+import org.domain.SeamAmiciDelGas.processes.OrderProcessing;
 import org.domain.SeamAmiciDelGas.webservices.Item;
 import org.jboss.seam.ScopeType;
+import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Logger;
 import org.jboss.seam.annotations.Name;
+import org.jboss.seam.annotations.Out;
 import org.jboss.seam.annotations.Scope;
+import org.jboss.seam.annotations.intercept.BypassInterceptors;
 import org.jboss.seam.log.Log;
 
 
@@ -19,11 +25,27 @@ public class ShoppingCart {
 	@Logger
 	private Log log;
 	
+	@In(value="orderProcessing", create=true)
+	private OrderProcessing orderProcessing;
+	
 	private String quantita="0";
 	
 	private boolean noSelect=false;
 	
 	List<ItemQuantita> itemInShoppingCart = new ArrayList<ItemQuantita>();
+
+	@Out(value="dataMassimaShoppingCart",scope=ScopeType.BUSINESS_PROCESS,required=false)
+	private Date dataMassima;
+	@Out(value="selectedItemShoppingCart",scope=ScopeType.BUSINESS_PROCESS,required=false)
+	private List<ItemQuantita> selectedItem;
+
+	public Date getDataMassima() {
+		return dataMassima;
+	}
+
+	public void setDataMassima(Date dataMassima) {
+		this.dataMassima = dataMassima;
+	}
 
 	public ShoppingCart(){}
 	
@@ -41,7 +63,7 @@ public class ShoppingCart {
 			return true;
 		return false;
 	}
-	
+
 	public List<ItemQuantita> getItemInShoppingCart() {
 		return itemInShoppingCart;
 	}
@@ -65,22 +87,16 @@ public class ShoppingCart {
 		itemInShoppingCart.add(new ItemQuantita(item,Integer.parseInt(quantita),contadinoUsername));
 	}
 	
-	public void deleteItemInShoppingCart(Item item, String quantita)
+	public void deleteItemInShoppingCart(Item item)
 	{
-		if(quantita==null || quantita.equals("")) 
-			return;
-		
 		for(int i=0; i<itemInShoppingCart.size(); i++)
 		{
 			ItemQuantita iq = itemInShoppingCart.get(i);
 			if(iq.getItem().equals(item))
 			{	
 				itemInShoppingCart.remove(i);
-				log.info("******** eliminato item : "+item.getName() +" quantita = "+quantita);
 				return;	}
-			
 		}
-		log.info("******** item non presente : "+item.getName() +" quantita = "+quantita);
 	}
 	
 	public double calcolaTotale()
@@ -93,34 +109,30 @@ public class ShoppingCart {
 		return totale;
 	}
 	
-	public void buyAllItem()
+	public void buySelectedItem()
 	{
 		//procede all'acquisto dei prodotti nel carrello
 		//svuota il carrello
 		log.info("******** buyAllItem************");
-		List<ItemQuantita> selectedItem = new ArrayList<ItemQuantita>();
+		selectedItem = new ArrayList<ItemQuantita>();
 		
 		for(int index=0; index<itemInShoppingCart.size(); index++)//aggiungo i prodotti all'ordine da fare
 		{	
 			ItemQuantita iq=itemInShoppingCart.get(index);
 			if(iq.isCheckedForOrdine())
-			{	selectedItem.add(iq); log.info("******** Item SELEZIONATO "+iq.getItem().getName()+"************");	}
-		}
-		//invia ordine
-		
-		for(int index=0; index<itemInShoppingCart.size(); index++)//elimino i prodotti dalla lista
-		{	
-			ItemQuantita iq=itemInShoppingCart.get(index);
-			if(iq.isCheckedForOrdine())
-			{
-				itemInShoppingCart.remove(index);
-				index=0;
+			{	selectedItem.add(iq); 
+				itemInShoppingCart.remove(index--);
+				log.info("******** Item SELEZIONATO "+iq.getItem().getName()+"************");	
 			}
 		}
-		if (selectedItem.size()==0)
-			noSelect=  true;
-		else
-			noSelect=  false;
+		noSelect = (selectedItem.size()==0) ? true : false;
+		
+		//invia ordine
+		if(!noSelect)
+		{
+			String logInfo = orderProcessing.startOrder();
+			log.info("*********** "+logInfo);
+		}
 	}
 
 	public boolean isNoSelect() {
