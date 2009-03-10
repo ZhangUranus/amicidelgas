@@ -4,13 +4,16 @@
 
 
 	<start-state name="L'utente sottomette un ordine">
-		<transition to="Ordine notificato a driver e contadini"></transition>
+		<transition to="Ordine notificato a driver e contadini" name="invia_notifica_ai_gruppi_driver_contadino"></transition>
 	</start-state>
 
 
 	<task-node name="Ordine notificato a driver e contadini">
-		<transition to="Prova a prenotare l'ordine" name="un driver o un contadino ha preso in carico un ordine"></transition>
-		<transition to="Notifica utente ordine non preso in carico" name="ordine non preso in carico entro datamax"></transition>
+		<task name="accetta_ordine">
+			<assignment pooled-actors="driver"></assignment>
+		</task>
+		<transition to="Prova a prenotare l'ordine" name="ordine_preso_in_carico"></transition>
+		<transition to="Notifica utente ordine non preso in carico" name="ordine_non_preso_in_carico_entro_datamax"></transition>
 	</task-node>
 
 	<node name="Prova a prenotare l'ordine">
