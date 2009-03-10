@@ -94,6 +94,22 @@
              </rich:menuItem>	
         	
         </rich:dropDownMenu>	
+        
+         <rich:dropDownMenu style=" width : 78px;" rendered="#{identity.loggedIn and loginSelectBean.driver}">
+        	
+        	<f:facet name="label"> 
+    	        <h:panelGroup cellpadding="0" cellspacing="0" columns="2">
+                     <h:outputText value="DRIVER" />
+                </h:panelGroup>
+            </f:facet>
+            
+            <rich:menuItem submitMode="none" >
+                    <s:link view="/driver/riceviNotifiche.xhtml" value="NOTIFICHE RICEVUTE (#{filtraNotifica.numberForSingleForCustomer() + filtraNotifica.numberForGroupForCustomer()})" propagation="none"/>
+                    <f:param name="utenteCodiceFiscale" value="#{currentUser.codiceFiscale}"/>
+		            <f:param name="accountUsername" value="#{currentAccount.username}"/>
+             </rich:menuItem>
+            
+            </rich:dropDownMenu>
     
     	<rich:dropDownMenu style=" width : 85px;" rendered="#{identity.loggedIn and (loginSelectBean.calculateMaxRole()=='mediatore' or loginSelectBean.calculateMaxRole()=='admin')}">
         	

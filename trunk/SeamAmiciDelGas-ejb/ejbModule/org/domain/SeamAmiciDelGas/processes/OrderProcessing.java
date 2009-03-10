@@ -31,6 +31,9 @@ public class OrderProcessing {
 	@Out(value="notificaDriverContadino",scope=ScopeType.BUSINESS_PROCESS,required=false)
 	protected Message messageDriverContadino;
 	
+	@Out(value="customer", scope=ScopeType.BUSINESS_PROCESS, required=false)
+	private String customer;
+	
 	@In(value="selectedItemShoppingCart",scope=ScopeType.BUSINESS_PROCESS,required=false)
 	private List<ItemQuantita> selectedItem;
 	
@@ -41,13 +44,15 @@ public class OrderProcessing {
 	
 	@CreateProcess(definition="myOrderProcessing")
 	public String startOrder(){
+		
+		customer = credentials.getUsername();
 		myOrdine = new MyOrdine();
 		myOrdine.setDataMassima(dataMassima);
 		myOrdine.setItemQuantita(selectedItem);
 		
 		messageDriverContadino = new Message();
 		String content = "Ordine fatto da " +credentials.getUsername();
-
+		
 		messageDriverContadino.setContent(content);
 		
 		return "partito";
