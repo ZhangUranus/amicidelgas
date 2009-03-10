@@ -1,0 +1,158 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:a="http://richfaces.org/a4j"
+    template="/layout/template.xhtml">
+
+    <ui:define name="body">
+		<h:form id="valutazioneContadinoForm">
+
+	    <rich:panel>
+	        <f:facet name="header">Questionario Valutazione CyberContadino</f:facet>
+	            
+	            <s:decorate id="qualitaProdottiValutazione" template="/layout/edit.xhtml">
+	                <ui:define name="label">Qualita' dei prodotti</ui:define>
+	                <h:selectOneRadio value="#{newValutazione.qualitaProdotti}" required="true" requiredMessage="inserire una valutazione" onclick="liveScore(1, this.value);">
+					  <f:selectItem itemLabel="Basso" itemValue="1" ></f:selectItem>
+					  <f:selectItem itemLabel="Normale" itemValue="2" ></f:selectItem>
+					  <f:selectItem itemLabel="Alto" itemValue="3"></f:selectItem>
+					  <f:selectItem itemLabel="Utopico" itemValue="4"></f:selectItem>
+					  <f:selectItem itemLabel="Divino" itemValue="5"></f:selectItem>
+					</h:selectOneRadio>
+	            </s:decorate>
+	            
+	            <s:decorate id="qualitaStabileValutazione" template="/layout/edit.xhtml">
+	                <ui:define name="label">Qualita' dello stabile</ui:define>
+	                <h:selectOneRadio value="#{newValutazione.qualitaStabile}" required="true" requiredMessage="inserire una valutazione" onclick="liveScore(2, this.value);">
+					  <f:selectItem itemLabel="Basso" itemValue="1" ></f:selectItem>
+					  <f:selectItem itemLabel="Normale" itemValue="2" ></f:selectItem>
+					  <f:selectItem itemLabel="Alto" itemValue="3" ></f:selectItem>
+					  <f:selectItem itemLabel="Utopico" itemValue="4" ></f:selectItem>
+					  <f:selectItem itemLabel="Divino" itemValue="5" ></f:selectItem>
+					</h:selectOneRadio>
+	            </s:decorate>
+	            
+	            <s:decorate id="condizioniIgienicoValutazione" template="/layout/edit.xhtml">
+	                <ui:define name="label">Condizioni igienico sanitarie</ui:define>
+	                <h:selectOneRadio value="#{newValutazione.condizioniIgienicoSanitarie}" required="true" requiredMessage="inserire una valutazione" onclick="liveScore(3, this.value);">
+					  <f:selectItem itemLabel="Basso" itemValue="1" ></f:selectItem>
+					  <f:selectItem itemLabel="Normale" itemValue="2" ></f:selectItem>
+					  <f:selectItem itemLabel="Alto" itemValue="3"></f:selectItem>
+					  <f:selectItem itemLabel="Utopico" itemValue="4"></f:selectItem>
+					  <f:selectItem itemLabel="Divino" itemValue="5"></f:selectItem>
+					</h:selectOneRadio>
+	            </s:decorate>
+	            
+	            <s:decorate id="ambienteLavoroValutazione" template="/layout/edit.xhtml">
+	                <ui:define name="label">Ambiente di lavoro</ui:define>
+	                <h:selectOneRadio value="#{newValutazione.ambienteLavoro}" required="true" requiredMessage="inserire una valutazione" onclick="liveScore(4, this.value);">
+					  <f:selectItem itemLabel="Basso" itemValue="1" ></f:selectItem>
+					  <f:selectItem itemLabel="Normale" itemValue="2" ></f:selectItem>
+					  <f:selectItem itemLabel="Alto" itemValue="3"></f:selectItem>
+					  <f:selectItem itemLabel="Utopico" itemValue="4"></f:selectItem>
+					  <f:selectItem itemLabel="Divino" itemValue="5"></f:selectItem>
+					</h:selectOneRadio>
+	            </s:decorate>
+	            
+	            <s:decorate id="professionalitaValutazione" template="/layout/edit.xhtml">
+	                <ui:define name="label">Professionalita'</ui:define>
+	                <h:selectOneRadio value="#{newValutazione.professionalita}" required="true" requiredMessage="inserire una valutazione" onclick="liveScore(5, this.value);">
+					  <f:selectItem itemLabel="Basso" itemValue="1" ></f:selectItem>
+					  <f:selectItem itemLabel="Normale" itemValue="2" ></f:selectItem>
+					  <f:selectItem itemLabel="Alto" itemValue="3"></f:selectItem>
+					  <f:selectItem itemLabel="Utopico" itemValue="4"></f:selectItem>
+					  <f:selectItem itemLabel="Divino" itemValue="5"></f:selectItem>
+					</h:selectOneRadio>
+	            </s:decorate>
+	            
+	            <s:decorate id="commentiValutazione" template="/layout/edit.xhtml">
+	                <ui:define name="label">Commenti (max 200 caratteri)</ui:define>
+	                <h:inputTextarea id="commentiArea"
+	                       required="true"
+	                           size="200"
+	                      maxlength="200"
+	                          value="#{newValutazione.commenti}">   
+	                </h:inputTextarea>
+	            </s:decorate>
+	            
+	            <s:decorate id="punteggioValutazione" template="/layout/edit.xhtml">
+	                <ui:define name="label">Anteprima punteggio valutazione</ui:define>
+	                <h:outputText id="punteggioContadino" value="" ></h:outputText>  
+	            </s:decorate>
+				
+				<div style="clear:both">
+	                <span class="required">*</span>
+	                Campi richiesti
+	            </div>
+	
+	    </rich:panel>
+	    
+	    	<div class="actionButtons">
+	            <h:commandButton id="postquestionario" value="Invia questionario" action="postquestionario"/>
+	        </div>
+	    
+	    </h:form>
+
+		<script type="text/javascript">
+		<!--
+			var score_one = 0;
+			var score_two = 0;
+			var score_three = 0;
+			var score_four = 0;
+			var score_five = 0;
+			 
+			function liveScore(who_is, score){
+				
+				switch(who_is){
+					case 1:
+						score_one = parseInt(score);
+						break;
+					case 2:
+						score_two = parseInt(score);
+						break;
+					case 3:
+						score_three = parseInt(score);
+						break;
+					case 4:
+						score_four = parseInt(score);
+						break;
+					case 5:
+						score_five = parseInt(score);
+						break;
+				}
+				
+				var score_live = (score_one + score_two + score_three + score_four + score_five)/5;
+				
+				if (score_live > 4.8) {
+					document.getElementById('valutazioneContadinoForm:punteggioValutazione:punteggioContadino').innerHTML = "<img src=\"/SeamAmiciDelGas/img/star_full.png\"/><img src=\"/SeamAmiciDelGas/img/star_full.png\"/><img src=\"/SeamAmiciDelGas/img/star_full.png\"/><img src=\"/SeamAmiciDelGas/img/star_full.png\"/><img src=\"/SeamAmiciDelGas/img/star_full.png\"/>";
+				} else if(score_live > 4.2) {
+					document.getElementById('valutazioneContadinoForm:punteggioValutazione:punteggioContadino').innerHTML = "<img src=\"/SeamAmiciDelGas/img/star_full.png\"/><img src=\"/SeamAmiciDelGas/img/star_full.png\"/><img src=\"/SeamAmiciDelGas/img/star_full.png\"/><img src=\"/SeamAmiciDelGas/img/star_full.png\"/><img src=\"/SeamAmiciDelGas/img/star_half.png\"/>";
+				} else if(score_live > 3.8) {
+					document.getElementById('valutazioneContadinoForm:punteggioValutazione:punteggioContadino').innerHTML = "<img src=\"/SeamAmiciDelGas/img/star_full.png\"/><img src=\"/SeamAmiciDelGas/img/star_full.png\"/><img src=\"/SeamAmiciDelGas/img/star_full.png\"/><img src=\"/SeamAmiciDelGas/img/star_full.png\"/><img src=\"/SeamAmiciDelGas/img/star_empty.png\"/>";
+				} else if(score_live > 3.2) {
+					document.getElementById('valutazioneContadinoForm:punteggioValutazione:punteggioContadino').innerHTML = "<img src=\"/SeamAmiciDelGas/img/star_full.png\"/><img src=\"/SeamAmiciDelGas/img/star_full.png\"/><img src=\"/SeamAmiciDelGas/img/star_full.png\"/><img src=\"/SeamAmiciDelGas/img/star_half.png\"/><img src=\"/SeamAmiciDelGas/img/star_empty.png\"/>";
+				} else if(score_live > 2.8) {
+					document.getElementById('valutazioneContadinoForm:punteggioValutazione:punteggioContadino').innerHTML = "<img src=\"/SeamAmiciDelGas/img/star_full.png\"/><img src=\"/SeamAmiciDelGas/img/star_full.png\"/><img src=\"/SeamAmiciDelGas/img/star_full.png\"/><img src=\"/SeamAmiciDelGas/img/star_empty.png\"/><img src=\"/SeamAmiciDelGas/img/star_empty.png\"/>";
+				} else if(score_live > 2.2) {
+					document.getElementById('valutazioneContadinoForm:punteggioValutazione:punteggioContadino').innerHTML = "<img src=\"/SeamAmiciDelGas/img/star_full.png\"/><img src=\"/SeamAmiciDelGas/img/star_full.png\"/><img src=\"/SeamAmiciDelGas/img/star_half.png\"/><img src=\"/SeamAmiciDelGas/img/star_empty.png\"/><img src=\"/SeamAmiciDelGas/img/star_empty.png\"/>";
+				} else if(score_live > 1.8) {
+					document.getElementById('valutazioneContadinoForm:punteggioValutazione:punteggioContadino').innerHTML = "<img src=\"/SeamAmiciDelGas/img/star_full.png\"/><img src=\"/SeamAmiciDelGas/img/star_full.png\"/><img src=\"/SeamAmiciDelGas/img/star_empty.png\"/><img src=\"/SeamAmiciDelGas/img/star_empty.png\"/><img src=\"/SeamAmiciDelGas/img/star_empty.png\"/>";
+				} else if(score_live > 1.2) {
+					document.getElementById('valutazioneContadinoForm:punteggioValutazione:punteggioContadino').innerHTML = "<img src=\"/SeamAmiciDelGas/img/star_full.png\"/><img src=\"/SeamAmiciDelGas/img/star_half.png\"/><img src=\"/SeamAmiciDelGas/img/star_empty.png\"/><img src=\"/SeamAmiciDelGas/img/star_empty.png\"/><img src=\"/SeamAmiciDelGas/img/star_empty.png\"/>";
+				} else if(score_live > 0.8) {
+					document.getElementById('valutazioneContadinoForm:punteggioValutazione:punteggioContadino').innerHTML = "<img src=\"/SeamAmiciDelGas/img/star_full.png\"/><img src=\"/SeamAmiciDelGas/img/star_empty.png\"/><img src=\"/SeamAmiciDelGas/img/star_empty.png\"/><img src=\"/SeamAmiciDelGas/img/star_empty.png\"/><img src=\"/SeamAmiciDelGas/img/star_empty.png\"/>";
+				} else if(score_live > 0.2) {
+					document.getElementById('valutazioneContadinoForm:punteggioValutazione:punteggioContadino').innerHTML = "<img src=\"/SeamAmiciDelGas/img/star_half.png\"/><img src=\"/SeamAmiciDelGas/img/star_empty.png\"/><img src=\"/SeamAmiciDelGas/img/star_empty.png\"/><img src=\"/SeamAmiciDelGas/img/star_empty.png\"/><img src=\"/SeamAmiciDelGas/img/star_empty.png\"/>";
+				} else {
+					document.getElementById('valutazioneContadinoForm:punteggioValutazione:punteggioContadino').innerHTML = "<img src=\"/SeamAmiciDelGas/img/star_empty.png\"/><img src=\"/SeamAmiciDelGas/img/star_empty.png\"/><img src=\"/SeamAmiciDelGas/img/star_empty.png\"/><img src=\"/SeamAmiciDelGas/img/star_empty.png\"/><img src=\"/SeamAmiciDelGas/img/star_empty.png\"/>";		
+				}
+			}
+		-->
+		</script>
+    </ui:define>
+</ui:composition>
