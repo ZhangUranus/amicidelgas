@@ -164,6 +164,13 @@
                       <h:outputText value="CONTADINO"/>
                 </h:panelGroup>
             </f:facet>
+            
+            <rich:menuItem submitMode="none" >
+                    <s:link view="/contadino/riceviNotifiche.xhtml" value="NOTIFICHE RICEVUTE (#{pooledTaskInstanceList.size() + taskInstanceList.size()})" propagation="none"/>
+                    <f:param name="utenteCodiceFiscale" value="#{currentUser.codiceFiscale}"/>
+		            <f:param name="accountUsername" value="#{currentAccount.username}"/>
+             </rich:menuItem>
+            
 
         </rich:dropDownMenu>
     
