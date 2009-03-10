@@ -78,7 +78,7 @@
              </rich:menuItem> 
              
              <rich:menuItem submitMode="none" >
-                    <s:link view="/customer/riceviNotifiche.xhtml" value="NOTIFICHE RICEVUTE (#{pooledTaskInstanceList.size() + taskInstanceList.size()})" propagation="none"/>
+                    <s:link view="/customer/riceviNotifiche.xhtml" value="NOTIFICHE RICEVUTE (#{filtraNotifica.numberForGroupForCustomer() + filtraNotifica.numberForSingleForCustomer()})" propagation="none"/>
                     <f:param name="utenteCodiceFiscale" value="#{currentUser.codiceFiscale}"/>
 		            <f:param name="accountUsername" value="#{currentAccount.username}"/>
              </rich:menuItem> 
@@ -104,7 +104,7 @@
             </f:facet>
             
             <rich:menuItem submitMode="none" >
-                    <s:link view="/driver/riceviNotifiche.xhtml" value="NOTIFICHE RICEVUTE (#{filtraNotifica.numberForSingleForCustomer() + filtraNotifica.numberForGroupForCustomer()})" propagation="none"/>
+                    <s:link view="/driver/riceviNotifiche.xhtml" value="NOTIFICHE RICEVUTE (#{filtraNotifica.numberForGroupForDriver() + filtraNotifica.numberForSingleForDriver()})" propagation="none"/>
                     <f:param name="utenteCodiceFiscale" value="#{currentUser.codiceFiscale}"/>
 		            <f:param name="accountUsername" value="#{currentAccount.username}"/>
              </rich:menuItem>

@@ -13,7 +13,7 @@
 		
 			<rich:simpleTogglePanel label="Notifiche Personali">
 						<rich:dataTable id="dataTableUtente" 
-										value="#{taskInstanceList}" var="_task"
+										value="#{filtraNotifica.taskInstanceSingleListForDriver()}" var="_task"
 										width="90%" align="center" >
 							<rich:column>
 								<f:facet name="header">Mittente</f:facet>    
@@ -34,7 +34,7 @@
 				
 				<rich:simpleTogglePanel label="Notifiche di gruppo">
 						<rich:dataTable id="dataTableGroup" 
-									value="#{pooledTaskInstanceList}" var="_pooledTask"
+									value="#{filtraNotifica.taskInstanceGroupListForDriver()}" var="_pooledTask"
 									width="90%" align="center" >
 							<rich:column>
 								<f:facet name="header">Mittente</f:facet>    
