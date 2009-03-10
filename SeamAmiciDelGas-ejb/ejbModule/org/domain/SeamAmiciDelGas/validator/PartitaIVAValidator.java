@@ -22,6 +22,8 @@ public class PartitaIVAValidator implements Validator, Serializable
 	public boolean isValid(Object value) {
 		// TODO Auto-generated method stub
 		String pi = (String) value;
+		if(pi.length()!= 11)
+			return false;
 		int i,c,s=0;
 		for( i=0; i<=9; i+=2 )
 			s += pi.charAt(i) - '0';

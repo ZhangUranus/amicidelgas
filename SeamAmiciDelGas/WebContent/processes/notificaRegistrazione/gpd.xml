@@ -11,7 +11,7 @@
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="partecipa al gruppo" x="19" y="253" width="289" height="42">
+  <node name="partecipa al gruppo" x="10" y="228" width="289" height="42">
     <edge>
       <label x="5" y="-10"/>
     </edge>
@@ -19,7 +19,7 @@
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="Riempire questionario" x="105" y="377" width="212" height="36">
+  <node name="Riempire questionario (Visualizza Admin)" x="64" y="442" width="313" height="36">
     <edge>
       <label x="5" y="-10"/>
     </edge>
@@ -27,7 +27,7 @@
   <node name="accetta altri utenti" x="462" y="198" width="132" height="36">
     <edge>
       <label x="5" y="-10"/>
-      <bendpoint w1="-380" h1="-70" w2="-6" h2="-125"/>
+      <bendpoint w1="-301" h1="-27" w2="64" h2="-85"/>
     </edge>
     <edge>
       <label x="5" y="-10"/>
@@ -41,14 +41,11 @@
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="join1" x="492" y="272" width="252" height="24">
+  <node name="join1" x="492" y="272" width="252" height="24"/>
+  <node name="SubProcessNotifica" x="393" y="338" width="185" height="36">
     <edge>
       <label x="5" y="-10"/>
-    </edge>
-  </node>
-  <node name="AspettaNuMumento" x="473" y="371" width="200" height="36">
-    <edge>
-      <label x="5" y="-10"/>
+      <bendpoint w1="-9" h1="58" w2="356" h2="14"/>
     </edge>
   </node>
   <node name="Contadino Accettato" x="186" y="506" width="132" height="36"/>

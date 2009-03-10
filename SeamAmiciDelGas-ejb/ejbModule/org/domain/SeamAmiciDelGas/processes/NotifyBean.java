@@ -9,9 +9,9 @@ import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Out;
 import org.jboss.seam.annotations.Scope;
-import org.jboss.seam.annotations.bpm.BeginTask;
 import org.jboss.seam.annotations.bpm.CreateProcess;
 import org.jboss.seam.annotations.bpm.EndTask;
+import org.jboss.seam.annotations.bpm.StartTask;
 import org.jboss.seam.annotations.intercept.BypassInterceptors;
 import org.jboss.seam.security.Credentials;
 
@@ -32,7 +32,6 @@ public class NotifyBean {
 	
 	@CreateProcess(definition="notificatore")
 	public String notifyMessage(){
-		
 		sender = credentials.getUsername();
 		message=new Message();
 		message.setContent(content);
@@ -41,7 +40,7 @@ public class NotifyBean {
 		return "partito";
 	}
 	
-	@BeginTask @EndTask(transition="ack")
+	@StartTask @EndTask(transition="ack")
 	public void receive(){
 		
 	}
