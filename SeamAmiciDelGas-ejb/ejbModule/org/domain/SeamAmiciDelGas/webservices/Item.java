@@ -14,5 +14,9 @@ public interface Item {
 	
 	public boolean equals(Object o);
 	
+	public String getMinImageUrl();
+	
+	public String getMaxImageUrl();
+	
 	
 }

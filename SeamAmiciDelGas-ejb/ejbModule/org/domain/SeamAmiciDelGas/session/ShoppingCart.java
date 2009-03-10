@@ -34,9 +34,9 @@ public class ShoppingCart {
 	
 	List<ItemQuantita> itemInShoppingCart = new ArrayList<ItemQuantita>();
 
-	@Out(value="dataMassimaShoppingCart",scope=ScopeType.BUSINESS_PROCESS,required=false)
+
 	private Date dataMassima;
-	@Out(value="selectedItemShoppingCart",scope=ScopeType.BUSINESS_PROCESS,required=false)
+
 	private List<ItemQuantita> selectedItem;
 
 	public Date getDataMassima() {
@@ -130,7 +130,7 @@ public class ShoppingCart {
 		//invia ordine
 		if(!noSelect)
 		{
-			String logInfo = orderProcessing.startOrder();
+			String logInfo = orderProcessing.startOrder(selectedItem,dataMassima);
 			log.info("*********** "+logInfo);
 		}
 	}
@@ -142,6 +142,7 @@ public class ShoppingCart {
 	public void setNoSelect(boolean noSelect) {
 		this.noSelect = noSelect;
 	}
+
 }
 
 	

@@ -29,7 +29,7 @@
              </rich:menuItem>
              
              <rich:menuItem submitMode="none" rendered="#{identity.loggedIn and !loginSelectBean.isCustomer}">
-                    <s:link view="/customer/customerHome.xhtml" value="HOME CONTADINO" propagation="none"/>
+                    <s:link view="/contadino/contadinoHome.xhtml" value="HOME CONTADINO" propagation="none"/>
              </rich:menuItem>
     		
     	</rich:dropDownMenu>	
@@ -166,7 +166,7 @@
             </f:facet>
             
             <rich:menuItem submitMode="none" >
-                    <s:link view="/contadino/riceviNotifiche.xhtml" value="NOTIFICHE RICEVUTE (#{pooledTaskInstanceList.size() + taskInstanceList.size()})" propagation="none"/>
+                    <s:link view="/contadino/riceviNotifiche.xhtml" value="NOTIFICHE RICEVUTE (#{filtraNotifica.numberForSingleForContadino()})" propagation="none"/>
                     <f:param name="utenteCodiceFiscale" value="#{currentUser.codiceFiscale}"/>
 		            <f:param name="accountUsername" value="#{currentAccount.username}"/>
              </rich:menuItem>

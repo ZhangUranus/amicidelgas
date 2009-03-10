@@ -13,7 +13,7 @@
 		
 			<rich:simpleTogglePanel label="Notifiche Personali">
 						<rich:dataTable id="dataTableUtente" 
-										value="#{taskInstanceList}" var="_task"
+										value="#{filtraNotifica.taskInstanceSingleListForContadino()}" var="_task"
 										width="90%" align="center" >
 							<rich:column>
 								<f:facet name="header">Mittente</f:facet>    
