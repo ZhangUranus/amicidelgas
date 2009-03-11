@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<root-container name="myOrderProcessing" width="1020" height="950">
+<root-container name="myOrderProcessing" width="1019" height="950">
   <node name="L&apos;utente sottomette un ordine" x="332" y="69" width="214" height="36">
     <edge>
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="Ordine notificato a driver e contadini" x="316" y="191" width="243" height="36">
+  <node name="Ordine notificato a driver e contadini" x="349" y="190" width="243" height="36">
     <edge>
       <label x="5" y="-10"/>
     </edge>
     <edge>
       <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="-135" y="-14"/>
     </edge>
   </node>
-  <node name="Notifica utente ordine non disponibile" x="595" y="409" width="252" height="36">
+  <node name="Notifica utente ordine non disponibile" x="582" y="371" width="252" height="36">
     <edge>
       <label x="5" y="-10"/>
-    </edge>
-    <edge>
-      <label x="5" y="-10"/>
-      <bendpoint w1="-5" h1="-220" w2="289" h2="-5"/>
+      <bendpoint w1="-76" h1="-89" w2="210" h2="23"/>
     </edge>
   </node>
   <node name="Notifica utente ordine non preso in carico" x="720" y="90" width="298" height="36">
@@ -61,10 +61,10 @@
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="end-state1" x="887" y="523" width="132" height="36"/>
+  <node name="end-state1" x="179" y="298" width="132" height="36"/>
   <node name="end-state2" x="795" y="249" width="146" height="36"/>
   <node name="end-state3" x="481" y="913" width="132" height="36"/>
-  <node name="Verifica disponibilità" x="359" y="291" width="155" height="36">
+  <node name="Verifica disponibilità" x="353" y="319" width="155" height="36">
     <edge>
       <label x="5" y="-10"/>
     </edge>

@@ -29,17 +29,17 @@ public class FiltraNotifica {
 	 */
 	
 	public int numberForSingleForCustomer() {
-		return numberOfTaskForSingle("notifyMessage");
+		return numberOfTaskForSingle("ReceiveMessage");
 	}
 
 	public int numberForSingleForDriver() {
-		return numberOfTaskForSingle("notificaDriverContadino");
+		return numberOfTaskForSingle("accetta_ordine");
 	}
 
 	public int numberOfTaskForSingle(String taskType)	{
 		int count = 0;
 		for (TaskInstance ti: taskInstanceList)
-			if (ti.getVariable(taskType)!=null)
+			if (ti.getName().equals(taskType))
 				count++;
 		return count;
 	}
@@ -49,17 +49,17 @@ public class FiltraNotifica {
 	 */
 	
 	public int numberForGroupForCustomer() 	{
-		return numberOfTaskForGroup("notifyMessage");
+		return numberOfTaskForGroup("ReceiveMessage");
 	}
 
 	public int numberForGroupForDriver() {
-		return numberOfTaskForGroup("notificaDriverContadino");
+		return numberOfTaskForGroup("accetta_ordine");
 	}
 	
 	public int numberOfTaskForGroup(String taskType)	{
 		int count = 0;
 		for (TaskInstance ti: pooledTaskInstanceList)
-			if (ti.getVariable(taskType)!=null)
+			if (ti.getName().equals(taskType))
 				count++;
 		return count;
 	}
@@ -69,17 +69,17 @@ public class FiltraNotifica {
 	 */
 	
 	public List<TaskInstance> taskInstanceSingleListForCustomer() {
-		return taskInstanceSingleList("notifyMessage");
+		return taskInstanceSingleList("ReceiveMessage");
 	}
 	
 	public List<TaskInstance> taskInstanceSingleListForDriver() {
-		return taskInstanceSingleList("notificaDriverContadino");
+		return taskInstanceSingleList("accetta_ordine");
 	}
 	
 	public List<TaskInstance> taskInstanceSingleList(String taskType) {
 		List<TaskInstance> tasks = new ArrayList<TaskInstance>();
 		for (TaskInstance ti: taskInstanceList) {
-			if (ti.getVariable(taskType)!=null)
+			if (ti.getName().equals(taskType))
 				tasks.add(ti);
 		}
 		return tasks;
@@ -91,17 +91,17 @@ public class FiltraNotifica {
 	 */
 	
 	public List<TaskInstance> taskInstanceGroupListForCustomer() {
-		return taskInstanceGroupList("notifyMessage");
+		return taskInstanceGroupList("ReceiveMessage");
 	}
 	
 	public List<TaskInstance> taskInstanceGroupListForDriver() {
-		return taskInstanceGroupList("notificaDriverContadino");
+		return taskInstanceGroupList("accetta_ordine");
 	}
 	
 	public List<TaskInstance> taskInstanceGroupList(String taskType) {
 		List<TaskInstance> tasks = new ArrayList<TaskInstance>();
 		for (TaskInstance ti: pooledTaskInstanceList) {
-			if (ti.getVariable(taskType)!=null)
+			if (ti.getName().equals(taskType))
 				tasks.add(ti);
 		}
 		return tasks;
@@ -115,7 +115,7 @@ public class FiltraNotifica {
 		List<TaskInstance> tasks = new ArrayList<TaskInstance>();
 		Message notifica;
 		for (TaskInstance ti: pooledTaskInstanceList) {
-			notifica = (Message) ti.getVariable("notificaDriverContadino");
+			notifica = (Message) ti.getVariable("accetta_ordine");
 			if (notifica!=null && notifica.getRecipients().contains(credentials.getUsername()))
 				tasks.add(ti);
 		}
@@ -127,7 +127,7 @@ public class FiltraNotifica {
 		int count = 0;
 		Message notifica;
 		for (TaskInstance ti: pooledTaskInstanceList) {
-			notifica = (Message) ti.getVariable("notificaDriverContadino");
+			notifica = (Message) ti.getVariable("accetta_ordine");
 			if (notifica!=null && notifica.getRecipients().contains(credentials.getUsername()))
 				count++;
 		}

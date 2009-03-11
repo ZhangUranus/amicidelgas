@@ -73,7 +73,7 @@ public class OrderProcessing {
 		return "partito";
 	}
 	
-	@BeginTask @EndTask(transition="accettaOrdine")
+	@BeginTask @EndTask(transition="ordine_preso_in_carico")
 	public void verificaDisponibilita(){
 		//setto lo stato dell'ordine
 		myOrdine.setPendente(false);
