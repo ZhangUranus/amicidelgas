@@ -9,7 +9,8 @@ public class MyOrdine implements Serializable{
 
 	private Date dataMassima;
 	private List<ItemQuantita> itemQuantita = new ArrayList<ItemQuantita>();
-
+	private boolean pendente;
+	private boolean evaso;
 	
 	public Date getDataMassima() {
 		return dataMassima;
@@ -22,6 +23,19 @@ public class MyOrdine implements Serializable{
 	}
 	public void setItemQuantita(List<ItemQuantita> itemQuantita) {
 		this.itemQuantita = itemQuantita;
+	}
+	public boolean isPendente() {
+		return pendente;
+	}
+	public void setPendente(boolean pendente) {
+		this.pendente = pendente;
+	}
+	
+	public boolean isEvaso() {
+		return evaso;
+	}
+	public void setEvaso(boolean evaso) {
+		this.evaso = evaso;
 	}
 	
 }

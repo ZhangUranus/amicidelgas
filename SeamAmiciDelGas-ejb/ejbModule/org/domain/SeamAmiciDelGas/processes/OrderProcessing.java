@@ -50,6 +50,9 @@ public class OrderProcessing {
 		myOrdine = new MyOrdine();
 		myOrdine.setDataMassima(dataMassima);
 		myOrdine.setItemQuantita(selectedItem);
+		//setto lo stato dell'ordine
+		myOrdine.setPendente(true);
+		myOrdine.setEvaso(false);
 		boolean isStessoContadino=true;
 		messageDriverContadino = new Message();
 
@@ -71,10 +74,14 @@ public class OrderProcessing {
 	}
 	
 	@BeginTask @EndTask(transition="accettaOrdine")
-	public void inviaNotificaDriverContadino(){
-		
+	public void verificaDisponibilita(){
+		//setto lo stato dell'ordine
+		myOrdine.setPendente(false);
+		//verifico la disponibilità per ogni contandino
+		for (ItemQuantita iq: myOrdine.getItemQuantita()) {
+			iq.setAccettato(true);
+		}
 	}
-
 
 	public MyOrdine getMyOrdine() {
 		return myOrdine;
