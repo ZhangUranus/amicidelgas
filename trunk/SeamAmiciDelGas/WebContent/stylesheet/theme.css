@@ -3,7 +3,7 @@ html {
 }
 
 body {
-	background: #b0b0b0 url("/SeamAmiciDelGas/img/sfondo.jpg") no-repeat left;
+	background: #b0b0b0 url("/SeamAmiciDelGas/img/sfondo.jpg") repeat-x;
 	font-size: 12px;
 	margin: 0px;
 }
@@ -35,6 +35,45 @@ input[type=text], input[type=password], textarea {
 	z-index: 110;
 	top: 4px;
 	left: 4px;
+}
+
+.notifiche_class{
+	background:transparent;
+	position:fixed;
+	zoom:1;
+	z-index: 120;
+	top: 18px;
+	left: 188px;
+}
+
+.notifiche_num_class{
+	background:transparent;
+	position:absolute;
+	zoom:1;
+	text-align:center;
+	z-index: 130;
+	top: 22px;
+	left: 193px;
+	font-size: 12px;
+	font-weight:bold; 
+	color: #FFFFFF;
+}
+
+.notifiche_schiccheria_class{
+	background:transparent;
+	position:fixed;
+	zoom:1;
+	z-index: 120;
+	top: 38px;
+	left: 5%;
+}
+
+.custom-menu {
+	background-image:url(/SeamAmiciDelGas/img/shadow.png);
+	background-position:left top;
+	background-repeat:repeat-x;
+	border:0px solid;
+	padding:0;
 }
 
 .dockvaleriobar_plus{
@@ -99,6 +138,7 @@ input[type=text], input[type=password], textarea {
 }
 
 .colore_1 {	font-size: 14px; color: #0000CC;}
+.colore_black {	font-size: 11px; color: #000000;}
 .explorer{ font-size: 14px; color: #666666;}
 
 .message li {
