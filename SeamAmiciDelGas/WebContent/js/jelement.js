@@ -69,11 +69,9 @@ function infolevel()
 	
 	if (current_infolevel == 0) {
 		document.getElementById('table_show_info').style.display = '';
-		document.getElementById('plus_img_infolevel').src = "/SeamAmiciDelGas/img/plus_off.jpg";
 		current_infolevel = 1;
 	} else {
 		document.getElementById('table_show_info').style.display = 'none';
-		document.getElementById('plus_img_infolevel').src = "/SeamAmiciDelGas/img/minus_off.jpg";	
 		current_infolevel = 0;
 	}
 }
@@ -84,15 +82,15 @@ function show_infolevel(cond)
 	if (current_infolevel == 1) {
 		
 		if(cond){
-			document.getElementById('plus_img_infolevel').src = "/SeamAmiciDelGas/img/plus_off.jpg";
+			document.getElementById('plus_img_infolevel').src = "/SeamAmiciDelGas/img/plus_off.png";
 		} else {
-			document.getElementById('plus_img_infolevel').src = "/SeamAmiciDelGas/img/plus.jpg";
+			document.getElementById('plus_img_infolevel').src = "/SeamAmiciDelGas/img/plus.png";
 		}
 	} else {
 		if(cond){
-			document.getElementById('plus_img_infolevel').src = "/SeamAmiciDelGas/img/minus_off.jpg";
+			document.getElementById('plus_img_infolevel').src = "/SeamAmiciDelGas/img/minus_off.png";
 		} else {		
-			document.getElementById('plus_img_infolevel').src = "/SeamAmiciDelGas/img/minus.jpg";
+			document.getElementById('plus_img_infolevel').src = "/SeamAmiciDelGas/img/minus.png";
 		}
 	}
 }
