@@ -17,8 +17,10 @@
 		<transition to="end-state1" name="ordine_eliminato_dall_utente"></transition>
 	</task-node>
 
-	<task-node name="Notifica utente ordine non disponibile">
-		<task></task>
+	<task-node name="Notifica utente ordine non disponibile" async="true">
+		<task>
+			<assignment actor-id="#{customer}"></assignment>
+		</task>
 		<transition to="Ordine notificato a driver e contadini" name="ordine_rimesso_nel_pool"></transition>
 	</task-node>
 
@@ -26,7 +28,10 @@
 		<transition to="end-state2"></transition>
 	</task-node>
 
-	<task-node name="Notifica utente ordine preso in carico">
+	<task-node name="Notifica utente ordine preso in carico" async="true">
+		<task>
+			<assignment actor-id="#{customer}"></assignment>
+		</task>
 		<transition to="Attendi data consegna"></transition>
 	</task-node>
 

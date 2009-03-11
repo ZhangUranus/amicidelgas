@@ -69,7 +69,15 @@ public class FiltraNotifica {
 	 */
 	
 	public List<TaskInstance> taskInstanceSingleListForCustomer() {
-		return taskInstanceSingleList("ReceiveMessage");
+		//return taskInstanceSingleList("ReceiveMessage");
+		List<TaskInstance> tasks= new ArrayList<TaskInstance>();
+		List<TaskInstance> list1 = taskInstanceSingleList("ReceiveMessage");
+		List<TaskInstance> list2 = taskInstanceSingleList("ReceiveOrderFailed");
+		List<TaskInstance> list3 = taskInstanceSingleList("ReceiveOrderAccepted");
+		tasks.addAll(list1);
+		tasks.addAll(list2);
+		tasks.addAll(list3);
+		return tasks;
 	}
 	
 	public List<TaskInstance> taskInstanceSingleListForDriver() {
