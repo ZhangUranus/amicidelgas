@@ -42,8 +42,8 @@ input[type=text], input[type=password], textarea {
 	position:fixed;
 	zoom:1;
 	z-index: 118;
-	top: 32px;
-	left: 70px;
+	top: 38px;
+	left: 50px;
 }
 
 .notifiche_class{
