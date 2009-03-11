@@ -5,6 +5,7 @@
         xmlns:ui="http://java.sun.com/jsf/facelets"
         xmlns:h="http://java.sun.com/jsf/html"
         xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:rich="http://richfaces.org/rich"
         xmlns:a="http://richfaces.org/a4j"
         xmlns:s="http://jboss.com/products/seam/taglib">
 <html>
@@ -22,12 +23,21 @@
 
 <body>
 
-<div align="center" id="logo" class="logo"><img src="/SeamAmiciDelGas/img/logo.png" alt="" /></div>
+<div align="center" id="logo" class="logo">
+	<s:link view="/home.xhtml" value="" propagation="none">
+		<h:graphicImage value="/img/logo.png" />
+		<rich:toolTip value=""><span class="colore_black">Gruppo G.A.S.</span></rich:toolTip>
+	</s:link>
+</div>
 
 <div align="center" id="dockvaleriobar_plus" class="dockvaleriobar_plus">
 <ui:include src="menu.xhtml">
     <ui:param name="projectName" value="SeamAmiciDelGas"/>
 </ui:include>				             
+</div>
+
+<div align="center" id="notifiche_schiccheria" class="notifiche_schiccheria_class" style="display: none;">
+	
 </div>
 
 <table width="96%" border="0" align="center" cellpadding="0" cellspacing="0" id="body_inter">

@@ -1,4 +1,4 @@
-<h:form id="formMenu"
+<h:form id="formMenu" 
 	xmlns="http://www.w3.org/1999/xhtml"
     xmlns:ui="http://java.sun.com/jsf/facelets"
     xmlns:h="http://java.sun.com/jsf/html"
@@ -6,57 +6,57 @@
     xmlns:s="http://jboss.com/products/seam/taglib"
     xmlns:rich="http://richfaces.org/rich"
     xmlns:a="http://richfaces.org/a4j">
+<table align="center" width="100%" cellpadding="2" cellspacing="0" border="0" style="background: url('/SeamAmiciDelGas/img/shadow.png');">
     
-    <rich:toolBar>
-    	<rich:dropDownMenu style=" width : 42px;">	
-       		<h:panelGrid cellpadding="0" cellspacing="0" columns="2"/>
-    	</rich:dropDownMenu>	
-    	
-    	<rich:dropDownMenu style=" width : 58px;">
-    		
-    		<f:facet name="label"> 
-            	<h:panelGroup>	
-                    <h:outputText value="HOME"/>
-                </h:panelGroup>
-      		</f:facet>
-      		
-      		<rich:menuItem submitMode="none">
-                    <s:link view="/home.xhtml" value="HOME GAS" propagation="none"/>
-             </rich:menuItem>
-    		
-    		<rich:menuItem submitMode="none" rendered="#{identity.loggedIn and loginSelectBean.isCustomer}">
-                    <s:link view="/customer/customerHome.xhtml" value="HOME UTENTE" propagation="none"/>
-             </rich:menuItem>
-             
-             <rich:menuItem submitMode="none" rendered="#{identity.loggedIn and !loginSelectBean.isCustomer}">
-                    <s:link view="/contadino/contadinoHome.xhtml" value="HOME CONTADINO" propagation="none"/>
-             </rich:menuItem>
-    		
-    	</rich:dropDownMenu>	
-        
-        <rich:dropDownMenu style=" width : 114px;" rendered="#{!identity.loggedIn}">
-        	
-        	<f:facet name="label"> 
-    	        <h:panelGroup>
-                      <h:outputText value="USER NON LOGGED"/>
-                </h:panelGroup>
-            </f:facet>
-            
-            <rich:menuItem submitMode="none">
-                    <s:link view="/login.xhtml" value="LOGIN" propagation="none"/>
-             </rich:menuItem>
-        	
-        	<rich:menuItem submitMode="none">
-                    <s:link view="/registrazione.xhtml" value="REGISTRAZIONE" propagation="none"/>
-             </rich:menuItem>        	
-        	
-        </rich:dropDownMenu>
-        
-        <rich:dropDownMenu style=" width : 78px;" rendered="#{identity.loggedIn and loginSelectBean.isCustomer}">
+    <tr align="center">
+    	<td width="64">	
+    	</td>
+    	<td width="16" align="center" >
+    		<img src="/SeamAmiciDelGas/img/palliniello.gif"/>	
+    	</td>
+        <td height="32" width="48" align="center" rendered="#{identity.loggedIn and loginSelectBean.isCustomer}">
+	        <s:link view="/customer/customerHome.xhtml" value="" propagation="none" rendered="#{identity.loggedIn and loginSelectBean.isCustomer}" >
+	        	 <h:graphicImage value="/img/menu_home.png" />
+	        	 <rich:toolTip value=""><span class="colore_black">Home Page</span></rich:toolTip>
+	        </s:link>
+	        <s:link view="/contadino/contadinoHome.xhtml" value="HOME" propagation="none" rendered="#{identity.loggedIn and !loginSelectBean.isCustomer}">
+	        	<h:graphicImage value="/img/menu_home.png" />
+	        	 <rich:toolTip value=""><span class="colore_black">Home Page</span></rich:toolTip>
+	        </s:link>
+        </td>
+        <td width="16" align="center" rendered="#{identity.loggedIn and loginSelectBean.isCustomer}">
+    		<img src="/SeamAmiciDelGas/img/palliniello.gif"/>	
+    	</td>
+        <td height="32" width="48" align="center" rendered="#{identity.loggedIn and loginSelectBean.isCustomer}">
+	        <s:link view="/customer/riceviNotifiche.xhtml" value="" propagation="none" rendered="#{identity.loggedIn and loginSelectBean.isCustomer}">
+                    <h:graphicImage value="/img/menu_notifiche.png" />
+                    <f:param name="utenteCodiceFiscale" value="#{currentUser.codiceFiscale}"/>
+		            <f:param name="accountUsername" value="#{currentAccount.username}"/>
+		            <span id="notifiche_div" class="notifiche_class" ><img src="/SeamAmiciDelGas/img/red_number.png" /></span>
+		            <span style="width: 20px" id="notifiche_number_div" class="notifiche_num_class" >#{pooledTaskInstanceList.size() + taskInstanceList.size()}</span>
+		            <rich:toolTip value=""><span class="colore_black">Notifiche</span></rich:toolTip>
+		    </s:link>
+        </td>
+        <td width="16" align="center" rendered="#{identity.loggedIn and loginSelectBean.isCustomer}">
+    		<img src="/SeamAmiciDelGas/img/palliniello.gif"/>	
+    	</td>
+        <td height="32" width="48" align="center" rendered="#{identity.loggedIn and loginSelectBean.isCustomer}">
+	        <s:link view="/customer/customerHome.xhtml" value="" propagation="none" rendered="#{identity.loggedIn and loginSelectBean.isCustomer}" >
+	        	 <h:graphicImage value="/img/menu_carrello.png" />
+	        	 <rich:toolTip value=""><span class="colore_black">Carrello</span></rich:toolTip>
+	        </s:link>
+	        <s:link view="/contadino/contadinoHome.xhtml" value="HOME" propagation="none" rendered="#{identity.loggedIn and !loginSelectBean.isCustomer}"/>
+        </td>
+        <td width="16" align="center" rendered="#{identity.loggedIn and loginSelectBean.isCustomer}">
+    		<img src="/SeamAmiciDelGas/img/palliniello.gif"/>	
+    	</td>
+    	<td height="32" align="left" rendered="#{identity.loggedIn and loginSelectBean.isCustomer}">
+   			<rich:dropDownMenu style=" width : 100px;" rendered="#{identity.loggedIn and loginSelectBean.isCustomer}">
         	
         	<f:facet name="label"> 
     	        <h:panelGroup cellpadding="0" cellspacing="0" columns="2">
-                      <h:outputText value="CUSTOMER" />
+    	        	  <img id="customer_image" src="/SeamAmiciDelGas/img/menu_customer.png" align="middle" />
+                      <h:outputLabel value="CUSTOMER" for="customer_image" />
                 </h:panelGroup>
             </f:facet>
             
@@ -64,14 +64,14 @@
                     <s:link view="/customer/visualizzaOrdini.xhtml" value="ORDINI" propagation="none"/>
              </rich:menuItem>
         	
-        	 <rich:menuItem submitMode="none" >
+        	 <rich:menuItem submitMode="none"  >
                     <s:link view="/customer/editDati.xhtml" value="PROFILO" propagation="none">
                     	<f:param name="utenteCodiceFiscale" value="#{currentUser.codiceFiscale}"/>
 		                <f:param name="accountUsername" value="#{currentAccount.username}"/>
 		            </s:link>
              </rich:menuItem>
              
-             <rich:menuItem submitMode="none" >
+             <rich:menuItem submitMode="none"  >
                     <s:link view="/customer/inviaNotifiche.xhtml" value="INVIA NOTIFICHE" propagation="none"/>
                     <f:param name="utenteCodiceFiscale" value="#{currentUser.codiceFiscale}"/>
 		            <f:param name="accountUsername" value="#{currentAccount.username}"/>
@@ -83,7 +83,7 @@
 		            <f:param name="accountUsername" value="#{currentAccount.username}"/>
              </rich:menuItem> 
              
-             <rich:menuItem submitMode="none" >
+             <rich:menuItem submitMode="none"  >
                     <s:link view="/customer/browseCatalog.xhtml" value="VEDI CATALOGO" propagation="none"/>
                     <f:param name="utenteCodiceFiscale" value="#{currentUser.codiceFiscale}"/>
 		            <f:param name="accountUsername" value="#{currentAccount.username}"/>
@@ -94,11 +94,60 @@
              </rich:menuItem>	
         	
         </rich:dropDownMenu>	
-        
-         <rich:dropDownMenu style=" width : 78px;" rendered="#{identity.loggedIn and loginSelectBean.driver}">
+        </td>
+        <td height="32" align="left" rendered="#{identity.loggedIn and (loginSelectBean.calculateMaxRole()=='mediatore' or loginSelectBean.calculateMaxRole()=='admin')}">
+        	<rich:dropDownMenu style=" width : 100px;" rendered="#{identity.loggedIn and (loginSelectBean.calculateMaxRole()=='mediatore' or loginSelectBean.calculateMaxRole()=='admin')}">
+	        	<f:facet name="label"> 
+	    	        <h:panelGroup cellpadding="0" cellspacing="0" columns="2">
+	    	        	  <img id="mediatore_image" src="/SeamAmiciDelGas/img/menu_mediatore.png" align="middle" />
+	                      <h:outputText value="MEDIATORE" />
+	                </h:panelGroup>
+	            </f:facet>
+	            
+	            <rich:menuItem submitMode="none">
+	                    <s:link view="/mediatore/accettaRegistrazioni.xhtml" value="RICHIESTE REGISTRAZIONI" propagation="none"/>
+	             </rich:menuItem>
+	             
+	             <rich:menuItem submitMode="none">
+	                    <s:link view="/mediatore/puntiDiConsegna.xhtml" value="PUNTI DI CONSEGNA" propagation="none"/>
+	             </rich:menuItem>
+	             
+	             <rich:menuItem submitMode="none">
+	                    <s:link view="/mediatore/richiesteDriver.xhtml" value="RICHIESTE DRIVER" propagation="none"/>
+	             </rich:menuItem>
+	        	
+	        </rich:dropDownMenu>        
+        </td>
+        <td height="32" align="left" rendered="#{identity.loggedIn and loginSelectBean.calculateMaxRole()=='admin'}">
+        	<rich:dropDownMenu style=" width : 100px;" rendered="#{identity.loggedIn and loginSelectBean.calculateMaxRole()=='admin'}">
+	        	<f:facet name="label"> 
+	    	        <h:panelGroup cellpadding="0" cellspacing="0" columns="2">
+	    	        	  <img id="admin_image" src="/SeamAmiciDelGas/img/menu_admin.png" align="middle" />
+	                      <h:outputText value="ADMIN" />
+	                </h:panelGroup>
+	            </f:facet>
+	            	
+	        	<rich:menuItem submitMode="none">
+	                    <s:link view="/admin/editDatiUtenti.xhtml" value="UTENTI REGISTRATI" propagation="none">
+	             			<f:param name="utenteCodiceFiscale" value="#{currentUser.codiceFiscale}"/>
+			            	<f:param name="accountUsername" value="#{currentAccount.username}"/>
+			            </s:link>
+	             </rich:menuItem>
+	             
+	             <rich:menuItem submitMode="none">
+	                    <s:link view="/admin/editDatiCybercontadino.xhtml" value="CONTADINI REGISTRATI" propagation="none">
+	             			<f:param name="utenteCodiceFiscale" value="#{currentUser.codiceFiscale}"/>
+			            	<f:param name="accountUsername" value="#{currentAccount.username}"/>
+			            </s:link>
+	             </rich:menuItem> 	
+	        </rich:dropDownMenu>        
+        </td>
+        <td height="32" align="left" rendered="#{identity.loggedIn and loginSelectBean.driver}">
+        	<rich:dropDownMenu style=" width : 78px;" rendered="#{identity.loggedIn and loginSelectBean.driver}">
         	
         	<f:facet name="label"> 
     	        <h:panelGroup cellpadding="0" cellspacing="0" columns="2">
+    	        	 <img id="driver_image" src="/SeamAmiciDelGas/img/menu_driver.png" align="middle" />
                      <h:outputText value="DRIVER" />
                 </h:panelGroup>
             </f:facet>
@@ -110,90 +159,41 @@
              </rich:menuItem>
             
             </rich:dropDownMenu>
-    
-    	<rich:dropDownMenu style=" width : 85px;" rendered="#{identity.loggedIn and (loginSelectBean.calculateMaxRole()=='mediatore' or loginSelectBean.calculateMaxRole()=='admin')}">
-        	
-        	<f:facet name="label"> 
-    	        <h:panelGroup cellpadding="0" cellspacing="0" columns="2">
-                      <h:outputText value="MEDIATORE" />
-                </h:panelGroup>
-            </f:facet>
-            
-            <rich:menuItem submitMode="none">
-                    <s:link view="/mediatore/accettaRegistrazioni.xhtml" value="RICHIESTE REGISTRAZIONI" propagation="none"/>
-             </rich:menuItem>
-             
-             <rich:menuItem submitMode="none">
-                    <s:link view="/mediatore/puntiDiConsegna.xhtml" value="PUNTI DI CONSEGNA" propagation="none"/>
-             </rich:menuItem>
-             
-             <rich:menuItem submitMode="none">
-                    <s:link view="/mediatore/richiesteDriver.xhtml" value="RICHIESTE DRIVER" propagation="none"/>
-             </rich:menuItem>
-        	
-        </rich:dropDownMenu>
-        
-    	<rich:dropDownMenu style=" width : 51px;" rendered="#{identity.loggedIn and loginSelectBean.calculateMaxRole()=='admin'}">
-        	
-        	<f:facet name="label"> 
-    	        <h:panelGroup cellpadding="0" cellspacing="0" columns="2">
-                      <h:outputText value="ADMIN" />
-                </h:panelGroup>
-            </f:facet>
-            	
-        	<rich:menuItem submitMode="none">
-                    <s:link view="/admin/editDatiUtenti.xhtml" value="UTENTI REGISTRATI" propagation="none">
-             			<f:param name="utenteCodiceFiscale" value="#{currentUser.codiceFiscale}"/>
-		            	<f:param name="accountUsername" value="#{currentAccount.username}"/>
-		            </s:link>
-             </rich:menuItem>
-             
-             <rich:menuItem submitMode="none">
-                    <s:link view="/admin/editDatiCybercontadino.xhtml" value="CONTADINI REGISTRATI" propagation="none">
-             			<f:param name="utenteCodiceFiscale" value="#{currentUser.codiceFiscale}"/>
-		            	<f:param name="accountUsername" value="#{currentAccount.username}"/>
-		            </s:link>
-             </rich:menuItem>
-        	
-        </rich:dropDownMenu>
-        
-        <rich:dropDownMenu style=" width : 82px;" rendered="#{identity.loggedIn and loginSelectBean.calculateMaxRole()=='utenteContadino'}">
-        	
-        	<f:facet name="label"> 
-    	        <h:panelGroup cellpadding="0" cellspacing="0" columns="2">
-                      <h:outputText value="CONTADINO"/>
-                </h:panelGroup>
-            </f:facet>
-            
-            <rich:menuItem submitMode="none" >
+        </td>
+        <td height="32" align="left" rendered="#{identity.loggedIn and loginSelectBean.calculateMaxRole()=='utenteContadino'}">
+  	        <rich:dropDownMenu style=" width : 100px;" rendered="#{identity.loggedIn and loginSelectBean.calculateMaxRole()=='utenteContadino'}">       	
+	        	<f:facet name="label"> 
+	    	        <h:panelGroup cellpadding="0" cellspacing="0" columns="2">
+	    	        	  <img id="contadino_image" src="/SeamAmiciDelGas/img/menu_contadino.png" align="middle" />
+	                      <h:outputText value="CONTADINO"/>
+	                </h:panelGroup>
+	            </f:facet>
+	            
+	            <rich:menuItem submitMode="none" >
                     <s:link view="/contadino/riceviNotifiche.xhtml" value="NOTIFICHE RICEVUTE (#{filtraNotifica.numberForSingleForContadino()})" propagation="none"/>
                     <f:param name="utenteCodiceFiscale" value="#{currentUser.codiceFiscale}"/>
 		            <f:param name="accountUsername" value="#{currentAccount.username}"/>
-             </rich:menuItem>
-            
-
-        </rich:dropDownMenu>
-    
-    	<rich:dropDownMenu style=" width : 50px;" rendered="#{identity.loggedIn}">	
-       		
-       		<f:facet name="label"> 
-    	        <h:panelGroup>
-                      <s:link view="/home.xhtml" action="#{identity.logout}" value="LOGOUT" propagation="none"/>
-                </h:panelGroup>
-            </f:facet>
-       		
-    	</rich:dropDownMenu>	
-    
-    	<rich:dropDownMenu style=" width : 50px;" rendered="#{identity.loggedIn}">	
-       		
-       		<f:facet name="label"> 
-    	        <h:panelGroup>
-                      <h:outputText style="color:red" value="LOGGED AS: #{identity.username}" />
-                </h:panelGroup>
-            </f:facet>
-       		
-    	</rich:dropDownMenu>	
-    
-    </rich:toolBar>
-
+             	</rich:menuItem>
+             	
+	        </rich:dropDownMenu>        
+        </td>
+        <td width="16" align="center" rendered="#{!identity.loggedIn}">
+    		<img src="/SeamAmiciDelGas/img/palliniello.gif"/>	
+    	</td>
+        <td height="32" align="left" rendered="#{!identity.loggedIn}">
+			<s:link view="/login.xhtml" value="Login" propagation="none" rendered="#{!identity.loggedIn}"/>
+        </td>
+        <td height="32" align="left" rendered="#{!identity.loggedIn}">
+	        <s:link view="/registrazione.xhtml" value="Registrazione" propagation="none" rendered="#{!identity.loggedIn}"/>
+        </td> 
+        <td height="32" align="left" rendered="#{identity.loggedIn}">
+	        <s:link view="/home.xhtml" action="#{identity.logout}" value="LOGOUT" propagation="none" rendered="#{identity.loggedIn}" />
+    	</td>
+    	<td height="32" rendered="#{identity.loggedIn}">	
+	        <h:outputText style="color:red" value="LOGGED AS: #{identity.username}" rendered="#{identity.loggedIn}" />
+    	</td>
+    	<td width="64">	
+    	</td>
+    </tr>	
+</table >
 </h:form>
