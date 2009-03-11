@@ -29,7 +29,7 @@
 	</task-node>
 
 	<task-node name="Notifica utente ordine preso in carico">
-		<task>
+		<task name="ReceiveOrderAccepted">
 			<assignment actor-id="#{customer}"></assignment>
 		</task>
 		<transition to="Attendi data consegna"></transition>
