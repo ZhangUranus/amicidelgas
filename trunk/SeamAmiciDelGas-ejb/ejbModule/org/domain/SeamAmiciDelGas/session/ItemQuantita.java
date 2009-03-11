@@ -25,7 +25,14 @@ public class ItemQuantita implements Serializable
 		private int quantitaParziale;
 		private Date dataMassimaAcquisto;
 		private boolean checkedForOrdine=false;
+		private boolean accettato = false;
 		
+		public boolean isAccettato() {
+			return accettato;
+		}
+		public void setAccettato(boolean accettato) {
+			this.accettato = accettato;
+		}
 		public boolean isCheckedForOrdine() {
 			return checkedForOrdine;
 		}

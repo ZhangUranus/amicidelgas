@@ -12,18 +12,13 @@
 		<task name="accetta_ordine">
 			<assignment pooled-actors="driver,utenteContadino"></assignment>
 		</task>
-		<transition to="Prova a prenotare l'ordine" name="ordine_preso_in_carico"></transition>
 		<transition to="Notifica utente ordine non preso in carico" name="ordine_non_preso_in_carico_entro_datamax"></transition>
+		<transition to="Verifica disponibilità" name="ordine_preso_in_carico"></transition>
 	</task-node>
 
-	<node name="Prova a prenotare l'ordine">
-		<transition to="Notifica utente ordine non disponibile" name="prodotti non disponibili"></transition>
-		<transition to="Notifica utente ordine preso in carico" name="ordine prenotato"></transition>
-	</node>
-
 	<task-node name="Notifica utente ordine non disponibile">
-		<transition to="end-state1" name="l'utente rinuncia all'ordine"></transition>
-		<transition to="Ordine notificato a driver e contadini" name="l'utente modifica l'ordine"></transition>
+		<transition to="end-state1" name="eliminazione_ordine"></transition>
+		<transition to="Ordine notificato a driver e contadini" name="modifica_ordine"></transition>
 	</task-node>
 
 	<task-node name="Notifica utente ordine non preso in carico">
@@ -54,6 +49,15 @@
 	<join name="join1">
 		<transition to="end-state3"></transition>
 	</join>
+
+	<decision name="Verifica disponibilità">
+		<transition to="Notifica utente ordine preso in carico" name="ordine_evaso">
+			<condition expression="#{!myOrdine.isPendente and myOrdine.isEvaso}"></condition>
+		</transition>
+		<transition to="Notifica utente ordine non disponibile" name="ordine_non_evaso">
+			<condition expression="#{!myOrdine.isPendente and !myOrdine.isEvaso}"></condition>
+		</transition>
+	</decision>
 
 
 	<end-state name="end-state1"></end-state>
