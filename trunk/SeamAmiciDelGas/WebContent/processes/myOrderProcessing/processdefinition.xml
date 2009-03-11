@@ -14,11 +14,12 @@
 		</task>
 		<transition to="Notifica utente ordine non preso in carico" name="ordine_non_preso_in_carico_entro_datamax"></transition>
 		<transition to="Verifica disponibilità" name="ordine_preso_in_carico"></transition>
+		<transition to="end-state1" name="ordine_eliminato_dall_utente"></transition>
 	</task-node>
 
 	<task-node name="Notifica utente ordine non disponibile">
-		<transition to="end-state1" name="eliminazione_ordine"></transition>
-		<transition to="Ordine notificato a driver e contadini" name="modifica_ordine"></transition>
+		<task></task>
+		<transition to="Ordine notificato a driver e contadini" name="ordine_rimesso_nel_pool"></transition>
 	</task-node>
 
 	<task-node name="Notifica utente ordine non preso in carico">
@@ -54,9 +55,7 @@
 		<transition to="Notifica utente ordine preso in carico" name="ordine_evaso">
 			<condition expression="#{!myOrdine.isPendente and myOrdine.isEvaso}"></condition>
 		</transition>
-		<transition to="Notifica utente ordine non disponibile" name="ordine_non_evaso">
-			<condition expression="#{!myOrdine.isPendente and !myOrdine.isEvaso}"></condition>
-		</transition>
+		<transition to="Notifica utente ordine non disponibile" name="ordine_non_evaso"></transition>
 	</decision>
 
 
