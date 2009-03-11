@@ -122,7 +122,7 @@ public class OrderProcessing {
 				String idContadino = enumContadini.nextElement();
 				catalog.commitTransaction(idContadino, transactionIdList.get(idContadino));
 			}
-			messageStatoOrdine.setContent("Ordine effettuato");
+			messageStatoOrdine.setContent("Ordine preso in carico da "+ credentials.getUsername());
 			myOrdine.setPendente(false);
 			myOrdine.setEvaso(true);
 		}
