@@ -14,10 +14,10 @@
 		<table width="96%" border="0" cellspacing="0" cellpadding="0" align="center" >
 			<tr>
 				<td colspan="3">
-					<table width="90%" border="0" cellspacing="4" cellpadding="0" align="left" >
+					<table width="90%" border="0" cellspacing="6" cellpadding="0" align="left" >
 					  <tr>			    
 					    <td rowspan="2" width="160" align="left">
-					    	<s:decorate rendered="#{loginSelectBean.calculateMaxRole()=='admin'}"><img alt="statistiche" border="0" src="/SeamAmiciDelGas/img/president.jpg"/></s:decorate>
+					    	<s:decorate rendered="#{loginSelectBean.calculateMaxRole()=='admin'}"><img alt="statistiche" border="0" src="/SeamAmiciDelGas/img/admin.png"/></s:decorate>
 					    	<s:decorate rendered="#{loginSelectBean.calculateMaxRole()=='mediatore'}"><img alt="statistiche" border="0" src="/SeamAmiciDelGas/img/contatti.png"/></s:decorate>
 					    	<s:decorate rendered="#{loginSelectBean.calculateMaxRole()=='utenteGas'}"><img alt="statistiche" border="0" src="/SeamAmiciDelGas/img/contatti.png"/></s:decorate>
 					    </td>
@@ -53,7 +53,7 @@
 							<a:repeat var="_ruolo" value="#{rolesPerAccount.resultList}">
 							<li><h:outputText value="#{_ruolo.name}"/></li>
 							</a:repeat>
-                        	<p></p>
+                        	<br/>
                         	<s:button
                         		
                         	    rendered="#{(currentAccount.punteggioFeedback >= 2.5)}"
@@ -69,75 +69,7 @@
 					</table>	
 				</td>
 				<td >
-					<table width="100%" border="0" cellspacing="0" cellpadding="0" align="right" >
-					   <tr>
-					    <td width="22" height="22" background="/SeamAmiciDelGas/img/shadow_a1.png"></td>
-					    <td height="22" background="/SeamAmiciDelGas/img/shadow_top1.png"></td>
-					    <td width="22" height="22" background="/SeamAmiciDelGas/img/shadow_b1.png"></td>
-					   </tr>
-					   <tr>
-					   	<td background="/SeamAmiciDelGas/img/shadow_left1.png"></td>	
-					     <td background="/SeamAmiciDelGas/img/shadow1.png">
-								<div align="center" >TODO notifiche ed eventi
-						<rich:dataTable  id="requestTable" var="_task"
-									value="#{pooledTaskInstanceList}"
-							rendered="#{identity.loggedIn and not empty pooledTaskInstanceList}">
-							<h:column>
-								<f:facet name="header">Message</f:facet>
-												#{_task.variables.notifyMessageRequest.content}
-									</h:column>
-							<h:column>
-								<f:facet name="header">Action</f:facet>
-								<s:link action="#{inviaRequestReply.riceviMessaggio}" taskInstance="#{_task}"
-									value="Invia Utente" />
-							</h:column>
-							<h:column>
-								<f:facet name="header">Message</f:facet>
-												#{_task.variables.notificaUtente.content}
-									</h:column>
-									<h:column>
-								<f:facet name="header">Action</f:facet>
-								<s:link action="#{inviaNotificaRegistrazioni.partecipa_alla_visita}" taskInstance="#{_task}"
-									value="Accetta Visita" />
-							</h:column>
-						</rich:dataTable>
-						<rich:dataTable  id="requestTableFalsa" var="_task2"
-									value="#{taskInstanceList}"
-							rendered="#{identity.loggedIn and not empty taskInstanceList}">
-							<h:column>
-								<f:facet name="header">Message</f:facet>
-												#{_task2.variables.notifyMessageReply.content}
-									</h:column>
-							<h:column>
-								<f:facet name="header">Action</f:facet>
-								<s:link action="#{inviaRequestReply.riceviRisposta}" taskInstance="#{_task2}"
-									value="Invia Fine" />
-							</h:column>
-						</rich:dataTable>
-									<li>notifica1</li>
-                        			<li>notifica2</li>
-                        			<li>notifica31</li>
-                        			<li>notifica14</li>
-                        	
-								</div>			    
-					     </td>
-					     <td background="/SeamAmiciDelGas/img/shadow_right1.png" valign="middle"></td>
-					   </tr>
-					   <tr>
-					    <td width="22" height="22" background="/SeamAmiciDelGas/img/shadow_d1.png"></td>
-					    <td height="22" background="/SeamAmiciDelGas/img/shadow_bottom1.png"></td>
-					    <td width="22" height="22" background="/SeamAmiciDelGas/img/shadow_c1.png"></td>
-					   </tr>
-					</table>	
-				</td>
-			</tr>
-			<tr>
-				<td colspan="4" height="16"><hr noshade="noshade" />	
-				</td>
-			</tr>
-			<tr>
-				<td width="25%">
-					<table width="98%" border="0" cellspacing="2" cellpadding="0" align="center" >
+					<table width="98%" border="0" cellspacing="6" cellpadding="0" align="center" >
 					  <tr>			    
 					    <td rowspan="2" align="left">
 					    	<s:link view="/customer/editDati.xhtml"
@@ -148,7 +80,7 @@
 				                        value="#{currentUser.codiceFiscale}"/>
 				                <f:param name="accountUsername"
 				                        value="#{currentAccount.username}"/>
-					    	<img alt="statistiche" border="0" src="/SeamAmiciDelGas/img/modifica.png"/>
+					    	<img alt="statistiche" border="0" src="/SeamAmiciDelGas/img/profilo.png"/>
 					    	</s:link>
 					    	</td>
 					    <td valign="bottom"><div align="left" class="colore_1">
@@ -165,9 +97,21 @@
 					    	</div></td>			      
 					  </tr>
 					  <tr>
-					    <td valign="top"><div align="left" class="explorer">Visualizza e modifica i tuoi dati, cancella il tuo account</div></td>
+					    <td valign="top"><div align="left" class="explorer">
+					    	<h:outputText value="Visualizza e modifica i tuoi dati, cancella il tuo account" rendered="#{!(loginSelectBean.calculateMaxRole()=='admin')}" />
+					    	<h:outputText value="Visualizza e modifica i tuoi dati" rendered="#{(loginSelectBean.calculateMaxRole()=='admin')}"/>
+					    </div></td>
 					  </tr>
 					</table>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="4" height="16"><hr noshade="noshade" />	
+				</td>
+			</tr>
+			<tr>
+				<td width="25%">
+					
 				</td>
 				
 				<td width="25%">
@@ -181,35 +125,24 @@
 					  </tr>
 					</table>
 				</td>
-				
-				<s:decorate rendered="#{loginSelectBean.calculateMaxRole()=='mediatore'} or #{loginSelectBean.calculateMaxRole()=='admin'}">
-					<td width="25%">
+				<td width="25%">
+					<s:decorate rendered="#{(loginSelectBean.calculateMaxRole()=='mediatore') or (loginSelectBean.calculateMaxRole()=='admin')}">
 						<table width="98%" border="0" cellspacing="2" cellpadding="0" align="center" >
 						  <tr>			    
-						    <td rowspan="2" align="left"><a href="/SeamAmiciDelGas/mediatore/puntiDiConsegna.seam"><img alt="statistiche" border="0" src="/img/ico_config.jpg"/></a></td>
+						    <td rowspan="2" align="left"><a href="/SeamAmiciDelGas/mediatore/puntiDiConsegna.seam"><img alt="statistiche" border="0" src="/SeamAmiciDelGas/img/punto_consegna.png"/></a></td>
 						    <td valign="bottom"><div align="left" class="colore_1"><a href="/SeamAmiciDelGas/mediatore/puntiDiConsegna.seam">Punti di consegna</a></div></td>			      
 						  </tr>
 						  <tr>
 						    <td valign="top"><div align="left" class="explorer">Aggiungi, Modifica, Elimina i Punti di Consegna </div></td>
 						  </tr>
-						</table>
-					</td>
-				</s:decorate>
+						</table>					
+					</s:decorate>
+				</td>
 				<td width="25%">
-					<table width="98%" border="0" cellspacing="2" cellpadding="0" align="center" >
-					  <tr>			    
-					    <td rowspan="2" align="left"><a href="categories"><img alt="statistiche" border="0" src="/img/ico_config.jpg"/></a></td>
-					    <td valign="bottom"><div align="left" class="colore_1"><a href="#">Configurazione portale</a></div></td>			      
-					  </tr>
-					  <tr>
-					    <td valign="top"><div align="left" class="explorer">Configura i </div></td>
-					  </tr>
-					</table>
+
 				</td>
 			</tr>
-			
-			
-			
+		
 		<s:decorate rendered="#{loginSelectBean.calculateMaxRole()=='admin'}">	
 			<tr>
 			<td width="25%">
