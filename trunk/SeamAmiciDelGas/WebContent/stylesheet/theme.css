@@ -37,6 +37,15 @@ input[type=text], input[type=password], textarea {
 	left: 4px;
 }
 
+.div_notifiche_lista_class{
+	background:transparent;
+	position:fixed;
+	zoom:1;
+	z-index: 118;
+	top: 32px;
+	left: 70px;
+}
+
 .notifiche_class{
 	background:transparent;
 	position:fixed;
@@ -139,6 +148,7 @@ input[type=text], input[type=password], textarea {
 
 .colore_1 {	font-size: 14px; color: #0000CC;}
 .colore_black {	font-size: 11px; color: #000000;}
+.colore_black_bold { font-size: 13px; font-weight:bold; color: #000000;}
 .explorer{ font-size: 14px; color: #666666;}
 
 .message li {
