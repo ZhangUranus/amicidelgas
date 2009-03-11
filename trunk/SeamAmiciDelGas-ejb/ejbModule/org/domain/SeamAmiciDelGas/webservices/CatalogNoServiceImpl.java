@@ -116,7 +116,7 @@ public class CatalogNoServiceImpl implements CatalogInterface{
 
 	public UUID beginTransaction(String idContadino) {
 		// TODO Auto-generated method stub
-		return null;
+		return UUID.randomUUID();
 	}
 
 	public long commitTransaction(String idContadino, UUID transactionId) {
@@ -138,7 +138,7 @@ public class CatalogNoServiceImpl implements CatalogInterface{
 	public boolean reserveItem(String idContadino, UUID transactionId,
 			Item item, int minimalQuantity, int quantity, Date deliveryDate) {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 }

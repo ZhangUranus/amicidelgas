@@ -23,16 +23,9 @@ public class ItemQuantita implements Serializable
 		private String username; 
 		private boolean booleanIsQuantitaMinima= false;
 		private int quantitaParziale;
-		private Date dataMassimaAcquisto;
+		//private Date dataMassimaAcquisto;
 		private boolean checkedForOrdine=false;
-		private boolean accettato = false;
 		
-		public boolean isAccettato() {
-			return accettato;
-		}
-		public void setAccettato(boolean accettato) {
-			this.accettato = accettato;
-		}
 		public boolean isCheckedForOrdine() {
 			return checkedForOrdine;
 		}
@@ -89,11 +82,5 @@ public class ItemQuantita implements Serializable
 		}
 		public void setUsername(String username) {
 			this.username = username;
-		}
-		public Date getDataMassimaAcquisto() {
-			return dataMassimaAcquisto;
-		}
-		public void setDataMassimaAcquisto(Date dataMassimaAcquisto) {
-			this.dataMassimaAcquisto = dataMassimaAcquisto;
 		}
 	}
