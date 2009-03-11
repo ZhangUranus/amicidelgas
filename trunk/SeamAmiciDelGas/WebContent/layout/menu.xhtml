@@ -31,16 +31,14 @@
     		<img src="/SeamAmiciDelGas/img/palliniello.gif"/>	
     	</td>
         <td height="32" width="48" align="center" >
-	        <s:link view="/customer/riceviNotifiche.xhtml" value="" propagation="none" rendered="#{identity.loggedIn and loginSelectBean.isCustomer}">
+			<div>
                     <h:graphicImage value="/img/menu_notifiche.png" />
-                    <f:param name="utenteCodiceFiscale" value="#{currentUser.codiceFiscale}"/>
-		            <f:param name="accountUsername" value="#{currentAccount.username}"/>
 		            <h:outputText rendered="#{(pooledTaskInstanceList.size() + taskInstanceList.size())>0}">
 		            	<span id="notifiche_div" class="notifiche_class" ><img src="/SeamAmiciDelGas/img/red_number.png" /></span>
 		            	<span style="width: 20px" id="notifiche_number_div" class="notifiche_num_class" >#{pooledTaskInstanceList.size() + taskInstanceList.size()}</span>
 		            	<rich:toolTip value=""><span class="colore_black">Notifiche</span></rich:toolTip>
 		            </h:outputText>
-		    </s:link>
+		    </div>
         </td>
         </s:decorate>
         <s:decorate rendered="#{identity.loggedIn and loginSelectBean.isCustomer}">
@@ -48,7 +46,7 @@
     		<img src="/SeamAmiciDelGas/img/palliniello.gif"/>	
     	</td>
         <td height="32" width="48" align="center" >
-	        <s:link view="/customer/customerHome.xhtml" value="" propagation="none" rendered="#{identity.loggedIn and loginSelectBean.isCustomer}" >
+	        <s:link view="/customer/browseCatalog.xhtml" value="" propagation="none">
 	        	 <h:graphicImage value="/img/menu_carrello.png" />
 	        	 <rich:toolTip value=""><span class="colore_black">Carrello</span></rich:toolTip>
 	        </s:link>
@@ -248,30 +246,74 @@
 <div id="notifiche_lista" style="display:block;" class="div_notifiche_lista_class">
 	<table width="280px" cellpadding="0" cellspacing="0" border="0" id="table_notifiche_liste">
 	  <tr>
-	    <td width="22" height="22" background="/SeamAmiciDelGas/img/shadow_a1.png"></td>
-	    <td height="22" colspan="2" background="/SeamAmiciDelGas/img/shadow_top1.png"></td>
-	    <td width="22" height="22" background="/SeamAmiciDelGas/img/shadow_b1.png"></td>
-	  </tr>
-      <tr>
-	  	<td background="/SeamAmiciDelGas/img/shadow_left1.png"></td>
-	    <td background="/SeamAmiciDelGas/img/shadow1.png" align="left" >
-    		<span class="colore_black_bold">Notifiche Personali</span><br /><br />
-    		<span class="colore_black_bold">Richieste Driver</span><br /><br />	
-    		<span class="colore_black_bold">Registrazioni cybercontadino</span>	
-	    </td>
-	    <td width="26px" background="/SeamAmiciDelGas/img/shadow1.png" align="left" >
-    		<span class="colore_black_bold">#{filtraNotifica.numberForGroupForCustomer() + filtraNotifica.numberForSingleForCustomer()}</span><br /><br />
-    		<span class="colore_black_bold">#{filtraNotifica.numberForGroupForCustomer() + filtraNotifica.numberForSingleForCustomer()}</span><br /><br />	
-    		<s:decorate rendered="#{(filtraNotifica.numberOfTaskForGroup('crea_visita') > 0)}">
-    			<div align="center" class="colore_white_bold" style="background:transparent url('/SeamAmiciDelGas/img/red_number.png') no-repeat; width:26px; height: 28px; padding-top: 4px; padding-left: 1px;" >#{filtraNotifica.numberOfTaskForGroup('crea_visita')}</div>
-    		</s:decorate>
-	    </td>
-	  	<td background="/SeamAmiciDelGas/img/shadow_right1.png"></td>
+	    <td width="13" height="12" background="/SeamAmiciDelGas/img/shadow_corner_a.png"></td>
+	    <td height="12" colspan="2" background="/SeamAmiciDelGas/img/shadow_top_n.png"></td>
+	    <td width="13" height="12" background="/SeamAmiciDelGas/img/shadow_corner_b.png"></td>
 	  </tr>
 	  <tr>
-	    <td width="22" height="22" background="/SeamAmiciDelGas/img/shadow_d1.png"></td>
-	    <td height="22" colspan="2" background="/SeamAmiciDelGas/img/shadow_bottom1.png"></td>
-	    <td width="22" height="12" background="/SeamAmiciDelGas/img/shadow_c1.png"></td>
+	  	<td background="/SeamAmiciDelGas/img/shadow_ovest.png"></td>
+	    <td colspan="2" background="/SeamAmiciDelGas/img/shadow_n.png" align="right" >
+	    		<div ><img src="/SeamAmiciDelGas/img/close.png" /></div>
+	    </td>
+	  	<td background="/SeamAmiciDelGas/img/shadow_est.png"></td>
+	  </tr>
+	  <tr>
+	  	<td background="/SeamAmiciDelGas/img/shadow_ovest.png"></td>
+	    <td colspan="2" background="/SeamAmiciDelGas/img/shadow_n.png" align="left" >
+	    	<s:link view="/customer/inviaNotifiche.xhtml" propagation="none">
+	    		<div class="colore_white_bold">Invia notifica</div>
+	    	</s:link>
+	    </td>
+	  	<td background="/SeamAmiciDelGas/img/shadow_est.png"></td>
+	  </tr>
+	  <tr>
+	  	<td background="/SeamAmiciDelGas/img/shadow_ovest.png"></td>
+	    <td height="16" colspan="2" background="/SeamAmiciDelGas/img/shadow_n.png" align="left" >
+	    	<hr noshade="noshade" />    		
+	    </td>
+	  	<td background="/SeamAmiciDelGas/img/shadow_est.png"></td>
+	  </tr>
+      <tr>
+	  	<td background="/SeamAmiciDelGas/img/shadow_ovest.png"></td>
+	    <td background="/SeamAmiciDelGas/img/shadow_n.png" align="left" >
+	    	<s:decorate >
+	    		<s:link view="/customer/riceviNotifiche.xhtml" value="" propagation="none" >
+    		    	<div align="left" class="colore_white_bold" style="height: 28px;  padding-top: 4px;">Notifiche Personali</div>
+    		    </s:link>
+    		</s:decorate>
+    		<s:decorate rendered="#{((loginSelectBean.calculateMaxRole()=='mediatore' or loginSelectBean.calculateMaxRole()=='admin'))}">
+    		    <div align="left" class="colore_white_bold" style="height: 28px;  padding-top: 4px;">Richieste Driver</div>
+    		</s:decorate>
+    		<s:decorate rendered="#{((loginSelectBean.calculateMaxRole()=='mediatore' or loginSelectBean.calculateMaxRole()=='admin'))}">
+    		    <div align="left" class="colore_white_bold" style="height: 28px;  padding-top: 4px;">Registrazioni cybercontadino</div>
+    		</s:decorate>
+	    </td>
+	    <td width="26px" background="/SeamAmiciDelGas/img/shadow_n.png" align="left" >
+    		<s:decorate rendered="#{(filtraNotifica.numberForGroupForCustomer() + filtraNotifica.numberForSingleForCustomer()) > 0}">
+    		    <div align="center" class="colore_white_bold" style="background:transparent url('/SeamAmiciDelGas/img/red_number2.png') no-repeat; width:26px; height: 28px; padding-top: 4px; padding-right: 1px;" >#{(filtraNotifica.numberForGroupForCustomer() + filtraNotifica.numberForSingleForCustomer())}</div>
+    		</s:decorate>
+    		<s:decorate rendered="#{!((filtraNotifica.numberForGroupForCustomer() + filtraNotifica.numberForSingleForCustomer()) > 0)}">
+    		    <div align="center" class="colore_white_bold" style="width:26px; height: 28px; padding-top: 4px;" >-</div>
+    		</s:decorate>
+    		<s:decorate rendered="#{((filtraNotifica.numberOfTaskForGroup('Conferma la richiesta') > 0) and (loginSelectBean.calculateMaxRole()=='mediatore' or loginSelectBean.calculateMaxRole()=='admin'))}">
+    		    <div align="center" class="colore_white_bold" style="background:transparent url('/SeamAmiciDelGas/img/red_number2.png') no-repeat; width:26px; height: 28px; padding-top: 4px; padding-right: 1px;" >#{filtraNotifica.numberOfTaskForGroup('Conferma la richiesta')}</div>
+    		</s:decorate>
+    		<s:decorate rendered="#{((filtraNotifica.numberOfTaskForGroup('Conferma la richiesta') == 0) and (loginSelectBean.calculateMaxRole()=='mediatore' or loginSelectBean.calculateMaxRole()=='admin'))}">
+    		    <div align="center" class="colore_white_bold" style="width:26px; height: 28px; padding-top: 4px;" >-</div>
+    		</s:decorate>  
+    		<s:decorate rendered="#{((filtraNotifica.numberOfTaskForGroup('crea_visita') > 0) and (loginSelectBean.calculateMaxRole()=='mediatore' or loginSelectBean.calculateMaxRole()=='admin'))}">
+    			<div align="center" class="colore_white_bold" style="background:transparent url('/SeamAmiciDelGas/img/red_number2.png') no-repeat; width:26px; height: 28px; padding-top: 4px; padding-right: 1px;" >#{filtraNotifica.numberOfTaskForGroup('crea_visita')}</div>
+    		</s:decorate>
+    		<s:decorate rendered="#{((filtraNotifica.numberOfTaskForGroup('crea_visita') == 0) and (loginSelectBean.calculateMaxRole()=='mediatore' or loginSelectBean.calculateMaxRole()=='admin'))}">
+    		    <div align="center" class="colore_white_bold" style="width:26px; height: 28px; padding-top: 4px;" >-</div>
+    		</s:decorate>
+	    </td>
+	  	<td background="/SeamAmiciDelGas/img/shadow_est.png"></td>
+	  </tr>
+	  <tr>
+	    <td width="13" height="12" background="/SeamAmiciDelGas/img/shadow_corner_d.png"></td>
+	    <td height="12" colspan="2" background="/SeamAmiciDelGas/img/shadow_bottom_n.png"></td>
+	    <td width="13" height="12" background="/SeamAmiciDelGas/img/shadow_corner_c.png"></td>
 	  </tr>
 	</table>
 </div>
