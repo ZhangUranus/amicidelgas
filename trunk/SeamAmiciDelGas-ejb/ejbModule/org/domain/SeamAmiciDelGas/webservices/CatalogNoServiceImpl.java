@@ -1,8 +1,10 @@
 package org.domain.SeamAmiciDelGas.webservices;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.UUID;
 
 import org.domain.SeamAmiciDelGas.entity.Cybercontadino;
 import org.jboss.seam.ScopeType;
@@ -109,6 +111,34 @@ public class CatalogNoServiceImpl implements CatalogInterface{
 
 	public void setCurrentCategory(String currentCategory) {
 		this.currentCategory = currentCategory;
+	}
+	
+
+	public UUID beginTransaction(String idContadino) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public long commitTransaction(String idContadino, UUID transactionId) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
+	public long rollBackTransaction(String idContadino, UUID transactionId) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public long getAvailableQuantity(String idContadino, Item item) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public boolean reserveItem(String idContadino, UUID transactionId,
+			Item item, int minimalQuantity, int quantity, Date deliveryDate) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }
