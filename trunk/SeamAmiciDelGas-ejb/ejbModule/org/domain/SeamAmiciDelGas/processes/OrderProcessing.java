@@ -9,7 +9,6 @@ import org.domain.SeamAmiciDelGas.session.Message;
 import org.domain.SeamAmiciDelGas.session.MyOrdine;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
-import org.jboss.seam.annotations.Logger;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Out;
 import org.jboss.seam.annotations.Scope;
@@ -17,14 +16,13 @@ import org.jboss.seam.annotations.bpm.BeginTask;
 import org.jboss.seam.annotations.bpm.CreateProcess;
 import org.jboss.seam.annotations.bpm.EndTask;
 import org.jboss.seam.annotations.intercept.BypassInterceptors;
-import org.jboss.seam.log.Log;
 import org.jboss.seam.security.Credentials;
 
 
 @Name("orderProcessing")
-@Scope(ScopeType.CONVERSATION)
+@Scope(ScopeType.SESSION)
 public class OrderProcessing {
-
+	
 	@Out(value="myOrdine",scope=ScopeType.BUSINESS_PROCESS,required=false)
 	private MyOrdine myOrdine;
 	
@@ -34,24 +32,38 @@ public class OrderProcessing {
 	@Out(value="customer", scope=ScopeType.BUSINESS_PROCESS, required=false)
 	private String customer;
 	
-	@In(value="selectedItemShoppingCart",scope=ScopeType.BUSINESS_PROCESS,required=false)
+	@Out(value="selectedItemShoppingCart",scope=ScopeType.BUSINESS_PROCESS,required=false)
 	private List<ItemQuantita> selectedItem;
 	
-	@In(value="dataMassimaShoppingCart",scope=ScopeType.BUSINESS_PROCESS,required=false)
+	@Out(value="dataMassimaShoppingCart",scope=ScopeType.BUSINESS_PROCESS,required=false)
 	private Date dataMassima;
 	
 	@In private Credentials credentials;
 	
 	@CreateProcess(definition="myOrderProcessing")
-	public String startOrder(){
+	public String startOrder(List<ItemQuantita> itemQ, Date dm){
+		
+		selectedItem = itemQ;
+		dataMassima = dm;
 		
 		customer = credentials.getUsername();
 		myOrdine = new MyOrdine();
 		myOrdine.setDataMassima(dataMassima);
 		myOrdine.setItemQuantita(selectedItem);
-		
+		boolean isStessoContadino=true;
 		messageDriverContadino = new Message();
-		String content = "Ordine fatto da " +credentials.getUsername();
+
+		String usernameContadino = selectedItem.get(0).getUsername();
+		for(ItemQuantita iq : selectedItem)//vedo se il contadino è sempre lo stesso
+			if(!(iq.getUsername().equals(usernameContadino)))
+			{	
+				isStessoContadino=false; break;
+			}
+		
+		if(isStessoContadino)
+			messageDriverContadino.addRecipient(usernameContadino);
+
+		String content = "Ordine fatto da " +credentials.getUsername()+"dim = "+selectedItem.size();
 		
 		messageDriverContadino.setContent(content);
 		
