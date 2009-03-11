@@ -11,10 +11,11 @@
     <tr align="center">
     	<td width="64">	
     	</td>
+    	<s:decorate rendered="#{identity.loggedIn and loginSelectBean.isCustomer}">
     	<td width="16" align="center" >
     		<img src="/SeamAmiciDelGas/img/palliniello.gif"/>	
     	</td>
-        <td height="32" width="48" align="center" rendered="#{identity.loggedIn and loginSelectBean.isCustomer}">
+        <td height="32" width="48" align="center" >
 	        <s:link view="/customer/customerHome.xhtml" value="" propagation="none" rendered="#{identity.loggedIn and loginSelectBean.isCustomer}" >
 	        	 <h:graphicImage value="/img/menu_home.png" />
 	        	 <rich:toolTip value=""><span class="colore_black">Home Page</span></rich:toolTip>
@@ -24,29 +25,36 @@
 	        	 <rich:toolTip value=""><span class="colore_black">Home Page</span></rich:toolTip>
 	        </s:link>
         </td>
-        <td width="16" align="center" rendered="#{identity.loggedIn and loginSelectBean.isCustomer}">
+        </s:decorate>
+        <s:decorate rendered="#{identity.loggedIn and loginSelectBean.isCustomer}">
+        <td width="16" align="center" >
     		<img src="/SeamAmiciDelGas/img/palliniello.gif"/>	
     	</td>
-        <td height="32" width="48" align="center" rendered="#{identity.loggedIn and loginSelectBean.isCustomer}">
+        <td height="32" width="48" align="center" >
 	        <s:link view="/customer/riceviNotifiche.xhtml" value="" propagation="none" rendered="#{identity.loggedIn and loginSelectBean.isCustomer}">
                     <h:graphicImage value="/img/menu_notifiche.png" />
                     <f:param name="utenteCodiceFiscale" value="#{currentUser.codiceFiscale}"/>
 		            <f:param name="accountUsername" value="#{currentAccount.username}"/>
-		            <span id="notifiche_div" class="notifiche_class" ><img src="/SeamAmiciDelGas/img/red_number.png" /></span>
-		            <span style="width: 20px" id="notifiche_number_div" class="notifiche_num_class" >#{pooledTaskInstanceList.size() + taskInstanceList.size()}</span>
-		            <rich:toolTip value=""><span class="colore_black">Notifiche</span></rich:toolTip>
+		            <h:outputText rendered="#{(pooledTaskInstanceList.size() + taskInstanceList.size())>0}">
+		            	<span id="notifiche_div" class="notifiche_class" ><img src="/SeamAmiciDelGas/img/red_number.png" /></span>
+		            	<span style="width: 20px" id="notifiche_number_div" class="notifiche_num_class" >#{pooledTaskInstanceList.size() + taskInstanceList.size()}</span>
+		            	<rich:toolTip value=""><span class="colore_black">Notifiche</span></rich:toolTip>
+		            </h:outputText>
 		    </s:link>
         </td>
-        <td width="16" align="center" rendered="#{identity.loggedIn and loginSelectBean.isCustomer}">
+        </s:decorate>
+        <s:decorate rendered="#{identity.loggedIn and loginSelectBean.isCustomer}">
+        <td width="16" align="center" >
     		<img src="/SeamAmiciDelGas/img/palliniello.gif"/>	
     	</td>
-        <td height="32" width="48" align="center" rendered="#{identity.loggedIn and loginSelectBean.isCustomer}">
+        <td height="32" width="48" align="center" >
 	        <s:link view="/customer/customerHome.xhtml" value="" propagation="none" rendered="#{identity.loggedIn and loginSelectBean.isCustomer}" >
 	        	 <h:graphicImage value="/img/menu_carrello.png" />
 	        	 <rich:toolTip value=""><span class="colore_black">Carrello</span></rich:toolTip>
 	        </s:link>
 	        <s:link view="/contadino/contadinoHome.xhtml" value="HOME" propagation="none" rendered="#{identity.loggedIn and !loginSelectBean.isCustomer}"/>
         </td>
+        </s:decorate>
         <td width="16" align="center" rendered="#{identity.loggedIn and loginSelectBean.isCustomer}">
     		<img src="/SeamAmiciDelGas/img/palliniello.gif"/>	
     	</td>

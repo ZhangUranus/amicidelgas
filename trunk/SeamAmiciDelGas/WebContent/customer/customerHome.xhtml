@@ -14,15 +14,21 @@
 		<table width="96%" border="0" cellspacing="0" cellpadding="0" align="center" >
 			<tr>
 				<td colspan="3">
-					<table width="90%" border="0" cellspacing="6" cellpadding="0" align="left" >
+					<table width="98%" border="0" cellspacing="6" cellpadding="0" align="left" >
 					  <tr>			    
-					    <td rowspan="2" width="160" align="left">
+					    <td rowspan="2" width="20%" align="left">
 					    	<s:decorate rendered="#{loginSelectBean.calculateMaxRole()=='admin'}"><img alt="statistiche" border="0" src="/SeamAmiciDelGas/img/admin.png"/></s:decorate>
 					    	<s:decorate rendered="#{loginSelectBean.calculateMaxRole()=='mediatore'}"><img alt="statistiche" border="0" src="/SeamAmiciDelGas/img/contatti.png"/></s:decorate>
 					    	<s:decorate rendered="#{loginSelectBean.calculateMaxRole()=='utenteGas'}"><img alt="statistiche" border="0" src="/SeamAmiciDelGas/img/contatti.png"/></s:decorate>
 					    </td>
-					    <td valign="top"><div align="left" class="colore_1">Bentornato <b>#{currentUser.nome} #{currentUser.cognome}</b></div></td>			      
-					  	<td valign="top"><div align="left" class="colore_1">I tuoi ruoli</div></td>			      
+					    <td valign="bottom" width="40%"><div align="left" class="colore_1">Bentornato <b>#{currentUser.nome} #{currentUser.cognome}</b></div></td>			      
+					  	<td valign="bottom" width="40%">
+					  		<s:decorate rendered="#{(currentAccount.punteggioFeedback >= 2.5)}">
+					  			<div align="center" class="min_bold" onclick="javascript:infolevel();" style="cursor: pointer" >
+					  			<img src="/SeamAmiciDelGas/img/driver_mini.png" border="0" id="plus_img_infolevel" align="middle" /> Proponiti come driver
+					  			</div>
+					  		</s:decorate>
+					  	</td>			      
 					  </tr>
 					  <tr>
 					    <td valign="top"><div align="left" class="explorer">
@@ -50,15 +56,37 @@
                         	<li>Indirizzo: #{currentUser.indirizzo}</li>
 						</div></td>
 						<td valign="top"><div align="left" class="explorer">
-							<a:repeat var="_ruolo" value="#{rolesPerAccount.resultList}">
-							<li><h:outputText value="#{_ruolo.name}"/></li>
-							</a:repeat>
-                        	<br/>
-                        	<s:button
-                        		
-                        	    rendered="#{(currentAccount.punteggioFeedback >= 2.5)}"
-                        	    action="#{notificaRichiestaRisposta.notificaRequest()}" 
-                        	    value="Proponiti come driver" />
+							<s:decorate rendered="#{(currentAccount.punteggioFeedback >= 2.5)}">
+                       		<table width="100%" border="0" align="left" cellpadding="0" cellspacing="0" id="table_show_info" style="display:none;">
+							  <tr>
+							    <td width="22" height="22" background="/SeamAmiciDelGas/img/shadow_a.png"></td>
+							    <td height="22" background="/SeamAmiciDelGas/img/shadow_top.png"></td>
+							    <td width="22" height="22" background="/SeamAmiciDelGas/img/shadow_b.png"></td>
+							  </tr>
+						      <tr>
+							  	<td background="/SeamAmiciDelGas/img/shadow_left.png"></td>
+							    <td background="/SeamAmiciDelGas/img/shadow.png" align="center" >
+						    				<h:inputTextarea value="" />
+							    </td>
+							  	<td background="/SeamAmiciDelGas/img/shadow_right.png"></td>
+							  </tr>
+							  <tr>
+							  	<td background="/SeamAmiciDelGas/img/shadow_left.png"></td>
+							    <td background="/SeamAmiciDelGas/img/shadow.png" align="center">							    	
+				    				<s:button rendered="#{(currentAccount.punteggioFeedback >= 2.5)}"
+                	    							action="#{notificaRichiestaRisposta.notificaRequest()}" 
+                   	    							value="Proponiti come driver" />
+                       	    					
+							    </td>
+							  	<td background="/SeamAmiciDelGas/img/shadow_right.png"></td>
+							  </tr>
+							  <tr>
+							    <td width="22" height="22" background="/SeamAmiciDelGas/img/shadow_d.png"></td>
+							    <td height="22" background="/SeamAmiciDelGas/img/shadow_bottom.png"></td>
+							    <td width="22" height="12" background="/SeamAmiciDelGas/img/shadow_c.png"></td>
+							  </tr>
+							</table>
+                        	</s:decorate>
                         	<!-- Inserire il corpo del messaggio e il destinatario e il broadcast(true) come campi nascosti
                         	<h:outputText rendered="#{(currentAccount.punteggioFeedback > 3.5)}"  >
                         		Proponiti come driver <img src="/SeamAmiciDelGas/img/driver_mini.png" border="0" align="middle"/>
@@ -69,6 +97,21 @@
 					</table>	
 				</td>
 				<td >
+					<table width="98%" border="0" cellspacing="6" cellpadding="0" align="center" >
+					  <tr>			    
+					    <td rowspan="2" align="left">
+					    	<img alt="statistiche" border="0" src="/SeamAmiciDelGas/img/ruoli.png"/>					    	
+					    </td>
+					    <td valign="bottom"><div align="left" class="colore_1">I tuoi ruoli</div></td>			      
+					  </tr>
+					  <tr>
+					    <td valign="top"><div align="left" class="explorer">
+							<a:repeat var="_ruolo" value="#{rolesPerAccount.resultList}">
+							<h:outputText value="#{_ruolo.name}"/>; 
+							</a:repeat>
+					    </div></td>
+					  </tr>
+					</table>
 					<table width="98%" border="0" cellspacing="6" cellpadding="0" align="center" >
 					  <tr>			    
 					    <td rowspan="2" align="left">
@@ -102,7 +145,7 @@
 					    	<h:outputText value="Visualizza e modifica i tuoi dati" rendered="#{(loginSelectBean.calculateMaxRole()=='admin')}"/>
 					    </div></td>
 					  </tr>
-					</table>
+					</table>					
 				</td>
 			</tr>
 			<tr>
@@ -115,9 +158,9 @@
 				</td>
 				
 				<td width="25%">
-					<table width="98%" border="0" cellspacing="2" cellpadding="0" align="center" >
+					<table width="98%" border="0" cellspacing="6" cellpadding="0" align="center" >
 					  <tr>			    
-					    <td rowspan="2" align="left"><a href="/SeamAmiciDelGas/driver/itinerario.seam"><img alt="statistiche" border="0" src="/img/ico_config.jpg"/></a></td>
+					    <td rowspan="2" align="left"><a href="/SeamAmiciDelGas/driver/itinerario.seam"><img alt="statistiche" border="0" src="/SeamAmiciDelGas/img/itinerario.png"/></a></td>
 					    <td valign="bottom"><div align="left" class="colore_1"><a href="/SeamAmiciDelGas/driver/itinerario.seam">itinerario</a></div></td>			      
 					  </tr>
 					  <tr>
@@ -127,7 +170,7 @@
 				</td>
 				<td width="25%">
 					<s:decorate rendered="#{(loginSelectBean.calculateMaxRole()=='mediatore') or (loginSelectBean.calculateMaxRole()=='admin')}">
-						<table width="98%" border="0" cellspacing="2" cellpadding="0" align="center" >
+						<table width="98%" border="0" cellspacing="6" cellpadding="0" align="center" >
 						  <tr>			    
 						    <td rowspan="2" align="left"><a href="/SeamAmiciDelGas/mediatore/puntiDiConsegna.seam"><img alt="statistiche" border="0" src="/SeamAmiciDelGas/img/punto_consegna.png"/></a></td>
 						    <td valign="bottom"><div align="left" class="colore_1"><a href="/SeamAmiciDelGas/mediatore/puntiDiConsegna.seam">Punti di consegna</a></div></td>			      
@@ -146,7 +189,7 @@
 		<s:decorate rendered="#{loginSelectBean.calculateMaxRole()=='admin'}">	
 			<tr>
 			<td width="25%">
-					<table width="98%" border="0" cellspacing="2" cellpadding="0" align="center" >
+					<table width="98%" border="0" cellspacing="6" cellpadding="0" align="center" >
 					  <tr>			    
 					    <td rowspan="2" align="left">
 					    	<s:link view="/admin/editDatiUtenti.xhtml"
@@ -180,7 +223,7 @@
 				</td>
 			
 			<td width="25%">
-					<table width="98%" border="0" cellspacing="2" cellpadding="0" align="center" >
+					<table width="98%" border="0" cellspacing="6" cellpadding="0" align="center" >
 					  <tr>			    
 					    <td rowspan="2" align="left">
 					    	<s:link view="/admin/editDatiCybercontadino.xhtml"
