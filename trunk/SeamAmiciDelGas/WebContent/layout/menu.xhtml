@@ -12,9 +12,6 @@
     	<td width="64">	
     	</td>
     	<s:decorate rendered="#{identity.loggedIn and loginSelectBean.isCustomer}">
-    	<td width="16" align="center" >
-    		<img src="/SeamAmiciDelGas/img/palliniello.gif"/>	
-    	</td>
         <td height="32" width="48" align="center" >
 	        <s:link view="/customer/customerHome.xhtml" value="" propagation="none" rendered="#{identity.loggedIn and loginSelectBean.isCustomer}" >
 	        	 <h:graphicImage value="/img/menu_home.png" />
@@ -27,9 +24,6 @@
         </td>
         </s:decorate>
         <s:decorate rendered="#{identity.loggedIn and loginSelectBean.isCustomer}">
-        <td width="16" align="center" >
-    		<img src="/SeamAmiciDelGas/img/palliniello.gif"/>	
-    	</td>
         <td height="32" width="48" align="center" >
 			<div onclick="show_notifiche()" style="cursor:pointer;"  >
                     <img src="/SeamAmiciDelGas/img/menu_notifiche.png;" class="button_notifiche" />
@@ -42,9 +36,6 @@
         </td>
         </s:decorate>
         <s:decorate rendered="#{identity.loggedIn and loginSelectBean.isCustomer}">
-        <td width="16" align="center" >
-    		<img src="/SeamAmiciDelGas/img/palliniello.gif"/>	
-    	</td>
         <td height="32" width="48" align="center" >
 	        <s:link view="/customer/browseCatalog.xhtml" value="" propagation="none">
 	        	 <h:graphicImage value="/img/menu_carrello.png" />
@@ -54,9 +45,6 @@
         </td>
         </s:decorate>
         <s:decorate rendered="#{identity.loggedIn and loginSelectBean.isCustomer}">
-        <td width="16" align="center" >
-    		<img src="/SeamAmiciDelGas/img/palliniello.gif"/>	
-    	</td>
     	<td height="32" align="left" >
    			<rich:dropDownMenu style=" width : 100px;" rendered="#{identity.loggedIn and loginSelectBean.isCustomer}">
         	
@@ -104,9 +92,6 @@
         </td>
         </s:decorate>
         <s:decorate rendered="#{identity.loggedIn and (loginSelectBean.calculateMaxRole()=='mediatore' or loginSelectBean.calculateMaxRole()=='admin')}">
-        <td width="16" align="center" >
-    		<img src="/SeamAmiciDelGas/img/palliniello.gif"/>	
-    	</td>
         <td height="32" align="left" >
         	<rich:dropDownMenu style=" width : 100px;" rendered="#{identity.loggedIn and (loginSelectBean.calculateMaxRole()=='mediatore' or loginSelectBean.calculateMaxRole()=='admin')}">
 	        	<f:facet name="label"> 
@@ -132,9 +117,6 @@
         </td>
         </s:decorate>
         <s:decorate rendered="#{identity.loggedIn and loginSelectBean.calculateMaxRole()=='admin'}">
-        <td width="16" align="center" >
-    		<img src="/SeamAmiciDelGas/img/palliniello.gif"/>	
-    	</td>
         <td height="32" align="left" >
         	<rich:dropDownMenu style=" width : 100px;" rendered="#{identity.loggedIn and loginSelectBean.calculateMaxRole()=='admin'}">
 	        	<f:facet name="label"> 
@@ -161,9 +143,6 @@
         </td>
         </s:decorate>
         <s:decorate rendered="#{identity.loggedIn and loginSelectBean.driver}">
-        <td width="16" align="center" >
-    		<img src="/SeamAmiciDelGas/img/palliniello.gif"/>	
-    	</td>
         <td height="32" align="left" >
         	<rich:dropDownMenu style=" width : 78px;" rendered="#{identity.loggedIn and loginSelectBean.driver}">
         	
@@ -184,9 +163,6 @@
         </td>
         </s:decorate>
         <s:decorate rendered="#{identity.loggedIn and loginSelectBean.calculateMaxRole()=='utenteContadino'}">
-        <td width="16" align="center" >
-    		<img src="/SeamAmiciDelGas/img/palliniello.gif"/>	
-    	</td>
         <td height="32" align="left" >
   	        <rich:dropDownMenu style=" width : 100px;" rendered="#{identity.loggedIn and loginSelectBean.calculateMaxRole()=='utenteContadino'}">       	
 	        	<f:facet name="label"> 
@@ -206,33 +182,21 @@
         </td>
         </s:decorate>
         <s:decorate rendered="#{!identity.loggedIn}">
-        <td width="16" align="center" >
-    		<img src="/SeamAmiciDelGas/img/palliniello.gif"/>	
-    	</td>
         <td height="32" align="left" >
 			<s:link view="/login.xhtml" value="Login" propagation="none" rendered="#{!identity.loggedIn}"/>
         </td>
         </s:decorate>
         <s:decorate rendered="#{!identity.loggedIn}">
-        <td width="16" align="center" >
-    		<img src="/SeamAmiciDelGas/img/palliniello.gif"/>	
-    	</td>
         <td height="32" align="left" >
 	        <s:link view="/registrazione.xhtml" value="Registrazione" propagation="none" rendered="#{!identity.loggedIn}"/>
         </td>
         </s:decorate>
         <s:decorate rendered="#{identity.loggedIn}">
-        <td width="16" align="center" >
-    		<img src="/SeamAmiciDelGas/img/palliniello.gif"/>	
-    	</td>
         <td height="32" align="left" >
 	        <s:link view="/home.xhtml" action="#{identity.logout}" value="LOGOUT" propagation="none" rendered="#{identity.loggedIn}" />
     	</td>
         </s:decorate> 
         <s:decorate rendered="#{identity.loggedIn}">
-    	<td width="16" align="center" >
-    		<img src="/SeamAmiciDelGas/img/palliniello.gif"/>	
-    	</td>
     	<td height="32" >	
 	        <h:outputText style="color:red" value="LOGGED AS: #{identity.username}" rendered="#{identity.loggedIn}" />
     	</td>
