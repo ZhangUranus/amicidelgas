@@ -12,48 +12,83 @@
 	<ui:define name="body">
 
 			<rich:simpleTogglePanel label="Notifiche Personali">
-						<rich:dataTable id="dataTableUtente" 
-										value="#{filtraNotifica.taskInstanceSingleListForCustomer()}" var="_task"
-										width="90%" align="center" >
-							<rich:column>
-								<f:facet name="header">Mittente</f:facet>    
-						         <h:outputText value="#{_task.variables.sender}"/>
-							</rich:column>
-							<rich:column>
-								<f:facet name="header">Contenuto messaggio</f:facet>    
-						         <h:outputText value="#{_task.variables.notifyMessage.content}"/>
-							</rich:column>
-							<rich:column width="10%">
-								<s:button taskInstance="#{_task}" action="#{notifyBean.receive()}"
-										  value="Cancella messaggio"/>
-							</rich:column>
-						</rich:dataTable>
-				</rich:simpleTogglePanel>
+				<s:decorate rendered="#{not empty filtraNotifica.getAllSingleTaskInstanceList('ReceiveMessage')}">
+					<b><h:outputText value="Messaggi da altri utenti" /></b><br/><br/>
+					<rich:dataTable id="dataTableUtente" width="90%" align="center" 
+									value="#{filtraNotifica.getAllSingleTaskInstanceList('ReceiveMessage')}" var="_task">
+						<rich:column>
+							<f:facet name="header">Mittente</f:facet>    
+						        <h:outputText value="#{_task.variables.sender}"/>
+						</rich:column>
+						<rich:column>
+							<f:facet name="header">Contenuto messaggio</f:facet>    
+						    <h:outputText value="#{_task.variables.notifyMessage.content}"/>
+						</rich:column>
+						<rich:column width="10%">
+							<s:button taskInstance="#{_task}" action="#{notifyBean.receive()}"
+									value="Cancella messaggio"/>
+						</rich:column>
+					</rich:dataTable>
+					<br/><br/><br/>
+				</s:decorate>
 				
-				<br/><br/><br/>
+				<s:decorate rendered="#{not empty filtraNotifica.getAllSingleTaskInstanceList('ReceiveOrderFailed','ReceiveOrderAccepted')}">
+					<b><h:outputText value="Messaggi dal driver o contadino" /></b><br/><br/>
+					<rich:dataTable id="dataTableUtente" width="90%" align="center" 
+									value="#{filtraNotifica.getAllSingleTaskInstanceList('ReceiveOrderFailed','ReceiveOrderAccepted')}" var="_task">
+						<rich:column>
+							<f:facet name="header">Mittente</f:facet>    
+						        <h:outputText value="#{_task.variables.notifyMessageStatoOrdine.mittente}"/>
+						</rich:column>
+
+						<rich:column>
+							<f:facet name="header">Contenuto messaggio</f:facet>    
+						    <h:outputText value="#{_task.variables.notifyMessageStatoOrdine.content}"/>
+						</rich:column>
+						<rich:column>
+							<f:facet name="header">Info Filter</f:facet>    
+						    <h:outputText value="#{_task.variables.notifyMessageStatoOrdine.infoFilter}"/>
+						</rich:column>
+						<rich:column width="10%">
+							<s:decorate rendered="#{_task.variables.notifyMessageStatoOrdine.infoFilter=='orderProcessingNonPreso'}">
+								<s:button taskInstance="#{_task}" action="#{orderProcessing.attendiDataConsegna()}"
+										value="Non preso, ok"/>
+							</s:decorate>
+							<s:decorate rendered="#{_task.variables.notifyMessageStatoOrdine.infoFilter=='orderProcessingPreso'}">
+								<s:button taskInstance="#{_task}" action="#{orderProcessing.attendiDataConsegna()}"
+										value="Preso, ok"/>
+							</s:decorate>
+						</rich:column>
+					</rich:dataTable>
+				</s:decorate>
+			</rich:simpleTogglePanel>
 				
-				<rich:simpleTogglePanel label="Notifiche di gruppo">
-						<rich:dataTable id="dataTableGroup" 
-									value="#{filtraNotifica.taskInstanceGroupListForCustomer()}" var="_pooledTask"
-									width="90%" align="center" >
-							<rich:column>
-								<f:facet name="header">Mittente</f:facet>    
-						         <h:outputText value="#{_pooledTask.variables.sender}"/>
-							</rich:column>
-							<rich:column>
-								<f:facet name="header">Gruppo</f:facet>    
-						         <h:outputText value="#{_pooledTask.variables.notifyMessage.recipient}"/>
-							</rich:column>
-							<rich:column>
-								<f:facet name="header">Contenuto messaggio</f:facet>    
-						         <h:outputText value="#{_pooledTask.variables.notifyMessage.content}"/>
-							</rich:column>
-							<rich:column width="10%">
-								<s:button taskInstance="#{_pooledTask}" action="#{notifyBean.receive()}"
-										  value="Cancella messaggio"/>
-							</rich:column>
-						</rich:dataTable>
+				<br/><br/>
 				
+			<rich:simpleTogglePanel label="Notifiche di gruppo">
+				<s:decorate rendered="#{not empty filtraNotifica.getAllPooledTaskInstanceList('ReceiveMessage')}">
+					<b><h:outputText value="Messaggi di gruppo da altri utenti" /></b><br/><br/>
+					<rich:dataTable id="dataTableGroup" 
+								value="#{filtraNotifica.getAllPooledTaskInstanceList('ReceiveMessage')}" var="_pooledTask"
+								width="90%" align="center" >
+						<rich:column>
+							<f:facet name="header">Mittente</f:facet>    
+					         <h:outputText value="#{_pooledTask.variables.sender}"/>
+						</rich:column>
+						<rich:column>
+							<f:facet name="header">Gruppo</f:facet>    
+					         <h:outputText value="#{_pooledTask.variables.notifyMessage.recipient}"/>
+						</rich:column>
+						<rich:column>
+							<f:facet name="header">Contenuto messaggio</f:facet>    
+					         <h:outputText value="#{_pooledTask.variables.notifyMessage.content}"/>
+						</rich:column>
+						<rich:column width="10%">
+							<s:button taskInstance="#{_pooledTask}" action="#{notifyBean.receive()}"
+									  value="Cancella messaggio"/>
+						</rich:column>
+					</rich:dataTable>
+				</s:decorate>
 			</rich:simpleTogglePanel>
 		
 		

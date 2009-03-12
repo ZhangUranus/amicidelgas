@@ -8,10 +8,11 @@ public class Message implements Serializable{
 
 	private static final long serialVersionUID = 8305655916287583818L;
 	private String content;
+	private String mittente;
 	private boolean broadcast;
-	public List<String> recipients = new ArrayList<String>();
-	public String destinatario;
-	
+	private List<String> recipients = new ArrayList<String>();
+	private String destinatario;
+	private String infoFilter;
 	
 	
 	public String getContent() { 
@@ -53,6 +54,19 @@ public class Message implements Serializable{
 	}
 	public void setDestinatario(String destinatario) {
 		this.destinatario = destinatario;
+	}
+
+	public String getInfoFilter() {
+		return infoFilter;
+	}
+	public void setInfoFilter(String infoFilter) {
+		this.infoFilter = infoFilter;
+	}
+	public String getMittente() {
+		return mittente;
+	}
+	public void setMittente(String mittente) {
+		this.mittente = mittente;
 	}
 }
 
