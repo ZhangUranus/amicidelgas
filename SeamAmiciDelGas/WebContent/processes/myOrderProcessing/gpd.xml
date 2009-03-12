@@ -8,7 +8,7 @@
   </node>
   <node name="Ordine notificato a driver e contadini" x="349" y="190" width="243" height="36">
     <edge>
-      <label x="5" y="-10"/>
+      <label x="-18" y="12"/>
     </edge>
     <edge>
       <label x="5" y="-10"/>
@@ -17,10 +17,10 @@
       <label x="-135" y="-14"/>
     </edge>
   </node>
-  <node name="Notifica utente ordine non disponibile" x="611" y="385" width="252" height="36">
+  <node name="Notifica utente ordine non disponibile" x="596" y="402" width="252" height="36">
     <edge>
       <label x="5" y="-10"/>
-      <bendpoint w1="-76" h1="-89" w2="210" h2="23"/>
+      <bendpoint w1="-61" h1="-187" w2="206" h2="8"/>
     </edge>
   </node>
   <node name="Notifica utente ordine non preso in carico" x="720" y="90" width="298" height="36">
@@ -61,7 +61,7 @@
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="Verifica disponibilita" x="392" y="294" width="132" height="36">
+  <node name="Verifica disponibilita" x="379" y="294" width="169" height="36">
     <edge>
       <label x="5" y="-10"/>
     </edge>
