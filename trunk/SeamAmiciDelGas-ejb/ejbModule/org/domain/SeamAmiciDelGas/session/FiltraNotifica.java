@@ -36,12 +36,8 @@ public class FiltraNotifica {
 		return numberOfTaskForSingle("accetta_ordine");
 	}
 
-	public int numberOfTaskForSingle(String taskType)	{
-		int count = 0;
-		for (TaskInstance ti: taskInstanceList)
-			if (ti.getName().equals(taskType))
-				count++;
-		return count;
+	public int numberOfTaskForSingle(String taskFilter)	{
+		return numberOfTask("taskForSingle", taskFilter);
 	}
 
 	/*
@@ -56,14 +52,35 @@ public class FiltraNotifica {
 		return numberOfTaskForGroup("accetta_ordine");
 	}
 	
-	public int numberOfTaskForGroup(String taskType)	{
-		int count = 0;
-		for (TaskInstance ti: pooledTaskInstanceList)
-			if (ti.getName().equals(taskType))
-				count++;
-		return count;
+	public int numberOfTaskForGroup(String... taskFilter)	{
+		return numberOfTask("taskForGroup", taskFilter);
 	}
 	
+	/**
+	 * numberOfTask(String SingleOrGroupTask, String... filters)
+	 * Torna il numero di task per single o per gruppi con 
+	 * gli opportuni filtri sul nome del filtro
+	 * @return un int che rappresenta il numero di task con gli opportuni filtri
+	 * @param SingleOrGroupTask può essere: "taskForSingle" oppure "taskForGroup" 
+	 * @param filters una o più stringhe separate da una virgola che rappresentano i task
+	 * 			a cui associare il filtro.
+	 */
+	public int numberOfTask(String SingleOrGroupTask, String... filters)
+	{
+		List<TaskInstance> tempTaskInstance;
+		if(SingleOrGroupTask.equals("taskForSingle"))
+			tempTaskInstance = taskInstanceList;
+		else if(SingleOrGroupTask.equals("taskForGroup"))
+			tempTaskInstance = pooledTaskInstanceList;
+		else
+			return 9999; //tempTaskInstance = null; //per verifica
+		int count = 0;
+		for (TaskInstance ti: tempTaskInstance)
+			for(String singleFilter : filters)
+				if (ti.getName().equals(singleFilter))
+					count++;
+		return count;
+	}
 	/*
 	 * Ritorno task instance per singolo utente
 	 */
@@ -71,14 +88,16 @@ public class FiltraNotifica {
 	public List<TaskInstance> taskInstanceSingleListForCustomer() {
 		//return taskInstanceSingleList("ReceiveMessage");
 		List<TaskInstance> tasks= new ArrayList<TaskInstance>();
-		List<TaskInstance> list1 = taskInstanceSingleList("ReceiveMessage");
-		List<TaskInstance> list2 = taskInstanceSingleList("ReceiveOrderFailed");
-		List<TaskInstance> list3 = taskInstanceSingleList("ReceiveOrderAccepted");
-		List<TaskInstance> list4 = taskInstanceSingleList("riceviMessaggio");
-		tasks.addAll(list1);
-		tasks.addAll(list2);
-		tasks.addAll(list3);
-		tasks.addAll(list4);
+		taskInstanceSingleListForCustomerDinamic("ReceiveMessage",
+												 "ReceiveOrderFailed","ReceiveOrderAccepted");
+		return tasks;
+	}
+	
+	public List<TaskInstance> taskInstanceSingleListForCustomerDinamic(String... filter)
+	{
+		List<TaskInstance> tasks= new ArrayList<TaskInstance>();
+		for(String taskFilter : filter)
+			tasks.addAll(taskInstanceSingleList(taskFilter));
 		return tasks;
 	}
 	
