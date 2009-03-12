@@ -31,7 +31,7 @@
     		<img src="/SeamAmiciDelGas/img/palliniello.gif"/>	
     	</td>
         <td height="32" width="48" align="center" >
-			<div>
+			<div onclick="show_notifiche()" style="cursor:pointer;" >
                     <h:graphicImage value="/img/menu_notifiche.png" />
 		            <h:outputText rendered="#{(pooledTaskInstanceList.size() + taskInstanceList.size())>0}">
 		            	<span id="notifiche_div" class="notifiche_class" ><img src="/SeamAmiciDelGas/img/red_number.png" /></span>
@@ -243,7 +243,7 @@
 </table >
 
 <s:decorate rendered="#{identity.loggedIn}">
-<div id="notifiche_lista" style="display:block;" class="div_notifiche_lista_class">
+<div id="notifiche_lista" style="display:none;" class="div_notifiche_lista_class">
 	<table width="280px" cellpadding="0" cellspacing="0" border="0" id="table_notifiche_liste">
 	  <tr>
 	    <td width="13" height="12" background="/SeamAmiciDelGas/img/shadow_corner_a.png"></td>
@@ -261,7 +261,7 @@
 	  	<td background="/SeamAmiciDelGas/img/shadow_ovest.png"></td>
 	    <td colspan="2" background="/SeamAmiciDelGas/img/shadow_n.png" align="left" >
 	    	<s:link view="/customer/inviaNotifiche.xhtml" propagation="none">
-	    		<div class="colore_white_bold">Invia notifica</div>
+	    		<div class="colore_white_bold"><i>Invia notifica</i></div>
 	    	</s:link>
 	    </td>
 	  	<td background="/SeamAmiciDelGas/img/shadow_est.png"></td>
@@ -316,6 +316,8 @@
 	    <td width="13" height="12" background="/SeamAmiciDelGas/img/shadow_corner_c.png"></td>
 	  </tr>
 	</table>
+</div>
+<div id="shadow_focus" class="focus_style" style="background: transparent url('/SeamAmiciDelGas/img/shadow0.png') ; width:100%; height:100%; display:none;">
 </div>
 </s:decorate>
 </h:form>
