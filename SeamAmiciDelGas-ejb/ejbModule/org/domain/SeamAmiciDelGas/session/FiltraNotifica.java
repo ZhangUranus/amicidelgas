@@ -144,10 +144,10 @@ public class FiltraNotifica {
 		return tasks;
 	}
 	
-	private List<TaskInstance> taskInstanceGroupList(String taskType) {
+	private List<TaskInstance> taskInstanceGroupList(String taskFilter) {
 		List<TaskInstance> tasks = new ArrayList<TaskInstance>();
 		for (TaskInstance ti: pooledTaskInstanceList) {
-			if (ti.getName().equals(taskType))
+			if (ti.getName().equals(taskFilter))
 				tasks.add(ti);
 		}
 		return tasks;
