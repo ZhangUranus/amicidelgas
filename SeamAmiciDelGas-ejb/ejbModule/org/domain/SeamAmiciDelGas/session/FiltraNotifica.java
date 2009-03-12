@@ -36,7 +36,7 @@ public class FiltraNotifica {
 		return numberOfTaskForSingle("accetta_ordine");
 	}
 
-	public int numberOfTaskForSingle(String taskFilter)	{
+	public int numberOfTaskForSingle(String... taskFilter)	{
 		return numberOfTask("taskForSingle", taskFilter);
 	}
 
@@ -81,39 +81,48 @@ public class FiltraNotifica {
 					count++;
 		return count;
 	}
+	
 	/*
-	 * Ritorno task instance per singolo utente
+	 * Ritorno la lista di task instance per singolo utente
 	 */
 	
 	public List<TaskInstance> taskInstanceSingleListForCustomer() {
-		//return taskInstanceSingleList("ReceiveMessage");
-		List<TaskInstance> tasks= new ArrayList<TaskInstance>();
-		taskInstanceSingleListForCustomerDinamic("ReceiveMessage",
+		return getAllSingleTaskInstanceList("ReceiveMessage",
 												 "ReceiveOrderFailed","ReceiveOrderAccepted");
+	}
+	
+	/**
+	 * public List<TaskInstance> taskInstanceSingleListForCustomerDinamic(String... filters)
+	 * {
+	 * List<TaskInstance> tasks= new ArrayList<TaskInstance>();
+	 *	for(String taskFilter : filters)
+	 *		tasks.addAll(taskInstanceSingleList(taskFilter));
+	 *	return tasks;
+	 * }
+	 * 
+	 * @param filters Una o più stringhe che rappresentano i filtri
+	 * @return ritorna una lista di TaskInstance 
+	 */
+	public List<TaskInstance> getAllSingleTaskInstanceList(String... filters)
+	{
+		List<TaskInstance> tasks= new ArrayList<TaskInstance>();
+		for(String taskFilter : filters)
+			tasks.addAll(taskInstanceSingleList(taskFilter));
 		return tasks;
 	}
 	
-	public List<TaskInstance> taskInstanceSingleListForCustomerDinamic(String... filter)
-	{
-		List<TaskInstance> tasks= new ArrayList<TaskInstance>();
-		for(String taskFilter : filter)
-			tasks.addAll(taskInstanceSingleList(taskFilter));
+	private List<TaskInstance> taskInstanceSingleList(String taskFilter) {
+		List<TaskInstance> tasks = new ArrayList<TaskInstance>();
+		for (TaskInstance ti: taskInstanceList) {
+			if (ti.getName().equals(taskFilter))
+				tasks.add(ti);
+		}
 		return tasks;
 	}
 	
 	public List<TaskInstance> taskInstanceSingleListForDriver() {
 		return taskInstanceSingleList("accetta_ordine");
 	}
-	
-	public List<TaskInstance> taskInstanceSingleList(String taskType) {
-		List<TaskInstance> tasks = new ArrayList<TaskInstance>();
-		for (TaskInstance ti: taskInstanceList) {
-			if (ti.getName().equals(taskType))
-				tasks.add(ti);
-		}
-		return tasks;
-	}
-	
 	
 	/*
 	 * ritorno task instance per gruppi
@@ -127,7 +136,15 @@ public class FiltraNotifica {
 		return taskInstanceGroupList("accetta_ordine");
 	}
 	
-	public List<TaskInstance> taskInstanceGroupList(String taskType) {
+	public List<TaskInstance> getAllPooledTaskInstanceList(String... filters)
+	{
+		List<TaskInstance> tasks= new ArrayList<TaskInstance>();
+		for(String taskFilter : filters)
+			tasks.addAll(taskInstanceGroupList(taskFilter));
+		return tasks;
+	}
+	
+	private List<TaskInstance> taskInstanceGroupList(String taskType) {
 		List<TaskInstance> tasks = new ArrayList<TaskInstance>();
 		for (TaskInstance ti: pooledTaskInstanceList) {
 			if (ti.getName().equals(taskType))
