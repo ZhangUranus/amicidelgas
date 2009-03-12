@@ -154,7 +154,48 @@
 			</tr>
 			<tr>
 				<td width="25%">
-					
+					<div align="center" >TODO notifiche ed eventi
+						<rich:dataTable  id="requestTable" var="_task"
+									value="#{pooledTaskInstanceList}"
+							rendered="#{identity.loggedIn and not empty pooledTaskInstanceList}">
+							<h:column>
+								<f:facet name="header">Message</f:facet>
+												#{_task.variables.notifyMessageRequest.content}
+									</h:column>
+							<h:column>
+								<f:facet name="header">Action</f:facet>
+								<s:link action="#{inviaRequestReply.riceviMessaggio}" taskInstance="#{_task}"
+									value="Invia Utente" />
+							</h:column>
+							<h:column>
+								<f:facet name="header">Message</f:facet>
+												#{_task.variables.notificaUtente.content}
+									</h:column>
+									<h:column>
+								<f:facet name="header">Action</f:facet>
+								<s:link action="#{inviaNotificaRegistrazioni.partecipa_alla_visita}" taskInstance="#{_task}"
+									value="Accetta Visita" />
+							</h:column>
+						</rich:dataTable>
+						<rich:dataTable  id="requestTableFalsa" var="_task2"
+									value="#{taskInstanceList}"
+							rendered="#{identity.loggedIn and not empty taskInstanceList}">
+							<h:column>
+								<f:facet name="header">Message</f:facet>
+												#{_task2.variables.notifyMessageReply.content}
+									</h:column>
+							<h:column>
+								<f:facet name="header">Action</f:facet>
+								<s:link action="#{inviaRequestReply.riceviRisposta}" taskInstance="#{_task2}"
+									value="Invia Fine" />
+							</h:column>
+						</rich:dataTable>
+									<li>notifica1</li>
+                        			<li>notifica2</li>
+                        			<li>notifica31</li>
+                        			<li>notifica14</li>
+                        	
+								</div>
 				</td>
 				
 				<td width="25%">
