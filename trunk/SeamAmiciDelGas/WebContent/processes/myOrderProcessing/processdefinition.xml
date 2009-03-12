@@ -18,7 +18,7 @@
 	</task-node>
 
 	<task-node name="Notifica utente ordine non disponibile">
-		<task>
+		<task name="ReceiveOrderFailed">
 			<assignment actor-id="#{customer}"></assignment>
 		</task>
 		<transition to="Ordine notificato a driver e contadini" name="ordine_rimesso_nel_pool"></transition>
