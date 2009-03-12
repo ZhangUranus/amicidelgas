@@ -241,7 +241,7 @@
 	  	<td background="/SeamAmiciDelGas/img/shadow_ovest.png"></td>
 	    <td background="/SeamAmiciDelGas/img/shadow_n.png" align="left" >
 	    	<s:decorate >
-	    		<s:link view="/customer/riceviNotifiche.xhtml" value="" propagation="none" >
+	    		<s:link view="/customer/riceviNotifiche.xhtml" propagation="none" >
     		    	<div align="left" class="colore_white_bold" style="height: 28px;  padding-top: 4px;">Notifiche Personali</div>
     		    </s:link>
     		</s:decorate>
@@ -249,7 +249,9 @@
     		    <div align="left" class="colore_white_bold" style="height: 28px;  padding-top: 4px;">Richieste Driver</div>
     		</s:decorate>
     		<s:decorate rendered="#{((loginSelectBean.calculateMaxRole()=='mediatore' or loginSelectBean.calculateMaxRole()=='admin'))}">
-    		    <div align="left" class="colore_white_bold" style="height: 28px;  padding-top: 4px;">Registrazioni cybercontadino</div>
+    			<s:link view="/mediatore/accettaRegistrazioni.xhtml" propagation="none">
+    		    	<div align="left" class="colore_white_bold" style="height: 28px;  padding-top: 4px;">Registrazioni cybercontadino</div>
+    		    </s:link>
     		</s:decorate>
 	    </td>
 	    <td width="26px" background="/SeamAmiciDelGas/img/shadow_n.png" align="left" >
