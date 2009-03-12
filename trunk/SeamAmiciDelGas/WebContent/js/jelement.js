@@ -9,6 +9,7 @@ var current_dockplus = 0;
 var current_eurolevel = 0;
 var current_calendarlevel = 0; 
 var current_area = 0;
+var current_notifiche = 0;
 
 
 function TabDispaly(obj, cond) {
@@ -51,17 +52,20 @@ function ricorsivo()
        }
 }
 
-function private_area()
+function show_notifiche()
 {
 	
-	if (current_area == 0) {
-		document.getElementById('login_table').style.display = '';
-		current_area = 1;
+	if (current_notifiche == 0) {
+		document.getElementById('notifiche_lista').style.display = '';
+		document.getElementById('shadow_focus').style.display = '';
+		current_notifiche = 1;
 	} else {
-		document.getElementById('login_table').style.display = 'none';
-		current_area = 0;
+		document.getElementById('notifiche_lista').style.display = 'none';
+		document.getElementById('shadow_focus').style.display = 'none';
+		current_notifiche = 0;
 	}
 }
+
 
 
 function infolevel()

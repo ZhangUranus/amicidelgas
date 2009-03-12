@@ -32,9 +32,17 @@ input[type=text], input[type=password], textarea {
 	background:transparent;
 	position:fixed;
 	zoom:1;
-	z-index: 110;
+	z-index: 102;
 	top: 4px;
 	left: 4px;
+}
+
+.focus_style{
+	position:fixed;
+	zoom:1;
+	z-index: 120;
+	top: 0px;
+	left: 0px;
 }
 
 .div_notifiche_lista_class{
@@ -50,7 +58,7 @@ input[type=text], input[type=password], textarea {
 	background:transparent;
 	position:fixed;
 	zoom:1;
-	z-index: 120;
+	z-index: 135;
 	top: 18px;
 	left: 188px;
 }
@@ -60,7 +68,7 @@ input[type=text], input[type=password], textarea {
 	position:absolute;
 	zoom:1;
 	text-align:center;
-	z-index: 130;
+	z-index: 136;
 	top: 22px;
 	left: 193px;
 	font-size: 12px;
@@ -72,7 +80,7 @@ input[type=text], input[type=password], textarea {
 	background:transparent;
 	position:fixed;
 	zoom:1;
-	z-index: 120;
+	z-index: 131;
 	top: 38px;
 	left: 5%;
 }
