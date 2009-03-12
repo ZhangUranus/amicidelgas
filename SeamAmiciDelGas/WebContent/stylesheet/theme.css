@@ -31,16 +31,19 @@ input[type=text], input[type=password], textarea {
 .logo{
 	background:transparent;
 	position:fixed;
-	zoom:1;
 	z-index: 102;
 	top: 4px;
 	left: 4px;
 }
 
+.button_notifiche{
+	z-index: 134;
+	position:relative;
+}
+
 .focus_style{
 	position:fixed;
 	zoom:1;
-	z-index: 120;
 	top: 0px;
 	left: 0px;
 }

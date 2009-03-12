@@ -31,8 +31,8 @@
     		<img src="/SeamAmiciDelGas/img/palliniello.gif"/>	
     	</td>
         <td height="32" width="48" align="center" >
-			<div onclick="show_notifiche()" style="cursor:pointer;" >
-                    <h:graphicImage value="/img/menu_notifiche.png" />
+			<div onclick="show_notifiche()" style="cursor:pointer;"  >
+                    <img src="/SeamAmiciDelGas/img/menu_notifiche.png;" class="button_notifiche" />
 		            <h:outputText rendered="#{(pooledTaskInstanceList.size() + taskInstanceList.size())>0}">
 		            	<span id="notifiche_div" class="notifiche_class" ><img src="/SeamAmiciDelGas/img/red_number.png" /></span>
 		            	<span style="width: 20px" id="notifiche_number_div" class="notifiche_num_class" >#{pooledTaskInstanceList.size() + taskInstanceList.size()}</span>
@@ -253,7 +253,7 @@
 	  <tr>
 	  	<td background="/SeamAmiciDelGas/img/shadow_ovest.png"></td>
 	    <td colspan="2" background="/SeamAmiciDelGas/img/shadow_n.png" align="right" >
-	    		<div ><img src="/SeamAmiciDelGas/img/close.png" /></div>
+	    		<div onclick="show_notifiche()" style="cursor:pointer;" ><img src="/SeamAmiciDelGas/img/close.png" /></div>
 	    </td>
 	  	<td background="/SeamAmiciDelGas/img/shadow_est.png"></td>
 	  </tr>
