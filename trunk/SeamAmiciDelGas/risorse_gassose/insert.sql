@@ -10561,15 +10561,15 @@ COMMIT;
 /*!40000 ALTER TABLE `utente` DISABLE KEYS */;
 SET AUTOCOMMIT=0;
 INSERT INTO `utente` (`CodiceFiscale`,`Nome`,`Indirizzo`,`RecapitoTelefonico`,`email`,`Cognome`,`DataNascita`,`Sesso`,`PathQuestionario`,`Comune_nascita`,`IDComune`) VALUES 
- ('gasgas00f03f123y','admin_gas','Labis','666','comelatua@undominio.com','admin_gas','1989-02-14','M',NULL,10252,10252);
+ ('gasgas00f03f123y','admin_nome','Labis','666','comelatua@undominio.com','admin_cognome','1989-02-14','M',NULL,10252,10252);
 COMMIT;
 /*!40000 ALTER TABLE `utente` ENABLE KEYS */;
 INSERT INTO `utente` (`CodiceFiscale`,`Nome`,`Indirizzo`,`RecapitoTelefonico`,`email`,`Cognome`,`DataNascita`,`Sesso`,`PathQuestionario`,`Comune_nascita`,`IDComune`) VALUES
 ('aaaaaa12b33d111a', 'Zlatan', 'via S.Siro', '0801234', 'ibra@inter.it', 'Ibrahimovic', '1981-12-11', 'M', NULL, 7, 204),
-('antodf12b32b111g', 'Esteban', 'via S.Siro', '0814424523', 'esteban@inter.it', 'Cambiasso', '1978-02-01', 'M', NULL, 6, 204),
-('FFFFFF23r23r234r', 'Jose', 'via S.Siro', '0812543', 'jose@inter.it', 'Mourinho', '1981-02-11', 'M', NULL, 7, 204),
-('ssssss34f35f354d', 'Tyson', 'via S.Siro', '082422432', 'tyson@inter.it', 'Rivas', '1981-02-11', 'M', NULL, 7, 204),
-('ffdgat12d15h134u', 'Giorgio', 'via S.Siro', '0824123456', 'giorgio@inter.it', 'Pantano', '1981-04-12', 'M', NULL, 7, 204);
+('antodf12b32b111g', 'Esteban', 'via Olimpico', '0814424523', 'esteban@inter.it', 'Cambiasso', '1978-02-01', 'M', NULL, 6, 204),
+('FFFFFF23r23r234r', 'Jose', 'via Prato', '0812543', 'jose@inter.it', 'Mourinho', '1981-02-11', 'M', NULL, 7, 204),
+('ssssss34f35f354d', 'Tyson', 'via Rio', '082422432', 'tyson@inter.it', 'Rivas', '1981-02-11', 'M', NULL, 7, 204),
+('ffdgat12d15h134u', 'Giorgio', 'via Daqui', '0824123456', 'giorgio@inter.it', 'Pantano', '1981-04-12', 'M', NULL, 7, 204);
 COMMIT;
 
 INSERT INTO `pagamentoelettronico` (`idPagamentoElettronico`, `tipo_carta`, `numero_carta`) VALUES
@@ -10613,8 +10613,8 @@ INSERT INTO `account` (`Username`,`passwordHash`,`Bloccato`,`Elimato`,`Cancellat
 COMMIT;
 
 INSERT INTO `cybercontadino` (`PartitaIVA`,`NomePresidente`,`Indirizzo`,`CognomePresidente`,`NomeAzienda`,`PathASL`,`URLWSDL`,`DescrizioneAzienda`,`recapito_telefonico`,`email`,`Coordinate`, `Username`, `Comune_ubicazione`) VALUES
-(01139780629, 'Massimo', 'via via', 'Ranieri', 'Pomodori','asl', 'url-wsdl', 'vendiamo pomodori', 973692, 'ranieri@napoli.it', 'eeweew', 'ranieri', 10252),
-(01435650625, 'Mohamed', 'via via', 'Sissoko', 'Patate', 'asl', 'url-wsdl-patate', 'vendiamo patate', 973692, 'sissoko@napoli.it', 'kjbdsds', 'sissoko', 1);
+(01139780629, 'Massimo', 'via Manzoni', 'Ranieri', 'Azienda RoCoCo','asl', 'url-wsdl', 'vendiamo pomodori', 973692, 'ranieri@napoli.it', 'eeweew', 'ranieri', 10252),
+(01435650625, 'Mohamed', 'via Roma', 'Sissoko', 'Azienda Sissoko and company', 'asl', 'url-wsdl-patate', 'vendiamo patate', 973692, 'sissoko@napoli.it', 'kjbdsds', 'sissoko', 1);
 COMMIT;
 
 INSERT INTO `role` (`id`,`name`,`Username`) VALUES
