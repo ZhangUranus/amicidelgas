@@ -74,9 +74,11 @@ public class FiltraNotifica {
 		List<TaskInstance> list1 = taskInstanceSingleList("ReceiveMessage");
 		List<TaskInstance> list2 = taskInstanceSingleList("ReceiveOrderFailed");
 		List<TaskInstance> list3 = taskInstanceSingleList("ReceiveOrderAccepted");
+		List<TaskInstance> list4 = taskInstanceSingleList("riceviMessaggio");
 		tasks.addAll(list1);
 		tasks.addAll(list2);
 		tasks.addAll(list3);
+		tasks.addAll(list4);
 		return tasks;
 	}
 	
