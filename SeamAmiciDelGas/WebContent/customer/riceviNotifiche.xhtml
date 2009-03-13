@@ -51,12 +51,12 @@
 						</rich:column>
 						<rich:column width="10%">
 							<s:decorate rendered="#{_task.variables.notifyMessageStatoOrdine.infoFilter=='orderProcessingNonPreso'}">
-								<s:button taskInstance="#{_task}" action="#{orderProcessing.attendiDataConsegna()}"
-										value="Non preso, ok"/>
+								<s:button taskInstance="#{_task}" action="#{orderProcessing.notificaOrdineNonDisponibile()}"
+										value="Cancella"/>
 							</s:decorate>
 							<s:decorate rendered="#{_task.variables.notifyMessageStatoOrdine.infoFilter=='orderProcessingPreso'}">
-								<s:button taskInstance="#{_task}" action="#{orderProcessing.attendiDataConsegna()}"
-										value="Preso, ok"/>
+								<s:button taskInstance="#{_task}" action="#{orderProcessing.notificaOrdineDisponibile()}"
+										value="Cancella"/>
 							</s:decorate>
 						</rich:column>
 					</rich:dataTable>

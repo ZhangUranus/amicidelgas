@@ -85,23 +85,20 @@ public class OrdineBean {
 		return ordiniPendenti;
 	}
 
-	public List<Ordine> listOrdiniEvasi() {
-		List<Ordine> ordiniEvasi = new ArrayList<Ordine>();
+	public List<Ordine> listOrdiniEvasiOrConclusi()
+	{
+		List<Ordine> ordini = new ArrayList<Ordine>();
 		if (tipoOrdine.equals("2")) {
 			ordineList.setEjbql("select ordine from Ordine ordine where ordine.account.username='"+credentials.getUsername()+"' and ordine.concluso=false");
-			ordiniEvasi = ordineList.getResultList();
+			ordini = ordineList.getResultList();
 		}
-		return ordiniEvasi;
-	}
-	
-	public List<Ordine> listOrdiniConclusi() {
-		List<Ordine> ordiniConclusi = new ArrayList<Ordine>();
 		if (tipoOrdine.equals("3")) {
 			ordineList.setEjbql("select ordine from Ordine ordine where ordine.account.username='"+credentials.getUsername()+"' and ordine.concluso=true");
-			ordiniConclusi = ordineList.getResultList();
+			ordini = ordineList.getResultList();
 		}
-		return ordiniConclusi;
+		return ordini;
 	}
+
 	
 	public MyOrdine getOrdineFromTask(TaskInstance task) {
 		return (MyOrdine) task.getVariable("myOrdine");
