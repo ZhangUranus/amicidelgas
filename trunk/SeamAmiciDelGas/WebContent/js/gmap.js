@@ -1,6 +1,6 @@
 var geocoder = null;
 var point;
-var gasIcon;
+var gasIcon, contadiniIcon;
 var markers = new Array();
 
 function Indirizzo(via,comune,provincia){
@@ -32,6 +32,14 @@ function load() {
 	    gasIcon.iconAnchor = new GPoint(5, 34);
 	    gasIcon.infoWindowAnchor = new GPoint(5, 2);
 	    gasIcon.infoShadowAnchor = new GPoint(14, 25);
+	    
+	    contadiniIcon = new GIcon();
+	    contadiniIcon.image= "/SeamAmiciDelGas/img/gmap_fiamma.png";
+	    contadiniIcon.shadow="/SeamAmiciDelGas/img/gmap_fiamma_ombra.png";
+	    contadiniIcon.iconSize= new GSize(32 , 32);
+	    contadiniIcon.iconAnchor = new GPoint(5, 34);
+	    contadiniIcon.infoWindowAnchor = new GPoint(5, 2);
+	    contadiniIcon.infoShadowAnchor = new GPoint(14, 25);
 		
 		// Set up our GMarkerOptions object
 		markerOptions = { 
@@ -56,6 +64,12 @@ function load() {
    		
 		var indirizzo = new Indirizzo(get_indirizzo, get_comune, get_provincia);
 		geocoder.getLocations(indirizzo.getAddress(), getCallBackFor(indirizzo,0,get_id));				
+   }
+   
+   function pushContadini(get_indirizzo, get_comune, get_provincia, get_id){
+   		
+		var indirizzo = new Indirizzo(get_indirizzo, get_comune, get_provincia);
+		geocoder.getLocations(indirizzo.getAddress(), getCallBackForContadini(indirizzo,0,get_id));				
    }
    
    function deletePoint(id){
@@ -87,5 +101,29 @@ function load() {
 		}
 	});
 }
-		
+	function getCallBackForContadini(indirizzo,codice, idmark){
+	return (function(data, response){
+		if(data.Status.code == "200"){
+			point = data.Placemark[0].Point.coordinates;
+			
+			var point2 = new GLatLng(point[1],point[0]);
+			var mark = new GMarker(point2, {title: indirizzo.getAddress(), icon:contadiniIcon});
+			map.addOverlay(mark);
+			markers[idmark] = mark;
+			
+			map.panTo(mark.getPoint());
+			mark.bindInfoWindowHtml('<div align=\"center\"><b>Punto di Consegna</b></div><p><div align=\"center\" class=\"colore_1\">'+indirizzo.getAddress()+'</div></p>');
+					
+			GEvent.addListener(mark, "infowindowopen", function() {
+				map.setZoom(16);
+				map.panTo(mark.getPoint());
+				map.panDirection(0, 1);
+			});
+			GEvent.addListener(mark, "infowindowclose", function() {map.setZoom(13); map.panTo(mark.getPoint());});
+		}
+		else if(data.Status.code =="602" && codice == 0){
+			new GClientGeocoder().getLocations(indirizzo.getComune(), getCallBackFor(indirizzo,1,idmark));
+		}
+	});
+}	
 		

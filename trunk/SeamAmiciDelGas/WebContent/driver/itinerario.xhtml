@@ -36,10 +36,17 @@ window.onload = function(){
 		</tr>
 	</table>
 	
-	<ui:repeat value="#{puntiDiConsegnaList.resultList}" var="_punto">
+<ui:repeat value="#{puntiDiConsegnaList.resultList}" var="_punto">
 <script type="text/javascript"><!--
 	load();
 	porcata("#{_punto.indirizzo}","#{_punto.comune.nome}","#{_punto.comune.provinces.nome}","#{_punto.idpuntiConsegna}");	
+--></script>
+</ui:repeat>
+
+<ui:repeat value="#{cybercontadinoList.resultList}" var="_contadino">
+<script type="text/javascript"><!--
+	load();
+	pushContadini("#{_contadino.indirizzo}","#{_contadino.comune.nome}","#{_contadino.comune.provinces.nome}","#{_contadino.partitaIva}");	
 --></script>
 </ui:repeat> 
 
