@@ -94,7 +94,7 @@
 					 						 reRender="valoreCarrelloColumn" ajaxSingle="true"/>
 					 			</rich:inputNumberSpinner>						  	
 					  			<a:commandButton id="commandButtonShoppingCart" image="/img/shopping_cart2.jpg" style="width : 25px; height : 25px;"
-					  							 action="#{shoppingCart.addItemInShoppingCart(_item, takeInHand.getHowMuchForItem(_item),catalogService.contadino.account.username)}"
+					  							 action="#{shoppingCart.addItemInShoppingCart(_item, takeInHand.getHowMuchForItem(_item),catalogService.contadino)}"
 					  							 reRender="inputNumberSpinnerCarrello,valoreCarrelloColumn,shoppingcartField" ajaxSingle="true">
 				 					<a:support event="onclick" action="#{takeInHand.azzeraHowMuch()}"
 				 							reRender="shoppingcartField" ajaxSingle="true"/>
@@ -125,7 +125,7 @@
 							</rich:column>	
 							<rich:column>
 								<f:facet name="header">Username contadino</f:facet>
-								<h:outputText value="#{_itemCarrello.username}"/>
+								<h:outputText value="#{_itemCarrello.cybercontadino.account.username}"/>
 							</rich:column>	
 							<rich:column>
 									<f:facet name="header">Quantita prodotto</f:facet>
