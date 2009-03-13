@@ -69,6 +69,10 @@ public class OrderProcessing {
 	@Out(value="customer", scope=ScopeType.BUSINESS_PROCESS, required=false)
 	private Account customer;
 	
+	@In(value="driver", scope=ScopeType.BUSINESS_PROCESS, required=false)
+	@Out(value="driver", scope=ScopeType.BUSINESS_PROCESS, required=false)
+	private Account driver;
+	
 	@Out(value="selectedItemShoppingCart",scope=ScopeType.BUSINESS_PROCESS,required=false)
 	private List<ItemQuantita> selectedItem;
 	
@@ -161,6 +165,7 @@ public class OrderProcessing {
 			}
 			messageStatoOrdine.setContent("Ordine preso in carico da "+ credentials.getUsername());
 			messageStatoOrdine.setInfoFilter("orderProcessingPreso");
+			driver = currentAccount;
 			myOrdine.setPendente(false);
 			myOrdine.setEvaso(true);
 			saveOrdine(); //salvo l'ordine nel database
@@ -180,7 +185,7 @@ public class OrderProcessing {
 		ordine.setConcluso(false);
 		ordine.setDataRichiesta(dataRichiesta);
 		ordine.setDataMassimaConsegna(myOrdine.getDataMassima());
-		ordine.setDriver(currentAccount);
+		ordine.setDriver(driver);
 		//salvo l'ordine
 		em.persist(ordine);
 		
