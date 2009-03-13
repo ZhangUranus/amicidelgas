@@ -23,20 +23,16 @@ public class InviaRequestReply {
 	@StartTask @EndTask(transition="inviaReply")
 	public void riceviMessaggio()
 	{
-		System.out.println();
+		System.out.println("RICEVI MESSAGGIO");
 		message.setContent("Seam Amici Del Gas e non ce ne tene e fa nu Gas");
-		message.setDestinatario(nomeMittente);
+		message.setDestinatario("admin");
 	}
 	
-	@StartTask @EndTask(transition="ack")
+	@StartTask @EndTask(transition="fine")
 	public void riceviRisposta()
 	{
-		
+		System.out.println("OKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK");
 	}
-	
-	
-	
-
 
 	public Message getMessage() {
 		return message;

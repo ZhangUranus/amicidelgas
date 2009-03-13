@@ -36,41 +36,23 @@ public class InviaNotificaRegistrazioni {
 	@In private Credentials credentials;
 	
 	@In protected EntityManager entityManager;
+
+	@In(value="inviati",scope=ScopeType.BUSINESS_PROCESS, required= false)
+	@Out(value="inviati",scope=ScopeType.BUSINESS_PROCESS, required= false)
+	private ArrayList<String> usernameInviati;
 	
-	private String msg="";
+	@In(value="postiOccupati" , scope= ScopeType.BUSINESS_PROCESS, required =false)
+	@Out(value="postiOccupati", scope= ScopeType.BUSINESS_PROCESS, required =false)
+	private int postiOccupati;
+	/*
+	 * 
+	 * private String msg="";
 	
 	@In (value="notificaUtente" ,scope= ScopeType.BUSINESS_PROCESS, required=false)
 //	@Out(value="notificaUtente", scope= ScopeType.BUSINESS_PROCESS, required=false)
 	protected Message messageUtente;
 	
 	@In private FacesMessages facesMessages;
-	
-	@In(value="inviati",scope=ScopeType.BUSINESS_PROCESS, required= false)
-	private ArrayList<String> usernameInviati;
-	
-	@In(value="postiOccupati" , scope= ScopeType.BUSINESS_PROCESS, required =false)
-	@Out(value="postiOccupati", scope= ScopeType.BUSINESS_PROCESS, required =false)
-	private int postiOccupati;
-	
-	@In(value="dataProposta", scope= ScopeType.BUSINESS_PROCESS, required =false)
-	private Date dataProposta;
-	/*
-	@Out(value="dataProposta", scope= ScopeType.BUSINESS_PROCESS, required =false)
-	private Date dataProposta;
-	
-	@Out(value="dataQuestionario", scope= ScopeType.BUSINESS_PROCESS, required =false)
-	private Date dataQuestionario ;
-	
-	@Out(value="dataMassimaAccettazione", scope= ScopeType.BUSINESS_PROCESS, required =false)
-	private Date dataMassimaAccettazione;
-	
-	@Out(value="postiOccupati",scope=ScopeType.BUSINESS_PROCESS, required= false)
-	private int postiOccupati;
-	
-	
-	@In(value="inviati",scope=ScopeType.BUSINESS_PROCESS, required= false)
-	private ArrayList<String> usernameInviati;
-	
 	private Cybercontadino contadinoCorrente;
 	private TaskInstance taskCorrente;
 	*/
@@ -80,10 +62,6 @@ public class InviaNotificaRegistrazioni {
 	@StartTask @EndTask(transition="partecipa")
 	public void partecipa_alla_visita()
 	{
-		if(usernameInviati == null)
-		{
-			usernameInviati = new ArrayList<String>();
-		}
 		usernameInviati.add(credentials.getUsername());
 		System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa"+usernameInviati.toString());
 		postiOccupati++;
@@ -93,11 +71,11 @@ public class InviaNotificaRegistrazioni {
 		gc.setTime((Date) dataProposta.clone());
 		gc.roll(Calendar.DATE, -2);
 		dataMassimaAccettazione= gc.getTime();
-		*/
+		
 		messageUtente= new Message();
 		String rejectMsg="Andiamo tutti dal cybercontadino.";
 		messageUtente.setContent(rejectMsg);
-		
+		*/
 	}
 	
 	@StartTask @EndTask(transition="compila")

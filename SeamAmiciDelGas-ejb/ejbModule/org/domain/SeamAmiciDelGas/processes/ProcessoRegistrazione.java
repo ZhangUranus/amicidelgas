@@ -1,11 +1,13 @@
 package org.domain.SeamAmiciDelGas.processes;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import javax.faces.component.html.HtmlInputHidden;
 import javax.persistence.EntityManager;
 
 import org.domain.SeamAmiciDelGas.entity.Cybercontadino;
@@ -36,9 +38,13 @@ public class ProcessoRegistrazione {
 	@In private Credentials credentials;
 	
 	@In protected EntityManager entityManager;
+	
 	@Out(value="notificaMediatore", scope= ScopeType.BUSINESS_PROCESS, required=false)
 	protected Message message;
-	private String msg="";
+	
+	private String content;
+	
+	private String mittente;
 	
 	
 	@Out(value="notificaUtente", scope= ScopeType.BUSINESS_PROCESS, required=false)
@@ -62,14 +68,20 @@ public class ProcessoRegistrazione {
 	@Out(value="postiOccupati",scope=ScopeType.BUSINESS_PROCESS, required= false)
 	private int postiOccupati;
 	
-	@Out(value="contenutoMessaggio",scope=ScopeType.BUSINESS_PROCESS, required= false)
-	private String contenutoMessaggio;
+//	@Out(value="contenutoMessaggio",scope=ScopeType.BUSINESS_PROCESS, required= false)
+//	private String contenutoMessaggio;
 	
 	@Out(value="inviati",scope=ScopeType.BUSINESS_PROCESS, required= false)
 	private List<String> usernameInviati;
 	
-	@Out(value="mioBroadcast",scope=ScopeType.BUSINESS_PROCESS, required= false)
-	private boolean mioBroadcast;
+//	@Out(value="provaInviato",scope=ScopeType.BUSINESS_PROCESS, required= false)
+//	private String provaInviato;
+	
+//	@Out(value="mioBroadcast",scope=ScopeType.BUSINESS_PROCESS, required= false)
+//	private boolean mioBroadcast;
+	
+	@Out(value="provaMessaggio", scope= ScopeType.BUSINESS_PROCESS, required=false)
+	protected Message provaMessaggio;
 	
 	private Cybercontadino contadinoCorrente;
 	private TaskInstance taskCorrente;
@@ -80,13 +92,18 @@ public class ProcessoRegistrazione {
 		//log.info("E' arrivata la richiesta driver");
 		
 		// Discutiamone con antonio probabilmente non serve a nulla.....
-		nomeContadino= credentials.getUsername();
+		//nomeContadino= credentials.getUsername();
 		facesMessages.add("La richiesta e' stata inoltrata");
-		usernameInviati = new ArrayList<String>();
-		usernameInviati.add("zlatan");
-		usernameInviati.add("esteban");
-		contenutoMessaggio="Ce la possiamo fare!!!";
-		mioBroadcast=false;
+		//usernameInviati = new ArrayList<String>();
+		//usernameInviati.add("zlatan");
+		//usernameInviati.add("esteban");
+//		provaInviato = "zlatan";
+//		provaMessaggio = new Message();
+		//provaMessaggio.setBroadcast(false);
+		//provaMessaggio.setDestinatario("zlatan");
+		//provaMessaggio.setContent("FOrse questa è la volta buona");
+//		contenutoMessaggio="Ce la possiamo fare!!!";
+//		mioBroadcast=false;
 	}
 	
 	
@@ -95,22 +112,30 @@ public class ProcessoRegistrazione {
 	{
 		Calendar gc= new GregorianCalendar();
 		gc.setTime((Date) dataProposta.clone());
-		gc.roll(Calendar.DATE, -1);
+		// funzionamento corretto
+		//gc.roll(Calendar.DATE, -1);
+		// funzionamento di prova
+		gc.roll(Calendar.MINUTE, -1);
 		dataMassimaAccettazione = gc.getTime();
 		postiOccupati=0;
 		
 		gc= new GregorianCalendar();
 		gc.setTime((Date) dataProposta.clone());
-	//	gc.roll(Calendar.DATE, +1);
+	//funzionamento corretto	gc.roll(Calendar.DATE, +1);
+		// funzionamento di prova
 		gc.roll(Calendar.MINUTE, +1);
-		gc.roll(Calendar.DATE, -1);
 		dataQuestionario = gc.getTime();
+		gc.setTime((Date) dataProposta.clone());
+		String format = "dd-MM-yyyy";
 		messageUtente= new Message();
-		String rejectMsg="Andiamo tutti dal cybercontadino.";
-		messageUtente.setContent(rejectMsg);
+		messageUtente.setContent(content+" in data "+(new SimpleDateFormat(format)).format(gc.getTime())
+				+" alle ore: "+gc.get(Calendar.HOUR_OF_DAY)+":"+gc.get(Calendar.MINUTE)+" .");
+		messageUtente.setMittente(mittente);
+		System.out.println("CONTENTTTTTTTTTTtt: "+content+mittente);
+		usernameInviati = new ArrayList<String>();
 	}
 	
-	
+/*	
 	@BypassInterceptors
 	public String getMsg() {
 		return msg;
@@ -120,7 +145,7 @@ public class ProcessoRegistrazione {
 		this.msg = msg;
 	}
 
-
+*/
 	public Cybercontadino getContadinoCorrente() {
 		return contadinoCorrente;
 	}
@@ -153,6 +178,26 @@ public class ProcessoRegistrazione {
 
 	public void update(){
 		log.info("Update- la data corrente �: "+ dataProposta);
+	}
+
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+
+	public String getContent() {
+		return content;
+	}
+
+
+	public void setMittente(String mittente) {
+		this.mittente = mittente;
+	}
+
+
+	public String getMittente() {
+		return mittente;
 	}
 	
 }

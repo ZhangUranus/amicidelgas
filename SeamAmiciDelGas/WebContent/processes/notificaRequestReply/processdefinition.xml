@@ -10,9 +10,15 @@
 
 	<task-node name="NotificaReply" create-tasks="false">
 		<task name="riceviMessaggio" />
+		<event type="timer-create">
+      		<action name="timerCreated" class="org.domain.SeamAmiciDelGas.processes.DeleteCreateTimer">
+       			<timerName>timerOpzionale</timerName>
+      		</action>
+    	</event>
 		<event type="node-enter">
 			<action name="CambiaDestinatario" class="org.domain.SeamAmiciDelGas.processes.CambiaDestinatarioHandler"></action>
 		</event>
+		<timer duedate="10 years" name="timerOpzionale" transition="inviaReply"/>
 		<transition to="VisualizzaReply" name="inviaReply"></transition>
 	</task-node>
 
@@ -20,7 +26,7 @@
 		<task name="riceviRisposta">
 			<assignment actor-id="#{notifyMessageReply.destinatario}"></assignment>
 		</task>
-		<transition to="end-state" name="ack"></transition>
+		<transition to="end-state" name="fine"></transition>
 	</task-node>
 
 

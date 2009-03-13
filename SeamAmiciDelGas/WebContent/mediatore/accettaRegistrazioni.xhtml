@@ -9,7 +9,12 @@
     template="/layout/template.xhtml">
     
 	<ui:define name="body">
-	
+<script type="text/javascript"><!--
+function attivaCalendar() {
+	document.getElementById('formVisitaField:tabellaField:campoNascosto').value='#{currentAccount.username}';
+}
+--></script>
+
 		<div class="colore_1" align="center">Richieste Registrazioni Customer</div>
 			<h:form>
 		        <a:region>
@@ -341,8 +346,8 @@
 							<h:outputText value="#{gestioneRegistrazioniBean.currentContadino.email}"/>
 							<h:outputText><b>Telefono: </b></h:outputText>
 							<h:outputText value="#{gestioneRegistrazioniBean.currentContadino.recapitoTelefonico}"/>
-							<h:outputText><b>Descrizione azienda: </b></h:outputText>
-							<h:outputText value="#{gestioneRegistrazioniBean.currentContadino.descrizioneAzienda}"/>
+							<h:outputText><b>Data proposta per la visita: </b></h:outputText>
+							<h:outputText value="#{gestioneRegistrazioniBean.currentContadino.dataVisita}"/>
 						</h:panelGrid>
 	        		</a:outputPanel>
                 </h:panelGrid>
@@ -364,16 +369,28 @@
 	                    operation="hide" event="onclick" />
 	            </h:panelGroup>
 	        </f:facet>
-	        <h:form>
+	        <h:form id="formVisitaField">
 	            <rich:messages style="color:red;"></rich:messages>
-	            <a:outputPanel ajaxRendered="true">
+				<a:outputPanel ajaxRendered="true">
+	            <h:panelGrid columns="2">
+	            <s:decorate id="tabellaField" template="/layout/edit.xhtml" >
+			             <ui:define name="label">Messaggio da inviare agli utenti</ui:define>
+			            	<h:inputTextarea id="messaggioDaInviare"
+				                      required="true"
+				                          rows="2" style=" width : 279px; height : 63px;"
+				                	     value="#{processoRegistrazione.content}"
+				                	     onclick="attivaCalendar()">
+				 
+				        	</h:inputTextarea>
+				        <h:inputHidden  id="campoNascosto" value="#{processoRegistrazione.mittente}" />
+			            </s:decorate>
+			    </h:panelGrid>
 	                <h:panelGrid columns="2">
 	                	<s:decorate id="dataVisitaField" template="/layout/edit.xhtml">
-			                <ui:define name="label">Data proposta</ui:define>
+			                <ui:define name="label">Data della Visita</ui:define>
 			                 <rich:calendar id="dataVisita"
                        			required="true"
                        			showApplyButton="true"
-                       			
                        			value="#{processoRegistrazione.dataProposta}" datePattern="MM/dd/yyyy HH:mm">
                        			<a:support event="oncollapse" action="#{processoRegistrazione.update()}" reRender="dataVisitaField,dataOut" limitToList="true"></a:support>
                   			</rich:calendar>
@@ -383,6 +400,7 @@
 			       </h:panelGrid>
 	                <rich:message showSummary="true" showDetail="false" for="dataVisitaField"/>
 	            </a:outputPanel>
+	            
 	            <s:button value="Invia richiesta di visita" 
 	            	taskInstance="#{processoRegistrazione.taskCorrente}" 
 	            	action="#{processoRegistrazione.creaVisita()}"
