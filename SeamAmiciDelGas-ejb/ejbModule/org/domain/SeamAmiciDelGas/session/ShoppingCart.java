@@ -36,10 +36,12 @@ public class ShoppingCart {
 	
 	List<ItemQuantita> itemInShoppingCart = new ArrayList<ItemQuantita>();
 
-	private Date dataMassima = new GregorianCalendar().getTime();
+	private Date dataMassima;
 
 	private List<ItemQuantita> selectedItem;
 
+	private boolean dataMassimaBeforeToday=false;
+	
 	public Date getDataMassima() {
 		return dataMassima;
 	}
@@ -112,11 +114,17 @@ public class ShoppingCart {
 	
 	public void buySelectedItem()
 	{
-		//procede all'acquisto dei prodotti nel carrello
-		//svuota il carrello
 		log.info("******** buyAllItem************");
-		selectedItem = new ArrayList<ItemQuantita>();
 		
+		if(dataMassima==null)
+		{
+			log.info("*******data massima = nuuuuuulllllllllllllllllllll*********");
+			return;
+		}
+		if(dataMassimaBeforeCurrentDate())
+			return;
+
+		selectedItem = new ArrayList<ItemQuantita>();
 		for(int index=0; index<itemInShoppingCart.size(); index++)//aggiungo i prodotti all'ordine da fare
 		{	
 			ItemQuantita iq=itemInShoppingCart.get(index);
@@ -128,15 +136,18 @@ public class ShoppingCart {
 		}
 		noSelect = (selectedItem.size()==0) ? true : false;
 		
-		//invia ordine
-		if(!noSelect)
+		if(noSelect)
 		{
-			log.info("******Data Massima*******");
-			if (dataMassima==null)
-				log.info("*******NULL********");
-			String logInfo = orderProcessing.startOrder(selectedItem,dataMassima);
-			log.info("*********** "+logInfo);
+			log.info("*******nessun item selezionato, ritorno*********");
+			return;
 		}
+
+		dataMassimaBeforeToday=false;
+		log.info("*******data massima = " +dataMassima.toString() +" ************");
+		String logInfo = orderProcessing.startOrder(selectedItem,dataMassima);
+		log.info("*********** "+logInfo);
+		//se l'ordine nn va a buon fine devo fare il rollback e riaggiungere
+		//gli item nel carrello...
 	}
 	
 	public void update() {
@@ -151,6 +162,27 @@ public class ShoppingCart {
 		this.noSelect = noSelect;
 	}
 
+	private boolean dataMassimaBeforeCurrentDate()
+	{
+		GregorianCalendar gc = new GregorianCalendar();
+		Date currentDate = gc.getTime();
+		if(dataMassima.before(currentDate))
+		{
+			log.info("*******data massima = " +dataMassima.toString() +" ************");
+			log.info("******* TROPPO PRESTOOOOOOOOOOOOOOOOO ************");
+			dataMassimaBeforeToday=true;
+			return true;
+		}
+		return false;
+	}
+
+	public boolean isDataMassimaBeforeToday() {
+		return dataMassimaBeforeToday;
+	}
+
+	public void setDataMassimaBeforeToday(boolean dataMassimaBeforeToday) {
+		this.dataMassimaBeforeToday = dataMassimaBeforeToday;
+	}
 }
 
 	
