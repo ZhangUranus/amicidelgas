@@ -17,6 +17,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -31,44 +32,41 @@ public class Ordine implements java.io.Serializable {
 
 	private Integer idordine;
 	private Account account;
-	private Articolo articolo;
 	private Date dataRichiesta;
-	private boolean pendente;
-	private int quantita;
-	private int quantitaMinUtente;
+	private Date dataConclusione;
 	private Date dataMassimaConsegna;
-	private Boolean cancellato;
-	private Date dataCancellazioneAccettazione;
+	private boolean concluso;
+	private boolean cancellato;
+	private Account driver;
 	private Set<Feedback> feedbacks = new HashSet<Feedback>(0);
-	private Set<Itinerario> itinerarios = new HashSet<Itinerario>(0);
+	private Set<Articolo> articolos = new HashSet<Articolo>(0);
 
 	public Ordine() {
 	}
-
-	public Ordine(Date dataRichiesta, boolean pendente, int quantita,
-			int quantitaMinUtente) {
+	
+	public Ordine(Account account, Set<Articolo> articolos, Date dataRichiesta, 
+			Date dataMassimaConsegna, boolean concluso, Account driver) {
+		this.account = account;
 		this.dataRichiesta = dataRichiesta;
-		this.pendente = pendente;
-		this.quantita = quantita;
-		this.quantitaMinUtente = quantitaMinUtente;
+		this.dataMassimaConsegna = dataMassimaConsegna;
+		this.concluso = concluso;
+		this.articolos = articolos;
+		this.driver = driver;
 	}
 
-	public Ordine(Account account, Articolo articolo, Date dataRichiesta,
-			boolean pendente, int quantita, int quantitaMinUtente,
-			Date dataMassimaConsegna, Boolean cancellato,
-			Date dataCancellazioneAccettazione, Set<Feedback> feedbacks,
-			Set<Itinerario> itinerarios) {
+	public Ordine(Account account, Set<Articolo> articolos, Date dataRichiesta,
+			Date dataConclusione, Date dataMassimaConsegna, 
+			boolean concluso, boolean cancellato, Account driver,
+			Set<Feedback> feedbacks) {
 		this.account = account;
-		this.articolo = articolo;
+		this.articolos = articolos;
 		this.dataRichiesta = dataRichiesta;
-		this.pendente = pendente;
-		this.quantita = quantita;
-		this.quantitaMinUtente = quantitaMinUtente;
+		this.dataConclusione = dataConclusione;
 		this.dataMassimaConsegna = dataMassimaConsegna;
+		this.concluso = concluso;
+		this.driver = driver;
 		this.cancellato = cancellato;
-		this.dataCancellazioneAccettazione = dataCancellazioneAccettazione;
 		this.feedbacks = feedbacks;
-		this.itinerarios = itinerarios;
 	}
 
 	@Id
@@ -92,16 +90,6 @@ public class Ordine implements java.io.Serializable {
 		this.account = account;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "Articolo_IDArticolo")
-	public Articolo getArticolo() {
-		return this.articolo;
-	}
-
-	public void setArticolo(Articolo articolo) {
-		this.articolo = articolo;
-	}
-
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DataRichiesta", nullable = false, length = 19)
 	@NotNull
@@ -113,38 +101,9 @@ public class Ordine implements java.io.Serializable {
 		this.dataRichiesta = dataRichiesta;
 	}
 
-	@Column(name = "Pendente", nullable = false)
-	@NotNull
-	public boolean isPendente() {
-		return this.pendente;
-	}
-
-	public void setPendente(boolean pendente) {
-		this.pendente = pendente;
-	}
-
-	@Column(name = "Quantita", nullable = false)
-	@NotNull
-	public int getQuantita() {
-		return this.quantita;
-	}
-
-	public void setQuantita(int quantita) {
-		this.quantita = quantita;
-	}
-
-	@Column(name = "QuantitaMinUtente", nullable = false)
-	@NotNull
-	public int getQuantitaMinUtente() {
-		return this.quantitaMinUtente;
-	}
-
-	public void setQuantitaMinUtente(int quantitaMinUtente) {
-		this.quantitaMinUtente = quantitaMinUtente;
-	}
-
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DataMassimaConsegna", length = 19)
+	@NotNull
 	public Date getDataMassimaConsegna() {
 		return this.dataMassimaConsegna;
 	}
@@ -153,24 +112,13 @@ public class Ordine implements java.io.Serializable {
 		this.dataMassimaConsegna = dataMassimaConsegna;
 	}
 
-	@Column(name = "Cancellato")
+	@Column(name = "Cancellato", nullable = true)
 	public Boolean getCancellato() {
 		return this.cancellato;
 	}
 
 	public void setCancellato(Boolean cancellato) {
 		this.cancellato = cancellato;
-	}
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "DataCancellazioneAccettazione", length = 19)
-	public Date getDataCancellazioneAccettazione() {
-		return this.dataCancellazioneAccettazione;
-	}
-
-	public void setDataCancellazioneAccettazione(
-			Date dataCancellazioneAccettazione) {
-		this.dataCancellazioneAccettazione = dataCancellazioneAccettazione;
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "ordine")
@@ -182,14 +130,49 @@ public class Ordine implements java.io.Serializable {
 		this.feedbacks = feedbacks;
 	}
 
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinTable(name = "itinerario_has_ordine", catalog = "database_gas", joinColumns = { @JoinColumn(name = "IDOrdine", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "IDItinerario", nullable = false, updatable = false) })
-	public Set<Itinerario> getItinerarios() {
-		return this.itinerarios;
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "DataConclusione", length = 19)
+	public Date getDataConclusione() {
+		return dataConclusione;
 	}
 
-	public void setItinerarios(Set<Itinerario> itinerarios) {
-		this.itinerarios = itinerarios;
+	public void setDataConclusione(Date dataConclusione) {
+		this.dataConclusione = dataConclusione;
+	}
+	
+	@Column(name = "Concluso", nullable = false)
+	@NotNull
+	public boolean isConcluso() {
+		return concluso;
+	}
+
+	public void setConcluso(boolean concluso) {
+		this.concluso = concluso;
+	}
+
+	public void setCancellato(boolean cancellato) {
+		this.cancellato = cancellato;
+	}
+
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "ordine")
+	public Set<Articolo> getArticolos() {
+		return articolos;
+	}
+
+	public void setArticolos(Set<Articolo> articolos) {
+		this.articolos = articolos;
+	}
+
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "Driver")
+	@NotNull
+	public Account getDriver() {
+		return driver;
+	}
+
+	public void setDriver(Account driver) {
+		this.driver = driver;
 	}
 
 }

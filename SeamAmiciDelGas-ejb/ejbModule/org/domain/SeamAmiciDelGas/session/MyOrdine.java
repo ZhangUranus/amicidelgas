@@ -8,6 +8,7 @@ import java.util.List;
 public class MyOrdine implements Serializable{
 
 	private Date dataMassima;
+	private Date dataRichiesta;
 	private List<ItemQuantita> itemQuantita = new ArrayList<ItemQuantita>();
 	private boolean pendente;
 	private boolean evaso;
@@ -36,6 +37,12 @@ public class MyOrdine implements Serializable{
 	}
 	public void setEvaso(boolean evaso) {
 		this.evaso = evaso;
+	}
+	public Date getDataRichiesta() {
+		return dataRichiesta;
+	}
+	public void setDataRichiesta(Date dataRichiesta) {
+		this.dataRichiesta = dataRichiesta;
 	}
 	
 }

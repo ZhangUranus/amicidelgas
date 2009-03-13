@@ -35,7 +35,6 @@ public class Itinerario implements java.io.Serializable {
 	private Date dataConsegna;
 	private String documentazionePath;
 	private Date dataCreazione;
-	private Set<Ordine> ordines = new HashSet<Ordine>(0);
 	private Set<PuntiDiConsegna> puntiDiConsegnas = new HashSet<PuntiDiConsegna>(
 			0);
 	private Set<Cybercontadino> cybercontadinos = new HashSet<Cybercontadino>(0);
@@ -52,7 +51,7 @@ public class Itinerario implements java.io.Serializable {
 	}
 
 	public Itinerario(Account account, Date dataPartenza, Date dataConsegna,
-			String documentazionePath, Date dataCreazione, Set<Ordine> ordines,
+			String documentazionePath, Date dataCreazione,
 			Set<PuntiDiConsegna> puntiDiConsegnas,
 			Set<Cybercontadino> cybercontadinos) {
 		this.account = account;
@@ -60,7 +59,6 @@ public class Itinerario implements java.io.Serializable {
 		this.dataConsegna = dataConsegna;
 		this.documentazionePath = documentazionePath;
 		this.dataCreazione = dataCreazione;
-		this.ordines = ordines;
 		this.puntiDiConsegnas = puntiDiConsegnas;
 		this.cybercontadinos = cybercontadinos;
 	}
@@ -128,15 +126,6 @@ public class Itinerario implements java.io.Serializable {
 
 	public void setDataCreazione(Date dataCreazione) {
 		this.dataCreazione = dataCreazione;
-	}
-
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "itinerarios")
-	public Set<Ordine> getOrdines() {
-		return this.ordines;
-	}
-
-	public void setOrdines(Set<Ordine> ordines) {
-		this.ordines = ordines;
 	}
 
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "itinerarios")

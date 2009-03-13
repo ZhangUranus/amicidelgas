@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import org.domain.SeamAmiciDelGas.entity.Cybercontadino;
 import org.domain.SeamAmiciDelGas.webservices.Item;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.Logger;
@@ -20,12 +21,19 @@ public class ItemQuantita implements Serializable
 		private Log log;
 		private Item item;
 		private int quantita;
-		private String username; 
+		private Cybercontadino cybercontadino; 
 		private boolean booleanIsQuantitaMinima= false;
 		private int quantitaParziale;
 		//private Date dataMassimaAcquisto;
 		private boolean checkedForOrdine=false;
+		private float prezzoTotale;
 		
+		public float getPrezzoTotale() {
+			return prezzoTotale;
+		}
+		public void setPrezzoTotale(float prezzoTotale) {
+			this.prezzoTotale = prezzoTotale;
+		}
 		public boolean isCheckedForOrdine() {
 			return checkedForOrdine;
 		}
@@ -37,11 +45,11 @@ public class ItemQuantita implements Serializable
 			this.item=item;
 			this.quantita=q;
 		}
-		public ItemQuantita(Item item, int q,String contadinoUsername)
+		public ItemQuantita(Item item, int q,Cybercontadino contadino)
 		{
 			this.item=item;
 			this.quantita=q;
-			this.username=contadinoUsername;
+			this.cybercontadino=contadino;
 		}
 		
 		public boolean isBooleanIsQuantitaMinima() {
@@ -77,10 +85,11 @@ public class ItemQuantita implements Serializable
 		{
 			return item.equals((Item)o);
 		}
-		public String getUsername() {
-			return username;
+		
+		public Cybercontadino getCybercontadino() {
+			return cybercontadino;
 		}
-		public void setUsername(String username) {
-			this.username = username;
+		public void setCybercontadino(Cybercontadino cybercontadino) {
+			this.cybercontadino = cybercontadino;
 		}
 	}

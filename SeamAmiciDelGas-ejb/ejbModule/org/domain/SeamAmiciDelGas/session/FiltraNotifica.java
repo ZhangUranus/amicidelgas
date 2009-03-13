@@ -3,6 +3,7 @@ package org.domain.SeamAmiciDelGas.session;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.domain.SeamAmiciDelGas.entity.Account;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
@@ -148,10 +149,11 @@ public class FiltraNotifica {
 	{
 		List<TaskInstance> tasks= getAllPooledTaskInstanceList(filters);
 		List<TaskInstance> tasksUser = new ArrayList<TaskInstance>();
+		Account account = null;
 		for(TaskInstance temp : tasks)
 		{
-			String s = (String) temp.getVariable("customer");
-			if(s.equals(username))
+			account = (Account) temp.getVariable("customer");
+			if(account.getUsername().equals(username))
 				tasksUser.add(temp);
 		}
 		return tasksUser;

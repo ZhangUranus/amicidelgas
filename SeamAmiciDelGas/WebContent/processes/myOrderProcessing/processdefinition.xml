@@ -10,7 +10,7 @@
 
 	<task-node name="Ordine notificato a driver e contadini">
 		<task name="accetta_ordine">
-			<assignment pooled-actors="driver,utenteContadino"></assignment>
+			<assignment pooled-actors="driver,utenteContadino,utenteGas"></assignment>
 		</task>
 		<transition to="Notifica utente ordine non preso in carico" name="ordine_non_preso_in_carico_entro_datamax"></transition>
 		<transition to="Verifica disponibilita" name="ordine_preso_in_carico"></transition>
@@ -19,7 +19,7 @@
 
 	<task-node name="Notifica utente ordine non disponibile">
 		<task name="ReceiveOrderFailed">
-			<assignment actor-id="#{customer}"></assignment>
+			<assignment actor-id="#{customer.username}"></assignment>
 		</task>
 		<transition to="Ordine notificato a driver e contadini" name="ordine_rimesso_nel_pool"></transition>
 	</task-node>
@@ -30,7 +30,7 @@
 
 	<task-node name="Notifica utente ordine preso in carico">
 		<task name="ReceiveOrderAccepted">
-			<assignment actor-id="#{customer}"></assignment>
+			<assignment actor-id="#{customer.username}"></assignment>
 		</task>
 		<transition to="Attendi data consegna"></transition>
 	</task-node>

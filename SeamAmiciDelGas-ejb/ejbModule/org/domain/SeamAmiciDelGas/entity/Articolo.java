@@ -29,27 +29,38 @@ public class Articolo implements java.io.Serializable {
 	private Cybercontadino cybercontadino;
 	private String codiceEsterno;
 	private String descrizione;
-	private boolean prenotazioneLungoTermine;
-	private Float prezzoDefinitivo;
-	private Set<Ordine> ordines = new HashSet<Ordine>(0);
+	private Float prezzo;
+	private int quantitaOttenuta;
+	private int quantitaRichiesta;
+	private int quantitaMinRichiesta;
+	private Ordine ordine;
+
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "IDOrdine", nullable = false)
+	@NotNull
+	public Ordine getOrdine() {
+		return ordine;
+	}
+
+	public void setOrdine(Ordine ordine) {
+		this.ordine = ordine;
+	}
 
 	public Articolo() {
 	}
 
-	public Articolo(String descrizione, boolean prenotazioneLungoTermine) {
+	public Articolo(String descrizione) {
 		this.descrizione = descrizione;
-		this.prenotazioneLungoTermine = prenotazioneLungoTermine;
 	}
 
 	public Articolo(Cybercontadino cybercontadino, String codiceEsterno,
-			String descrizione, boolean prenotazioneLungoTermine,
-			Float prezzoDefinitivo, Set<Ordine> ordines) {
+			String descrizione, Float prezzo, Ordine ordine) {
 		this.cybercontadino = cybercontadino;
 		this.codiceEsterno = codiceEsterno;
 		this.descrizione = descrizione;
-		this.prenotazioneLungoTermine = prenotazioneLungoTermine;
-		this.prezzoDefinitivo = prezzoDefinitivo;
-		this.ordines = ordines;
+		this.prezzo= prezzo;
+		this.ordine = ordine;
 	}
 
 	@Id
@@ -93,33 +104,42 @@ public class Articolo implements java.io.Serializable {
 	public void setDescrizione(String descrizione) {
 		this.descrizione = descrizione;
 	}
+	
+	@Column(name = "QuantitaMinRichiesta", nullable = true)
+	public int getQuantitaMinRichiesta() {
+		return quantitaMinRichiesta;
+	}
+	
+	public void setQuantitaRichiesta(int quantitaRichiesta) {
+		this.quantitaRichiesta = quantitaRichiesta;
+	}
 
-	@Column(name = "PrenotazioneLungoTermine", nullable = false)
+	public void setQuantitaMinRichiesta(int quantitaMinRichiesta) {
+		this.quantitaMinRichiesta = quantitaMinRichiesta;
+	}
+	
+	@Column(name = "QuantitaOttenuta", nullable = true)
+	public int getQuantitaOttenuta() {
+		return quantitaOttenuta;
+	}
+
+	public void setQuantitaOttenuta(int quantitaOttenuta) {
+		this.quantitaOttenuta = quantitaOttenuta;
+	}
+	
+	@Column(name = "QuantitaRichiesta", nullable = false)
 	@NotNull
-	public boolean isPrenotazioneLungoTermine() {
-		return this.prenotazioneLungoTermine;
+	public int getQuantitaRichiesta() {
+		return quantitaRichiesta;
 	}
 
-	public void setPrenotazioneLungoTermine(boolean prenotazioneLungoTermine) {
-		this.prenotazioneLungoTermine = prenotazioneLungoTermine;
+	@Column(name = "prezzo", precision = 12, scale = 0)
+	public Float getPrezzo() {
+		return prezzo;
 	}
 
-	@Column(name = "Prezzo_definitivo", precision = 12, scale = 0)
-	public Float getPrezzoDefinitivo() {
-		return this.prezzoDefinitivo;
-	}
-
-	public void setPrezzoDefinitivo(Float prezzoDefinitivo) {
-		this.prezzoDefinitivo = prezzoDefinitivo;
-	}
-
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "articolo")
-	public Set<Ordine> getOrdines() {
-		return this.ordines;
-	}
-
-	public void setOrdines(Set<Ordine> ordines) {
-		this.ordines = ordines;
+	public void setPrezzo(Float prezzo) {
+		this.prezzo = prezzo;
 	}
 
 }
