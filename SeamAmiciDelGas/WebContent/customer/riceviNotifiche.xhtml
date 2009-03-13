@@ -72,6 +72,10 @@
 								value="#{filtraNotifica.getAllPooledTaskInstanceList('ReceiveMessage')}" var="_pooledTask"
 								width="90%" align="center" >
 						<rich:column>
+							<f:facet name="header">Processo</f:facet>							    
+					         <h:outputText value="#{_pooledTask.name}"/>
+						</rich:column>
+						<rich:column>
 							<f:facet name="header">Mittente</f:facet>    
 					         <h:outputText value="#{_pooledTask.variables.sender}"/>
 						</rich:column>
@@ -86,6 +90,34 @@
 						<rich:column width="10%">
 							<s:button taskInstance="#{_pooledTask}" action="#{notifyBean.receive()}"
 									  value="Cancella messaggio"/>
+						</rich:column>
+					</rich:dataTable>
+				</s:decorate>
+				<s:decorate rendered="#{not empty filtraNotifica.getAllPooledTaskInstanceListForAllUserButMeNot(currentAccount.username,'partecipa_alla_visita')}">
+					<b><h:outputText value="Messaggi di gruppo da altri utenti" /></b><br/><br/>
+					<rich:dataTable id="dataTableGroupVisita" 
+								value="#{filtraNotifica.getAllPooledTaskInstanceListForAllUserButMeNot(currentAccount.username,'partecipa_alla_visita')}" var="_pooledTask2"
+								width="90%" align="center" >
+						<rich:column>
+							<f:facet name="header">Processo</f:facet>							    
+					         <h:outputText value="#{_pooledTask2.name}"/>
+						</rich:column>
+						<rich:column>
+							<f:facet name="header">Mittente</f:facet>    
+					         <h:outputText value="Un mediatore"/>
+						</rich:column>
+						<rich:column>
+							<f:facet name="header">Gruppo</f:facet>    
+					         <h:outputText value="#{_pooledTask2.pooledActors.iterator().next()}"/>
+						</rich:column>
+						<rich:column>
+							<f:facet name="header">Contenuto messaggio</f:facet>    
+					         <h:outputText value="#{_pooledTask2.variables.notificaUtente.content}"/>
+						</rich:column>
+						<rich:column width="10%">
+							<f:facet name="header">Azione</f:facet>  
+							<s:button taskInstance="#{_pooledTask2}" action="#{inviaNotificaRegistrazioni.partecipa_alla_visita}"
+									  value="Partecipa alla visita"/>
 						</rich:column>
 					</rich:dataTable>
 				</s:decorate>
