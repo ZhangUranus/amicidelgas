@@ -144,6 +144,20 @@ public class FiltraNotifica {
 		return tasks;
 	}
 	
+	public List<TaskInstance> getAllPooledTaskInstanceListForSingleCustomer(String username, String... filters)
+	{
+		List<TaskInstance> tasks= getAllPooledTaskInstanceList(filters);
+		List<TaskInstance> tasksUser = new ArrayList<TaskInstance>();
+		for(TaskInstance temp : tasks)
+		{
+			String s = (String) temp.getVariable("customer");
+			if(s.equals(username))
+				tasksUser.add(temp);
+		}
+		return tasksUser;
+		
+	}
+	
 	private List<TaskInstance> taskInstanceGroupList(String taskFilter) {
 		List<TaskInstance> tasks = new ArrayList<TaskInstance>();
 		for (TaskInstance ti: pooledTaskInstanceList) {
