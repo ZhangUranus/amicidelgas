@@ -2,17 +2,16 @@ package org.domain.SeamAmiciDelGas.session;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
+import java.util.GregorianCalendar;
 import java.util.List;
 
-import org.domain.SeamAmiciDelGas.processes.NotifyBean;
 import org.domain.SeamAmiciDelGas.processes.OrderProcessing;
 import org.domain.SeamAmiciDelGas.webservices.Item;
+import org.hibernate.validator.Future;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Logger;
 import org.jboss.seam.annotations.Name;
-import org.jboss.seam.annotations.Out;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.annotations.intercept.BypassInterceptors;
 import org.jboss.seam.log.Log;
@@ -33,27 +32,23 @@ public class ShoppingCart {
 	private boolean noSelect=false;
 	
 	List<ItemQuantita> itemInShoppingCart = new ArrayList<ItemQuantita>();
-
-
+	
 	private Date dataMassima;
+	private boolean dataMassimaBeforeToday=false;
 
 	private List<ItemQuantita> selectedItem;
 
-	public Date getDataMassima() {
-		return dataMassima;
-	}
-
-	public void setDataMassima(Date dataMassima) {
-		this.dataMassima = dataMassima;
-	}
 
 	public ShoppingCart(){}
 	
+	@Future
 	public String getQuantita() {
+		log.info("******** get data massima ************");
 		return quantita;
 	}
-
+	
 	public void setQuantita(String quantita) {
+		log.info("******** set data massima ************");
 		this.quantita = quantita;
 	}
 
@@ -108,14 +103,35 @@ public class ShoppingCart {
 		}
 		return totale;
 	}
+	private boolean dataMassimaBeforeCurrentDate()
+	{
+		GregorianCalendar gc = new GregorianCalendar();
+		Date currentDate = gc.getTime();
+		if(dataMassima.before(currentDate))
+		{
+			log.info("*******data massima = " +dataMassima.toString() +" ************");
+			log.info("******* TROPPO PRESTOOOOOOOOOOOOOOOOO ************");
+			dataMassimaBeforeToday=true;
+			return true;
+		}
+		return false;
+	}
 	
 	public void buySelectedItem()
 	{
 		//procede all'acquisto dei prodotti nel carrello
 		//svuota il carrello
 		log.info("******** buyAllItem************");
-		selectedItem = new ArrayList<ItemQuantita>();
 		
+		if(dataMassima==null)
+		{
+			log.info("*******data massima = nuuuuuulllllllllllllllllllll*********");
+			return;
+		}
+		if(dataMassimaBeforeCurrentDate())
+			return;
+
+		selectedItem = new ArrayList<ItemQuantita>();
 		for(int index=0; index<itemInShoppingCart.size(); index++)//aggiungo i prodotti all'ordine da fare
 		{	
 			ItemQuantita iq=itemInShoppingCart.get(index);
@@ -127,12 +143,19 @@ public class ShoppingCart {
 		}
 		noSelect = (selectedItem.size()==0) ? true : false;
 		
-		//invia ordine
-		if(!noSelect)
+		if(noSelect)
 		{
-			String logInfo = orderProcessing.startOrder(selectedItem,dataMassima);
-			log.info("*********** "+logInfo);
+			log.info("*******nessun item selezionato, ritorno*********");
+			return;
 		}
+
+		dataMassimaBeforeToday=false;
+		log.info("*******data massima = " +dataMassima.toString() +" ************");
+		String logInfo = orderProcessing.startOrder(selectedItem,dataMassima);
+		log.info("*********** "+logInfo);
+		//se l'ordine nn va a buon fine devo fare il rollback e riaggiungere
+		//gli item nel carrello...
+
 	}
 
 	public boolean isNoSelect() {
@@ -141,6 +164,22 @@ public class ShoppingCart {
 
 	public void setNoSelect(boolean noSelect) {
 		this.noSelect = noSelect;
+	}
+
+	public Date getDataMassima() {
+		return dataMassima;
+	}
+
+	public void setDataMassima(Date dataMassima) {
+		this.dataMassima = dataMassima;
+	}
+
+	public boolean isDataMassimaBeforeToday() {
+		return dataMassimaBeforeToday;
+	}
+
+	public void setDataMassimaBeforeToday(boolean dataMassimaBeforeToday) {
+		this.dataMassimaBeforeToday = dataMassimaBeforeToday;
 	}
 
 }
