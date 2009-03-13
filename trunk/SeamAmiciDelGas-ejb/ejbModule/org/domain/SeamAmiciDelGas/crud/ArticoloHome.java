@@ -1,6 +1,7 @@
 package org.domain.SeamAmiciDelGas.crud;
 
 import org.domain.SeamAmiciDelGas.entity.*;
+
 import java.util.ArrayList;
 import java.util.List;
 import org.jboss.seam.annotations.In;
@@ -12,7 +13,8 @@ public class ArticoloHome extends EntityHome<Articolo> {
 
 	@In(create = true)
 	CybercontadinoHome cybercontadinoHome;
-
+	@In(create = true)
+	OrdineHome ordineHome;
 	public void setArticoloIdarticolo(Integer id) {
 		setId(id);
 	}
@@ -33,6 +35,10 @@ public class ArticoloHome extends EntityHome<Articolo> {
 		if (cybercontadino != null) {
 			getInstance().setCybercontadino(cybercontadino);
 		}
+		Ordine ordine = ordineHome.getDefinedInstance();
+		if (ordine != null) {
+			getInstance().setOrdine(ordine);
+		}
 	}
 
 	public boolean isWired() {
@@ -43,9 +49,5 @@ public class ArticoloHome extends EntityHome<Articolo> {
 		return isIdDefined() ? getInstance() : null;
 	}
 
-	public List<Ordine> getOrdines() {
-		return getInstance() == null ? null : new ArrayList<Ordine>(
-				getInstance().getOrdines());
-	}
 
 }

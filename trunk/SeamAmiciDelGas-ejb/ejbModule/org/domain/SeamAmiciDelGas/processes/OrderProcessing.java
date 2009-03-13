@@ -1,45 +1,70 @@
 package org.domain.SeamAmiciDelGas.processes;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Enumeration;
+import java.util.GregorianCalendar;
+import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
+import javax.ejb.Remove;
+import javax.ejb.Stateful;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
+import org.domain.SeamAmiciDelGas.crud.OrdineList;
+import org.domain.SeamAmiciDelGas.entity.Account;
+import org.domain.SeamAmiciDelGas.entity.Articolo;
+import org.domain.SeamAmiciDelGas.entity.Ordine;
 import org.domain.SeamAmiciDelGas.session.ItemQuantita;
 import org.domain.SeamAmiciDelGas.session.Message;
 import org.domain.SeamAmiciDelGas.session.MyOrdine;
+import org.domain.SeamAmiciDelGas.session.OrdineBean;
 import org.domain.SeamAmiciDelGas.webservices.CatalogInterface;
 import org.domain.SeamAmiciDelGas.webservices.CatalogNoServiceImpl;
 import org.jboss.seam.ScopeType;
+import org.jboss.seam.annotations.Destroy;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Out;
 import org.jboss.seam.annotations.Scope;
+import org.jboss.seam.annotations.Transactional;
 import org.jboss.seam.annotations.bpm.BeginTask;
 import org.jboss.seam.annotations.bpm.CreateProcess;
 import org.jboss.seam.annotations.bpm.EndTask;
 import org.jboss.seam.annotations.intercept.BypassInterceptors;
 import org.jboss.seam.security.Credentials;
 
-
 @Name("orderProcessing")
 @Scope(ScopeType.SESSION)
 public class OrderProcessing {
+	
 	@In(value="myOrdine", scope=ScopeType.BUSINESS_PROCESS, required=false)
 	@Out(value="myOrdine",scope=ScopeType.BUSINESS_PROCESS,required=false)
 	private MyOrdine myOrdine;
 	
+	@In(value="dataRichiesta", scope=ScopeType.BUSINESS_PROCESS, required=false)
+	@Out(value="dataRichiesta",scope=ScopeType.BUSINESS_PROCESS,required=false)
+	private Date dataRichiesta;
+	
 	@Out(value="notificaDriverContadino",scope=ScopeType.BUSINESS_PROCESS,required=false)
 	protected Message messageDriverContadino;
+	
+	@In(value="entityManager")
+    private EntityManager em;
+	
+	@In(value="currentAccount", scope=ScopeType.SESSION, required=false)
+	@Out(value="currentAccount", scope=ScopeType.BUSINESS_PROCESS, required=false)
+	private Account currentAccount;
 	
 	@Out(value="notifyMessage",scope=ScopeType.BUSINESS_PROCESS,required=false)
 	protected Message messageStatoOrdine;
 	
 	@In(value="customer", scope=ScopeType.BUSINESS_PROCESS, required=false)
 	@Out(value="customer", scope=ScopeType.BUSINESS_PROCESS, required=false)
-	private String customer;
+	private Account customer;
 	
 	@Out(value="selectedItemShoppingCart",scope=ScopeType.BUSINESS_PROCESS,required=false)
 	private List<ItemQuantita> selectedItem;
@@ -49,33 +74,41 @@ public class OrderProcessing {
 	
 	@In private Credentials credentials;
 	
+	
+	
 	@CreateProcess(definition="myOrderProcessing")
 	public String startOrder(List<ItemQuantita> itemQ, Date dm){
-		
 		selectedItem = itemQ;
 		dataMassima = dm;
-		
-		customer = credentials.getUsername();
+		//setto la data di richiesta
+		GregorianCalendar gc = new GregorianCalendar();
+		dataRichiesta = gc.getTime();
+		customer = currentAccount;
 		myOrdine = new MyOrdine();
 		myOrdine.setDataMassima(dataMassima);
 		myOrdine.setItemQuantita(selectedItem);
+		myOrdine.setDataRichiesta(dataRichiesta);
 		//setto lo stato dell'ordine
 		myOrdine.setPendente(true);
 		myOrdine.setEvaso(false);
 		boolean isStessoContadino=true;
 		messageDriverContadino = new Message();
 
-		String usernameContadino = selectedItem.get(0).getUsername();
+		String usernameContadino = selectedItem.get(0).getCybercontadino().getAccount().getUsername();
 		for(ItemQuantita iq : selectedItem)//vedo se il contadino è sempre lo stesso
-			if(!(iq.getUsername().equals(usernameContadino)))
+			if(!(iq.getCybercontadino().getAccount().getUsername().equals(usernameContadino)))
 			{	
 				isStessoContadino=false; break;
 			}
 		
 		if(isStessoContadino)
 			messageDriverContadino.addRecipient(usernameContadino);
-
-		String content = "Ordine fatto da " +credentials.getUsername()+"dim = "+selectedItem.size();
+		String o=null;
+		if (dataMassima==null)
+			o = "null";
+		else
+			o = "not null";
+		String content = "Ordine fatto da " +credentials.getUsername()+" dataMassima = "+o;
 		
 		messageDriverContadino.setContent(content);
 		
@@ -91,7 +124,7 @@ public class OrderProcessing {
 		boolean isAvailable=true;
 		//verifico la disponibilità per ogni contandino
 		for (ItemQuantita iq : myOrdine.getItemQuantita()) {
-			String idContadino = iq.getUsername();
+			String idContadino = iq.getCybercontadino().getAccount().getUsername();
 			UUID uuid = transactionIdList.get(idContadino);
 			if(uuid==null)
 			{	
@@ -103,8 +136,8 @@ public class OrderProcessing {
 				break;
 		}
 		messageStatoOrdine =new Message();
-		messageStatoOrdine.addRecipient(customer);
-		if(!isAvailable)
+		messageStatoOrdine.addRecipient(customer.getUsername());
+		if(!isAvailable) //uno degli itemquantita non è disponibile
 		{
 			Enumeration<String> enumContadini = transactionIdList.keys();
 			while(enumContadini.hasMoreElements())
@@ -114,7 +147,7 @@ public class OrderProcessing {
 			}
 			messageStatoOrdine.setContent("Ordine non fattibile, e' stato rimesso in coda");
 		}
-		else
+		else //l'ordine può essere evaso
 		{
 			Enumeration<String> enumContadini = transactionIdList.keys();
 			while(enumContadini.hasMoreElements())
@@ -125,13 +158,49 @@ public class OrderProcessing {
 			messageStatoOrdine.setContent("Ordine preso in carico da "+ credentials.getUsername());
 			myOrdine.setPendente(false);
 			myOrdine.setEvaso(true);
+			saveOrdine(); //salvo l'ordine nel database
 		}
 	}
 	
+	@Transactional
+	private void saveOrdine() {
+		Ordine ordine = new Ordine();
+		ordine.setAccount(customer);
+		ordine.setConcluso(false);
+		ordine.setDataRichiesta(dataRichiesta);
+		ordine.setDataMassimaConsegna(myOrdine.getDataMassima());
+		ordine.setDriver(currentAccount);
+		//salvo l'ordine
+		em.persist(ordine);
+		
+		Articolo articolo;
+		for (ItemQuantita iq: myOrdine.getItemQuantita()) {
+			articolo = new Articolo();
+			articolo.setCodiceEsterno(iq.getItem().getName());
+			articolo.setCybercontadino(iq.getCybercontadino());
+			articolo.setDescrizione(iq.getItem().getDescription());
+			articolo.setPrezzo((float) iq.getItem().getPrezzo());
+			if (!iq.isBooleanIsQuantitaMinima())
+				iq.setQuantitaParziale(iq.getQuantita());
+			articolo.setQuantitaMinRichiesta(iq.getQuantitaParziale());
+			articolo.setQuantitaRichiesta(iq.getQuantita());
+			articolo.setOrdine(ordine);
+			em.persist(articolo);
+		}
+	}
+	
+	@BeginTask @EndTask(transition="ordine_eliminato_dall_utente")
+	public void delete() {
+		
+	}
 	/*
 	 * Getter and settrer methods...
 	 */
+	
+	@Destroy @Remove
+	 public void destroy() {}
 
+	
 	public MyOrdine getMyOrdine() {
 		return myOrdine;
 	}

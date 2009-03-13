@@ -35,10 +35,7 @@ public class OrdineHome extends EntityHome<Ordine> {
 		if (account != null) {
 			getInstance().setAccount(account);
 		}
-		Articolo articolo = articoloHome.getDefinedInstance();
-		if (articolo != null) {
-			getInstance().setArticolo(articolo);
-		}
+		
 	}
 
 	public boolean isWired() {
@@ -52,6 +49,11 @@ public class OrdineHome extends EntityHome<Ordine> {
 	public List<Feedback> getFeedbacks() {
 		return getInstance() == null ? null : new ArrayList<Feedback>(
 				getInstance().getFeedbacks());
+	}
+	
+	public List<Articolo> getArticolos() {
+		return getInstance() == null ? null : new ArrayList<Articolo>(
+				getInstance().getArticolos());
 	}
 
 }

@@ -85,6 +85,12 @@
              </rich:menuItem>
              
              <rich:menuItem submitMode="none" >
+                    <s:link view="/customer/visualizzaOrdini.xhtml" value="VISUALIZZA ORDINI" propagation="none"/>
+                    <f:param name="utenteCodiceFiscale" value="#{currentUser.codiceFiscale}"/>
+		            <f:param name="accountUsername" value="#{currentAccount.username}"/>
+             </rich:menuItem> 
+             
+             <rich:menuItem submitMode="none" >
                     <s:link view="/customer/questionario.xhtml" value="QUESTIONARIO" propagation="none"/>
              </rich:menuItem>	
         	
