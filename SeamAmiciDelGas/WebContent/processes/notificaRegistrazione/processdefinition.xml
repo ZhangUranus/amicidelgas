@@ -3,18 +3,18 @@
 <process-definition  xmlns=""  name="notificaRegistrazione">
 
 
-	<start-state name="Richiesta registrazione">
-		<transition to="Crea Evento Azienda da visitare" name="inviaRegistrazione"></transition>
+	<start-state name="RichiestaRegistrazione">
+		<transition to="CreaEventoAziendaVisitare" name="inviaRegistrazione"></transition>
 	</start-state>
 
-	<task-node name="Crea Evento Azienda da visitare">
+	<task-node name="CreaEventoAziendaVisitare">
 		<task name="crea_visita">
 			<assignment pooled-actors="mediatore"></assignment>
 		</task>
 		<transition to="fork1" name="invia"></transition>
 	</task-node>
 
-	<task-node name="partecipa al gruppo">
+	<task-node name="PartecipaVisita">
 		<task name="partecipa_alla_visita" >
 			<assignment pooled-actors="utenteGas"></assignment>
 		</task>
@@ -27,22 +27,22 @@
 			<action name="SpegniTuttoeVaiAvanti" class="org.domain.SeamAmiciDelGas.processes.CancelTaskAction"></action>
 		</event>
     <timer duedate="10 years" name="varTimer" transition="time-out"/>
-		<transition to="accetta altri utenti" name="partecipa"></transition>
-		<transition to="join11" name="time-out"></transition>
+		<transition to="AccettaAltriUtenti" name="partecipa"></transition>
+		<transition to="join1" name="time-out"></transition>
 	</task-node>
 
-	<task-node name="Visualizza Questionari">
+	<task-node name="VisualizzaQuestionari">
 		<task name="visualizzaQuestionari">
 			<assignment pooled-actors="admin"></assignment>
 		</task>
 		<transition to="AccettaRifiuta" name="decisioneAdmin"></transition>
 	</task-node>
 
-	<decision name="accetta altri utenti">
-		<transition to="partecipa al gruppo" name="posti disponibili">
+	<decision name="AccettaAltriUtenti">
+		<transition to="PartecipaVisita" name="posti disponibili">
 			<condition expression="#{!(postiOccupati &gt;= 10)}"></condition>
 		</transition>
-		<transition to="join11" name="posti esauriti">
+		<transition to="join1" name="posti esauriti">
 			<condition expression="#{postiOccupati ==10}"></condition>
 		</transition>
 	</decision>
@@ -53,39 +53,43 @@
 	</decision>
 	
 	<mail-node name="EmailConfermaRegistrazione">
-		<transition to="Contadino Accettato" name="ok"></transition>
+		<transition to="ContadinoAccettato" name="ok"></transition>
 	</mail-node>
 
 	<fork name="fork1">
-		<transition to="accetta altri utenti"></transition>
-		<transition to="join11" name="to EMAIL"></transition>
+		<transition to="AccettaAltriUtenti"></transition>
+		<transition to="join1" name="to EMAIL"></transition>
 	</fork>
 
-	<join name="join11">
-		<transition to="fork11" name="notificaQuestionario"></transition>
+	<join name="join1">
+		<transition to="AspettaDataQuestionario" name="aspettaData"></transition>
 	</join>
 
 	<process-state name="SubProcessNotifica">
 		<sub-process name="notificaRequestReply" binding="late"/>
 		<variable access="read" name="provaMessaggio" mapped-name="notifyMessageRequest"></variable>
-		<transition to="join1Prova" name="fineSubProcess"></transition>
+		<transition to="CustomNodeJoin" name="fineSubProcess"></transition>
 	</process-state>
 
-	<node name="fork11">
+	<node name="CustomNodeFork">
 	<action class="org.domain.SeamAmiciDelGas.processes.ForEachForkActionHandler"/>
 		<transition to="SubProcessNotifica" name="invocaSubProcess"></transition>
 	</node>
 
-	<join name="join1Prova" >
-		<transition to="Visualizza Questionari" name="notificaAdmin"></transition>
+	<join name="CustomNodeJoin" >
+		<transition to="VisualizzaQuestionari" name="notificaAdmin"></transition>
 	</join>
 
 	<mail-node name="EmailRifiutoRegistrazione">
-		<transition to="Contadino Rifiutato" name="emailOk"></transition>
+		<transition to="ContadinoRifiutato" name="emailOk"></transition>
 	</mail-node>
+
+	<state name="AspettaDataQuestionario">
+		<transition to="CustomNodeFork" name="notificaQuestionario"></transition>
+	</state>
 	
-	<end-state name="Contadino Accettato"></end-state>
+	<end-state name="ContadinoAccettato"></end-state>
 	
-	<end-state name="Contadino Rifiutato"></end-state>
+	<end-state name="ContadinoRifiutato"></end-state>
 
 </process-definition>

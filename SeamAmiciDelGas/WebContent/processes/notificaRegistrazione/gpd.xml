@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<root-container name="notificaRegistrazione" width="757" height="908">
-  <node name="Richiesta registrazione" x="29" y="22" width="192" height="36">
+<root-container name="notificaRegistrazione" width="764" height="908">
+  <node name="RichiestaRegistrazione" x="29" y="22" width="192" height="36">
     <edge>
       <label x="-54" y="-32"/>
     </edge>
   </node>
-  <node name="Crea Evento Azienda da visitare" x="423" y="26" width="240" height="36">
+  <node name="CreaEventoAziendaVisitare" x="423" y="26" width="240" height="36">
     <edge>
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="partecipa al gruppo" x="34" y="230" width="216" height="42">
+  <node name="PartecipaVisita" x="34" y="230" width="216" height="42">
     <edge>
       <label x="5" y="-10"/>
       <bendpoint w1="214" h1="-4" w2="-131" h2="55"/>
@@ -20,12 +20,12 @@
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="Visualizza Questionari" x="443" y="507" width="313" height="36">
+  <node name="VisualizzaQuestionari" x="443" y="507" width="313" height="36">
     <edge>
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="accetta altri utenti" x="338" y="158" width="132" height="36">
+  <node name="AccettaAltriUtenti" x="338" y="158" width="132" height="36">
     <edge>
       <label x="12" y="-23"/>
       <bendpoint w1="-296" h1="-1" w2="49" h2="-60"/>
@@ -42,7 +42,7 @@
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="EmailConfermaRegistrazione" x="560" y="770" width="132" height="36">
+  <node name="EmailConfermaRegistrazione" x="560" y="770" width="203" height="36">
     <edge>
       <label x="5" y="-10"/>
     </edge>
@@ -55,7 +55,7 @@
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="join11" x="408" y="347" width="252" height="24">
+  <node name="join1" x="408" y="347" width="252" height="24">
     <edge>
       <label x="5" y="-10"/>
     </edge>
@@ -65,19 +65,24 @@
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="fork11" x="100" y="366" width="132" height="36">
+  <node name="CustomNodeFork" x="100" y="366" width="132" height="36">
     <edge>
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="join1Prova" x="68" y="550" width="252" height="24">
+  <node name="CustomNodeJoin" x="68" y="550" width="252" height="24">
     <edge>
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="Contadino Accettato" x="573" y="858" width="132" height="36"/>
-  <node name="Contadino Rifiutato" x="251" y="871" width="132" height="36"/>
+  <node name="ContadinoAccettato" x="573" y="858" width="132" height="36"/>
+  <node name="ContadinoRifiutato" x="251" y="871" width="132" height="36"/>
   <node name="EmailRifiutoRegistrazione" x="251" y="762" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="AspettaDataQuestionario" x="375" y="411" width="192" height="36">
     <edge>
       <label x="5" y="-10"/>
     </edge>

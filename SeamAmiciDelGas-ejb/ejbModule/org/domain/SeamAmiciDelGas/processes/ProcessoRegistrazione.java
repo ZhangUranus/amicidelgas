@@ -79,9 +79,7 @@ public class ProcessoRegistrazione {
 	
 //	@Out(value="mioBroadcast",scope=ScopeType.BUSINESS_PROCESS, required= false)
 //	private boolean mioBroadcast;
-	
-	@Out(value="provaMessaggio", scope= ScopeType.BUSINESS_PROCESS, required=false)
-	protected Message provaMessaggio;
+
 	
 	private Cybercontadino contadinoCorrente;
 	private TaskInstance taskCorrente;
