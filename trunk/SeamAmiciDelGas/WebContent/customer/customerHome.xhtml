@@ -169,6 +169,15 @@
 							</h:column>
 							<h:column>
 								<f:facet name="header">Message</f:facet>
+												#{_task.variables.notifyMessageReply.content}
+									</h:column>
+							<h:column>
+								<f:facet name="header">Action</f:facet>
+								<s:link action="#{inviaRequestReply.riceviRisposta}" taskInstance="#{_task}"
+									value="Invia RICEVI RISPOSTA Utente" />
+							</h:column>
+							<h:column>
+								<f:facet name="header">Message</f:facet>
 												#{_task.variables.notificaUtente.content}
 									</h:column>
 									<h:column>
@@ -182,12 +191,21 @@
 							rendered="#{identity.loggedIn and not empty taskInstanceList}">
 							<h:column>
 								<f:facet name="header">Message</f:facet>
+												#{_task2.variables.notifyMessageRequest.content}
+									</h:column>
+							<h:column>
+								<f:facet name="header">Action</f:facet>
+								<s:link action="#{inviaRequestReply.riceviMessaggio}" taskInstance="#{_task2}"
+									value="Invia Ricevi Messaggio" />
+							</h:column>
+							<h:column>
+								<f:facet name="header">Message</f:facet>
 												#{_task2.variables.notifyMessageReply.content}
 									</h:column>
 							<h:column>
 								<f:facet name="header">Action</f:facet>
 								<s:link action="#{inviaRequestReply.riceviRisposta}" taskInstance="#{_task2}"
-									value="Invia Fine" />
+									value="Invia RICEVI RISPOSTA" />
 							</h:column>
 						</rich:dataTable>
 									<li>notifica1</li>

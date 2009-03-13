@@ -164,6 +164,16 @@
           <s:decorate id="erroreField" template="/layout/edit.xhtml">
             <h:outputText styleClass="errors" value="#{newFileUpload.errore}" />
             </s:decorate>
+            
+            <s:decorate id="dataVisitaField" template="/layout/edit.xhtml">
+                <ui:define name="label">Inserire una data in cui si è disponibili a effettuare la visita in azienda</ui:define>
+                <rich:calendar id="dataVisita"
+                       required="true"
+                       requiredMessage="Inserire una data"
+                       value="#{newCybercontadino.dataVisita}" datePattern="MM/dd/yyyy">
+                   <a:support event="onchange" reRender="dataVisitaField" bypassUpdates="true" ajaxSingle="true"/>
+                </rich:calendar>
+            </s:decorate>
           
           <s:decorate id="verifyCaptchaField" template="/layout/edit.xhtml">
 				<ui:define name="label">Security Check</ui:define>

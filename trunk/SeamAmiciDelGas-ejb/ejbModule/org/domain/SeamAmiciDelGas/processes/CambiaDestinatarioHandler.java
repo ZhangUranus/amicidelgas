@@ -37,20 +37,29 @@ public class CambiaDestinatarioHandler implements ActionHandler{
 	    ProcessInstance pi= executionContext.getProcessInstance();
 	   
 	    TaskNode taskNode = (TaskNode) executionContext.getNode();
-	  //  taskNode.setSignal(TaskNode.SIGNAL_LAST_WAIT);
+	 //   taskNode.setSignal(TaskNode.SIGNAL_LAST_WAIT);
 	    Task riceviMessaggio = taskNode.getTask("riceviMessaggio");
 	    Message message = (Message) executionContext.getVariable("notifyMessageRequest");
+	    if(message == null)
+	    {
+	    	System.out.println("Messaggio NULLOOOOOOOO");
+	    	return;
+	    }
 	    TaskInstance ti = tmi.createTaskInstance(riceviMessaggio,executionContext);
     	Map tokenVariables=pi.getContextInstance().getTokenVariableMap(token).getVariables();
     	//ti.setVariableLocally("notifyMessageRequest", tokenVariables.get("notifyMessageReques"));
 	    if(message.isBroadcast())
 	    {
-	   		String [] poolActor = new String[1];
+	    	System.out.println("Messaggio BROADCAST");
+	    	String [] poolActor = new String[1];
 	   		poolActor[0] = message.getDestinatario();
 	    	ti.setPooledActors(poolActor);
 	    }
 	    else
+	    {
+	    	System.out.println("Messaggio NON BROADCAST");
 	    	ti.setActorId(message.getDestinatario());
+	    }
 	}
 
 

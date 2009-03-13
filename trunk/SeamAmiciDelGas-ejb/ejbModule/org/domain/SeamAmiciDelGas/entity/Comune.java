@@ -46,11 +46,11 @@ public class Comune implements java.io.Serializable {
 
 	public Comune() {
 	}
-
+/*
 	public Comune(String nome) {
 		this.nome = nome;
 	}
-
+*/
 	public Comune(Provinces provinces, String nome, Integer cap,
 			Set<Utente> utentesForIdcomune,
 			Set<Cybercontadino> cybercontadinos,

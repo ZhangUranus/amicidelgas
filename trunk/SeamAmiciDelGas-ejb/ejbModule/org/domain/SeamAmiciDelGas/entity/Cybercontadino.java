@@ -2,6 +2,7 @@ package org.domain.SeamAmiciDelGas.entity;
 
 // Generated 7-feb-2009 13.24.15 by Hibernate Tools 3.2.2.GA
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.CascadeType;
@@ -14,9 +15,12 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.domain.SeamAmiciDelGas.validator.PartitaIVA;
 import org.hibernate.validator.Email;
+import org.hibernate.validator.Future;
 import org.hibernate.validator.Length;
 import org.hibernate.validator.NotNull;
 import org.hibernate.validator.Pattern;
@@ -49,6 +53,7 @@ public class Cybercontadino implements java.io.Serializable {
 	@Email (message="errore")
 	private String email;
 	private String coordinate;
+	private Date dataVisita;
 	private Set<Questionario> questionarios = new HashSet<Questionario>(0);
 	private Set<Itinerario> itinerarios = new HashSet<Itinerario>(0);
 	private Set<Articolo> articolos = new HashSet<Articolo>(0);
@@ -267,4 +272,15 @@ public class Cybercontadino implements java.io.Serializable {
 		this.articolos = articolos;
 	}
 
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "dataVisita", nullable = false)
+	@NotNull
+	@Future
+	public Date getDataVisita() {
+		return dataVisita;
+	}
+
+	public void setDataVisita(Date dataVisita) {
+		this.dataVisita = dataVisita;
+	}
 }

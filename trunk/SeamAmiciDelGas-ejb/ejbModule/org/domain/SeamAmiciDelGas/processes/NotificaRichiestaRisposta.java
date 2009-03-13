@@ -11,6 +11,8 @@ import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Out;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.annotations.bpm.CreateProcess;
+import org.jboss.seam.annotations.bpm.EndTask;
+import org.jboss.seam.annotations.bpm.StartTask;
 import org.jboss.seam.faces.FacesMessages;
 import org.jboss.seam.log.Log;
 import org.jboss.seam.security.Credentials;
@@ -52,8 +54,24 @@ public class NotificaRichiestaRisposta {
 		message.setDestinatario(destinatario);
 		//message.setBroadcast(true);
 		message.setBroadcast(broadcast);
+		System.out.println("La richiesta � stata inoltrata");
 		facesMessages.add("La richiesta � stata inoltrata");
 	}
+/*	
+	@StartTask @EndTask(transition="inviaRequest")
+	public void creaMessaggio()
+	{
+		System.out.println("Creo Messaggio");
+		message=new Message();
+		content = "Tutto bien?! Posso diventare Driver?";
+		message.setContent(content);
+		//message.setDestinatario("Mediatore");
+		message.setDestinatario(destinatario);
+		//message.setBroadcast(true);
+		message.setBroadcast(broadcast);
+		System.out.println("Il messaggio � stata inoltrato");
+	}
+	*/
 
 	public String getContent() {
 		return content;

@@ -7,12 +7,11 @@
 		<transition to="Crea Evento Azienda da visitare" name="inviaRegistrazione"></transition>
 	</start-state>
 
-
 	<task-node name="Crea Evento Azienda da visitare">
 		<task name="crea_visita">
 			<assignment pooled-actors="mediatore"></assignment>
 		</task>
-		<transition to="SubProcessNotifica" name="invia"></transition>
+		<transition to="fork1" name="invia"></transition>
 	</task-node>
 
 	<task-node name="partecipa al gruppo">
@@ -29,43 +28,64 @@
 		</event>
     <timer duedate="10 years" name="varTimer" transition="time-out"/>
 		<transition to="accetta altri utenti" name="partecipa"></transition>
-		<transition to="join1" name="time-out"></transition>
+		<transition to="join11" name="time-out"></transition>
 	</task-node>
 
-	<task-node name="Riempire questionario (Visualizza Admin)">
-		<task name="compilaQuestionario">
-			<assignment pooled-actors="utenteContadino"></assignment>
+	<task-node name="Visualizza Questionari">
+		<task name="visualizzaQuestionari">
+			<assignment pooled-actors="admin"></assignment>
 		</task>
-		<transition to="Contadino Accettato" name="fine"></transition>
+		<transition to="AccettaRifiuta" name="decisioneAdmin"></transition>
 	</task-node>
 
 	<decision name="accetta altri utenti">
 		<transition to="partecipa al gruppo" name="posti disponibili">
-			<condition expression="#{!(postiOccupati &gt;= 3)}"></condition>
+			<condition expression="#{!(postiOccupati &gt;= 10)}"></condition>
 		</transition>
-		<transition to="join1" name="posti esauriti">
-			<condition expression="#{postiOccupati ==3}"></condition>
+		<transition to="join11" name="posti esauriti">
+			<condition expression="#{postiOccupati ==10}"></condition>
 		</transition>
 	</decision>
+	
+	<decision name="AccettaRifiuta">
+		<transition to="EmailRifiutoRegistrazione" name="Rifiuta"></transition>
+		<transition to="EmailConfermaRegistrazione" name="accetta"></transition>
+	</decision>
+	
+	<mail-node name="EmailConfermaRegistrazione">
+		<transition to="Contadino Accettato" name="ok"></transition>
+	</mail-node>
 
 	<fork name="fork1">
 		<transition to="accetta altri utenti"></transition>
-		<transition to="join1" name="to join1"></transition>
+		<transition to="join11" name="to EMAIL"></transition>
 	</fork>
 
-	<join name="join1"></join>
+	<join name="join11">
+		<transition to="fork11" name="notificaQuestionario"></transition>
+	</join>
 
 	<process-state name="SubProcessNotifica">
-		<sub-process name="notificatore"></sub-process>
-		<variable access="read" name="inviati" mapped-name="recipients"></variable>
-		<variable access="read" name="contenutoMessaggio" mapped-name="content"></variable>
-		<variable access="read" name="mioBroadcast" mapped-name="broadcast"></variable>
-		<transition to="Riempire questionario (Visualizza Admin)" name="rispostaQuestionario"></transition>
+		<sub-process name="notificaRequestReply" binding="late"/>
+		<variable access="read" name="provaMessaggio" mapped-name="notifyMessageRequest"></variable>
+		<transition to="join1Prova" name="fineSubProcess"></transition>
 	</process-state>
 
+	<node name="fork11">
+	<action class="org.domain.SeamAmiciDelGas.processes.ForEachForkActionHandler"/>
+		<transition to="SubProcessNotifica" name="invocaSubProcess"></transition>
+	</node>
 
+	<join name="join1Prova" >
+		<transition to="Visualizza Questionari" name="notificaAdmin"></transition>
+	</join>
+
+	<mail-node name="EmailRifiutoRegistrazione">
+		<transition to="Contadino Rifiutato" name="emailOk"></transition>
+	</mail-node>
+	
 	<end-state name="Contadino Accettato"></end-state>
-
-
+	
+	<end-state name="Contadino Rifiutato"></end-state>
 
 </process-definition>
