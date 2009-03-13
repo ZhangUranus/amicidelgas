@@ -35,7 +35,6 @@ public class InviaNotificaRegistrazioni {
 	private Log log;
 	@In private Credentials credentials;
 	
-	@In protected EntityManager entityManager;
 
 	@In(value="inviati",scope=ScopeType.BUSINESS_PROCESS, required= false)
 	@Out(value="inviati",scope=ScopeType.BUSINESS_PROCESS, required= false)
