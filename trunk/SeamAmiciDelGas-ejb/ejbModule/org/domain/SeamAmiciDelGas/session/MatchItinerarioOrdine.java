@@ -35,7 +35,12 @@ public class MatchItinerarioOrdine implements Serializable{
 		//query per tornare gli itinerari del driver
 		return null;
 	}
-	
+	/**
+	 * vedo quali ordini nei taskInstance("accetta_ordine") possono essere
+	 * soddisfatti dall'itinerario scelto.
+	 * @param itinerario un itinerario caricato dal database
+	 * @return List<TaskInstance>
+	 */
 	public List<TaskInstance> loadTaskInstanceForItinerario(Itinerario itinerario) {
 		List<TaskInstance> tasks = filtraNotifica.getAllPooledTaskInstanceList("accetta_ordine");
 		List<TaskInstance> taskValidi = new ArrayList<TaskInstance>() ;
@@ -43,30 +48,27 @@ public class MatchItinerarioOrdine implements Serializable{
 		for(TaskInstance ti : tasks)
 		{
 			myOrdine= (MyOrdine) ti.getVariable("myOrdine");
-			if(compareOrdineItinerario(myOrdine,itinerario))
+			if(compareOrdineWithItinerario(myOrdine,itinerario))
 				taskValidi.add(ti);
 		}
 		return taskValidi;
 	}
 	
-	private boolean compareOrdineItinerario(MyOrdine myOrdine, Itinerario itinerario) {
+	/**
+	 * 
+	 * @param myOrdine 
+	 * @param itinerario
+	 * @return true se l'ordine ha tutti contadini che si trovano anche nell'itinerario
+	 */
+	private boolean compareOrdineWithItinerario(MyOrdine myOrdine, Itinerario itinerario) {
 		List<ItemQuantita> listItemQuantita = myOrdine.getItemQuantita();
-		Set<Cybercontadino> cyber = itinerario.getCybercontadinos();
-		boolean matching;
-		for(ItemQuantita iq : listItemQuantita)
+		Set<Cybercontadino> contadinoList = itinerario.getCybercontadinos();
+		for(ItemQuantita currentItemQuantita : listItemQuantita)
 		{
-			String usernameContadinoOrdine = iq.getCybercontadino().getAccount().getUsername();
-			matching=false;
-			for(Cybercontadino tempCyber : cyber)
-			{
-				if(tempCyber.getAccount().getUsername().equals(usernameContadinoOrdine))
-				{
-					matching=true;
-					break;
-				}
-			}
-			if(!matching)
-				return false;
+			String usernameContadinoOrdine = currentItemQuantita.getCybercontadino().getAccount().getUsername();
+			for(Cybercontadino currentContadino : contadinoList)
+				if(!currentContadino.getAccount().getUsername().equals(usernameContadinoOrdine))
+					return false;
 		}
 		return true;
 	}
