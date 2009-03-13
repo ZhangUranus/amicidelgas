@@ -21,6 +21,9 @@
 		<task name="ReceiveOrderFailed">
 			<assignment actor-id="#{customer.username}"></assignment>
 		</task>
+		<timer duedate="10 seconds" name="Ordine non disponibile timer" transition="ordine_rimesso_nel_pool">
+			<action></action>
+		</timer>
 		<transition to="Ordine notificato a driver e contadini" name="ordine_rimesso_nel_pool"></transition>
 	</task-node>
 
@@ -32,7 +35,7 @@
 		<task name="ReceiveOrderAccepted">
 			<assignment actor-id="#{customer.username}"></assignment>
 		</task>
-		<transition to="Attendi data consegna"></transition>
+		<transition to="Attendi data consegna" name="ordine_preso_in_consegna"></transition>
 	</task-node>
 
 	<state name="Attendi data consegna">

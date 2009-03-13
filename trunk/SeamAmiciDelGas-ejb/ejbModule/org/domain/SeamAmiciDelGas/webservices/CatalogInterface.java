@@ -14,11 +14,11 @@ public interface CatalogInterface {
 	
 	public Item[] getItemsForCategory(String idContadino, String category);
 	
-	public UUID beginTransaction(String idContadino);
+	public UUID beginTransaction(String idContadino, Date deliveryDate);
 	
 	public long getAvailableQuantity(String idContadino,Item item);
 	
-	public boolean reserveItem(String idContadino,UUID transactionId, Item item, int minimalQuantity, int quantity, Date deliveryDate);
+	public boolean reserveItem(String idContadino,UUID transactionId, Item item, int minimalQuantity, int quantity);
 	
 	public long rollBackTransaction(String idContadino,UUID transactionId);
 	public long commitTransaction(String idContadino, UUID transactionId);

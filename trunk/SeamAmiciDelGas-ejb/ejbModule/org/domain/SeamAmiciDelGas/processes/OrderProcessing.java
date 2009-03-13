@@ -52,6 +52,9 @@ public class OrderProcessing {
 	@Out(value="notificaDriverContadino",scope=ScopeType.BUSINESS_PROCESS,required=false)
 	protected Message messageDriverContadino;
 	
+
+	@Out(value="notifyMessageStatoOrdine",scope=ScopeType.BUSINESS_PROCESS,required=false)
+
 	@In(value="entityManager")
     private EntityManager em;
 	
@@ -59,7 +62,7 @@ public class OrderProcessing {
 	@Out(value="currentAccount", scope=ScopeType.BUSINESS_PROCESS, required=false)
 	private Account currentAccount;
 	
-	@Out(value="notifyMessage",scope=ScopeType.BUSINESS_PROCESS,required=false)
+	@Out(value="notifyMessageStatoOrdine",scope=ScopeType.BUSINESS_PROCESS,required=false)
 	protected Message messageStatoOrdine;
 	
 	@In(value="customer", scope=ScopeType.BUSINESS_PROCESS, required=false)
@@ -71,7 +74,7 @@ public class OrderProcessing {
 	
 	@Out(value="dataMassimaShoppingCart",scope=ScopeType.BUSINESS_PROCESS,required=false)
 	private Date dataMassima;
-	
+
 	@In private Credentials credentials;
 	
 	
@@ -93,7 +96,7 @@ public class OrderProcessing {
 		myOrdine.setEvaso(false);
 		boolean isStessoContadino=true;
 		messageDriverContadino = new Message();
-
+		
 		String usernameContadino = selectedItem.get(0).getCybercontadino().getAccount().getUsername();
 		for(ItemQuantita iq : selectedItem)//vedo se il contadino è sempre lo stesso
 			if(!(iq.getCybercontadino().getAccount().getUsername().equals(usernameContadino)))
@@ -111,7 +114,6 @@ public class OrderProcessing {
 		String content = "Ordine fatto da " +credentials.getUsername()+" dataMassima = "+o;
 		
 		messageDriverContadino.setContent(content);
-		
 		return "partito";
 	}
 	
@@ -128,14 +130,15 @@ public class OrderProcessing {
 			UUID uuid = transactionIdList.get(idContadino);
 			if(uuid==null)
 			{	
-				uuid = catalog.beginTransaction(idContadino);
+				uuid = catalog.beginTransaction(idContadino,myOrdine.getDataMassima());
 				transactionIdList.put(idContadino, uuid);
 			}
-			isAvailable=catalog.reserveItem(idContadino,uuid, iq.getItem(),iq.getQuantitaParziale(), iq.getQuantita(),myOrdine.getDataMassima());
+			isAvailable=catalog.reserveItem(idContadino,uuid, iq.getItem(),iq.getQuantitaParziale(), iq.getQuantita());
 			if(!isAvailable)
 				break;
 		}
 		messageStatoOrdine =new Message();
+		messageStatoOrdine.setMittente(credentials.getUsername());
 		messageStatoOrdine.addRecipient(customer.getUsername());
 		if(!isAvailable) //uno degli itemquantita non è disponibile
 		{
@@ -146,6 +149,7 @@ public class OrderProcessing {
 				catalog.rollBackTransaction(idContadino, transactionIdList.get(idContadino));
 			}
 			messageStatoOrdine.setContent("Ordine non fattibile, e' stato rimesso in coda");
+			messageStatoOrdine.setInfoFilter("orderProcessingNonPreso");
 		}
 		else //l'ordine può essere evaso
 		{
@@ -156,10 +160,17 @@ public class OrderProcessing {
 				catalog.commitTransaction(idContadino, transactionIdList.get(idContadino));
 			}
 			messageStatoOrdine.setContent("Ordine preso in carico da "+ credentials.getUsername());
+			messageStatoOrdine.setInfoFilter("orderProcessingPreso");
 			myOrdine.setPendente(false);
 			myOrdine.setEvaso(true);
 			saveOrdine(); //salvo l'ordine nel database
 		}
+	}
+	
+
+	@BeginTask @EndTask(transition="attendi_data_consegna")
+	public void attendiDataConsegna(){
+		
 	}
 	
 	@Transactional
@@ -193,6 +204,17 @@ public class OrderProcessing {
 	public void delete() {
 		
 	}
+	
+	@BeginTask @EndTask(transition="ordine_rimesso_nel_pool")
+	public void notificaOrdineNonDisponibile() {
+		
+	}
+	
+	@BeginTask @EndTask(transition="ordine_preso_in_consegna")
+	public void notificaOrdineDisponibile() {
+		
+	}
+
 	/*
 	 * Getter and settrer methods...
 	 */

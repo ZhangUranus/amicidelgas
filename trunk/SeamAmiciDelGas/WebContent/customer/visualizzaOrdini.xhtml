@@ -18,8 +18,9 @@
 					<td width="25%">
 					 <s:decorate template="/layout/display.xhtml">
 		                <ui:define name="label">Tipi di ordine</ui:define>
-		                <h:selectOneMenu value="#{ordineBean.tipoOrdine}" required="true" title="seleziona il tipo di ordine che vuoi visualizzare" style=" width : 149px;">
-		                	<a:support event="onchange" ajaxSingle="true" reRender="table" />
+		                <h:selectOneMenu value="#{ordineBean.tipoOrdine}" required="true"
+		                title="seleziona il tipo di ordine che vuoi visualizzare" style=" width : 149px;">
+		                	<a:support event="onchange" ajaxSingle="true" reRender="ordiniPendenti,ordiniEvasiConclusi" />
 		                	<f:selectItem itemLabel="Ordini Pendenti" itemValue="1"/>
 		                	<f:selectItem itemLabel="Ordini Evasi" itemValue="2"/>
 		                	<f:selectItem itemLabel="Ordini Conclusi" itemValue="3"/>
@@ -35,7 +36,7 @@
 		<br/>
 		<rich:panel>
 			<f:facet name="header">Ordini effettuati dall'utente #{identity.username}</f:facet>
-				
+				<a:outputPanel ajaxRendered="true">
 				<s:decorate id="ordiniPendenti" rendered="#{ordineBean.tipoOrdine=='1'}">
 					<h:form>
 			        	<a:region>
@@ -45,7 +46,7 @@
 									<f:facet name="header">
 										<h:outputText value="Data Richiesta" />
 									</f:facet>
-									<h:outputText value="#{ordineBean.getOrdineFromTask(_task).dataRichiesta}" id="dataRichiesta">
+									<h:outputText value="#{ordineBean.getOrdineFromTask(_task).dataRichiesta}">
 										<f:convertDateTime type="date" dateStyle="medium" locale="Locale.ITALY"/>
 									</h:outputText>
 			        			</rich:column>
@@ -54,7 +55,7 @@
 									<f:facet name="header">
 										<h:outputText value="Data Massima" />
 									</f:facet>
-									<h:outputText value="#{ordineBean.getOrdineFromTask(_task).dataMassima}" id="dataMassima">
+									<h:outputText value="#{ordineBean.getOrdineFromTask(_task).dataMassima}">
 										<f:convertDateTime type="date" dateStyle="medium" locale="Locale.ITALY"/>
 									</h:outputText>	
 			        			</rich:column>
@@ -64,7 +65,7 @@
 			                        	Dettagli Ordine
 				                	</f:facet>
 				                	<a:commandLink ajaxSingle="true" id="dettagliOrdinePendenteLink"
-				                    	oncomplete="#{rich:component('noSelectPanel')}.show()">
+				                    	oncomplete="#{rich:component('dettagliOrdinePanel')}.show()">
 				                    	<f:setPropertyActionListener value="#{_task}" target="#{ordineBean.currentTask}" />
 					                    <h:graphicImage value="/img/modifica_mini.png" style="border:0" />
 					                </a:commandLink>
@@ -75,9 +76,9 @@
 				                	<f:facet name="header">
 			                        	Elimina Ordine
 				                	</f:facet>
-				                	<s:button id="eliminaOrdinePendenteLink" taskInstance="#{_task}" action="#{orderProcessing.delete()}">
+				                	<s:link id="eliminaOrdinePendenteLink" taskInstance="#{_task}" action="#{orderProcessing.delete()}">
 					                    <h:graphicImage value="/img/cancel.png" style="border:0" />
-					                </s:button>
+					                </s:link>
 					                <rich:toolTip for="eliminaOrdinePendenteLink" value="Elimina l'ordine"/>
 				            	</rich:column>
 								
@@ -87,9 +88,48 @@
 					</h:form>
 				</s:decorate>
 				
+				<s:decorate id="ordiniEvasiConclusi" rendered="#{ordineBean.tipoOrdine=='2' or ordineBean.tipoOrdine=='3'}">
+					<h:form>
+			        	<a:region>
+				    		<rich:dataTable value="#{ordineBean.listOrdiniEvasiOrConclusi()}" var="_ordine" id="table2" rows="20" width="50%">
+								
+								<rich:column>
+									<f:facet name="header">
+										<h:outputText value="Data Richiesta" />
+									</f:facet>
+									<h:outputText value="#{_ordine.dataRichiesta}">
+										<f:convertDateTime type="date" dateStyle="medium" locale="Locale.ITALY"/>
+									</h:outputText>
+			        			</rich:column>
+			        			
+			        			<rich:column>
+									<f:facet name="header">
+										<h:outputText value="Data Massima" />
+									</f:facet>
+									<h:outputText value="#{_ordine.dataMassimaConsegna}">
+										<f:convertDateTime type="date" dateStyle="medium" locale="Locale.ITALY"/>
+									</h:outputText>	
+			        			</rich:column>
+			        			<rich:column align="center">
+				                	<f:facet name="header">
+			                        	Dettagli Ordine
+				                	</f:facet>
+				                	<a:commandLink ajaxSingle="true" id="dettagliOrdinePendenteLink2"
+				                    	oncomplete="#{rich:component('dettagliOrdinePanel')}.show()">
+				                    	<f:setPropertyActionListener value="#{_ordine}" target="#{ordineBean.currentOrdine}" />
+					                    <h:graphicImage value="/img/modifica_mini.png" style="border:0" />
+					                </a:commandLink>
+					                <rich:toolTip for="dettagliOrdineLink2" value="Visualizza i dettagli dell'ordine"/>
+				            	</rich:column>
+							</rich:dataTable>
+							<rich:datascroller align="center" for="table2" id="sc2" rendered="true"/>
+						</a:region>
+					</h:form>
+				</s:decorate>
+			</a:outputPanel>
 		</rich:panel>
 		
-		<rich:modalPanel id="noSelectPanel" autosized="true" width="350">
+		<rich:modalPanel id="dettagliOrdinePanel" autosized="true" width="350">
        		<f:facet name="header">
             	<h:outputText value="ATTENZIONE" />
         	</f:facet>
