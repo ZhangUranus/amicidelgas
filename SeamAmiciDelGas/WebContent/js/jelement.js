@@ -10,6 +10,7 @@ var current_eurolevel = 0;
 var current_calendarlevel = 0; 
 var current_area = 0;
 var current_notifiche = 0;
+var current_focus = 0;
 
 
 function TabDispaly(obj, cond) {
@@ -61,9 +62,28 @@ function show_notifiche()
 		current_notifiche = 1;
 	} else {
 		document.getElementById('notifiche_lista').style.display = 'none';
-		document.getElementById('shadow_focus').style.display = 'none';
+		document.getElementById('shadow_focus').style.display = 'none';	
 		current_notifiche = 0;
 	}
+}
+
+function show_focus()
+{
+	
+	if (current_focus == 0) {
+		document.getElementById('shadow_focus_home').style.display = '';
+		document.getElementById('alert_div_focus').style.display = '';	
+		current_focus = 1;
+	} else {
+		document.getElementById('shadow_focus_home').style.display = 'none';
+		document.getElementById('alert_div_focus').style.display = 'none';		
+		current_focus = 0;
+	}
+}
+
+function show_focus_timer()
+{
+	window.setTimeout('show_focus()',15000);
 }
 
 

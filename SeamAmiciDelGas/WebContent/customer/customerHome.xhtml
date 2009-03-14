@@ -10,6 +10,40 @@
     template="/layout/template.xhtml">
 
     <ui:define name="body">
+    	<div id="shadow_focus_home" style="background: transparent url('/SeamAmiciDelGas/img/shadow0.png') ; width:100%; z-index:199; height:100%; left:0; top:0; display:none; position:fixed;" />
+		<div id="alert_div_focus" style="cursor:pointer; display:block; z-index: 200; position:fixed; left:40%; top:40%;" onclick="show_focus(); show_focus_timer();">
+			<table width="200px" border="0" cellspacing="0" cellpadding="0" align="center" >
+			  <tr>
+			    <td width="13" height="12" background="/SeamAmiciDelGas/img/shadow_corner_a.png"></td>
+			    <td height="12" background="/SeamAmiciDelGas/img/shadow_top_n.png"></td>
+			    <td width="13" height="12" background="/SeamAmiciDelGas/img/shadow_corner_b.png"></td>
+			  </tr>
+			  <tr>
+			  	<td background="/SeamAmiciDelGas/img/shadow_ovest.png"></td>
+			    <td background="/SeamAmiciDelGas/img/shadow_n.png" valign="top"><div align="center" >
+					<img alt="statistiche" border="0" src="/SeamAmiciDelGas/img/alert.png"/>
+			    </div></td>
+			    <td background="/SeamAmiciDelGas/img/shadow_est.png"></td>
+			  </tr>
+			  <tr>
+			  	<td background="/SeamAmiciDelGas/img/shadow_ovest.png"></td>			    
+			    <td background="/SeamAmiciDelGas/img/shadow_n.png" valign="bottom"><div align="center" class="colore_yellow">Avviso</div></td>
+			    <td background="/SeamAmiciDelGas/img/shadow_est.png"></td>			      
+			  </tr>
+			  <tr>
+			  	<td background="/SeamAmiciDelGas/img/shadow_ovest.png"></td>
+			    <td background="/SeamAmiciDelGas/img/shadow_n.png" valign="top"><div align="center" class="explorer_white">
+					Attenzione: hai #{filtraNotifica.numberOfHighestPriorityTaskForSingle()} avviso/i ad alta priorita' da risolvere
+			    </div></td>
+			    <td background="/SeamAmiciDelGas/img/shadow_est.png"></td>
+			  </tr>
+			  <tr>
+			    <td width="13" height="12" background="/SeamAmiciDelGas/img/shadow_corner_d.png"></td>
+			    <td height="12" background="/SeamAmiciDelGas/img/shadow_bottom_n.png"></td>
+			    <td width="13" height="12" background="/SeamAmiciDelGas/img/shadow_corner_c.png"></td>
+			  </tr>
+			</table>
+		</div>
 
 		<table width="96%" border="0" cellspacing="0" cellpadding="0" align="center" >
 			<tr>
@@ -145,7 +179,25 @@
 					    	<h:outputText value="Visualizza e modifica i tuoi dati" rendered="#{(loginSelectBean.calculateMaxRole()=='admin')}"/>
 					    </div></td>
 					  </tr>
-					</table>					
+					</table>
+					<s:decorate rendered="#{(filtraNotifica.numberOfHighestPriorityTaskForSingle() > -1)}">
+						<div id="alert_div">
+							<script type="text/javascript">show_focus();</script>
+							<table width="98%" border="0" cellspacing="6" cellpadding="0" align="center" >
+							  <tr>			    
+							    <td rowspan="2" align="left">
+							    	<img alt="statistiche" border="0" src="/SeamAmiciDelGas/img/alert.png"/>					    	
+							    </td>
+							    <td valign="bottom"><div align="left" class="colore_1">Avviso</div></td>			      
+							  </tr>
+							  <tr>
+							    <td valign="top"><div align="left" class="explorer">
+									Hai #{filtraNotifica.numberOfHighestPriorityTaskForSingle()} avviso/i ad alta priorita' da risolvere
+							    </div></td>
+							  </tr>
+							</table>
+						</div>
+					</s:decorate>					
 				</td>
 			</tr>
 			<tr>
@@ -209,9 +261,6 @@
 							</h:column>
 						</rich:dataTable>
 									<li>notifica1</li>
-                        			<li>notifica2</li>
-                        			<li>notifica31</li>
-                        			<li>notifica14</li>
                         	
 								</div>
 				</td>
@@ -317,7 +366,7 @@
 			</tr>
 		</s:decorate>	
 			
-		</table>
+		</table>		
 
     </ui:define>
 </ui:composition>

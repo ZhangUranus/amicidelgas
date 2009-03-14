@@ -246,6 +246,11 @@
       <tr>
 	  	<td background="/SeamAmiciDelGas/img/shadow_ovest.png"></td>
 	    <td background="/SeamAmiciDelGas/img/shadow_n.png" align="left" >
+	    	<s:decorate rendered="#{(filtraNotifica.numberOfHighestPriorityTaskForSingle() > -1)}" >
+	    		<s:link view="/customer/riceviNotifiche.xhtml" propagation="none" >
+    		    	<div align="left" class="colore_yellow" style="height: 28px;  padding-top: 4px;"><b>Notifiche alta priorita'</b></div>
+    		    </s:link>
+    		</s:decorate>
 	    	<s:decorate >
 	    		<s:link view="/customer/riceviNotifiche.xhtml" propagation="none" >
     		    	<div align="left" class="colore_white_bold" style="height: 28px;  padding-top: 4px;">Notifiche Personali</div>
@@ -261,6 +266,9 @@
     		</s:decorate>
 	    </td>
 	    <td width="26px" background="/SeamAmiciDelGas/img/shadow_n.png" align="left" >
+	    	<s:decorate rendered="#{(filtraNotifica.numberOfHighestPriorityTaskForSingle() > -1)}">
+    		    <div align="center" class="colore_white_bold" style="background:transparent url('/SeamAmiciDelGas/img/red_number2.png') no-repeat; width:26px; height: 28px; padding-top: 4px; padding-right: 1px;" >#{filtraNotifica.numberOfHighestPriorityTaskForSingle()}</div>
+    		</s:decorate>
     		<s:decorate rendered="#{(filtraNotifica.numberForGroupForCustomer() + filtraNotifica.numberForSingleForCustomer()) > 0}">
     		    <div align="center" class="colore_white_bold" style="background:transparent url('/SeamAmiciDelGas/img/red_number2.png') no-repeat; width:26px; height: 28px; padding-top: 4px; padding-right: 1px;" >#{(filtraNotifica.numberForGroupForCustomer() + filtraNotifica.numberForSingleForCustomer())}</div>
     		</s:decorate>
