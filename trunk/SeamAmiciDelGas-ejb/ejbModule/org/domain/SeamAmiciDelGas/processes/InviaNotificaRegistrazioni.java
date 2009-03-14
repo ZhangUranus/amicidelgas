@@ -7,6 +7,7 @@ import java.util.GregorianCalendar;
 
 import javax.persistence.EntityManager;
 
+import org.domain.SeamAmiciDelGas.entity.Account;
 import org.domain.SeamAmiciDelGas.entity.Cybercontadino;
 import org.domain.SeamAmiciDelGas.session.Message;
 import org.jboss.seam.ScopeType;
@@ -43,6 +44,13 @@ public class InviaNotificaRegistrazioni {
 	@In(value="postiOccupati" , scope= ScopeType.BUSINESS_PROCESS, required =false)
 	@Out(value="postiOccupati", scope= ScopeType.BUSINESS_PROCESS, required =false)
 	private int postiOccupati;
+	
+	@Out(value="decisione",scope=ScopeType.BUSINESS_PROCESS, required= false)
+	private boolean decisione;
+	
+	@In(value="nomeContadino",scope=ScopeType.BUSINESS_PROCESS, required=false)
+	private String nomeContadino;
+	
 	/*
 	 * 
 	 * private String msg="";
@@ -77,11 +85,21 @@ public class InviaNotificaRegistrazioni {
 		*/
 	}
 	
-	@StartTask @EndTask(transition="compila")
-	public void compilaQuestionario()
+	@StartTask @EndTask(transition="decisioneAdmin")
+	public void visualizzaQuestionari(boolean b)
 	{
+		decisione = b;
+		/*
+		if(decisione == true)
+		{
+			
+			 account = (Account) entityManager.createQuery(
+			"select account from Account account " +
+			"where account.username = #{nomeRichiedente}")
+			.getSingleResult();
+		}
 		log.info("Stampa qualcosaa: ");
-		
+		*/
 	}
 	
 	

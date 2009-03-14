@@ -152,6 +152,7 @@ public class ProcessoRegistrazione {
 		messageSubProcess.setDestinatario(credentials.getUsername());
 		messageSubProcess.setBroadcast(false);
 		messageSubProcess.setMittente(mittente);
+		messageSubProcess.setTipo("questionario");
 		
 		gc= new GregorianCalendar();
 		gc.setTime((Date) dataQuestionario.clone());

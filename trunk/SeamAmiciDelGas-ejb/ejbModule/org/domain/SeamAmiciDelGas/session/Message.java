@@ -13,6 +13,7 @@ public class Message implements Serializable{
 	private List<String> recipients = new ArrayList<String>();
 	private String destinatario;
 	private String infoFilter;
+	private String tipo;
 	
 	
 	public String getContent() { 
@@ -67,6 +68,12 @@ public class Message implements Serializable{
 	}
 	public void setMittente(String mittente) {
 		this.mittente = mittente;
+	}
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+	public String getTipo() {
+		return tipo;
 	}
 }
 
