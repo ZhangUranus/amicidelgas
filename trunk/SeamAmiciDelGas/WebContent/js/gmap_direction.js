@@ -1,5 +1,6 @@
 var gdir;
 var addressMarker;
+var toplaces = new Array();
 
 function initialize() {
        
@@ -7,7 +8,7 @@ function initialize() {
    GEvent.addListener(gdir, "load", onGDirectionsLoad);
    GEvent.addListener(gdir, "error", handleErrors);
 	
-   setDirections("viale mellusi, Benevento (Benevento)","via delle puglie, Benevento (Benevento)", "via napoli, Benevento (Benevento)", "it_IT");
+   setDirections("via mellusi, Benevento (Benevento)","via delle puglie, Benevento (Benevento)", "via napoli, Benevento (Benevento)", "it_IT");
 }
 
 function setDirections(fromAddress, toAddress, toAddress2, locale) {

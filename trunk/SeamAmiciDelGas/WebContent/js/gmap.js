@@ -2,6 +2,7 @@ var geocoder = null;
 var point;
 var gasIcon, contadiniIcon;
 var markers = new Array();
+var markers_contadini = new Array();
 var map;
 
 function Indirizzo(via,comune,provincia){
@@ -110,7 +111,7 @@ function load() {
 			var point2 = new GLatLng(point[1],point[0]);
 			var mark = new GMarker(point2, {title: indirizzo.getAddress(), icon:contadiniIcon});
 			map.addOverlay(mark);
-			markers[idmark] = mark;
+			markers_contadini[idmark] = mark;
 			
 			map.panTo(mark.getPoint());
 			mark.bindInfoWindowHtml('<div align=\"center\"><b>Punto di Consegna</b></div><p><div align=\"center\" class=\"colore_1\">'+indirizzo.getAddress()+'</div></p>');
