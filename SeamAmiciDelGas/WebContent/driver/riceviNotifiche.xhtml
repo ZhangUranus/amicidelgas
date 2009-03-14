@@ -11,50 +11,113 @@
 
 	<ui:define name="body">
 		
-			<rich:simpleTogglePanel label="Notifiche Personali">
-						<rich:dataTable id="dataTableUtente" 
-										value="#{filtraNotifica.taskInstanceSingleListForDriver()}" var="_task"
-										width="90%" align="center" >
-							<rich:column>
-								<f:facet name="header">Mittente</f:facet>    
-						         <h:outputText value="#{_task.variables.customer.username}"/>
-							</rich:column>
-							<rich:column>
-								<f:facet name="header">Contenuto messaggio</f:facet>    
-						         <h:outputText value="#{_task.variables.notificaDriverContadino.content}"/>
-							</rich:column>
-							<rich:column width="10%">
-								<s:button taskInstance="#{_task}" action="#{orderProcessing.verificaDisponibilita()}"
-										  value="Accetta ordine"/>
-							</rich:column>
-						</rich:dataTable>
-				</rich:simpleTogglePanel>
-				
-				<br/><br/><br/>
-				
-				<rich:simpleTogglePanel label="Notifiche di gruppo">
-						<rich:dataTable id="dataTableGroup" 
-									value="#{filtraNotifica.taskInstanceGroupListForDriver()}" var="_pooledTask"
-									width="90%" align="center" >
-							<rich:column>
-								<f:facet name="header">Mittente</f:facet>    
-						         <h:outputText value="#{_pooledTask.variables.customer.username}"/>
-							</rich:column>
-							<rich:column>
-								<f:facet name="header">Gruppo</f:facet>    
-						         <h:outputText value="Driver"/>
-							</rich:column>
-							<rich:column>
-								<f:facet name="header">Contenuto messaggio</f:facet>    
-						         <h:outputText value="#{_pooledTask.variables.notificaDriverContadino.content}"/>
-							</rich:column>
-							<rich:column width="10%">
-								<s:button taskInstance="#{_pooledTask}" action="#{orderProcessing.verificaDisponibilita()}"
-										  value="Accetta ordine"/>
-							</rich:column>
-						</rich:dataTable>
-				
-			</rich:simpleTogglePanel>
+		<rich:simpleTogglePanel label="Itinerari...">
+		<h:form>
+		        <a:region>
+			<rich:dataTable id="dataTableItinerari" 
+								value="#{matchItinerarioOrdine.loadItinerari()}" var="_itinerario"
+								width="90%" align="center" >
+				<rich:column>
+					<f:facet name="header">Id</f:facet>    
+					<h:outputText value="#{_itinerario.iditinerario}"/>
+				</rich:column>
+				<rich:column>
+					<f:facet name="header">Data creazione</f:facet>    
+					<h:outputText value="#{_itinerario.dataCreazione}">
+						<f:convertDateTime type="date" dateStyle="medium" locale="Locale.ITALY"/>
+					</h:outputText>
+				</rich:column>
+				<rich:column>
+					<f:facet name="header">Data consegna</f:facet>    
+					<h:outputText value="#{_itinerario.dataConsegna}">
+						<f:convertDateTime type="date" dateStyle="medium" locale="Locale.ITALY"/>
+					</h:outputText>
+				</rich:column>
+				<rich:column>
+					<f:facet name="header">Contadini</f:facet>    
+					<a:commandLink ajaxSingle="true" id="listaContadiniPerItinerarioLink"
+				        	oncomplete="#{rich:component('listaContadiniPerItinerario')}.show()">
+				        <f:setPropertyActionListener value="#{_itinerario}" target="#{matchItinerarioOrdine.currentItinerario}" />
+					    <h:graphicImage value="/img/modifica_mini.png" style="border:0" />
+					</a:commandLink>
+				</rich:column>
+				<rich:column>
+					<f:facet name="header">Seleziona</f:facet>
+					<a:commandButton event="onclick"
+									 value="Seleziona questo itinerario">
+						<f:setPropertyActionListener value="#{_itinerario}"
+								target="#{matchItinerarioOrdine.currentItinerario}" />
+						<a:support event="onclick" reRender="ordiniPerItinerarioCorrente"></a:support>
+					</a:commandButton>
+				</rich:column>
+
+			</rich:dataTable>
+			</a:region>
+		</h:form>
+		</rich:simpleTogglePanel>
+		 
+		<br/><br/><br/>
+		 
+		<rich:modalPanel id="listaContadiniPerItinerario" autosized="true" width="350">
+       		<f:facet name="header">
+            	<h:outputText value="Contadini"/>
+        	</f:facet>
+       		<f:facet name="controls">
+            	<h:panelGroup>
+                	<h:graphicImage value="/img/close.png"
+                    	id="hidelink1" />
+               	 	<rich:componentControl for="listaContadiniPerItinerario" attachTo="hidelink1"
+                    	operation="hide" event="onclick" />
+            	</h:panelGroup>
+        	</f:facet>
+        	<a:outputPanel ajaxRendered="true">
+	        	<rich:dataTable id="dataTableContadini" 
+								value="#{matchItinerarioOrdine.currentListCybercontadino}" var="_contadino"
+								width="90%" align="center" >
+				<h:column>
+					<f:facet name="header">Username</f:facet>
+					<h:outputText value="#{_contadino.account.username}"/>
+				</h:column>			
+				<h:column>
+					<f:facet name="header">Comune</f:facet>
+					<h:outputText value="#{_contadino.comune.nome}"/>
+				</h:column>		
+				<h:column>
+					<f:facet name="header">Nome azienda</f:facet>
+					<h:outputText value="#{_contadino.nomeAzienda}"/>
+				</h:column>						
+					
+				</rich:dataTable>
+			</a:outputPanel>	
+       	</rich:modalPanel>
+		
+		<br/><br/><br/>
+		
+		<rich:simpleTogglePanel label="Ordini per itinerario">
+			<s:decorate id="ordiniPerItinerarioCorrente">
+			<a:outputPanel ajaxRendered="true">
+			<h:form>	
+				<rich:dataTable id="ordini" width="90%" align="center"
+							value="#{matchItinerarioOrdine.loadTaskInstanceForItinerario()}" 
+							var="_task">
+					<rich:column>
+						<f:facet name="header">Mittente</f:facet>    
+				         <h:outputText value="#{_task.variables.customer.username}"/>
+					</rich:column>
+					<rich:column>
+						<f:facet name="header">Contenuto messaggio</f:facet>    
+				         <h:outputText value="#{_task.variables.notificaDriverContadino.content}"/>
+					</rich:column>
+					<rich:column width="10%">
+						<f:facet name="header">Accetta</f:facet>
+						<s:button taskInstance="#{_task}" action="#{orderProcessing.verificaDisponibilita()}"
+								  value="Accetta ordine"/>
+					</rich:column>
+				</rich:dataTable>
+			</h:form>
+			</a:outputPanel>
+			</s:decorate>
+		</rich:simpleTogglePanel>
 		
 		
 	</ui:define>
