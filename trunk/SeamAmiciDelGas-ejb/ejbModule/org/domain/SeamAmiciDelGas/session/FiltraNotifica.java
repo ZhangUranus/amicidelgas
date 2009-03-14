@@ -11,6 +11,7 @@ import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.bpm.PooledTaskInstanceList;
 import org.jboss.seam.bpm.TaskInstanceList;
 import org.jboss.seam.security.Credentials;
+import org.jbpm.taskmgmt.def.Task;
 import org.jbpm.taskmgmt.exe.TaskInstance;
 
 @Name("filtraNotifica")
@@ -40,6 +41,12 @@ public class FiltraNotifica {
 	public int numberOfTaskForSingle(String... taskFilter)	{
 		return numberOfTask("taskForSingle", taskFilter);
 	}
+	
+	public int numberOfHighestPriorityTaskForSingle()	{
+		return numberOfHighPriorityTask("taskForSingle");
+	}
+	
+	
 
 	/*
 	 * ritorno il numero di notifiche per gruppi
@@ -80,6 +87,31 @@ public class FiltraNotifica {
 			for(String singleFilter : filters)
 				if (ti.getName().equals(singleFilter))
 					count++;
+		return count;
+	}
+	
+	/**
+	 * numberOfTask(String SingleOrGroupTask, String... filters)
+	 * Torna il numero di task con priorità alta per single o per gruppi con 
+	 * gli opportuni filtri sul nome del filtro
+	 * @return un int che rappresenta il numero di task a priorità alta con gli opportuni filtri
+	 * @param SingleOrGroupTask può essere: "taskForSingle" oppure "taskForGroup" 
+	 * @param filters una o più stringhe separate da una virgola che rappresentano i task
+	 * 			a cui associare il filtro.
+	 */
+	public int numberOfHighPriorityTask(String SingleOrGroupTask)
+	{
+		List<TaskInstance> tempTaskInstance;
+		if(SingleOrGroupTask.equals("taskForSingle"))
+			tempTaskInstance = taskInstanceList;
+		else if(SingleOrGroupTask.equals("taskForGroup"))
+			tempTaskInstance = pooledTaskInstanceList;
+		else
+			return 9999; //tempTaskInstance = null; //per verifica
+		int count = 0;
+		for (TaskInstance ti: tempTaskInstance)
+			if ((ti.getPriority() == Task.PRIORITY_HIGHEST))
+				count++;
 		return count;
 	}
 	
