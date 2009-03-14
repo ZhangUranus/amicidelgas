@@ -110,12 +110,7 @@ public class OrderProcessing {
 		
 		if(isStessoContadino)
 			messageDriverContadino.addRecipient(usernameContadino);
-		String o=null;
-		if (dataMassima==null)
-			o = "null";
-		else
-			o = "not null";
-		String content = "Ordine fatto da " +credentials.getUsername()+" dataMassima = "+o;
+		String content = "Ordine fatto da " +credentials.getUsername()+" dataMassima = "+dataMassima.toString();
 		
 		messageDriverContadino.setContent(content);
 		return "partito";
