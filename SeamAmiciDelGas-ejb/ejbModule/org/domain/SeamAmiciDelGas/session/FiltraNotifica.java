@@ -160,6 +160,31 @@ public class FiltraNotifica {
 		
 	}
 	
+	public List<TaskInstance> getAllPooledTaskInstanceListForAllUserButMeNot(String username, String... filters)
+	{
+		List<TaskInstance> tasks= getAllPooledTaskInstanceList(filters);
+		List<TaskInstance> tasksUser = new ArrayList<TaskInstance>();
+		
+		ArrayList<String> arraylist = null;
+		
+		for(TaskInstance temp : tasks)
+		{
+			arraylist = (ArrayList<String>) temp.getVariable("inviati");
+			
+			if(arraylist==null){
+				tasksUser.add(temp);
+				System.out.println("vuoto");
+			} else {
+				System.out.println("pieno");
+				if(!(arraylist.contains(username)))
+					tasksUser.add(temp);
+			}
+			
+		}
+		return tasksUser;
+		
+	}
+	
 	private List<TaskInstance> taskInstanceGroupList(String taskFilter) {
 		List<TaskInstance> tasks = new ArrayList<TaskInstance>();
 		for (TaskInstance ti: pooledTaskInstanceList) {

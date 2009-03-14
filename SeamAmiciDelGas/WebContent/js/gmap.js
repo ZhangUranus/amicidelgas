@@ -2,6 +2,7 @@ var geocoder = null;
 var point;
 var gasIcon, contadiniIcon;
 var markers = new Array();
+var map;
 
 function Indirizzo(via,comune,provincia){
 	this.via = via;
@@ -36,7 +37,7 @@ function load() {
 	    contadiniIcon = new GIcon();
 	    contadiniIcon.image= "/SeamAmiciDelGas/img/gmap_fiamma.png";
 	    contadiniIcon.shadow="/SeamAmiciDelGas/img/gmap_fiamma_ombra.png";
-	    contadiniIcon.iconSize= new GSize(32 , 32);
+	    contadiniIcon.iconSize= new GSize(18 , 28);
 	    contadiniIcon.iconAnchor = new GPoint(5, 34);
 	    contadiniIcon.infoWindowAnchor = new GPoint(5, 2);
 	    contadiniIcon.infoShadowAnchor = new GPoint(14, 25);
