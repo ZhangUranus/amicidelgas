@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<root-container name="notificaRegistrazione" width="764" height="908">
+<root-container name="notificaRegistrazione" width="864" height="906">
   <node name="RichiestaRegistrazione" x="29" y="22" width="192" height="36">
     <edge>
       <label x="-54" y="-32"/>
@@ -20,7 +20,7 @@
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="VisualizzaQuestionari" x="443" y="507" width="313" height="36">
+  <node name="VisualizzaQuestionari" x="476" y="543" width="313" height="36">
     <edge>
       <label x="5" y="-10"/>
     </edge>
@@ -28,26 +28,18 @@
   <node name="AccettaAltriUtenti" x="338" y="158" width="132" height="36">
     <edge>
       <label x="12" y="-23"/>
-      <bendpoint w1="-296" h1="-1" w2="49" h2="-60"/>
+      <bendpoint w1="-262" h1="1" w2="0" h2="-74"/>
     </edge>
     <edge>
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="AccettaRifiuta" x="469" y="658" width="132" height="36">
-    <edge>
-      <label x="5" y="-10"/>
-    </edge>
-    <edge>
-      <label x="5" y="-10"/>
-    </edge>
-  </node>
-  <node name="EmailConfermaRegistrazione" x="560" y="770" width="203" height="36">
+  <node name="EmailConfermaRegistrazione" x="575" y="773" width="203" height="36">
     <edge>
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="fork1" x="419" y="112" width="252" height="24">
+  <node name="fork1" x="495" y="112" width="252" height="24">
     <edge>
       <label x="5" y="-10"/>
     </edge>
@@ -55,34 +47,42 @@
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="join1" x="408" y="347" width="252" height="24">
+  <node name="join1" x="483" y="305" width="252" height="24">
     <edge>
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="SubProcessNotifica" x="84" y="444" width="185" height="36">
+  <node name="SubProcessNotifica" x="25" y="446" width="185" height="36">
     <edge>
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="CustomNodeFork" x="100" y="366" width="132" height="36">
+  <node name="CustomNodeFork" x="54" y="364" width="132" height="36">
     <edge>
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="CustomNodeJoin" x="68" y="550" width="252" height="24">
+  <node name="CustomNodeJoin" x="-1" y="550" width="252" height="24">
     <edge>
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="ContadinoAccettato" x="573" y="858" width="132" height="36"/>
-  <node name="ContadinoRifiutato" x="251" y="871" width="132" height="36"/>
-  <node name="EmailRifiutoRegistrazione" x="251" y="762" width="132" height="36">
+  <node name="EmailRifiutoRegistrazione" x="275" y="759" width="182" height="36">
     <edge>
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="AspettaDataQuestionario" x="375" y="411" width="192" height="36">
+  <node name="AspettaDataQuestionario" x="515" y="370" width="192" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="ContadinoAccettato" x="604" y="855" width="132" height="36"/>
+  <node name="ContadinoRifiutato" x="290" y="869" width="132" height="36"/>
+  <node name="AccettaRifiuta" x="530" y="642" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
     <edge>
       <label x="5" y="-10"/>
     </edge>

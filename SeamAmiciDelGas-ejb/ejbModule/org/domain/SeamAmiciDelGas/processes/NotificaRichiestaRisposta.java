@@ -1,6 +1,7 @@
 package org.domain.SeamAmiciDelGas.processes;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.domain.SeamAmiciDelGas.session.Message;
@@ -38,6 +39,12 @@ public class NotificaRichiestaRisposta {
 	
 	@Out(value="nomeMittente",scope=ScopeType.BUSINESS_PROCESS, required=false)
 	private String nomeMittente;
+	
+	@Out(value="nomeDestinatario",scope=ScopeType.BUSINESS_PROCESS, required=false)
+	private String nomeDestinatario;
+	
+	@Out(value="dataTimer",scope=ScopeType.BUSINESS_PROCESS, required=false)
+	private Date dataTimer;
 	
 	@Out(value="notifyMessageRequest",scope=ScopeType.BUSINESS_PROCESS,required=false) 
 	private Message message;

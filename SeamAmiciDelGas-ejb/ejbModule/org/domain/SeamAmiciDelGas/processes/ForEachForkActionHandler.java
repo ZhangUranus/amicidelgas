@@ -9,6 +9,7 @@ import org.jbpm.graph.def.Node;
 import org.jbpm.graph.def.Transition;
 import org.jbpm.graph.exe.ExecutionContext;
 import org.jbpm.graph.exe.Token;
+import org.domain.SeamAmiciDelGas.session.*;
 
 public class ForEachForkActionHandler implements ActionHandler{
 
@@ -25,6 +26,8 @@ public class ForEachForkActionHandler implements ActionHandler{
         final Node node = executionContext.getNode();
         final List argSets = new LinkedList();
         List<String> gruppoInviati = (List<String>) executionContext.getVariable("inviati");
+       // Message messaggio = (Message) executionContext.getVariable("messageSubProcess");
+        //executionContext.getVariable("inviati");
         if(gruppoInviati == null)
         {
         	System.out.println("ORROREEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
@@ -40,7 +43,11 @@ public class ForEachForkActionHandler implements ActionHandler{
                 newToken.setTerminationImplicit(true);
                 executionContext.getJbpmContext().getSession().save(newToken);   
                 final ExecutionContext newExecutionContext = new ExecutionContext( newToken );
-                newExecutionContext.getContextInstance().createVariable( "inviato", gruppoInviati.get(j), newToken);               
+                //associa la variabile al token
+                newExecutionContext.getContextInstance().createVariable( "inviato", gruppoInviati.get(j), newToken);
+                //newExecutionContext.getContextInstance().createVariable( "inviato", gruppoInviati.get(j));
+            //    newExecutionContext.setVariable("inviato", gruppoInviati.get(j));
+              //  newExecutionContext.getContextInstance().c
                 argSets.add(new Object[] {newExecutionContext, transition});
             }
         }

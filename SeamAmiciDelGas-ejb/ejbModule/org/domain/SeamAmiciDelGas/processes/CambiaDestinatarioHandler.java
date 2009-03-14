@@ -29,6 +29,8 @@ public class CambiaDestinatarioHandler implements ActionHandler{
 	 * 
 	 */
 	private static final long serialVersionUID = -2785379940181442314L;
+	
+	String nameTask;
 
 	public void execute(ExecutionContext executionContext) throws Exception 
 	{
@@ -38,14 +40,17 @@ public class CambiaDestinatarioHandler implements ActionHandler{
 	   
 	    TaskNode taskNode = (TaskNode) executionContext.getNode();
 	 //   taskNode.setSignal(TaskNode.SIGNAL_LAST_WAIT);
-	    Task riceviMessaggio = taskNode.getTask("riceviMessaggio");
+	   // Task riceviMessaggio = taskNode.getTask("riceviMessaggio");
+	    Task task = taskNode.getTask(nameTask);
+	    System.out.println(nameTask+" IMPOSSIBILEEEEEEEEEEEEEEEEEEEEE");
 	    Message message = (Message) executionContext.getVariable("notifyMessageRequest");
+	    String destinatario = (String) executionContext.getVariable("nomeDestinatario");
 	    if(message == null)
 	    {
 	    	System.out.println("Messaggio NULLOOOOOOOO");
 	    	return;
 	    }
-	    TaskInstance ti = tmi.createTaskInstance(riceviMessaggio,executionContext);
+	    TaskInstance ti = tmi.createTaskInstance(task,executionContext);
     	Map tokenVariables=pi.getContextInstance().getTokenVariableMap(token).getVariables();
     	//ti.setVariableLocally("notifyMessageRequest", tokenVariables.get("notifyMessageReques"));
 	    if(message.isBroadcast())
@@ -57,9 +62,22 @@ public class CambiaDestinatarioHandler implements ActionHandler{
 	    }
 	    else
 	    {
-	    	System.out.println("Messaggio NON BROADCAST");
-	    	ti.setActorId(message.getDestinatario());
+	    	/*
+	    	if(nameTask.equals("riceviRisposta"))
+	    	{
+	    		destinatario = message.getDestinatario();
+	    	}*/
+	    	System.out.println("Messaggio NON BROADCAST +"+destinatario);
+	    	ti.setActorId(destinatario);
 	    }
+	}
+
+	public String getNameTask() {
+		return nameTask;
+	}
+
+	public void setNameTask(String nameTask) {
+		this.nameTask = nameTask;
 	}
 
 

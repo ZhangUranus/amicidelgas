@@ -9,22 +9,31 @@
 
 
 	<task-node name="NotificaReply" create-tasks="false">
-		<task name="riceviMessaggio" />
+		<task name="riceviMessaggio" priority="highest"/>	
+		<event type="node-enter">
+			<action name="CambiaDestinatario" class="org.domain.SeamAmiciDelGas.processes.CambiaDestinatarioHandler">
+				<nameTask>riceviMessaggio</nameTask>
+			</action>
+		</event>
 		<event type="timer-create">
       		<action name="timerCreated" class="org.domain.SeamAmiciDelGas.processes.DeleteCreateTimer">
        			<timerName>timerOpzionale</timerName>
       		</action>
     	</event>
-		<event type="node-enter">
-			<action name="CambiaDestinatario" class="org.domain.SeamAmiciDelGas.processes.CambiaDestinatarioHandler"></action>
+		<event type="node-leave">
+			<action name="FermaTask" class="org.domain.SeamAmiciDelGas.processes.CancelTaskAction">
+				<taskName>riceviMessaggio</taskName>
+			</action>
 		</event>
 		<timer duedate="10 years" name="timerOpzionale" transition="inviaReply"/>
 		<transition to="VisualizzaReply" name="inviaReply"></transition>
 	</task-node>
 
 	<task-node name="VisualizzaReply">
-		<task name="riceviRisposta">
-			<assignment actor-id="#{notifyMessageReply.destinatario}"></assignment>
+		<task name="riceviRisposta" priority="highest">
+			<assignment name="AssegnamentoRisposta" class="org.domain.SeamAmiciDelGas.processes.DestinatarioHandler">
+				<nameTask>riceviRisposta</nameTask>
+			</assignment>
 		</task>
 		<transition to="end-state" name="fine"></transition>
 	</task-node>
