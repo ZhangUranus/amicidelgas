@@ -36,6 +36,10 @@ input[type=text], input[type=password], textarea {
 	left: 4px;
 }
 
+.googledir{
+	font-size: 10px;	
+}
+
 .button_notifiche{
 	z-index: 134;
 	position:relative;

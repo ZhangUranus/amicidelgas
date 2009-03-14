@@ -10,25 +10,30 @@
 
 	<ui:define name="body">
 
-<script type="text/javascript" src="/SeamAmiciDelGas/js/gmap.js"></script>
 <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAA9kD5_OmN0uEDmhZR1SpkhQLRfBUDvGNHCcx6kAPzaLMZO9K4BQY3rNdRxgSHx9ShvHtxi2RXo5rCw"
       type="text/javascript"></script>
+<script type="text/javascript" src="/SeamAmiciDelGas/js/gmap.js"></script>
+<script type="text/javascript" src="/SeamAmiciDelGas/js/gmap_direction.js"></script>     
 <script type="text/javascript"><!--
 window.onunload = function(){
-	GUnload();
+	GUnload();	
 }
 window.onload = function(){
 	load();
+	initialize();
 }		
 --></script>
 
-	<table width="99%" border="0" cellspacing="0" cellpadding="0" align="center" >
+	<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center" >
 		<tr>
 			<td>
-				<table width="99%" border="0" cellspacing="4" cellpadding="0" align="center">
+				<table width="100%" border="0" cellspacing="4" cellpadding="0" align="center">
 					<tr>
-						<td width="100%">
-							<div id="map1"  align="center" style="width: 100%; height: 380px"></div>
+						<td width="67%">
+							<div id="map1"  align="center" style="width: 100%; height: 500px"></div>
+						</td>
+						<td width="33%">
+							<div id="directions"  align="center" style="width: 100%; height: 500px"></div>
 						</td>						
 					</tr>
 				</table>
