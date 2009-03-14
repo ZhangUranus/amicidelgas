@@ -37,6 +37,10 @@ public class NotificaRichiestaRisposta {
 	
 	private boolean broadcast;
 	
+	private String tipo;
+	
+	private String mittente;
+	
 	@Out(value="nomeMittente",scope=ScopeType.BUSINESS_PROCESS, required=false)
 	private String nomeMittente;
 	
@@ -111,6 +115,22 @@ public class NotificaRichiestaRisposta {
 
 	public void setDestinatario(String destinatario) {
 		this.destinatario = destinatario;
+	}
+
+	public void setMittente(String mittente) {
+		this.mittente = mittente;
+	}
+
+	public String getMittente() {
+		return mittente;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+
+	public String getTipo() {
+		return tipo;
 	}
 
 }
