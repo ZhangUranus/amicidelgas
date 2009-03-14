@@ -40,7 +40,10 @@ public class ProcessoRegistrazione {
 	@In protected EntityManager entityManager;
 	
 	@Out(value="notificaMediatore", scope= ScopeType.BUSINESS_PROCESS, required=false)
-	protected Message message;
+	private Message message;
+	
+	@Out(value="messageSubProcess", scope= ScopeType.BUSINESS_PROCESS, required=false)
+	private Message messageSubProcess;
 	
 	private String content;
 	
@@ -55,12 +58,18 @@ public class ProcessoRegistrazione {
 	@Out(value="nomeContadino",scope=ScopeType.BUSINESS_PROCESS, required=false)
 	private String nomeContadino;
 	
+	@Out(value="MediatoreCheManda",scope=ScopeType.BUSINESS_PROCESS, required=false)
+	private String MediatoreCheManda;
+	
 
 	@Out(value="dataProposta", scope= ScopeType.BUSINESS_PROCESS, required =false)
 	private Date dataProposta;
 	
 	@Out(value="dataQuestionario", scope= ScopeType.BUSINESS_PROCESS, required =false)
 	private Date dataQuestionario ;
+	
+	@Out(value="dataTimer", scope= ScopeType.BUSINESS_PROCESS, required =false)
+	private Date dataTimer ;
 	
 	@Out(value="dataMassimaAccettazione", scope= ScopeType.BUSINESS_PROCESS, required =false)
 	private Date dataMassimaAccettazione;
@@ -113,7 +122,9 @@ public class ProcessoRegistrazione {
 		// funzionamento corretto
 		//gc.roll(Calendar.DATE, -1);
 		// funzionamento di prova
-		gc.roll(Calendar.MINUTE, -1);
+		//gc.roll(Calendar.MINUTE, -1);
+		// funzionamento NON ME NE TIENE
+		gc.roll(Calendar.MINUTE, +0);
 		dataMassimaAccettazione = gc.getTime();
 		postiOccupati=0;
 		
@@ -121,8 +132,12 @@ public class ProcessoRegistrazione {
 		gc.setTime((Date) dataProposta.clone());
 	//funzionamento corretto	gc.roll(Calendar.DATE, +1);
 		// funzionamento di prova
+		//gc.roll(Calendar.MINUTE, +1);
+		// funzionamento NON ME NE TIENE
 		gc.roll(Calendar.MINUTE, +1);
 		dataQuestionario = gc.getTime();
+		
+		
 		gc.setTime((Date) dataProposta.clone());
 		String format = "dd-MM-yyyy";
 		messageUtente= new Message();
@@ -131,6 +146,20 @@ public class ProcessoRegistrazione {
 		messageUtente.setMittente(mittente);
 		System.out.println("CONTENTTTTTTTTTTtt: "+content+mittente);
 		usernameInviati = new ArrayList<String>();
+		messageSubProcess = new Message();
+		messageSubProcess.setContent("Ora puoi compilare il questionario per dare il tuo parere "
+				+"sull'azienda che abbiamo visitato, clikkando nella sezione \"Compila Questionario\"");
+		messageSubProcess.setDestinatario(credentials.getUsername());
+		messageSubProcess.setBroadcast(false);
+		messageSubProcess.setMittente(mittente);
+		
+		gc= new GregorianCalendar();
+		gc.setTime((Date) dataQuestionario.clone());
+	//funzionamento corretto	gc.roll(Calendar.DATE, +1);
+		// funzionamento di prova
+		gc.roll(Calendar.MINUTE, +1);
+		dataTimer = gc.getTime();
+		MediatoreCheManda = credentials.getUsername();
 	}
 	
 /*	

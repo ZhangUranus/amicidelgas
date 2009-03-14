@@ -9,6 +9,7 @@ public class CancelTaskAction implements ActionHandler{
 	
 	private static final long serialVersionUID = 6157822508821288152L;
 
+	String taskName;
 	public void execute(ExecutionContext executionContext) throws Exception 
 	{
 		
@@ -21,13 +22,20 @@ public class CancelTaskAction implements ActionHandler{
 		{
 			task = (TaskInstance) it.next();
 			System.out.println("IL TASKKKKKKKKKK "+task.getName());
-			if(task.getName().equals("partecipa_alla_visita") && task.isOpen())
+			//if(task.getName().equals("partecipa_alla_visita") && task.isOpen())
+			if(task.getName().equals(taskName) && task.isOpen())
 			{
 				System.out.println("Task ID: "+task.getId());
 				task.setSignalling(false);
 				task.cancel();
 			}
 		}
+	}
+	public String getTaskName() {
+		return taskName;
+	}
+	public void setTaskName(String taskName) {
+		this.taskName = taskName;
 	}
 
 }

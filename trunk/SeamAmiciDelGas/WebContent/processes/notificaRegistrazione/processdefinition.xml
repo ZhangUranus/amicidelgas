@@ -24,7 +24,9 @@
       </action>
     </event>
 		<event type="node-leave">
-			<action name="SpegniTuttoeVaiAvanti" class="org.domain.SeamAmiciDelGas.processes.CancelTaskAction"></action>
+			<action name="SpegniTuttoeVaiAvanti" class="org.domain.SeamAmiciDelGas.processes.CancelTaskAction">
+			 <taskName>partecipa_alla_visita</taskName>
+			 </action>
 		</event>
     <timer duedate="10 years" name="varTimer" transition="time-out"/>
 		<transition to="AccettaAltriUtenti" name="partecipa"></transition>
@@ -47,11 +49,6 @@
 		</transition>
 	</decision>
 	
-	<decision name="AccettaRifiuta">
-		<transition to="EmailRifiutoRegistrazione" name="Rifiuta"></transition>
-		<transition to="EmailConfermaRegistrazione" name="accetta"></transition>
-	</decision>
-	
 	<mail-node name="EmailConfermaRegistrazione">
 		<transition to="ContadinoAccettato" name="ok"></transition>
 	</mail-node>
@@ -67,7 +64,10 @@
 
 	<process-state name="SubProcessNotifica">
 		<sub-process name="notificaRequestReply" binding="late"/>
-		<variable access="read" name="provaMessaggio" mapped-name="notifyMessageRequest"></variable>
+		<variable access="read" name="messageSubProcess" mapped-name="notifyMessageRequest"></variable>
+		<variable access="read" name="inviato" mapped-name="nomeDestinatario"></variable>
+		<variable access="read" name="dataTimer" mapped-name="dataTimer"></variable>
+		<variable access="read" name="MediatoreCheManda" mapped-name="nomeMittente"></variable>
 		<transition to="CustomNodeJoin" name="fineSubProcess"></transition>
 	</process-state>
 
@@ -85,8 +85,23 @@
 	</mail-node>
 
 	<state name="AspettaDataQuestionario">
+		<event type="timer-create">
+      		<action name="timerState" class="org.domain.SeamAmiciDelGas.processes.TimerHandler">
+        		<timerName>timerVarQuestionario</timerName>
+      		</action>
+    	</event>
+    	<timer duedate="10 years" name="timerVarQuestionario" transition="notificaQuestionario"/>
 		<transition to="CustomNodeFork" name="notificaQuestionario"></transition>
 	</state>
+
+	<decision name="AccettaRifiuta">
+		<transition to="EmailConfermaRegistrazione" name="accetta">
+			<condition expression="#{decisione == 1}"></condition>
+		</transition>
+		<transition to="EmailRifiutoRegistrazione" name="rifiuta">
+			<condition expression="#{decisione == 0}"></condition>
+		</transition>
+	</decision>
 	
 	<end-state name="ContadinoAccettato"></end-state>
 	

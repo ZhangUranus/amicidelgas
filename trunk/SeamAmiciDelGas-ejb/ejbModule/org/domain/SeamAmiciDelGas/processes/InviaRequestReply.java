@@ -16,16 +16,13 @@ public class InviaRequestReply {
 	@Out(value="notifyMessageReply", scope= ScopeType.BUSINESS_PROCESS, required=false)
 	private Message message;
 	
-	@In(value="nomeMittente",scope=ScopeType.BUSINESS_PROCESS, required=false)
-	private String nomeMittente;
-	
-	
 	@StartTask @EndTask(transition="inviaReply")
 	public void riceviMessaggio()
 	{
 		System.out.println("RICEVI MESSAGGIO");
 		message.setContent("Seam Amici Del Gas e non ce ne tene e fa nu Gas");
-		message.setDestinatario("admin");
+		System.out.println("NOMEEEEEEEEEEEEEEEe:"+message.getDestinatario());
+			
 	}
 	
 	@StartTask @EndTask(transition="fine")
@@ -86,6 +83,7 @@ public class InviaRequestReply {
 		
 		facesMessages.add("La richiesta dell'utente � stata rifiutata");
 	}
+	
 	@BypassInterceptors
 	public String getMsg() {
 		return msg;

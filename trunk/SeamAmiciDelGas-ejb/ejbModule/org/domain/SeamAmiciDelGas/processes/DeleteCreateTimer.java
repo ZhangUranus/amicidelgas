@@ -1,6 +1,8 @@
 package org.domain.SeamAmiciDelGas.processes;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -28,8 +30,8 @@ public class DeleteCreateTimer implements ActionHandler{
 	          
 	          if (timer != null && timerName.equals(timer.getName())) {
 	        	  
-	        	  Date dataCompilazioneQuestionario = (Date) executionContext.getVariable("dataCompilazioneQuestionario");
-	        	  if(dataCompilazioneQuestionario == null)
+	        	  Date dataTimerDefinitiva  = (Date) executionContext.getVariable("dataTimer");
+	        	  if(dataTimerDefinitiva  == null)
 	        	  {
 	        		  SchedulerService schedulerService = (SchedulerService) Services.getCurrentService(Services.SERVICENAME_SCHEDULER);
 		              schedulerService.deleteTimersByName(timer.getName(), executionContext.getToken());
@@ -55,8 +57,9 @@ public class DeleteCreateTimer implements ActionHandler{
 	               timer.setDueDate(dueDateDate);
 	               schedulerService.createTimer(timer);
 	*/
-	               System.out.println("dataCompilazioneQuestionario: "+dataCompilazioneQuestionario);
-	               timer.setDueDate(dataCompilazioneQuestionario);
+
+	        		  System.out.println("dataCompilazioneQuestionario: "+dataTimerDefinitiva);
+	        		  timer.setDueDate(dataTimerDefinitiva);
 	        	  }
 	          } else {
 	               log.debug("Doesn't match: " + timer);

@@ -2,7 +2,9 @@ package org.domain.SeamAmiciDelGas.webservices;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import org.apache.axis2.AxisFault;
 import org.domain.SeamAmiciDelGas.entity.Cybercontadino;
@@ -146,6 +148,32 @@ public class CatalogImpl implements CatalogInterface {
 
 	public void setCategory(String category) {
 		this.category = category;
+	}
+
+	public UUID beginTransaction(String idContadino, Date deliveryDate) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public long commitTransaction(String idContadino, UUID transactionId) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public long getAvailableQuantity(String idContadino, Item item) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public boolean reserveItem(String idContadino, UUID transactionId,
+			Item item, int minimalQuantity, int quantity) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public long rollBackTransaction(String idContadino, UUID transactionId) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }
