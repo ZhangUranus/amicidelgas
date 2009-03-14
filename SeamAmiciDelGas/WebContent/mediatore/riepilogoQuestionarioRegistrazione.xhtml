@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:a="http://richfaces.org/a4j"
+    template="/layout/template.xhtml">
+
+	<ui:define name="body">
+
+
+
+	<table width="100%" border="0" cellspacing="2" cellpadding="0" align="center" >
+		<tr>
+			<td width="40%" valign="top">
+				<table width="100%" border="0" cellspacing="4" cellpadding="0" align="center">
+					<tr>
+						<td width="100%">
+							<s:decorate id="qualitaProdottiValutazione" template="/layout/edit.xhtml">
+				                <ui:define name="label">Qualita' dei prodotti</ui:define>
+				                <h:outputText id="punteggioContadino" value="" ></h:outputText>
+				            </s:decorate>
+				            
+				            <s:decorate id="qualitaStabileValutazione" template="/layout/edit.xhtml">
+				                <ui:define name="label">Qualita' dello stabile</ui:define>
+				                <h:outputText id="punteggioContadino" value="" ></h:outputText>
+				            </s:decorate>
+				            
+				            <s:decorate id="condizioniIgienicoValutazione" template="/layout/edit.xhtml">
+				                <ui:define name="label">Condizioni igienico sanitarie</ui:define>
+				                <h:outputText id="punteggioContadino" value="" ></h:outputText>
+				            </s:decorate>
+				            
+				            <s:decorate id="ambienteLavoroValutazione" template="/layout/edit.xhtml">
+				                <ui:define name="label">Ambiente di lavoro</ui:define>
+				                <h:outputText id="punteggioContadino" value="" ></h:outputText>
+				            </s:decorate>
+				            
+				            <s:decorate id="professionalitaValutazione" template="/layout/edit.xhtml">
+				                <ui:define name="label">Professionalita'</ui:define>
+				                <h:outputText id="punteggioContadino" value="" ></h:outputText>
+				            </s:decorate>
+				            				            
+				            <s:decorate id="punteggioValutazione" template="/layout/edit.xhtml">
+				                <ui:define name="label">Valutazione totale</ui:define>
+				                <h:outputText id="punteggioContadino" value="" ></h:outputText>  
+				            </s:decorate>
+						</td>						
+					</tr>
+				</table>
+			</td>
+			<td width="60%" valign="top">
+				<table width="100%" border="0" cellspacing="4" cellpadding="0" align="center">
+					<tr>
+						<td width="100%" colspan="4" align="center" valign="top">
+							<div align="center" class="colore_1" >Visitatori:  di 10</div>
+						</td>					
+					</tr>
+					<tr>
+						<td width="30%" ><div align="left" ><b>Nome Inviato</b></div></td>
+						<td width="30%" ><div align="left" ><b>Testo messaggio</b></div></td>
+						<td width="20%" ><div align="center" ><b>Questionario Compilato?</b></div></td>
+						<td width="20%" ><div align="right" ><b>Azione</b></div></td>
+					</tr>
+					<tr>
+						<td width="100%" colspan="4" align="center" >
+							<hr noshade="noshade"/>
+						</td>					
+					</tr>
+					<tr>
+						<td width="30%"><div align="left" class="explorer" >bonghi</div></td>
+						<td width="30%"><div align="left" class="explorer" >Testo messaggio</div></td>
+						<td width="20%"><div align="center" class="explorer" ><img src="/SeamAmiciDelGas/img/accepted.png"/></div></td>
+						<td width="20%"><div align="right" class="explorer" ><img src="/SeamAmiciDelGas/img/feedback_up.png"/></div></td>
+					</tr>
+					<ui:repeat value="#{puntiDiConsegnaList.resultList}" var="_punto">
+					</ui:repeat>
+				</table>
+			</td>	
+		</tr>
+	</table>
+	
+	
+	</ui:define>
+</ui:composition>

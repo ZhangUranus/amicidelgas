@@ -192,6 +192,21 @@ public class FiltraNotifica {
 		
 	}
 	
+	public List<TaskInstance> getAllPooledHighestPriorityTaskInstanceListForSingleCustomer(String username)
+	{
+		List<TaskInstance> tasks= pooledTaskInstanceList;
+		List<TaskInstance> tasksUser = new ArrayList<TaskInstance>();
+		Account account = null;
+		for(TaskInstance temp : tasks)
+		{
+			account = (Account) temp.getVariable("customer");
+			if((account.getUsername().equals(username))&& (temp.getPriority() == Task.PRIORITY_HIGHEST))
+				tasksUser.add(temp);
+		}
+		return tasksUser;
+		
+	}
+	
 	public List<TaskInstance> getAllPooledTaskInstanceListForAllUserButMeNot(String username, String... filters)
 	{
 		List<TaskInstance> tasks= getAllPooledTaskInstanceList(filters);

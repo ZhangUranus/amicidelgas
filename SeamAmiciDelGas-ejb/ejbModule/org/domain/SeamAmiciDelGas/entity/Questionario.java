@@ -32,7 +32,7 @@ public class Questionario implements java.io.Serializable {
 	private Integer votoIgiene;
 	private Integer votoAllevamento;
 	private Integer votoProfessionalita;
-	private Integer votoGlobale;
+	private float votoGlobale;
 	private String commenti;
 	private boolean visionato;
 	private Date dataVisita;
@@ -53,7 +53,7 @@ public class Questionario implements java.io.Serializable {
 	public Questionario(Account account, Cybercontadino cybercontadino,
 			Integer votoProdotti, Integer votoStabile, Integer votoIgiene,
 			Integer votoAllevamento, Integer votoProfessionalita,
-			Integer votoGlobale, String commenti, boolean visionato,
+			float votoGlobale, String commenti, boolean visionato,
 			Date dataVisita, Date dataCompilazione) {
 		this.account = account;
 		this.cybercontadino = cybercontadino;
@@ -148,11 +148,11 @@ public class Questionario implements java.io.Serializable {
 	}
 
 	@Column(name = "voto_globale")
-	public Integer getVotoGlobale() {
+	public float getVotoGlobale() {
 		return this.votoGlobale;
 	}
 
-	public void setVotoGlobale(Integer votoGlobale) {
+	public void setVotoGlobale(float votoGlobale) {
 		this.votoGlobale = votoGlobale;
 	}
 

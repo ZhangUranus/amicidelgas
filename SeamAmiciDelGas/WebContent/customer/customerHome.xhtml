@@ -45,10 +45,10 @@
 			</table>
 		</div>
 
-		<table width="96%" border="0" cellspacing="0" cellpadding="0" align="center" >
+		<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center" >
 			<tr>
 				<td colspan="3">
-					<table width="98%" border="0" cellspacing="6" cellpadding="0" align="left" >
+					<table width="99%" border="0" cellspacing="6" cellpadding="0" align="left" >
 					  <tr>			    
 					    <td rowspan="2" width="20%" align="left">
 					    	<s:decorate rendered="#{loginSelectBean.calculateMaxRole()=='admin'}"><img alt="statistiche" border="0" src="/SeamAmiciDelGas/img/admin.png"/></s:decorate>
@@ -131,9 +131,9 @@
 					</table>	
 				</td>
 				<td >
-					<table width="98%" border="0" cellspacing="6" cellpadding="0" align="center" >
+					<table width="99%" border="0" cellspacing="6" cellpadding="0" align="left" >
 					  <tr>			    
-					    <td rowspan="2" align="left">
+					    <td width="50px" rowspan="2" align="left">
 					    	<img alt="statistiche" border="0" src="/SeamAmiciDelGas/img/ruoli.png"/>					    	
 					    </td>
 					    <td valign="bottom"><div align="left" class="colore_1">I tuoi ruoli</div></td>			      
@@ -146,9 +146,9 @@
 					    </div></td>
 					  </tr>
 					</table>
-					<table width="98%" border="0" cellspacing="6" cellpadding="0" align="center" >
+					<table width="99%" border="0" cellspacing="6" cellpadding="0" align="left" >
 					  <tr>			    
-					    <td rowspan="2" align="left">
+					    <td width="50px" rowspan="2" align="left">
 					    	<s:link view="/customer/editDati.xhtml"
 				             propagation="none"
 				                      id="utenteEditImg"
@@ -180,12 +180,24 @@
 					    </div></td>
 					  </tr>
 					</table>
+					<table width="99%" border="0" cellspacing="6" cellpadding="0" align="left" >
+					  <tr>			    
+					    <td width="50px" rowspan="2" align="left">
+					    	<img alt="statistiche" border="0" src="/SeamAmiciDelGas/img/fondo.png"/>					    	
+					    </td>
+					    <td valign="bottom"><div align="left" class="colore_1">Il tuo fondo soldi</div></td>			      
+					  </tr>
+					  <tr>
+					    <td valign="top"><div align="left" class="explorer">#{currentAccount.fondo} &#8364;</div>
+					    </td>
+					  </tr>
+					</table>
 					<s:decorate rendered="#{(filtraNotifica.numberOfHighestPriorityTaskForSingle() > -1)}">
 						<div id="alert_div">
 							<script type="text/javascript">show_focus();</script>
-							<table width="98%" border="0" cellspacing="6" cellpadding="0" align="center" >
+							<table width="99%" border="0" cellspacing="6" cellpadding="0" align="left" >
 							  <tr>			    
-							    <td rowspan="2" align="left">
+							    <td width="50px" rowspan="2" align="left">
 							    	<img alt="statistiche" border="0" src="/SeamAmiciDelGas/img/alert.png"/>					    	
 							    </td>
 							    <td valign="bottom"><div align="left" class="colore_1">Avviso</div></td>			      
@@ -342,7 +354,7 @@
 				                        value="#{currentUser.codiceFiscale}"/>
 				                <f:param name="accountUsername"
 				                        value="#{currentAccount.username}"/>
-					    	<img alt="statistiche" border="0" src="/SeamAmiciDelGas/img/contadino50x36.gif"/>
+					    	<img alt="statistiche" border="0" src="/SeamAmiciDelGas/img/contadini_registrati.png"/>
 					    	</s:link>
 					    	</td>
 					    <td valign="bottom"><div align="left" class="colore_1">
