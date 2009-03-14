@@ -10626,6 +10626,29 @@ INSERT INTO `role` (`id`,`name`,`Username`) VALUES
 (14,'admin','soloadmin');
 COMMIT;
 
+INSERT INTO `punti_di_consegna` VALUES
+ (1,'viale mellusi','coordinate1',10252),
+ (2,'via napoli','coordinate2',10252);
+COMMIT;
+
+INSERT INTO `itinerario_has_punti_di_consegna` VALUES
+ (1,1),
+ (2,2),
+ (1,3);
+COMMIT;
+
+INSERT INTO `itinerario` VALUES
+ (1,'2009-04-12','2009-04-12','documentazionePath1','2009-03-14','esteban'),
+ (2,'2009-04-24','2009-04-24','documentazionePath2','2009-03-14','esteban'),
+ (3,'2009-04-24','2009-04-24','documentazionePath3','2009-03-14','zlatan');
+COMMIT;
+
+INSERT INTO `itinerario_has_cybercontadino` VALUES
+ (1,01139780629),
+ (2,01139780629),
+ (2,01435650625),
+ (3,01435650625);
+COMMIT;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
