@@ -83,7 +83,7 @@ function show_focus()
 
 function show_focus_timer()
 {
-	window.setTimeout('show_focus()',15000);
+	window.setTimeout('show_focus()',20000);
 }
 
 

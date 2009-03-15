@@ -42,11 +42,20 @@
 						</rich:column>
 						<rich:column>
 							<f:facet name="header">Mittente</f:facet>    
-						        <h:outputText value="Un mediatore"/>
+						        <h:outputText value="#{_task.variables.notifyMessageRequest.tipo}"/>
 						</rich:column>
 						<rich:column>
 							<f:facet name="header">Contenuto messaggio</f:facet>    
 						    <h:outputText value="#{_task.variables.notifyMessageRequest.content}"/>
+						</rich:column>					
+						<rich:column >
+							<f:facet name="header">Azioni</f:facet>    
+						    <s:link view="/customer/questionarioCybercontadino.xhtml"
+				                   value="Compila Questionario"
+				             propagation="none"
+				                      id="compilaquestionario" 
+				                      rendered="#{(_task.variables.notifyMessageRequest.tipo=='questionario')}">
+				            </s:link>
 						</rich:column>
 					</rich:dataTable>
 					<br/><br/><br/>

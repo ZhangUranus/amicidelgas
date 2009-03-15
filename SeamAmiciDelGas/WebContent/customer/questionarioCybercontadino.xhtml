@@ -17,7 +17,7 @@
 	            
 	            <s:decorate id="qualitaProdottiValutazione" template="/layout/edit.xhtml">
 	                <ui:define name="label">Qualita' dei prodotti</ui:define>
-	                <h:selectOneRadio value="#{newValutazione.qualitaProdotti}" required="true" requiredMessage="inserire una valutazione" onclick="liveScore(1, this.value);">
+	                <h:selectOneRadio value="#{newQuestionario.votoProdotti}" required="true" requiredMessage="inserire una valutazione" onclick="liveScore(1, this.value);">
 					  <f:selectItem itemLabel="Basso" itemValue="1" ></f:selectItem>
 					  <f:selectItem itemLabel="Normale" itemValue="2" ></f:selectItem>
 					  <f:selectItem itemLabel="Alto" itemValue="3"></f:selectItem>
@@ -28,7 +28,7 @@
 	            
 	            <s:decorate id="qualitaStabileValutazione" template="/layout/edit.xhtml">
 	                <ui:define name="label">Qualita' dello stabile</ui:define>
-	                <h:selectOneRadio value="#{newValutazione.qualitaStabile}" required="true" requiredMessage="inserire una valutazione" onclick="liveScore(2, this.value);">
+	                <h:selectOneRadio value="#{newQuestionario.votoStabile}" required="true" requiredMessage="inserire una valutazione" onclick="liveScore(2, this.value);">
 					  <f:selectItem itemLabel="Basso" itemValue="1" ></f:selectItem>
 					  <f:selectItem itemLabel="Normale" itemValue="2" ></f:selectItem>
 					  <f:selectItem itemLabel="Alto" itemValue="3" ></f:selectItem>
@@ -39,7 +39,7 @@
 	            
 	            <s:decorate id="condizioniIgienicoValutazione" template="/layout/edit.xhtml">
 	                <ui:define name="label">Condizioni igienico sanitarie</ui:define>
-	                <h:selectOneRadio value="#{newValutazione.condizioniIgienicoSanitarie}" required="true" requiredMessage="inserire una valutazione" onclick="liveScore(3, this.value);">
+	                <h:selectOneRadio value="#{newQuestionario.votoIgiene}" required="true" requiredMessage="inserire una valutazione" onclick="liveScore(3, this.value);">
 					  <f:selectItem itemLabel="Basso" itemValue="1" ></f:selectItem>
 					  <f:selectItem itemLabel="Normale" itemValue="2" ></f:selectItem>
 					  <f:selectItem itemLabel="Alto" itemValue="3"></f:selectItem>
@@ -50,7 +50,7 @@
 	            
 	            <s:decorate id="ambienteLavoroValutazione" template="/layout/edit.xhtml">
 	                <ui:define name="label">Ambiente di lavoro</ui:define>
-	                <h:selectOneRadio value="#{newValutazione.ambienteLavoro}" required="true" requiredMessage="inserire una valutazione" onclick="liveScore(4, this.value);">
+	                <h:selectOneRadio value="#{newQuestionario.votoAllevamento}" required="true" requiredMessage="inserire una valutazione" onclick="liveScore(4, this.value);">
 					  <f:selectItem itemLabel="Basso" itemValue="1" ></f:selectItem>
 					  <f:selectItem itemLabel="Normale" itemValue="2" ></f:selectItem>
 					  <f:selectItem itemLabel="Alto" itemValue="3"></f:selectItem>
@@ -61,7 +61,7 @@
 	            
 	            <s:decorate id="professionalitaValutazione" template="/layout/edit.xhtml">
 	                <ui:define name="label">Professionalita'</ui:define>
-	                <h:selectOneRadio value="#{newValutazione.professionalita}" required="true" requiredMessage="inserire una valutazione" onclick="liveScore(5, this.value);">
+	                <h:selectOneRadio value="#{newQuestionario.votoProfessionalita}" required="true" requiredMessage="inserire una valutazione" onclick="liveScore(5, this.value);">
 					  <f:selectItem itemLabel="Basso" itemValue="1" ></f:selectItem>
 					  <f:selectItem itemLabel="Normale" itemValue="2" ></f:selectItem>
 					  <f:selectItem itemLabel="Alto" itemValue="3"></f:selectItem>
@@ -76,13 +76,13 @@
 	                       required="true"
 	                           size="200"
 	                      maxlength="200"
-	                          value="#{newValutazione.commenti}">   
+	                          value="#{newQuestionario.commenti}">   
 	                </h:inputTextarea>
 	            </s:decorate>
 	            
 	            <s:decorate id="punteggioValutazione" template="/layout/edit.xhtml">
 	                <ui:define name="label">Anteprima punteggio valutazione</ui:define>
-	                <h:outputText id="punteggioContadino" value="" ></h:outputText>  
+	                <h:outputText id="punteggioContadino" value="#{newQuestionario.votoGlobale}" ></h:outputText>  
 	            </s:decorate>
 				
 				<div style="clear:both">
@@ -93,7 +93,11 @@
 	    </rich:panel>
 	    
 	    	<div class="actionButtons">
-	            <h:commandButton id="postquestionario" value="Invia questionario" action="postquestionario"/>
+	    		<s:button value="postquestionario" 
+	            	taskInstance="#{processoRegistrazione.taskCorrente}" 
+	            	action="#{inviaRequestReply.riceviMessaggio(true)}">
+	            <a:support event="onclick" action="#{inviaRequestReply.update}"></a:support>
+	            </s:button>
 	        </div>
 	    
 	    </h:form>

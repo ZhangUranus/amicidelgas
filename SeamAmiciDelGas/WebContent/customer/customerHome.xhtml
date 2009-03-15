@@ -11,7 +11,7 @@
 
     <ui:define name="body">
     	<div id="shadow_focus_home" style="background: transparent url('/SeamAmiciDelGas/img/shadow0.png') ; width:100%; z-index:199; height:100%; left:0; top:0; display:none; position:fixed;" />
-		<div id="alert_div_focus" style="cursor:pointer; display:block; z-index: 200; position:fixed; left:40%; top:40%;" onclick="show_focus(); show_focus_timer();">
+		<div id="alert_div_focus" style="cursor:pointer; display:none; z-index: 200; position:fixed; left:40%; top:40%;" onclick="show_focus(); show_focus_timer();">
 			<table width="200px" border="0" cellspacing="0" cellpadding="0" align="center" >
 			  <tr>
 			    <td width="13" height="12" background="/SeamAmiciDelGas/img/shadow_corner_a.png"></td>
@@ -192,7 +192,7 @@
 					    </td>
 					  </tr>
 					</table>
-					<s:decorate rendered="#{(filtraNotifica.numberOfHighestPriorityTaskForSingle() > -1)}">
+					<s:decorate rendered="#{(filtraNotifica.numberOfHighestPriorityTaskForSingle() > 0)}">
 						<div id="alert_div">
 							<script type="text/javascript">show_focus();</script>
 							<table width="99%" border="0" cellspacing="6" cellpadding="0" align="left" >
