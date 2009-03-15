@@ -1,10 +1,7 @@
 package org.domain.SeamAmiciDelGas.processes;
 
 import java.util.Date;
-
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
 import org.domain.SeamAmiciDelGas.entity.Account;
 import org.domain.SeamAmiciDelGas.entity.Cybercontadino;
 import org.domain.SeamAmiciDelGas.entity.Questionario;
@@ -27,7 +24,7 @@ public class InviaRequestReply {
 	@Logger
 	private Log log;
 	
-	@PersistenceContext
+	@In(value="entityManager")
     private EntityManager em;
 	
 	@In(value="currentAccount" , scope=ScopeType.SESSION , required=false)
@@ -121,8 +118,6 @@ public class InviaRequestReply {
 	public Questionario getQuestionario() {
 		return questionario;
 	}
-
-
 }
 
 /*
