@@ -8,6 +8,13 @@ body {
 	margin: 0px;
 }
 
+.a:hover {
+	text-decoration: none;
+}
+.a:active, a:link, a:visited {
+	text-decoration: none;
+}
+
 a img {
 	border: none;
 }
