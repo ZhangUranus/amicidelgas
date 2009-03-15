@@ -34,7 +34,6 @@ public class ProcessoRegistrazione {
 	private Log log;
 	@In private Credentials credentials;
 	
-	@In protected EntityManager entityManager;
 	
 	@Out(value="notificaMediatore", scope= ScopeType.BUSINESS_PROCESS, required=false)
 	private Message message;

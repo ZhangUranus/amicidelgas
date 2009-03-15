@@ -69,8 +69,8 @@ public class FiltraNotifica {
 	 * Torna il numero di task per single o per gruppi con 
 	 * gli opportuni filtri sul nome del filtro
 	 * @return un int che rappresenta il numero di task con gli opportuni filtri
-	 * @param SingleOrGroupTask può essere: "taskForSingle" oppure "taskForGroup" 
-	 * @param filters una o più stringhe separate da una virgola che rappresentano i task
+	 * @param SingleOrGroupTask puï¿½ essere: "taskForSingle" oppure "taskForGroup" 
+	 * @param filters una o piï¿½ stringhe separate da una virgola che rappresentano i task
 	 * 			a cui associare il filtro.
 	 */
 	public int numberOfTask(String SingleOrGroupTask, String... filters)
@@ -92,11 +92,11 @@ public class FiltraNotifica {
 	
 	/**
 	 * numberOfTask(String SingleOrGroupTask, String... filters)
-	 * Torna il numero di task con priorità alta per single o per gruppi con 
+	 * Torna il numero di task con prioritï¿½ alta per single o per gruppi con 
 	 * gli opportuni filtri sul nome del filtro
-	 * @return un int che rappresenta il numero di task a priorità alta con gli opportuni filtri
-	 * @param SingleOrGroupTask può essere: "taskForSingle" oppure "taskForGroup" 
-	 * @param filters una o più stringhe separate da una virgola che rappresentano i task
+	 * @return un int che rappresenta il numero di task a prioritï¿½ alta con gli opportuni filtri
+	 * @param SingleOrGroupTask puï¿½ essere: "taskForSingle" oppure "taskForGroup" 
+	 * @param filters una o piï¿½ stringhe separate da una virgola che rappresentano i task
 	 * 			a cui associare il filtro.
 	 */
 	public int numberOfHighPriorityTask(String SingleOrGroupTask)
@@ -133,7 +133,7 @@ public class FiltraNotifica {
 	 *	return tasks;
 	 * }
 	 * 
-	 * @param filters Una o più stringhe che rappresentano i filtri
+	 * @param filters Una o piï¿½ stringhe che rappresentano i filtri
 	 * @return ritorna una lista di TaskInstance 
 	 */
 	public List<TaskInstance> getAllSingleTaskInstanceList(String... filters)
@@ -192,6 +192,26 @@ public class FiltraNotifica {
 		
 	}
 	
+	public List<TaskInstance> getAllHighestPriorityTaskInstanceListForSingleCustomer(String username ,String  taskName)
+	{
+		List<TaskInstance> tasks = taskInstanceSingleList(taskName);
+		List<TaskInstance> tasksUser = new ArrayList<TaskInstance>();
+		//Account account = null;
+		String nome;
+		for(TaskInstance temp : tasks)
+		{
+			//account = (Account) temp.getVariable("currentAccount");
+			nome = temp.getActorId();
+			if(nome != null)
+			{
+				if((nome.equals(username)))
+					tasksUser.add(temp);
+			}
+		}
+		return tasksUser;
+		
+	}
+	
 	public List<TaskInstance> getAllPooledHighestPriorityTaskInstanceListForSingleCustomer(String username)
 	{
 		List<TaskInstance> tasks= pooledTaskInstanceList;
@@ -199,7 +219,7 @@ public class FiltraNotifica {
 		Account account = null;
 		for(TaskInstance temp : tasks)
 		{
-			account = (Account) temp.getVariable("customer");
+			account = (Account) temp.getVariable("currentAccoun");
 			if((account.getUsername().equals(username))&& (temp.getPriority() == Task.PRIORITY_HIGHEST))
 				tasksUser.add(temp);
 		}
