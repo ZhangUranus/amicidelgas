@@ -1,34 +1,99 @@
 package org.domain.SeamAmiciDelGas.processes;
 
+import java.util.Date;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
+import org.domain.SeamAmiciDelGas.entity.Account;
+import org.domain.SeamAmiciDelGas.entity.Cybercontadino;
+import org.domain.SeamAmiciDelGas.entity.Questionario;
 import org.domain.SeamAmiciDelGas.session.Message;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
+import org.jboss.seam.annotations.Logger;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Out;
+import org.jboss.seam.annotations.Transactional;
 import org.jboss.seam.annotations.bpm.StartTask;
 import org.jboss.seam.annotations.bpm.EndTask;
+import org.jboss.seam.log.Log;
 
 
 @Name("inviaRequestReply")
 public class InviaRequestReply {
 	
+	
+	@Logger
+	private Log log;
+	
+	@PersistenceContext
+    private EntityManager em;
+	
+	@In(value="currentAccount" , scope=ScopeType.SESSION , required=false)
+	private Account account;
+	
+	@In(value="dataProposta", scope= ScopeType.BUSINESS_PROCESS, required =false)
+	private Date dataProposta;
+	
+    @In(value="contadinoCreato", scope= ScopeType.BUSINESS_PROCESS)
+    private Cybercontadino contadino;
+	
 	@In(value="notifyMessageRequest",scope=ScopeType.BUSINESS_PROCESS, required=false) 
 	@Out(value="notifyMessageReply", scope= ScopeType.BUSINESS_PROCESS, required=false)
 	private Message message;
 	
+	@In(value="compilato", scope= ScopeType.BUSINESS_PROCESS, required=false)
 	@Out(value="compilato", scope= ScopeType.BUSINESS_PROCESS, required=false)
 	private boolean compilato;
 	
+	private Date dataCorrente;
+	
+	@In(value="newQuestionario" , create=true)
+	private Questionario questionario;
 	
 	@StartTask @EndTask(transition="inviaReply")
 	public void riceviMessaggio(boolean fatto)
 	{
 		System.out.println("RICEVI MESSAGGIO");
 		compilato = fatto;
-		message.setContent("Seam Amici Del Gas e non ce ne tene e fa nu Gas");
+		if(questionario == null)
+		{
+			System.out.println("QUESTIONARIO NULLOOOOOOOOOOOOOOO");
+			//message.setContent("Messaggio generato dal sistema in seguito alla mancata compilazione del questionario da parte dell'utente" +
+			//		" nel tempo prestabilito");
+		}
+		else
+		{
+			boolean ret = this.registraQuestionario();
+			if(ret)
+			{
+				message.setContent("Ho compilato il questionario in data "+dataCorrente+" in seguito alla visita nell'azienda" +
+						 " " + contadino.getNomeAzienda() +" effettuata il giorno "+dataProposta);
+				System.out.println("NOMEEEEEEEEEEEEEEEe:"+message.getDestinatario());
+			}
+			else
+			{
+				System.out.println("ERRORE CRITICO");
+				message.setContent("ERRORE CRITICO NEL DATABASE in data:"+dataCorrente);
+			}
+		}
 		System.out.println("NOMEEEEEEEEEEEEEEEe:"+message.getDestinatario());
 			
 	}
+	
+	@Transactional public boolean registraQuestionario()
+    {
+		dataCorrente = new Date(System.currentTimeMillis());
+		questionario.setAccount(account);
+		questionario.setCybercontadino(contadino);
+		questionario.setDataCompilazione(dataCorrente);
+		questionario.setDataVisita(dataProposta);
+		questionario.setVisionato(false);
+		em.persist(questionario);
+		return true; 
+		
+    }
 	
 	@StartTask @EndTask(transition="fine")
 	public void riceviRisposta()
@@ -44,6 +109,19 @@ public class InviaRequestReply {
 	public void setMessage(Message message) {
 		this.message = message;
 	}
+	
+	public void update(){
+		log.info("QESTIONARIO COMPILATO"+ questionario.toString());
+	}
+
+	public void setQuestionario(Questionario questionario) {
+		this.questionario = questionario;
+	}
+
+	public Questionario getQuestionario() {
+		return questionario;
+	}
+
 
 }
 
