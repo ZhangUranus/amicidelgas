@@ -37,11 +37,11 @@ public class InviaRequestReply {
 	@In(value="notifyMessageRequest",scope=ScopeType.BUSINESS_PROCESS, required=false) 
 	@Out(value="notifyMessageReply", scope= ScopeType.BUSINESS_PROCESS, required=false)
 	private Message message;
-/*	
+	
 	@In(value="compilato", scope= ScopeType.BUSINESS_PROCESS, required=false)
-	@Out(value="compilatoOut", scope= ScopeType.BUSINESS_PROCESS, required=false)
+	@Out(value="compilato", scope= ScopeType.BUSINESS_PROCESS, required=false)
 	private boolean compilato;
-*/	
+	
 	private Date dataCorrente;
 	
 	@In(value="newQuestionario" , create=true)
@@ -52,7 +52,7 @@ public class InviaRequestReply {
 	{
 		System.out.println("RICEVI MESSAGGIO");
 		
-		
+		compilato = true;
 		if(questionario == null)
 		{
 			System.out.println("QUESTIONARIO NULLOOOOOOOOOOOOOOO");
@@ -74,7 +74,7 @@ public class InviaRequestReply {
 				message.setContent("ERRORE CRITICO NEL DATABASE in data:"+dataCorrente);
 			}
 		}
-		//compilato = true;
+		
 		System.out.println("NOMEEEEEEEEEEEEEEEe:"+message.getDestinatario());
 			
 	}
@@ -107,8 +107,9 @@ public class InviaRequestReply {
 		this.message = message;
 	}
 	
-	public void update(){
+	public String update(){
 		log.info("QESTIONARIO COMPILATO"+ questionario.toString());
+		return "OutQuestionario";
 	}
 
 	public void setQuestionario(Questionario questionario) {
