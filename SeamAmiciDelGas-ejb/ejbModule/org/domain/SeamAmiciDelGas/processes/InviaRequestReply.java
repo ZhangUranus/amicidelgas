@@ -16,10 +16,15 @@ public class InviaRequestReply {
 	@Out(value="notifyMessageReply", scope= ScopeType.BUSINESS_PROCESS, required=false)
 	private Message message;
 	
+	@Out(value="compilato", scope= ScopeType.BUSINESS_PROCESS, required=false)
+	private boolean compilato;
+	
+	
 	@StartTask @EndTask(transition="inviaReply")
-	public void riceviMessaggio()
+	public void riceviMessaggio(boolean fatto)
 	{
 		System.out.println("RICEVI MESSAGGIO");
+		compilato = fatto;
 		message.setContent("Seam Amici Del Gas e non ce ne tene e fa nu Gas");
 		System.out.println("NOMEEEEEEEEEEEEEEEe:"+message.getDestinatario());
 			
