@@ -28,10 +28,10 @@ public class InviaRequestReply {
 	@In(value="currentAccount" , scope=ScopeType.SESSION , required=false)
 	private Account account;
 	
-	@In(value="dataProposta", scope= ScopeType.BUSINESS_PROCESS, required =false)
-	private Date dataProposta;
+	@In(value="dataVisita", scope= ScopeType.BUSINESS_PROCESS, required =false)
+	private Date dataVisita;
 	
-    @In(value="contadinoCreato", scope= ScopeType.BUSINESS_PROCESS ,required =false)
+    @In(value="contadino", scope= ScopeType.BUSINESS_PROCESS ,required =false)
     private Cybercontadino contadino;
 	
 	@In(value="notifyMessageRequest",scope=ScopeType.BUSINESS_PROCESS, required=false) 
@@ -65,7 +65,7 @@ public class InviaRequestReply {
 			if(ret)
 			{
 				message.setContent("Ho compilato il questionario in data "+dataCorrente+" in seguito alla visita nell'azienda" +
-						 " " + contadino.getNomeAzienda() +" effettuata il giorno "+dataProposta);
+						 " " + contadino.getNomeAzienda() +" effettuata il giorno "+dataVisita);
 				System.out.println("NOMEEEEEEEEEEEEEEEe:"+message.getDestinatario());
 			}
 			else
@@ -85,7 +85,7 @@ public class InviaRequestReply {
 		questionario.setAccount(account);
 		questionario.setCybercontadino(contadino);
 		questionario.setDataCompilazione(dataCorrente);
-		questionario.setDataVisita(dataProposta);
+		questionario.setDataVisita(dataVisita);
 		questionario.setVisionato(false);
 		em.persist(questionario);
 		return true; 
