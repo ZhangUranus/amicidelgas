@@ -18,6 +18,7 @@ import org.domain.SeamAmiciDelGas.crud.OrdineList;
 import org.domain.SeamAmiciDelGas.entity.Account;
 import org.domain.SeamAmiciDelGas.entity.Articolo;
 import org.domain.SeamAmiciDelGas.entity.Ordine;
+import org.domain.SeamAmiciDelGas.session.GestioneFondo;
 import org.domain.SeamAmiciDelGas.session.ItemQuantita;
 import org.domain.SeamAmiciDelGas.session.Message;
 import org.domain.SeamAmiciDelGas.session.MyOrdine;
@@ -73,6 +74,10 @@ public class OrderProcessing {
 	@Out(value="driver", scope=ScopeType.BUSINESS_PROCESS, required=false)
 	private Account driver;
 	
+	@In(value="dataConsegna", scope=ScopeType.BUSINESS_PROCESS, required=false)
+	@Out(value="dataConsegna", scope=ScopeType.BUSINESS_PROCESS, required=false)
+	private Date dataConsegna;
+	
 	@Out(value="selectedItemShoppingCart",scope=ScopeType.BUSINESS_PROCESS,required=false)
 	private List<ItemQuantita> selectedItem;
 	
@@ -81,7 +86,8 @@ public class OrderProcessing {
 
 	@In private Credentials credentials;
 	
-	
+	@In(value="gestioneFondo", create=true)
+	private GestioneFondo gestioneFondo;
 	
 	@CreateProcess(definition="myOrderProcessing")
 	public String startOrder(List<ItemQuantita> itemQ, Date dm){
@@ -110,14 +116,14 @@ public class OrderProcessing {
 		
 		if(isStessoContadino)
 			messageDriverContadino.addRecipient(usernameContadino);
-		String content = "Ordine fatto da " +credentials.getUsername()+" dataMassima = "+dataMassima.toString();
-		
+		String content = "RICHIESTA ORDINE"+
+						"Customer: " +credentials.getUsername();
 		messageDriverContadino.setContent(content);
 		return "partito";
 	}
 	
 	@BeginTask @EndTask(transition="ordine_preso_in_carico")
-	public void verificaDisponibilita(){
+	public void verificaDisponibilita(Date dataConsegna){
 		//setto lo stato dell'ordine
 		//myOrdine.setPendente(false);
 		CatalogInterface catalog = new CatalogNoServiceImpl();
@@ -158,11 +164,15 @@ public class OrderProcessing {
 				String idContadino = enumContadini.nextElement();
 				catalog.commitTransaction(idContadino, transactionIdList.get(idContadino));
 			}
-			messageStatoOrdine.setContent("Ordine preso in carico da "+ credentials.getUsername());
+			String isNull = "NOT NULL";
+			if (dataConsegna==null)
+				isNull = "NULLLLL";
+			messageStatoOrdine.setContent("Ordine preso in carico da "+ credentials.getUsername()+" dataConsegna = "+isNull);
 			messageStatoOrdine.setInfoFilter("orderProcessingPreso");
 			driver = currentAccount;
 			myOrdine.setPendente(false);
 			myOrdine.setEvaso(true);
+			this.dataConsegna = dataConsegna;
 			saveOrdine(); //salvo l'ordine nel database
 		}
 	}
@@ -179,6 +189,7 @@ public class OrderProcessing {
 		ordine.setAccount(customer);
 		ordine.setConcluso(false);
 		ordine.setDataRichiesta(dataRichiesta);
+		ordine.setDataConclusione(dataConsegna);
 		ordine.setDataMassimaConsegna(myOrdine.getDataMassima());
 		ordine.setDriver(driver);
 		//salvo l'ordine
@@ -202,7 +213,16 @@ public class OrderProcessing {
 	
 	@BeginTask @EndTask(transition="ordine_eliminato_dall_utente")
 	public void delete() {
-		
+		updateFondo();		
+	}
+	
+	private void updateFondo() {
+		//riaggiorno il fondo dell'utente customer
+		float prezzoOrdine = 0;
+		List<ItemQuantita> items = myOrdine.getItemQuantita();
+		for (ItemQuantita iq: items)
+			prezzoOrdine+=iq.getPrezzoTotale();
+		gestioneFondo.plusFondo(prezzoOrdine);
 	}
 	
 	@BeginTask @EndTask(transition="ordine_rimesso_nel_pool")

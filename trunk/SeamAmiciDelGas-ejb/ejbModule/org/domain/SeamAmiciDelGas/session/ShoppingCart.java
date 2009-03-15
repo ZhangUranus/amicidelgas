@@ -6,6 +6,7 @@ import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
 
+import org.domain.SeamAmiciDelGas.entity.Account;
 import org.domain.SeamAmiciDelGas.entity.Cybercontadino;
 import org.domain.SeamAmiciDelGas.processes.NotifyBean;
 import org.domain.SeamAmiciDelGas.processes.OrderProcessing;
@@ -30,7 +31,12 @@ public class ShoppingCart {
 	@In(value="orderProcessing",create=true)
 	private OrderProcessing orderProcessing;
 	
+	@In(value="gestioneFondo", create=true)
+	private GestioneFondo gestioneFondo;
+	
 	private String quantita="0";
+	
+	public float prezzoOrdine;
 	
 	private boolean noSelect=false;
 	
@@ -42,6 +48,16 @@ public class ShoppingCart {
 
 	private boolean dataMassimaBeforeToday=false;
 	
+	private boolean fondo = true;
+	
+	public boolean isFondo() {
+		return fondo;
+	}
+
+	public void setFondo(boolean fondo) {
+		this.fondo = fondo;
+	}
+
 	public Date getDataMassima() {
 		return dataMassima;
 	}
@@ -105,9 +121,12 @@ public class ShoppingCart {
 	public double calcolaTotale()
 	{
 		double totale=0;
+		double totaleIq;
 		for(ItemQuantita iq : itemInShoppingCart)
 		{
-			totale += ( iq.getItem().getPrezzo() * iq.getQuantita() );
+			totaleIq = iq.getItem().getPrezzo() * iq.getQuantita();
+			iq.setPrezzoTotale((float) totaleIq);
+			totale += totaleIq;
 		}
 		return totale;
 	}
@@ -115,33 +134,51 @@ public class ShoppingCart {
 	public void buySelectedItem()
 	{
 		log.info("******** buyAllItem************");
-		
+		fondo=true;
 		if(dataMassima==null)
 		{
-			log.info("*******data massima = nuuuuuulllllllllllllllllllll*********");
 			return;
 		}
 		if(dataMassimaBeforeCurrentDate())
 			return;
 
 		selectedItem = new ArrayList<ItemQuantita>();
+		//controllo il fondo
+		prezzoOrdine = 0;
+		for (ItemQuantita iq: itemInShoppingCart) {
+			if(iq.isCheckedForOrdine())
+				prezzoOrdine+=iq.getPrezzoTotale();
+		}
+		log.info("******PREZZOORDINE*******");
+		log.info("******"+prezzoOrdine+"******");
+		if (!gestioneFondo.isFondoSufficiente(prezzoOrdine)) {
+			log.info("*****FONDO INSUFFICIENTE********");
+			fondo=false;
+			return;
+		}
+		fondo = true;
+		gestioneFondo.lessFondo(prezzoOrdine);
+		log.info("******FONDO SUFFICIENTE******");
+		log.info("*****"+gestioneFondo.getFondo()+"********");
 		for(int index=0; index<itemInShoppingCart.size(); index++)//aggiungo i prodotti all'ordine da fare
 		{	
 			ItemQuantita iq=itemInShoppingCart.get(index);
 			if(iq.isCheckedForOrdine())
-			{	selectedItem.add(iq); 
+			{	
+				prezzoOrdine+=iq.getPrezzoTotale();
+				selectedItem.add(iq); 
 				itemInShoppingCart.remove(index--);
 				log.info("******** Item SELEZIONATO "+iq.getItem().getName()+"************");	
 			}
 		}
 		noSelect = (selectedItem.size()==0) ? true : false;
-		
 		if(noSelect)
 		{
 			log.info("*******nessun item selezionato, ritorno*********");
 			return;
 		}
-
+		//controllo se il fondo è sufficiente a fare l'ordine
+		
 		dataMassimaBeforeToday=false;
 		log.info("*******data massima = " +dataMassima.toString() +" ************");
 		String logInfo = orderProcessing.startOrder(selectedItem,dataMassima);
@@ -182,6 +219,14 @@ public class ShoppingCart {
 
 	public void setDataMassimaBeforeToday(boolean dataMassimaBeforeToday) {
 		this.dataMassimaBeforeToday = dataMassimaBeforeToday;
+	}
+
+	public float getPrezzoOrdine() {
+		return prezzoOrdine;
+	}
+
+	public void setPrezzoOrdine(float prezzoOrdine) {
+		this.prezzoOrdine = prezzoOrdine;
 	}
 }
 
