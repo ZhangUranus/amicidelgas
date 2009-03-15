@@ -6,9 +6,9 @@
       no-conversation-view-id="/questionarioCybercontadino.xhtml"
       login-required="true">
 
-<restrict>#{s:hasRole('utenteGas')}</restrict>      
- <navigation from-action="#{inviaRequestReply.riceviMessaggio}">
-  <rule>
+     
+ <navigation>
+  <rule if-outcome="OutQuestionario">
    <redirect view-id="/customer/customerHome.xhtml"/>
   </rule>
  </navigation>
