@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<root-container name="notificaRegistrazione" width="998" height="906">
+<root-container name="notificaRegistrazione" width="864" height="906">
   <node name="RichiestaRegistrazione" x="29" y="22" width="192" height="36">
     <edge>
       <label x="-54" y="-32"/>
