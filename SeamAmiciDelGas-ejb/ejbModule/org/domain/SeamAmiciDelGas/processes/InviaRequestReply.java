@@ -16,11 +16,9 @@ import org.jboss.seam.annotations.bpm.StartTask;
 import org.jboss.seam.annotations.bpm.EndTask;
 import org.jboss.seam.log.Log;
 
-
 @Name("inviaRequestReply")
 public class InviaRequestReply {
-	
-	
+		
 	@Logger
 	private Log log;
 	
@@ -33,7 +31,7 @@ public class InviaRequestReply {
 	@In(value="dataProposta", scope= ScopeType.BUSINESS_PROCESS, required =false)
 	private Date dataProposta;
 	
-    @In(value="contadinoCreato", scope= ScopeType.BUSINESS_PROCESS)
+    @In(value="contadinoCreato", scope= ScopeType.BUSINESS_PROCESS ,required =false)
     private Cybercontadino contadino;
 	
 	@In(value="notifyMessageRequest",scope=ScopeType.BUSINESS_PROCESS, required=false) 
@@ -50,10 +48,11 @@ public class InviaRequestReply {
 	private Questionario questionario;
 	
 	@StartTask @EndTask(transition="inviaReply")
-	public void riceviMessaggio(boolean fatto)
+	public void riceviMessaggio()
 	{
 		System.out.println("RICEVI MESSAGGIO");
-		compilato = fatto;
+		
+		compilato = true;
 		if(questionario == null)
 		{
 			System.out.println("QUESTIONARIO NULLOOOOOOOOOOOOOOO");

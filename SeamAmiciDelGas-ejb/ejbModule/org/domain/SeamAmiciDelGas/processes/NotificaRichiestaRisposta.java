@@ -41,6 +41,9 @@ public class NotificaRichiestaRisposta {
 	
 	private String mittente;
 	
+	@Out(value="compilato",scope=ScopeType.BUSINESS_PROCESS, required=false)
+	private boolean compilato;
+	
 	@Out(value="nomeMittente",scope=ScopeType.BUSINESS_PROCESS, required=false)
 	private String nomeMittente;
 	
