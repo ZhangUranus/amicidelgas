@@ -7,7 +7,6 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import javax.faces.component.html.HtmlInputHidden;
 import javax.persistence.EntityManager;
 
 import org.domain.SeamAmiciDelGas.entity.Cybercontadino;
@@ -18,11 +17,9 @@ import org.jboss.seam.annotations.Logger;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Out;
 import org.jboss.seam.annotations.Scope;
-import org.jboss.seam.annotations.bpm.BeginTask;
 import org.jboss.seam.annotations.bpm.CreateProcess;
 import org.jboss.seam.annotations.bpm.EndTask;
 import org.jboss.seam.annotations.bpm.StartTask;
-import org.jboss.seam.annotations.intercept.BypassInterceptors;
 import org.jboss.seam.faces.FacesMessages;
 import org.jboss.seam.log.Log;
 import org.jboss.seam.security.Credentials;
