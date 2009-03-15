@@ -24,7 +24,7 @@
 						         <h:outputText value="#{_task.variables.notificaDriverContadino.content}"/>
 							</rich:column>
 							<rich:column width="10%">
-								<s:button taskInstance="#{_task}" action="#{notifyBean.receive()}"
+								<s:button taskInstance="#{_task}" action="#{orderProcessing.verificaDisponibilita()}"
 										  value="Accetta ordine"/>
 							</rich:column>
 						</rich:dataTable>
@@ -49,7 +49,7 @@
 						         <h:outputText value="#{_pooledTask.variables.notificaDriverContadino.content}"/>
 							</rich:column>
 							<rich:column width="10%">
-								<s:button taskInstance="#{_pooledTask}" action="#{notifyBean.receive()}"
+								<s:button taskInstance="#{_pooledTask}" action="#{orderProcessing.verificaDisponibilita()}"
 										  value="Accetta ordine"/>
 							</rich:column>
 						</rich:dataTable>

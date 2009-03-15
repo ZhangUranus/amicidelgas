@@ -194,19 +194,24 @@
 					 		<a:commandButton id="commandButtonShoppingCartBuy" image="/img/shoppingCartBuy.jpg" 
 					 				   rendered="#{not empty shoppingCart.itemInShoppingCart}"
 					 				   reRender="shoppingcartField,outputTextSelectProduct,outputTextSelectDate,outputTextSelectDateBeforeToday"
-									     action="#{shoppingCart.buySelectedItem()}">
+									   action="#{shoppingCart.buySelectedItem()}">
 					 		</a:commandButton>
 					 		<rich:toolTip for="commandButtonShoppingCartBuy" value="Concludi acquisto"/>
 					 		
 					 		<s:decorate id="outputTextSelectProduct" rendered="#{ shoppingCart.noSelect==true and (not empty shoppingCart.itemInShoppingCart) }">
-					 			<h:outputText value="Selezionare almeno un prodotto" />
+					 			<h:outputText style="color:red" value="Selezionare almeno un prodotto" />
 					 		</s:decorate>
 					 		<br/>
 					 		<s:decorate id="outputTextSelectDate" rendered="#{ empty shoppingCart.dataMassima and (not empty shoppingCart.itemInShoppingCart) }">
-					 			<h:outputText value="Selezionare una data massima di consegna"/>
+					 			<h:outputText style="color:red" value="Selezionare una data massima di consegna"/>
 					 		</s:decorate>
 					 		<s:decorate id="outputTextSelectDateBeforeToday" rendered="#{ shoppingCart.dataMassimaBeforeToday and (not empty shoppingCart.itemInShoppingCart) }">
-					 			<h:outputText value="Data massima non valida, troppo presto"/>
+					 			<h:outputText style="color:red" value="Data massima non valida, troppo presto"/>
+					 		</s:decorate>
+					 		<br />
+					 		<br />
+					 		<s:decorate id="outputTextSelectFondoInsuff" rendered="#{(not shoppingCart.fondo) and (not empty shoppingCart.itemInShoppingCart) }">
+					 			<h:outputText style="color:red" value="Fondo insufficiente. Fondo = #{currentAccount.fondo} &#8364;. Prezzo Ordine: #{shoppingCart.prezzoOrdine} &#8364;"/>
 					 		</s:decorate>
 						</td></tr>
 						</table>
