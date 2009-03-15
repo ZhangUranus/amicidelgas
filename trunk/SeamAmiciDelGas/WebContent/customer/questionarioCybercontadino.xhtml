@@ -11,8 +11,8 @@
 
     <ui:define name="body">
 		<h:form id="valutazioneContadinoForm">
-
-	    <rich:panel>
+		
+	    <rich:panel id="panelIdRich" >
 	        <f:facet name="header">Questionario Valutazione CyberContadino</f:facet>
 	            
 	            <s:decorate id="qualitaProdottiValutazione" template="/layout/edit.xhtml">
@@ -85,21 +85,24 @@
 	                <h:outputText id="punteggioContadino" value="#{newQuestionario.votoGlobale}" ></h:outputText>  
 	            </s:decorate>
 				
+				<s:decorate id="IdTaskIntance" template="/layout/edit.xhtml">
+	                <h:inputHidden id="taskintance" var="_task value="#{getAllSingleTaskInstanceList['riceviMessaggio']}" />
+	            </s:decorate>
+				
 				<div style="clear:both">
 	                <span class="required">*</span>
 	                Campi richiesti
 	            </div>
 	
 	    </rich:panel>
-	    
-	    	<div class="actionButtons">
-	    		<s:button value="postquestionario" 
-	            	taskInstance="#{processoRegistrazione.taskCorrente}" 
-	            	action="#{inviaRequestReply.riceviMessaggio()}">
-	            <a:support event="onclick" action="#{inviaRequestReply.update}"></a:support>
-	            </s:button>
-	        </div>
-	    
+		 	<rich:dataTable  id="requestTableQuestionario" var="_task" value="#{getAllSingleTaskInstanceList['riceviMessaggio']}">
+					<h:column>
+						<s:link value="post questionario" taskInstance="#{_task}"
+	            			action="#{inviaRequestReply.riceviMessaggio}" >
+	            			<a:support event="onclick" action="#{inviaRequestReply.update}"/>
+	            		</s:link>
+					</h:column>
+			</rich:dataTable>
 	    </h:form>
 
 		<script type="text/javascript">
