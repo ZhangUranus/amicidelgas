@@ -30,6 +30,7 @@ import org.hibernate.validator.NotNull;
 @Table(name = "ordine", catalog = "database_gas")
 public class Ordine implements java.io.Serializable {
 
+	private static final long serialVersionUID = -1381613240078746827L;
 	private Integer idordine;
 	private Account account;
 	private Date dataRichiesta;

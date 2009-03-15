@@ -27,6 +27,7 @@ import org.domain.SeamAmiciDelGas.entity.Account;
 import org.domain.SeamAmiciDelGas.entity.Articolo;
 import org.domain.SeamAmiciDelGas.entity.Ordine;
 import org.domain.SeamAmiciDelGas.processes.OrderProcessing;
+import org.domain.SeamAmiciDelGas.webservices.Item;
 
 
 @Name("ordineBean")
@@ -55,6 +56,8 @@ public class OrdineBean {
 	private List<MyOrdine> ordini;
 	
 	private Ordine currentOrdine;
+	
+	private MyOrdine currentMyOrder;
 	
 	private TaskInstance currentTask;
 
@@ -115,5 +118,32 @@ public class OrdineBean {
 	public void setCurrentTask(TaskInstance currentTask) {
 		this.currentTask = currentTask;
 	}
+
+	public MyOrdine getCurrentMyOrder() {
+		return currentMyOrder;
+	}
+
+	public void setCurrentMyOrder(MyOrdine currentMyOrder) {
+		this.currentMyOrder = currentMyOrder;
+	}
+	
+	public void deleteItemFromMyOrdine(Item itemSelected)
+	{
+		List<ItemQuantita> itemQuantitaList = currentMyOrder.getItemQuantita();
+		log.info("***** deleteItemFromMyOrdine(Item itemSelected) ********");
+		for(int index=0; index<itemQuantitaList.size(); index++)
+		{
+			ItemQuantita iq = itemQuantitaList.get(index);
+			log.info("***** itemQuantita"+iq.getItem().getName() +" ********" );
+			if(iq.getItem().equals(itemSelected))
+			{
+				log.info("\n\n*****\n\n itemQuantita rimosso..."+iq.getItem().getName() +" \n\n********\n\n" );
+				itemQuantitaList.remove(index);
+				currentMyOrder.setItemQuantita(itemQuantitaList);
+				return;
+			}
+		}
+	}
+
 	
 }

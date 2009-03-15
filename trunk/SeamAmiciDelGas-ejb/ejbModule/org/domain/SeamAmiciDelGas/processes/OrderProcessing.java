@@ -14,6 +14,7 @@ import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.domain.SeamAmiciDelGas.crud.AccountHome;
 import org.domain.SeamAmiciDelGas.crud.OrdineList;
 import org.domain.SeamAmiciDelGas.entity.Account;
 import org.domain.SeamAmiciDelGas.entity.Articolo;
@@ -53,15 +54,13 @@ public class OrderProcessing {
 	@Out(value="notificaDriverContadino",scope=ScopeType.BUSINESS_PROCESS,required=false)
 	protected Message messageDriverContadino;
 	
-
-	@Out(value="notifyMessageStatoOrdine",scope=ScopeType.BUSINESS_PROCESS,required=false)
-
 	@In(value="entityManager")
     private EntityManager em;
 	
 	@In(value="currentAccount", scope=ScopeType.SESSION, required=false)
 	@Out(value="currentAccount", scope=ScopeType.BUSINESS_PROCESS, required=false)
 	private Account currentAccount;
+	
 	
 	@Out(value="notifyMessageStatoOrdine",scope=ScopeType.BUSINESS_PROCESS,required=false)
 	protected Message messageStatoOrdine;
@@ -212,17 +211,14 @@ public class OrderProcessing {
 	}
 	
 	@BeginTask @EndTask(transition="ordine_eliminato_dall_utente")
-	public void delete() {
-		updateFondo();		
-	}
-	
-	private void updateFondo() {
+	public String delete() {
 		//riaggiorno il fondo dell'utente customer
 		float prezzoOrdine = 0;
 		List<ItemQuantita> items = myOrdine.getItemQuantita();
 		for (ItemQuantita iq: items)
 			prezzoOrdine+=iq.getPrezzoTotale();
 		gestioneFondo.plusFondo(prezzoOrdine);
+		return "deleted";
 	}
 	
 	@BeginTask @EndTask(transition="ordine_rimesso_nel_pool")
@@ -266,5 +262,4 @@ public class OrderProcessing {
 	public void setDataMassima(Date dataMassima) {
 		this.dataMassima = dataMassima;
 	}
-	
 }

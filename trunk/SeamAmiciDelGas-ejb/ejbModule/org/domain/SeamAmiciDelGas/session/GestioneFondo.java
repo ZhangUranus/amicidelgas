@@ -16,7 +16,7 @@ public class GestioneFondo {
 	@In(value="accountHome", create=true)
 	private AccountHome accountHome;
 	
-	@In(value="currentAccount", create=true)
+	@In(value="currentAccount")
 	private Account currentAccount;
 
 	
