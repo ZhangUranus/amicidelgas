@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<root-container name="notificaRegistrazione" width="864" height="906">
+<root-container name="notificaRegistrazione" width="998" height="906">
   <node name="RichiestaRegistrazione" x="29" y="22" width="192" height="36">
     <edge>
       <label x="-54" y="-32"/>
@@ -77,8 +77,6 @@
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="ContadinoAccettato" x="604" y="855" width="132" height="36"/>
-  <node name="ContadinoRifiutato" x="290" y="869" width="132" height="36"/>
   <node name="AccettaRifiuta" x="530" y="642" width="132" height="36">
     <edge>
       <label x="5" y="-10"/>
@@ -87,4 +85,6 @@
       <label x="5" y="-10"/>
     </edge>
   </node>
+  <node name="ContadinoAccettato" x="604" y="855" width="132" height="36"/>
+  <node name="ContadinoRifiutato" x="290" y="869" width="132" height="36"/>
 </root-container>
