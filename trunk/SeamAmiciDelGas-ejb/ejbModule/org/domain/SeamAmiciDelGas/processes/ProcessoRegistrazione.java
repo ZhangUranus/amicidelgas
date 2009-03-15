@@ -124,17 +124,17 @@ public class ProcessoRegistrazione {
 		// funzionamento di prova
 		//gc.roll(Calendar.MINUTE, -1);
 		// funzionamento NON ME NE TIENE
-		gc.roll(Calendar.MINUTE, +0);
+		gc.add(Calendar.MINUTE, +0);
 		dataMassimaAccettazione = gc.getTime();
 		postiOccupati=0;
 		
 		gc= new GregorianCalendar();
 		gc.setTime((Date) dataProposta.clone());
-	//funzionamento corretto	gc.roll(Calendar.DATE, +1);
+	//funzionamento corretto	gc.add(Calendar.DATE, +1);
 		// funzionamento di prova
-		//gc.roll(Calendar.MINUTE, +1);
+		//gc.add(Calendar.MINUTE, +1);
 		// funzionamento NON ME NE TIENE
-		gc.roll(Calendar.MINUTE, +1);
+		gc.add(Calendar.MINUTE, +1);
 		dataQuestionario = gc.getTime();
 		
 		
@@ -156,9 +156,9 @@ public class ProcessoRegistrazione {
 		
 		gc= new GregorianCalendar();
 		gc.setTime((Date) dataQuestionario.clone());
-	//funzionamento corretto	gc.roll(Calendar.DATE, +1);
+	//funzionamento corretto	gc.add(Calendar.DATE, +1);
 		// funzionamento di prova
-		gc.roll(Calendar.MINUTE, +1);
+		gc.add(Calendar.MINUTE, +59);
 		dataTimer = gc.getTime();
 		MediatoreCheManda = credentials.getUsername();
 	}
