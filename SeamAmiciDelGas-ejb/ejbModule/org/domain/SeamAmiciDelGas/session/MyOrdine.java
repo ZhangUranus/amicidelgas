@@ -5,8 +5,17 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class MyOrdine implements Serializable{
+import org.domain.SeamAmiciDelGas.webservices.Item;
+import org.jboss.seam.annotations.Logger;
+import org.jboss.seam.log.Log;
 
+public class MyOrdine implements Serializable{	
+
+	private static final long serialVersionUID = 8347466730682726753L;
+
+	@Logger
+	Log log;
+	
 	private Date dataMassima;
 	private Date dataRichiesta;
 	private List<ItemQuantita> itemQuantita = new ArrayList<ItemQuantita>();

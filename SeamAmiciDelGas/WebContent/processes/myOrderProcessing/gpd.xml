@@ -20,7 +20,7 @@
   <node name="Notifica utente ordine non disponibile" x="596" y="402" width="252" height="36">
     <edge>
       <label x="5" y="-10"/>
-      <bendpoint w1="-61" h1="-187" w2="206" h2="8"/>
+      <bendpoint w1="-85" h1="-183" w2="168" h2="30"/>
     </edge>
   </node>
   <node name="Notifica utente ordine non preso in carico" x="720" y="90" width="298" height="36">
