@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import javax.ejb.Remove;
 import javax.ejb.Stateful;
@@ -75,16 +76,12 @@ public class OrdineBean {
 	}
 
 	public void setTipoOrdine(String tipoOrdine) {
-		log.info("****ho selezionato un ordine****");
-		log.info("*******"+tipoOrdine+"**********");
 		this.tipoOrdine = tipoOrdine;
 	}
 
 	
 	public List<TaskInstance> listOrdiniPendenti() {
 		List<TaskInstance> ordiniPendenti = filtraNotifica.getAllPooledTaskInstanceListForSingleCustomer(credentials.getUsername(), "accetta_ordine");
-		log.info("****PENDENTE****");
-		log.info("*******"+ordiniPendenti.size()+"**********");
 		return ordiniPendenti;
 	}
 
@@ -102,6 +99,12 @@ public class OrdineBean {
 		return ordini;
 	}
 
+	public List<Ordine> ordiniPresiInCarico() {
+		List<Ordine> ordini = new ArrayList<Ordine>();
+		ordineList.setEjbql("select ordine from Ordine ordine where ordine.driver.username='"+credentials.getUsername()+"' and ordine.concluso=false");
+		ordini = ordineList.getResultList();
+		return ordini;
+	}
 	
 	public MyOrdine getOrdineFromTask(TaskInstance task) {
 		return (MyOrdine) task.getVariable("myOrdine");
@@ -127,7 +130,7 @@ public class OrdineBean {
 		this.currentMyOrder = currentMyOrder;
 	}
 	
-	public void deleteItemFromMyOrdine(Item itemSelected)
+	public void deleteItemFromMyOrdine(ItemQuantita itemSelected)
 	{
 		List<ItemQuantita> itemQuantitaList = currentMyOrder.getItemQuantita();
 		log.info("***** deleteItemFromMyOrdine(Item itemSelected) ********");
@@ -135,15 +138,22 @@ public class OrdineBean {
 		{
 			ItemQuantita iq = itemQuantitaList.get(index);
 			log.info("***** itemQuantita"+iq.getItem().getName() +" ********" );
-			if(iq.getItem().equals(itemSelected))
+			if(iq.getItem().equals(itemSelected.getItem()))
 			{
 				log.info("\n\n*****\n\n itemQuantita rimosso..."+iq.getItem().getName() +" \n\n********\n\n" );
 				itemQuantitaList.remove(index);
-				currentMyOrder.setItemQuantita(itemQuantitaList);
 				return;
 			}
 		}
 	}
-
 	
+	public List<Articolo> currentArticolosForOrdine() {
+		List<Articolo> articoloList = new ArrayList<Articolo>();
+		if(currentOrdine==null)
+			return articoloList;
+		Set<Articolo> articoloSet = currentOrdine.getArticolos();
+		articoloList.addAll(articoloSet);
+		return articoloList;
+	}
+
 }
