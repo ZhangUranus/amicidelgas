@@ -41,7 +41,8 @@
 					         <h:outputText value="#{_task.name}"/>
 						</rich:column>
 						<rich:column>
-							<f:facet name="header">Mittente</f:facet>    
+							<f:facet name="header">Mittente</f:facet>
+								<h:outputText value="#{_task.contextInstance.getVariable(name)}"/>    
 						        <h:outputText value="#{_task.variables.notifyMessageRequest.tipo}"/>
 						</rich:column>
 						<rich:column>
