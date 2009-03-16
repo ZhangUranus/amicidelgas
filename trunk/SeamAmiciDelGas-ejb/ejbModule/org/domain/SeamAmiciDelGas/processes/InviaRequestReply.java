@@ -115,11 +115,13 @@ public class InviaRequestReply {
 	public void riceviRisposta()
 	{
 		System.out.println("OKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK");
-		if(!compilato)
-			this.inserisciFeedbackNegativo();
+		if(compilato)
+			this.inserisciFeedback(4.0f);
+		else
+			this.inserisciFeedback(2.0f);
 	}
 	
-	@Transactional public boolean inserisciFeedbackNegativo()
+	@Transactional public boolean inserisciFeedback(float p)
     {
 		dataCorrente = new Date(System.currentTimeMillis());
 		Account accountUtente = (Account) em.createQuery(
@@ -131,12 +133,17 @@ public class InviaRequestReply {
 		feedback.setAccountByDestinatario(accountUtente);
 		feedback.setDataSegnalazione(dataCorrente);
 		feedback.setDataValidazione(dataCorrente);
-		feedback.setDescrizione("Feedback Negativo inserito perchè l'utente non " +
+		if(compilato)
+			feedback.setDescrizione("Feedback Positivo inserito perchè l'utente " +
 				"ha compilato il questionario in tempo per l'azienda "+contadino.getNomeAzienda()+" in seguito alla visita" +
 						" in data "+dataVisita);
+		else
+			feedback.setDescrizione("Feedback Negativo inserito perchè l'utente non " +
+					"ha compilato il questionario in tempo per l'azienda "+contadino.getNomeAzienda()+" in seguito alla visita" +
+							" in data "+dataVisita);
 		feedback.setAnalizzato(true);
-		feedback.setPunteggio(2.0f);
-		float punteggioCorrente = this.calcolaPunteggioFeedback(2.0f);
+		feedback.setPunteggio(p);
+		float punteggioCorrente = this.calcolaPunteggioFeedback(p);
 		accountUtente.setPunteggioFeedback(punteggioCorrente);
 		em.persist(accountUtente);
 		em.persist(feedback);
