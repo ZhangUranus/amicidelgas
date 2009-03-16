@@ -10580,12 +10580,12 @@ INSERT INTO `pagamentoelettronico` (`idPagamentoElettronico`, `tipo_carta`, `num
 (8, 'visa', '1234123095765444');
 COMMIT;
 
-INSERT INTO `account` (`Username`,`passwordHash`,`Bloccato`,`Elimato`,`Cancellato`,`Attivato`,`DataRichiesta`,`DataAccettazione`,`PunteggioFeedback`,`Utente_CodiceFiscale`,`fondo`,`PagamentoElettronico_idPagamentoElettronico`) VALUES
- ('zlatan','8ff430762890cbf91b3af84032d6f3ceda61644f',0x00,0x00,0x00,0x00,'2009-02-17',NULL,3,'aaaaaa12b33d111a',1500,2),
- ('esteban','8ff430762890cbf91b3af84032d6f3ceda61644f',0x00,0x00,0x00,0x00,'2009-02-16',NULL,2,'antodf12b32b111g',300,3),
- ('jose','8ff430762890cbf91b3af84032d6f3ceda61644f',0x00,0x00,0x00,0x00,'2009-02-15',NULL,4,'FFFFFF23r23r234r',100,4),
- ('tyson','8ff430762890cbf91b3af84032d6f3ceda61644f',0x00,0x00,0x00,0x00,'2009-02-14',NULL,5,'ssssss34f35f354d',200,5),
- ('giorgio','8ff430762890cbf91b3af84032d6f3ceda61644f',0x00,0x00,0x00,0x00,'2009-02-11',NULL,1,'ffdgat12d15h134u',4500,6);
+INSERT INTO `account` (`Username`,`passwordHash`,`Bloccato`,`Elimato`,`Cancellato`,`Attivato`,`DataRichiesta`,`DataAccettazione`,`PunteggioFeedback`,`Utente_CodiceFiscale`,`fondo`,`PagamentoElettronico_idPagamentoElettronico`,`numeroVotanti`) VALUES
+ ('zlatan','8ff430762890cbf91b3af84032d6f3ceda61644f',0x00,0x00,0x00,0x00,'2009-02-17',NULL,3,'aaaaaa12b33d111a',1500,2,1),
+ ('esteban','8ff430762890cbf91b3af84032d6f3ceda61644f',0x00,0x00,0x00,0x00,'2009-02-16',NULL,2,'antodf12b32b111g',300,3,1),
+ ('jose','8ff430762890cbf91b3af84032d6f3ceda61644f',0x00,0x00,0x00,0x00,'2009-02-15',NULL,4,'FFFFFF23r23r234r',100,4,1),
+ ('tyson','8ff430762890cbf91b3af84032d6f3ceda61644f',0x00,0x00,0x00,0x00,'2009-02-14',NULL,5,'ssssss34f35f354d',200,5,1),
+ ('giorgio','8ff430762890cbf91b3af84032d6f3ceda61644f',0x00,0x00,0x00,0x00,'2009-02-11',NULL,1,'ffdgat12d15h134u',4500,6,1);
 COMMIT;
 
 
@@ -10607,9 +10607,9 @@ INSERT INTO `role` (`id`,`name`,`Username`) VALUES
  (8,'utenteGas','giorgio');
 COMMIT;
 
-INSERT INTO `account` (`Username`,`passwordHash`,`Bloccato`,`Elimato`,`Cancellato`,`Attivato`,`DataRichiesta`,`DataAccettazione`,`PunteggioFeedback`,`Utente_CodiceFiscale`,`fondo`,`PagamentoElettronico_idPagamentoElettronico`) VALUES
- ('ranieri','8ff430762890cbf91b3af84032d6f3ceda61644f',0x00,0x00,0x00,0x00,'2009-02-17',NULL,3,NULL,0,7),
- ('sissoko','8ff430762890cbf91b3af84032d6f3ceda61644f',0x00,0x00,0x00,0x00,'2009-02-17',NULL,3,NULL,0,8);
+INSERT INTO `account` (`Username`,`passwordHash`,`Bloccato`,`Elimato`,`Cancellato`,`Attivato`,`DataRichiesta`,`DataAccettazione`,`PunteggioFeedback`,`Utente_CodiceFiscale`,`fondo`,`PagamentoElettronico_idPagamentoElettronico`,`numeroVotanti`) VALUES
+ ('ranieri','8ff430762890cbf91b3af84032d6f3ceda61644f',0x00,0x00,0x00,0x00,'2009-02-17',NULL,3,NULL,0,7,1),
+ ('sissoko','8ff430762890cbf91b3af84032d6f3ceda61644f',0x00,0x00,0x00,0x00,'2009-02-17',NULL,3,NULL,0,8,1);
 COMMIT;
 
 INSERT INTO `cybercontadino` (`PartitaIVA`,`NomePresidente`,`Indirizzo`,`CognomePresidente`,`NomeAzienda`,`PathASL`,`URLWSDL`,`DescrizioneAzienda`,`recapito_telefonico`,`email`,`Coordinate`, `Username`, `Comune_ubicazione`,`dataVisita`) VALUES
