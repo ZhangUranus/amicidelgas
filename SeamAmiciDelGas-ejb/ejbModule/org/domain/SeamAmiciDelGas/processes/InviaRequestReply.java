@@ -112,10 +112,11 @@ public class InviaRequestReply {
     }
 	
 	@StartTask @EndTask(transition="fine")
-	public void riceviRisposta()
+	public void riceviRisposta(boolean feedback)
 	{
 		System.out.println("OKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK");
-		
+		if(feedback)
+			this.inserisciFeedbackNegativo();
 	}
 	
 	@Transactional public boolean inserisciFeedbackNegativo()
@@ -130,10 +131,10 @@ public class InviaRequestReply {
 		feedback.setAccountByDestinatario(accountUtente);
 		feedback.setDataSegnalazione(dataCorrente);
 		feedback.setDataValidazione(dataCorrente);
-		feedback.setDescrizione("");
+		feedback.setDescrizione("Feedback Negativo inserito perchè l'utente non ha compilato");
 		feedback.setAnalizzato(true);
 		feedback.setPunteggio(2.0f);
-		float punteggioCorrente = this.calcolataPunteggioFeedback(2.0f);
+		float punteggioCorrente = this.calcolaPunteggioFeedback(2.0f);
 		accountUtente.setPunteggioFeedback(punteggioCorrente);
 		em.persist(accountUtente);
 		em.persist(feedback);
@@ -142,7 +143,7 @@ public class InviaRequestReply {
 		
     }
 	
-	private float calcolataPunteggioFeedback(float punteggioNuovo)
+	private float calcolaPunteggioFeedback(float punteggioNuovo)
 	{
 		List<Feedback> listaFeedback = feedbackList.getPunteggioFeedback(nomeUtente);
 		ArrayList<Float> listaFloat = new ArrayList<Float>();
@@ -179,3 +180,55 @@ public class InviaRequestReply {
 		return questionario;
 	}
 }
+
+/*
+@In protected FacesMessages facesMessages;
+	@In protected EntityManager entityManager;
+	@Out(value="notificaDecisioneDriver", scope= ScopeType.BUSINESS_PROCESS, required=false)
+	protected Message message;
+	private String msg="";
+	
+	
+	@BeginTask @EndTask(transition="approva")
+	public void approve(){
+		String nomeRichiedente=(String) Component.getInstance("nomeRichiedente", ScopeType.BUSINESS_PROCESS);
+		
+		Account account = (Account) entityManager.createQuery(
+				"select account from Account account " +
+				"where account.username = #{nomeRichiedente}")
+				.getSingleResult();
+		Role r= new Role();
+		r.setName("driver");
+		r.setAccount(account);
+		entityManager.persist(r);
+		message= new Message();
+		String approveMsg="La tua richiesta di divenire driver � stata accettata.";
+		if(msg!=null)
+			approveMsg+="Il responsabile ha incluso il seguente messaggio:\n\""+msg+"\"";
+		message.setContent(approveMsg);
+		message.addRecipient(nomeRichiedente);
+		facesMessages.add("L'utente � stato reso driver");
+	}
+	
+	@BeginTask @EndTask(transition="rifiuta")
+	public void reject(){
+		String nomeRichiedente=(String) Component.getInstance("nomeRichiedente", ScopeType.BUSINESS_PROCESS);
+		message= new Message();
+		String rejectMsg="La tua richiesta di divenire driver � stata rifiutata.";
+		if(msg!=null)
+			rejectMsg+="Il responsabile ha incluso il seguente messaggio:\n\""+msg+"\"";
+		message.setContent(rejectMsg);
+		message.addRecipient(nomeRichiedente);
+		
+		facesMessages.add("La richiesta dell'utente � stata rifiutata");
+	}
+	
+	@BypassInterceptors
+	public String getMsg() {
+		return msg;
+	}
+	@BypassInterceptors
+	public void setMsg(String msg) {
+		this.msg = msg;
+	}
+*/
