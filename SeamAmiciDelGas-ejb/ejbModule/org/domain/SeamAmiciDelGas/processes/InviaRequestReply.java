@@ -7,6 +7,8 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
+import org.domain.SeamAmiciDelGas.crud.AccountHome;
+import org.domain.SeamAmiciDelGas.crud.AccountList;
 import org.domain.SeamAmiciDelGas.crud.FeedbackListExtended;
 import org.domain.SeamAmiciDelGas.entity.Account;
 import org.domain.SeamAmiciDelGas.entity.Cybercontadino;
@@ -53,6 +55,9 @@ public class InviaRequestReply {
 	private boolean compilato;
 	
 	private Date dataCorrente;
+	
+	@In(value="accountHome", create=true)
+	private AccountHome accounthome;
 	
 	@In(value="newQuestionario" , create=true)
 	private Questionario questionario;
@@ -112,13 +117,16 @@ public class InviaRequestReply {
     }
 	
 	@StartTask @EndTask(transition="fine")
-	public void riceviRisposta()
+	public String riceviRisposta()
 	{
 		System.out.println("OKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK");
 		if(compilato)
 			this.inserisciFeedback(4.0f);
 		else
 			this.inserisciFeedback(2.0f);
+		
+		return "OutRiepilogoQuestionari";
+		
 	}
 	
 	@Transactional public boolean inserisciFeedback(float p)
@@ -143,18 +151,23 @@ public class InviaRequestReply {
 							" in data "+dataVisita);
 		feedback.setAnalizzato(true);
 		feedback.setPunteggio(p);
-		float punteggioCorrente = this.calcolaPunteggioFeedback(p);
-		accountUtente.setPunteggioFeedback(punteggioCorrente);
-		em.persist(accountUtente);
+		float punteggioCorrente = this.calcolaPunteggioFeedback(p, accountUtente);
+		//accountUtente.setPunteggioFeedback(punteggioCorrente);
+		System.out.println("FIGARO");
+		accounthome.setAccountUsername(accountUtente.getUsername());
+		Account a= accounthome.find();
+		a.setPunteggioFeedback(punteggioCorrente);
+		accounthome.update();
 		em.persist(feedback);
 		
 		return true; 
 		
     }
 	
-	private float calcolaPunteggioFeedback(float punteggioNuovo)
+	private float calcolaPunteggioFeedback(float punteggioNuovo, Account accountUtente)
 	{
-		List<Feedback> listaFeedback = feedbackList.getPunteggioFeedback(nomeUtente);
+		feedbackList.getFeedback().setAccountByDestinatario(accountUtente);
+		List<Feedback> listaFeedback = feedbackList.getResultList();
 		ArrayList<Float> listaFloat = new ArrayList<Float>();
 		for (Feedback feedback : listaFeedback) {
 			listaFloat.add(feedback.getPunteggio());
@@ -165,6 +178,11 @@ public class InviaRequestReply {
 			somma += float1.floatValue();
 		}
 		somma += punteggioNuovo;
+		//situazione iniziale, nessun feedback punteggio di partenza 3
+		if(size==0){
+			somma+=3;
+			size=1;
+		}			
 		return somma/size;
 	}
 

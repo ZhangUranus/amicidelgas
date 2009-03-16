@@ -157,7 +157,7 @@ public class ProcessoRegistrazione {
 		gc.setTime((Date) dataQuestionario.clone());
 	//funzionamento corretto	gc.add(Calendar.DATE, +1);
 		// funzionamento di prova
-		gc.add(Calendar.MINUTE, +59);
+		gc.add(Calendar.MINUTE, +5);
 		dataTimer = gc.getTime();
 		MediatoreCheManda = credentials.getUsername();
 		compilato = false;
