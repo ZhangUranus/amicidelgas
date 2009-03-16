@@ -199,15 +199,20 @@ public class FiltraNotifica {
 		// Primo filtro che restiuisce la lista dei contadini per un tipo di  task e assegnato ad un utente
 		List<TaskInstance> tasks= taskInstanceSingleList(taskName);
 		List<Cybercontadino> contadini = new ArrayList<Cybercontadino>();
+		List<String> partiteIva = new ArrayList<String>();
 		String nome;
 		Cybercontadino nomeContadino;
 		for(TaskInstance temp : tasks)
 		{
 			nome = temp.getActorId();
 			nomeContadino = (Cybercontadino) temp.getVariable("contadino");
-			if((nome.equals(username)))
-				if(nomeContadino != null && !(contadini.contains(nomeContadino)))
+			if((nome.equals(username))){
+				if(nomeContadino != null && !(partiteIva.contains(nomeContadino.getPartitaIva()))){						
 					contadini.add(nomeContadino);
+					partiteIva.add(nomeContadino.getPartitaIva());
+				}
+			}
+				
 		}
 		return contadini;
 	}
@@ -215,17 +220,26 @@ public class FiltraNotifica {
 	public int getSizeForAllContadinoForTaskInstanceType(String username, String taskName)
 	{
 		// Primo filtro che restiuisce il numero di contadini per un tipo di  task e assegnato ad un utente
+		//System.out.println("PARCOSEMPIONE00000");
 		List<TaskInstance> tasks= taskInstanceSingleList(taskName);
+		//System.out.println("Stampa numero di task: " +tasks.size());
 		List<Cybercontadino> contadini = new ArrayList<Cybercontadino>();
+		List<String> partiteIva = new ArrayList<String>();
 		String nome;
 		Cybercontadino nomeContadino;
 		for(TaskInstance temp : tasks)
 		{
 			nome = temp.getActorId();
 			nomeContadino = (Cybercontadino) temp.getVariable("contadino");
-			if((nome.equals(username)))
-				if(nomeContadino != null && !(contadini.contains(nomeContadino)))
+			if((nome.equals(username))){
+				//System.out.println("sono admin: "+username+" taskname: "+taskName);
+				if((nomeContadino != null) && !(partiteIva.contains(nomeContadino.getPartitaIva()))){
 					contadini.add(nomeContadino);
+					partiteIva.add(nomeContadino.getPartitaIva());
+					//System.out.println("NOME CONTADINO: "+nomeContadino.getDescrizioneAzienda());
+				}
+			}
+			//System.out.println("PARCOSEMPIONE");
 		}
 		return contadini.size();
 	}

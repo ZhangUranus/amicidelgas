@@ -264,6 +264,11 @@
     		    	<div align="left" class="colore_white_bold" style="height: 28px;  padding-top: 4px;">Registrazioni cybercontadino</div>
     		    </s:link>
     		</s:decorate>
+    		<s:decorate rendered="#{((loginSelectBean.calculateMaxRole()=='mediatore' or loginSelectBean.calculateMaxRole()=='admin'))}">
+    			<s:link view="/mediatore/riepilogoQuestionarioRegistrazione.xhtml" propagation="none">
+    		    	<div align="left" class="colore_white_bold" style="height: 28px;  padding-top: 4px;">Questionari cybercontadino</div>
+    		    </s:link>
+    		</s:decorate>
 	    </td>
 	    <td width="26px" background="/SeamAmiciDelGas/img/shadow_n.png" align="left" >
 	    	<s:decorate rendered="#{(filtraNotifica.numberOfHighestPriorityTaskForSingle() > -1)}">
@@ -285,6 +290,12 @@
     			<div align="center" class="colore_white_bold" style="background:transparent url('/SeamAmiciDelGas/img/red_number2.png') no-repeat; width:26px; height: 28px; padding-top: 4px; padding-right: 1px;" >#{filtraNotifica.numberOfTaskForGroup('crea_visita')}</div>
     		</s:decorate>
     		<s:decorate rendered="#{((filtraNotifica.numberOfTaskForGroup('crea_visita') == 0) and (loginSelectBean.calculateMaxRole()=='mediatore' or loginSelectBean.calculateMaxRole()=='admin'))}">
+    		    <div align="center" class="colore_white_bold" style="width:26px; height: 28px; padding-top: 4px;" >-</div>
+    		</s:decorate>  		
+    		<s:decorate rendered="#{((filtraNotifica.getSizeForAllContadinoForTaskInstanceType(currentAccount.username,'riceviRisposta') > 0) and (loginSelectBean.calculateMaxRole()=='mediatore' or loginSelectBean.calculateMaxRole()=='admin'))}">
+    			<div align="center" class="colore_white_bold" style="background:transparent url('/SeamAmiciDelGas/img/red_number2.png') no-repeat; width:26px; height: 28px; padding-top: 4px; padding-right: 1px;" >#{filtraNotifica.getSizeForAllContadinoForTaskInstanceType(currentAccount.username,'riceviRisposta')}</div>
+    		</s:decorate>
+    		<s:decorate rendered="#{((filtraNotifica.getSizeForAllContadinoForTaskInstanceType(currentAccount.username,'riceviRisposta') == 0) and (loginSelectBean.calculateMaxRole()=='mediatore' or loginSelectBean.calculateMaxRole()=='admin'))}">
     		    <div align="center" class="colore_white_bold" style="width:26px; height: 28px; padding-top: 4px;" >-</div>
     		</s:decorate>
 	    </td>
