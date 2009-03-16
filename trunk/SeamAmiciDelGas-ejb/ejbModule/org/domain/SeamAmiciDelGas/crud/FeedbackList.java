@@ -12,15 +12,9 @@ public class FeedbackList extends EntityQuery<Feedback> {
 
 	private static final String[] RESTRICTIONS = { "lower(feedback.descrizione) like concat(lower(#{feedbackList.feedback.descrizione}),'%')", };
 
-	private Feedback feedback = new Feedback();
-
 	public FeedbackList() {
 		setEjbql(EJBQL);
 		setRestrictionExpressionStrings(Arrays.asList(RESTRICTIONS));
 		setMaxResults(25);
-	}
-
-	public Feedback getFeedback() {
-		return feedback;
 	}
 }

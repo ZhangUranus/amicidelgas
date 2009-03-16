@@ -192,6 +192,45 @@ public class FiltraNotifica {
 		
 	}
 	
+	
+	public List<String> getAllContadinoForTaskInstanceType(String username, String taskName)
+	{
+		// Primo filtro che restiuisce la lista dei contadini per un tipo di  task e assegnato ad un utente
+		List<TaskInstance> tasks= taskInstanceSingleList(taskName);
+		List<String> contadini = new ArrayList<String>();
+		String nome;
+		String nomeContadino;
+		for(TaskInstance temp : tasks)
+		{
+			nome = temp.getActorId();
+			nomeContadino = (String) temp.getVariable("contadino");
+			if((nome.equals(username)))
+				if(nomeContadino != null)
+					contadini.add(nomeContadino);
+		}
+		return contadini;
+	}
+	
+	public List<TaskInstance> getAllTaskInstanceListForContadino(String username, String taskName, String contadino)
+	{
+		// Seoncod filtro che restituisce i task per un contadino e assegnato a un utente
+		
+		List<TaskInstance> tasks= taskInstanceSingleList(taskName);
+		List<TaskInstance> tasksUser = new ArrayList<TaskInstance>();
+		String nomeContadino ;
+		String nome;
+		for(TaskInstance temp : tasks)
+		{
+			nomeContadino = (String) temp.getVariable("contadino");
+			nome = temp.getActorId();
+			if((nome.equals(username)))
+				if(nomeContadino.equals(contadino))
+					tasksUser.add(temp);
+		}
+		return tasksUser;
+		
+	}
+	
 	public List<TaskInstance> getAllHighestPriorityTaskInstanceListForSingleCustomer(String username ,String  taskName)
 	{
 		List<TaskInstance> tasks = taskInstanceSingleList(taskName);
