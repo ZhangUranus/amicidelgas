@@ -12,6 +12,18 @@
 		<task name="accetta_ordine">
 			<assignment pooled-actors="driver,utenteContadino,utenteGas"></assignment>
 		</task>
+		<event type="timer-create">
+      <action name="timerDataMassimaScaduta" class="org.domain.SeamAmiciDelGas.processes.ChangeDueDateTimerOrdine">
+        <timerName>dataMassimaTimer</timerName>
+        <nomeData>dataMassimaShoppingCart</nomeData>
+      </action>
+    </event>
+		<event type="node-leave">
+			<action name="SpegniTuttoeVaiAvanti" class="org.domain.SeamAmiciDelGas.processes.CancelTaskAction">
+			 <taskName>accetta_ordine</taskName>
+			 </action>
+		</event>
+		<timer duedate="10 years" name="dataMassimaTimer" transition="ordine_non_preso_in_carico_entro_datamax"/>
 		<transition to="Notifica utente ordine non preso in carico" name="ordine_non_preso_in_carico_entro_datamax"></transition>
 		<transition to="Verifica disponibilita" name="ordine_preso_in_carico"></transition>
 		<transition to="end-state1" name="ordine_eliminato_dall_utente"></transition>
@@ -28,36 +40,53 @@
 	</task-node>
 
 	<task-node name="Notifica utente ordine non preso in carico">
-		<transition to="end-state2"></transition>
+		<task name="timeOutDataMassima" >
+			<assignment name="AssegnamentoTaskDataMassimaScaduta" class="org.domain.SeamAmiciDelGas.processes.DestinatarioHandlerOrdineDataMassimaScaduta">
+				<nameTask>timeOutDataMassima</nameTask>
+			</assignment>
+		</task>
+		<transition to="end-state2" name="notifica_inviata_ordine_non_preso_in_carico_termina_processo"></transition>
 	</task-node>
 
 	<task-node name="Notifica utente ordine preso in carico">
 		<task name="ReceiveOrderAccepted">
 			<assignment actor-id="#{customer.username}"></assignment>
 		</task>
-		<transition to="Attendi data consegna" name="ordine_preso_in_consegna"></transition>
+		<transition to="Attendi data consegna" name="attendi_consegna"></transition>
 	</task-node>
 
 	<state name="Attendi data consegna">
-		<transition to="fork1"></transition>
+		<timer name="attendiDataConsegna" transition="assegna_feedback">
+			<event type="timer-create">
+      <action name="timerDataConsegnaScaduta" class="org.domain.SeamAmiciDelGas.processes.ChangeDueDateTimerOrdine">
+        <timerName>dataConsegnaTimer</timerName>
+        <nomeData>dataConsegna</nomeData>
+      </action>
+    </event>
+		<timer duedate="10 years" name="dataConsegnaTimer" transition="assegna_feedback"/>
+		</timer>
+		<transition to="fork2" name="assegna_feedback"></transition>
 	</state>
 
-	<task-node name="Rilascia feedback all'utente">
+	<task-node name="Fb from responsabile consegna to contadino">
+		<task name="utenteToContadinoWithDriver">
+			<assignment actor-id="#{customer.username}"></assignment>
+		</task>
+		<task name="ContadinoToDriver">
+			<assignment pooled-actors="utenteContadino"></assignment>
+		</task>
+		<task name="DriverToContadinoAndUtente">
+			<assignment pooled-actors="driver"></assignment>
+		</task>
 		<transition to="join1"></transition>
 	</task-node>
 
-	<fork name="fork1">
-		<transition to="Rilascia feedback all'utente" name="to Rilascia feedback all'utente"></transition>
-		<transition to="Rilascia feedback al contadino o driver" name="to Rilascia feedback al contadino o driver"></transition>
-	</fork>
-
-	<task-node name="Rilascia feedback al contadino o driver">
-		<transition to="join1"></transition>
+	<task-node name="Fb from customer to contadino per qualita">
+		<task name="utenteToContadini">
+			<assignment actor-id="#{customer.username}"></assignment>
+		</task>
+		<transition to="join2"></transition>
 	</task-node>
-
-	<join name="join1">
-		<transition to="end-state3"></transition>
-	</join>
 
 	<decision name="Verifica disponibilita">
 		<transition to="Notifica utente ordine preso in carico" name="ordine_evaso">
@@ -68,12 +97,53 @@
 		</transition>
 	</decision>
 
+	<decision name="Il driver ha partecipato alla spesa">
+		<transition to="fork1" name="Si"></transition>
+		<transition to="join2" name="No"></transition>
+	</decision>
+
+	<fork name="fork2">
+		<transition to="Il driver ha partecipato alla spesa"></transition>
+		<transition to="Fb from customer to contadino per qualita" name="to task-node1"></transition>
+		<transition to="Fb from customer to responsabile consegna" name="to task-node3"></transition>
+		<transition to="Fb from responsabile cosegna to customer" name="to Feedback from responsabile cosegna to customer"></transition>
+	</fork>
+
+	<join name="join2">
+		<transition to="end-state3"></transition>
+	</join>
+
+	<task-node name="Fb from customer to responsabile consegna">
+		<transition to="join2" name="to join2"></transition>
+	</task-node>
+
+	<task-node name="Fb from responsabile cosegna to customer">
+		<transition to="join2"></transition>
+	</task-node>
+
+	<task-node name="Fb from contadino to responsabile consegna">
+		<transition to="join1"></transition>
+	</task-node>
+
+	<fork name="fork1">
+		<transition to="Fb from contadino to responsabile consegna"></transition>
+		<transition to="Fb from responsabile consegna to contadino"></transition>
+	</fork>
+
+	<join name="join1">
+		<transition to="join2"></transition>
+	</join>
+
 
 	<end-state name="end-state1"></end-state>
 
 	<end-state name="end-state2"></end-state>
 
-	<end-state name="end-state3"></end-state>
+	<end-state name="end-state3">
+		<event type="node-enter">
+			<action name="perstistAllInfo"></action>
+		</event>
+	</end-state>
 
 
 </process-definition>
