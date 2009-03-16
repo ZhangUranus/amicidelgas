@@ -183,7 +183,7 @@ public class InviaRequestReply {
 			somma+=3;
 			size=1;
 		}			
-		return somma/size;
+		return somma/(size+1);
 	}
 
 	public Message getMessage() {
