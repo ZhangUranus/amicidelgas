@@ -90,8 +90,7 @@ public class Feedback implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "IDOrdine", nullable = false)
-	@NotNull
+	@JoinColumn(name = "IDOrdine")
 	public Ordine getOrdine() {
 		return this.ordine;
 	}
@@ -164,7 +163,8 @@ public class Feedback implements java.io.Serializable {
 		this.dataSegnalazione = dataSegnalazione;
 	}
 
-	@Column(name = "Punteggio")
+	@Column(name = "Punteggio" ,nullable = false)
+	@NotNull
 	public float getPunteggio() {
 		return this.punteggio;
 	}
