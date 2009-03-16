@@ -1,0 +1,39 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:a="http://richfaces.org/a4j"
+    template="/layout/template.xhtml">
+
+	<ui:define name="body">
+
+			<rich:simpleTogglePanel label="Notifiche personali ad alta priorita'">
+				<s:decorate rendered="#{(filtraNotifica.numberOfHighestPriorityTaskForSingle() > -1)}">
+					<b><h:outputText value="Avvisi importanti" /></b><br/><br/>
+					<rich:dataTable id="dataTableUtente" width="90%" align="center" 
+									value="#{filtraNotifica.getAllPooledHighestPriorityTaskInstanceListForSingleCustomer(currentAccount.username)}" var="_task">
+						<rich:column>
+							<f:facet name="header">Processo</f:facet>							    
+					         <h:outputText value="#{_task.name}"/>
+						</rich:column>
+						<rich:column>
+							<f:facet name="header">Mittente</f:facet>    
+						        <h:outputText value="Un mediatore"/>
+						</rich:column>
+						<rich:column>
+							<f:facet name="header">Contenuto messaggio</f:facet>    
+						    <h:outputText value="#{_task.variables.notifyMessageRequest.content}"/>
+						</rich:column>
+					</rich:dataTable>
+					<br/><br/><br/>
+				</s:decorate>				
+			</rich:simpleTogglePanel>
+		
+		
+	</ui:define>
+	
+</ui:composition>
