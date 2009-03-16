@@ -21,6 +21,7 @@ import org.domain.SeamAmiciDelGas.entity.Articolo;
 import org.domain.SeamAmiciDelGas.entity.Ordine;
 import org.domain.SeamAmiciDelGas.session.GestioneFondo;
 import org.domain.SeamAmiciDelGas.session.ItemQuantita;
+import org.domain.SeamAmiciDelGas.session.LoginSelectBean;
 import org.domain.SeamAmiciDelGas.session.Message;
 import org.domain.SeamAmiciDelGas.session.MyOrdine;
 import org.domain.SeamAmiciDelGas.session.OrdineBean;
@@ -90,6 +91,13 @@ public class OrderProcessing {
 	
 	@In(value="gestioneFondo", create=true)
 	private GestioneFondo gestioneFondo;
+	
+	@In(value="loginSelectBean", scope=ScopeType.SESSION, required=false)
+	private LoginSelectBean loginSelectBean;
+	
+	@In(value="responsabileIsDriver", scope=ScopeType.BUSINESS_PROCESS,required=false)
+	@Out(value="responsabileIsDriver", scope=ScopeType.BUSINESS_PROCESS,required=false)
+	private boolean responsabileIsDriver;
 	
 	@CreateProcess(definition="myOrderProcessing")
 	public String startOrder(List<ItemQuantita> itemQ, Date dm){
@@ -178,6 +186,10 @@ public class OrderProcessing {
 			messageStatoOrdine.setContent("Ordine preso in carico da "+ credentials.getUsername()+" dataConsegna = "+isNull);
 			messageStatoOrdine.setInfoFilter("orderProcessingPreso");
 			responsabileConsegna = currentAccount;
+			if (loginSelectBean.isDriver())
+				responsabileIsDriver = true;
+			else 
+				responsabileIsDriver = false;
 			myOrdine.setPendente(false);
 			myOrdine.setEvaso(true);
 			this.dataConsegna = dataConsegna;
