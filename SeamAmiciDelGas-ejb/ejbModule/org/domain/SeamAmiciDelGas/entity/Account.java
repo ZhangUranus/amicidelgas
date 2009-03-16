@@ -49,6 +49,7 @@ public class Account implements java.io.Serializable {
 	private Date dataRichiesta;
 	private Date dataAccettazione;
 	private float punteggioFeedback;
+	private int numeroVotanti=1;
 	private float fondo = 0.0f;
 	private Set<Itinerario> itinerarios = new HashSet<Itinerario>(0);
 	private Set<Cybercontadino> cybercontadinos = new HashSet<Cybercontadino>(0);
@@ -291,6 +292,15 @@ public class Account implements java.io.Serializable {
 
 	public void setFondo(float fondo) {
 		this.fondo = fondo;
+	}
+
+	@Column(name = "numeroVotanti")
+	public int getNumeroVotanti() {
+		return numeroVotanti;
+	}
+
+	public void setNumeroVotanti(int numeroVotanti) {
+		this.numeroVotanti = numeroVotanti;
 	}
 
 }
