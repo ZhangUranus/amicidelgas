@@ -12,10 +12,10 @@
 
 	<rich:dataTable id="tabellaRiepilogo" width="100%" align="center" value="#{filtraNotifica.getAllContadinoForTaskInstanceType(currentAccount.username, 'riceviRisposta')}" var="_contadino">
 		<rich:column>
-			<f:facet name="header">Riepilogo questinari per l'azienda</f:facet>
+			<f:facet name="header">Riepilogo questionari per l'azienda</f:facet>
 				<table width="100%" border="0" cellspacing="2" cellpadding="0" align="center" >
 					<tr>
-						<td width="40%" valign="top">
+						<td width="25%" valign="top">
 							<table width="100%" border="0" cellspacing="4" cellpadding="0" align="center">
 								<tr>
 									<td width="100%">
@@ -53,33 +53,38 @@
 								</tr>
 							</table>
 						</td>
-						<td width="60%" valign="top">
+						<td width="75%" valign="top">
 							<table width="100%" border="0" cellspacing="4" cellpadding="0" align="center">
 								<tr>
 									<td width="100%" colspan="4" align="center" valign="top">
-										<div align="center" class="colore_1" >Visitatori:  di 10</div>
+										<div align="center" class="colore_1" >Visitatori: #{filtraNotifica.getNumerOfAllTaskInstanceListForContadino(currentAccount.username, 'riceviRisposta',_contadino.partitaIva)} di 10</div>
 									</td>					
 								</tr>
 								<tr>
-									<td width="30%" ><div align="left" ><b>Nome Inviato</b></div></td>
-									<td width="30%" ><div align="left" ><b>Testo messaggio</b></div></td>
-									<td width="20%" ><div align="center" ><b>Questionario Compilato?</b></div></td>
-									<td width="20%" ><div align="right" ><b>Azione</b></div></td>
+									<td width="15%" ><div align="left" ><b>Nome Inviato</b></div></td>
+									<td width="50%" ><div align="left" ><b>Testo messaggio</b></div></td>
+									<td width="25%" ><div align="center" ><b>Questionario Compilato?</b></div></td>
+									<td width="10%" ><div align="right" ><b>Azione</b></div></td>
 								</tr>
-								<tr>
-									<td width="100%" colspan="4" align="center" >
-										<hr noshade="noshade"/>
-									</td>					
-								</tr>
-								<tr>
-									<td width="30%"><div align="left" class="explorer" >bonghi</div></td>
-									<td width="30%"><div align="left" class="explorer" >Testo messaggio</div></td>
-									<td width="20%"><div align="center" class="explorer" ><img src="/SeamAmiciDelGas/img/accepted.png"/></div></td>
-									<td width="20%"><div align="right" class="explorer" ><img src="/SeamAmiciDelGas/img/feedback_up.png"/></div></td>
-								</tr>
-								<ui:repeat value="#{puntiDiConsegnaList.resultList}" var="_punto">
-								</ui:repeat>
 							</table>
+							<rich:dataTable id="tabellaRiepilogoInviati" width="100%" align="center" value="#{filtraNotifica.getAllTaskInstanceListForContadino(currentAccount.username, 'riceviRisposta',_contadino.partitaIva)}" var="_inviato" >
+								<rich:column>
+									<table width="100%" border="0" cellspacing="4" cellpadding="0" align="center">
+										<tr>
+											<td width="15%"><div align="left" class="explorer" >#{_inviato.variables.nomeDestinatario}</div></td>
+											<td width="50%"><div align="left" class="explorer" >#{_inviato.variables.notifyMessageReply.content}</div></td>
+											<td width="25%"><div align="center" class="explorer" >
+													<h:graphicImage value="/img/accepted.png" rendered="#{_inviato.variables.compilato}" /><h:graphicImage value="/img/not_valid.png" rendered="#{!(_inviato.variables.compilato)}" />
+											</div></td>
+											<td width="10%"><div align="right" class="explorer" >
+												<s:link taskInstance="#{_inviato}" action="#{inviaRequestReply.riceviRisposta}">
+													<h:graphicImage value="/img/feedback_up.png" rendered="#{_inviato.variables.compilato}" /><h:graphicImage value="/img/feedback_down.png" rendered="#{!(_inviato.variables.compilato)}" />
+												</s:link>
+											</div></td>
+										</tr>
+									</table>
+								</rich:column>
+							</rich:dataTable>
 						</td>	
 					</tr>
 				</table>
