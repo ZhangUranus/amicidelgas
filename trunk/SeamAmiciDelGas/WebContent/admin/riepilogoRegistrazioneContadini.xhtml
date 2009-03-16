@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:a="http://richfaces.org/a4j"
+    template="/layout/template.xhtml">
+
+	<ui:define name="body">
+
+	<rich:dataTable id="tabellaRiepilogo" width="100%" align="center" value="#{filtraNotifica.getAllPooledTaskInstanceList('visualizzaQuestionari')}" var="_contadinoTask">
+		<rich:column>
+			<f:facet name="header">Riepilogo questionari per l'azienda</f:facet>
+				<table width="100%" border="0" cellspacing="2" cellpadding="0" align="center" >
+					<tr>
+						<td width="25%" valign="top">
+							<table width="100%" border="0" cellspacing="4" cellpadding="0" align="center">
+								<tr>
+									<td width="100%">
+									
+										<s:decorate  template="/layout/edit.xhtml">
+							                <ui:define name="label">Nome Azienda</ui:define>
+							                <h:outputText id="nomeAziendaContadino" value="#{_contadinoTask.variables.contadinoCreato.nomeAzienda}" ></h:outputText>
+							            </s:decorate>
+							            
+										<s:decorate  template="/layout/edit.xhtml">
+							                <ui:define name="label">Partita IVA</ui:define>
+							                <h:outputText id="partitaIvaContadino" value="#{_contadinoTask.variables.contadinoCreato.partitaIva}" ></h:outputText>
+							            </s:decorate>
+							            
+							            <s:decorate  template="/layout/edit.xhtml">
+							                <ui:define name="label">Nome Presidente</ui:define>
+							                <h:outputText id="nomePresidenteContadino" value="#{_contadinoTask.variables.contadinoCreato.nomePresidente}" ></h:outputText>
+							            </s:decorate>
+							            
+							            <s:decorate  template="/layout/edit.xhtml">
+							                <ui:define name="label">Cognome Presidente</ui:define>
+							                <h:outputText id="cognomePresidenteContadino" value="#{_contadinoTask.variables.contadinoCreato.cognomePresidente}" ></h:outputText>
+							            </s:decorate>
+							            
+							            <s:decorate  template="/layout/edit.xhtml">
+							                <ui:define name="label">Data Visita Azienda'</ui:define>
+							                <h:outputText id="dataVisitaContadino" value="#{_contadinoTask.variables.contadinoCreato.dataVisita}" ></h:outputText>
+							            </s:decorate>
+							            				            
+							            <s:decorate  template="/layout/edit.xhtml">
+							                <ui:define name="label">Indirizzo</ui:define>
+							                <h:outputText id="indirizzoContadino" value="#{_contadinoTask.variables.contadinoCreato.indirizzo}" ></h:outputText>  
+							            </s:decorate>
+							            
+							            <s:decorate  template="/layout/edit.xhtml">
+							                <ui:define name="label">Documento asl</ui:define>
+							                <a href="#{_contadinoTask.variables.contadinoCreato.pathAsl}" target="_blank"><img src="/SeamAmiciDelGas/img/asl.png" border="0"/></a>  
+							            </s:decorate>
+									</td>						
+								</tr>
+							</table>
+						</td>
+						<td width="75%" valign="top">
+							<table width="100%" border="0" cellspacing="4" cellpadding="0" align="center">
+								<tr>
+									<td width="100%" colspan="6" align="center" valign="top">
+										<div align="center" class="colore_1" >Visitatori: #{_contadinoTask.variables.inviati.size()} di 10</div>
+									</td>					
+								</tr>
+								<tr>
+									<td width="25%" ><div align="left" ><b>Nome Inviato</b></div></td>
+									<td width="15%" ><div align="center" ><b>Voto 1</b></div></td>
+									<td width="15%" ><div align="center" ><b>Voto 2</b></div></td>
+									<td width="15%" ><div align="center" ><b>Voto 3</b></div></td>
+									<td width="15%" ><div align="center" ><b>Voto 4</b></div></td>
+									<td width="15%" ><div align="center" ><b>Voto 5</b></div></td>
+								</tr>
+							</table>
+							<rich:dataTable id="tabellaRiepilogoInviati" width="100%" align="center" value="#{_contadinoTask.variables.inviati}" var="_inviato"  >
+								<rich:column >
+									<table width="100%" border="0" cellspacing="4" cellpadding="0" align="center">
+										<tr>
+											<td width="25%"><div align="left" class="explorer" >#{_inviato}</div></td>
+											<ui:repeat value="#{newRiepilogoQuestionari.getVotoByVisitatore(_inviato, _contadinoTask.variables.contadinoCreato.partitaIva)}" var="_voto">
+												<td width="15%" ><div align="center" ><h:outputText value="#{_voto}"></h:outputText></div></td>
+											</ui:repeat>
+										</tr>
+									</table>
+								</rich:column>
+							</rich:dataTable>
+						</td>	
+					</tr>
+				</table>
+		</rich:column>
+	</rich:dataTable>
+	
+	
+	</ui:define>
+</ui:composition>
