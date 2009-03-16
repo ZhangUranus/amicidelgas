@@ -2,13 +2,9 @@ package org.domain.SeamAmiciDelGas.processes;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
-
 import javax.persistence.EntityManager;
-
 import org.domain.SeamAmiciDelGas.crud.AccountHome;
-import org.domain.SeamAmiciDelGas.crud.AccountList;
 import org.domain.SeamAmiciDelGas.crud.FeedbackListExtended;
 import org.domain.SeamAmiciDelGas.entity.Account;
 import org.domain.SeamAmiciDelGas.entity.Cybercontadino;
@@ -50,30 +46,31 @@ public class InviaRequestReply {
 	@Out(value="notifyMessageReply", scope= ScopeType.BUSINESS_PROCESS, required=false)
 	private Message message;
 	
-	@In(value="compilato", scope= ScopeType.BUSINESS_PROCESS, required=false)
+	//@In(value="compilato", scope= ScopeType.BUSINESS_PROCESS, required=false)
 	@Out(value="compilato", scope= ScopeType.BUSINESS_PROCESS, required=false)
 	private boolean compilato;
 	
 	private Date dataCorrente;
 	
-	@In(value="accountHome", create=true)
-	private AccountHome accounthome;
-	
 	@In(value="newQuestionario" , create=true)
 	private Questionario questionario;
+/*	
+	@In(value="accountHome", create=true)
+	private AccountHome accounthome;
 	
 	@In(value="newFeedback" , create=true)
 	private Feedback feedback;
 	
 	@In(value="newFeedbackListExtended",create=true)
 	private FeedbackListExtended feedbackList;
-	
+*/	
 	@StartTask @EndTask(transition="inviaReply")
 	public String riceviMessaggio()
 	{
 		System.out.println("RICEVI MESSAGGIO");
 		
 		compilato = true;
+		System.out.println("COMPILATOOOOOOOOOOOOO"+compilato);
 		if(questionario == null)
 		{
 			System.out.println("QUESTIONARIO NULLOOOOOOOOOOOOOOO");
@@ -96,7 +93,7 @@ public class InviaRequestReply {
 			}
 		}
 		
-		System.out.println("NOMEEEEEEEEEEEEEEEe:"+message.getDestinatario());
+		System.out.println("NOMEEEEEEEEEEe:"+message.getDestinatario());
 		return "OutQuestionario";
 			
 	}
@@ -104,6 +101,7 @@ public class InviaRequestReply {
 	@Transactional public boolean registraQuestionario()
     {
 		dataCorrente = new Date(System.currentTimeMillis());
+		System.out.println("ALLEVAMENTO "+questionario.getVotoAllevamento());
 		float somma = (questionario.getVotoAllevamento()+questionario.getVotoIgiene()+questionario.getVotoProdotti()+questionario.getVotoProfessionalita()+questionario.getVotoStabile())/5;
 		questionario.setAccount(account);
 		questionario.setCybercontadino(contadino);
@@ -115,27 +113,27 @@ public class InviaRequestReply {
 		return true; 
 		
     }
-	
+/*	
 	@StartTask @EndTask(transition="fine")
 	public String riceviRisposta()
 	{
 		System.out.println("OKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK");
+		
 		if(compilato)
 			this.inserisciFeedback(4.0f);
 		else
 			this.inserisciFeedback(2.0f);
-		
 		return "OutRiepilogoQuestionari";
+		
 		
 	}
 	
 	@Transactional public boolean inserisciFeedback(float p)
     {
 		dataCorrente = new Date(System.currentTimeMillis());
-		Account accountUtente = (Account) em.createQuery(
-				"select account from Account account " +
-				"where account.username = '"+nomeUtente+"'")
-				.getSingleResult();
+		accounthome.setAccountUsername(nomeUtente);
+		Account accountUtente = accounthome.find();
+
 		feedback.setAccountBySegnalatore(account);
 		feedback.setAccountByValidatore(account);
 		feedback.setAccountByDestinatario(accountUtente);
@@ -154,9 +152,7 @@ public class InviaRequestReply {
 		float punteggioCorrente = this.calcolaPunteggioFeedback(p, accountUtente);
 		//accountUtente.setPunteggioFeedback(punteggioCorrente);
 		System.out.println("FIGARO");
-		accounthome.setAccountUsername(accountUtente.getUsername());
-		Account a= accounthome.find();
-		a.setPunteggioFeedback(punteggioCorrente);
+		accountUtente.setPunteggioFeedback(punteggioCorrente);
 		accounthome.update();
 		em.persist(feedback);
 		
@@ -185,7 +181,7 @@ public class InviaRequestReply {
 		}			
 		return somma/(size+1);
 	}
-
+*/
 	public Message getMessage() {
 		return message;
 	}

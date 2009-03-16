@@ -61,7 +61,7 @@ public class ProcessoRegistrazione {
 	@Out(value="dataProposta", scope= ScopeType.BUSINESS_PROCESS, required =false)
 	private Date dataProposta;
 	
-	@Out(value="compilato", scope= ScopeType.BUSINESS_PROCESS, required =false)
+	@Out(value="compilatoQuestionario", scope= ScopeType.BUSINESS_PROCESS, required =false)
 	private boolean compilato;
 	
 	@Out(value="dataQuestionario", scope= ScopeType.BUSINESS_PROCESS, required =false)
@@ -157,7 +157,7 @@ public class ProcessoRegistrazione {
 		gc.setTime((Date) dataQuestionario.clone());
 	//funzionamento corretto	gc.add(Calendar.DATE, +1);
 		// funzionamento di prova
-		gc.add(Calendar.MINUTE, +5);
+		gc.add(Calendar.MINUTE, +55);
 		dataTimer = gc.getTime();
 		MediatoreCheManda = credentials.getUsername();
 		compilato = false;

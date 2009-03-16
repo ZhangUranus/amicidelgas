@@ -1,7 +1,6 @@
 package org.domain.SeamAmiciDelGas.crud;
 
 import java.util.Arrays;
-import java.util.List;
 import org.domain.SeamAmiciDelGas.entity.Feedback;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.framework.EntityQuery;
