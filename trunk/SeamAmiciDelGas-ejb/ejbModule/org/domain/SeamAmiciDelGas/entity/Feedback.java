@@ -142,8 +142,7 @@ public class Feedback implements java.io.Serializable {
 	}
 
 	@Temporal(TemporalType.DATE)
-	@Column(name = "DataValidazione", nullable = false, length = 10)
-	@NotNull
+	@Column(name = "DataValidazione", length = 10)
 	public Date getDataValidazione() {
 		return this.dataValidazione;
 	}
