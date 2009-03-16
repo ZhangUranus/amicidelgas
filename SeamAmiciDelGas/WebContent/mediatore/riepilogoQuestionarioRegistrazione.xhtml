@@ -10,77 +10,81 @@
 
 	<ui:define name="body">
 
-
-
-	<table width="100%" border="0" cellspacing="2" cellpadding="0" align="center" >
-		<tr>
-			<td width="40%" valign="top">
-				<table width="100%" border="0" cellspacing="4" cellpadding="0" align="center">
+	<rich:dataTable id="tabellaRiepilogo" width="100%" align="center" value="#{filtraNotifica.getAllContadinoForTaskInstanceType(currentAccount.username, 'riceviRisposta')}" var="_contadino">
+		<rich:column>
+			<f:facet name="header">Riepilogo questinari per l'azienda</f:facet>
+				<table width="100%" border="0" cellspacing="2" cellpadding="0" align="center" >
 					<tr>
-						<td width="100%">
-							<s:decorate id="qualitaProdottiValutazione" template="/layout/edit.xhtml">
-				                <ui:define name="label">Qualita' dei prodotti</ui:define>
-				                <h:outputText id="punteggioContadino" value="" ></h:outputText>
-				            </s:decorate>
-				            
-				            <s:decorate id="qualitaStabileValutazione" template="/layout/edit.xhtml">
-				                <ui:define name="label">Qualita' dello stabile</ui:define>
-				                <h:outputText id="punteggioContadino" value="" ></h:outputText>
-				            </s:decorate>
-				            
-				            <s:decorate id="condizioniIgienicoValutazione" template="/layout/edit.xhtml">
-				                <ui:define name="label">Condizioni igienico sanitarie</ui:define>
-				                <h:outputText id="punteggioContadino" value="" ></h:outputText>
-				            </s:decorate>
-				            
-				            <s:decorate id="ambienteLavoroValutazione" template="/layout/edit.xhtml">
-				                <ui:define name="label">Ambiente di lavoro</ui:define>
-				                <h:outputText id="punteggioContadino" value="" ></h:outputText>
-				            </s:decorate>
-				            
-				            <s:decorate id="professionalitaValutazione" template="/layout/edit.xhtml">
-				                <ui:define name="label">Professionalita'</ui:define>
-				                <h:outputText id="punteggioContadino" value="" ></h:outputText>
-				            </s:decorate>
-				            				            
-				            <s:decorate id="punteggioValutazione" template="/layout/edit.xhtml">
-				                <ui:define name="label">Valutazione totale</ui:define>
-				                <h:outputText id="punteggioContadino" value="" ></h:outputText>  
-				            </s:decorate>
-						</td>						
+						<td width="40%" valign="top">
+							<table width="100%" border="0" cellspacing="4" cellpadding="0" align="center">
+								<tr>
+									<td width="100%">
+									
+										<s:decorate  template="/layout/edit.xhtml">
+							                <ui:define name="label">Nome Azienda</ui:define>
+							                <h:outputText id="nomeAziendaContadino" value="#{_contadino.nomeAzienda}" ></h:outputText>
+							            </s:decorate>
+							            
+										<s:decorate  template="/layout/edit.xhtml">
+							                <ui:define name="label">Partita IVA</ui:define>
+							                <h:outputText id="partitaIvaContadino" value="#{_contadino.partitaIva}" ></h:outputText>
+							            </s:decorate>
+							            
+							            <s:decorate  template="/layout/edit.xhtml">
+							                <ui:define name="label">Nome Presidente</ui:define>
+							                <h:outputText id="nomePresidenteContadino" value="#{_contadino.nomePresidente}" ></h:outputText>
+							            </s:decorate>
+							            
+							            <s:decorate  template="/layout/edit.xhtml">
+							                <ui:define name="label">Cognome Presidente</ui:define>
+							                <h:outputText id="cognomePresidenteContadino" value="#{_contadino.cognomePresidente}" ></h:outputText>
+							            </s:decorate>
+							            
+							            <s:decorate  template="/layout/edit.xhtml">
+							                <ui:define name="label">Data Visita Azienda'</ui:define>
+							                <h:outputText id="dataVisitaContadino" value="#{_contadino.dataVisita}" ></h:outputText>
+							            </s:decorate>
+							            				            
+							            <s:decorate  template="/layout/edit.xhtml">
+							                <ui:define name="label">Indirizzo</ui:define>
+							                <h:outputText id="indirizzoContadino" value="#{_contadino.indirizzo}" ></h:outputText>  
+							            </s:decorate>
+									</td>						
+								</tr>
+							</table>
+						</td>
+						<td width="60%" valign="top">
+							<table width="100%" border="0" cellspacing="4" cellpadding="0" align="center">
+								<tr>
+									<td width="100%" colspan="4" align="center" valign="top">
+										<div align="center" class="colore_1" >Visitatori:  di 10</div>
+									</td>					
+								</tr>
+								<tr>
+									<td width="30%" ><div align="left" ><b>Nome Inviato</b></div></td>
+									<td width="30%" ><div align="left" ><b>Testo messaggio</b></div></td>
+									<td width="20%" ><div align="center" ><b>Questionario Compilato?</b></div></td>
+									<td width="20%" ><div align="right" ><b>Azione</b></div></td>
+								</tr>
+								<tr>
+									<td width="100%" colspan="4" align="center" >
+										<hr noshade="noshade"/>
+									</td>					
+								</tr>
+								<tr>
+									<td width="30%"><div align="left" class="explorer" >bonghi</div></td>
+									<td width="30%"><div align="left" class="explorer" >Testo messaggio</div></td>
+									<td width="20%"><div align="center" class="explorer" ><img src="/SeamAmiciDelGas/img/accepted.png"/></div></td>
+									<td width="20%"><div align="right" class="explorer" ><img src="/SeamAmiciDelGas/img/feedback_up.png"/></div></td>
+								</tr>
+								<ui:repeat value="#{puntiDiConsegnaList.resultList}" var="_punto">
+								</ui:repeat>
+							</table>
+						</td>	
 					</tr>
 				</table>
-			</td>
-			<td width="60%" valign="top">
-				<table width="100%" border="0" cellspacing="4" cellpadding="0" align="center">
-					<tr>
-						<td width="100%" colspan="4" align="center" valign="top">
-							<div align="center" class="colore_1" >Visitatori:  di 10</div>
-						</td>					
-					</tr>
-					<tr>
-						<td width="30%" ><div align="left" ><b>Nome Inviato</b></div></td>
-						<td width="30%" ><div align="left" ><b>Testo messaggio</b></div></td>
-						<td width="20%" ><div align="center" ><b>Questionario Compilato?</b></div></td>
-						<td width="20%" ><div align="right" ><b>Azione</b></div></td>
-					</tr>
-					<tr>
-						<td width="100%" colspan="4" align="center" >
-							<hr noshade="noshade"/>
-						</td>					
-					</tr>
-					<tr>
-						<td width="30%"><div align="left" class="explorer" >bonghi</div></td>
-						<td width="30%"><div align="left" class="explorer" >Testo messaggio</div></td>
-						<td width="20%"><div align="center" class="explorer" ><img src="/SeamAmiciDelGas/img/accepted.png"/></div></td>
-						<td width="20%"><div align="right" class="explorer" ><img src="/SeamAmiciDelGas/img/feedback_up.png"/></div></td>
-					</tr>
-					<ui:repeat value="#{puntiDiConsegnaList.resultList}" var="_punto">
-					</ui:repeat>
-				</table>
-			</td>	
-		</tr>
-	</table>
+		</rich:column>
+	</rich:dataTable>
 	
 	
 	</ui:define>
