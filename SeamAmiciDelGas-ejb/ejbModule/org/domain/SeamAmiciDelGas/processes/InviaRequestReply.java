@@ -126,7 +126,7 @@ public class InviaRequestReply {
 		dataCorrente = new Date(System.currentTimeMillis());
 		Account accountUtente = (Account) em.createQuery(
 				"select account from Account account " +
-				"where account.username = "+nomeUtente)
+				"where account.username = '"+nomeUtente+"'")
 				.getSingleResult();
 		feedback.setAccountBySegnalatore(account);
 		feedback.setAccountByValidatore(account);
