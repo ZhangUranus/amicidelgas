@@ -1,9 +1,16 @@
 package org.domain.SeamAmiciDelGas.processes;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+
 import javax.persistence.EntityManager;
+
+import org.domain.SeamAmiciDelGas.crud.FeedbackListExtended;
 import org.domain.SeamAmiciDelGas.entity.Account;
 import org.domain.SeamAmiciDelGas.entity.Cybercontadino;
+import org.domain.SeamAmiciDelGas.entity.Feedback;
 import org.domain.SeamAmiciDelGas.entity.Questionario;
 import org.domain.SeamAmiciDelGas.session.Message;
 import org.jboss.seam.ScopeType;
@@ -33,6 +40,9 @@ public class InviaRequestReply {
 	
     @In(value="contadino", scope= ScopeType.BUSINESS_PROCESS ,required =false)
     private Cybercontadino contadino;
+    
+    @In(value="nomeDestinatario", scope= ScopeType.BUSINESS_PROCESS, required =false)
+	private String nomeUtente;
 	
 	@In(value="notifyMessageRequest",scope=ScopeType.BUSINESS_PROCESS, required=false) 
 	@Out(value="notifyMessageReply", scope= ScopeType.BUSINESS_PROCESS, required=false)
@@ -47,8 +57,14 @@ public class InviaRequestReply {
 	@In(value="newQuestionario" , create=true)
 	private Questionario questionario;
 	
+	@In(value="newFeedback" , create=true)
+	private Feedback feedback;
+	
+	@In(value="newFeedbackListExtended",create=true)
+	private FeedbackListExtended feedbackList;
+	
 	@StartTask @EndTask(transition="inviaReply")
-	public void riceviMessaggio()
+	public String riceviMessaggio()
 	{
 		System.out.println("RICEVI MESSAGGIO");
 		
@@ -76,6 +92,7 @@ public class InviaRequestReply {
 		}
 		
 		System.out.println("NOMEEEEEEEEEEEEEEEe:"+message.getDestinatario());
+		return "OutQuestionario";
 			
 	}
 	
@@ -96,6 +113,47 @@ public class InviaRequestReply {
 	public void riceviRisposta()
 	{
 		System.out.println("OKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK");
+		
+	}
+	
+	@Transactional public boolean inserisciFeedbackNegativo()
+    {
+		dataCorrente = new Date(System.currentTimeMillis());
+		Account accountUtente = (Account) em.createQuery(
+				"select account from Account account " +
+				"where account.username = "+nomeUtente)
+				.getSingleResult();
+		feedback.setAccountBySegnalatore(account);
+		feedback.setAccountByValidatore(account);
+		feedback.setAccountByDestinatario(accountUtente);
+		feedback.setDataSegnalazione(dataCorrente);
+		feedback.setDataValidazione(dataCorrente);
+		feedback.setDescrizione("");
+		feedback.setAnalizzato(true);
+		feedback.setPunteggio(2.0f);
+		float punteggioCorrente = this.calcolataPunteggioFeedback(2.0f);
+		accountUtente.setPunteggioFeedback(punteggioCorrente);
+		em.persist(accountUtente);
+		em.persist(feedback);
+		
+		return true; 
+		
+    }
+	
+	private float calcolataPunteggioFeedback(float punteggioNuovo)
+	{
+		List<Feedback> listaFeedback = feedbackList.getPunteggioFeedback(nomeUtente);
+		ArrayList<Float> listaFloat = new ArrayList<Float>();
+		for (Feedback feedback : listaFeedback) {
+			listaFloat.add(feedback.getPunteggio());
+		}
+		int size = listaFloat.size();
+		float somma = 0.0f;
+		for (Float float1 : listaFloat) {
+			somma += float1.floatValue();
+		}
+		somma += punteggioNuovo;
+		return somma/size;
 	}
 
 	public Message getMessage() {
@@ -107,9 +165,8 @@ public class InviaRequestReply {
 		this.message = message;
 	}
 	
-	public String update(){
+	public void update(){
 		log.info("QESTIONARIO COMPILATO"+ questionario.toString());
-		return "OutQuestionario";
 	}
 
 	public void setQuestionario(Questionario questionario) {
