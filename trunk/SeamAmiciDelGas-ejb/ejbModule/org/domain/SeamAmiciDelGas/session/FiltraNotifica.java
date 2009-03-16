@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.domain.SeamAmiciDelGas.entity.Account;
+import org.domain.SeamAmiciDelGas.entity.Cybercontadino;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
@@ -193,19 +194,19 @@ public class FiltraNotifica {
 	}
 	
 	
-	public List<String> getAllContadinoForTaskInstanceType(String username, String taskName)
+	public List<Cybercontadino> getAllContadinoForTaskInstanceType(String username, String taskName)
 	{
 		// Primo filtro che restiuisce la lista dei contadini per un tipo di  task e assegnato ad un utente
 		List<TaskInstance> tasks= taskInstanceSingleList(taskName);
-		List<String> contadini = new ArrayList<String>();
+		List<Cybercontadino> contadini = new ArrayList<Cybercontadino>();
 		String nome;
-		String nomeContadino;
+		Cybercontadino nomeContadino;
 		for(TaskInstance temp : tasks)
 		{
 			nome = temp.getActorId();
-			nomeContadino = (String) temp.getVariable("contadino");
+			nomeContadino = (Cybercontadino) temp.getVariable("contadino");
 			if((nome.equals(username)))
-				if(nomeContadino != null)
+				if(nomeContadino != null && !(contadini.contains(nomeContadino)))
 					contadini.add(nomeContadino);
 		}
 		return contadini;
@@ -215,15 +216,15 @@ public class FiltraNotifica {
 	{
 		// Primo filtro che restiuisce il numero di contadini per un tipo di  task e assegnato ad un utente
 		List<TaskInstance> tasks= taskInstanceSingleList(taskName);
-		List<String> contadini = new ArrayList<String>();
+		List<Cybercontadino> contadini = new ArrayList<Cybercontadino>();
 		String nome;
-		String nomeContadino;
+		Cybercontadino nomeContadino;
 		for(TaskInstance temp : tasks)
 		{
 			nome = temp.getActorId();
-			nomeContadino = (String) temp.getVariable("contadino");
+			nomeContadino = (Cybercontadino) temp.getVariable("contadino");
 			if((nome.equals(username)))
-				if(nomeContadino != null)
+				if(nomeContadino != null && !(contadini.contains(nomeContadino)))
 					contadini.add(nomeContadino);
 		}
 		return contadini.size();
@@ -234,15 +235,16 @@ public class FiltraNotifica {
 		// Seoncod filtro che restituisce i task per un contadino e assegnato a un utente
 		
 		List<TaskInstance> tasks= taskInstanceSingleList(taskName);
+		
 		List<TaskInstance> tasksUser = new ArrayList<TaskInstance>();
-		String nomeContadino ;
+		Cybercontadino nomeContadino ;
 		String nome;
 		for(TaskInstance temp : tasks)
 		{
-			nomeContadino = (String) temp.getVariable("contadino");
+			nomeContadino = (Cybercontadino) temp.getVariable("contadino");
 			nome = temp.getActorId();
 			if((nome.equals(username)))
-				if(nomeContadino.equals(contadino))
+				if(nomeContadino.getPartitaIva().equals(contadino))
 					tasksUser.add(temp);
 		}
 		return tasksUser;
@@ -261,7 +263,7 @@ public class FiltraNotifica {
 			nome = temp.getActorId();
 			if(nome != null)
 			{
-				if((nome.equals(username)))
+				if((nome.equals(username)) && (temp.getPriority() == Task.PRIORITY_HIGHEST))
 					tasksUser.add(temp);
 			}
 		}

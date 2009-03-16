@@ -131,7 +131,9 @@ public class InviaRequestReply {
 		feedback.setAccountByDestinatario(accountUtente);
 		feedback.setDataSegnalazione(dataCorrente);
 		feedback.setDataValidazione(dataCorrente);
-		feedback.setDescrizione("Feedback Negativo inserito perchè l'utente non ha compilato");
+		feedback.setDescrizione("Feedback Negativo inserito perchè l'utente non " +
+				"ha compilato il questionario in tempo per l'azienda "+contadino.getNomeAzienda()+" in seguito alla visita" +
+						" in data "+dataVisita);
 		feedback.setAnalizzato(true);
 		feedback.setPunteggio(2.0f);
 		float punteggioCorrente = this.calcolaPunteggioFeedback(2.0f);
