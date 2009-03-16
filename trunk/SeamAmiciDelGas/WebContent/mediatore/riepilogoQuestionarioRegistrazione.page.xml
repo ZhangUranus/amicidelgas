@@ -3,13 +3,13 @@
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns:s="http://jboss.com/products/seam/taglib"
       xsi:schemaLocation="http://jboss.com/products/seam/pages http://jboss.com/products/seam/pages-2.1.xsd"
-      no-conversation-view-id="/questionarioCybercontadino.xhtml"
+      no-conversation-view-id="/riepilogoQuestionarioRegistrazione.xhtml"
       login-required="true">
 
-<restrict>#{s:hasRole('utenteGas')}</restrict>      
+<restrict>#{s:hasRole('mediatore')}</restrict>      
  <navigation>
-  <rule if-outcome="OutQuestionario">
-   <redirect view-id="/customer/customerHome.xhtml"/>
+  <rule if-outcome="OutRiepilogoQuestionari">
+   <redirect view-id="/mediatore/riepilogoQuestionarioRegistrazione.xhtml"/>
   </rule>
  </navigation>
 </page>
