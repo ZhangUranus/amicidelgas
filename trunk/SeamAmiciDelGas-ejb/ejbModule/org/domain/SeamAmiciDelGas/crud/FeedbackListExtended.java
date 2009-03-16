@@ -20,9 +20,9 @@ public class FeedbackListExtended extends EntityQuery<Feedback>{
 	//private Feedback feedback = new Feedback();
 
 	public FeedbackListExtended() {
-		/*setEjbql(EJBQL);
+		setEjbql(EJBQL);
 		//setRestrictionExpressionStrings(Arrays.asList(RESTRICTIONS));
-		setMaxResults(25);*/
+		setMaxResults(100);
 	}
 	
 	public List<Feedback> getPunteggioFeedback(String username)
