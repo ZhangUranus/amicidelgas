@@ -112,10 +112,10 @@ public class InviaRequestReply {
     }
 	
 	@StartTask @EndTask(transition="fine")
-	public void riceviRisposta(boolean feedback)
+	public void riceviRisposta()
 	{
 		System.out.println("OKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK");
-		if(feedback)
+		if(!compilato)
 			this.inserisciFeedbackNegativo();
 	}
 	
