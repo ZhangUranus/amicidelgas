@@ -76,10 +76,11 @@
 	                       required="true"
 	                           size="200"
 	                      maxlength="200"
-	                          value="#{newQuestionario.commenti}">   
+	                          value="#{newQuestionario.commenti}"
+	                          onkeypress="attiva_post()">   
 	                </h:inputTextarea>
 	            </s:decorate>
-	            
+	            	            
 	            <s:decorate id="punteggioValutazione" template="/layout/edit.xhtml">
 	                <ui:define name="label">Anteprima punteggio valutazione</ui:define>
 	                <h:outputText id="punteggioContadino" value="#{newQuestionario.votoGlobale}" ></h:outputText>  
@@ -92,15 +93,15 @@
 	
 	    </rich:panel>
 	    
-	    <s:decorate>
+	    		<s:decorate id="decorateQuestionario">
 					<rich:dataTable  id="requestTableQuestionario" var="_task" value="#{filtraNotifica.getAllHighestPriorityTaskInstanceListForSingleCustomer(currentAccount.username ,'riceviMessaggio')}">
 					<h:column>
-						<s:button value="post questionario" taskInstance="#{_task}"
-	            			action="#{inviaRequestReply.riceviMessaggio}"  >
+						<s:button value="post questionario" taskInstance="#{_task}" id="postQuestionario"
+	            			action="#{inviaRequestReply.riceviMessaggio}" style="display:none;"  >
 	            			<a:support event="onclick"  action="#{inviaRequestReply.update}"/>
 	            		</s:button>
 					</h:column>
-			</rich:dataTable>
+					</rich:dataTable>
 				</s:decorate>
 	    </h:form>
 
@@ -111,6 +112,10 @@
 			var score_three = 0;
 			var score_four = 0;
 			var score_five = 0;
+			
+			function attiva_post(){
+				document.getElementById('valutazioneContadinoForm:decorateQuestionario:requestTableQuestionario:0:postQuestionario').style.display = "";
+			}
 			 
 			function liveScore(who_is, score){
 				
@@ -156,7 +161,8 @@
 					document.getElementById('valutazioneContadinoForm:punteggioValutazione:punteggioContadino').innerHTML = "<img src=\"/SeamAmiciDelGas/img/star_half.png\"/><img src=\"/SeamAmiciDelGas/img/star_empty.png\"/><img src=\"/SeamAmiciDelGas/img/star_empty.png\"/><img src=\"/SeamAmiciDelGas/img/star_empty.png\"/><img src=\"/SeamAmiciDelGas/img/star_empty.png\"/>";
 				} else {
 					document.getElementById('valutazioneContadinoForm:punteggioValutazione:punteggioContadino').innerHTML = "<img src=\"/SeamAmiciDelGas/img/star_empty.png\"/><img src=\"/SeamAmiciDelGas/img/star_empty.png\"/><img src=\"/SeamAmiciDelGas/img/star_empty.png\"/><img src=\"/SeamAmiciDelGas/img/star_empty.png\"/><img src=\"/SeamAmiciDelGas/img/star_empty.png\"/>";		
-				}
+				}				
+				
 			}
 		-->
 		</script>
