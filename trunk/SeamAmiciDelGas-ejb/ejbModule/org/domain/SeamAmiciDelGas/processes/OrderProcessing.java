@@ -54,6 +54,9 @@ public class OrderProcessing {
 	@Out(value="notificaDriverContadino",scope=ScopeType.BUSINESS_PROCESS,required=false)
 	protected Message messageDriverContadino;
 	
+	@Out(value="notificaDataMassimaScaduta",scope=ScopeType.BUSINESS_PROCESS,required=false)
+	protected Message messageDataMassimaScaduta;
+	
 	@In(value="entityManager")
     private EntityManager em;
 	
@@ -69,9 +72,9 @@ public class OrderProcessing {
 	@Out(value="customer", scope=ScopeType.BUSINESS_PROCESS, required=false)
 	private Account customer;
 	
-	@In(value="driver", scope=ScopeType.BUSINESS_PROCESS, required=false)
-	@Out(value="driver", scope=ScopeType.BUSINESS_PROCESS, required=false)
-	private Account driver;
+	@In(value="responsabileConsegna", scope=ScopeType.BUSINESS_PROCESS, required=false)
+	@Out(value="responsabileConsegna", scope=ScopeType.BUSINESS_PROCESS, required=false)
+	private Account responsabileConsegna;
 	
 	@In(value="dataConsegna", scope=ScopeType.BUSINESS_PROCESS, required=false)
 	@Out(value="dataConsegna", scope=ScopeType.BUSINESS_PROCESS, required=false)
@@ -118,6 +121,12 @@ public class OrderProcessing {
 		String content = "RICHIESTA ORDINE"+
 						"Customer: " +credentials.getUsername();
 		messageDriverContadino.setContent(content);
+		
+		messageDataMassimaScaduta = new Message();
+		messageDataMassimaScaduta.setMittente("Sistema GAS");
+		messageDataMassimaScaduta.addRecipient(customer.getUsername());
+		messageDataMassimaScaduta.setContent("Ordine non evaso entro data massima");		
+		
 		return "partito";
 	}
 	
@@ -168,7 +177,7 @@ public class OrderProcessing {
 				isNull = "NULLLLL";
 			messageStatoOrdine.setContent("Ordine preso in carico da "+ credentials.getUsername()+" dataConsegna = "+isNull);
 			messageStatoOrdine.setInfoFilter("orderProcessingPreso");
-			driver = currentAccount;
+			responsabileConsegna = currentAccount;
 			myOrdine.setPendente(false);
 			myOrdine.setEvaso(true);
 			this.dataConsegna = dataConsegna;
@@ -190,7 +199,7 @@ public class OrderProcessing {
 		ordine.setDataRichiesta(dataRichiesta);
 		ordine.setDataConclusione(dataConsegna);
 		ordine.setDataMassimaConsegna(myOrdine.getDataMassima());
-		ordine.setDriver(driver);
+		ordine.setDriver(responsabileConsegna);
 		//salvo l'ordine
 		em.persist(ordine);
 		
@@ -210,7 +219,7 @@ public class OrderProcessing {
 		}
 	}
 	
-	@BeginTask @EndTask(transition="ordine_eliminato_dall_utente")
+	@BeginTask @EndTask(beforeRedirect=true,transition="ordine_eliminato_dall_utente")
 	public String delete() {
 		//riaggiorno il fondo dell'utente customer
 		float prezzoOrdine = 0;
@@ -230,7 +239,16 @@ public class OrderProcessing {
 	public void notificaOrdineDisponibile() {
 		
 	}
-
+	
+	@BeginTask @EndTask(beforeRedirect=true,transition="notifica_inviata_ordine_non_preso_in_carico_termina_processo")
+	public String notificaOrdineNonPresoDataMassimaScaduta() {
+		float prezzoOrdine = 0;
+		List<ItemQuantita> items = myOrdine.getItemQuantita();
+		for (ItemQuantita iq: items)
+			prezzoOrdine+=iq.getPrezzoTotale();
+		gestioneFondo.plusFondo(prezzoOrdine);
+		return "deletedTimeOut";
+	}
 	/*
 	 * Getter and settrer methods...
 	 */
