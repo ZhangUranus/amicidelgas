@@ -1,22 +1,68 @@
 package org.domain.SeamAmiciDelGas.webservices;
 
-public interface Item {
+import java.io.Serializable;
 
-	public String getId();
+public class Item implements Serializable{
+
+	private String category;
+	private String description;
+	private String id;
+	private String name;
+	private double prezzo;
+	public Item() {
+		
+	}
 	
-	public String getName();
-	
-	public String getDescription();
-	
-	public String getCategory();
-	
-	public double getPrezzo();
-	
-	public boolean equals(Object o);
-	
-	public String getMinImageUrl();
-	
-	public String getMaxImageUrl();
-	
-	
+
+
+	public String getCategory() {
+		return category;
+	}
+
+
+
+	public String getDescription() {
+		return description;
+	}
+
+
+
+	public String getId() {
+		return id;
+	}
+
+
+
+	public String getName() {
+		return name;
+	}
+
+
+
+	public double getPrezzo() {
+		return prezzo;
+	}
+
+
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setPrezzo(double prezzo) {
+		this.prezzo = prezzo;
+	}
+
 }

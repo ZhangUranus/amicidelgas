@@ -14,7 +14,7 @@ import org.jboss.seam.annotations.Out;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.log.Log;
 
-@Name("catalogService")
+@Name("catalogNoServiceImpl")
 @Scope(ScopeType.SESSION)
 public class CatalogNoServiceImpl implements CatalogInterface{
 
@@ -32,35 +32,35 @@ public class CatalogNoServiceImpl implements CatalogInterface{
 		categories.add("cibo");
 		categories.add("bevande");
 		
-		ItemImpl t1= new ItemImpl();
+		Item t1= new Item();
 		t1.setId("01");
 		t1.setCategory("cibo");
 		t1.setDescription("Formaggio fresco");
 		t1.setName("Sottilette");
 		t1.setPrezzo(2.50);
 		
-		ItemImpl t2= new ItemImpl();
+		Item t2= new Item();
 		t2.setId("02");
 		t2.setCategory("bevande");
 		t2.setDescription("Direttamente dalla Sicilia");
 		t2.setName("Nero d'avola");
 		t2.setPrezzo(3.50);
 		
-		ItemImpl t3= new ItemImpl();
+		Item t3= new Item();
 		t3.setId("03");
 		t3.setCategory("bevande");
 		t3.setDescription("Sempre sicilia");
 		t3.setName("Zibibbo");
 		t3.setPrezzo(4.00);
 		
-		ItemImpl t4= new ItemImpl();
+		Item t4= new Item();
 		t4.setId("04");
 		t4.setCategory("bevande");
 		t4.setDescription("Vino Sardu");
 		t4.setName("Nuragus");
 		t4.setPrezzo(2.25);
 		
-		ItemImpl t5= new ItemImpl();
+		Item t5= new Item();
 		t5.setId("05");
 		t5.setCategory("cibo");
 		t5.setDescription("Panino con la frittataa");
@@ -76,25 +76,25 @@ public class CatalogNoServiceImpl implements CatalogInterface{
 		//itemsForCategory= new ArrayList<Item>();
 	}
 	
-	public String[] getCategories(String idContadino) {
-		return (String[]) categories.toArray(new String[categories.size()]);
+	public List<String> getCategories() {
+		return categories;
 	}
 
-	public String getDescription(String idContadino) {
+	public String getDescription() {
 		return "Un semplice catalogo di prova";
 	}
 
-	public Item[] getItems(String idContadino) {
-		return (Item[])listaProdotti.toArray(new Item[listaProdotti.size()]);
+	public List<Item> getItems() {
+		return listaProdotti;
 	}
 
-	public Item[] getItemsForCategory(String idContadino, String category) {
+	public List<Item> getItemsForCategory(String category) {
 		List<Item> newItem = new ArrayList<Item>();
 		for(Item it : listaProdotti)
 			if(it.getCategory().equalsIgnoreCase(category))
 				newItem.add(it);
 		
-		return (Item[]) newItem.toArray(new Item[newItem.size()]);
+		return newItem;
 	}
 
 	public Cybercontadino getContadino() {
@@ -114,28 +114,25 @@ public class CatalogNoServiceImpl implements CatalogInterface{
 	}
 	
 
-	public UUID beginTransaction(String idContadino, Date deliveryDate) {
-		// TODO Auto-generated method stub
-		return UUID.randomUUID();
+	public String beginTransaction( Date deliveryDate) {
+		return UUID.randomUUID().toString();
 	}
 
-	public long commitTransaction(String idContadino, UUID transactionId) {
-		// TODO Auto-generated method stub
+	public long commitTransaction( String transactionId) {
 		return 0;
 	}
 
 
-	public long rollBackTransaction(String idContadino, UUID transactionId) {
+	public long rollBackTransaction( String transactionId) {
+		return 0;
+	}
+
+	public long getAvailableQuantity(Item item) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	public long getAvailableQuantity(String idContadino, Item item) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	public boolean reserveItem(String idContadino, UUID transactionId,
+	public boolean reserveItem( String transactionId,
 			Item item, int minimalQuantity, int quantity) {
 		// TODO Auto-generated method stub
 		return true;
