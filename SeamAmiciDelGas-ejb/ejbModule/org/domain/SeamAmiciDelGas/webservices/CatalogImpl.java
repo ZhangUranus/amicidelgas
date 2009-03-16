@@ -1,179 +1,114 @@
 package org.domain.SeamAmiciDelGas.webservices;
 
-import java.rmi.RemoteException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
 
-import org.apache.axis2.AxisFault;
-import org.domain.SeamAmiciDelGas.entity.Cybercontadino;
-import org.domain.SeamAmiciDelGas.webservices.CatalogMatchMakerStub.GetCategories;
-import org.domain.SeamAmiciDelGas.webservices.CatalogMatchMakerStub.GetCategoriesResponse;
-import org.domain.SeamAmiciDelGas.webservices.CatalogMatchMakerStub.GetDescription;
-import org.domain.SeamAmiciDelGas.webservices.CatalogMatchMakerStub.GetDescriptionResponse;
-import org.domain.SeamAmiciDelGas.webservices.CatalogMatchMakerStub.GetItems;
-import org.domain.SeamAmiciDelGas.webservices.CatalogMatchMakerStub.GetItemsForCategory;
-import org.domain.SeamAmiciDelGas.webservices.CatalogMatchMakerStub.GetItemsForCategoryResponse;
-import org.domain.SeamAmiciDelGas.webservices.CatalogMatchMakerStub.GetItemsResponse;
-import org.jboss.seam.ScopeType;
-import org.jboss.seam.annotations.Name;
-import org.jboss.seam.annotations.Out;
-import org.jboss.seam.annotations.Scope;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.rmi.Remote;
+import java.util.Iterator;
+import java.util.Properties;
+import java.util.Vector;
 
-//@Name("catalogService")
-@Scope(ScopeType.SESSION)
-public class CatalogImpl implements CatalogInterface {
+import javax.xml.namespace.QName;
+import javax.xml.ws.Service;
 
+import org.uddi4j.client.UDDIProxy;
+import org.uddi4j.datatype.Name;
+import org.uddi4j.datatype.OverviewDoc;
+import org.uddi4j.datatype.binding.BindingTemplate;
+import org.uddi4j.datatype.binding.InstanceDetails;
+import org.uddi4j.datatype.binding.TModelInstanceInfo;
+import org.uddi4j.datatype.tmodel.TModel;
+import org.uddi4j.response.AuthToken;
+import org.uddi4j.response.BindingDetail;
+import org.uddi4j.response.BusinessInfo;
+import org.uddi4j.response.BusinessList;
+import org.uddi4j.response.ServiceInfo;
+import org.uddi4j.response.ServiceList;
+import org.uddi4j.response.TModelDetail;
+import org.uddi4j.util.FindQualifier;
+import org.uddi4j.util.FindQualifiers;
+
+import com.sun.org.apache.xalan.internal.xsltc.runtime.Hashtable;
+
+
+
+
+public class CatalogImpl {
+
+	public static Hashtable instances;
 	
-	@Out(value="categories") private List<String> categories;
-	@Out(value="items") private List<Item> items;
-	@Out(value="itemsForCategory") private List<Item> itemsForCategory;
-	private Cybercontadino contadino;
-	private String category;
-	private CatalogMatchMakerStub cs;
-	public CatalogImpl(){
-		try {
-			cs= new CatalogMatchMakerStub();
-			categories= new ArrayList<String>();
-			items= new ArrayList<Item>();
-			itemsForCategory= new ArrayList<Item>();
-		} catch (AxisFault e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	public static CatalogInterface getInstanceForContadino(String idContadino){
+		if(idContadino == null)
+			return null;
+		CatalogInterface  cat = (CatalogInterface) instances.get(idContadino);
+		boolean sviluppoClelioStefano=false;
+		if(sviluppoClelioStefano){
+			return CatalogImpl.staticCatalog();
 		}
-		
+		if(cat==null){
+			cat= (CatalogInterface) retrieveServiceFromUddi(idContadino, "CatalogService", "CatalogServicePort");
+			instances.put(idContadino, cat);
+		}
+		return cat;
 	}
 	
-	public String[] getCategories(String idContadino) {
-		categories= new ArrayList<String>();
-		GetCategories catArgs= new GetCategories();
-		catArgs.setIdContadino(idContadino);
-		try {
-			GetCategoriesResponse catResp = cs.getCategories(catArgs);
-			String[]catArray=catResp.get_return();
-			for(String category:catArray)
-			categories.add(category);
-			return catArray;
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		return null;
-		
+	private static CatalogInterface staticCatalog(){
+		return new CatalogNoServiceImpl();
 	}
-
-	public String getDescription(String idContadino) {
-		GetDescription descArgs= new GetDescription();
-		descArgs.setIdContadino(idContadino);
-		try {
-			GetDescriptionResponse descResp = cs.getDescription(descArgs);
-			return descResp.get_return();
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public Item[] getItems(String idContadino) {
-		items= new ArrayList<Item>();
-		GetItems itemArgs= new GetItems();
-		itemArgs.setIdContadino(idContadino);
-		try {
-			GetItemsResponse itemResp=cs.getItems(itemArgs);
-			CatalogMatchMakerStub.Item[] itemArray=itemResp.get_return();
-			ItemImpl[] myItemArray= new ItemImpl[itemArray.length];
-			int i=0;
-			for(CatalogMatchMakerStub.Item item: itemArray){
-				myItemArray[i]=new ItemImpl();
-				myItemArray[i].setCategory(item.getCategory());
-				myItemArray[i].setDescription(item.getDescription());
-				myItemArray[i].setId(item.getId());
-				myItemArray[i].setName(item.getName());
-				myItemArray[i].setPrezzo(item.getPrezzo());
-				items.add(myItemArray[i++]);
+	
+	private static Remote retrieveServiceFromUddi(String businessName, String serviceName, String servicePort){
+		try{
+			Properties config = UDDIConfigurator.load();
+			int MAX_ROWS=50;
+			UDDIProxy proxy = new UDDIProxy();
+			proxy.setInquiryURL(config.getProperty("inquiryURL"));
+			proxy.setPublishURL(config.getProperty("publishURL"));
+			AuthToken token = proxy.get_authToken(config.getProperty("userid"),
+					config.getProperty("password"));
+			
+			Vector businessNames= new Vector();
+			businessNames.add(new Name(businessName));
+			FindQualifiers findQualifiers = new FindQualifiers();
+			Vector qualifier = new Vector();
+			qualifier.add(new FindQualifier(FindQualifier.exactNameMatch));
+			findQualifiers.setFindQualifierVector(qualifier);
+			
+			BusinessList bl = proxy.find_business(businessNames, null, null, null, null, findQualifiers, 50);
+			BusinessInfo bInfo= (BusinessInfo) bl.getBusinessInfos().getBusinessInfoVector().elementAt(0);
+			String businessKey=bInfo.getBusinessKey();
+			Vector names = new Vector();
+			names.add(new Name(serviceName));
+			ServiceList serviceList = proxy.find_service(businessKey, names, null,null, findQualifiers, MAX_ROWS);
+			ServiceInfo sInfo= (ServiceInfo) serviceList.getServiceInfos().getServiceInfoVector().elementAt(0);
+			BindingDetail btd = proxy.find_binding(null, sInfo.getServiceKey(), null, MAX_ROWS);
+			BindingTemplate bt = (BindingTemplate)btd.getBindingTemplateVector().elementAt(0);
+			Vector tModelInstanceInfoVector=bt.getTModelInstanceDetails().getTModelInstanceInfoVector();
+			TModelInstanceInfo tModelInstanceInfo= (TModelInstanceInfo) tModelInstanceInfoVector.elementAt(0);
+	       	InstanceDetails tModelInstanceDetails=tModelInstanceInfo.getInstanceDetails();
+			String tModelKey=tModelInstanceInfo.getTModelKey();
+			TModelDetail tModelDetail = proxy.get_tModelDetail(tModelKey);
+			Vector tModelVector = tModelDetail.getTModelVector();
+			TModel tModel= (TModel) tModelVector.elementAt(0);
+			OverviewDoc doc = tModel.getOverviewDoc();
+			String wsdlUrl = 	doc.getOverviewURL().getText();
+			String nameSpaceUri= tModel.getName().getText();
+			Service afs = Service.create(new 	java.net.URL(wsdlUrl),new QName(nameSpaceUri, "CatalogService"));
+			QName portName=null;
+			Iterator ports=afs.getPorts();
+			while(ports.hasNext()){
+			   QName port= (QName) ports.next();
+			   if(port.getLocalPart().equalsIgnoreCase(servicePort))
+				   portName=port;
 			}
-			return myItemArray;
-				
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
-	}
-
-	public Item[] getItemsForCategory(String idContadino, String category) {
-		itemsForCategory= new ArrayList<Item>();
-		GetItemsForCategory itemForCatArgs= new GetItemsForCategory();
-		itemForCatArgs.setIdContadino(idContadino);
-		itemForCatArgs.setCategory(category);
-		
-		try {
-			GetItemsForCategoryResponse itemResp=cs.getItemsForCategory(itemForCatArgs);
-			CatalogMatchMakerStub.Item[] itemArray=itemResp.get_return();
-			ItemImpl[] myItemArray= new ItemImpl[itemArray.length];
-			int i=0;
-			for(CatalogMatchMakerStub.Item item: itemArray){
-				myItemArray[i]=new ItemImpl();
-				myItemArray[i].setCategory(item.getCategory());
-				myItemArray[i].setDescription(item.getDescription());
-				myItemArray[i].setId(item.getId());
-				myItemArray[i].setName(item.getName());
-				myItemArray[i].setPrezzo(item.getPrezzo());
-				itemsForCategory.add(myItemArray[i++]);
+			
+			Remote rProxy= afs.getPort(portName, CatalogInterface.class);
+			    		
+			  return rProxy;
 			}
-			return myItemArray;
-				
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
+			catch(Exception e){
+				e.printStackTrace();
+				return null;
+			}
 	}
-
-	public Cybercontadino getContadino() {
-		return contadino;
-	}
-
-	public void setContadino(Cybercontadino contadino) {
-		this.contadino = contadino;
-	}
-
-	public String getCategory() {
-		return category;
-	}
-
-	public void setCategory(String category) {
-		this.category = category;
-	}
-
-	public UUID beginTransaction(String idContadino, Date deliveryDate) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public long commitTransaction(String idContadino, UUID transactionId) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	public long getAvailableQuantity(String idContadino, Item item) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	public boolean reserveItem(String idContadino, UUID transactionId,
-			Item item, int minimalQuantity, int quantity) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	public long rollBackTransaction(String idContadino, UUID transactionId) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
+	
 }
