@@ -329,7 +329,7 @@ public class FiltraNotifica {
 		Account account = null;
 		for(TaskInstance temp : tasks)
 		{
-			account = (Account) temp.getVariable("currentAccoun");
+			account = (Account) temp.getVariable("currentAccount");
 			if((account.getUsername().equals(username))&& (temp.getPriority() == Task.PRIORITY_HIGHEST))
 				tasksUser.add(temp);
 		}
