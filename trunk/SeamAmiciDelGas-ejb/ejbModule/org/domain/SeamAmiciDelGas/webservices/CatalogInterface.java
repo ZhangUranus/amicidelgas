@@ -1,25 +1,29 @@
 package org.domain.SeamAmiciDelGas.webservices;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
+import javax.jws.WebService;
 
-public interface CatalogInterface {
+@WebService
+public interface CatalogInterface extends java.rmi.Remote{
 
-	public Item[] getItems(String idContadino);
+	public List<Item> getItems();
 	
-	public String getDescription(String idContadino);
+	public String getDescription();
 	
-	public String[] getCategories(String idContadino);
+	public List<String> getCategories();
 	
-	public Item[] getItemsForCategory(String idContadino, String category);
+	public List<Item> getItemsForCategory(String category);
 	
-	public UUID beginTransaction(String idContadino, Date deliveryDate);
+	public String beginTransaction(Date deliveryDate);
 	
-	public long getAvailableQuantity(String idContadino,Item item);
+	public long getAvailableQuantity(Item item);
 	
-	public boolean reserveItem(String idContadino,UUID transactionId, Item item, int minimalQuantity, int quantity);
+	public boolean reserveItem(String transactionId, Item item, int minimalQuantity, int quantity);
 	
-	public long rollBackTransaction(String idContadino,UUID transactionId);
-	public long commitTransaction(String idContadino, UUID transactionId);
+	public long rollBackTransaction(String transactionId);
+	
+	public long commitTransaction(String transactionId);
 }
