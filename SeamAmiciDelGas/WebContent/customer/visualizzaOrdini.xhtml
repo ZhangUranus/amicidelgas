@@ -75,9 +75,7 @@
 				            	<rich:column align="center">
 				                	<f:facet name="header">Elimina Ordine</f:facet>
 				                	<s:link id="eliminaOrdinePendenteLink" taskInstance="#{_task}" action="#{orderProcessing.delete()}">
-				         
 					                    <h:graphicImage value="/img/cancel.png" style="border:0" />
-					                    
 					                </s:link>
 					                <rich:toolTip for="eliminaOrdinePendenteLink" value="Elimina l'ordine"/>
 				            	</rich:column>
@@ -183,7 +181,7 @@
 													  style="width : 25px; height : 25px;">
 					 					<a:support event="onclick"  ajaxSingle="true"
 					 						   	reRender="#{rich:component('dettagliOrdinePanel')}.show()}"
-					 						   action="#{ordineBean.deleteItemFromMyOrdine(_itemCarrello.item)}"/>
+					 						   action="#{ordineBean.deleteItemFromMyOrdine(_itemCarrello)}"/>
 					 	</a:commandButton>
 					 	<rich:toolTip for="commandButtonDeleteItem" value="Elimina prodotto dall'ordine"/>
 					</h:form>
