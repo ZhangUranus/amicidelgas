@@ -99,11 +99,13 @@ public class InviaRequestReply {
 	@Transactional public boolean registraQuestionario()
     {
 		dataCorrente = new Date(System.currentTimeMillis());
+		float somma = (questionario.getVotoAllevamento()+questionario.getVotoIgiene()+questionario.getVotoProdotti()+questionario.getVotoProfessionalita()+questionario.getVotoStabile())/5;
 		questionario.setAccount(account);
 		questionario.setCybercontadino(contadino);
 		questionario.setDataCompilazione(dataCorrente);
 		questionario.setDataVisita(dataVisita);
 		questionario.setVisionato(false);
+		questionario.setVotoGlobale(somma);
 		em.persist(questionario);
 		return true; 
 		
@@ -177,55 +179,3 @@ public class InviaRequestReply {
 		return questionario;
 	}
 }
-
-/*
-@In protected FacesMessages facesMessages;
-	@In protected EntityManager entityManager;
-	@Out(value="notificaDecisioneDriver", scope= ScopeType.BUSINESS_PROCESS, required=false)
-	protected Message message;
-	private String msg="";
-	
-	
-	@BeginTask @EndTask(transition="approva")
-	public void approve(){
-		String nomeRichiedente=(String) Component.getInstance("nomeRichiedente", ScopeType.BUSINESS_PROCESS);
-		
-		Account account = (Account) entityManager.createQuery(
-				"select account from Account account " +
-				"where account.username = #{nomeRichiedente}")
-				.getSingleResult();
-		Role r= new Role();
-		r.setName("driver");
-		r.setAccount(account);
-		entityManager.persist(r);
-		message= new Message();
-		String approveMsg="La tua richiesta di divenire driver � stata accettata.";
-		if(msg!=null)
-			approveMsg+="Il responsabile ha incluso il seguente messaggio:\n\""+msg+"\"";
-		message.setContent(approveMsg);
-		message.addRecipient(nomeRichiedente);
-		facesMessages.add("L'utente � stato reso driver");
-	}
-	
-	@BeginTask @EndTask(transition="rifiuta")
-	public void reject(){
-		String nomeRichiedente=(String) Component.getInstance("nomeRichiedente", ScopeType.BUSINESS_PROCESS);
-		message= new Message();
-		String rejectMsg="La tua richiesta di divenire driver � stata rifiutata.";
-		if(msg!=null)
-			rejectMsg+="Il responsabile ha incluso il seguente messaggio:\n\""+msg+"\"";
-		message.setContent(rejectMsg);
-		message.addRecipient(nomeRichiedente);
-		
-		facesMessages.add("La richiesta dell'utente � stata rifiutata");
-	}
-	
-	@BypassInterceptors
-	public String getMsg() {
-		return msg;
-	}
-	@BypassInterceptors
-	public void setMsg(String msg) {
-		this.msg = msg;
-	}
-*/
