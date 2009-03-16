@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<root-container name="myOrderProcessing" width="1019" height="950">
+<root-container name="myOrderProcessing" width="1178" height="1163">
   <node name="L&apos;utente sottomette un ordine" x="332" y="69" width="214" height="36">
     <edge>
-      <label x="5" y="-10"/>
+      <label x="-203" y="-10"/>
     </edge>
   </node>
   <node name="Ordine notificato a driver e contadini" x="348" y="189" width="243" height="36">
     <edge>
-      <label x="-18" y="12"/>
+      <label x="5" y="-10"/>
     </edge>
     <edge>
       <label x="5" y="-10"/>
     </edge>
     <edge>
-      <label x="-135" y="-14"/>
+      <label x="5" y="-10"/>
     </edge>
   </node>
   <node name="Notifica utente ordine non disponibile" x="596" y="402" width="252" height="36">
     <edge>
-      <label x="5" y="-10"/>
+      <label x="-17" y="17"/>
       <bendpoint w1="-85" h1="-183" w2="168" h2="30"/>
     </edge>
   </node>
@@ -33,32 +33,20 @@
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="Attendi data consegna" x="211" y="513" width="157" height="36">
+  <node name="Attendi data consegna" x="221" y="508" width="157" height="36">
     <edge>
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="Rilascia feedback all&apos;utente" x="633" y="746" width="215" height="36">
+  <node name="Fb from responsabile consegna to contadino" x="854" y="894" width="285" height="36">
     <edge>
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="fork1" x="415" y="580" width="252" height="24">
+  <node name="Fb from customer to contadino per qualita" x="7" y="956" width="334" height="36">
     <edge>
       <label x="5" y="-10"/>
-    </edge>
-    <edge>
-      <label x="-201" y="-10"/>
-    </edge>
-  </node>
-  <node name="Rilascia feedback al contadino o driver" x="249" y="747" width="270" height="36">
-    <edge>
-      <label x="5" y="-10"/>
-    </edge>
-  </node>
-  <node name="join1" x="346" y="845" width="252" height="24">
-    <edge>
-      <label x="5" y="-10"/>
+      <bendpoint w1="-2" h1="118" w2="-222" h2="0"/>
     </edge>
   </node>
   <node name="Verifica disponibilita" x="379" y="294" width="169" height="36">
@@ -69,7 +57,65 @@
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="end-state1" x="179" y="298" width="132" height="36"/>
+  <node name="end-state1" x="154" y="274" width="132" height="36"/>
   <node name="end-state2" x="795" y="249" width="146" height="36"/>
-  <node name="end-state3" x="481" y="913" width="132" height="36"/>
+  <node name="end-state3" x="339" y="1126" width="132" height="36"/>
+  <node name="Il driver ha partecipato alla spesa" x="705" y="735" width="228" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+      <bendpoint w1="340" h1="-7" w2="765" h2="-346"/>
+      <bendpoint w1="340" h1="337" w2="765" h2="-2"/>
+    </edge>
+  </node>
+  <node name="fork2" x="188" y="628" width="252" height="24">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="join2" x="268" y="1080" width="252" height="24">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="Fb from customer to responsabile consegna" x="197" y="999" width="322" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="Fb from responsabile cosegna to customer" x="383" y="953" width="317" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+      <bendpoint w1="7" h1="64" w2="154" h2="-57"/>
+    </edge>
+  </node>
+  <node name="Fb from contadino to responsabile consegna" x="564" y="893" width="277" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="fork1" x="705" y="820" width="252" height="24">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="join1" x="716" y="995" width="252" height="24">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
 </root-container>
