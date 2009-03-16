@@ -145,6 +145,22 @@ public class FiltraNotifica {
 		return tasks;
 	}
 	
+	public List<TaskInstance> getAllSingleTaskInstanceList(String username , String taskName)
+	{
+		List<TaskInstance> tasks= taskInstanceSingleList(taskName);
+		List<TaskInstance> taskList = new ArrayList<TaskInstance>();
+		String nome;
+		for (TaskInstance ti: tasks) {
+			nome = ti.getActorId();
+			if((nome.equals(username)))
+			{
+				if (ti.getName().equals(taskName))
+					taskList.add(ti);
+			}
+		}
+		return tasks;
+	}
+	
 	private List<TaskInstance> taskInstanceSingleList(String taskFilter) {
 		List<TaskInstance> tasks = new ArrayList<TaskInstance>();
 		for (TaskInstance ti: taskInstanceList) {
@@ -262,6 +278,27 @@ public class FiltraNotifica {
 					tasksUser.add(temp);
 		}
 		return tasksUser;
+		
+	}
+	
+	public int getNumerOfAllTaskInstanceListForContadino(String username, String taskName, String contadino)
+	{
+		// Seoncod filtro che restituisce i task per un contadino e assegnato a un utente
+		
+		List<TaskInstance> tasks= taskInstanceSingleList(taskName);
+		
+		List<TaskInstance> tasksUser = new ArrayList<TaskInstance>();
+		Cybercontadino nomeContadino ;
+		String nome;
+		for(TaskInstance temp : tasks)
+		{
+			nomeContadino = (Cybercontadino) temp.getVariable("contadino");
+			nome = temp.getActorId();
+			if((nome.equals(username)))
+				if(nomeContadino.getPartitaIva().equals(contadino))
+					tasksUser.add(temp);
+		}
+		return tasksUser.size();
 		
 	}
 	
