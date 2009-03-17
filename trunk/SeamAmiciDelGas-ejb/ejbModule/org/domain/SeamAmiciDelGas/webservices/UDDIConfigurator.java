@@ -57,7 +57,7 @@ public class UDDIConfigurator {
     	  config.setProperty("adminURL", UDDIConfigurator.DEFAULT_ADMIN_URL);
      if(config.getProperty("userId")==null)
     	  config.setProperty("userId", UDDIConfigurator.DEFAULT__USERID);
-    	  
+   
       // Configure UDDI4J system properties. Normally set on commandline or elsewhere
       // SOAP transport being used
       if (System.getProperty(TransportFactory.PROPERTY_NAME)==null) {
