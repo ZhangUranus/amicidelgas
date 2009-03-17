@@ -1,9 +1,6 @@
 package org.domain.SeamAmiciDelGas.processes;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-
 import org.domain.SeamAmiciDelGas.session.Message;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
@@ -12,12 +9,9 @@ import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Out;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.annotations.bpm.CreateProcess;
-import org.jboss.seam.annotations.bpm.EndTask;
-import org.jboss.seam.annotations.bpm.StartTask;
 import org.jboss.seam.faces.FacesMessages;
 import org.jboss.seam.log.Log;
 import org.jboss.seam.security.Credentials;
-
 
 @Name("notificaRichiestaRisposta")
 @Scope(ScopeType.SESSION)
@@ -42,7 +36,7 @@ public class NotificaRichiestaRisposta {
 	private String mittente;
 	
 	@Out(value="compilato",scope=ScopeType.BUSINESS_PROCESS, required=false)
-	private boolean compilato;
+	private Boolean compilato;
 	
 	@Out(value="nomeMittente",scope=ScopeType.BUSINESS_PROCESS, required=false)
 	private String nomeMittente;

@@ -25,16 +25,19 @@ public class ChangeTimerDate implements ActionHandler{
 		
 		  try {
 
-			  
 	          Timer timer = executionContext.getTimer();
 	          
 	          if (timer != null && nomeTimer.equals(timer.getName())) {
 	               Date data = (Date) executionContext.getVariable(nomeDueDate);
-	               if(data == null)
-	            	   System.out.println("ORROREEEEEEEEEEEE DATA");
+	               System.out.println("DataIMPOSTATA: "+data);
+	               if(data != null)
+	               {
+	            	   timer.setDueDate(data);
+	               }
+	               System.out.println("ORROREEEEEEEEEEEE DATA");
 	               System.out.println(nomeTimer);
 	               System.out.println("DataCAMBIATA: "+data);
-	               timer.setDueDate(data);
+	           
 	          } else {
 	               log.debug("Doesn't match: " + timer);
 	          }

@@ -122,6 +122,39 @@ public class FiltraNotificaAltaPriorita {
 			return true;
 	}
 	
+	public List<TaskInstance> getAllHighestPriorityTaskInstanceListForMe(String username, String taskName, String partitaIva)
+	{
+		// ritorna i task assegnati solo a me per un particolare taskName e un particolare contadino
+		System.out.println("AIUTOOOOOOOOOOOOOOOOOO TASKKKKKKKKKKKKKKK");
+		List<TaskInstance> tasks= taskInstanceSingleList(taskName);
+		List<TaskInstance> tasksUser = new ArrayList<TaskInstance>();
+		Cybercontadino contadino ;
+		for(TaskInstance temp : tasks)
+		{
+			contadino = (Cybercontadino) temp.getVariable("contadino");
+			if(contadino.getPartitaIva().equals(partitaIva) && (temp.getPriority() == Task.PRIORITY_HIGHEST))
+					tasksUser.add(temp);
+			System.out.println("STAMPATIIIII "+tasksUser.toString()+"  "+contadino.getPartitaIva() + "  partita: " +partitaIva + " taskname:"+taskName);
+		}
+		return tasksUser;
+	}
+	public int getNumberAllHighestPriorityTaskInstanceListForMe(String username, String taskName, String partitaIva)
+	{
+		// ritorna il numero di task assegnati solo a me per un particolare taskName e un particolare contadino
+		System.out.println("AIUTOOOOOOOOOOOOOOOOOO TASKKKKKKKKKKKKKKK");
+		List<TaskInstance> tasks= taskInstanceSingleList(taskName);
+		List<TaskInstance> tasksUser = new ArrayList<TaskInstance>();
+		Cybercontadino contadino ;
+		for(TaskInstance temp : tasks)
+		{
+			contadino = (Cybercontadino) temp.getVariable("contadino");
+			if(contadino.getPartitaIva().equals(partitaIva) && (temp.getPriority() == Task.PRIORITY_HIGHEST))
+					tasksUser.add(temp);
+			System.out.println("STAMPATIIIII "+tasksUser.toString()+"  "+contadino.getPartitaIva() + "  partita: " +partitaIva + " taskname:"+taskName);
+		}
+		return tasksUser.size();
+	}
+	
 	public List<TaskInstance> getPooledTaskInstanceListForAllUserButMeNot(String username, String taskName)
 	{
 		System.out.println("AIUTOOOOOOOOOOOOOOOOOO TASKKKKKKKKKKKKKKK");

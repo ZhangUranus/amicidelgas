@@ -9,13 +9,10 @@ import org.domain.SeamAmiciDelGas.crud.FeedbackListExtended;
 import org.domain.SeamAmiciDelGas.entity.Account;
 import org.domain.SeamAmiciDelGas.entity.Cybercontadino;
 import org.domain.SeamAmiciDelGas.entity.Feedback;
-import org.domain.SeamAmiciDelGas.entity.Questionario;
-import org.domain.SeamAmiciDelGas.session.Message;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Logger;
 import org.jboss.seam.annotations.Name;
-import org.jboss.seam.annotations.Out;
 import org.jboss.seam.annotations.Transactional;
 import org.jboss.seam.annotations.bpm.StartTask;
 import org.jboss.seam.annotations.bpm.EndTask;
@@ -45,8 +42,6 @@ public class InviaRichiestaRisposta {
 	@In(value="compilato", scope= ScopeType.BUSINESS_PROCESS, required=false)
 	private Boolean compilato;
 	
-	private Date dataCorrente;
-	
 	@In(value="accountHome", create=true)
 	private AccountHome accounthome;
 
@@ -56,10 +51,8 @@ public class InviaRichiestaRisposta {
 	@In(value="newFeedbackListExtended",create=true)
 	private FeedbackListExtended feedbackList;
 	
-	
-	
-	
-	
+	private Date dataCorrente;
+
 	@StartTask @EndTask(beforeRedirect=true , transition="fine")
 	public String riceviRisposta()
 	{
@@ -95,7 +88,6 @@ public class InviaRichiestaRisposta {
 		feedback.setAnalizzato(true);
 		feedback.setPunteggio(p);
 		float punteggioCorrente = this.calcolaPunteggioFeedback(p, accountUtente);
-		//accountUtente.setPunteggioFeedback(punteggioCorrente);
 		System.out.println("FIGARO");
 		accountUtente.setPunteggioFeedback(punteggioCorrente);
 		accounthome.update();

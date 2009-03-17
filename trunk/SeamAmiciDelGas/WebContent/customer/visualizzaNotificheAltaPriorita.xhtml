@@ -33,10 +33,10 @@
 							<f:facet name="header">Azioni</f:facet>    
 						    <s:link view="/customer/questionarioCybercontadino.xhtml"
 				                   value="Compila Questionario"
-				             propagation="none"
-				             taskInstance="#{_task}"
+				            		 propagation="none"
 				                      id="compilaquestionario" 
 				                      rendered="#{(_task.variables.notifyMessageRequest.tipo=='questionario')}">
+				                      <f:param value="#{_task.variables.contadino.partitaIva}" name="contadino"/>
 				            </s:link>
 						</rich:column>
 					</rich:dataTable>
