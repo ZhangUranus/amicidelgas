@@ -70,7 +70,7 @@ public class ProcessoRegistrazione {
 	private Date dataMassimaAccettazione;
 	
 	@Out(value="postiOccupati",scope=ScopeType.BUSINESS_PROCESS, required= false)
-	private Integer postiOccupati;
+	private int postiOccupati;
 	
 	@Out(value="inviati",scope=ScopeType.BUSINESS_PROCESS, required= false)
 	private List<String> usernameInviati;
@@ -114,7 +114,7 @@ public class ProcessoRegistrazione {
 		messageSubProcess.setTipo("questionario");
 		gc= new GregorianCalendar();
 		gc.setTime((Date) dataQuestionario.clone());
-		gc.add(Calendar.MINUTE, +155);
+		gc.add(Calendar.MINUTE, +30);
 		dataTimer = gc.getTime();
 		MediatoreCheManda = credentials.getUsername();
 		compilato = false;

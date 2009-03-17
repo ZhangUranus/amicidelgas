@@ -22,7 +22,7 @@ public class InviaNotificaRegistrazioni {
 	
 	@In(value="postiOccupati" , scope= ScopeType.BUSINESS_PROCESS, required =false)
 	@Out(value="postiOccupati", scope= ScopeType.BUSINESS_PROCESS, required =false)
-	private Integer postiOccupati;
+	private int postiOccupati;
 	
 	@Out(value="decisione",scope=ScopeType.BUSINESS_PROCESS, required= false)
 	private boolean decisione;
@@ -31,7 +31,6 @@ public class InviaNotificaRegistrazioni {
 	public void partecipa_alla_visita()
 	{
 		usernameInviati.add(credentials.getUsername());
-		System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa"+usernameInviati.toString());
 		postiOccupati++;
 		System.out.println("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBb "+postiOccupati);
 	}
