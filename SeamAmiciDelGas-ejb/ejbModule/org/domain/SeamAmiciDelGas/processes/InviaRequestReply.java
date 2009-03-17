@@ -46,9 +46,9 @@ public class InviaRequestReply {
 	@Out(value="notifyMessageReply", scope= ScopeType.BUSINESS_PROCESS, required=false)
 	private Message message;
 	
-	//@In(value="compilato", scope= ScopeType.BUSINESS_PROCESS, required=false)
+	@In(value="compilato", scope= ScopeType.BUSINESS_PROCESS, required=false)
 	@Out(value="compilato", scope= ScopeType.BUSINESS_PROCESS, required=false)
-	private boolean compilato;
+	private Boolean compilato;
 	
 	private Date dataCorrente;
 	

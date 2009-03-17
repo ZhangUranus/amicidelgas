@@ -11,31 +11,11 @@
 
 	<ui:define name="body">
 
-			<rich:simpleTogglePanel label="Notifiche personali ad alta priorita'">
-				<s:decorate rendered="#{(filtraNotificaAltaPriorita.numberOfHighestPriorityTaskForSingle() > -1)}">
-					<b><h:outputText value="Avvisi importanti" /></b><br/><br/>
+			<rich:simpleTogglePanel label="Notifiche Eventi Azienda">
+				<s:decorate rendered="#{not empty filtraNotifica.getAllSingleTaskInstanceList(currentAccount.username , 'riceviMessaggio')}">
+					<br/>
 					<rich:dataTable id="dataTableUtente" width="90%" align="center" 
-									value="#{filtraNotificaAltaPriorita.getAllPooledHighestPriorityTaskInstanceListForSingleCustomer(currentAccount.username)}" var="_task">
-						<rich:column>
-							<f:facet name="header">Processo</f:facet>							    
-					         <h:outputText value="#{_task.name}"/>
-						</rich:column>
-						<rich:column>
-							<f:facet name="header">Mittente</f:facet>    
-						        <h:outputText value="Un mediatore"/>
-						</rich:column>
-						<rich:column>
-							<f:facet name="header">Contenuto messaggio</f:facet>    
-						    <h:outputText value="#{_task.variables.notifyMessageRequest.content}"/>
-						</rich:column>
-					</rich:dataTable>
-					<br/><br/><br/>
-				</s:decorate>
-				
-				<s:decorate rendered="#{not empty filtraNotificaAltaPriorita.getAllSingleTaskInstanceList(currentAccount.username , 'riceviMessaggio')}">
-					<b><h:outputText value="Messaggi da altri utenti" /></b><br/><br/>
-					<rich:dataTable id="dataTableUtente" width="90%" align="center" 
-									value="#{filtraNotificaAltaPriorita.getAllSingleTaskInstanceList('riceviMessaggio')}" var="_task">
+									value="#{filtraNotifica.getAllSingleTaskInstanceList(currentAccount.username , 'riceviMessaggio')}" var="_task">
 						
 						<rich:column>
 							<f:facet name="header">Mittente</f:facet>
@@ -54,6 +34,7 @@
 						    <s:link view="/customer/questionarioCybercontadino.xhtml"
 				                   value="Compila Questionario"
 				             propagation="none"
+				             taskInstance="#{_task}"
 				                      id="compilaquestionario" 
 				                      rendered="#{(_task.variables.notifyMessageRequest.tipo=='questionario')}">
 				            </s:link>
@@ -61,37 +42,36 @@
 					</rich:dataTable>
 					<br/><br/><br/>
 				</s:decorate>
-				
-				<s:decorate rendered="#{not empty filtraNotificaAltaPriorita.getAllPooledTaskInstanceListForAllUserButMeNot(currentAccount.username,'partecipa_alla_visita')}">
-					<b><h:outputText value="Messaggi di gruppo da altri utenti" /></b><br/><br/>
+
+				<s:decorate rendered="#{filtraNotificaAltaPriorita.PooledTaskInstanceListForAllUserButMeNot(currentAccount.username , 'partecipa_alla_visita')}">
+					<b><h:outputText value="Messaggi per partecipare alla visita in azienda" /></b><br/><br/>
 					<rich:dataTable id="dataTableGroupVisita" 
-								value="#{filtraNotificaAltaPriorita.getAllPooledTaskInstanceListForAllUserButMeNot(currentAccount.username,'partecipa_alla_visita')}" var="_pooledTask2"
+								value="#{filtraNotificaAltaPriorita.getPooledTaskInstanceListForAllUserButMeNot(currentAccount.username,'partecipa_alla_visita')}" var="_singleTask2"
 								width="90%" align="center" >
-						<rich:column>
-							<f:facet name="header">Processo</f:facet>							    
-					         <h:outputText value="#{_pooledTask2.name}"/>
-						</rich:column>
+			
 						<rich:column>
 							<f:facet name="header">Mittente</f:facet>    
 					         <h:outputText value="Un mediatore"/>
 						</rich:column>
 						<rich:column>
-							<f:facet name="header">Gruppo</f:facet>    
-					         <h:outputText value="#{_pooledTask2.pooledActors.iterator().next()}"/>
+							<f:facet name="header">Contenuto messaggio</f:facet>    
+					         <h:outputText value="#{_singleTask2.variables.notificaUtente.content}"/>
 						</rich:column>
 						<rich:column>
-							<f:facet name="header">Contenuto messaggio</f:facet>    
-					         <h:outputText value="#{_pooledTask2.variables.notificaUtente.content}"/>
+							<f:facet name="header">Nome Azienda</f:facet>							    
+					         <h:outputText value="#{_singleTask2.variables.contadinoCreato.nomeAzienda}"/>
 						</rich:column>
 						<rich:column width="10%">
 							<f:facet name="header">Azione</f:facet>  
-							<s:button taskInstance="#{_pooledTask2}" action="#{inviaNotificaRegistrazioni.partecipa_alla_visita}"
+							<s:button taskInstance="#{_singleTask2}" action="#{inviaNotificaRegistrazioni.partecipa_alla_visita}"
 									  value="Partecipa alla visita"/>
 						</rich:column>
 					</rich:dataTable>
 				</s:decorate>
 								
 			</rich:simpleTogglePanel>
+			
+			
 		
 		
 	</ui:define>

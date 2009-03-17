@@ -9,8 +9,6 @@ import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
-import org.jboss.seam.bpm.PooledTaskInstanceList;
-import org.jboss.seam.bpm.TaskInstanceList;
 import org.jboss.seam.security.Credentials;
 import org.jbpm.taskmgmt.def.Task;
 import org.jbpm.taskmgmt.exe.TaskInstance;
@@ -24,10 +22,6 @@ public class FiltraNotificaAltaPriorita {
 	
 	@In(value="taskInstanceList", create=true)
 	private List<TaskInstance> taskInstanceList;
-	
-	@In private Credentials credentials;
-	
-
 	/*
 	 * ritorno il numero di notifiche per gruppi
 	 */
@@ -49,7 +43,7 @@ public class FiltraNotificaAltaPriorita {
 		return count;
 	}
 	
-	public int numberOfTask(String SingleOrGroupTask, String... filters)
+	public int numberOfTask(String SingleOrGroupTask, String taskName)
 	{
 		List<TaskInstance> tempTaskInstance;
 		if(SingleOrGroupTask.equals("taskForSingle"))
@@ -60,11 +54,101 @@ public class FiltraNotificaAltaPriorita {
 			return 9999; //tempTaskInstance = null; //per verifica
 		int count = 0;
 		for (TaskInstance ti: tempTaskInstance)
-			for(String singleFilter : filters)
-				if (ti.getName().equals(singleFilter))
+			if(ti.getName().equals(taskName))
 					count++;
+		System.out.println("COUNTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTtt"+count);
 		return count;
 	}
+	
+	public boolean TaskInstanceListForAllUserButMeNot(String username, String taskName)
+	{
+		System.out.println("AIUTOOOOOOOOOOOOOOOOOO TASKKKKKKKKKKKKKKK");
+		List<TaskInstance> tasks= taskInstanceSingleList(taskName);
+		List<TaskInstance> tasksUser = new ArrayList<TaskInstance>();
+		
+		ArrayList<String> arraylist = null;
+		
+		for(TaskInstance temp : tasks)
+		{
+			arraylist = (ArrayList<String>) temp.getVariable("inviati");
+			
+			if(arraylist==null)
+			{
+				System.out.println("VUOTOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+				return true;
+			} 
+			else 
+			{
+				System.out.println("PIENOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+				if(!(arraylist.contains(username)))
+					tasksUser.add(temp);
+			}
+			
+		}
+		if(tasksUser.isEmpty())
+			return false;
+		else
+			return true;
+	}
+	
+	public boolean PooledTaskInstanceListForAllUserButMeNot(String username, String taskName)
+	{
+		System.out.println("AIUTOOOOOOOOOOOOOOOOOO TASKKKKKKKKKKKKKKK");
+		List<TaskInstance> tasks= getAllPooledTaskInstanceList(taskName);
+		List<TaskInstance> tasksUser = new ArrayList<TaskInstance>();
+		
+		ArrayList<String> arraylist = null;
+		
+		for(TaskInstance temp : tasks)
+		{
+			arraylist = (ArrayList<String>) temp.getVariable("inviati");
+			
+			if(arraylist==null)
+			{
+				System.out.println("VUOTOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+				return true;
+			} 
+			else 
+			{
+				System.out.println("PIENOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+				if(!(arraylist.contains(username)))
+					tasksUser.add(temp);
+			}
+			
+		}
+		if(tasksUser.isEmpty())
+			return false;
+		else
+			return true;
+	}
+	
+	public List<TaskInstance> getPooledTaskInstanceListForAllUserButMeNot(String username, String taskName)
+	{
+		System.out.println("AIUTOOOOOOOOOOOOOOOOOO TASKKKKKKKKKKKKKKK");
+		List<TaskInstance> tasks= getAllPooledTaskInstanceList(taskName);
+		List<TaskInstance> tasksUser = new ArrayList<TaskInstance>();
+		
+		ArrayList<String> arraylist = null;
+		
+		for(TaskInstance temp : tasks)
+		{
+			arraylist = (ArrayList<String>) temp.getVariable("inviati");
+			
+			if(arraylist==null)
+			{
+				System.out.println("VUOTOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+			} 
+			else 
+			{
+				System.out.println("PIENOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+				if(!(arraylist.contains(username)))
+					tasksUser.add(temp);
+			}
+			
+		}
+		return tasksUser;
+	}
+	
 	
 	public int numberOfHighestPriorityTaskForSingle()	{
 		return numberOfHighPriorityTask("taskForSingle");

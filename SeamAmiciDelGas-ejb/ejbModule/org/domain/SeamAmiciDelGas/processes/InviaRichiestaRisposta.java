@@ -43,7 +43,7 @@ public class InviaRichiestaRisposta {
 	private String nomeUtente;
 	
 	@In(value="compilato", scope= ScopeType.BUSINESS_PROCESS, required=false)
-	private boolean compilato;
+	private Boolean compilato;
 	
 	private Date dataCorrente;
 	

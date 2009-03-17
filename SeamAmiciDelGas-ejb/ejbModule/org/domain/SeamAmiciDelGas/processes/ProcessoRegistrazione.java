@@ -62,7 +62,7 @@ public class ProcessoRegistrazione {
 	private Date dataProposta;
 	
 	@Out(value="compilatoQuestionario", scope= ScopeType.BUSINESS_PROCESS, required =false)
-	private boolean compilato;
+	private Boolean compilato;
 	
 	@Out(value="dataQuestionario", scope= ScopeType.BUSINESS_PROCESS, required =false)
 	private Date dataQuestionario ;
