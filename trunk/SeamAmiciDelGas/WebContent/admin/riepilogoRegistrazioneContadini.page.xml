@@ -7,9 +7,5 @@
       login-required="true">
 
 <restrict>#{s:hasRole('admin')}</restrict>      
- <navigation>
-  <rule if-outcome="OutRiepilogoQuestionari">
-   <redirect view-id="/mediatore/riepilogoRegistrazioneContadini.xhtml"/>
-  </rule>
- </navigation>
+
 </page>
