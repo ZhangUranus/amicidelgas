@@ -116,11 +116,11 @@ public class OrderProcessing {
 	
 	@In(value="feedbackDriverToCustomer", scope=ScopeType.BUSINESS_PROCESS,required=false)
 	@Out(value="feedbackDriverToCustomer", scope=ScopeType.BUSINESS_PROCESS,required=false)
-	private boolean feedbackDriverToCustomer;
+	private Boolean feedbackDriverToCustomer;
 
 	@In(value="feedbackCustomerToDriver", scope=ScopeType.BUSINESS_PROCESS,required=false)
 	@Out(value="feedbackCustomerToDriver", scope=ScopeType.BUSINESS_PROCESS,required=false)
-	private boolean feedbackCustomerToDriver;
+	private Boolean feedbackCustomerToDriver;
 	//customerToDriver
 	//DriverToCustomer
 */	
@@ -231,7 +231,7 @@ public class OrderProcessing {
 		}
 	}
 	
-	private List<Cybercontadino> listCybercontadiniEffettivi() {
+	public List<Cybercontadino> listCybercontadiniEffettivi() {
 		List<Cybercontadino> contadiniEffettivi = new ArrayList<Cybercontadino>();
 		for (ItemQuantita iq: myOrdine.getItemQuantita()) {
 			if (!contadiniEffettivi.contains(iq.getCybercontadino()))
@@ -313,12 +313,12 @@ public class OrderProcessing {
 			feedbackListContadiniToDriver.remove(contadino.getPartitaIva());
 		if(transition.equals("fb_responsabile_consegna_to_contadino"))
 			feedbackListDriverToContadini.remove(contadino);
-
 	}
 */
 	@BeginTask @EndTask(beforeRedirect=true,transition="fb_customer_to_contadino")
 	public String fb_customer_to_contadino() {
 		//list...
+		
 		return "fb_customer_to_contadino";
 	}
 	
@@ -377,5 +377,4 @@ public class OrderProcessing {
 	public void setDataMassima(Date dataMassima) {
 		this.dataMassima = dataMassima;
 	}
-
 }
