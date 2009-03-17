@@ -284,5 +284,12 @@ public class Cybercontadino implements java.io.Serializable {
 	public void setDataVisita(Date dataVisita) {
 		this.dataVisita = dataVisita;
 	}
+	
+	public boolean equals(Cybercontadino contadino) {
+		if(this.partitaIva.equals(contadino.getPartitaIva()))
+				return true;
+		return false;
+	}
+	
 
 }
