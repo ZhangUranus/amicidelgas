@@ -55,6 +55,10 @@ public class OrderProcessing {
 	@Out(value="myOrdine",scope=ScopeType.BUSINESS_PROCESS,required=false)
 	private MyOrdine myOrdine;
 	
+	@In(value="ordine", scope=ScopeType.BUSINESS_PROCESS, required=false)
+	@Out(value="ordine",scope=ScopeType.BUSINESS_PROCESS,required=false)
+	private Ordine ordine;
+	
 	@In(value="dataRichiesta", scope=ScopeType.BUSINESS_PROCESS, required=false)
 	@Out(value="dataRichiesta",scope=ScopeType.BUSINESS_PROCESS,required=false)
 	private Date dataRichiesta;
@@ -220,22 +224,20 @@ public class OrderProcessing {
 				CatalogInterface catalog= CatalogImpl.getInstanceForContadino(partitaIva);
 				catalog.commitTransaction(transactionIdList.get(partitaIva));
 			}
-			String isNull = "NOT NULL";
-			if (dataConsegna==null)
-				isNull = "NULLLLL";
-			messageStatoOrdine.setContent("Ordine preso in carico da "+ credentials.getUsername()+" dataConsegna = "+isNull);
+			//messageStatoOrdine.setContent("Ordine preso in carico da "+ credentials.getUsername()+" ordine = "+ordine.getIdordine());
 			messageStatoOrdine.setInfoFilter("orderProcessingPreso");
 			responsabileConsegna = currentAccount;
 			myOrdine.setPendente(false);
 			myOrdine.setEvaso(true);
 			this.dataConsegna = dataConsegna;
 			saveOrdine(); //salvo l'ordine nel database
+			messageStatoOrdine.setContent("Ordine preso in carico da "+ credentials.getUsername()+" ordine = "+ordine.getIdordine());
 		}
 	}
 	
 	@Transactional
 	private void saveOrdine() {
-		Ordine ordine = new Ordine();
+		ordine = new Ordine();
 		ordine.setAccount(customer);
 		ordine.setConcluso(false);
 		ordine.setDataRichiesta(dataRichiesta);
