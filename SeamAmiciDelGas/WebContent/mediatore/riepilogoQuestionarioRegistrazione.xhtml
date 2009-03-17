@@ -10,7 +10,7 @@
 
 	<ui:define name="body">
 
-	<rich:dataTable id="tabellaRiepilogo" width="100%" align="center" value="#{filtraNotifica.getAllContadinoForTaskInstanceType(currentAccount.username, 'riceviRisposta')}" var="_contadino">
+	<rich:dataTable id="tabellaRiepilogo" width="100%" align="center" value="#{filtraNotificaAltaPriorita.getAllContadinoForTaskInstanceType(currentAccount.username, 'riceviRisposta')}" var="_contadino">
 		<rich:column>
 			<f:facet name="header">Riepilogo questionari per l'azienda</f:facet>
 				<table width="100%" border="0" cellspacing="2" cellpadding="0" align="center" >
@@ -57,7 +57,7 @@
 							<table width="100%" border="0" cellspacing="4" cellpadding="0" align="center">
 								<tr>
 									<td width="100%" colspan="4" align="center" valign="top">
-										<div align="center" class="colore_1" >Visitatori: #{filtraNotifica.getNumerOfAllTaskInstanceListForContadino(currentAccount.username, 'riceviRisposta',_contadino.partitaIva)} di 10</div>
+										<div align="center" class="colore_1" >Visitatori: #{filtraNotificaAltaPriorita.getNumerOfAllTaskInstanceListForContadino(currentAccount.username, 'riceviRisposta',_contadino.partitaIva)} di 10</div>
 									</td>					
 								</tr>
 								<tr>
@@ -67,7 +67,7 @@
 									<td width="10%" ><div align="right" ><b>Azione</b></div></td>
 								</tr>
 							</table>
-							<rich:dataTable id="tabellaRiepilogoInviati" width="100%" align="center" value="#{filtraNotifica.getAllTaskInstanceListForContadino(currentAccount.username, 'riceviRisposta',_contadino.partitaIva)}" var="_inviato" >
+							<rich:dataTable id="tabellaRiepilogoInviati" width="100%" align="center" value="#{filtraNotificaAltaPriorita.getAllTaskInstanceListForContadino(currentAccount.username, 'riceviRisposta',_contadino.partitaIva)}" var="_inviato" >
 								<rich:column>
 									<table width="100%" border="0" cellspacing="4" cellpadding="0" align="center">
 										<tr>
