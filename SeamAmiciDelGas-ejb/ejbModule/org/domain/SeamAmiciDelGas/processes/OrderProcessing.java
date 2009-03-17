@@ -31,6 +31,7 @@ import org.domain.SeamAmiciDelGas.session.MyOrdine;
 import org.domain.SeamAmiciDelGas.session.OrdineBean;
 import org.domain.SeamAmiciDelGas.session.TakeInHandContadino;
 import org.domain.SeamAmiciDelGas.session.TakeInHandContadino.InfoFeedback;
+import org.domain.SeamAmiciDelGas.webservices.CatalogImpl;
 import org.domain.SeamAmiciDelGas.webservices.CatalogInterface;
 import org.domain.SeamAmiciDelGas.webservices.CatalogNoServiceImpl;
 import org.jboss.seam.ScopeType;
@@ -178,19 +179,20 @@ public class OrderProcessing {
 	public void verificaDisponibilita(Date dataConsegna){
 		//setto lo stato dell'ordine
 		//myOrdine.setPendente(false);
-		CatalogInterface catalog = new CatalogNoServiceImpl();
-		Hashtable<String,UUID> transactionIdList = new Hashtable<String,UUID>();
+		Hashtable<String,String> transactionIdList = new Hashtable<String,String>();
 		boolean isAvailable=true;
 		//verifico la disponibilità per ogni contandino
 		for (ItemQuantita iq : myOrdine.getItemQuantita()) {
-			String idContadino = iq.getCybercontadino().getAccount().getUsername();
-			UUID uuid = transactionIdList.get(idContadino);
+			String partitaIva= iq.getCybercontadino().getPartitaIva();
+			CatalogInterface catalog = CatalogImpl.getInstanceForContadino(partitaIva);
+			
+			String uuid = transactionIdList.get(partitaIva);
 			if(uuid==null)
 			{	
-				uuid = catalog.beginTransaction(idContadino,myOrdine.getDataMassima());
-				transactionIdList.put(idContadino, uuid);
+				uuid = catalog.beginTransaction(myOrdine.getDataMassima());
+				transactionIdList.put(partitaIva, uuid);
 			}
-			isAvailable=catalog.reserveItem(idContadino,uuid, iq.getItem(),iq.getQuantitaParziale(), iq.getQuantita());
+			isAvailable=catalog.reserveItem(uuid, iq.getItem(),iq.getQuantitaParziale(), iq.getQuantita());
 			if(!isAvailable)
 				break;
 		}
@@ -202,8 +204,9 @@ public class OrderProcessing {
 			Enumeration<String> enumContadini = transactionIdList.keys();
 			while(enumContadini.hasMoreElements())
 			{
-				String idContadino = enumContadini.nextElement();
-				catalog.rollBackTransaction(idContadino, transactionIdList.get(idContadino));
+				String partitaIva = enumContadini.nextElement();
+				CatalogInterface catalog= CatalogImpl.getInstanceForContadino(partitaIva);
+				catalog.rollBackTransaction(transactionIdList.get(partitaIva));
 			}
 			messageStatoOrdine.setContent("Ordine non fattibile, e' stato rimesso in coda");
 			messageStatoOrdine.setInfoFilter("orderProcessingNonPreso");
@@ -213,8 +216,9 @@ public class OrderProcessing {
 			Enumeration<String> enumContadini = transactionIdList.keys();
 			while(enumContadini.hasMoreElements())
 			{
-				String idContadino = enumContadini.nextElement();
-				catalog.commitTransaction(idContadino, transactionIdList.get(idContadino));
+				String partitaIva = enumContadini.nextElement();
+				CatalogInterface catalog= CatalogImpl.getInstanceForContadino(partitaIva);
+				catalog.commitTransaction(transactionIdList.get(partitaIva));
 			}
 			String isNull = "NOT NULL";
 			if (dataConsegna==null)
@@ -222,23 +226,10 @@ public class OrderProcessing {
 			messageStatoOrdine.setContent("Ordine preso in carico da "+ credentials.getUsername()+" dataConsegna = "+isNull);
 			messageStatoOrdine.setInfoFilter("orderProcessingPreso");
 			responsabileConsegna = currentAccount;
-			/*if (loginSelectBean.isDriver())
-				responsabileIsDriver = true;
-			else 
-				responsabileIsDriver = false;*/
 			myOrdine.setPendente(false);
 			myOrdine.setEvaso(true);
 			this.dataConsegna = dataConsegna;
 			saveOrdine(); //salvo l'ordine nel database
-			//setto le variabili per i feedback
-/*			feedbackListCustomerToContadini = listCybercontadiniEffettivi();
-			feedbackListDriverToContadini = listCybercontadiniEffettivi();
-			feedbackListContadiniToDriver = new Hashtable<String,Boolean>();
-			for (Cybercontadino c: feedbackListCustomerToContadini)
-				feedbackListContadiniToDriver.put(c.getPartitaIva(), new Boolean(false));
-			feedbackDriverToCustomer = false;
-			feedbackCustomerToDriver = false;		
-*/			
 		}
 	}
 	
