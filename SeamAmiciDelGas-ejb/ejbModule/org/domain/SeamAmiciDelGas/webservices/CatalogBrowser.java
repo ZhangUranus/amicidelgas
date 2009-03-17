@@ -11,10 +11,8 @@ import org.jboss.seam.annotations.Scope;
 @Name("catalogBrowser")
 @Scope(ScopeType.SESSION)
 public class CatalogBrowser{
-
-	@Out(value="categories", required=false) private List<String> categories;
-	@Out(value="items", required=false) private List<Item> items;
-	@Out(value="itemsForCategory", required=false) private List<Item> itemsForCategory;
+	
+	@Out(value="contadinoSelezionato",scope=ScopeType.SESSION, required=false)
 	private Cybercontadino contadino;
 	private String category;
 	public CatalogBrowser(){
@@ -22,6 +20,8 @@ public class CatalogBrowser{
 	}
 	
 	public List<String> getCategories(){
+		if(contadino==null)
+			return null;
 		CatalogInterface catalog= CatalogImpl.getInstanceForContadino(contadino.getPartitaIva());
 		if(catalog==null)
 			return new ArrayList<String>();
@@ -31,17 +31,30 @@ public class CatalogBrowser{
 	}
 
 	public String getDescription() {
+		if(contadino==null)
+			return null;
+		
 		CatalogInterface catalog= CatalogImpl.getInstanceForContadino(contadino.getPartitaIva());
 		return catalog.getDescription();
 	}
 
 	public List<Item> getItems() {
+		if(contadino==null)
+			return null;
+		
 		CatalogInterface catalog= CatalogImpl.getInstanceForContadino(contadino.getPartitaIva());
+		if(catalog==null)
+			return new ArrayList<Item>();
 		return catalog.getItems();
 	
 	}
 
 	public List<Item> getItemsForCategory(String category) {
+		if(contadino==null)
+			return null;
+		if(category.length()==0)
+			return null;
+		
 		CatalogInterface catalog= CatalogImpl.getInstanceForContadino(contadino.getPartitaIva());
 		return catalog.getItemsForCategory(category);
 	}
@@ -63,6 +76,9 @@ public class CatalogBrowser{
 	}
 
 	public long getAvailableQuantity(Item item) {
+		if(contadino==null)
+			return 0;
+		
 		CatalogInterface catalog= CatalogImpl.getInstanceForContadino(contadino.getPartitaIva());
 		return catalog.getAvailableQuantity(item);
 	}

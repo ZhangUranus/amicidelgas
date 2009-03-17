@@ -64,5 +64,6 @@ public class Item implements Serializable{
 	public void setPrezzo(double prezzo) {
 		this.prezzo = prezzo;
 	}
+	
 
 }

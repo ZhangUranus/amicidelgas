@@ -35,7 +35,7 @@ import com.sun.org.apache.xalan.internal.xsltc.runtime.Hashtable;
 
 public class CatalogImpl {
 
-	public static Hashtable instances;
+	public static Hashtable instances= new Hashtable();
 	
 	public static CatalogInterface getInstanceForContadino(String idContadino){
 		if(idContadino == null)
@@ -63,7 +63,7 @@ public class CatalogImpl {
 			UDDIProxy proxy = new UDDIProxy();
 			proxy.setInquiryURL(config.getProperty("inquiryURL"));
 			proxy.setPublishURL(config.getProperty("publishURL"));
-			AuthToken token = proxy.get_authToken(config.getProperty("userid"),
+			AuthToken token = proxy.get_authToken(config.getProperty("userId"),
 					config.getProperty("password"));
 			
 			Vector businessNames= new Vector();
@@ -92,7 +92,7 @@ public class CatalogImpl {
 			OverviewDoc doc = tModel.getOverviewDoc();
 			String wsdlUrl = 	doc.getOverviewURL().getText();
 			String nameSpaceUri= tModel.getName().getText();
-			Service afs = Service.create(new 	java.net.URL(wsdlUrl),new QName(nameSpaceUri, "CatalogService"));
+			Service afs = Service.create(new java.net.URL(wsdlUrl),new QName(nameSpaceUri, "CatalogService"));
 			QName portName=null;
 			Iterator ports=afs.getPorts();
 			while(ports.hasNext()){
