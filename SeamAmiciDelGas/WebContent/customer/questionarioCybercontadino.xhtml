@@ -12,7 +12,7 @@
     <ui:define name="body">
 		<h:form id="valutazioneContadinoForm">
 		
-	    <rich:panel id="panelIdRich" rendered="#{filtraNotificaAltaPriorita.getNumberAllHighestPriorityTaskInstanceListForMe(currentAccount.username ,'riceviMessaggio', param.contadino) > 0 }">
+	    <rich:panel id="panelIdRich" >
 	        <f:facet name="header">Questionario Valutazione CyberContadino</f:facet>
 	            
 	            <s:decorate id="qualitaProdottiValutazione" template="/layout/edit.xhtml">
@@ -90,20 +90,15 @@
 	                <span class="required">*</span>
 	                Campi richiesti
 	            </div>
+	
 	    </rich:panel>
 	    
-	    		<s:decorate id="decorateQuestionario">
-					<rich:dataTable  id="requestTableQuestionario" var="_task" value="#{filtraNotificaAltaPriorita.getAllHighestPriorityTaskInstanceListForMe(currentAccount.username ,'riceviMessaggio',param.contadino)}">
-					<h:column>
-						<s:button value="post questionario" taskInstance="#{_task}" id="postQuestionario"
-	            			action="#{inviaRequestReply.riceviMessaggio()}" view="/customer/questionarioCybercontadino.xhtml"
-	            			  >
-	            			<a:support event="onmousedown"  />
-	            		</s:button>
-					</h:column>
-					</rich:dataTable>
+	    		<s:decorate id="decorateQuestionario">					
+						<h:commandLink value="post questionario" id="postQuestionario"
+	            			action="#{inviaRequestReply.riceviMessaggio}" style="display:none;"  >	            			
+	            			<f:param name="taskId" value="#{param.taskId}"/>
+	            		</h:commandLink>
 				</s:decorate>
-				
 	    </h:form>
 
 		<script type="text/javascript">
@@ -115,7 +110,7 @@
 			var score_five = 0;
 			
 			function attiva_post(){
-				document.getElementById('valutazioneContadinoForm:decorateQuestionario:requestTableQuestionario:0:postQuestionario').style.display = "";
+				document.getElementById('valutazioneContadinoForm:decorateQuestionario:postQuestionario').style.display = "";
 			}
 			 
 			function liveScore(who_is, score){
