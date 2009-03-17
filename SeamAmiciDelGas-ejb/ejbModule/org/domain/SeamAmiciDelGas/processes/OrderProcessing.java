@@ -312,7 +312,7 @@ public class OrderProcessing {
 		while(enum1.hasMoreElements()) {
 			String username = enum1.nextElement();
 			InfoFeedback infoFeedback = hashTableContadini.get(username);
-			gestioneFeedback.assegnaFeedback(username, (float) infoFeedback.getFeedback(), infoFeedback.getComment());
+			gestioneFeedback.assegnaFeedback(username, ordine, (float) infoFeedback.getFeedback(), infoFeedback.getComment());
 		}
 		
 		takeInHandContadino.reset();
