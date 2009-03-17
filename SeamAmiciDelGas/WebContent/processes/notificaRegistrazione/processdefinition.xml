@@ -29,7 +29,7 @@
 			 	<taskName>partecipa_alla_visita</taskName>
 			</action>
 		</event>
-    	<timer duedate="9 years" name="varTimer" transition="time-out"/>
+    	<timer duedate="1 years" name="varTimer" transition="time-out"/>
 		<transition to="AccettaAltriUtenti" name="partecipa"></transition>
 		<transition to="join1" name="time-out"></transition>
 	</task-node>
@@ -69,7 +69,7 @@
 		<variable access="read" name="inviato" mapped-name="nomeDestinatario"></variable>
 		<variable access="read" name="dataTimer" mapped-name="dataTimer"></variable>
 		<variable access="read" name="MediatoreCheManda" mapped-name="nomeMittente"></variable>
-		<variable access="read" name="compilatoQuestionario" mapped-name="compilato"></variable>
+		<variable access="read" name="compilato" mapped-name="compilato"></variable>
 		<variable access="read" name="dataProposta" mapped-name="dataVisita"></variable>
 		<variable access="read" name="contadinoCreato" mapped-name="contadino"></variable>
 		<transition to="CustomNodeJoin" name="fineSubProcess"></transition>

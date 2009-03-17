@@ -6,9 +6,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
-
-import javax.persistence.EntityManager;
-
 import org.domain.SeamAmiciDelGas.entity.Cybercontadino;
 import org.domain.SeamAmiciDelGas.session.Message;
 import org.jboss.seam.ScopeType;
@@ -24,7 +21,6 @@ import org.jboss.seam.faces.FacesMessages;
 import org.jboss.seam.log.Log;
 import org.jboss.seam.security.Credentials;
 import org.jbpm.taskmgmt.exe.TaskInstance;
-
 
 @Name("processoRegistrazione")
 @Scope(ScopeType.SESSION)
@@ -61,7 +57,7 @@ public class ProcessoRegistrazione {
 	@Out(value="dataProposta", scope= ScopeType.BUSINESS_PROCESS, required =false)
 	private Date dataProposta;
 	
-	@Out(value="compilatoQuestionario", scope= ScopeType.BUSINESS_PROCESS, required =false)
+	@Out(value="compilato", scope= ScopeType.BUSINESS_PROCESS, required =false)
 	private Boolean compilato;
 	
 	@Out(value="dataQuestionario", scope= ScopeType.BUSINESS_PROCESS, required =false)
@@ -74,42 +70,18 @@ public class ProcessoRegistrazione {
 	private Date dataMassimaAccettazione;
 	
 	@Out(value="postiOccupati",scope=ScopeType.BUSINESS_PROCESS, required= false)
-	private int postiOccupati;
-	
-//	@Out(value="contenutoMessaggio",scope=ScopeType.BUSINESS_PROCESS, required= false)
-//	private String contenutoMessaggio;
+	private Integer postiOccupati;
 	
 	@Out(value="inviati",scope=ScopeType.BUSINESS_PROCESS, required= false)
 	private List<String> usernameInviati;
-	
-//	@Out(value="provaInviato",scope=ScopeType.BUSINESS_PROCESS, required= false)
-//	private String provaInviato;
-	
-//	@Out(value="mioBroadcast",scope=ScopeType.BUSINESS_PROCESS, required= false)
-//	private boolean mioBroadcast;
-
 	
 	private Cybercontadino contadinoCorrente;
 	private TaskInstance taskCorrente;
 	
 	@CreateProcess(definition="notificaRegistrazione")
 	public void inviaRegistrazione()
-	{
-		//log.info("E' arrivata la richiesta driver");
-		
-		// Discutiamone con antonio probabilmente non serve a nulla.....
-		//nomeContadino= credentials.getUsername();
+	{	
 		facesMessages.add("La richiesta e' stata inoltrata");
-		//usernameInviati = new ArrayList<String>();
-		//usernameInviati.add("zlatan");
-		//usernameInviati.add("esteban");
-//		provaInviato = "zlatan";
-//		provaMessaggio = new Message();
-		//provaMessaggio.setBroadcast(false);
-		//provaMessaggio.setDestinatario("zlatan");
-		//provaMessaggio.setContent("FOrse questa è la volta buona");
-//		contenutoMessaggio="Ce la possiamo fare!!!";
-//		mioBroadcast=false;
 	}
 	
 	
@@ -118,25 +90,13 @@ public class ProcessoRegistrazione {
 	{
 		Calendar gc= new GregorianCalendar();
 		gc.setTime((Date) dataProposta.clone());
-		// funzionamento corretto
-		//gc.roll(Calendar.DATE, -1);
-		// funzionamento di prova
-		//gc.roll(Calendar.MINUTE, -1);
-		// funzionamento NON ME NE TIENE
 		gc.add(Calendar.MINUTE, +0);
 		dataMassimaAccettazione = gc.getTime();
 		postiOccupati=0;
-		
 		gc= new GregorianCalendar();
 		gc.setTime((Date) dataProposta.clone());
-	//funzionamento corretto	gc.add(Calendar.DATE, +1);
-		// funzionamento di prova
-		//gc.add(Calendar.MINUTE, +1);
-		// funzionamento NON ME NE TIENE
 		gc.add(Calendar.MINUTE, +1);
 		dataQuestionario = gc.getTime();
-		
-		
 		gc.setTime((Date) dataProposta.clone());
 		String format = "dd-MM-yyyy";
 		messageUtente= new Message();
@@ -152,28 +112,14 @@ public class ProcessoRegistrazione {
 		messageSubProcess.setBroadcast(false);
 		messageSubProcess.setMittente(mittente);
 		messageSubProcess.setTipo("questionario");
-		
 		gc= new GregorianCalendar();
 		gc.setTime((Date) dataQuestionario.clone());
-	//funzionamento corretto	gc.add(Calendar.DATE, +1);
-		// funzionamento di prova
-		gc.add(Calendar.MINUTE, +55);
+		gc.add(Calendar.MINUTE, +155);
 		dataTimer = gc.getTime();
 		MediatoreCheManda = credentials.getUsername();
 		compilato = false;
 	}
 	
-/*	
-	@BypassInterceptors
-	public String getMsg() {
-		return msg;
-	}
-	@BypassInterceptors
-	public void setMsg(String msg) {
-		this.msg = msg;
-	}
-
-*/
 	public Cybercontadino getContadinoCorrente() {
 		return contadinoCorrente;
 	}
