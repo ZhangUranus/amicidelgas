@@ -2,8 +2,11 @@ package org.domain.SeamAmiciDelGas.processes;
 
 import java.util.Date;
 import javax.persistence.EntityManager;
+import org.domain.SeamAmiciDelGas.crud.AccountHome;
+import org.domain.SeamAmiciDelGas.crud.FeedbackListExtended;
 import org.domain.SeamAmiciDelGas.entity.Account;
 import org.domain.SeamAmiciDelGas.entity.Cybercontadino;
+import org.domain.SeamAmiciDelGas.entity.Feedback;
 import org.domain.SeamAmiciDelGas.entity.Questionario;
 import org.domain.SeamAmiciDelGas.session.Message;
 import org.jboss.seam.ScopeType;
@@ -14,9 +17,7 @@ import org.jboss.seam.annotations.Out;
 import org.jboss.seam.annotations.Transactional;
 import org.jboss.seam.annotations.bpm.StartTask;
 import org.jboss.seam.annotations.bpm.EndTask;
-import org.jboss.seam.annotations.intercept.BypassInterceptors;
 import org.jboss.seam.log.Log;
-import org.jbpm.taskmgmt.exe.TaskInstance;
 
 @Name("inviaRequestReply")
 public class InviaRequestReply {
@@ -45,21 +46,31 @@ public class InviaRequestReply {
 	
 	@In(value="compilato", scope= ScopeType.BUSINESS_PROCESS, required=false)
 	@Out(value="compilato", scope= ScopeType.BUSINESS_PROCESS, required=false)
-	private Boolean compilato;
+	private boolean compilato;
 	
 	private Date dataCorrente;
 	
+	@In(value="accountHome", create=true)
+	private AccountHome accounthome;
+	
 	@In(value="newQuestionario")
 	private Questionario questionario;
-
-
+	
+	//@In(value="creaQuestionario")
+	//private creaQuestionario creaQuestionario;
+	
+	@In(value="newFeedback" , create=true)
+	private Feedback feedback;
+	
+	@In(value="newFeedbackListExtended",create=true)
+	private FeedbackListExtended feedbackList;
+	
 	@StartTask @EndTask(transition="inviaReply")
 	public String riceviMessaggio()
 	{
-		System.out.println("RICEVI MESSAGGIO");
+		//System.out.println("RICEVI MESSAGGIO");
 		
 		compilato = true;
-		System.out.println("COMPILATOOOOOOOOOOOOO"+compilato);
 		if(questionario == null)
 		{
 			System.out.println("QUESTIONARIO NULLOOOOOOOOOOOOOOO");
@@ -67,23 +78,17 @@ public class InviaRequestReply {
 		}
 		else
 		{
-			System.out.println("QUESTIONARIO aaaaaaaaaaa"+questionario.getVotoIgiene());
 			boolean ret = this.registraQuestionario();
 			if(ret)
 			{
 				message.setContent("Ho compilato il questionario in data "+dataCorrente+" in seguito alla visita nell'azienda" +
 						 " " + contadino.getNomeAzienda() +" effettuata il giorno "+dataVisita);
-				System.out.println("NOMEEEEEEEEEEEEEEEe:"+message.getDestinatario());
-			}
-			else
-			{
-				System.out.println("ERRORE CRITICO");
+			}else{
+				
 				message.setContent("ERRORE CRITICO NEL DATABASE in data:"+dataCorrente);
 				return null;
 			}
 		}
-		
-		System.out.println("NOMEEEEEEEEEEe:"+message.getDestinatario());
 		return "OutQuestionario";
 			
 	}
@@ -91,13 +96,7 @@ public class InviaRequestReply {
 	@Transactional public boolean registraQuestionario()
     {
 		dataCorrente = new Date(System.currentTimeMillis());
-		System.out.println("ALLEVAMENTO1 "+questionario.getVotoIgiene());
-		System.out.println("ALLEVAMENTO2 "+questionario.getVotoAllevamento());
-		System.out.println("ALLEVAMENTO3 "+questionario.getVotoProdotti());
-		System.out.println("ALLEVAMENTO4 "+questionario.getVotoProfessionalita());
-		System.out.println("ALLEVAMENTO5 "+questionario.getVotoStabile());
-		System.out.println("ALLEVAMENTO6 "+questionario.getCommenti());
-		float somma = (questionario.getVotoAllevamento()+questionario.getVotoIgiene()+questionario.getVotoProdotti()+questionario.getVotoProfessionalita()+questionario.getVotoStabile())/5;
+		float somma = ((float)(questionario.getVotoAllevamento()+questionario.getVotoIgiene()+questionario.getVotoProdotti()+questionario.getVotoProfessionalita()+questionario.getVotoStabile()))/5.0f;
 		questionario.setAccount(account);
 		questionario.setCybercontadino(contadino);
 		questionario.setDataCompilazione(dataCorrente);
@@ -109,9 +108,85 @@ public class InviaRequestReply {
 		
     }
 	
+	@StartTask @EndTask(transition="fine")
+	public String riceviRisposta()
+	{
+		if(compilato)
+			this.inserisciFeedback(4.0f);
+		else
+			this.inserisciFeedback(2.0f);
+		
+		return "OutRiepilogoQuestionari";
+		
+	}
+	
+	@Transactional public boolean inserisciFeedback(float p)
+    {
+		dataCorrente = new Date(System.currentTimeMillis());
+		Account accountUtente = (Account) em.createQuery(
+				"select account from Account account " +
+				"where account.username = '"+nomeUtente+"'")
+				.getSingleResult();
+		feedback.setAccountBySegnalatore(account);
+		feedback.setAccountByValidatore(account);
+		feedback.setAccountByDestinatario(accountUtente);
+		feedback.setDataSegnalazione(dataCorrente);
+		feedback.setDataValidazione(dataCorrente);
+		if(compilato)
+			feedback.setDescrizione("Feedback Positivo inserito perchè l'utente " +
+				"ha compilato il questionario in tempo per l'azienda "+contadino.getNomeAzienda()+" in seguito alla visita" +
+						" in data "+dataVisita);
+		else
+			feedback.setDescrizione("Feedback Negativo inserito perchè l'utente non " +
+					"ha compilato il questionario in tempo per l'azienda "+contadino.getNomeAzienda()+" in seguito alla visita" +
+							" in data "+dataVisita);
+		feedback.setAnalizzato(true);
+		feedback.setPunteggio(p);
+		
+		float punteggioCorrente = accountUtente.getPunteggioFeedback();
+		int numvotanti = accountUtente.getNumeroVotanti()+1;
+		punteggioCorrente = (punteggioCorrente+p)/((float) numvotanti);
+
+		accounthome.setAccountUsername(accountUtente.getUsername());
+		Account a= accounthome.find();
+		a.setPunteggioFeedback(punteggioCorrente);
+		a.setNumeroVotanti(numvotanti);
+		accounthome.update();
+		em.persist(feedback);
+		
+		return true; 
+		
+    }
+	
+	/*
+	private float calcolaPunteggioFeedback(float punteggioNuovo, Account accountUtente)
+	{
+		
+		feedbackList.getFeedback().setAccountByDestinatario(accountUtente);
+		List<Feedback> listaFeedback = feedbackList.getResultList();
+		ArrayList<Float> listaFloat = new ArrayList<Float>();
+		for (Feedback feedback : listaFeedback) {
+			listaFloat.add(feedback.getPunteggio());
+		}
+		int size = listaFloat.size();
+		float somma = 0.0f;
+		for (Float float1 : listaFloat) {
+			somma += float1.floatValue();
+		}
+		somma += punteggioNuovo;
+		//situazione iniziale, nessun feedback punteggio di partenza 3
+		if(size==0){
+			somma+=3;
+			size=1;
+		}			
+		return somma/(size+1);
+		
+	}*/
+
 	public Message getMessage() {
 		return message;
 	}
+
 
 	public void setMessage(Message message) {
 		this.message = message;
@@ -120,4 +195,64 @@ public class InviaRequestReply {
 	public void update(){
 		log.info("QESTIONARIO COMPILATO"+ questionario.toString());
 	}
+
+//	public void setQuestionario(Questionario questionario) {
+//		this.questionario = questionario;
+//	}
+//
+//	public Questionario getQuestionario() {
+//		return questionario;
+//	}
 }
+
+/*
+@In protected FacesMessages facesMessages;
+	@In protected EntityManager entityManager;
+	@Out(value="notificaDecisioneDriver", scope= ScopeType.BUSINESS_PROCESS, required=false)
+	protected Message message;
+	private String msg="";
+	
+	
+	@BeginTask @EndTask(transition="approva")
+	public void approve(){
+		String nomeRichiedente=(String) Component.getInstance("nomeRichiedente", ScopeType.BUSINESS_PROCESS);
+		
+		Account account = (Account) entityManager.createQuery(
+				"select account from Account account " +
+				"where account.username = #{nomeRichiedente}")
+				.getSingleResult();
+		Role r= new Role();
+		r.setName("driver");
+		r.setAccount(account);
+		entityManager.persist(r);
+		message= new Message();
+		String approveMsg="La tua richiesta di divenire driver � stata accettata.";
+		if(msg!=null)
+			approveMsg+="Il responsabile ha incluso il seguente messaggio:\n\""+msg+"\"";
+		message.setContent(approveMsg);
+		message.addRecipient(nomeRichiedente);
+		facesMessages.add("L'utente � stato reso driver");
+	}
+	
+	@BeginTask @EndTask(transition="rifiuta")
+	public void reject(){
+		String nomeRichiedente=(String) Component.getInstance("nomeRichiedente", ScopeType.BUSINESS_PROCESS);
+		message= new Message();
+		String rejectMsg="La tua richiesta di divenire driver � stata rifiutata.";
+		if(msg!=null)
+			rejectMsg+="Il responsabile ha incluso il seguente messaggio:\n\""+msg+"\"";
+		message.setContent(rejectMsg);
+		message.addRecipient(nomeRichiedente);
+		
+		facesMessages.add("La richiesta dell'utente � stata rifiutata");
+	}
+	
+	@BypassInterceptors
+	public String getMsg() {
+		return msg;
+	}
+	@BypassInterceptors
+	public void setMsg(String msg) {
+		this.msg = msg;
+	}
+*/
