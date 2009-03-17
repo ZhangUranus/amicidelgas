@@ -1,5 +1,6 @@
 package org.domain.SeamAmiciDelGas.processes;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.GregorianCalendar;
@@ -18,6 +19,7 @@ import org.domain.SeamAmiciDelGas.crud.AccountHome;
 import org.domain.SeamAmiciDelGas.crud.OrdineList;
 import org.domain.SeamAmiciDelGas.entity.Account;
 import org.domain.SeamAmiciDelGas.entity.Articolo;
+import org.domain.SeamAmiciDelGas.entity.Cybercontadino;
 import org.domain.SeamAmiciDelGas.entity.Ordine;
 import org.domain.SeamAmiciDelGas.session.GestioneFondo;
 import org.domain.SeamAmiciDelGas.session.ItemQuantita;
@@ -95,10 +97,33 @@ public class OrderProcessing {
 	@In(value="loginSelectBean", scope=ScopeType.SESSION, required=false)
 	private LoginSelectBean loginSelectBean;
 	
-	@In(value="responsabileIsDriver", scope=ScopeType.BUSINESS_PROCESS,required=false)
-	@Out(value="responsabileIsDriver", scope=ScopeType.BUSINESS_PROCESS,required=false)
-	private boolean responsabileIsDriver;
+	//@In(value="responsabileIsDriver", scope=ScopeType.BUSINESS_PROCESS,required=false)
+	//@Out(value="responsabileIsDriver", scope=ScopeType.BUSINESS_PROCESS,required=false)
+	//private boolean responsabileIsDriver;
 	
+	//liste per i feedback
+/*	@In(value="feedbackListCustomerToContadini", scope=ScopeType.BUSINESS_PROCESS,required=false)
+	@Out(value="feedbackListCustomerToContadini", scope=ScopeType.BUSINESS_PROCESS,required=false)
+	private List<Cybercontadino> feedbackListCustomerToContadini;
+	
+	@In(value="feedbackListDriverToContadini", scope=ScopeType.BUSINESS_PROCESS,required=false)
+	@Out(value="feedbackListDriverToContadini", scope=ScopeType.BUSINESS_PROCESS,required=false)
+	private List<Cybercontadino> feedbackListDriverToContadini;
+	
+	@In(value="feedbackListContadiniToDriver", scope=ScopeType.BUSINESS_PROCESS,required=false)
+	@Out(value="feedbackListContadiniToDriver", scope=ScopeType.BUSINESS_PROCESS,required=false)
+	private Hashtable<String,Boolean> feedbackListContadiniToDriver;
+	
+	@In(value="feedbackDriverToCustomer", scope=ScopeType.BUSINESS_PROCESS,required=false)
+	@Out(value="feedbackDriverToCustomer", scope=ScopeType.BUSINESS_PROCESS,required=false)
+	private boolean feedbackDriverToCustomer;
+
+	@In(value="feedbackCustomerToDriver", scope=ScopeType.BUSINESS_PROCESS,required=false)
+	@Out(value="feedbackCustomerToDriver", scope=ScopeType.BUSINESS_PROCESS,required=false)
+	private boolean feedbackCustomerToDriver;
+	//customerToDriver
+	//DriverToCustomer
+*/	
 	@CreateProcess(definition="myOrderProcessing")
 	public String startOrder(List<ItemQuantita> itemQ, Date dm){
 		selectedItem = itemQ;
@@ -186,15 +211,33 @@ public class OrderProcessing {
 			messageStatoOrdine.setContent("Ordine preso in carico da "+ credentials.getUsername()+" dataConsegna = "+isNull);
 			messageStatoOrdine.setInfoFilter("orderProcessingPreso");
 			responsabileConsegna = currentAccount;
-			if (loginSelectBean.isDriver())
+			/*if (loginSelectBean.isDriver())
 				responsabileIsDriver = true;
 			else 
-				responsabileIsDriver = false;
+				responsabileIsDriver = false;*/
 			myOrdine.setPendente(false);
 			myOrdine.setEvaso(true);
 			this.dataConsegna = dataConsegna;
 			saveOrdine(); //salvo l'ordine nel database
+			//setto le variabili per i feedback
+/*			feedbackListCustomerToContadini = listCybercontadiniEffettivi();
+			feedbackListDriverToContadini = listCybercontadiniEffettivi();
+			feedbackListContadiniToDriver = new Hashtable<String,Boolean>();
+			for (Cybercontadino c: feedbackListCustomerToContadini)
+				feedbackListContadiniToDriver.put(c.getPartitaIva(), new Boolean(false));
+			feedbackDriverToCustomer = false;
+			feedbackCustomerToDriver = false;		
+*/			
 		}
+	}
+	
+	private List<Cybercontadino> listCybercontadiniEffettivi() {
+		List<Cybercontadino> contadiniEffettivi = new ArrayList<Cybercontadino>();
+		for (ItemQuantita iq: myOrdine.getItemQuantita()) {
+			if (!contadiniEffettivi.contains(iq.getCybercontadino()))
+				contadiniEffettivi.add(iq.getCybercontadino());
+		}
+		return contadiniEffettivi;
 	}
 	
 
@@ -261,6 +304,48 @@ public class OrderProcessing {
 		gestioneFondo.plusFondo(prezzoOrdine);
 		return "deletedTimeOut";
 	}
+
+/*	public void removeFrom(String transition, Cybercontadino contadino)
+	{
+		if(transition.equals("fb_customer_to_contadino"))
+			feedbackListCustomerToContadini.remove(contadino);
+		if(transition.equals("fb_contadino_to_responsabile_consegna"))
+			feedbackListContadiniToDriver.remove(contadino.getPartitaIva());
+		if(transition.equals("fb_responsabile_consegna_to_contadino"))
+			feedbackListDriverToContadini.remove(contadino);
+
+	}
+*/
+	@BeginTask @EndTask(beforeRedirect=true,transition="fb_customer_to_contadino")
+	public String fb_customer_to_contadino() {
+		//list...
+		return "fb_customer_to_contadino";
+	}
+	
+	@BeginTask @EndTask(beforeRedirect=true,transition="fb_customer_to_responsabile_consegna")
+	public String fb_customer_to_responsabile_consegna() {
+		//single
+		return "fb_customer_to_responsabile_consegna";
+	}
+	
+	@BeginTask @EndTask(beforeRedirect=true,transition="fb_responsabile_to_customer")
+	public String fb_responsabile_to_customer() {
+		//single
+		return "fb_responsabile_to_customer";
+	}
+	
+	@BeginTask @EndTask(beforeRedirect=true,transition="fb_contadino_to_responsabile_consegna")
+	public String fb_contadino_to_responsabile_consegna() {
+		//list..
+		return "fb_contadino_to_responsabile_consegna";
+	}
+	
+	@BeginTask @EndTask(beforeRedirect=true,transition="fb_responsabile_consegna_to_contadino")
+	public String fb_responsabile_consegna_to_contadino() {
+		//list..
+		return "fb_responsabile_consegna_to_contadino";
+	}
+	
 	/*
 	 * Getter and settrer methods...
 	 */
@@ -292,4 +377,5 @@ public class OrderProcessing {
 	public void setDataMassima(Date dataMassima) {
 		this.dataMassima = dataMassima;
 	}
+
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<root-container name="myOrderProcessing" width="1178" height="1163">
+<root-container name="myOrderProcessing" width="1179" height="1188">
   <node name="L&apos;utente sottomette un ordine" x="332" y="69" width="214" height="36">
     <edge>
       <label x="-203" y="-10"/>
@@ -30,23 +30,19 @@
   </node>
   <node name="Notifica utente ordine preso in carico" x="154" y="407" width="262" height="36">
     <edge>
-      <label x="5" y="-10"/>
+      <label x="11" y="-10"/>
     </edge>
   </node>
-  <node name="Attendi data consegna" x="221" y="508" width="157" height="36">
-    <edge>
-      <label x="5" y="-10"/>
-    </edge>
-  </node>
+  <node name="Attendi data consegna" x="480" y="513" width="157" height="36"/>
   <node name="Fb from responsabile consegna to contadino" x="854" y="894" width="285" height="36">
     <edge>
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="Fb from customer to contadino per qualita" x="7" y="956" width="334" height="36">
+  <node name="Fb from customer to contadino per qualita" x="0" y="956" width="334" height="36">
     <edge>
       <label x="5" y="-10"/>
-      <bendpoint w1="-2" h1="118" w2="-222" h2="0"/>
+      <bendpoint w1="1" h1="141" w2="-226" h2="-2"/>
     </edge>
   </node>
   <node name="Verifica disponibilita" x="379" y="294" width="169" height="36">
@@ -57,9 +53,6 @@
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="end-state1" x="154" y="274" width="132" height="36"/>
-  <node name="end-state2" x="795" y="249" width="146" height="36"/>
-  <node name="end-state3" x="339" y="1126" width="132" height="36"/>
   <node name="Il driver ha partecipato alla spesa" x="705" y="735" width="228" height="36">
     <edge>
       <label x="5" y="-10"/>
@@ -84,14 +77,14 @@
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="join2" x="268" y="1080" width="252" height="24">
+  <node name="join2" x="268" y="1105" width="252" height="24">
     <edge>
       <label x="5" y="-10"/>
     </edge>
   </node>
   <node name="Fb from customer to responsabile consegna" x="197" y="999" width="322" height="36">
     <edge>
-      <label x="5" y="-10"/>
+      <label x="-110" y="-21"/>
     </edge>
   </node>
   <node name="Fb from responsabile cosegna to customer" x="383" y="953" width="317" height="36">
@@ -102,7 +95,7 @@
   </node>
   <node name="Fb from contadino to responsabile consegna" x="564" y="893" width="277" height="36">
     <edge>
-      <label x="5" y="-10"/>
+      <label x="-116" y="-26"/>
     </edge>
   </node>
   <node name="fork1" x="705" y="820" width="252" height="24">
@@ -118,4 +111,7 @@
       <label x="5" y="-10"/>
     </edge>
   </node>
+  <node name="end-state1" x="154" y="274" width="132" height="36"/>
+  <node name="end-state2" x="795" y="249" width="146" height="36"/>
+  <node name="end-state3" x="339" y="1151" width="132" height="36"/>
 </root-container>

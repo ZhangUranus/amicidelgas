@@ -1,0 +1,45 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a="http://richfaces.org/a4j" template="/layout/template.xhtml">
+
+
+
+	<ui:define name="body">
+		<rich:simpleTogglePanel label="Rilascia feedback ai contadini">
+			<h:form id="browseContadiniForm">
+
+					<a:outputPanel ajaxRendered="true">
+					<s:decorate id="gruppoField">
+						<h:selectOneMenu value="#{gestioneFeedback.currentContadino}"  required="true"
+								requiredMessage="Seleziona il contadino al quale vuoi lasciare un feedback">
+		                	<s:selectItems noSelectionLabel="Seleziona un contadino"
+		                			hideNoSelectionLabel="false"
+		                			var="_contadino"
+		                			label="#{_contadino.account.username}"
+		                			value="#{orderProcessing.feedbackListCustomerToContadini}"
+		                			/>	
+		                </h:selectOneMenu>
+		                <h:outputText value="#{gestioneFeedback.currentContadino.account.username}" />
+					</s:decorate>
+				</a:outputPanel>
+			</h:form>
+		</rich:simpleTogglePanel>
+		
+	 	<br/>
+	 	<br/>
+	 	<br/>
+		
+		<rich:simpleTogglePanel label="Categorie e prodotti">
+			
+		</rich:simpleTogglePanel>
+	
+	</ui:define>
+
+</ui:composition>
+
