@@ -12,8 +12,37 @@
 	<ui:define name="body">
 
 			<rich:simpleTogglePanel label="Notifiche Personali">
+
 			
-				
+				<s:decorate rendered="#{not empty filtraNotifica.getAllSingleTaskInstanceList('riceviMessaggio')}">
+					<b><h:outputText value="Messaggi da altri utenti" /></b><br/><br/>
+					<rich:dataTable id="dataTableUtente" width="90%" align="center" 
+									value="#{filtraNotifica.getAllSingleTaskInstanceList('riceviMessaggio')}" var="_task">
+						<rich:column>
+							<f:facet name="header">Processo</f:facet>							    
+					         <h:outputText value="#{_task.name}"/>
+						</rich:column>
+						<rich:column>
+							<f:facet name="header">Mittente</f:facet>
+								<h:outputText value="#{_task.contextInstance.getVariable(name)}"/>    
+						        <h:outputText value="#{_task.variables.notifyMessageRequest.tipo}"/>
+						</rich:column>
+						<rich:column>
+							<f:facet name="header">Contenuto messaggio</f:facet>    
+						    <h:outputText value="#{_task.variables.notifyMessageRequest.content}"/>
+						</rich:column>					
+						<rich:column >
+							<f:facet name="header">Azioni</f:facet>    
+						    <s:link view="/customer/questionarioCybercontadino.xhtml"
+				                   value="Compila Questionario"
+				             propagation="none"
+				                      id="compilaquestionario" 
+				                      rendered="#{(_task.variables.notifyMessageRequest.tipo=='questionario')}">
+				            </s:link>
+						</rich:column>
+					</rich:dataTable>
+					<br/><br/><br/>
+				</s:decorate>
 				
 				<s:decorate rendered="#{not empty filtraNotifica.getAllSingleTaskInstanceList('ReceiveMessage')}">
 					<b><h:outputText value="Messaggi da altri utenti" /></b><br/><br/>
@@ -63,15 +92,43 @@
 						<rich:column width="10%">
 							<s:decorate rendered="#{_task.variables.notifyMessageStatoOrdine.infoFilter=='orderProcessingNonPreso'}">
 								<s:button taskInstance="#{_task}" action="#{orderProcessing.notificaOrdineNonDisponibile()}"
-										value="Cancella"/>
+										value="Cancella Non preso"/>
 							</s:decorate>
 							<s:decorate rendered="#{_task.variables.notifyMessageStatoOrdine.infoFilter=='orderProcessingPreso'}">
-								<s:button taskInstance="#{_task}" action="#{orderProcessing.notificaOrdineDisponibile()}"
-										value="Cancella"/>
+								<s:button taskInstance="#{_task}" action="#{orderProcessing.attendi_consegna()}"
+										value="Cancella Preso"/>
 							</s:decorate>
 						</rich:column>
 					</rich:dataTable>
 				</s:decorate>
+				
+				<s:decorate rendered="#{not empty filtraNotifica.getAllSingleTaskInstanceList('timeOutDataMassima')}">
+					<b><h:outputText value="Ordini scaduti" /></b><br/><br/>
+					<rich:dataTable id="dataTableOrdiniScaduti" width="90%" align="center" 
+									value="#{filtraNotifica.getAllSingleTaskInstanceList('timeOutDataMassima')}" var="_task">
+						<rich:column>
+							<f:facet name="header">Processo</f:facet>							    
+					         <h:outputText value="#{_task.name}"/>
+						</rich:column>
+						<rich:column>
+							<f:facet name="header">Mittente</f:facet>
+								<h:outputText value="#{_task.variables.notificaDataMassimaScaduta.mittente}"/>    
+						</rich:column>
+						<rich:column>
+							<f:facet name="header">Contenuto messaggio</f:facet>    
+						    <h:outputText value="#{_task.variables.notificaDataMassimaScaduta.content}"/>
+						</rich:column>					
+						<rich:column >
+							<f:facet name="header">Azioni</f:facet>    
+						    <s:link id="eliminaOrdineNonEvasoLink" taskInstance="#{_task}" action="#{orderProcessing.notificaOrdineNonPresoDataMassimaScaduta()}">
+					                    <h:graphicImage value="/img/cancel.png" style="border:0" />
+			                </s:link>
+					                <rich:toolTip for="eliminaOrdineNonEvasoLink" value="Elimina l'ordine"/>
+						</rich:column>
+					</rich:dataTable>
+					<br/><br/><br/>
+				</s:decorate>
+				
 			</rich:simpleTogglePanel>
 				
 				<br/><br/>

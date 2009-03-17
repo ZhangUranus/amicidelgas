@@ -14,19 +14,6 @@
 		<rich:simpleTogglePanel id="simpleTogglePanelContadini" label="Rilascia feedback ai contadini">
 			<h:form id="browseContadiniForm">
 
-					
-				<h:selectOneRadio id ="selectOneRadioContadini" required="true"
-								value="#{takeInHandContadino.currentTaskInstance}">
-					<a:support	event="onclick" ajaxSingle="true" 
-								reRender="riasciaFeedbackField,aggiornami"/>
-					<s:selectItems var="_task" 
-								 label="#{_task.name}" 
-								 value="#{filtraNotifica.getAllSingleTaskInstanceList('fbCustomerToContadino')}"/>
-				</h:selectOneRadio>
-				<a:outputPanel ajaxRendered="true">
-					<h:outputText id="aggiornami" value="Username contadino #{takeInHandContadino.listCybercontadiniEffettivi().size()}" />
-				</a:outputPanel>
-
 			<h:dataTable value="#{filtraNotifica.getAllSingleTaskInstanceList('fbCustomerToContadino')}" var="_task">
 				<rich:column>
 					<f:facet name="header">
@@ -67,13 +54,14 @@
 					  				</h:inputTextarea>
 			        			</s:decorate>
 			        		</rich:column>
-			        		
+			        		<rich:column>
 			        		<s:decorate template="/layout/edit.xhtml">
-			        			<s:button taskInstance="#{takeInHandContadino.currentTaskInstance}"
+			        			<s:button taskInstance="#{_task}" value="oook"
 			        					  action="#{orderProcessing.fb_customer_to_contadino(takeInHandContadino)}">
-			        				
+			        			
 			        			</s:button>
 			        		</s:decorate>
+			        		</rich:column>
 						</h:dataTable>
 					</s:decorate>
 				</a:outputPanel>
