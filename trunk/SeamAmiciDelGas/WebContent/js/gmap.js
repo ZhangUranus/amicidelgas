@@ -30,7 +30,7 @@ function load() {
 		gasIcon = new GIcon();
 	     gasIcon.image= "/SeamAmiciDelGas/img/gmap_consegna.png";
 	     gasIcon.shadow="/SeamAmiciDelGas/img/gmap_fiamma_ombra.png";
-	     gasIcon.iconSize= new GSize(32 , 32);
+	     gasIcon.iconSize= new GSize(25 , 32);
 	    gasIcon.iconAnchor = new GPoint(5, 34);
 	    gasIcon.infoWindowAnchor = new GPoint(5, 2);
 	    gasIcon.infoShadowAnchor = new GPoint(14, 25);
