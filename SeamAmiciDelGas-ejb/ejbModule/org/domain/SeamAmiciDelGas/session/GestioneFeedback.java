@@ -36,38 +36,22 @@ public class GestioneFeedback {
 	@In(value="entityManager")
     private EntityManager em;
 	
-	//informazioni sul feedback
-	@In(value="newFeedback",create=true)
-	private Feedback newFeedback;
-
 	private Cybercontadino currentContadino;
 	
 	public Cybercontadino getCurrentContadino() {
 		return currentContadino;
 	}
 
-
 	public void setCurrentContadino(Cybercontadino currentContadino) {
 		this.currentContadino = currentContadino;
 	}
-
-
-	public Feedback getNewFeedback() {
-		return newFeedback;
-	}
-
-
-	public void setNewFeedback(Feedback newFeedback) {
-		this.newFeedback = newFeedback;
-	}
-
 
 	public GestioneFeedback() {
 		
 	}
 	
 	
-	public void assegnaFeedback(String username, float feedbackAssegnato)
+	public void assegnaFeedback(String username, float feedbackAssegnato, String commento)
 	{
 		//account dell'username
 		accountHome.setAccountUsername(username);
@@ -79,7 +63,7 @@ public class GestioneFeedback {
 		accountDaModificare.setNumeroVotanti(accountDaModificare.getNumeroVotanti()+1);
 		
 		//salvo info feedback
-		salvaFeedback(accountDaModificare, feedbackAssegnato);
+		salvaFeedback(accountDaModificare, feedbackAssegnato, commento);
 		
 		//aggiorno account
 		accountHome.update();
@@ -96,8 +80,10 @@ public class GestioneFeedback {
 		return newPunteggio;
 	}
 	
-	private void salvaFeedback(Account accountDaModificare, float feedback)
+	private void salvaFeedback(Account accountDaModificare, float feedback, String commento)
 	{
+		Feedback newFeedback = new Feedback();
+		newFeedback.setDescrizione(commento);
 		newFeedback.setAnalizzato(false);
 		newFeedback.setDataSegnalazione(new GregorianCalendar().getTime());
 		newFeedback.setPunteggio(feedback);

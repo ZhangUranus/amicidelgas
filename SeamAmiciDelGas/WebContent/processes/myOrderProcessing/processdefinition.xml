@@ -33,9 +33,6 @@
 		<task name="ReceiveOrderFailed">
 			<assignment actor-id="#{customer.username}"></assignment>
 		</task>
-		<timer duedate="10 seconds" name="Ordine non disponibile timer" transition="ordine_rimesso_nel_pool">
-			<action></action>
-		</timer>
 		<transition to="Ordine notificato a driver e contadini" name="ordine_rimesso_nel_pool"></transition>
 	</task-node>
 
@@ -54,18 +51,6 @@
 		</task>
 		<transition to="fork2" name="attendi_consegna"></transition>
 	</task-node>
-
-	<state name="Attendi data consegna">
-		<timer name="attendiDataConsegna" transition="assegna_feedback">
-			<event type="timer-create">
-      <action name="timerDataConsegnaScaduta" class="org.domain.SeamAmiciDelGas.processes.ChangeDueDateTimerOrdine">
-        <timerName>dataConsegnaTimer</timerName>
-        <nomeData>dataConsegna</nomeData>
-      </action>
-    </event>
-		<timer duedate="10 years" name="dataConsegnaTimer" transition="assegna_feedback"/>
-		</timer>
-	</state>
 
 	<task-node name="Fb from responsabile consegna to contadino">
 		<task name="utenteToContadinoWithDriver">
@@ -97,19 +82,15 @@
 	</decision>
 
 	<decision name="Il driver ha partecipato alla spesa">
-		<transition to="fork1" name="Si">
-			<condition expression="#{responsabileIsDriver}"></condition>
-		</transition>
-		<transition to="join2" name="No">
-			<condition expression="#{!responsabileIsDriver}"></condition>
-		</transition>
+		<transition to="fork1" name="Si"></transition>
+		<transition to="join2" name="No"></transition>
 	</decision>
 
 	<fork name="fork2">
-		<transition to="Il driver ha partecipato alla spesa"></transition>
-		<transition to="Fb from customer to contadino per qualita"></transition>
-		<transition to="Fb from customer to responsabile consegna"></transition>
-		<transition to="Fb from responsabile cosegna to customer"></transition>
+		<transition to="Il driver ha partecipato alla spesa" name="toTask4"></transition>
+		<transition to="Fb from customer to contadino per qualita" name="toTask1"></transition>
+		<transition to="Fb from customer to responsabile consegna" name="toTask2"></transition>
+		<transition to="Fb from responsabile cosegna to customer" name="toTask3"></transition>
 	</fork>
 
 	<join name="join2">
@@ -122,7 +103,7 @@
 	</task-node>
 
 	<task-node name="Fb from responsabile cosegna to customer">
-		<task name="fbREsponsabileConsegnaToCustomer"></task>
+		<task name="fbResponsabileConsegnaToCustomer"></task>
 		<transition to="join2" name="fb_responsabile_to_customer"></transition>
 	</task-node>
 

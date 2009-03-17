@@ -10,25 +10,78 @@
 
 
 
-	<ui:define name="body">
-		<rich:simpleTogglePanel label="Rilascia feedback ai contadini">
+	<ui:define id="defineUI" name="body">
+		<rich:simpleTogglePanel id="simpleTogglePanelContadini" label="Rilascia feedback ai contadini">
 			<h:form id="browseContadiniForm">
 
-					<a:outputPanel ajaxRendered="true">
-					<s:decorate id="gruppoField">
-						<h:selectOneMenu value="#{gestioneFeedback.currentContadino}"  required="true"
-								requiredMessage="Seleziona il contadino al quale vuoi lasciare un feedback">
-		                	<s:selectItems noSelectionLabel="Seleziona un contadino"
-		                			hideNoSelectionLabel="false"
-		                			var="_contadino"
-		                			label="#{_contadino.account.username}"
-		                			value="#{orderProcessing.feedbackListCustomerToContadini}"
-		                			/>	
-		                </h:selectOneMenu>
-		                <h:outputText value="#{gestioneFeedback.currentContadino.account.username}" />
+					
+				<h:selectOneRadio id ="selectOneRadioContadini" required="true"
+								value="#{takeInHandContadino.currentTaskInstance}">
+					<a:support	event="onclick" ajaxSingle="true" 
+								reRender="riasciaFeedbackField,aggiornami"/>
+					<s:selectItems var="_task" 
+								 label="#{_task.name}" 
+								 value="#{filtraNotifica.getAllSingleTaskInstanceList('fbCustomerToContadino')}"/>
+				</h:selectOneRadio>
+				<a:outputPanel ajaxRendered="true">
+					<h:outputText id="aggiornami" value="Username contadino #{takeInHandContadino.listCybercontadiniEffettivi().size()}" />
+				</a:outputPanel>
+
+			<h:dataTable value="#{filtraNotifica.getAllSingleTaskInstanceList('fbCustomerToContadino')}" var="_task">
+				<rich:column>
+					<f:facet name="header">
+						<h:outputText value="task name" />
+					</f:facet>
+				<a:outputPanel ajaxRendered="true">
+					<s:decorate id="riasciaFeedbackField">
+						<h:dataTable value="#{takeInHandContadino.listCybercontadiniEffettivi(_task)}" var="_contadino">
+							<rich:column>
+									<f:facet name="header">
+										<h:outputText value="Username contadino" />
+									</f:facet>
+									<h:outputText value="#{_contadino.account.username}"></h:outputText>
+			        		</rich:column>
+			        		<rich:column>
+			        			<s:decorate template="/layout/edit.xhtml">
+	                				<f:facet name="header">
+										<h:outputText value="Voto feedback" />
+									</f:facet>
+	                				<h:selectOneRadio value="#{takeInHandContadino.getInfoFeedback(_contadino.account.username).feedback}" required="true" 
+	                					requiredMessage="inserire una valutazione">
+					  					<f:selectItem itemLabel="Basso" itemValue="1" ></f:selectItem>
+					  					<f:selectItem itemLabel="Normale" itemValue="2" ></f:selectItem>
+					  					<f:selectItem itemLabel="Alto" itemValue="3"></f:selectItem>
+					  					<f:selectItem itemLabel="Utopico" itemValue="4"></f:selectItem>
+					  					<f:selectItem itemLabel="Divino" itemValue="5"></f:selectItem>
+					  					<a:support	event="onclick" ajaxSingle="true"/>
+					  				</h:selectOneRadio>
+	            				</s:decorate>
+			        		</rich:column>
+			        		<rich:column>
+			        			<s:decorate template="/layout/edit.xhtml">
+	                				<f:facet name="header">
+										<h:outputText value="Commento" />
+									</f:facet>
+			        				<h:inputTextarea value="#{takeInHandContadino.getInfoFeedback(_contadino.account.username).comment}">
+			        					<a:support	event="onkeyup" ajaxSingle="true" requestDelay="100"/>
+					  				</h:inputTextarea>
+			        			</s:decorate>
+			        		</rich:column>
+			        		
+			        		<s:decorate template="/layout/edit.xhtml">
+			        			<s:button taskInstance="#{takeInHandContadino.currentTaskInstance}"
+			        					  action="#{orderProcessing.fb_customer_to_contadino(takeInHandContadino)}">
+			        				
+			        			</s:button>
+			        		</s:decorate>
+						</h:dataTable>
 					</s:decorate>
 				</a:outputPanel>
+				</rich:column>
+			</h:dataTable>
 			</h:form>
+			
+
 		</rich:simpleTogglePanel>
 		
 	 	<br/>

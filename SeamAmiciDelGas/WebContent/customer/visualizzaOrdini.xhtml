@@ -19,7 +19,7 @@
 					 <s:decorate template="/layout/display.xhtml">
 		                <ui:define name="label">Tipi di ordine</ui:define>
 		                <h:selectOneMenu value="#{ordineBean.tipoOrdine}" required="true"
-		                title="seleziona il tipo di ordine che vuoi visualizzare" style=" width : 149px;">
+		                	title="seleziona il tipo di ordine che vuoi visualizzare" style=" width : 149px;">
 		                	<a:support event="onchange" ajaxSingle="true" reRender="ordiniPendenti,ordiniEvasiConclusi" />
 		                	<f:selectItem itemLabel="Ordini Pendenti" itemValue="1"/>
 		                	<f:selectItem itemLabel="Ordini Evasi" itemValue="2"/>
@@ -114,11 +114,12 @@
 				                	<a:commandLink ajaxSingle="true" id="dettagliOrdinePendenteLink2"
 				                    	oncomplete="#{rich:component('dettagliOrdinePanel')}.show()">
 				                    	<f:setPropertyActionListener value="#{_ordine}" target="#{ordineBean.currentOrdine}" />
+					                    
 					                    <h:graphicImage value="/img/modifica_mini.png" style="border:0" />
 					                </a:commandLink>
 					                <rich:toolTip for="dettagliOrdinePendenteLink2" value="Visualizza dettagli ordine"/>
-					                
 				            	</rich:column>
+				            	
 							</rich:dataTable>
 							<rich:datascroller align="center" for="table2" id="sc2" rendered="true"/>
 						</a:region>
