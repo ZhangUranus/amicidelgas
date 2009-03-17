@@ -91,19 +91,23 @@ public class ShoppingCart {
 		this.itemInShoppingCart = itemInShoppingCart;
 	}
 	
-	public void addItemInShoppingCart(Item item, String quantita, Cybercontadino contadino)
+	public void addItemInShoppingCart(Item item, int quantita, Cybercontadino contadino)
 	{
-		if(quantita==null || quantita.equals("0") || quantita.equals("")) 
+		if(quantita==0){
+			log.info("tentativo di aggiunta di item con quantita 0");
+			
 			return;
+		}
+		
 		for(ItemQuantita iq : itemInShoppingCart)
 		{
-			if(iq.getItem().equals(item))
-			{	iq.addQuantita(Integer.parseInt(quantita)); 
+			if(iq.getItem().getId().equalsIgnoreCase(item.getId()) && iq.getCybercontadino().getPartitaIva().equalsIgnoreCase(contadino.getPartitaIva()))
+			{	iq.addQuantita(quantita); 
 				log.info("******** aggiunto item gia esistente: "+item.getName() +" quantita = "+quantita);
 				return;	}
 		}
 		log.info("******** aggiunto nuovo item : "+item.getName() +" quantita = "+quantita +"nome" +contadino.getCognomePresidente());
-		itemInShoppingCart.add(new ItemQuantita(item,Integer.parseInt(quantita),contadino));
+		itemInShoppingCart.add(new ItemQuantita(item,new Integer(quantita),contadino));
 	}
 	
 	public void deleteItemInShoppingCart(Item item)
