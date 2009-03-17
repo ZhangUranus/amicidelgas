@@ -51,7 +51,7 @@ public class GestioneFeedback {
 	}
 	
 	
-	public void assegnaFeedback(String username, float feedbackAssegnato, String commento)
+	public void assegnaFeedback(String username, Ordine ordine, float feedbackAssegnato, String commento)
 	{
 		//account dell'username
 		accountHome.setAccountUsername(username);
@@ -63,7 +63,7 @@ public class GestioneFeedback {
 		accountDaModificare.setNumeroVotanti(accountDaModificare.getNumeroVotanti()+1);
 		
 		//salvo info feedback
-		salvaFeedback(accountDaModificare, feedbackAssegnato, commento);
+		salvaFeedback(accountDaModificare, ordine, feedbackAssegnato, commento);
 		
 		//aggiorno account
 		accountHome.update();
@@ -80,14 +80,14 @@ public class GestioneFeedback {
 		return newPunteggio;
 	}
 	
-	private void salvaFeedback(Account accountDaModificare, float feedback, String commento)
+	private void salvaFeedback(Account accountDaModificare, Ordine ordine, float feedback, String commento)
 	{
 		Feedback newFeedback = new Feedback();
 		newFeedback.setDescrizione(commento);
 		newFeedback.setAnalizzato(false);
 		newFeedback.setDataSegnalazione(new GregorianCalendar().getTime());
 		newFeedback.setPunteggio(feedback);
-		newFeedback.setOrdine(ordineBean.getCurrentOrdine());
+		newFeedback.setOrdine(ordine);
 		newFeedback.setAccountByValidatore(currentAccount);
 		newFeedback.setAccountBySegnalatore(currentAccount);
 		newFeedback.setAccountByDestinatario(accountDaModificare);

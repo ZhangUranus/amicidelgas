@@ -19,6 +19,8 @@ public class TakeInHandContadino {
 
 	public TakeInHandContadino(){}
 	
+	private String stringa;
+	
 	@Logger
 	private Log log;
 	
@@ -109,6 +111,14 @@ public class TakeInHandContadino {
 
 		public Hashtable<String, InfoFeedback> getHashTable() {
 			return hashTable;
+		}
+
+		public String getStringa() {
+			return stringa;
+		}
+
+		public void setStringa(String stringa) {
+			this.stringa = stringa;
 		}
 
 }
