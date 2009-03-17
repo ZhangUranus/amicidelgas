@@ -13,6 +13,10 @@ var current_notifiche = 0;
 var current_focus = 0;
 
 
+function disable_this(obj){
+	document.getElementById(obj).disabled = true;
+}
+
 function TabDispaly(obj, cond) {
 	
 	Ext.get(obj).setDisplayed(cond);

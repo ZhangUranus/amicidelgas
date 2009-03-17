@@ -62,25 +62,36 @@
 							<table width="100%" border="0" cellspacing="4" cellpadding="0" align="center">
 								<tr>
 									<td width="100%" colspan="6" align="center" valign="top">
-										<div align="center" class="colore_1" >Visitatori: #{_contadinoTask.variables.inviati.size()} di 10</div>
+										<div align="center" class="colore_1" >Inviati che hanno partecipato alla visita: #{_contadinoTask.variables.inviati.size()} di 10</div>
 									</td>					
 								</tr>
 								<tr>
-									<td width="25%" ><div align="left" ><b>Nome Inviato</b></div></td>
-									<td width="15%" ><div align="center" ><b>Voto 1</b></div></td>
-									<td width="15%" ><div align="center" ><b>Voto 2</b></div></td>
-									<td width="15%" ><div align="center" ><b>Voto 3</b></div></td>
-									<td width="15%" ><div align="center" ><b>Voto 4</b></div></td>
-									<td width="15%" ><div align="center" ><b>Voto 5</b></div></td>
+									<td width="15%" ><div align="left" ><b>Nome Inviato</b></div></td>
+									<td width="17%" ><div align="center" ><b>Ambiente di lavoro</b></div></td>
+									<td width="17%" ><div align="center" ><b>Condizioni igienico sanitarie</b></div></td>
+									<td width="17%" ><div align="center" ><b>Qualita' dei prodotti</b></div></td>
+									<td width="17%" ><div align="center" ><b>Professionalita'</b></div></td>
+									<td width="17%" ><div align="center" ><b>Qualita' dello stabile</b></div></td>
 								</tr>
 							</table>
 							<rich:dataTable id="tabellaRiepilogoInviati" width="100%" align="center" value="#{_contadinoTask.variables.inviati}" var="_inviato"  >
 								<rich:column >
 									<table width="100%" border="0" cellspacing="4" cellpadding="0" align="center">
 										<tr>
-											<td width="25%"><div align="left" class="explorer" >#{_inviato}</div></td>
+											<td width="15%"><div align="left" class="explorer" >#{_inviato}</div></td>
 											<ui:repeat value="#{newRiepilogoQuestionari.getVotoByVisitatore(_inviato, _contadinoTask.variables.contadinoCreato.partitaIva)}" var="_voto">
-												<td width="15%" ><div align="center" ><h:outputText value="#{_voto}"></h:outputText></div></td>
+												<td width="17%" ><div align="center" >
+													<h:graphicImage value="/img/star_full_mini.png" rendered="#{_voto > 0.5}" />
+													<h:graphicImage value="/img/star_full_mini.png" rendered="#{_voto > 1.5}" />
+													<h:graphicImage value="/img/star_full_mini.png" rendered="#{_voto > 2.5}" />
+													<h:graphicImage value="/img/star_full_mini.png" rendered="#{_voto > 3.5}" />
+													<h:graphicImage value="/img/star_full_mini.png" rendered="#{_voto > 4.5}" />
+													<h:graphicImage value="/img/star_empty_mini.png" rendered="#{!(_voto > 0)}" />
+													<h:graphicImage value="/img/star_empty_mini.png" rendered="#{!(_voto > 1)}" />
+													<h:graphicImage value="/img/star_empty_mini.png" rendered="#{!(_voto > 2)}" />
+													<h:graphicImage value="/img/star_empty_mini.png" rendered="#{!(_voto > 3)}" />
+													<h:graphicImage value="/img/star_empty_mini.png" rendered="#{!(_voto > 4)}" />
+												</div></td>
 											</ui:repeat>
 										</tr>
 									</table>

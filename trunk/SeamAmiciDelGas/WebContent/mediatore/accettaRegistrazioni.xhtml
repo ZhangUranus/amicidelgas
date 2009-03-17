@@ -404,15 +404,21 @@ function attivaCalendar() {
 	            <s:button value="Invia richiesta di visita" 
 	            	taskInstance="#{processoRegistrazione.taskCorrente}" 
 	            	action="#{processoRegistrazione.creaVisita()}"
-	            		
-	            >
-	            <a:support event="onclick" action="#{processoRegistrazione.update}"></a:support>
+	            	id="creaVisitaButton">
+		            <a:support event="onclick" action="#{processoRegistrazione.update}">	            	
+		            </a:support>
 	            </s:button>
 	            
 	   </h:form>
 	    </rich:modalPanel> 
        	</a:outputPanel>
-	
+	<script type="text/javascript">
+		<!--
+			function attiva_post(){
+				document.getElementById('formVisitaField:creaVisitaButton').style.display = "";
+			}			 
+		-->
+		</script>
 	</ui:define>    
     
 </ui:composition>
