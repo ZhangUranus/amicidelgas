@@ -68,6 +68,7 @@ public class OrdineBean {
 	}
 
 	public void setCurrentOrdine(Ordine currentOrdine) {
+		log.info("\n\n******** CURRENT ORDINE == " +currentOrdine.getDriver() +" **********");
 		this.currentOrdine = currentOrdine;
 	}
 

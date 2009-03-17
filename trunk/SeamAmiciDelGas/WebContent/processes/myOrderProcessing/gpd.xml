@@ -33,7 +33,6 @@
       <label x="11" y="-10"/>
     </edge>
   </node>
-  <node name="Attendi data consegna" x="480" y="513" width="157" height="36"/>
   <node name="Fb from responsabile consegna to contadino" x="854" y="894" width="285" height="36">
     <edge>
       <label x="5" y="-10"/>
@@ -63,7 +62,7 @@
       <bendpoint w1="340" h1="337" w2="765" h2="-2"/>
     </edge>
   </node>
-  <node name="fork2" x="188" y="628" width="252" height="24">
+  <node name="fork2" x="191" y="541" width="252" height="24">
     <edge>
       <label x="5" y="-10"/>
     </edge>

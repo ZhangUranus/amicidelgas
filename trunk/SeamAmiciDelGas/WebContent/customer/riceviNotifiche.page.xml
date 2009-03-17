@@ -11,5 +11,8 @@
   <rule if-outcome="deletedTimeOut">
    <redirect view-id="/customer/riceviNotifiche.xhtml"/>
   </rule>
+  <rule if-outcome="deleted">
+   <redirect view-id="/customer/riceviNotifiche.xhtml"/>
+  </rule>
  </navigation>
 </page>

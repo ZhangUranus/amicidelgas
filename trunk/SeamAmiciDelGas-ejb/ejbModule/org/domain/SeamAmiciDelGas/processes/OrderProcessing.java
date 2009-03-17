@@ -6,6 +6,7 @@ import java.util.Enumeration;
 import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -21,12 +22,15 @@ import org.domain.SeamAmiciDelGas.entity.Account;
 import org.domain.SeamAmiciDelGas.entity.Articolo;
 import org.domain.SeamAmiciDelGas.entity.Cybercontadino;
 import org.domain.SeamAmiciDelGas.entity.Ordine;
+import org.domain.SeamAmiciDelGas.session.GestioneFeedback;
 import org.domain.SeamAmiciDelGas.session.GestioneFondo;
 import org.domain.SeamAmiciDelGas.session.ItemQuantita;
 import org.domain.SeamAmiciDelGas.session.LoginSelectBean;
 import org.domain.SeamAmiciDelGas.session.Message;
 import org.domain.SeamAmiciDelGas.session.MyOrdine;
 import org.domain.SeamAmiciDelGas.session.OrdineBean;
+import org.domain.SeamAmiciDelGas.session.TakeInHandContadino;
+import org.domain.SeamAmiciDelGas.session.TakeInHandContadino.InfoFeedback;
 import org.domain.SeamAmiciDelGas.webservices.CatalogInterface;
 import org.domain.SeamAmiciDelGas.webservices.CatalogNoServiceImpl;
 import org.jboss.seam.ScopeType;
@@ -93,6 +97,13 @@ public class OrderProcessing {
 	
 	@In(value="gestioneFondo", create=true)
 	private GestioneFondo gestioneFondo;
+	
+	@In(value="gestioneFeedback", create=true)
+	private GestioneFeedback gestioneFeedback;
+	
+	@In(value="booleanCustomerToContadino", scope=ScopeType.BUSINESS_PROCESS, required=false)
+	@Out(value="booleanCustomerToContadino", scope=ScopeType.BUSINESS_PROCESS, required=false)
+	private Boolean booleanCustomerToContadino= new Boolean(false);
 	
 	@In(value="loginSelectBean", scope=ScopeType.SESSION, required=false)
 	private LoginSelectBean loginSelectBean;
@@ -231,21 +242,6 @@ public class OrderProcessing {
 		}
 	}
 	
-	public List<Cybercontadino> listCybercontadiniEffettivi() {
-		List<Cybercontadino> contadiniEffettivi = new ArrayList<Cybercontadino>();
-		for (ItemQuantita iq: myOrdine.getItemQuantita()) {
-			if (!contadiniEffettivi.contains(iq.getCybercontadino()))
-				contadiniEffettivi.add(iq.getCybercontadino());
-		}
-		return contadiniEffettivi;
-	}
-	
-
-	@BeginTask @EndTask(transition="attendi_data_consegna")
-	public void attendiDataConsegna(){
-		
-	}
-	
 	@Transactional
 	private void saveOrdine() {
 		Ordine ordine = new Ordine();
@@ -286,13 +282,13 @@ public class OrderProcessing {
 	}
 	
 	@BeginTask @EndTask(transition="ordine_rimesso_nel_pool")
-	public void notificaOrdineNonDisponibile() {
-		
+	public String notificaOrdineNonDisponibile() {
+		return "deleted";
 	}
 	
-	@BeginTask @EndTask(transition="ordine_preso_in_consegna")
-	public void notificaOrdineDisponibile() {
-		
+	@BeginTask @EndTask(transition="attendi_consegna")
+	public String attendi_consegna() {
+		return "deleted";
 	}
 	
 	@BeginTask @EndTask(beforeRedirect=true,transition="notifica_inviata_ordine_non_preso_in_carico_termina_processo")
@@ -316,9 +312,17 @@ public class OrderProcessing {
 	}
 */
 	@BeginTask @EndTask(beforeRedirect=true,transition="fb_customer_to_contadino")
-	public String fb_customer_to_contadino() {
-		//list...
+	public String fb_customer_to_contadino(TakeInHandContadino takeInHandContadino) {
+		booleanCustomerToContadino = new Boolean(true);
+		Hashtable<String, InfoFeedback> hashTableContadini = takeInHandContadino.getHashTable();
+		Enumeration<String> enum1 = hashTableContadini.keys();
+		while(enum1.hasMoreElements()) {
+			String username = enum1.nextElement();
+			InfoFeedback infoFeedback = hashTableContadini.get(username);
+			gestioneFeedback.assegnaFeedback(username, (float) infoFeedback.getFeedback(), infoFeedback.getComment());
+		}
 		
+		takeInHandContadino.reset();
 		return "fb_customer_to_contadino";
 	}
 	
