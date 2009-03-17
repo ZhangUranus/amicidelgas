@@ -33,7 +33,7 @@
 			  <tr>
 			  	<td background="/SeamAmiciDelGas/img/shadow_ovest.png"></td>
 			    <td background="/SeamAmiciDelGas/img/shadow_n.png" valign="top"><div align="center" class="explorer_white">
-					Attenzione: hai #{filtraNotifica.numberOfHighestPriorityTaskForSingle()} avviso/i ad alta priorita' da risolvere
+					Attenzione: hai #{filtraNotificaAltaPriorita.numberOfHighestPriorityTaskForSingle()} avviso/i ad alta priorita' da risolvere
 			    </div></td>
 			    <td background="/SeamAmiciDelGas/img/shadow_est.png"></td>
 			  </tr>
@@ -192,7 +192,7 @@
 					    </td>
 					  </tr>
 					</table>
-					<s:decorate rendered="#{(filtraNotifica.numberOfHighestPriorityTaskForSingle() > 0)}">
+					<s:decorate rendered="#{(filtraNotificaAltaPriorita.numberOfHighestPriorityTaskForSingle() > 0)}">
 						<div id="alert_div">
 							<script type="text/javascript">show_focus();</script>
 							<table width="99%" border="0" cellspacing="6" cellpadding="0" align="left" >
@@ -204,7 +204,7 @@
 							  </tr>
 							  <tr>
 							    <td valign="top"><div align="left" class="explorer">
-									Hai #{filtraNotifica.numberOfHighestPriorityTaskForSingle()} avviso/i ad alta priorita' da risolvere
+									Hai #{filtraNotificaAltaPriorita.numberOfHighestPriorityTaskForSingle()} avviso/i ad alta priorita' da risolvere
 							    </div></td>
 							  </tr>
 							</table>

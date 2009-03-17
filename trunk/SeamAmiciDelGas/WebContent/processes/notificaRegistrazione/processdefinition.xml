@@ -19,16 +19,17 @@
 			<assignment pooled-actors="utenteGas"></assignment>
 		</task>
 		 <event type="timer-create">
-      <action name="timerCreated" class="org.domain.SeamAmiciDelGas.processes.ChangeDueDateTimer">
-        <timerName>varTimer</timerName>
-      </action>
-    </event>
+      		<action name="nuovoTimer" class="org.domain.SeamAmiciDelGas.processes.ChangeTimerDate">
+        		<nomeTimer>varTimer</nomeTimer>
+				<nomeDueDate>dataMassimaAccettazione</nomeDueDate>
+      		</action>
+    	</event>
 		<event type="node-leave">
-			<action name="SpegniTuttoeVaiAvanti" class="org.domain.SeamAmiciDelGas.processes.CancelTaskAction">
-			 <taskName>partecipa_alla_visita</taskName>
-			 </action>
+			<action name="CancellaTaskAperti" class="org.domain.SeamAmiciDelGas.processes.CancelTaskAction">
+			 	<taskName>partecipa_alla_visita</taskName>
+			</action>
 		</event>
-    <timer duedate="10 years" name="varTimer" transition="time-out"/>
+    	<timer duedate="9 years" name="varTimer" transition="time-out"/>
 		<transition to="AccettaAltriUtenti" name="partecipa"></transition>
 		<transition to="join1" name="time-out"></transition>
 	</task-node>
@@ -89,11 +90,12 @@
 
 	<state name="AspettaDataQuestionario">
 		<event type="timer-create">
-      		<action name="timerState" class="org.domain.SeamAmiciDelGas.processes.TimerHandler">
-        		<timerName>timerVarQuestionario</timerName>
+      		 <action name="CambiaTimerQuestionario" class="org.domain.SeamAmiciDelGas.processes.ChangeTimerDate">
+        		<nomeTimer>timerVarQuestionario</nomeTimer>
+				<nomeDueDate>dataQuestionario</nomeDueDate>
       		</action>
     	</event>
-    	<timer duedate="10 years" name="timerVarQuestionario" transition="notificaQuestionario"/>
+    	<timer duedate="9 years" name="timerVarQuestionario" transition="notificaQuestionario"/>
 		<transition to="CustomNodeFork" name="notificaQuestionario"></transition>
 	</state>
 

@@ -214,7 +214,7 @@
 
 <s:decorate rendered="#{identity.loggedIn}">
 <div id="notifiche_lista" style="display:none;" class="div_notifiche_lista_class">
-	<table width="280px" cellpadding="0" cellspacing="0" border="0" id="table_notifiche_liste">
+	<table width="320px" cellpadding="0" cellspacing="0" border="0" id="table_notifiche_liste">
 	  <tr>
 	    <td width="13" height="12" background="/SeamAmiciDelGas/img/shadow_corner_a.png"></td>
 	    <td height="12" colspan="2" background="/SeamAmiciDelGas/img/shadow_top_n.png"></td>
@@ -251,9 +251,14 @@
     		    	<div align="left" class="colore_yellow" style="height: 28px;  padding-top: 4px;"><b>Notifiche alta priorita'</b></div>
     		    </s:link>
     		</s:decorate>
-	    	<s:decorate >
+	    	<s:decorate rendered="#{(filtraNotifica.numberForGroupForCustomer() + filtraNotifica.numberForSingleForCustomer()) > 0}">
 	    		<s:link view="/customer/riceviNotifiche.xhtml" propagation="none" >
     		    	<div align="left" class="colore_white_bold" style="height: 28px;  padding-top: 4px;">Notifiche Personali</div>
+    		    </s:link>
+    		</s:decorate>
+    		<s:decorate rendered="#{((filtraNotificaAltaPriorita.numberOfTask('taskForGroup' , 'partecipa_alla_visita') > 0)  and (filtraNotificaAltaPriorita.PooledTaskInstanceListForAllUserButMeNot(currentAccount.username , 'partecipa_alla_visita')))}" >
+	    		<s:link view="/customer/visualizzaNotificheAltaPriorita.xhtml" propagation="none" >
+    		    	<div align="left" class="colore_white_bold" style="height: 28px;  padding-top: 4px;">Eventi Visita Azienda</div>
     		    </s:link>
     		</s:decorate>
     		<s:decorate rendered="#{((loginSelectBean.calculateMaxRole()=='mediatore' or loginSelectBean.calculateMaxRole()=='admin'))}">
@@ -277,15 +282,12 @@
     		<s:decorate rendered="#{(filtraNotifica.numberForGroupForCustomer() + filtraNotifica.numberForSingleForCustomer()) > 0}">
     		    <div align="center" class="colore_white_bold" style="background:transparent url('/SeamAmiciDelGas/img/red_number2.png') no-repeat; width:26px; height: 28px; padding-top: 4px; padding-right: 1px;" >#{(filtraNotifica.numberForGroupForCustomer() + filtraNotifica.numberForSingleForCustomer())}</div>
     		</s:decorate>
-    		<s:decorate rendered="#{!((filtraNotifica.numberForGroupForCustomer() + filtraNotifica.numberForSingleForCustomer()) > 0)}">
-    		    <div align="center" class="colore_white_bold" style="width:26px; height: 28px; padding-top: 4px;" >-</div>
+    		<s:decorate rendered="#{((filtraNotificaAltaPriorita.numberOfTask('taskForGroup' , 'partecipa_alla_visita') > 0) and ( filtraNotificaAltaPriorita.PooledTaskInstanceListForAllUserButMeNot(currentAccount.username , 'partecipa_alla_visita')))}">
+    		    <div align="center" class="colore_white_bold" style="background:transparent url('/SeamAmiciDelGas/img/red_number2.png') no-repeat; width:26px; height: 28px; padding-top: 4px; padding-right: 1px;" >#{filtraNotificaAltaPriorita.numberOfTask('taskForGroup' , 'partecipa_alla_visita')}</div>
     		</s:decorate>
     		<s:decorate rendered="#{((filtraNotifica.numberOfTaskForGroup('Conferma la richiesta') > 0) and (loginSelectBean.calculateMaxRole()=='mediatore' or loginSelectBean.calculateMaxRole()=='admin'))}">
     		    <div align="center" class="colore_white_bold" style="background:transparent url('/SeamAmiciDelGas/img/red_number2.png') no-repeat; width:26px; height: 28px; padding-top: 4px; padding-right: 1px;" >#{filtraNotifica.numberOfTaskForGroup('Conferma la richiesta')}</div>
-    		</s:decorate>
-    		<s:decorate rendered="#{((filtraNotifica.numberOfTaskForGroup('Conferma la richiesta') == 0) and (loginSelectBean.calculateMaxRole()=='mediatore' or loginSelectBean.calculateMaxRole()=='admin'))}">
-    		    <div align="center" class="colore_white_bold" style="width:26px; height: 28px; padding-top: 4px;" >-</div>
-    		</s:decorate>  
+    		</s:decorate> 
     		<s:decorate rendered="#{((filtraNotifica.numberOfTaskForGroup('crea_visita') > 0) and (loginSelectBean.calculateMaxRole()=='mediatore' or loginSelectBean.calculateMaxRole()=='admin'))}">
     			<div align="center" class="colore_white_bold" style="background:transparent url('/SeamAmiciDelGas/img/red_number2.png') no-repeat; width:26px; height: 28px; padding-top: 4px; padding-right: 1px;" >#{filtraNotifica.numberOfTaskForGroup('crea_visita')}</div>
     		</s:decorate> 		
