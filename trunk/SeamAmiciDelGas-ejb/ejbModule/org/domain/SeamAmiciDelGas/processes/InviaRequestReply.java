@@ -56,9 +56,6 @@ public class InviaRequestReply {
 	@In(value="newQuestionario")
 	private Questionario questionario;
 	
-	//@In(value="creaQuestionario")
-	//private creaQuestionario creaQuestionario;
-	
 	@In(value="newFeedback" , create=true)
 	private Feedback feedback;
 	
@@ -196,13 +193,6 @@ public class InviaRequestReply {
 		log.info("QESTIONARIO COMPILATO"+ questionario.toString());
 	}
 
-//	public void setQuestionario(Questionario questionario) {
-//		this.questionario = questionario;
-//	}
-//
-//	public Questionario getQuestionario() {
-//		return questionario;
-//	}
 }
 
 /*
