@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.domain.SeamAmiciDelGas.entity.Account;
 import org.domain.SeamAmiciDelGas.entity.Cybercontadino;
+import org.domain.SeamAmiciDelGas.entity.Itinerario;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
@@ -142,9 +143,21 @@ public class FiltraNotifica {
 		return tasks;
 	}
 	
+	public List<TaskInstance> taskInstanceSingleListForItinerario(int idItinerario, String filter) {
+		List<TaskInstance> tasks = getAllSingleTaskInstanceList(filter);
+		List<TaskInstance> tasksForItinerario = new ArrayList<TaskInstance>();
+		for(TaskInstance task : tasks) {
+			Itinerario iter = (Itinerario) task.getVariable("itinerario");
+			if(iter.getIditinerario() == idItinerario)
+				tasksForItinerario.add(task);
+		}
+		return tasksForItinerario;
+	}
+	
 	public List<TaskInstance> taskInstanceSingleListForDriver() {
 		return taskInstanceSingleList("accetta_ordine");
 	}
+	
 	
 	/*
 	 * ritorno task instance per gruppi

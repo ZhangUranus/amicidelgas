@@ -21,6 +21,7 @@ import org.domain.SeamAmiciDelGas.crud.OrdineList;
 import org.domain.SeamAmiciDelGas.entity.Account;
 import org.domain.SeamAmiciDelGas.entity.Articolo;
 import org.domain.SeamAmiciDelGas.entity.Cybercontadino;
+import org.domain.SeamAmiciDelGas.entity.Itinerario;
 import org.domain.SeamAmiciDelGas.entity.Ordine;
 import org.domain.SeamAmiciDelGas.session.GestioneFeedback;
 import org.domain.SeamAmiciDelGas.session.GestioneFondo;
@@ -29,8 +30,9 @@ import org.domain.SeamAmiciDelGas.session.LoginSelectBean;
 import org.domain.SeamAmiciDelGas.session.Message;
 import org.domain.SeamAmiciDelGas.session.MyOrdine;
 import org.domain.SeamAmiciDelGas.session.OrdineBean;
-import org.domain.SeamAmiciDelGas.session.TakeInHandContadino;
-import org.domain.SeamAmiciDelGas.session.TakeInHandContadino.InfoFeedback;
+import org.domain.SeamAmiciDelGas.session.TakeInHandForCustomer;
+import org.domain.SeamAmiciDelGas.session.TakeInHandForDriver;
+import org.domain.SeamAmiciDelGas.session.InfoFeedback;
 import org.domain.SeamAmiciDelGas.webservices.CatalogImpl;
 import org.domain.SeamAmiciDelGas.webservices.CatalogInterface;
 import org.domain.SeamAmiciDelGas.webservices.CatalogNoServiceImpl;
@@ -84,6 +86,10 @@ public class OrderProcessing {
 	@Out(value="customer", scope=ScopeType.BUSINESS_PROCESS, required=false)
 	private Account customer;
 	
+	@In(value="itinerario", scope=ScopeType.BUSINESS_PROCESS, required=false)
+	@Out(value="itinerario", scope=ScopeType.BUSINESS_PROCESS, required=false)
+	private Itinerario itinerario;
+	
 	@In(value="responsabileConsegna", scope=ScopeType.BUSINESS_PROCESS, required=false)
 	@Out(value="responsabileConsegna", scope=ScopeType.BUSINESS_PROCESS, required=false)
 	private Account responsabileConsegna;
@@ -108,11 +114,17 @@ public class OrderProcessing {
 	
 	@In(value="booleanCustomerToContadino", scope=ScopeType.BUSINESS_PROCESS, required=false)
 	@Out(value="booleanCustomerToContadino", scope=ScopeType.BUSINESS_PROCESS, required=false)
-	private Boolean booleanCustomerToContadino= new Boolean(false);
+	private Boolean booleanCustomerToContadino = new Boolean(false);
 	
 	@In(value="booleanCustomerToResponsabileConsegna", scope=ScopeType.BUSINESS_PROCESS, required=false)
 	@Out(value="booleanCustomerToResponsabileConsegna", scope=ScopeType.BUSINESS_PROCESS, required=false)
-	private Boolean booleanCustomerToResponsabileConsegna= new Boolean(false);
+	private Boolean booleanCustomerToResponsabileConsegna = new Boolean(false);
+	
+	@In(value="booleanResponsabileConsegnaToDriver", scope=ScopeType.BUSINESS_PROCESS, required=false)
+	@Out(value="booleanResponsabileConsegnaToDriver", scope=ScopeType.BUSINESS_PROCESS, required=false)
+	private Boolean booleanResponsabileConsegnaToDriver = new Boolean(false);
+	
+	
 	
 	@In(value="loginSelectBean", scope=ScopeType.SESSION, required=false)
 	private LoginSelectBean loginSelectBean;
@@ -162,7 +174,7 @@ public class OrderProcessing {
 	}
 	
 	@BeginTask @EndTask(transition="ordine_preso_in_carico")
-	public void verificaDisponibilita(Date dataConsegna){
+	public void verificaDisponibilita(Itinerario itinerario){
 		//setto lo stato dell'ordine
 		//myOrdine.setPendente(false);
 		Hashtable<String,String> transactionIdList = new Hashtable<String,String>();
@@ -209,9 +221,14 @@ public class OrderProcessing {
 			//messageStatoOrdine.setContent("Ordine preso in carico da "+ credentials.getUsername()+" ordine = "+ordine.getIdordine());
 			messageStatoOrdine.setInfoFilter("orderProcessingPreso");
 			responsabileConsegna = currentAccount;
+			if (loginSelectBean.isDriver())
+				responsabileIsDriver = new Boolean(true);
+			else
+				responsabileIsDriver = new Boolean(false);
 			myOrdine.setPendente(false);
 			myOrdine.setEvaso(true);
-			this.dataConsegna = dataConsegna;
+			this.dataConsegna = itinerario.getDataConsegna();
+			this.itinerario = itinerario;
 			saveOrdine(); //salvo l'ordine nel database
 			messageStatoOrdine.setContent("Ordine preso in carico da "+ credentials.getUsername()+" ordine = "+ordine.getIdordine());
 		}
@@ -281,9 +298,9 @@ public class OrderProcessing {
 	}
 
 	@BeginTask @EndTask(beforeRedirect=true,transition="fb_customer_to_contadino")
-	public String fb_customer_to_contadino(TakeInHandContadino takeInHandContadino) {
+	public String fb_customer_to_contadino(TakeInHandForCustomer takeInHandForCustomer) {
 		booleanCustomerToContadino = new Boolean(true);
-		Hashtable<String, InfoFeedback> hashTableContadini = takeInHandContadino.getHashTable();
+		Hashtable<String, InfoFeedback> hashTableContadini = takeInHandForCustomer.getHashTable();
 		Enumeration<String> enum1 = hashTableContadini.keys();
 		while(enum1.hasMoreElements()) {
 			String username = enum1.nextElement();
@@ -291,23 +308,23 @@ public class OrderProcessing {
 			gestioneFeedback.assegnaFeedback(username, ordine, (float) infoFeedback.getFeedback(), infoFeedback.getComment());
 		}
 		
-		takeInHandContadino.reset();
+		takeInHandForCustomer.reset();
 		return "fb_customer_to_contadino";
 	}
 	
 	@BeginTask @EndTask(beforeRedirect=true,transition="fb_customer_to_responsabile_consegna")
-	public String fb_customer_to_responsabile_consegna(TakeInHandContadino takeInHandContadino) {
+	public String fb_customer_to_responsabile_consegna(TakeInHandForCustomer  takeInHandForCustomer ) {
 		//single
 		booleanCustomerToResponsabileConsegna = new Boolean(true);
-		InfoFeedback infoFeedback = takeInHandContadino.getInfoFeedbackResponsabile();
+		InfoFeedback infoFeedback = takeInHandForCustomer.getInfoFeedbackResponsabile();
 		gestioneFeedback.assegnaFeedback(ordine.getDriver().getUsername(), ordine, (float) infoFeedback.getFeedback(), infoFeedback.getComment());
-		takeInHandContadino.reset();
+		takeInHandForCustomer .reset();
 		return "fb_customer_to_responsabile_consegna";
 	}
 	
 	@BeginTask @EndTask(beforeRedirect=true,transition="fb_responsabile_to_customer")
-	public String fb_responsabile_to_customer() {
-		//single
+	public String fb_responsabile_to_customer(TakeInHandForDriver takeInHandForDriver) {
+
 		return "fb_responsabile_to_customer";
 	}
 	
@@ -318,8 +335,17 @@ public class OrderProcessing {
 	}
 	
 	@BeginTask @EndTask(beforeRedirect=true,transition="fb_responsabile_consegna_to_contadino")
-	public String fb_responsabile_consegna_to_contadino() {
+	public String fb_responsabile_consegna_to_contadino(TakeInHandForDriver takeInHandForDriver) {
 		//list..
+		booleanResponsabileConsegnaToDriver = new Boolean(true);
+		Hashtable<String, InfoFeedback> hashTableContadini = takeInHandForDriver.getHashTableContadini();
+		Enumeration<String> enum1 = hashTableContadini.keys();
+		while(enum1.hasMoreElements()) {
+			String username = enum1.nextElement();
+			InfoFeedback infoFeedback = hashTableContadini.get(username);
+			gestioneFeedback.assegnaFeedback(username, ordine, (float) infoFeedback.getFeedback(), infoFeedback.getComment());
+		}
+		takeInHandForDriver.reset();
 		return "fb_responsabile_consegna_to_contadino";
 	}
 	
