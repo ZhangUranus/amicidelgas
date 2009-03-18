@@ -16,8 +16,9 @@ var current_focus = 0;
 function altrimenti_non_funge(){
 }
 
-function disable_this(obj){
+function disable_this(obj, load_obj){
 	document.getElementById(obj).style.display="none";
+	document.getElementById(load_obj).style.display="";
 }
 
 function TabDispaly(obj, cond) {
