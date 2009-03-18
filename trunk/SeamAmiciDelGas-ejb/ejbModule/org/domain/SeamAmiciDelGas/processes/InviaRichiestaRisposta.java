@@ -29,7 +29,7 @@ public class InviaRichiestaRisposta {
 	@In(value="entityManager")
     private EntityManager em;
 	
-	@In(value="notifyMessageRequest",scope=ScopeType.BUSINESS_PROCESS, required=false) 
+	@In(value="notifyMessageReply",scope=ScopeType.BUSINESS_PROCESS, required=false) 
 	private Message message;
 	
 	@In(value="currentAccount" , scope=ScopeType.SESSION , required=false)
