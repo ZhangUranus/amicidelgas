@@ -35,12 +35,12 @@
   </node>
   <node name="Fb from responsabile consegna to contadino" x="854" y="894" width="285" height="36">
     <edge>
-      <label x="5" y="-10"/>
+      <label x="-13" y="-24"/>
     </edge>
   </node>
   <node name="Fb from customer to contadino per qualita" x="0" y="956" width="334" height="36">
     <edge>
-      <label x="5" y="-10"/>
+      <label x="-56" y="-29"/>
       <bendpoint w1="1" h1="141" w2="-226" h2="-2"/>
     </edge>
   </node>
@@ -58,8 +58,8 @@
     </edge>
     <edge>
       <label x="5" y="-10"/>
-      <bendpoint w1="340" h1="-7" w2="765" h2="-346"/>
-      <bendpoint w1="340" h1="337" w2="765" h2="-2"/>
+      <bendpoint w1="341" h1="0" w2="766" h2="-364"/>
+      <bendpoint w1="339" h1="362" w2="764" h2="-2"/>
     </edge>
   </node>
   <node name="fork2" x="191" y="541" width="252" height="24">
@@ -88,13 +88,13 @@
   </node>
   <node name="Fb from responsabile cosegna to customer" x="383" y="953" width="317" height="36">
     <edge>
-      <label x="5" y="-10"/>
+      <label x="-62" y="3"/>
       <bendpoint w1="7" h1="64" w2="154" h2="-57"/>
     </edge>
   </node>
   <node name="Fb from contadino to responsabile consegna" x="564" y="893" width="277" height="36">
     <edge>
-      <label x="-116" y="-26"/>
+      <label x="-110" y="-25"/>
     </edge>
   </node>
   <node name="fork1" x="705" y="820" width="252" height="24">

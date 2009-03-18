@@ -110,36 +110,18 @@ public class OrderProcessing {
 	@Out(value="booleanCustomerToContadino", scope=ScopeType.BUSINESS_PROCESS, required=false)
 	private Boolean booleanCustomerToContadino= new Boolean(false);
 	
+	@In(value="booleanCustomerToResponsabileConsegna", scope=ScopeType.BUSINESS_PROCESS, required=false)
+	@Out(value="booleanCustomerToResponsabileConsegna", scope=ScopeType.BUSINESS_PROCESS, required=false)
+	private Boolean booleanCustomerToResponsabileConsegna= new Boolean(false);
+	
 	@In(value="loginSelectBean", scope=ScopeType.SESSION, required=false)
 	private LoginSelectBean loginSelectBean;
 	
-	//@In(value="responsabileIsDriver", scope=ScopeType.BUSINESS_PROCESS,required=false)
-	//@Out(value="responsabileIsDriver", scope=ScopeType.BUSINESS_PROCESS,required=false)
-	//private boolean responsabileIsDriver;
+	@In(value="responsabileIsDriver", scope=ScopeType.BUSINESS_PROCESS,required=false)
+	@Out(value="responsabileIsDriver", scope=ScopeType.BUSINESS_PROCESS,required=false)
+	private Boolean responsabileIsDriver = new Boolean(false);
 	
-	//liste per i feedback
-/*	@In(value="feedbackListCustomerToContadini", scope=ScopeType.BUSINESS_PROCESS,required=false)
-	@Out(value="feedbackListCustomerToContadini", scope=ScopeType.BUSINESS_PROCESS,required=false)
-	private List<Cybercontadino> feedbackListCustomerToContadini;
 	
-	@In(value="feedbackListDriverToContadini", scope=ScopeType.BUSINESS_PROCESS,required=false)
-	@Out(value="feedbackListDriverToContadini", scope=ScopeType.BUSINESS_PROCESS,required=false)
-	private List<Cybercontadino> feedbackListDriverToContadini;
-	
-	@In(value="feedbackListContadiniToDriver", scope=ScopeType.BUSINESS_PROCESS,required=false)
-	@Out(value="feedbackListContadiniToDriver", scope=ScopeType.BUSINESS_PROCESS,required=false)
-	private Hashtable<String,Boolean> feedbackListContadiniToDriver;
-	
-	@In(value="feedbackDriverToCustomer", scope=ScopeType.BUSINESS_PROCESS,required=false)
-	@Out(value="feedbackDriverToCustomer", scope=ScopeType.BUSINESS_PROCESS,required=false)
-	private Boolean feedbackDriverToCustomer;
-
-	@In(value="feedbackCustomerToDriver", scope=ScopeType.BUSINESS_PROCESS,required=false)
-	@Out(value="feedbackCustomerToDriver", scope=ScopeType.BUSINESS_PROCESS,required=false)
-	private Boolean feedbackCustomerToDriver;
-	//customerToDriver
-	//DriverToCustomer
-*/	
 	@CreateProcess(definition="myOrderProcessing")
 	public String startOrder(List<ItemQuantita> itemQ, Date dm){
 		selectedItem = itemQ;
@@ -248,6 +230,7 @@ public class OrderProcessing {
 		em.persist(ordine);
 		
 		Articolo articolo;
+		Set<Articolo> articoli = new HashSet<Articolo>(0); 
 		for (ItemQuantita iq: myOrdine.getItemQuantita()) {
 			articolo = new Articolo();
 			articolo.setCodiceEsterno(iq.getItem().getName());
@@ -260,7 +243,10 @@ public class OrderProcessing {
 			articolo.setQuantitaRichiesta(iq.getQuantita());
 			articolo.setOrdine(ordine);
 			em.persist(articolo);
+			articoli.add(articolo);
 		}
+		ordine.setArticolos(articoli);
+		
 	}
 	
 	@BeginTask @EndTask(beforeRedirect=true,transition="ordine_eliminato_dall_utente")
@@ -294,16 +280,6 @@ public class OrderProcessing {
 		return "deletedTimeOut";
 	}
 
-/*	public void removeFrom(String transition, Cybercontadino contadino)
-	{
-		if(transition.equals("fb_customer_to_contadino"))
-			feedbackListCustomerToContadini.remove(contadino);
-		if(transition.equals("fb_contadino_to_responsabile_consegna"))
-			feedbackListContadiniToDriver.remove(contadino.getPartitaIva());
-		if(transition.equals("fb_responsabile_consegna_to_contadino"))
-			feedbackListDriverToContadini.remove(contadino);
-	}
-*/
 	@BeginTask @EndTask(beforeRedirect=true,transition="fb_customer_to_contadino")
 	public String fb_customer_to_contadino(TakeInHandContadino takeInHandContadino) {
 		booleanCustomerToContadino = new Boolean(true);
@@ -320,8 +296,12 @@ public class OrderProcessing {
 	}
 	
 	@BeginTask @EndTask(beforeRedirect=true,transition="fb_customer_to_responsabile_consegna")
-	public String fb_customer_to_responsabile_consegna() {
+	public String fb_customer_to_responsabile_consegna(TakeInHandContadino takeInHandContadino) {
 		//single
+		booleanCustomerToResponsabileConsegna = new Boolean(true);
+		InfoFeedback infoFeedback = takeInHandContadino.getInfoFeedbackResponsabile();
+		gestioneFeedback.assegnaFeedback(ordine.getDriver().getUsername(), ordine, (float) infoFeedback.getFeedback(), infoFeedback.getComment());
+		takeInHandContadino.reset();
 		return "fb_customer_to_responsabile_consegna";
 	}
 	

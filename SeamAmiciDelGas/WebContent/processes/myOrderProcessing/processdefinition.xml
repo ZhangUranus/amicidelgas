@@ -98,12 +98,16 @@
 	</join>
 
 	<task-node name="Fb from customer to responsabile consegna">
-		<task name="fbCustomerToResponsabileConsegna"></task>
+		<task name="fbCustomerToResponsabileConsegna">
+			<assignment actor-id="#{customer.username}"></assignment>
+		</task>
 		<transition to="join2" name="fb_customer_to_responsabile_consegna"></transition>
 	</task-node>
 
 	<task-node name="Fb from responsabile cosegna to customer">
-		<task name="fbResponsabileConsegnaToCustomer"></task>
+		<task name="fbResponsabileConsegnaToCustomer">
+			<assignment actor-id="#{responsabileConsegna.username}"></assignment>
+		</task>
 		<transition to="join2" name="fb_responsabile_to_customer"></transition>
 	</task-node>
 

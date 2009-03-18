@@ -17,8 +17,10 @@ import org.domain.SeamAmiciDelGas.entity.Feedback;
 import org.domain.SeamAmiciDelGas.entity.Ordine;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
+import org.jboss.seam.annotations.Logger;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
+import org.jboss.seam.log.Log;
 
 @Name(value="gestioneFeedback")
 @Scope(ScopeType.SESSION)
@@ -35,6 +37,8 @@ public class GestioneFeedback {
 	
 	@In(value="entityManager")
     private EntityManager em;
+	
+	@Logger private Log log;
 	
 	private Cybercontadino currentContadino;
 	
@@ -54,9 +58,11 @@ public class GestioneFeedback {
 	public void assegnaFeedback(String username, Ordine ordine, float feedbackAssegnato, String commento)
 	{
 		//account dell'username
+		log.info("******** ssegnaFeedback *********");
+		log.info("------> username = "+username);
 		accountHome.setAccountUsername(username);
 		Account accountDaModificare = accountHome.find();	
-		
+		log.info(" accountDaModificare username = "+accountDaModificare.getUsername());
 		//modifico feedback
 		float newMedia = calcolaPunteggioFeedback(accountDaModificare,feedbackAssegnato);
 		accountDaModificare.setPunteggioFeedback(newMedia);
@@ -67,6 +73,7 @@ public class GestioneFeedback {
 		
 		//aggiorno account
 		accountHome.update();
+		log.info(" accountDaModificare username = "+accountDaModificare.getUsername()+ " aggiornato");
 	}
 
 	private float calcolaPunteggioFeedback(Account accountDaModificare, float punteggioFeedback)
