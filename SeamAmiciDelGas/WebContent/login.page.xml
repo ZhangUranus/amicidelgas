@@ -10,6 +10,9 @@
 	  		<rule if="#{loginSelectBean.calculateMaxRole() == 'mediatore'}">
 	             <redirect view-id="/customer/customerHome.xhtml"/>
 	  		</rule>
+	  		<rule if="#{loginSelectBean.calculateMaxRole() == 'driver'}">
+	             <redirect view-id="/customer/customerHome.xhtml"/>
+	  		</rule>
       		<rule if="#{loginSelectBean.calculateMaxRole() == 'utenteGas'}">
 	             <redirect view-id="/customer/customerHome.xhtml"/>
 	  		</rule>
