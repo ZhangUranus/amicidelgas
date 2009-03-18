@@ -8,7 +8,7 @@
 	             <redirect view-id="/customer/customerHome.xhtml"/>
 	  		</rule>
 	  		<rule if="#{loginSelectBean.calculateMaxRole() == 'mediatore'}">
-	             <redirect view-id="/mediatore/mediatoreHome.xhtml"/>
+	             <redirect view-id="/customer/customerHome.xhtml"/>
 	  		</rule>
       		<rule if="#{loginSelectBean.calculateMaxRole() == 'utenteGas'}">
 	             <redirect view-id="/customer/customerHome.xhtml"/>

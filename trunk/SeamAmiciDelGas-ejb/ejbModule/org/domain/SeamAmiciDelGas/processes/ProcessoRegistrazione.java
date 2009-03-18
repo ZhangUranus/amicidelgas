@@ -40,19 +40,17 @@ public class ProcessoRegistrazione {
 	private String content;
 	
 	private String mittente;
-	
-	
+
 	@Out(value="notificaUtente", scope= ScopeType.BUSINESS_PROCESS, required=false)
 	protected Message messageUtente;
 	
 	@In private FacesMessages facesMessages;
 	
-	@Out(value="nomeContadino",scope=ScopeType.BUSINESS_PROCESS, required=false)
-	private String nomeContadino;
+//	@Out(value="nomeContadino",scope=ScopeType.BUSINESS_PROCESS, required=false)
+//	private String nomeContadino;
 	
 	@Out(value="MediatoreCheManda",scope=ScopeType.BUSINESS_PROCESS, required=false)
 	private String MediatoreCheManda;
-	
 
 	@Out(value="dataProposta", scope= ScopeType.BUSINESS_PROCESS, required =false)
 	private Date dataProposta;
@@ -76,14 +74,14 @@ public class ProcessoRegistrazione {
 	private List<String> usernameInviati;
 	
 	private Cybercontadino contadinoCorrente;
+	
 	private TaskInstance taskCorrente;
 	
 	@CreateProcess(definition="notificaRegistrazione")
 	public void inviaRegistrazione()
 	{	
 		facesMessages.add("La richiesta e' stata inoltrata");
-	}
-	
+	}	
 	
 	@StartTask @EndTask(transition="invia")
 	public void creaVisita()
@@ -100,7 +98,7 @@ public class ProcessoRegistrazione {
 		gc.setTime((Date) dataProposta.clone());
 		String format = "dd-MM-yyyy";
 		messageUtente= new Message();
-		messageUtente.setContent(content+" in data "+(new SimpleDateFormat(format)).format(gc.getTime())
+		messageUtente.setContent(content+"\nIn data "+(new SimpleDateFormat(format)).format(gc.getTime())
 				+" alle ore: "+gc.get(Calendar.HOUR_OF_DAY)+":"+gc.get(Calendar.MINUTE)+" .");
 		messageUtente.setMittente(mittente);
 		System.out.println("CONTENTTTTTTTTTTtt: "+content+mittente);
@@ -114,7 +112,7 @@ public class ProcessoRegistrazione {
 		messageSubProcess.setTipo("questionario");
 		gc= new GregorianCalendar();
 		gc.setTime((Date) dataQuestionario.clone());
-		gc.add(Calendar.MINUTE, +10);
+		gc.add(Calendar.MINUTE, +2);
 		dataTimer = gc.getTime();
 		MediatoreCheManda = credentials.getUsername();
 		compilato = false;
@@ -128,7 +126,6 @@ public class ProcessoRegistrazione {
 	public void setContadinoCorrente(Cybercontadino contadinoCorrente) {
 		this.contadinoCorrente = contadinoCorrente;
 	}
-
 
 	public Date getDataProposta() {
 		return dataProposta;

@@ -6,6 +6,6 @@
       no-conversation-view-id="/customerHome.xhtml"
       login-required="true">
 
-<restrict>#{s:hasRole('utenteGas')}</restrict>      
+<restrict>#{s:hasRole('utenteGas') or s:hasRole('mediatore')}</restrict> 
 
 </page>
