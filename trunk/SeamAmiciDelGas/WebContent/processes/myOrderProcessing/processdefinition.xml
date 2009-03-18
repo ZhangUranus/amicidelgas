@@ -53,15 +53,7 @@
 	</task-node>
 
 	<task-node name="Fb from responsabile consegna to contadino">
-		<task name="utenteToContadinoWithDriver">
-			<assignment actor-id="#{customer.username}"></assignment>
-		</task>
-		<task name="ContadinoToDriver">
-			<assignment pooled-actors="utenteContadino"></assignment>
-		</task>
-		<task name="DriverToContadinoAndUtente">
-			<assignment pooled-actors="driver"></assignment>
-		</task>
+		<task name="fbResponsabileConsegnaToContadino"></task>
 		<transition to="join1" name="fb_responsabile_consegna_to_contadino"></transition>
 	</task-node>
 
