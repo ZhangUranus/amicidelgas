@@ -87,35 +87,15 @@ public class InviaRichiestaRisposta {
 							" in data "+dataVisita);
 		feedback.setAnalizzato(true);
 		feedback.setPunteggio(p);
-		float punteggioCorrente = this.calcolaPunteggioFeedback(p, accountUtente);
-		System.out.println("FIGARO");
+		float punteggioCorrente = accountUtente.getPunteggioFeedback();
+		int numvotanti = accountUtente.getNumeroVotanti()+1;
+		punteggioCorrente = ((punteggioCorrente * (numvotanti-1))+p)/((float) numvotanti);
 		accountUtente.setPunteggioFeedback(punteggioCorrente);
+		accountUtente.setNumeroVotanti(numvotanti);
 		accounthome.update();
 		em.persist(feedback);
 		
 		return true; 
 		
     }
-	
-	private float calcolaPunteggioFeedback(float punteggioNuovo, Account accountUtente)
-	{
-		feedbackList.getFeedback().setAccountByDestinatario(accountUtente);
-		List<Feedback> listaFeedback = feedbackList.getResultList();
-		ArrayList<Float> listaFloat = new ArrayList<Float>();
-		for (Feedback feedback : listaFeedback) {
-			listaFloat.add(feedback.getPunteggio());
-		}
-		int size = listaFloat.size();
-		float somma = 0.0f;
-		for (Float float1 : listaFloat) {
-			somma += float1.floatValue();
-		}
-		somma += punteggioNuovo;
-		//situazione iniziale, nessun feedback punteggio di partenza 3
-		if(size==0){
-			somma+=3;
-			size=1;
-		}			
-		return somma/(size+1);
-	}
 }
