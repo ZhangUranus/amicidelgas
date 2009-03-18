@@ -49,6 +49,7 @@ public class Cybercontadino implements java.io.Serializable {
 	private String nomeAzienda;
 	private String pathAsl;
 	private String urlWsdl;
+	private String nameSpaceWsdl;
 	private String descrizioneAzienda;
 	private String recapitoTelefonico;
 	@Email (message="errore")
@@ -289,6 +290,18 @@ public class Cybercontadino implements java.io.Serializable {
 		if(this.partitaIva.equals(contadino.getPartitaIva()))
 				return true;
 		return false;
+	}
+
+	@Column(name = "NameSpaceWSDL", length = 500)
+	@NotNull
+	@Length(max = 500)
+	
+	public String getNameSpaceWsdl() {
+		return nameSpaceWsdl;
+	}
+
+	public void setNameSpaceWsdl(String nameSpaceWsdl) {
+		this.nameSpaceWsdl = nameSpaceWsdl;
 	}
 	
 
