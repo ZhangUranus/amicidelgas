@@ -13,8 +13,11 @@ var current_notifiche = 0;
 var current_focus = 0;
 
 
+function altrimenti_non_funge(){
+}
+
 function disable_this(obj){
-	document.getElementById(obj).disabled = true;
+	document.getElementById(obj).style.display="none";
 }
 
 function TabDispaly(obj, cond) {
