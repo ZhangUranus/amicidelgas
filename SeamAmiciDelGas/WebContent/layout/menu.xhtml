@@ -162,13 +162,9 @@
             <rich:menuItem submitMode="none" >
                     <s:link view="/driver/rilasciaFeedbackDriver.xhtml" value="FEEDBACK" propagation="none"/>
              </rich:menuItem>
-            
-            </rich:dropDownMenu>
-            
-            <rich:menuItem submitMode="none" >
+             
+             <rich:menuItem submitMode="none" >
                     <s:link view="/driver/riceviNotifiche.xhtml" value="NOTIFICHE RICEVUTE (#{filtraNotifica.numberForGroupForDriver() + filtraNotifica.numberForSingleForDriver()})" propagation="none"/>
-                    <f:param name="utenteCodiceFiscale" value="#{currentUser.codiceFiscale}"/>
-		            <f:param name="accountUsername" value="#{currentAccount.username}"/>
              </rich:menuItem>
             
             </rich:dropDownMenu>
