@@ -1,4 +1,5 @@
 package org.domain.SeamAmiciDelGas.session;
+import java.net.URL;
 import java.util.Date;
 
 import javax.ejb.Remove;
@@ -14,6 +15,7 @@ import org.domain.SeamAmiciDelGas.entity.Cybercontadino;
 import org.domain.SeamAmiciDelGas.entity.Pagamentoelettronico;
 import org.domain.SeamAmiciDelGas.entity.Role;
 import org.domain.SeamAmiciDelGas.processes.ProcessoRegistrazione;
+import org.domain.SeamAmiciDelGas.webservices.ServicePublisher;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.Destroy;
 import org.jboss.seam.annotations.Name;
@@ -106,6 +108,9 @@ public class RegistrazioneCybercontadinoBean implements RegistrazioneCybercontad
     	//registrationMailer.sendWelcomeEmail();
     	
     	
+    	String urlWsdl=contadino.getUrlWsdl();
+    	ServicePublisher sp= new ServicePublisher(); 
+    	sp.publishService(contadino.getPartitaIva(), "CatalogService", urlWsdl, contadino.getNameSpaceWsdl());
     	// implement your business logic here
     	log.info("registrazionecybercontadino.registrazionecybercontadino() action called");
         statusMessages.add("Avvenuta Registrazione Cybercontadino");
