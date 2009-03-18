@@ -32,10 +32,8 @@ public class NotificaRichiestaRisposta {
 	
 	private String tipo;
 	
-	//private String mittente;
-	
 	@Out(value="compilato",scope=ScopeType.BUSINESS_PROCESS, required=false)
-	private Boolean compilato;
+	private boolean compilato;
 	
 	@Out(value="nomeMittente",scope=ScopeType.BUSINESS_PROCESS, required=false)
 	private String nomeMittente;
@@ -61,6 +59,7 @@ public class NotificaRichiestaRisposta {
 		message.setDestinatario(destinatario);
 		//message.setBroadcast(true);
 		message.setBroadcast(broadcast);
+		compilato = false;
 		System.out.println("La richiesta � stata inoltrata TUREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE"+broadcast);
 		facesMessages.add("La richiesta � stata inoltrata");
 	}

@@ -137,6 +137,12 @@ public class InviaRequestReply {
 			r.setName("driver");
 			r.setAccount(accountUtente);
 			em.persist(r);
+			message.setContent("La tua richiesta di divenire driver e' stata accettata.");
+		}
+		else
+		{
+			message.setContent("La tua richiesta di divenire driver � stata rifiutata.");
+			
 		}
 		return true;
     }
