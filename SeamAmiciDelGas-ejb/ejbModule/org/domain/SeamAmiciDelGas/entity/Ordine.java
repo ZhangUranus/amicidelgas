@@ -175,5 +175,9 @@ public class Ordine implements java.io.Serializable {
 	public void setDriver(Account driver) {
 		this.driver = driver;
 	}
+	
+	public boolean equals(Ordine o) {
+		return o.getIdordine()==idordine;
+	}
 
 }
