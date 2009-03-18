@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<process-definition  xmlns=""  name="notificaRegistrazione">
-
+<process-definition  xmlns=""  name="ProvaProcesso">
 
 	<start-state name="RichiestaRegistrazione">
 		<transition to="CreaEventoAziendaVisitare" name="inviaRegistrazione"></transition>
@@ -50,9 +49,20 @@
 		</transition>
 	</decision>
 	
+	<mail-node name="EmailConfermaRegistrazione" to="#{contadinoCreato.email}">
+		<subject>
+			Registrazione Gruppo Gas
+		</subject>
+		<text>
+			In seguito alla visita in Azienda e all'analisi del nostro responsabile, la sua richiesta di registrazione è stata rifiutata perche' non soddisfaceva i nostri canoni.
+Cordiali Saluti il Gruppo GAS.
+		</text>
+		<transition to="ContadinoAccettato" name="ok"></transition>
+	</mail-node>
+
 	<fork name="fork1">
 		<transition to="AccettaAltriUtenti"></transition>
-		<transition to="join1" name="to EMAIL"></transition>
+		<transition to="EmailAppuntamentoAzienda" name="to EMAIL"></transition>
 	</fork>
 
 	<join name="join1">
@@ -80,6 +90,34 @@
 		<transition to="VisualizzaQuestionari" name="notificaAdmin"></transition>
 	</join>
 
+	<mail-node name="EmailRifiutoRegistrazione" to="#{contadinoCreato.email}">
+		<subject>
+			Registrazione Gruppo Gas
+		</subject>
+		<text>
+			In seguito alla visita in Azienda e all'analisi del nostro responsabile, la sua richiesta di registrazione è accettata.
+Prima di registrarsi, e' pregato di verificare il suo indirizzo e-mail clikkando sul seguente link:
+http://localhost:8080/SeamAmiciDelGas/confirmRegistration.seam?code=#{confirmationCode}&amp;amp;taskId=#{taskInstance.id}
+Cordiali Saluti il Gruppo GAS.
+
+
+		</text>
+		<transition to="ContadinoRifiutato" name="emailOk"></transition>
+	</mail-node>
+	
+	<mail-node name="EmailAppuntamentoAzienda" to="#{contadinoCreato.email}">
+		<subject>
+			Proposta Visita azienda
+		</subject>
+		<text>
+			Salve Mr #{contadinoCreato.cognomePresidente}, questo messaggio è generato automaticamente dal gruppo GAS a cui ha fatto richiesta di adesione. Per accettare la registrazione, il gruppo GAS, come lei sa, richiede una visita alla sua azienda #{contadinoCreato.nomeAzienda} e
+tra le date da lei indicate, il GAS gradirebbe effettuare una visita il giorno #{dataProposta}.
+Invieremo un responsabile con il compito di intervistarla e un gruppo di persone per visitare l'azienda.
+Cordiali saluti, il gruppo GAS.
+		</text>
+		<transition to="join1" name="fromemailTojoin"></transition>
+	</mail-node>
+
 	<state name="AspettaDataQuestionario">
 		<event type="timer-create">
       		 <action name="CambiaTimerQuestionario" class="org.domain.SeamAmiciDelGas.processes.ChangeTimerDate">
@@ -92,10 +130,10 @@
 	</state>
 
 	<decision name="AccettaRifiuta">
-		<transition to="ContadinoAccettato" name="accetta">
+		<transition to="EmailConfermaRegistrazione" name="accetta">
 			<condition expression="#{decisione == 1}"></condition>
 		</transition>
-		<transition to="ContadinoRifiutato" name="rifiuta">
+		<transition to="EmailRifiutoRegistrazione" name="rifiuta">
 			<condition expression="#{decisione == 0}"></condition>
 		</transition>
 	</decision>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<root-container name="notificaRegistrazione" width="792" height="882">
+<root-container name="notificaRegistrazione" width="792" height="886">
   <node name="RichiestaRegistrazione" x="29" y="22" width="192" height="36">
     <edge>
       <label x="-54" y="-32"/>
@@ -34,11 +34,6 @@
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="EmailConfermaRegistrazione" x="575" y="773" width="203" height="36">
-    <edge>
-      <label x="5" y="-10"/>
-    </edge>
-  </node>
   <node name="fork1" x="495" y="112" width="252" height="24">
     <edge>
       <label x="5" y="-10"/>
@@ -67,11 +62,6 @@
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="EmailRifiutoRegistrazione" x="275" y="759" width="182" height="36">
-    <edge>
-      <label x="5" y="-10"/>
-    </edge>
-  </node>
   <node name="AspettaDataQuestionario" x="515" y="370" width="192" height="36">
     <edge>
       <label x="5" y="-10"/>
@@ -85,6 +75,6 @@
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="ContadinoAccettato" x="608" y="843" width="132" height="36"/>
-  <node name="ContadinoRifiutato" x="281" y="839" width="132" height="36"/>
+  <node name="ContadinoAccettato" x="620" y="845" width="132" height="36"/>
+  <node name="ContadinoRifiutato" x="351" y="849" width="132" height="36"/>
 </root-container>

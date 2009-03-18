@@ -73,6 +73,8 @@ public class ProcessoRegistrazione {
 	@Out(value="inviati",scope=ScopeType.BUSINESS_PROCESS, required= false)
 	private List<String> usernameInviati;
 	
+	
+	// contadino che serve per il panel della jsf (Clelio)
 	private Cybercontadino contadinoCorrente;
 	
 	private TaskInstance taskCorrente;
