@@ -54,7 +54,7 @@ public class InviaRequestReply {
 	@In(value="accountHome", create=true)
 	private AccountHome accounthome;
 	
-	@In(value="newQuestionario")
+	@In(value="newQuestionario", required=false)
 	private Questionario questionario;
 	
 	@In(value="newFeedback" , create=true)
@@ -67,13 +67,14 @@ public class InviaRequestReply {
 	public String riceviMessaggio(int risposta)
 	{
 		//System.out.println("RICEVI MESSAGGIO");
-		if(message.getTipo().equals("becomeDriver"))
+		if(compilato)
 		{
 			System.out.println("BECOMEDRIVER"+risposta);
 			this.setDriver(risposta);
 		}
 		else
 		{
+			
 			compilato = true;
 			if(questionario == null)
 			{
