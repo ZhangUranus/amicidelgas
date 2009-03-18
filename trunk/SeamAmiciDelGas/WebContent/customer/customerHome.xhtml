@@ -47,7 +47,7 @@
 
 		<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center" >
 			<tr>
-				<td colspan="3">
+				<td colspan="3" width="70%">
 					<table width="99%" border="0" cellspacing="6" cellpadding="0" align="left" >
 					  <tr>			    
 					    <td rowspan="2" width="20%" align="center">
@@ -92,13 +92,14 @@
 						</div></td>
 						<script type="text/javascript"><!--
 							function setInput() {
-								document.getElementById('driver_div:destinatario_hidden').value='mediatore';
-								document.getElementById('driver_div:broadcast_hidden').value=true;
-								document.getElementById('driver_div:tipo_hidden').value='becomeDriver';
+								document.getElementById('becameDriverForm:driver_div:destinatario_hidden').value='mediatore';
+								document.getElementById('becameDriverForm:driver_div:broadcast_hidden').value=true;
+								document.getElementById('becameDriverForm:driver_div:tipo_hidden').value='becomeDriver';
 								document.getElementById('become_driver_button').style.display= "";
 							}
 						--></script>
 						<td valign="top" ><div  align="left" class="explorer">
+							<h:form id="becameDriverForm">
 							<s:decorate id="driver_div" rendered="#{(currentAccount.punteggioFeedback >= 3.5) and (!(loginSelectBean.calculateMaxRole()=='driver'))}">
                        		<table border="0" align="left" cellpadding="0" cellspacing="8" id="table_show_info" style="display:none;border-color:#CCCCCC;">
 							  <tr>
@@ -108,7 +109,7 @@
 							  </tr>
 						      <tr>
 							    <td align="center" >
-				    				<h:inputTextarea value="#{notificaRichiestaRisposta.content}" onclick="setInput();" />
+				    				<h:inputTextarea value="#{notificaRichiestaRisposta.content}" onkeypress="setInput();" />
 				    				<h:inputHidden id="destinatario_hidden" value="#{notificaRichiestaRisposta.destinatario}" ></h:inputHidden>
 				    				<h:inputHidden id="broadcast_hidden" value="#{notificaRichiestaRisposta.broadcast}" ></h:inputHidden>
 				    				<h:inputHidden id="tipo_hidden" value="#{notificaRichiestaRisposta.tipo}" ></h:inputHidden>
@@ -116,20 +117,21 @@
 							  </tr>
 							  <tr>
 							    <td align="center">
-							    	<div id="become_driver_button" style="display:none;">						    	
-				    				<s:button rendered="#{(currentAccount.punteggioFeedback >= 3.5)}"
-                	    							action="#{notificaRichiestaRisposta.notificaRequest()}" 
-                   	    							value="Proponiti come driver" />
+							    	<div id="become_driver_button" style="display:none;">
+							    	<h:commandLink value="Proponiti come driver"
+				            			action="#{notificaRichiestaRisposta.notificaRequest}"  >	    
+				            		</h:commandLink>						  
                    	    			</div>	
 							    </td>
 							  </tr>
 							</table>
                         	</s:decorate>
+                        	</h:form>
 						</div></td>
 					  </tr>
 					</table>	
 				</td>
-				<td >
+				<td width ="30%">
 					<table width="99%" border="0" cellspacing="6" cellpadding="0" align="left" >
 					  <tr>			    
 					    <td width="50px" rowspan="2" align="left">
