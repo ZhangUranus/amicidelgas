@@ -404,6 +404,7 @@ function attivaCalendar() {
 	            <s:button value="Invia richiesta di visita" 
 	            	taskInstance="#{processoRegistrazione.taskCorrente}" 
 	            	action="#{processoRegistrazione.creaVisita()}"
+	            	onmouseup="disable_this(this.id);"
 	            	id="creaVisitaButton">
 		            <a:support event="onclick" action="#{processoRegistrazione.update}">	            	
 		            </a:support>
