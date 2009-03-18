@@ -42,7 +42,7 @@ public class InviaRequestReply {
 	private String nomeUtente;
 	
 	@In(value="notifyMessageRequest",scope=ScopeType.BUSINESS_PROCESS, required=false) 
-	@Out(value="notifyMessageReply", scope= ScopeType.BUSINESS_PROCESS, required=false)
+	@Out(value="notifyMessageRequest", scope= ScopeType.BUSINESS_PROCESS, required=false)
 	private Message message;
 	
 	@In(value="nomeMittente", scope= ScopeType.BUSINESS_PROCESS, required=false)
@@ -70,7 +70,7 @@ public class InviaRequestReply {
 	public String riceviMessaggio(int risposta)
 	{
 		//System.out.println("RICEVI MESSAGGIO");
-		if(compilato)
+		if(questionario == null)
 		{
 			System.out.println("BECOMEDRIVER"+risposta);
 			this.setDriver(risposta);

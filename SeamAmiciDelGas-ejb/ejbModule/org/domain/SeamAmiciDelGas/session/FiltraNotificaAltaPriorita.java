@@ -156,6 +156,40 @@ public class FiltraNotificaAltaPriorita {
 		return tasksUser;
 	}
 	
+	public List<TaskInstance> getRispostaMediatoreDriver(String taskName , String username)
+	{
+		// ritorna i task assegnati solo a me per un particolare taskName e un particolare contadino
+		System.out.println("AIUTOOOOOOOOOOOOOOOOOO TASKKKKKKKKKKKKKKK");
+		List<TaskInstance> tasks= getAllPooledTaskInstanceList(taskName);
+		List<TaskInstance> tasksUser = new ArrayList<TaskInstance>();
+		String nome;
+		for(TaskInstance temp : tasks)
+		{
+			nome = (String) temp.getVariable("nomeMittente");
+			if(temp.getPriority() == Task.PRIORITY_HIGH  && nome.equals(username));
+					tasksUser.add(temp);
+			System.out.println("STAMPATIIIII "+tasksUser.toString());
+		}
+		return tasksUser;
+	}
+	
+	public int getNumRispostaMediatoreDriver(String taskName , String username)
+	{
+		// ritorna i task assegnati solo a me per un particolare taskName e un particolare contadino
+		System.out.println("AIUTOOOOOOOOOOOOOOOOOO TASKKKKKKKKKKKKKKK");
+		List<TaskInstance> tasks= getAllPooledTaskInstanceList(taskName);
+		List<TaskInstance> tasksUser = new ArrayList<TaskInstance>();
+		String nome;
+		for(TaskInstance temp : tasks)
+		{
+			nome = (String) temp.getVariable("nomeMittente");
+			if(temp.getPriority() == Task.PRIORITY_HIGH  && nome.equals(username));
+					tasksUser.add(temp);
+			System.out.println("STAMPATIIIII "+tasksUser.toString());
+		}
+		return tasksUser.size();
+	}
+	
 	public int getNumberBecomeDriver(String taskName)
 	{
 		// ritorna i task assegnati solo a me per un particolare taskName e un particolare contadino
