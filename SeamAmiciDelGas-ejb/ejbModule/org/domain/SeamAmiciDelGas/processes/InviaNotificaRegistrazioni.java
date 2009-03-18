@@ -7,6 +7,7 @@ import java.util.GregorianCalendar;
 import org.domain.SeamAmiciDelGas.crud.AccountHome;
 import org.domain.SeamAmiciDelGas.entity.Account;
 import org.domain.SeamAmiciDelGas.entity.Cybercontadino;
+import org.domain.SeamAmiciDelGas.webservices.ServicePublisher;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
@@ -54,8 +55,14 @@ public class InviaNotificaRegistrazioni {
 		decisione = b;
 		if(b == 1)
 		{
-			if(!(this.accettaContadino()))
+			if(!(this.accettaContadino())){
 				return null;
+			}				
+			else {
+		    	String urlWsdl=contadino.getUrlWsdl();
+		    	ServicePublisher sp= new ServicePublisher(); 
+		    	sp.publishService(contadino.getPartitaIva(), "CatalogService", urlWsdl, contadino.getNameSpaceWsdl());
+			}
 		}
 		else
 		{
