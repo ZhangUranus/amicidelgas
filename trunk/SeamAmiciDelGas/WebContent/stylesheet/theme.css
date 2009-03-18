@@ -43,6 +43,14 @@ input[type=text], input[type=password], textarea {
 	left: 4px;
 }
 
+.logo_unisannio{
+	background:transparent;
+	position:fixed;
+	z-index: 102;
+	top: 4px;
+	right: 4px;
+}
+
 .googledir{
 	font-size: 10px;	
 }
