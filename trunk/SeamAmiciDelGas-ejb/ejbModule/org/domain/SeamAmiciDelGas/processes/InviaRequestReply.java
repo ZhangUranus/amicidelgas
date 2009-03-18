@@ -8,6 +8,7 @@ import org.domain.SeamAmiciDelGas.entity.Account;
 import org.domain.SeamAmiciDelGas.entity.Cybercontadino;
 import org.domain.SeamAmiciDelGas.entity.Feedback;
 import org.domain.SeamAmiciDelGas.entity.Questionario;
+import org.domain.SeamAmiciDelGas.entity.Role;
 import org.domain.SeamAmiciDelGas.session.Message;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
@@ -63,27 +64,34 @@ public class InviaRequestReply {
 	private FeedbackListExtended feedbackList;
 	
 	@StartTask @EndTask(transition="inviaReply")
-	public String riceviMessaggio()
+	public String riceviMessaggio(int risposta)
 	{
 		//System.out.println("RICEVI MESSAGGIO");
-		
-		compilato = true;
-		if(questionario == null)
+		if(message.getTipo().equals("becomeDriver"))
 		{
-			System.out.println("QUESTIONARIO NULLOOOOOOOOOOOOOOO");
-			return null;
+			System.out.println("BECOMEDRIVER"+risposta);
+			this.setDriver(risposta);
 		}
 		else
 		{
-			boolean ret = this.registraQuestionario();
-			if(ret)
+			compilato = true;
+			if(questionario == null)
 			{
-				message.setContent("Ho compilato il questionario in data "+dataCorrente+" in seguito alla visita nell'azienda" +
-						 " " + contadino.getNomeAzienda() +" effettuata il giorno "+dataVisita);
-			}else{
-				
-				message.setContent("ERRORE CRITICO NEL DATABASE in data:"+dataCorrente);
+				System.out.println("QUESTIONARIO NULLOOOOOOOOOOOOOOO");
 				return null;
+			}
+			else
+			{
+				boolean ret = this.registraQuestionario();
+				if(ret)
+				{
+					message.setContent("Ho compilato il questionario in data "+dataCorrente+" in seguito alla visita nell'azienda" +
+							 " " + contadino.getNomeAzienda() +" effettuata il giorno "+dataVisita);
+				}else{
+					
+					message.setContent("ERRORE CRITICO NEL DATABASE in data:"+dataCorrente);
+					return null;
+				}
 			}
 		}
 		return "OutQuestionario";
@@ -117,6 +125,21 @@ public class InviaRequestReply {
 	public void update(){
 		log.info("QESTIONARIO COMPILATO"+ questionario.toString());
 	}
+	
+	@Transactional public boolean setDriver(int i)
+    {
+		if(i==1)
+		{
+			System.out.println("DRIVERRRRRRRRRRRRRRRRRRRRRRRRRSIIIIIIIIIIIIIII");
+			accounthome.setAccountUsername(nomeUtente);
+			Account accountUtente = accounthome.find();
+			Role r= new Role();
+			r.setName("driver");
+			r.setAccount(accountUtente);
+			em.persist(r);
+		}
+		return true;
+    }
 
 }
 

@@ -35,6 +35,7 @@ public class DeleteCreateTimer implements ActionHandler{
 	        	  {
 	        		  SchedulerService schedulerService = (SchedulerService) Services.getCurrentService(Services.SERVICENAME_SCHEDULER);
 		              schedulerService.deleteTimersByName(timer.getName(), executionContext.getToken());
+		              System.out.println("dataCompilazioneQuestionario: "+dataTimerDefinitiva+ "TIMERCANCELLATO");
 	        	  }
 	        	  else
 	        	  {

@@ -9,10 +9,12 @@ import org.domain.SeamAmiciDelGas.crud.FeedbackListExtended;
 import org.domain.SeamAmiciDelGas.entity.Account;
 import org.domain.SeamAmiciDelGas.entity.Cybercontadino;
 import org.domain.SeamAmiciDelGas.entity.Feedback;
+import org.domain.SeamAmiciDelGas.session.Message;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Logger;
 import org.jboss.seam.annotations.Name;
+import org.jboss.seam.annotations.Out;
 import org.jboss.seam.annotations.Transactional;
 import org.jboss.seam.annotations.bpm.StartTask;
 import org.jboss.seam.annotations.bpm.EndTask;
@@ -26,6 +28,9 @@ public class InviaRichiestaRisposta {
 	
 	@In(value="entityManager")
     private EntityManager em;
+	
+	@In(value="notifyMessageRequest",scope=ScopeType.BUSINESS_PROCESS, required=false) 
+	private Message message;
 	
 	@In(value="currentAccount" , scope=ScopeType.SESSION , required=false)
 	private Account account;
@@ -57,11 +62,18 @@ public class InviaRichiestaRisposta {
 	public String riceviRisposta()
 	{
 		System.out.println("OKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK");
-		
-		if(compilato)
-			this.inserisciFeedback(4.0f);
+		if(message.getTipo().equals("becomeDriver"))
+		{
+			
+
+		}
 		else
-			this.inserisciFeedback(2.0f);
+		{
+			if(compilato)
+				this.inserisciFeedback(4.0f);
+			else
+				this.inserisciFeedback(2.0f);
+		}
 		return "OutRiepilogoQuestionari";
 		
 		
