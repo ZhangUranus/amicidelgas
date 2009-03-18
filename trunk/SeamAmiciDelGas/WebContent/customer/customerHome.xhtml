@@ -50,14 +50,15 @@
 				<td colspan="3">
 					<table width="99%" border="0" cellspacing="6" cellpadding="0" align="left" >
 					  <tr>			    
-					    <td rowspan="2" width="20%" align="left">
+					    <td rowspan="2" width="20%" align="center">
 					    	<s:decorate rendered="#{loginSelectBean.calculateMaxRole()=='admin'}"><img alt="statistiche" border="0" src="/SeamAmiciDelGas/img/admin.png"/></s:decorate>
 					    	<s:decorate rendered="#{loginSelectBean.calculateMaxRole()=='mediatore'}"><img alt="statistiche" border="0" src="/SeamAmiciDelGas/img/contatti.png"/></s:decorate>
 					    	<s:decorate rendered="#{loginSelectBean.calculateMaxRole()=='utenteGas'}"><img alt="statistiche" border="0" src="/SeamAmiciDelGas/img/contatti.png"/></s:decorate>
+					    	<s:decorate rendered="#{loginSelectBean.calculateMaxRole()=='driver'}"><img alt="statistiche" border="0" src="/SeamAmiciDelGas/img/driver.png"/></s:decorate>
 					    </td>
 					    <td valign="bottom" width="40%"><div align="left" class="colore_1">Bentornato <b>#{currentUser.nome} #{currentUser.cognome}</b></div></td>			      
 					  	<td valign="bottom" width="40%">
-					  		<s:decorate rendered="#{(currentAccount.punteggioFeedback >= 2.5)}">
+					  		<s:decorate rendered="#{(currentAccount.punteggioFeedback >= 3.5) and (!(loginSelectBean.calculateMaxRole()=='driver'))}">
 					  			<div align="center" class="min_bold" onclick="javascript:infolevel();" style="cursor: pointer" >
 					  			<img src="/SeamAmiciDelGas/img/driver_mini.png" border="0" id="plus_img_infolevel" align="middle" /> Proponiti come driver
 					  			</div>
@@ -65,7 +66,7 @@
 					  	</td>			      
 					  </tr>
 					  <tr>
-					    <td valign="top"><div align="left" class="explorer">
+					    <td valign="top" ><div align="left" class="explorer">
 					    	<h:graphicImage value="/img/star_full.png" rendered="#{currentAccount.punteggioFeedback > 0.5}" />
 							<h:graphicImage value="/img/star_full.png" rendered="#{currentAccount.punteggioFeedback > 1.5}" />
 							<h:graphicImage value="/img/star_full.png" rendered="#{currentAccount.punteggioFeedback > 2.5}" />
@@ -89,43 +90,41 @@
                         	<li>Telefono: #{currentUser.recapitoTelefonico}</li>
                         	<li>Indirizzo: #{currentUser.indirizzo}</li>
 						</div></td>
-						<td valign="top"><div align="left" class="explorer">
-							<s:decorate rendered="#{(currentAccount.punteggioFeedback >= 2.5)}">
-                       		<table width="100%" border="0" align="left" cellpadding="0" cellspacing="0" id="table_show_info" style="display:none;">
+						<script type="text/javascript"><!--
+							function setInput() {
+								document.getElementById('driver_div:destinatario_hidden').value='mediatore';
+								document.getElementById('driver_div:broadcast_hidden').value=true;
+								document.getElementById('driver_div:tipo_hidden').value='becomeDriver';
+								document.getElementById('become_driver_button').style.display= "";
+							}
+						--></script>
+						<td valign="top" ><div  align="left" class="explorer">
+							<s:decorate id="driver_div" rendered="#{(currentAccount.punteggioFeedback >= 3.5) and (!(loginSelectBean.calculateMaxRole()=='driver'))}">
+                       		<table border="0" align="left" cellpadding="0" cellspacing="8" id="table_show_info" style="display:none;border-color:#CCCCCC;">
 							  <tr>
-							    <td width="22" height="22" background="/SeamAmiciDelGas/img/shadow_a.png"></td>
-							    <td height="22" background="/SeamAmiciDelGas/img/shadow_top.png"></td>
-							    <td width="22" height="22" background="/SeamAmiciDelGas/img/shadow_b.png"></td>
+							    <td align="center" >
+				    				<div align="center" class="colore_1">Inserisci messaggio da mandare al mediatore</div>
+							    </td>
 							  </tr>
 						      <tr>
-							  	<td background="/SeamAmiciDelGas/img/shadow_left.png"></td>
-							    <td background="/SeamAmiciDelGas/img/shadow.png" align="center" >
-						    				<h:inputTextarea value="" />
+							    <td align="center" >
+				    				<h:inputTextarea value="#{notificaRichiestaRisposta.content}" onclick="setInput();" />
+				    				<h:inputHidden id="destinatario_hidden" value="#{notificaRichiestaRisposta.destinatario}" ></h:inputHidden>
+				    				<h:inputHidden id="broadcast_hidden" value="#{notificaRichiestaRisposta.broadcast}" ></h:inputHidden>
+				    				<h:inputHidden id="tipo_hidden" value="#{notificaRichiestaRisposta.tipo}" ></h:inputHidden>
 							    </td>
-							  	<td background="/SeamAmiciDelGas/img/shadow_right.png"></td>
 							  </tr>
 							  <tr>
-							  	<td background="/SeamAmiciDelGas/img/shadow_left.png"></td>
-							    <td background="/SeamAmiciDelGas/img/shadow.png" align="center">							    	
-				    				<s:button rendered="#{(currentAccount.punteggioFeedback >= 2.5)}"
+							    <td align="center">
+							    	<div id="become_driver_button" style="display:none;">						    	
+				    				<s:button rendered="#{(currentAccount.punteggioFeedback >= 3.5)}"
                 	    							action="#{notificaRichiestaRisposta.notificaRequest()}" 
                    	    							value="Proponiti come driver" />
-                       	    					
+                   	    			</div>	
 							    </td>
-							  	<td background="/SeamAmiciDelGas/img/shadow_right.png"></td>
-							  </tr>
-							  <tr>
-							    <td width="22" height="22" background="/SeamAmiciDelGas/img/shadow_d.png"></td>
-							    <td height="22" background="/SeamAmiciDelGas/img/shadow_bottom.png"></td>
-							    <td width="22" height="12" background="/SeamAmiciDelGas/img/shadow_c.png"></td>
 							  </tr>
 							</table>
                         	</s:decorate>
-                        	<!-- Inserire il corpo del messaggio e il destinatario e il broadcast(true) come campi nascosti
-                        	<h:outputText rendered="#{(currentAccount.punteggioFeedback > 3.5)}"  >
-                        		Proponiti come driver <img src="/SeamAmiciDelGas/img/driver_mini.png" border="0" align="middle"/>
-                        	</h:outputText>
-                        	 -->
 						</div></td>
 					  </tr>
 					</table>	
