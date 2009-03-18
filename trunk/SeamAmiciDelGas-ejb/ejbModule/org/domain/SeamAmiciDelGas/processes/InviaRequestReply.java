@@ -45,6 +45,9 @@ public class InviaRequestReply {
 	@Out(value="notifyMessageReply", scope= ScopeType.BUSINESS_PROCESS, required=false)
 	private Message message;
 	
+	@In(value="nomeMittente", scope= ScopeType.BUSINESS_PROCESS, required=false)
+	private String nomeMittente;
+	
 	@In(value="compilato", scope= ScopeType.BUSINESS_PROCESS, required=false)
 	@Out(value="compilato", scope= ScopeType.BUSINESS_PROCESS, required=false)
 	private boolean compilato;
@@ -145,6 +148,7 @@ public class InviaRequestReply {
 			message.setContent("La tua richiesta di divenire driver � stata rifiutata.");
 			
 		}
+		message.setDestinatario(nomeMittente);
 		return true;
     }
 

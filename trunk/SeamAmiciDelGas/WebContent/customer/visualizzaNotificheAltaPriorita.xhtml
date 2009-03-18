@@ -72,10 +72,10 @@
 			</rich:simpleTogglePanel>
 			
 			<rich:simpleTogglePanel label="Richieste Driver">
-				<s:decorate rendered="#{not empty filtraNotificaAltaPriorita.getBecomeDriver('riceviMessaggio')}">
+				<s:decorate rendered="#{not empty filtraNotificaAltaPriorita.getBecomeDriver('riceviMessaggio' , currentAccount.username)}">
 					<br/>
-					<rich:dataTable id="dataTableUtente" width="90%" align="center" 
-									value="#{filtraNotificaAltaPriorita.getBecomeDriver('riceviMessaggio')}" var="_task">
+					<rich:dataTable id="dataTableUtenteValerio" width="90%" align="center" 
+									value="#{filtraNotificaAltaPriorita.getBecomeDriver('riceviMessaggio', currentAccount.username)}" var="_task">
 						
 						<rich:column>
 							<f:facet name="header">Mittente</f:facet>
@@ -87,8 +87,8 @@
 						</rich:column>			
 						<rich:column >
 							<f:facet name="header">Azioni</f:facet>    
-						    <s:button id="PulsanteAccetta" taskInstance="#{_task}" value="Accetta" action="#{inviaRequestReply.riceviMessaggio(1)}"/>
-						    <s:button id="PulsanteRifiuta" taskInstance="#{_task}" value="Rifiuta" action="#{inviaRequestReply.riceviMessaggio(0)}"/>
+						    <s:button taskInstance="#{_task}" value="Accetta" action="#{inviaRequestReply.riceviMessaggio(1)}"/>
+						    <s:button taskInstance="#{_task}" value="Rifiuta" action="#{inviaRequestReply.riceviMessaggio(0)}"/>
 						    
 						</rich:column>
 					</rich:dataTable>

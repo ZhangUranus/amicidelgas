@@ -59,7 +59,7 @@ public class NotificaRichiestaRisposta {
 		message.setDestinatario(destinatario);
 		//message.setBroadcast(true);
 		message.setBroadcast(broadcast);
-		compilato = false;
+		compilato = true;
 		System.out.println("La richiesta � stata inoltrata TUREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE"+broadcast);
 		facesMessages.add("La richiesta � stata inoltrata");
 	}
