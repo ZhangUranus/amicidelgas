@@ -108,9 +108,7 @@ public class RegistrazioneCybercontadinoBean implements RegistrazioneCybercontad
     	//registrationMailer.sendWelcomeEmail();
     	
     	
-    	String urlWsdl=contadino.getUrlWsdl();
-    	ServicePublisher sp= new ServicePublisher(); 
-    	sp.publishService(contadino.getPartitaIva(), "CatalogService", urlWsdl, contadino.getNameSpaceWsdl());
+
     	// implement your business logic here
     	log.info("registrazionecybercontadino.registrazionecybercontadino() action called");
         statusMessages.add("Avvenuta Registrazione Cybercontadino");
