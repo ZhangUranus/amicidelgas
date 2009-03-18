@@ -177,7 +177,7 @@ public class Ordine implements java.io.Serializable {
 	}
 	
 	public boolean equals(Ordine o) {
-		return o.getIdordine()==idordine;
+		return o.getIdordine().equals(idordine);
 	}
 
 }

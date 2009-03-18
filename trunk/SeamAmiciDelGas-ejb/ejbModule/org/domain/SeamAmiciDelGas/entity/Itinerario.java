@@ -148,7 +148,7 @@ public class Itinerario implements java.io.Serializable {
 	}
 	
 	public boolean equals(Itinerario it) {
-		return iditinerario.intValue()==it.getIditinerario().intValue();
+		return iditinerario.equals(it.getIditinerario());
 	}
 
 }
