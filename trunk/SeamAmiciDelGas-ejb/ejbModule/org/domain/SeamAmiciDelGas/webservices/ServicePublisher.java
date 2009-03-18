@@ -100,7 +100,7 @@ public class ServicePublisher {
 	
 	public static void main(String[] args) {
 		ServicePublisher s= new ServicePublisher();
-		s.publishService("2839281", "myCatalogService","http://localhost:8080/urlWsdl?wsdl", "http://myNewNamespace.org");
+		s.publishService("1139780629", "CatalogService","http://localhost:8080/SeamCatalogoContadino-ear-SeamCatalogoContadino-ejb/CatalogService?wsdl", "http://session.SeamCatalogoContadino.domain.org/");
 	}
 	
 }
