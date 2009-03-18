@@ -41,6 +41,9 @@ public class LoginSelectBean{
 			if(r.getName().equals("mediatore"))
 				return "mediatore";
 		for(Role r : account.getRoles())
+			if(r.getName().equals("driver"))
+				return "driver";
+		for(Role r : account.getRoles())
 			if(r.getName().equals("utenteContadino"))
 				return "utenteContadino";
 		for(Role r : account.getRoles())
