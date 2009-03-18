@@ -26,10 +26,6 @@ COMMIT;
 /*!40000 ALTER TABLE `account` ENABLE KEYS */;
 
 
-/*!40000 ALTER TABLE `articolo` DISABLE KEYS */;
-SET AUTOCOMMIT=0;
-COMMIT;
-/*!40000 ALTER TABLE `articolo` ENABLE KEYS */;
 
 
 /*!40000 ALTER TABLE `comune` DISABLE KEYS */;
@@ -10612,9 +10608,9 @@ INSERT INTO `account` (`Username`,`passwordHash`,`Bloccato`,`Elimato`,`Cancellat
  ('sissoko','8ff430762890cbf91b3af84032d6f3ceda61644f',0x00,0x00,0x00,0x00,'2009-02-17',NULL,3,NULL,0,8,1);
 COMMIT;
 
-INSERT INTO `cybercontadino` (`PartitaIVA`,`NomePresidente`,`Indirizzo`,`CognomePresidente`,`NomeAzienda`,`PathASL`,`URLWSDL`,`DescrizioneAzienda`,`recapito_telefonico`,`email`,`Coordinate`, `Username`, `Comune_ubicazione`,`dataVisita`) VALUES
-(01139780629, 'Massimo', 'piazza roma', 'Ranieri', 'Azienda RoCoCo','asl', 'url-wsdl', 'vendiamo pomodori', 973692, 'laserbnc@gmail.com', 'eeweew', 'ranieri', 10252, '2009-02-17'),
-(01435650625, 'Mohamed', 'viale mellusi, 134', 'Sissoko', 'Azienda Sissoko and company', 'asl', 'url-wsdl-patate', 'vendiamo patate', 973692, 'laserbnc@gmail.com', 'kjbdsds', 'sissoko', 10252, '2009-03-18');
+INSERT INTO `cybercontadino` (`PartitaIVA`,`NomePresidente`,`Indirizzo`,`CognomePresidente`,`NomeAzienda`,`PathASL`,`URLWSDL`, `NameSpaceWSDL`, `DescrizioneAzienda`,`recapito_telefonico`,`email`,`Coordinate`, `Username`, `Comune_ubicazione`,`dataVisita`) VALUES
+(01139780629, 'Massimo', 'piazza roma', 'Ranieri', 'Azienda RoCoCo','asl', 'url-wsdl','namespace-wsdl', 'vendiamo pomodori', 973692, 'laserbnc@gmail.com', 'eeweew', 'ranieri', 10252, '2009-02-17'),
+(01435650625, 'Mohamed', 'viale mellusi, 134', 'Sissoko', 'Azienda Sissoko and company', 'asl', 'url-wsdl-patate', 'namespace-wsdl', 'vendiamo patate', 973692, 'laserbnc@gmail.com', 'kjbdsds', 'sissoko', 10252, '2009-03-18');
 COMMIT;
 
 INSERT INTO `role` (`id`,`name`,`Username`) VALUES
