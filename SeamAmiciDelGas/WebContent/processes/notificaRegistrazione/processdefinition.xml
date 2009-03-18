@@ -35,7 +35,7 @@
 	</task-node>
 
 	<task-node name="VisualizzaQuestionari">
-		<task name="visualizzaQuestionari">
+		<task name="visualizzaQuestionari" priority="highest">
 			<assignment pooled-actors="admin"></assignment>
 		</task>
 		<transition to="AccettaRifiuta" name="decisioneAdmin"></transition>

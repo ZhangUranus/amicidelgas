@@ -6,6 +6,10 @@
       no-conversation-view-id="/riepilogoRegistrazioneContadini.xhtml"
       login-required="true">
 
-<restrict>#{s:hasRole('admin')}</restrict>      
-
+<restrict>#{s:hasRole('admin')}</restrict>   
+ <navigation>
+  <rule if-outcome="OutComeRiepilogoRegistrazione">
+   <redirect view-id="/admin/riepilogoRegistrazioneContadini.xhtml"/>
+  </rule>
+ </navigation>  
 </page>

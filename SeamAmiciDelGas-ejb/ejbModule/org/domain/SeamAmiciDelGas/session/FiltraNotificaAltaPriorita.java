@@ -344,7 +344,7 @@ public class FiltraNotificaAltaPriorita {
 		}
 		return tasks;
 	}
-
+	
 	public List<TaskInstance> getAllPooledTaskInstanceList(String... filters)
 	{
 		List<TaskInstance> tasks= new ArrayList<TaskInstance>();

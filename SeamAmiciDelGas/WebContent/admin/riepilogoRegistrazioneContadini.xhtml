@@ -10,7 +10,7 @@
 
 	<ui:define name="body">
 
-	<rich:dataTable id="tabellaRiepilogo" width="100%" align="center" value="#{filtraNotifica.getAllPooledTaskInstanceList('visualizzaQuestionari')}" var="_contadinoTask">
+	<rich:dataTable id="tabellaRiepilogo" width="100%" align="center" value="#{filtraNotificaAltaPriorita.getAllPooledTaskInstanceList('visualizzaQuestionari')}" var="_contadinoTask">
 		<rich:column>
 			<f:facet name="header">Riepilogo questionari per l'azienda</f:facet>
 				<table width="100%" border="0" cellspacing="2" cellpadding="0" align="center" >
@@ -106,10 +106,16 @@
 							<table width="100%" border="0" cellspacing="4" cellpadding="0" align="center">
 								<tr>
 									<td width="50%" align="center" >
-										<div align="center" class="colore_1" >pulsante accetta</div>
+										<div align="center" >
+										<s:button taskInstance="#{_contadinoTask}" action="#{inviaNotificaRegistrazioni.visualizzaQuestionari(1)}"
+									  value="Accetta"/>
+										</div>
 									</td>
 									<td width="50%" align="center" >
-										<div align="center" class="colore_1" >pulsante rifiuta</div>
+										<div align="center" >
+										<s:button taskInstance="#{_contadinoTask}" action="#{inviaNotificaRegistrazioni.visualizzaQuestionari(0)}"
+									  value="Rifiuta"/>
+										</div>
 									</td>					
 								</tr>								
 							</table>
