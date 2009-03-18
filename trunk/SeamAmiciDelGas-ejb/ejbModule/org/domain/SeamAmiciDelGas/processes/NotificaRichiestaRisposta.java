@@ -28,8 +28,7 @@ public class NotificaRichiestaRisposta {
 	
 	private String destinatario;
 
-	
-	private boolean broadcast;
+	private String broadcast;
 	
 	private String tipo;
 	
@@ -61,8 +60,8 @@ public class NotificaRichiestaRisposta {
 		//message.setDestinatario("Mediatore");
 		message.setDestinatario(destinatario);
 		//message.setBroadcast(true);
-		message.setBroadcast(broadcast);
-		System.out.println("La richiesta � stata inoltrata TUREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE"+broadcast);
+		message.setBroadcast(Boolean.getBoolean(broadcast));
+		System.out.println("La richiesta � stata inoltrata TUREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE"+broadcast + content + destinatario);
 		facesMessages.add("La richiesta � stata inoltrata");
 	}
 /*	
@@ -89,7 +88,7 @@ public class NotificaRichiestaRisposta {
 		this.content = content;
 	}
 
-	
+/*	
 	public boolean isBroadcast() {
 		return broadcast;
 	}
@@ -98,6 +97,7 @@ public class NotificaRichiestaRisposta {
 		this.broadcast = broadcast;
 	}
 
+*/
 	public Message getMessage() {
 		return message;
 	}
@@ -128,6 +128,18 @@ public class NotificaRichiestaRisposta {
 
 	public String getTipo() {
 		return tipo;
+	}
+
+	public String getBroadcast() {
+		return broadcast;
+	}
+
+	public void setBroadcast(String broadcast) {
+		this.broadcast = broadcast;
+	}
+	
+	public void update(){
+		log.info("UPDATEBROADCAST �: "+ broadcast);
 	}
 
 }
