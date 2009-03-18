@@ -68,31 +68,19 @@
              
              <rich:menuItem submitMode="none"  >
                     <s:link view="/customer/inviaNotifiche.xhtml" value="INVIA NOTIFICHE" propagation="none"/>
-                    <f:param name="utenteCodiceFiscale" value="#{currentUser.codiceFiscale}"/>
-		            <f:param name="accountUsername" value="#{currentAccount.username}"/>
              </rich:menuItem> 
              
              <rich:menuItem submitMode="none" >
                     <s:link view="/customer/riceviNotifiche.xhtml" value="NOTIFICHE RICEVUTE (#{filtraNotifica.numberForGroupForCustomer() + filtraNotifica.numberForSingleForCustomer()})" propagation="none"/>
-                    <f:param name="utenteCodiceFiscale" value="#{currentUser.codiceFiscale}"/>
-		            <f:param name="accountUsername" value="#{currentAccount.username}"/>
              </rich:menuItem> 
              
              <rich:menuItem submitMode="none"  >
                     <s:link view="/customer/browseCatalog.xhtml" value="VEDI CATALOGO" propagation="none"/>
-                    <f:param name="utenteCodiceFiscale" value="#{currentUser.codiceFiscale}"/>
-		            <f:param name="accountUsername" value="#{currentAccount.username}"/>
              </rich:menuItem>
              
              <rich:menuItem submitMode="none" >
                     <s:link view="/customer/visualizzaOrdini.xhtml" value="VISUALIZZA ORDINI" propagation="none"/>
-                    <f:param name="utenteCodiceFiscale" value="#{currentUser.codiceFiscale}"/>
-		            <f:param name="accountUsername" value="#{currentAccount.username}"/>
-             </rich:menuItem> 
-             
-             <rich:menuItem submitMode="none" >
-                    <s:link view="/customer/questionario.xhtml" value="QUESTIONARIO" propagation="none"/>
-             </rich:menuItem>	
+             </rich:menuItem> 	
         	
         </rich:dropDownMenu>	
         </td>
@@ -263,7 +251,7 @@
     		    	<div align="left" class="colore_white_bold" style="height: 28px;  padding-top: 4px;">Eventi Visita Azienda</div>
     		    </s:link>
     		</s:decorate>
-    		<s:decorate rendered="#{((loginSelectBean.calculateMaxRole()=='mediatore' or loginSelectBean.calculateMaxRole()=='admin'))}">
+    		<s:decorate rendered="#{((filtraNotificaAltaPriorita.getNumberBecomeDriver('riceviMessaggio') > 0) and (loginSelectBean.calculateMaxRole()=='mediatore' or loginSelectBean.calculateMaxRole()=='admin'))}">
     		    <div align="left" class="colore_white_bold" style="height: 28px;  padding-top: 4px;">Richieste Driver</div>
     		</s:decorate>
     		<s:decorate rendered="#{((filtraNotifica.numberOfTaskForGroup('crea_visita') > 0) and (loginSelectBean.calculateMaxRole()=='mediatore' or loginSelectBean.calculateMaxRole()=='admin'))}">
@@ -286,10 +274,10 @@
     		</s:decorate>
     		<s:decorate rendered="#{((filtraNotificaAltaPriorita.numberOfTask('taskForGroup' , 'partecipa_alla_visita') > 0) and ( filtraNotificaAltaPriorita.PooledTaskInstanceListForAllUserButMeNot(currentAccount.username , 'partecipa_alla_visita')))}">
     		    <div align="center" class="colore_white_bold" style="background:transparent url('/SeamAmiciDelGas/img/red_number2.png') no-repeat; width:26px; height: 28px; padding-top: 4px; padding-right: 1px;" >#{filtraNotificaAltaPriorita.numberOfTask('taskForGroup' , 'partecipa_alla_visita')}</div>
-    		</s:decorate>
-    		<s:decorate rendered="#{((filtraNotifica.numberOfTaskForGroup('Conferma la richiesta') > 0) and (loginSelectBean.calculateMaxRole()=='mediatore' or loginSelectBean.calculateMaxRole()=='admin'))}">
-    		    <div align="center" class="colore_white_bold" style="background:transparent url('/SeamAmiciDelGas/img/red_number2.png') no-repeat; width:26px; height: 28px; padding-top: 4px; padding-right: 1px;" >#{filtraNotifica.numberOfTaskForGroup('Conferma la richiesta')}</div>
-    		</s:decorate> 
+    		</s:decorate>    		 
+    		<s:decorate rendered="#{((filtraNotificaAltaPriorita.getNumberBecomeDriver('riceviMessaggio') > 0) and (loginSelectBean.calculateMaxRole()=='mediatore' or loginSelectBean.calculateMaxRole()=='admin'))}">
+    		    <div align="center" class="colore_white_bold" style="background:transparent url('/SeamAmiciDelGas/img/red_number2.png') no-repeat; width:26px; height: 28px; padding-top: 4px; padding-right: 1px;" >#{filtraNotificaAltaPriorita.getNumberBecomeDriver('riceviMessaggio')}</div>
+    		</s:decorate>    		 
     		<s:decorate rendered="#{((filtraNotifica.numberOfTaskForGroup('crea_visita') > 0) and (loginSelectBean.calculateMaxRole()=='mediatore' or loginSelectBean.calculateMaxRole()=='admin'))}">
     			<div align="center" class="colore_white_bold" style="background:transparent url('/SeamAmiciDelGas/img/red_number2.png') no-repeat; width:26px; height: 28px; padding-top: 4px; padding-right: 1px;" >#{filtraNotifica.numberOfTaskForGroup('crea_visita')}</div>
     		</s:decorate> 		
