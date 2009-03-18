@@ -33,7 +33,7 @@ public class NotificaRichiestaRisposta {
 	
 	private String tipo;
 	
-	private String mittente;
+	//private String mittente;
 	
 	@Out(value="compilato",scope=ScopeType.BUSINESS_PROCESS, required=false)
 	private Boolean compilato;
@@ -56,13 +56,13 @@ public class NotificaRichiestaRisposta {
 		log.info("Inoltrata la richiesta RequestReply");
 		nomeMittente= credentials.getUsername();
 		message=new Message();
-		content = "Tutto bien?! Posso diventare Driver?";
+		//content = "Tutto bien?! Posso diventare Driver?";
 		message.setContent(content);
 		//message.setDestinatario("Mediatore");
 		message.setDestinatario(destinatario);
 		//message.setBroadcast(true);
 		message.setBroadcast(broadcast);
-		System.out.println("La richiesta � stata inoltrata");
+		System.out.println("La richiesta � stata inoltrata TUREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE"+broadcast);
 		facesMessages.add("La richiesta � stata inoltrata");
 	}
 /*	
@@ -113,7 +113,7 @@ public class NotificaRichiestaRisposta {
 	public void setDestinatario(String destinatario) {
 		this.destinatario = destinatario;
 	}
-
+/*
 	public void setMittente(String mittente) {
 		this.mittente = mittente;
 	}
@@ -121,7 +121,7 @@ public class NotificaRichiestaRisposta {
 	public String getMittente() {
 		return mittente;
 	}
-
+*/
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
