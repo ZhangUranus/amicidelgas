@@ -55,20 +55,19 @@ public class CambiaDestinatarioHandler implements ActionHandler{
     	//ti.setVariableLocally("notifyMessageRequest", tokenVariables.get("notifyMessageReques"));
 	    if(message.isBroadcast())
 	    {
+	    	//Processo Driver
 	    	System.out.println("Messaggio BROADCAST");
 	    	String [] poolActor = new String[1];
 	   		poolActor[0] = message.getDestinatario();
 	    	ti.setPooledActors(poolActor);
+	    	ti.setPriority(Task.PRIORITY_HIGH);
 	    }
 	    else
 	    {
-	    	/*
-	    	if(nameTask.equals("riceviRisposta"))
-	    	{
-	    		destinatario = message.getDestinatario();
-	    	}*/
+	    	// Processo Questionario
 	    	System.out.println("Messaggio NON BROADCAST +"+destinatario);
 	    	ti.setActorId(destinatario);
+	    	ti.setPriority(Task.PRIORITY_HIGHEST);
 	    }
 	}
 

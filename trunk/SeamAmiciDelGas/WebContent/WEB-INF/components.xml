@@ -69,6 +69,7 @@
 			<value>processes/myOrderProcessing/processdefinition.xml</value>
 			<value>processes/notificatore/processdefinition.xml</value>
 			<value>processes/notificaRegistrazione/processdefinition.xml</value>
+			<value>processes/ProcessoEmailConferma/processdefinition.xml</value>
 		</bpm:process-definitions>
 		<bpm:pageflow-definitions></bpm:pageflow-definitions>
 	</bpm:jbpm>
