@@ -15,21 +15,21 @@
 	<h:form id="browseContadiniForm">
 		<rich:simpleTogglePanel id="simpleTogglePanelOrdini" switchType="ajax" label="Ordini">
 	
-				<h:selectOneRadio value="#{takeInHandForCustomer.stringa}" required="true">
-                 	<a:support event="onclick" ajaxSingle="true" reRender="decoratepanelGridInfoOrdine,simpleTogglePanelCustomerToContadini,simpleTogglePanelCustomerToResponsabileConsegna"/>
-               		<s:selectItems var="_stringa" label="Ordine #{_stringa}" value="#{takeInHandForCustomer.stringhe}" />
+				<h:selectOneRadio value="#{takeInHandForDriver.stringa}" required="true">
+                 	<a:support event="onclick" ajaxSingle="true" reRender="decoratepanelGridInfoItinerario,simpleTogglePanelDriverToContadini,simpleTogglePanelDriverToCustomer"/>
+               		<s:selectItems var="_stringa" label="Ordine #{_stringa}" value="#{takeInHandForDriver.stringhe}" />
                 </h:selectOneRadio>
                 
             <a:outputPanel ajaxRendered="true"> 
-				<s:decorate id="decoratepanelGridInfoOrdine" rendered="#{not empty takeInHandForCustomer.currentOrdine}">
-                	<h:panelGrid id="panelGridInfoOrdine" columns="4" >
+				<s:decorate id="decoratepanelGridInfoItinerario" rendered="#{not empty takeInHandForDriver.currentItinerario}">
+                	<h:panelGrid id="panelGridInfoItinerario" columns="2" >
                 		<rich:column>
-							<table id="table_data_richiesta" cellpadding="10" cellspacing="0" border="0" width="100%"	>
+							<table id="table_data_creazione" cellpadding="10" cellspacing="0" border="0" width="100%"	>
 								<tr><td>
-										<b>Data Richiesta</b>
+										<b>Data Creazione</b>
 								</td></tr>
 								<tr><td>
-										<h:outputText value="#{takeInHandForCustomer.currentOrdine.dataRichiesta}">
+										<h:outputText value="#{takeInHandForDriver.currentItinerario.dataCreazione}">
 											<f:convertDateTime type="date" dateStyle="medium" locale="Locale.ITALY"/>											
 										</h:outputText>
 								</td></tr>
@@ -38,40 +38,15 @@
 	        			<rich:column>
 							<table id="table_data_conclusione" cellpadding="10" cellspacing="0" border="0" width="100%"	>
 								<tr><td>
-									<b>Data Conclusione</b>
+									<b>Data Consegna</b>
 								</td></tr>
 								<tr><td>
-									<h:outputText value="#{takeInHandForCustomer.currentOrdine.dataConclusione}">
+									<h:outputText value="#{takeInHandForDriver.currentItinerario.dataConsegna}">
 										<f:convertDateTime type="date" dateStyle="medium" locale="Locale.ITALY"/>
 									</h:outputText>	
 								</td></tr>
 							</table>
 	        			</rich:column>
-	        			<rich:column>
-							<table id="table_data_driver" cellpadding="10" cellspacing="0" border="0" width="100%"	>
-								<tr><td>
-									<b>Driver</b>
-								</td></tr>
-								<tr><td>
-									<h:outputText value="#{takeInHandForCustomer.currentOrdine.driver.username}">
-									</h:outputText>	
-								</td></tr>
-							</table>
-	        			</rich:column>
-	        			<rich:column align="center">
-							<table id="table_data_dettagli" cellpadding="10" cellspacing="0" border="0" width="100%"	>
-								<tr><td align="center">
-			                        	<b>Dettagli ordini</b>
-								</td></tr>
-								<tr><td align="center">
-				                	<a:commandLink ajaxSingle="true" id="dettagliOrdinePendenteLink2"
-				                    	oncomplete="#{rich:component('dettagliOrdinePanel')}.show()">
-					                    <h:graphicImage value="/img/modifica_mini.png" style="border:0" />
-					                </a:commandLink>
-					                <rich:toolTip for="dettagliOrdinePendenteLink2" value="Visualizza dettagli ordine"/>
-					             </td></tr>
-							</table>
-				        </rich:column>
                 	</h:panelGrid>      
 				</s:decorate>
 			</a:outputPanel> 
@@ -83,11 +58,11 @@
  	<br/>
                 
             <a:outputPanel ajaxRendered="true">   
-            <rich:simpleTogglePanel id="simpleTogglePanelCustomerToContadini" switchType="ajax" label="Rilascia feedback ai contadini">    
+            <rich:simpleTogglePanel id="simpleTogglePanelDriverToContadini" switchType="ajax" label="Rilascia feedback ai contadini">    
 			
-				<s:decorate id="rilasciaFeedbackField1" rendered="#{not empty takeInHandForCustomer.currentTaskCustomerToContadino}">
+				<s:decorate id="rilasciaFeedbackField1" rendered="#{not empty takeInHandForDriver.currentTaskResponsabileToContadino}">
 					<h:form>
-					<h:dataTable value="#{takeInHandForCustomer.listCybercontadiniEffettivi()}" var="_contadino">
+					<h:dataTable value="#{takeInHandForDriver.listCybercontadini()}" var="_contadino">
 							<rich:column>
 									<f:facet name="header">
 										<h:outputText value="Username contadino" />
@@ -99,7 +74,7 @@
 	                				<f:facet name="header">
 										<h:outputText value="Voto feedback" />
 									</f:facet>
-	                				<h:selectOneRadio value="#{takeInHandForCustomer.getInfoFeedbackContadini(_contadino.account.username).feedback}" required="true" 
+	                				<h:selectOneRadio value="#{takeInHandForDriver.getInfoFeedbackContadini(_contadino.account.username).feedback}" required="true" 
 	                					requiredMessage="inserire una valutazione">
 					  					<f:selectItem itemLabel="Basso" itemValue="1" ></f:selectItem>
 					  					<f:selectItem itemLabel="Normale" itemValue="2" ></f:selectItem>
@@ -115,16 +90,17 @@
 	                				<f:facet name="header">
 										<h:outputText value="Commento" />
 									</f:facet>
-			        				<h:inputTextarea value="#{takeInHandForCustomer.getInfoFeedbackContadini(_contadino.account.username).comment}">
+			        				<h:inputTextarea value="#{takeInHandForDriver.getInfoFeedbackContadini(_contadino.account.username).comment}">
 			        					<a:support	event="onblur" ajaxSingle="true"/>
 					  				</h:inputTextarea>
 			        			</s:decorate>
 			        		</rich:column>
 						</h:dataTable>
 					
-	        			<s:button taskInstance="#{takeInHandForCustomer.currentTaskCustomerToContadino}" value="Assegna Feedback"
-	        					  action="#{orderProcessing.fb_customer_to_contadino(takeInHandForCustomer)}">	
-	        			</s:button>
+	        			<h:commandButton value="Assegna Feedback"
+	        					  action="#{closeTaskInstance.(takeInHandForDriver)}">
+	        			</h:commandButton>
+	        			
 					</h:form>
 				</s:decorate>
 
@@ -136,23 +112,23 @@
  		<br/>
 		
 		<a:outputPanel ajaxRendered="true">   
-            <rich:simpleTogglePanel id="simpleTogglePanelCustomerToResponsabileConsegna" switchType="ajax" label="Rilascia feedback al responsabile consegna">    
+            <rich:simpleTogglePanel id="simpleTogglePanelDriverToCustomer" switchType="ajax" label="Rilascia feedback ai customer">    
 			
-				<s:decorate id="rilasciaFeedbackField2" rendered="#{not empty takeInHandForCustomer.currentTaskCustomerToResponsabileConsegna}">
+				<s:decorate id="rilasciaFeedbackField2" rendered="#{not empty takeInHandForDriver.currentTaskResponsabileToCustomer}">
 					<h:form>
-					<h:dataTable value="#{takeInHandForCustomer.responsabileConsegna()}" var="_responsabile">
+					<h:dataTable value="#{takeInHandForDriver.listCustomer()}" var="_customer">
 							<rich:column>
 									<f:facet name="header">
-										<h:outputText value="Username responsabile" />
+										<h:outputText value="Username customer" />
 									</f:facet>
-									<h:outputText value="#{_responsabile.username}"></h:outputText>
+									<h:outputText value="#{_customer.username}"></h:outputText>
 			        		</rich:column>
 			        		<rich:column>
 			        			<s:decorate template="/layout/edit.xhtml">
 	                				<f:facet name="header">
 										<h:outputText value="Voto feedback" />
 									</f:facet>
-	                				<h:selectOneRadio value="#{takeInHandForCustomer.infoFeedbackResponsabile.feedback}" required="true" 
+	                				<h:selectOneRadio value="#{takeInHandForDriver.getInfoFeedbackCustomer(_customer.username).feedback}" required="true" 
 	                					requiredMessage="inserire una valutazione">
 					  					<f:selectItem itemLabel="Basso" itemValue="1" ></f:selectItem>
 					  					<f:selectItem itemLabel="Normale" itemValue="2" ></f:selectItem>
@@ -168,7 +144,7 @@
 	                				<f:facet name="header">
 										<h:outputText value="Commento" />
 									</f:facet>
-			        				<h:inputTextarea value="#{takeInHandForCustomer.infoFeedbackResponsabile.comment}">
+			        				<h:inputTextarea value="#{takeInHandForDriver.getInfoFeedbackCustomer(_customer.username).comment}">
 			        					<a:support	event="onblur" ajaxSingle="true"/>
 					  				</h:inputTextarea>
 			        			</s:decorate>
@@ -176,9 +152,9 @@
 			        		
 						</h:dataTable>
 					
-	        			<s:button taskInstance="#{takeInHandForCustomer.currentTaskCustomerToResponsabileConsegna}" value="Assegna Feedback"
-	        					  action="#{orderProcessing.fb_customer_to_responsabile_consegna(takeInHandForCustomer)}">
-	        			</s:button>
+	        			<h:commandButton value="Assegna Feedback"
+	        					  action="#{closeTaskInstance.closefbResponsabileConsegnaToCustomer(takeInHandForDriver)}">
+	        			</h:commandButton>
 					
 					</h:form>
 				</s:decorate>
@@ -203,7 +179,7 @@
         	</f:facet>
 			<ui:define name="label">Prodotti nel carrello</ui:define>
 			<rich:dataTable var="_articolo" id="itemsDataTableOrdiniFatti"
-				value="#{takeInHandForCustomer.articoloForCurrentOrdine}">
+				value="#{takeInHandContadino.articoloForCurrentOrdine}">
 				<rich:column>
 						<f:facet name="header">Nome prodotto</f:facet>
 						<h:outputText value="#{_articolo.codiceEsterno}"/>

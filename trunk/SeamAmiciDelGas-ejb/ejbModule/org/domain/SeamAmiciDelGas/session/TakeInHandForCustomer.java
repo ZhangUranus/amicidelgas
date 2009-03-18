@@ -18,11 +18,11 @@ import org.jboss.seam.log.Log;
 import org.jboss.seam.ScopeType;
 import org.jbpm.taskmgmt.exe.TaskInstance;
 
-@Name(value="takeInHandContadino") 
+@Name(value="takeInHandForCustomer") 
 @Scope(ScopeType.SESSION)
-public class TakeInHandContadino {
+public class TakeInHandForCustomer {
 
-	public TakeInHandContadino(){}
+	public TakeInHandForCustomer(){}
 	
 	private String stringa;
 	
@@ -61,6 +61,8 @@ public class TakeInHandContadino {
 		currentOrdine=null;
 		infoFeedbackResponsabile=null;
 		ordini = new ArrayList<Ordine>();
+		stringa = null;
+		stringhe = new ArrayList<String>();
 		log.info("\n\n******** RESET ***********\n\n");
 	}
 	
@@ -119,31 +121,6 @@ public class TakeInHandContadino {
 		if (currentTaskCustomerToResponsabileConsegna!=null)
 			return (Account) currentTaskCustomerToResponsabileConsegna.getVariable("responsabileConsegna");
 		return null;
-	}
-	
-		public class InfoFeedback {
-		
-		public InfoFeedback() {}
-		
-		public InfoFeedback(String c, int f) {
-			comment = c; feedback = f;
-		}
-
-		private String comment;
-		private int feedback;
-		
-		public String getComment() {
-			return comment;
-		}
-		public void setComment(String comment) {
-			this.comment = comment;
-		}
-		public int getFeedback() {
-			return feedback;
-		}
-		public void setFeedback(int feedback) {
-			this.feedback = feedback;
-		}
 	}
 
 		public Hashtable<String, InfoFeedback> getHashTable() {

@@ -146,5 +146,9 @@ public class Itinerario implements java.io.Serializable {
 	public void setCybercontadinos(Set<Cybercontadino> cybercontadinos) {
 		this.cybercontadinos = cybercontadinos;
 	}
+	
+	public boolean equals(Itinerario it) {
+		return iditinerario.intValue()==it.getIditinerario().intValue();
+	}
 
 }
