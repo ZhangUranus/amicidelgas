@@ -71,8 +71,72 @@
 								
 			</rich:simpleTogglePanel>
 			
-			
+			<rich:simpleTogglePanel label="Richieste Driver">
+				<s:decorate rendered="#{not empty filtraNotificaAltaPriorita.getBecameDriver('riceviMessaggio')}">
+					<br/>
+					<rich:dataTable id="dataTableUtente" width="90%" align="center" 
+									value="#{not empty filtraNotificaAltaPriorita.getBecameDriver('riceviMessaggio')}" var="_task">
+						
+						<rich:column>
+							<f:facet name="header">Mittente</f:facet>
+								<h:outputText value="#{_task.variables.nomeMittente}"/>    
+						</rich:column>
+						<rich:column>
+							<f:facet name="header">Contenuto messaggio</f:facet>    
+						    <h:outputText value="#{_task.variables.notifyMessageRequest.content}"/>
+						</rich:column>			
+						<rich:column >
+							<f:facet name="header">Azioni</f:facet>    
+						    <a:commandButton ajaxSingle="true" id="driverDecision" value="Decidi"
+				                    oncomplete="#{rich:component('panelDriverDecision')}.show()">				                    
+				            </a:commandButton>
+				             <rich:toolTip for="editpagamento" value="Modifica dati di pagamento"/>
+						</rich:column>
+					</rich:dataTable>
+					<br/><br/><br/>
+				</s:decorate>
+								
+			</rich:simpleTogglePanel>		
 		
+		 <rich:modalPanel id="panelDriverDecision" autosized="true" width="500">
+	        <f:facet name="header">
+	            <h:outputText value="Accetta o rifiuta la richiesta" />
+	        </f:facet>
+	        <f:facet name="controls">
+	            <h:panelGroup>
+	                <h:graphicImage value="/img/close.png"
+	                    id="hidelink" />
+	                <rich:componentControl for="panelDriverDecision" attachTo="hidelink"
+	                    operation="hide" event="onclick" />
+	            </h:panelGroup>
+	        </f:facet>
+	        <h:form>
+	            <rich:messages style="color:red;"></rich:messages>
+	            <h:panelGrid columns="1">
+	            <a:outputPanel ajaxRendered="true">
+	                <h:panelGrid columns="2">
+			            <s:decorate id="messaggioField" template="/layout/edit.xhtml">
+			                <ui:define name="label">Testo del messaggio</ui:define>
+			                <h:inputText id="content"
+			                       required="true"
+			                           size="32"
+			                      maxlength="100"
+			                          value="#{inviaRequestReply.message.content}">
+			                    <a:support event="onblur" reRender="messaggioField" bypassUpdates="true" ajaxSingle="true"/>
+			                </h:inputText>
+			            </s:decorate>
+	                </h:panelGrid>
+	                <rich:message showSummary="true" showDetail="false" for="campo-email"/>
+	            </a:outputPanel>
+	            <a:commandButton value="Accetta Richiesta"
+	                action="#{inviaRequestReply.riceviMessaggio(1)}"
+	                oncomplete="#{rich:component('panelDriverDecision')}.hide();" />
+	            <a:commandButton value="Rifiuta Richiesta"
+	                action="#{inviaRequestReply.riceviMessaggio(0)}"
+	                oncomplete="#{rich:component('panelDriverDecision')}.hide();" />
+	            </h:panelGrid>  
+	        </h:form>
+	    </rich:modalPanel> 
 		
 	</ui:define>
 	
