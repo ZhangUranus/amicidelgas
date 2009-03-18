@@ -17,7 +17,7 @@
 	
 				<h:selectOneRadio value="#{takeInHandForDriver.stringa}" required="true">
                  	<a:support event="onclick" ajaxSingle="true" reRender="decoratepanelGridInfoItinerario,simpleTogglePanelDriverToContadini,simpleTogglePanelDriverToCustomer"/>
-               		<s:selectItems var="_stringa" label="Ordine #{_stringa}" value="#{takeInHandForDriver.stringhe}" />
+               		<s:selectItems var="_stringa" label="Itinerario #{_stringa}" value="#{takeInHandForDriver.stringhe}" />
                 </h:selectOneRadio>
                 
             <a:outputPanel ajaxRendered="true"> 
@@ -98,7 +98,7 @@
 						</h:dataTable>
 					
 	        			<h:commandButton value="Assegna Feedback"
-	        					  action="#{closeTaskInstance.(takeInHandForDriver)}">
+	        					  action="#{closeTaskInstance.closefbResponsabileConsegnaToCustomer(takeInHandForDriver)}">
 	        			</h:commandButton>
 	        			
 					</h:form>
