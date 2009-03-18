@@ -59,10 +59,11 @@
 					   <tr>
 					   	<td background="/SeamAmiciDelGas/img/shadow_left1.png"></td>	
 					     <td background="/SeamAmiciDelGas/img/shadow1.png">
-								<div align="center" >					
+								<div align="center"  >
+								<div id="pulsante_contadino_loading" style="display: none;"><img src="/SeamAmiciDelGas/img/loading.gif" /></div>					
                         		<s:button     
                         	    action="#{registrazioneCybercontadino.testProcesso()}"
-                        	    onmouseup="disable_this(this.id);"
+                        	    onmouseup="disable_this(this.id, 'pulsante_contadino_loading');"
                         	    value="Inizia processo" />
 								</div>			    
 					     </td>

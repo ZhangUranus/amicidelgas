@@ -118,9 +118,11 @@
 							  <tr>
 							    <td align="center">
 							    	<div id="become_driver_button" style="display:none;">
-							    	<h:commandLink value="Proponiti come driver"
-				            			action="#{notificaRichiestaRisposta.notificaRequest}"  >	    
-				            		</h:commandLink>						  
+							    	<div id="pulsante_driver_loading" style="display: none;"><img src="/SeamAmiciDelGas/img/loading.gif" /></div>					
+							    	<h:commandButton id="button" value="Proponiti come driver"
+				            			action="#{notificaRichiestaRisposta.notificaRequest}"
+				            			onmouseup="disable_this(this.id, 'pulsante_driver_loading');"  >	    
+				            		</h:commandButton>						  
                    	    			</div>	
 							    </td>
 							  </tr>
