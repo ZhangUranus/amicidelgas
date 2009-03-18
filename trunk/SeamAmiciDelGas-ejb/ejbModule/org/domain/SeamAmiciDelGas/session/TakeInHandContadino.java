@@ -5,6 +5,8 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.StringTokenizer;
 
+import org.domain.SeamAmiciDelGas.entity.Account;
+import org.domain.SeamAmiciDelGas.entity.Articolo;
 import org.domain.SeamAmiciDelGas.entity.Cybercontadino;
 import org.domain.SeamAmiciDelGas.entity.Ordine;
 import org.jboss.seam.annotations.In;
@@ -32,13 +34,17 @@ public class TakeInHandContadino {
 	
 	private Hashtable<String, InfoFeedback> hashTable = new Hashtable<String, InfoFeedback>();
 	
-	private TaskInstance currentTask1;
+	private TaskInstance currentTaskCustomerToContadino;
 	
-	private TaskInstance currentTask2;
+	private TaskInstance currentTaskCustomerToResponsabileConsegna;
 	
-	private List<TaskInstance> tasks1;
+	private List<TaskInstance> tasksCustomerToContadino;
 	
-	private List<TaskInstance> tasks2;
+	private List<TaskInstance> tasksCustomerToResponsabileConsegna;
+	
+	private InfoFeedback infoFeedbackResponsabile;
+	
+	private Ordine currentOrdine;
 	
 	private List<Ordine> ordini;
 	
@@ -48,9 +54,17 @@ public class TakeInHandContadino {
 	
 	public void reset() {
 		hashTable = new Hashtable<String, InfoFeedback>();
+		currentTaskCustomerToContadino=null;
+		currentTaskCustomerToResponsabileConsegna=null;
+		tasksCustomerToContadino = new ArrayList<TaskInstance>();
+		tasksCustomerToResponsabileConsegna  = new ArrayList<TaskInstance>();
+		currentOrdine=null;
+		infoFeedbackResponsabile=null;
+		ordini = new ArrayList<Ordine>();
+		log.info("\n\n******** RESET ***********\n\n");
 	}
 	
-	public InfoFeedback getInfoFeedback(String username){
+	public InfoFeedback getInfoFeedbackContadini(String username){
 		if(username==null){
 			InfoFeedback feed= new InfoFeedback();
 			feed.setComment("");
@@ -68,13 +82,21 @@ public class TakeInHandContadino {
 		return feed;
 	}
 	
+	public InfoFeedback getInfoFeedbackResponsabile() {
+		if(infoFeedbackResponsabile==null){
+			infoFeedbackResponsabile= new InfoFeedback();
+			infoFeedbackResponsabile.setComment("");
+			infoFeedbackResponsabile.setFeedback(3);
+		}
+		return infoFeedbackResponsabile;
+	}
 	
 	
-	public List<Cybercontadino> listCybercontadiniEffettivi1() {
+	public List<Cybercontadino> listCybercontadiniEffettivi() {
 		List<Cybercontadino> contadiniEffettivi = new ArrayList<Cybercontadino>();
-		if(currentTask1!=null)
+		if(currentTaskCustomerToContadino!=null)
 		{
-			MyOrdine myOrdine = (MyOrdine) currentTask1.getVariable("myOrdine");
+			MyOrdine myOrdine = (MyOrdine) currentTaskCustomerToContadino.getVariable("myOrdine");
 				for (ItemQuantita iq: myOrdine.getItemQuantita()) {
 					Cybercontadino contadino = iq.getCybercontadino();
 					boolean isPresent = false;
@@ -91,28 +113,12 @@ public class TakeInHandContadino {
 		}
 		return contadiniEffettivi;
 	}
+
 	
-	
-	public List<Cybercontadino> listCybercontadiniEffettivi2() {
-		List<Cybercontadino> contadiniEffettivi = new ArrayList<Cybercontadino>();
-		if(currentTask2!=null)
-		{
-			MyOrdine myOrdine = (MyOrdine) currentTask2.getVariable("myOrdine");
-				for (ItemQuantita iq: myOrdine.getItemQuantita()) {
-					Cybercontadino contadino = iq.getCybercontadino();
-					boolean isPresent = false;
-					for(Cybercontadino effettivo : contadiniEffettivi) {
-						if(effettivo.getPartitaIva().equals(contadino.getPartitaIva()))
-						{
-							isPresent = true;
-							break;
-						}
-					}
-					if(!isPresent)
-						contadiniEffettivi.add(contadino);
-				}
-		}
-		return contadiniEffettivi;
+	public Account responsabileConsegna() {
+		if (currentTaskCustomerToResponsabileConsegna!=null)
+			return (Account) currentTaskCustomerToResponsabileConsegna.getVariable("responsabileConsegna");
+		return null;
 	}
 	
 		public class InfoFeedback {
@@ -145,26 +151,26 @@ public class TakeInHandContadino {
 		}
 
 		public List<String> getStringhe() {
-			tasks1 = filtraNotifica.getAllSingleTaskInstanceList("fbCustomerToContadino");
-			tasks2 = filtraNotifica.getAllSingleTaskInstanceList("fbCustomerToResponsabileConsegna");
+			tasksCustomerToContadino = filtraNotifica.getAllSingleTaskInstanceList("fbCustomerToContadino");
+			tasksCustomerToResponsabileConsegna = filtraNotifica.getAllSingleTaskInstanceList("fbCustomerToResponsabileConsegna");
 			ordini = new ArrayList<Ordine>();
 			stringhe = new ArrayList<String>();
-			for (TaskInstance t1: tasks1) {
+			for (TaskInstance t1: tasksCustomerToContadino) {
 				Ordine ordine = (Ordine) t1.getVariable("ordine");
 				if (!ordini.contains(ordine)) {
 					ordini.add(ordine);
 					stringhe.add(""+ordine.getIdordine());
 				}
 			}
-			for (TaskInstance t2: tasks2) {
+			for (TaskInstance t2: tasksCustomerToResponsabileConsegna) {
 				Ordine ordine = (Ordine) t2.getVariable("ordine");
 				if (!ordini.contains(ordine)) {
 					ordini.add(ordine);
 					stringhe.add(""+ordine.getIdordine());
 				}
 			}
-			log.info("****TASKS1**"+tasks1.size());
-			log.info("****TASKS2**"+tasks2.size());
+			log.info("****TASKS1**"+tasksCustomerToContadino.size());
+			log.info("****TASKS2**"+tasksCustomerToResponsabileConsegna.size());
 			return stringhe;
 		}
 
@@ -179,33 +185,63 @@ public class TakeInHandContadino {
 		public void setStringa(String stringa) {
 			this.stringa = stringa;
 			log.info("Codice Ordine"+stringa);
+			Ordine o;
+			currentOrdine = null;
+			currentTaskCustomerToContadino = null;
+			currentTaskCustomerToResponsabileConsegna = null;
 			int idOrdine = Integer.parseInt(stringa);
-			for (TaskInstance t1: tasks1) {
-				Ordine o = (Ordine) t1.getVariable("ordine");
+			for (TaskInstance t1: tasksCustomerToContadino) {
+				o = (Ordine) t1.getVariable("ordine");
 				if (o.getIdordine()==idOrdine)
-					currentTask1 = t1;
+				{
+					currentTaskCustomerToContadino = t1;
+					currentOrdine = o;
+				}
+				
 			}
-			for (TaskInstance t2: tasks2) {
-				Ordine o = (Ordine) t2.getVariable("ordine");
+			for (TaskInstance t2: tasksCustomerToResponsabileConsegna) {
+				o = (Ordine) t2.getVariable("ordine");
 				if (o.getIdordine()==idOrdine)
-					currentTask2 = t2;
+				{
+					currentTaskCustomerToResponsabileConsegna = t2;
+					currentOrdine = o;
+				}
 			}
+			log.info("******* current ordine = " +currentOrdine.getDataConclusione().toString());
 		}
 
-		public TaskInstance getCurrentTask1() {
-			return currentTask1;
+		public List<Articolo> getArticoloForCurrentOrdine() {
+			List<Articolo> articolos = new ArrayList<Articolo>();
+			if(currentOrdine!=null)
+				articolos.addAll(currentOrdine.getArticolos());
+			return articolos;
+		}
+		
+
+		public Ordine getCurrentOrdine() {
+			return currentOrdine;
 		}
 
-		public void setCurrentTask1(TaskInstance currentTask1) {
-			this.currentTask1 = currentTask1;
+		public void setCurrentOrdine(Ordine currentOrdine) {
+			this.currentOrdine = currentOrdine;
 		}
 
-		public TaskInstance getCurrentTask2() {
-			return currentTask2;
+		public TaskInstance getCurrentTaskCustomerToContadino() {
+			return currentTaskCustomerToContadino;
 		}
 
-		public void setCurrentTask2(TaskInstance currentTask2) {
-			this.currentTask2 = currentTask2;
+		public void setCurrentTaskCustomerToContadino(
+				TaskInstance currentTaskCustomerToContadino) {
+			this.currentTaskCustomerToContadino = currentTaskCustomerToContadino;
+		}
+
+		public TaskInstance getCurrentTaskCustomerToResponsabileConsegna() {
+			return currentTaskCustomerToResponsabileConsegna;
+		}
+
+		public void setCurrentTaskCustomerToResponsabileConsegna(
+				TaskInstance currentTaskCustomerToResponsabileConsegna) {
+			this.currentTaskCustomerToResponsabileConsegna = currentTaskCustomerToResponsabileConsegna;
 		}
 
 }

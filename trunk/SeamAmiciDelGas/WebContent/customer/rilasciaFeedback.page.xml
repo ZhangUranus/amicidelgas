@@ -8,7 +8,10 @@
 
      
  <navigation>
-  <rule if-outcome="OutQuestionario">
+  <rule if-outcome="fb_customer_to_contadino">
+   <redirect view-id="/customer/rilasciaFeedback.xhtml"/>
+  </rule>
+  <rule if-outcome="fb_customer_to_responsabile_consegna">
    <redirect view-id="/customer/rilasciaFeedback.xhtml"/>
   </rule>
  </navigation>
