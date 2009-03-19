@@ -58,7 +58,7 @@
 					    </td>
 					    <td valign="bottom" width="40%"><div align="left" class="colore_1">Bentornato <b>#{currentUser.nome} #{currentUser.cognome}</b></div></td>			      
 					  	<td valign="bottom" width="40%">
-					  		<s:decorate rendered="#{(currentAccount.punteggioFeedback >= 3.5) and (!(loginSelectBean.calculateMaxRole()=='driver'))}">
+					  		<s:decorate rendered="#{(!(filtraNotificaAltaPriorita.getBecomeDriverStartByMe('riceviMessaggio',currentAccount.username)>0)) and (currentAccount.punteggioFeedback >= 3.5) and (!(loginSelectBean.calculateMaxRole()=='driver'))}">
 					  			<div align="center" class="min_bold" onclick="javascript:infolevel();" style="cursor: pointer" >
 					  			<img src="/SeamAmiciDelGas/img/driver_mini.png" border="0" id="plus_img_infolevel" align="middle" /> Proponiti come driver
 					  			</div>
@@ -219,6 +219,10 @@
 				<td colspan="4" height="16"><hr noshade="noshade" />	
 				</td>
 			</tr>
+		</table>
+		
+		<s:decorate rendered="#{(loginSelectBean.calculateMaxRole()=='admin') or (loginSelectBean.calculateMaxRole()=='mediatore') or (loginSelectBean.calculateMaxRole()=='driver')}">
+		<table width="100%" border="1" cellspacing="0" cellpadding="0" align="center" >
 			<tr>
 				<td width="25%">
 					<table width="98%" border="0" cellspacing="6" cellpadding="0" align="center" >
@@ -248,6 +252,7 @@
 
 				</td>
 			</tr>
+		
 		
 		<s:decorate rendered="#{loginSelectBean.calculateMaxRole()=='admin'}">	
 			<tr>
@@ -322,6 +327,7 @@
 		</s:decorate>	
 			
 		</table>		
-
+		</s:decorate>
+			
     </ui:define>
 </ui:composition>

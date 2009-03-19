@@ -21,6 +21,10 @@ function disable_this(obj, load_obj){
 	document.getElementById(load_obj).style.display="";
 }
 
+function enable_this(obj){
+	document.getElementById(obj).style.display="";
+}
+
 function TabDispaly(obj, cond) {
 	
 	Ext.get(obj).setDisplayed(cond);
