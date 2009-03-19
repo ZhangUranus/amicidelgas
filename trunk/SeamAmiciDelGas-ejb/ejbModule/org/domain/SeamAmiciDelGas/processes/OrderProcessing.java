@@ -78,7 +78,6 @@ public class OrderProcessing {
 	@Out(value="currentAccount", scope=ScopeType.BUSINESS_PROCESS, required=false)
 	private Account currentAccount;
 	
-	
 	@Out(value="notifyMessageStatoOrdine",scope=ScopeType.BUSINESS_PROCESS,required=false)
 	protected Message messageStatoOrdine;
 	
@@ -283,6 +282,8 @@ public class OrderProcessing {
 	public String notificaOrdineNonDisponibile() {
 		return "deleted";
 	}
+	
+	
 	
 	@BeginTask @EndTask(transition="attendi_consegna")
 	public String attendi_consegna() {
