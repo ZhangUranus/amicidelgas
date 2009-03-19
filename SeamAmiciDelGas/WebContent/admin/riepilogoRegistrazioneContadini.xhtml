@@ -107,14 +107,16 @@
 								<tr>
 									<td width="50%" align="center" >
 										<div align="center" >
-										<s:button taskInstance="#{_contadinoTask}" action="#{inviaNotificaRegistrazioni.visualizzaQuestionari(1)}"
-									  value="Accetta"/>
+										<div id="pulsante_accetta_loading" style="display: none;"><img src="/SeamAmiciDelGas/img/loading.gif" /></div>					
+										<s:button id="accetta_fine" taskInstance="#{_contadinoTask}" action="#{inviaNotificaRegistrazioni.visualizzaQuestionari(1)}"
+									  value="Accetta" onmouseup="disable_this(this.id, 'pulsante_accetta_loading');"/>
 										</div>
 									</td>
 									<td width="50%" align="center" >
 										<div align="center" >
-										<s:button taskInstance="#{_contadinoTask}" action="#{inviaNotificaRegistrazioni.visualizzaQuestionari(0)}"
-									  value="Rifiuta"/>
+										<div id="pulsante_rifiuta_loading" style="display: none;"><img src="/SeamAmiciDelGas/img/loading.gif" /></div>					
+										<s:button id="rifiuta_fine" taskInstance="#{_contadinoTask}" action="#{inviaNotificaRegistrazioni.visualizzaQuestionari(0)}"
+									  value="Rifiuta" onmouseup="disable_this(this.id, 'pulsante_rifiuta_loading');"/>
 										</div>
 									</td>					
 								</tr>								
