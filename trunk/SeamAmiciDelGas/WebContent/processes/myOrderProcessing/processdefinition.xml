@@ -48,7 +48,10 @@
 	<task-node name="Notifica utente ordine preso in carico">
 		<task name="ReceiveOrderAccepted">
 			<assignment actor-id="#{customer.username}"></assignment>
+			<timer duedate="30 seconds" name="notifica_utente_driver" transition="attendi_consegna">
+			</timer>
 		</task>
+		
 		<transition to="fork2" name="attendi_consegna"></transition>
 	</task-node>
 
@@ -100,7 +103,7 @@
 		<task name="fbResponsabileConsegnaToCustomer">
 			<assignment actor-id="#{responsabileConsegna.username}"></assignment>
 		</task>
-		<transition to="join2" name="fb_responsabile_to_customer"></transition>
+		<transition to="task-node1" name="fb_responsabile_to_customer"></transition>
 	</task-node>
 
 	<task-node name="Fb from contadino to responsabile consegna">
@@ -113,8 +116,15 @@
 	</fork>
 
 	<join name="join1">
-		<transition to="join2"></transition>
+		<transition to="join2" name="join2_tojoin1"></transition>
 	</join>
+
+	<task-node name="task-node1">
+		<task name="taskPonte">
+			<assignment actor-id="admin"></assignment>
+		</task>
+		<transition to="join2" name="pontetask"></transition>
+	</task-node>
 
 
 	<end-state name="end-state1"></end-state>
