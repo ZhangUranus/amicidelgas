@@ -1,9 +1,10 @@
 package org.domain.SeamAmiciDelGas.session;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Hashtable;
 import java.util.List;
-import java.util.StringTokenizer;
 
 import org.domain.SeamAmiciDelGas.entity.Account;
 import org.domain.SeamAmiciDelGas.entity.Articolo;
@@ -58,6 +59,7 @@ public class TakeInHandForDriver {
 	private List<String> stringhe;
 	
 	public void reset() {
+
 		hashTableContadini = new Hashtable<String, InfoFeedback>();
 		hashTableCustomer = new Hashtable<String, InfoFeedback>();
 		currentTaskResponsabileToCustomer=null;
@@ -69,42 +71,23 @@ public class TakeInHandForDriver {
 		stringa = null;
 		stringhe = new ArrayList<String>();
 		log.info("\n\n******** RESET ***********\n\n");
+
 	}
 	
 	public InfoFeedback getInfoFeedbackContadini(String username){
-		if(username==null){
-			InfoFeedback feed= new InfoFeedback();
-			feed.setComment("");
-			feed.setFeedback(3);
-			hashTableContadini.put(username, feed);
-			return feed;
-		}
-		InfoFeedback feed = hashTableContadini.get(username);
-		if(feed==null){
-			feed= new InfoFeedback();
-			feed.setComment("");
-			feed.setFeedback(3);
-			hashTableContadini.put(username, feed);
-		}
-		return feed;
+		if(username==null)
+			return null;
+		if(hashTableContadini.get(username)==null)
+			hashTableContadini.put(username, new InfoFeedback("",3));
+		return hashTableContadini.get(username);
 	}
 	
 	public InfoFeedback getInfoFeedbackCustomer(String username){
-		if(username==null){
-			InfoFeedback feed= new InfoFeedback();
-			feed.setComment("");
-			feed.setFeedback(3);
-			hashTableCustomer.put(username, feed);
-			return feed;
-		}
-		InfoFeedback feed = hashTableCustomer.get(username);
-		if(feed==null){
-			feed= new InfoFeedback();
-			feed.setComment("");
-			feed.setFeedback(3);
-			hashTableCustomer.put(username, feed);
-		}
-		return feed;
+		if(username==null)
+			return null;
+		if(hashTableCustomer.get(username)==null)
+			hashTableCustomer.put(username, new InfoFeedback("",3));
+		return hashTableCustomer.get(username);
 	}
 
 	
@@ -148,26 +131,30 @@ public class TakeInHandForDriver {
 		public List<String> getStringhe() {
 			tasksResponsabileToCustomer = filtraNotifica.getAllSingleTaskInstanceList("fbResponsabileConsegnaToCustomer");
 			tasksResponsabileToContadino = filtraNotifica.getAllSingleTaskInstanceList("fbResponsabileConsegnaToContadino");
+			
 			itinerari = new ArrayList<Itinerario>();
 			stringhe = new ArrayList<String>();
-			for (TaskInstance t1: tasksResponsabileToCustomer) {
-				Itinerario it = (Itinerario) t1.getVariable("itinerario");
-				if (!itinerari.contains(it)) {
-					itinerari.add(it);
-					stringhe.add(""+it.getIditinerario());
-				}
-			}
-			for (TaskInstance t2: tasksResponsabileToContadino) {
+
+			addList(tasksResponsabileToCustomer);
+			addList(tasksResponsabileToContadino);
+			
+			log.info("****TASKS1**"+tasksResponsabileToCustomer.size());
+			log.info("****TASKS2**"+tasksResponsabileToContadino.size());
+			
+			Collections.sort(stringhe);
+			return stringhe;
+		}
+		
+		private void addList(List<TaskInstance> taskInstanceList) {
+				for (TaskInstance t2: taskInstanceList) {
 				Itinerario it = (Itinerario) t2.getVariable("itinerario");
 				if (!itinerari.contains(it)) {
 					itinerari.add(it);
 					stringhe.add(""+it.getIditinerario());
 				}
-			} 
-			log.info("****TASKS1**"+tasksResponsabileToCustomer.size());
-			log.info("****TASKS2**"+tasksResponsabileToContadino.size());
-			return stringhe;
+			}
 		}
+		
 
 		public void setStringhe(List<String> stringhe) {
 			this.stringhe = stringhe;
@@ -177,29 +164,27 @@ public class TakeInHandForDriver {
 			return stringa;
 		}
 
-		public void setStringa(String stringa) {
-			this.stringa = stringa;
-			log.info("Codice Itinerario "+stringa);
-			Itinerario it;
-			currentItinerario = null;
+		public void setStringa(String idItinerario) {
+			this.stringa = idItinerario;
+			log.info("Codice Itinerario "+idItinerario);
+			
 			currentTaskResponsabileToCustomer = null;
 			currentTaskResponsabileToContadino = null;
 			taskInstanceCustomerForItinerario = new ArrayList<TaskInstance>();
 			taskInstanceContadinoForItinerario = new ArrayList<TaskInstance>();
-			int idItinerario = Integer.parseInt(stringa);
+
 			for (TaskInstance t1: tasksResponsabileToCustomer) {
-				it = (Itinerario) t1.getVariable("itinerario");
+				Itinerario it = (Itinerario) t1.getVariable("itinerario");
 				if (it.getIditinerario().equals(new Integer(idItinerario)))
 				{
 					taskInstanceCustomerForItinerario.add(t1);
 					currentTaskResponsabileToCustomer = t1;
 					currentItinerario = it;
 				}
-				
 			}
 			for (TaskInstance t2: tasksResponsabileToContadino) {
-				it = (Itinerario) t2.getVariable("itinerario");
-				if (it.getIditinerario().equals(new Integer (idItinerario)))
+				Itinerario it = (Itinerario) t2.getVariable("itinerario");
+				if (it.getIditinerario().equals(new Integer(idItinerario)))
 				{
 					taskInstanceContadinoForItinerario.add(t2);
 					currentTaskResponsabileToContadino = t2;
