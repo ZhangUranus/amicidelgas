@@ -303,4 +303,9 @@ public class Account implements java.io.Serializable {
 		this.numeroVotanti = numeroVotanti;
 	}
 
+	public boolean equals(Object obj) {
+		Account account = (Account) obj;
+		return this.username.equals(account.getUsername());
+	}
+	
 }

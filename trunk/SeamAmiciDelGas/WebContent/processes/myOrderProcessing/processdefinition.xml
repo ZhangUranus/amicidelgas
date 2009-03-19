@@ -48,10 +48,7 @@
 	<task-node name="Notifica utente ordine preso in carico">
 		<task name="ReceiveOrderAccepted">
 			<assignment actor-id="#{customer.username}"></assignment>
-			<timer duedate="30 seconds" name="notifica_utente_driver" transition="attendi_consegna">
-			</timer>
 		</task>
-		
 		<transition to="fork2" name="attendi_consegna"></transition>
 	</task-node>
 
@@ -77,8 +74,12 @@
 	</decision>
 
 	<decision name="Il driver ha partecipato alla spesa">
-		<transition to="fork1" name="Si"></transition>
-		<transition to="join2" name="No"></transition>
+		<transition to="fork1" name="Si">
+			<condition expression="#{responsabileIsDriver}"></condition>
+		</transition>
+		<transition to="join2" name="No">
+			<condition expression="#{!(responsabileIsDriver)}"></condition>
+		</transition>
 	</decision>
 
 	<fork name="fork2">
@@ -103,28 +104,24 @@
 		<task name="fbResponsabileConsegnaToCustomer">
 			<assignment actor-id="#{responsabileConsegna.username}"></assignment>
 		</task>
-		<transition to="task-node1" name="fb_responsabile_to_customer"></transition>
+		<transition to="join2" name="fb_responsabile_to_customer"></transition>
 	</task-node>
 
 	<task-node name="Fb from contadino to responsabile consegna">
+		<task name="fbContadinoToResponsabile">
+			<assignment pooled-actors="utenteContadino"></assignment>
+		</task>
 		<transition to="join1" name="fb_contadino_to_responsabile_consegna"></transition>
 	</task-node>
 
 	<fork name="fork1">
-		<transition to="Fb from contadino to responsabile consegna"></transition>
-		<transition to="Fb from responsabile consegna to contadino"></transition>
+		<transition to="Fb from contadino to responsabile consegna" name="toTask5"></transition>
+		<transition to="Fb from responsabile consegna to contadino" name="toTask6"></transition>
 	</fork>
 
 	<join name="join1">
-		<transition to="join2" name="join2_tojoin1"></transition>
+		<transition to="join2" name="toTask7"></transition>
 	</join>
-
-	<task-node name="task-node1">
-		<task name="taskPonte">
-			<assignment actor-id="admin"></assignment>
-		</task>
-		<transition to="join2" name="pontetask"></transition>
-	</task-node>
 
 
 	<end-state name="end-state1"></end-state>
