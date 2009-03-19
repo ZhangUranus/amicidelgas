@@ -94,10 +94,10 @@
 	    </rich:panel>
 	    
 	    		<s:decorate id="decorateQuestionario">					
-						<h:commandButton value="post questionario" id="postQuestionario"
-	            			action="#{inviaRequestReply.riceviMessaggio}" style="display:none;"  >	            			
+						<h:commandLink value="Post questionario" id="postQuestionario"
+	            			action="#{inviaRequestReply.riceviMessaggio(1)}" style="display:none;"  >	            			
 	            			<f:param name="taskId" value="#{param.taskId}"/>
-	            		</h:commandButton>
+	            		</h:commandLink>
 				</s:decorate>
 	    </h:form>
 

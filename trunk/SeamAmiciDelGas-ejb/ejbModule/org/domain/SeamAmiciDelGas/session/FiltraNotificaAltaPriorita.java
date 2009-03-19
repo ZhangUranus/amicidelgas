@@ -291,7 +291,8 @@ public class FiltraNotificaAltaPriorita {
 			nome = temp.getActorId();
 			nomeContadino = (Cybercontadino) temp.getVariable("contadino");
 			if((nome.equals(username))){
-				if((nomeContadino != null) && !(partiteIva.contains(nomeContadino.getPartitaIva()))){
+				if((nomeContadino != null) && !(partiteIva.contains(nomeContadino.getPartitaIva())) )
+				{
 					contadini.add(nomeContadino);
 					partiteIva.add(nomeContadino.getPartitaIva());
 				}
@@ -313,7 +314,8 @@ public class FiltraNotificaAltaPriorita {
 			nome = temp.getActorId();
 			nomeContadino = (Cybercontadino) temp.getVariable("contadino");
 			if((nome.equals(username))){
-				if(nomeContadino != null && !(partiteIva.contains(nomeContadino.getPartitaIva()))){						
+				if(nomeContadino != null && !(partiteIva.contains(nomeContadino.getPartitaIva())))
+				{						
 					contadini.add(nomeContadino);
 					partiteIva.add(nomeContadino.getPartitaIva());
 				}

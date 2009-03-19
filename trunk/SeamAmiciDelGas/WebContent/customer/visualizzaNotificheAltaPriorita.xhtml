@@ -71,7 +71,7 @@
 								
 			</rich:simpleTogglePanel>
 			
-			<rich:simpleTogglePanel label="Richieste Driver" rendered="#{loginSelectBean.calculateMaxRole()=='mediatore'}">
+			<rich:simpleTogglePanel label="Richieste Driver" rendered="#{loginSelectBean.calculateMaxRole()=='mediatore' or loginSelectBean.calculateMaxRole()=='admin' }">
 				<s:decorate rendered="#{not empty filtraNotificaAltaPriorita.getBecomeDriver('riceviMessaggio')}">
 					<br/>
 					<rich:dataTable id="dataTableUtenteValerio" width="90%" align="center" 
