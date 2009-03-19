@@ -40,6 +40,10 @@ import org.jboss.seam.annotations.Scope;
 @Scope(value=ScopeType.SESSION)
 public class Cybercontadino implements java.io.Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -517797899390968430L;
 	private String partitaIva;
 	private Account account;
 	private Comune comune;
@@ -286,7 +290,8 @@ public class Cybercontadino implements java.io.Serializable {
 		this.dataVisita = dataVisita;
 	}
 	
-	public boolean equals(Cybercontadino contadino) {
+	public boolean equals(Object obj) {
+		Cybercontadino contadino = (Cybercontadino) obj;
 		if(this.partitaIva.equals(contadino.getPartitaIva()))
 				return true;
 		return false;
