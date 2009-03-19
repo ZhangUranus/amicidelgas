@@ -265,6 +265,11 @@
     			<s:link view="/mediatore/riepilogoQuestionarioRegistrazione.xhtml" propagation="none">
     		    	<div align="left" class="colore_white_bold" style="height: 28px;  padding-top: 4px;">Questionari cybercontadino</div>
     		    </s:link>
+    		</s:decorate>    		
+    		<s:decorate rendered="#{((filtraNotificaAltaPriorita.getNumRispostaMediatoreDriver('riceviRisposta',currentAccount.username) > 0) and (loginSelectBean.calculateMaxRole()=='utenteGas'))}">
+    			<s:link view="/mediatore/visualizzaNotificheAltaPriorita.xhtml" propagation="none">
+    		    	<div align="left" class="colore_white_bold" style="height: 28px;  padding-top: 4px;">Risposta richiesta driver</div>
+    		    </s:link>
     		</s:decorate>
 	    </td>
 	    <td width="26px" background="/SeamAmiciDelGas/img/shadow_n.png" align="left" >
@@ -285,6 +290,9 @@
     		</s:decorate> 		
     		<s:decorate rendered="#{((filtraNotificaAltaPriorita.getSizeForAllContadinoForTaskInstanceType(currentAccount.username,'riceviRisposta') > 0) and (loginSelectBean.calculateMaxRole()=='mediatore' or loginSelectBean.calculateMaxRole()=='admin'))}">
     			<div align="center" class="colore_white_bold" style="background:transparent url('/SeamAmiciDelGas/img/red_number2.png') no-repeat; width:26px; height: 28px; padding-top: 4px; padding-right: 1px;" >#{filtraNotificaAltaPriorita.getSizeForAllContadinoForTaskInstanceType(currentAccount.username,'riceviRisposta')}</div>
+    		</s:decorate>
+    		<s:decorate rendered="#{((filtraNotificaAltaPriorita.getNumRispostaMediatoreDriver('riceviRisposta',currentAccount.username) > 0) and (loginSelectBean.calculateMaxRole()=='utenteGas'))}">
+    			<div align="center" class="colore_white_bold" style="background:transparent url('/SeamAmiciDelGas/img/red_number2.png') no-repeat; width:26px; height: 28px; padding-top: 4px; padding-right: 1px;" >#{(filtraNotificaAltaPriorita.getNumRispostaMediatoreDriver('riceviRisposta',currentAccount.username) > 0)}</div>
     		</s:decorate>
 	    </td>
 	  	<td background="/SeamAmiciDelGas/img/shadow_est.png"></td>
