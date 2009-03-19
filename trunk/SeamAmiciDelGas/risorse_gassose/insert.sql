@@ -19,9 +19,9 @@ USE database_gas;
 /*!40000 ALTER TABLE `account` DISABLE KEYS */;
 SET AUTOCOMMIT=0;
 INSERT INTO `account` (`Username`,`passwordHash`,`Bloccato`,`Elimato`,`Cancellato`,`Attivato`,`DataRichiesta`,`DataAccettazione`,`PunteggioFeedback`,`Utente_CodiceFiscale`,`fondo`,`PagamentoElettronico_idPagamentoElettronico`,`numeroVotanti`) VALUES
- ('admin','8ff430762890cbf91b3af84032d6f3ceda61644f',0x00,0x00,0x00,0x00,'2009-02-17',NULL,3,'gasgas00f03f123y',0,1,1),
-('soloadmin','8ff430762890cbf91b3af84032d6f3ceda61644f',0x00,0x00,0x00,0x00,'2009-02-17',NULL,3,'gassol00f03f123y',0,1,1),
-('mediatore','8ff430762890cbf91b3af84032d6f3ceda61644f',0x00,0x00,0x00,0x00,'2009-02-17',NULL,3,'gasmed00f03f123y',0,1,1);
+ ('admin','8ff430762890cbf91b3af84032d6f3ceda61644f',0x00,0x00,0x00,0x1,'2009-02-17',NULL,3,'gasgas00f03f123y',0,1,1),
+('soloadmin','8ff430762890cbf91b3af84032d6f3ceda61644f',0x00,0x00,0x00,0x1,'2009-02-17',NULL,3,'gassol00f03f123y',0,1,1),
+('mediatore','8ff430762890cbf91b3af84032d6f3ceda61644f',0x00,0x00,0x00,0x1,'2009-02-17',NULL,3,'gasmed00f03f123y',0,1,1);
 COMMIT;
 /*!40000 ALTER TABLE `account` ENABLE KEYS */;
 
@@ -10579,9 +10579,9 @@ COMMIT;
 INSERT INTO `account` (`Username`,`passwordHash`,`Bloccato`,`Elimato`,`Cancellato`,`Attivato`,`DataRichiesta`,`DataAccettazione`,`PunteggioFeedback`,`Utente_CodiceFiscale`,`fondo`,`PagamentoElettronico_idPagamentoElettronico`,`numeroVotanti`) VALUES
  ('zlatan','8ff430762890cbf91b3af84032d6f3ceda61644f',0x00,0x00,0x00,0x00,'2009-02-17',NULL,3,'aaaaaa12b33d111a',1500,2,1),
  ('esteban','8ff430762890cbf91b3af84032d6f3ceda61644f',0x00,0x00,0x00,0x00,'2009-02-16',NULL,2,'antodf12b32b111g',300,3,1),
- ('jose','8ff430762890cbf91b3af84032d6f3ceda61644f',0x00,0x00,0x00,0x00,'2009-02-15',NULL,4,'FFFFFF23r23r234r',100,4,1),
- ('tyson','8ff430762890cbf91b3af84032d6f3ceda61644f',0x00,0x00,0x00,0x00,'2009-02-14',NULL,5,'ssssss34f35f354d',200,5,1),
- ('giorgio','8ff430762890cbf91b3af84032d6f3ceda61644f',0x00,0x00,0x00,0x00,'2009-02-11',NULL,1,'ffdgat12d15h134u',4500,6,1);
+ ('jose','8ff430762890cbf91b3af84032d6f3ceda61644f',0x00,0x00,0x00,0x1,'2009-02-15',NULL,4,'FFFFFF23r23r234r',100,4,1),
+ ('tyson','8ff430762890cbf91b3af84032d6f3ceda61644f',0x00,0x00,0x00,0x1,'2009-02-14',NULL,5,'ssssss34f35f354d',200,5,1),
+ ('giorgio','8ff430762890cbf91b3af84032d6f3ceda61644f',0x00,0x00,0x00,0x1,'2009-02-11',NULL,1,'ffdgat12d15h134u',4500,6,1);
 COMMIT;
 
 
@@ -10604,7 +10604,7 @@ INSERT INTO `role` (`id`,`name`,`Username`) VALUES
 COMMIT;
 
 INSERT INTO `account` (`Username`,`passwordHash`,`Bloccato`,`Elimato`,`Cancellato`,`Attivato`,`DataRichiesta`,`DataAccettazione`,`PunteggioFeedback`,`Utente_CodiceFiscale`,`fondo`,`PagamentoElettronico_idPagamentoElettronico`,`numeroVotanti`) VALUES
- ('ranieri','8ff430762890cbf91b3af84032d6f3ceda61644f',0x00,0x00,0x00,0x00,'2009-02-17',NULL,3,NULL,0,7,1),
+ ('ranieri','8ff430762890cbf91b3af84032d6f3ceda61644f',0x00,0x00,0x00,0x1,'2009-02-17',NULL,3,NULL,0,7,1),
  ('sissoko','8ff430762890cbf91b3af84032d6f3ceda61644f',0x00,0x00,0x00,0x00,'2009-02-17',NULL,3,NULL,0,8,1);
 COMMIT;
 
