@@ -123,31 +123,26 @@ public class OrderProcessing {
 	@Out(value="booleanResponsabileConsegnaToDriver", scope=ScopeType.BUSINESS_PROCESS, required=false)
 	private Boolean booleanResponsabileConsegnaToDriver = new Boolean(false);
 	
-	
+	@In(value="responsabileIsDriver", scope=ScopeType.BUSINESS_PROCESS,required=false)
+	@Out(value="responsabileIsDriver", scope=ScopeType.BUSINESS_PROCESS,required=false)
+	private Boolean responsabileIsDriver = new Boolean(false);
 	
 	@In(value="loginSelectBean", scope=ScopeType.SESSION, required=false)
 	private LoginSelectBean loginSelectBean;
 	
-	@In(value="responsabileIsDriver", scope=ScopeType.BUSINESS_PROCESS,required=false)
-	@Out(value="responsabileIsDriver", scope=ScopeType.BUSINESS_PROCESS,required=false)
-	private Boolean responsabileIsDriver = new Boolean(false);
 	
 	
 	@CreateProcess(definition="myOrderProcessing")
 	public String startOrder(List<ItemQuantita> itemQ, Date dm){
 		selectedItem = itemQ;
 		dataMassima = dm;
-		//setto la data di richiesta
-		GregorianCalendar gc = new GregorianCalendar();
-		dataRichiesta = gc.getTime();
 		customer = currentAccount;
-		myOrdine = new MyOrdine();
-		myOrdine.setDataMassima(dataMassima);
-		myOrdine.setItemQuantita(selectedItem);
-		myOrdine.setDataRichiesta(dataRichiesta);
-		//setto lo stato dell'ordine
-		myOrdine.setPendente(true);
-		myOrdine.setEvaso(false);
+		
+		myOrdine = MyOrdine.createMyOrder(itemQ, dm);
+		dataRichiesta = myOrdine.getDataRichiesta();
+		
+		
+
 		boolean isStessoContadino=true;
 		messageDriverContadino = new Message();
 		
@@ -160,8 +155,7 @@ public class OrderProcessing {
 		
 		if(isStessoContadino)
 			messageDriverContadino.addRecipient(usernameContadino);
-		String content = "RICHIESTA ORDINE"+
-						"Customer: " +credentials.getUsername();
+		String content = "RICHIESTA ORDINE Customer: " +credentials.getUsername();
 		messageDriverContadino.setContent(content);
 		
 		messageDataMassimaScaduta = new Message();
@@ -174,8 +168,7 @@ public class OrderProcessing {
 	
 	@BeginTask @EndTask(transition="ordine_preso_in_carico")
 	public void verificaDisponibilita(Itinerario itinerario){
-		//setto lo stato dell'ordine
-		//myOrdine.setPendente(false);
+
 		Hashtable<String,String> transactionIdList = new Hashtable<String,String>();
 		boolean isAvailable=true;
 		//verifico la disponibilità per ogni contandino
@@ -217,7 +210,6 @@ public class OrderProcessing {
 				CatalogInterface catalog= CatalogImpl.getInstanceForContadino(partitaIva);
 				catalog.commitTransaction(transactionIdList.get(partitaIva));
 			}
-			//messageStatoOrdine.setContent("Ordine preso in carico da "+ credentials.getUsername()+" ordine = "+ordine.getIdordine());
 			messageStatoOrdine.setInfoFilter("orderProcessingPreso");
 			responsabileConsegna = currentAccount;
 			if (loginSelectBean.isDriver())
