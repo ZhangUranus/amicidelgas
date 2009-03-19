@@ -212,18 +212,19 @@ public class OrderProcessing {
 			}
 			messageStatoOrdine.setInfoFilter("orderProcessingPreso");
 			responsabileConsegna = currentAccount;
-			if (loginSelectBean.isDriver())
+			if (loginSelectBean.isDriver()) {
 				responsabileIsDriver = new Boolean(true);
+				this.itinerario = itinerario;
+				this.itinerario.getCybercontadinos();
+				this.itinerario.getPuntiDiConsegnas();
+			}
 			else
 				responsabileIsDriver = new Boolean(false);
+			this.dataConsegna = itinerario.getDataConsegna();
 			myOrdine.setPendente(false);
 			myOrdine.setEvaso(true);
-			this.dataConsegna = itinerario.getDataConsegna();
-			this.itinerario = itinerario;
-			this.itinerario.getCybercontadinos();
-			this.itinerario.getPuntiDiConsegnas();
 			saveOrdine(); //salvo l'ordine nel database
-			messageStatoOrdine.setContent("Ordine preso in carico da "+ credentials.getUsername()+" ordine = "+ordine.getIdordine());
+			messageStatoOrdine.setContent("L'ordine "+ordine.getIdordine()+" e' stato preso in carico da "+ credentials.getUsername()+".");
 		}
 	}
 	

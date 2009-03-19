@@ -125,8 +125,6 @@ public class MatchItinerarioOrdine implements Serializable{
 	public void setCurrentListCybercontadino(List<Cybercontadino> currentListCybercontadino) {
 		this.currentListCybercontadino = currentListCybercontadino;
 	}
-	
 
-	
 }
 
