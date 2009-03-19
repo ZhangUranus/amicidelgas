@@ -1,8 +1,6 @@
 package org.domain.SeamAmiciDelGas.processes;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.EntityManager;
 import org.domain.SeamAmiciDelGas.crud.AccountHome;
 import org.domain.SeamAmiciDelGas.crud.FeedbackListExtended;
@@ -42,7 +40,8 @@ public class InviaRichiestaRisposta {
     private Cybercontadino contadino;
     
     @In(value="nomeDestinatario", scope= ScopeType.BUSINESS_PROCESS, required =false)
-	private String nomeUtente;
+    @Out(value="nomeDestinatario",scope=ScopeType.BUSINESS_PROCESS, required=false)
+	private String nomeDestinatario;
 	
 	@In(value="compilato", scope= ScopeType.BUSINESS_PROCESS, required=false)
 	private Boolean compilato;
@@ -61,8 +60,8 @@ public class InviaRichiestaRisposta {
 	@StartTask @EndTask(beforeRedirect=true , transition="fine")
 	public String riceviRisposta()
 	{
-		System.out.println("OKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK");
-		if((message !=null) && (message.getTipo().equals("becomeDriver")))
+		System.out.println("OKKKK");
+		if(message != null && message.getTipo().equals("becomeDriver"))
 		{
 			
 
@@ -82,7 +81,7 @@ public class InviaRichiestaRisposta {
 	@Transactional public boolean inserisciFeedback(float p)
     {
 		dataCorrente = new Date(System.currentTimeMillis());
-		accounthome.setAccountUsername(nomeUtente);
+		accounthome.setAccountUsername(nomeDestinatario);
 		Account accountUtente = accounthome.find();
 		feedback.setAccountBySegnalatore(account);
 		feedback.setAccountByValidatore(account);

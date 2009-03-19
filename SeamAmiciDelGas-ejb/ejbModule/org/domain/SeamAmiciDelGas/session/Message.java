@@ -15,7 +15,6 @@ public class Message implements Serializable{
 	private String infoFilter;
 	private String tipo;
 	
-	
 	public String getContent() { 
 		return content; 
 	}

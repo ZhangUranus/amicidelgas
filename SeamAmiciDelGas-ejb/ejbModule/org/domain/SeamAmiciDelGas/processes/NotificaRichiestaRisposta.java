@@ -32,12 +32,13 @@ public class NotificaRichiestaRisposta {
 	
 	private String tipo;
 	
-	@Out(value="compilato",scope=ScopeType.BUSINESS_PROCESS, required=false)
+	@Out(value="compilato", scope= ScopeType.BUSINESS_PROCESS, required=false)
 	private boolean compilato;
 	
 	@Out(value="nomeMittente",scope=ScopeType.BUSINESS_PROCESS, required=false)
 	private String nomeMittente;
 	
+	@In(value="nomeDestinatario",scope=ScopeType.BUSINESS_PROCESS, required=false)
 	@Out(value="nomeDestinatario",scope=ScopeType.BUSINESS_PROCESS, required=false)
 	private String nomeDestinatario;
 	
@@ -59,25 +60,11 @@ public class NotificaRichiestaRisposta {
 		message.setDestinatario(destinatario);
 		//message.setBroadcast(true);
 		message.setBroadcast(broadcast);
+		message.setTipo(tipo);
 		compilato = true;
 		System.out.println("La richiesta � stata inoltrata TUREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE"+broadcast);
 		facesMessages.add("La richiesta � stata inoltrata");
 	}
-/*	
-	@StartTask @EndTask(transition="inviaRequest")
-	public void creaMessaggio()
-	{
-		System.out.println("Creo Messaggio");
-		message=new Message();
-		content = "Tutto bien?! Posso diventare Driver?";
-		message.setContent(content);
-		//message.setDestinatario("Mediatore");
-		message.setDestinatario(destinatario);
-		//message.setBroadcast(true);
-		message.setBroadcast(broadcast);
-		System.out.println("Il messaggio � stata inoltrato");
-	}
-	*/
 
 	public String getContent() {
 		return content;
@@ -103,14 +90,6 @@ public class NotificaRichiestaRisposta {
 	public void setMessage(Message message) {
 		this.message = message;
 	}
-
-	public String getDestinatario() {
-		return destinatario;
-	}
-
-	public void setDestinatario(String destinatario) {
-		this.destinatario = destinatario;
-	}
 /*
 	public void setMittente(String mittente) {
 		this.mittente = mittente;
@@ -126,6 +105,14 @@ public class NotificaRichiestaRisposta {
 
 	public String getTipo() {
 		return tipo;
+	}
+
+	public String getDestinatario() {
+		return destinatario;
+	}
+
+	public void setDestinatario(String destinatario) {
+		this.destinatario = destinatario;
 	}
 
 }
