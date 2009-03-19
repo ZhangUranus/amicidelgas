@@ -30,6 +30,10 @@ import org.jboss.seam.annotations.Scope;
 @Scope(value=ScopeType.SESSION)
 public class Pagamentoelettronico implements java.io.Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3488130030289433260L;
 	private Integer idPagamentoElettronico;
 	private String tipoCarta;
 	private String numeroCarta;

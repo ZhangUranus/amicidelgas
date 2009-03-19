@@ -21,7 +21,11 @@ import org.jboss.seam.annotations.security.management.RoleName;
 @Name(value="newRole")
 public class Role implements Serializable
 {
-    // seam-gen attributes (you should probably edit these)
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -593776597603673863L;
+	// seam-gen attributes (you should probably edit these)
     private Long id;
     private Account account;
     private String name;

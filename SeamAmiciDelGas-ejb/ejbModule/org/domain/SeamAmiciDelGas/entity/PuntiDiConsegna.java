@@ -31,6 +31,10 @@ import org.jboss.seam.annotations.Scope;
 @Scope(value=ScopeType.SESSION)
 public class PuntiDiConsegna implements java.io.Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2040149126500186772L;
 	private Integer idpuntiConsegna;
 	private Comune comune;
 	private String indirizzo;

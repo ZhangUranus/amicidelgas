@@ -26,6 +26,10 @@ import org.jboss.seam.annotations.Name;
 @Name("newFeedback")
 public class Feedback implements java.io.Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6410508667783071743L;
 	private Integer idfeedback;
 	private Account accountByDestinatario;
 	private Ordine ordine;
