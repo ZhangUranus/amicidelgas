@@ -32,9 +32,9 @@ import org.jbpm.job.Timer;
 
 public class ChangeDueDateTimerOrdine implements ActionHandler {
 
-  
-  private static final long serialVersionUID = 17056455L;
-  private static final Log log = LogFactory.getLog(ChangeDueDateTimerOrdine.class);
+	private static final long serialVersionUID = -6230700145750733687L;
+
+	private static final Log log = LogFactory.getLog(ChangeDueDateTimerOrdine.class);
 
   String timerName;
   String nomeData;
