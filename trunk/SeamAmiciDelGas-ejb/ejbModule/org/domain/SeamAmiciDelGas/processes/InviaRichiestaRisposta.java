@@ -62,7 +62,7 @@ public class InviaRichiestaRisposta {
 	public String riceviRisposta()
 	{
 		System.out.println("OKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK");
-		if(message.getTipo().equals("becomeDriver"))
+		if((message !=null) && (message.getTipo().equals("becomeDriver")))
 		{
 			
 
