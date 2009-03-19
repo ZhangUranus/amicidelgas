@@ -27,7 +27,7 @@ import org.hibernate.validator.NotNull;
  */
 @Entity
 @Table(name = "itinerario", catalog = "database_gas")
-public class Itinerario implements java.io.Serializable {
+public class Itinerario implements java.io.Serializable, Comparable<Itinerario> {
 
 	/**
 	 * 
@@ -154,6 +154,10 @@ public class Itinerario implements java.io.Serializable {
 	public boolean equals(Object obj) {
 		Itinerario it = (Itinerario) obj;
 		return iditinerario.equals(it.getIditinerario());
+	}
+
+	public int compareTo(Itinerario iter) {
+		return this.getIditinerario().compareTo(iter.getIditinerario());
 	}
 
 }

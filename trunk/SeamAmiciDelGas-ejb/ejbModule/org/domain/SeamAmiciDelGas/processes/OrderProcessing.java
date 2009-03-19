@@ -351,6 +351,12 @@ public class OrderProcessing {
 		return "fb_responsabile_consegna_to_contadino";
 	}
 	
+	@BeginTask @EndTask(beforeRedirect=true,transition="pontetask")
+	public String ponteTask()
+	{
+		return "deleted";
+	}
+	
 	/*
 	 * Getter and settrer methods...
 	 */
