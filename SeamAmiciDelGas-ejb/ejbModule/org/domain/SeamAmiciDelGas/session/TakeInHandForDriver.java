@@ -106,8 +106,9 @@ public class TakeInHandForDriver {
 		if(currentItinerario!=null) {
 			for (TaskInstance t1: tasksResponsabileToCustomer) {
 				Itinerario it = (Itinerario) t1.getVariable("itinerario");
-				if (currentItinerario.equals(it))
-					customerList.add((Account) t1.getVariable("customer"));
+				Account currAccount = (Account) t1.getVariable("customer");
+				if (currentItinerario.equals(it) && !customerList.contains(currAccount))
+					customerList.add(currAccount);
 			}
 		}
 		return customerList;
