@@ -156,6 +156,30 @@ public class FiltraNotificaAltaPriorita {
 		return tasksUser;
 	}
 	
+	/**
+	 * Ritorna il numero di richiesta become driver fatte dall'utente username
+	 * @param taskName
+	 * @return
+	 */
+	public int getBecomeDriverStartByMe(String taskName, String username)
+	{
+		System.out.println("come si chiamava quel film col robottino... corto circuito?");
+		List<TaskInstance> tasks= taskInstanceSingleList(taskName);
+		List<TaskInstance> tasksUser = new ArrayList<TaskInstance>();
+		String nome;
+		for(TaskInstance temp : tasks)
+		{
+			nome = (String) temp.getVariable("nomeMittente");
+			System.out.println("nome: "+nome+" username: "+username);
+			if(temp.getPriority() == Task.PRIORITY_HIGH  && nome.equals(username)){
+				tasksUser.add(temp);
+				System.out.println("Era il cognome: "+nome);
+			}
+					
+		}
+		return tasksUser.size();
+	}
+	
 	public List<TaskInstance> getRispostaMediatoreDriver(String taskName , String username)
 	{
 		// ritorna i task assegnati solo a me per un particolare taskName e un particolare contadino
@@ -192,17 +216,13 @@ public class FiltraNotificaAltaPriorita {
 	
 	public int getNumberBecomeDriver(String taskName)
 	{
-		// ritorna i task assegnati solo a me per un particolare taskName e un particolare contadino
-		System.out.println("AIUTOOOOOOOOOOOOOOOOOO TASKKKKKKKKKKKKKKK");
 		List<TaskInstance> tasks= getAllPooledTaskInstanceList(taskName);
 		List<TaskInstance> tasksUser = new ArrayList<TaskInstance>();
 		
 		for(TaskInstance temp : tasks)
 		{
-			
 			if(temp.getPriority() == Task.PRIORITY_HIGH  )
 					tasksUser.add(temp);
-			System.out.println("STAMPATIIIII "+tasksUser.toString());
 		}
 		return tasksUser.size();
 	}
