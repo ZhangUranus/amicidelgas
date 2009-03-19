@@ -1,6 +1,7 @@
 package org.domain.SeamAmiciDelGas.session;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -8,6 +9,7 @@ import java.util.StringTokenizer;
 import org.domain.SeamAmiciDelGas.entity.Account;
 import org.domain.SeamAmiciDelGas.entity.Articolo;
 import org.domain.SeamAmiciDelGas.entity.Cybercontadino;
+import org.domain.SeamAmiciDelGas.entity.Itinerario;
 import org.domain.SeamAmiciDelGas.entity.Ordine;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Logger;
@@ -53,6 +55,7 @@ public class TakeInHandForCustomer {
 	private List<String> stringhe;
 	
 	public void reset() {
+		
 		hashTable = new Hashtable<String, InfoFeedback>();
 		currentTaskCustomerToContadino=null;
 		currentTaskCustomerToResponsabileConsegna=null;
@@ -67,29 +70,16 @@ public class TakeInHandForCustomer {
 	}
 	
 	public InfoFeedback getInfoFeedbackContadini(String username){
-		if(username==null){
-			InfoFeedback feed= new InfoFeedback();
-			feed.setComment("");
-			feed.setFeedback(3);
-			hashTable.put(username, feed);
-			return feed;
-		}
-		InfoFeedback feed = hashTable.get(username);
-		if(feed==null){
-			feed= new InfoFeedback();
-			feed.setComment("");
-			feed.setFeedback(3);
-			hashTable.put(username, feed);
-		}
-		return feed;
+		if(username==null)
+			return null;
+		if(hashTable.get(username)==null)
+			hashTable.put(username, new InfoFeedback("",3));
+		return hashTable.get(username);
 	}
 	
 	public InfoFeedback getInfoFeedbackResponsabile() {
-		if(infoFeedbackResponsabile==null){
-			infoFeedbackResponsabile= new InfoFeedback();
-			infoFeedbackResponsabile.setComment("");
-			infoFeedbackResponsabile.setFeedback(3);
-		}
+		if(infoFeedbackResponsabile==null)
+			infoFeedbackResponsabile= new InfoFeedback("",3);
 		return infoFeedbackResponsabile;
 	}
 	
@@ -101,15 +91,7 @@ public class TakeInHandForCustomer {
 			MyOrdine myOrdine = (MyOrdine) currentTaskCustomerToContadino.getVariable("myOrdine");
 				for (ItemQuantita iq: myOrdine.getItemQuantita()) {
 					Cybercontadino contadino = iq.getCybercontadino();
-					boolean isPresent = false;
-					for(Cybercontadino effettivo : contadiniEffettivi) {
-						if(effettivo.getPartitaIva().equals(contadino.getPartitaIva()))
-						{
-							isPresent = true;
-							break;
-						}
-					}
-					if(!isPresent)
+					if(!contadiniEffettivi.contains(contadino))
 						contadiniEffettivi.add(contadino);
 				}
 		}
@@ -130,26 +112,29 @@ public class TakeInHandForCustomer {
 		public List<String> getStringhe() {
 			tasksCustomerToContadino = filtraNotifica.getAllSingleTaskInstanceList("fbCustomerToContadino");
 			tasksCustomerToResponsabileConsegna = filtraNotifica.getAllSingleTaskInstanceList("fbCustomerToResponsabileConsegna");
+			
 			ordini = new ArrayList<Ordine>();
 			stringhe = new ArrayList<String>();
-			for (TaskInstance t1: tasksCustomerToContadino) {
-				Ordine ordine = (Ordine) t1.getVariable("ordine");
-				if (!ordini.contains(ordine)) {
-					ordini.add(ordine);
-					stringhe.add(""+ordine.getIdordine());
-				}
-			}
-			for (TaskInstance t2: tasksCustomerToResponsabileConsegna) {
-				Ordine ordine = (Ordine) t2.getVariable("ordine");
-				if (!ordini.contains(ordine)) {
-					ordini.add(ordine);
-					stringhe.add(""+ordine.getIdordine());
-				}
-			}
+
+			addList(tasksCustomerToContadino);
+			addList(tasksCustomerToResponsabileConsegna);
+			
 			log.info("****TASKS1**"+tasksCustomerToContadino.size());
 			log.info("****TASKS2**"+tasksCustomerToResponsabileConsegna.size());
+			
+			Collections.sort(stringhe);
 			return stringhe;
 		}
+		
+		private void addList(List<TaskInstance> taskInstanceList) {
+			for (TaskInstance t2: taskInstanceList) {
+			Ordine ord = (Ordine) t2.getVariable("ordine");
+			if (!ordini.contains(ord)) {
+				ordini.add(ord);
+				stringhe.add(""+ord.getIdordine());
+			}
+		}
+	}
 
 		public void setStringhe(List<String> stringhe) {
 			this.stringhe = stringhe;
@@ -159,31 +144,31 @@ public class TakeInHandForCustomer {
 			return stringa;
 		}
 
-		public void setStringa(String stringa) {
-			this.stringa = stringa;
-			log.info("Codice Ordine"+stringa);
-			Ordine o;
+		public void setStringa(String idOrdine) {
+			
+			this.stringa = idOrdine;
 			currentOrdine = null;
 			currentTaskCustomerToContadino = null;
 			currentTaskCustomerToResponsabileConsegna = null;
-			int idOrdine = Integer.parseInt(stringa);
+
 			for (TaskInstance t1: tasksCustomerToContadino) {
-				o = (Ordine) t1.getVariable("ordine");
-				if (o.getIdordine()==idOrdine)
+				Ordine ordine = (Ordine) t1.getVariable("ordine");
+				if (ordine.getIdordine().equals(new Integer(idOrdine)))
 				{
 					currentTaskCustomerToContadino = t1;
-					currentOrdine = o;
+					currentOrdine = ordine;
 				}
 				
 			}
 			for (TaskInstance t2: tasksCustomerToResponsabileConsegna) {
-				o = (Ordine) t2.getVariable("ordine");
-				if (o.getIdordine()==idOrdine)
+				Ordine ordine = (Ordine) t2.getVariable("ordine");
+				if (ordine.getIdordine().equals(new Integer(idOrdine)))
 				{
 					currentTaskCustomerToResponsabileConsegna = t2;
-					currentOrdine = o;
+					currentOrdine = ordine;
 				}
 			}
+			
 			log.info("******* current ordine = " +currentOrdine.getDataConclusione().toString());
 		}
 
