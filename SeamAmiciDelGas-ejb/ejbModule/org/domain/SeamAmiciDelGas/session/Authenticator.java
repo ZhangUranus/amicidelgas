@@ -47,6 +47,9 @@ public class Authenticator
         		"select account from Account account where account.username = :username").setParameter("username", credentials.getUsername()).getSingleResult();
         if(!validatePassword(credentials.getPassword(), account))
         	return false;
+        if((!account.getAttivato()) || (account.getBloccato() || (account.getCancellato()) || (account.getElimato()))){
+        	return false;
+        }
         actor.setId(credentials.getUsername());
         if (account.getRoles() != null) {
         	for (Role role : account.getRoles()) {
