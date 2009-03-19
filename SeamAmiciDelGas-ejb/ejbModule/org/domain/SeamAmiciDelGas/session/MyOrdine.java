@@ -3,6 +3,7 @@ package org.domain.SeamAmiciDelGas.session;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.domain.SeamAmiciDelGas.webservices.Item;
@@ -52,6 +53,20 @@ public class MyOrdine implements Serializable{
 	}
 	public void setDataRichiesta(Date dataRichiesta) {
 		this.dataRichiesta = dataRichiesta;
+	}
+	
+	public static MyOrdine createMyOrder(List<ItemQuantita> itemQ,Date dm) {
+		MyOrdine myOrder = new MyOrdine();
+		myOrder.setDataMassima(dm);
+		GregorianCalendar gc = new GregorianCalendar();
+		myOrder.setDataRichiesta(gc.getTime());//data corrente 
+		myOrder.setItemQuantita(itemQ);
+		
+		//setto stato dell'ordine
+		myOrder.setPendente(true);
+		myOrder.setEvaso(false);
+		
+		return myOrder;
 	}
 	
 }
