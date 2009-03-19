@@ -98,7 +98,7 @@
 			</rich:simpleTogglePanel>
 			
 			
-			<rich:simpleTogglePanel label="Risposta a richiesta Driver" rendered="#{loginSelectBean.calculateMaxRole()=='utenteGas'}">
+			<rich:simpleTogglePanel label="Risposta a richiesta Driver" rendered="#{loginSelectBean.calculateMaxRole()=='utenteGas' or loginSelectBean.calculateMaxRole()=='driver'}">
 				<s:decorate rendered="#{not empty filtraNotificaAltaPriorita.getRispostaMediatoreDriver('riceviRisposta',currentAccount.username)}">
 					<br/>
 					<rich:dataTable id="dataTableUtenteRispostaRichiesta" width="90%" align="center" 
@@ -109,7 +109,7 @@
 						</rich:column>
 						<rich:column>
 							<f:facet name="header">Contenuto messaggio</f:facet>    
-						    <h:outputText value="#{_task.variables.notifyMessageRequest.content}"/>
+						    <h:outputText value="#{_task.variables.notifyMessageReply.content}"/>
 						</rich:column>			
 						<rich:column >
 							<f:facet name="header">Azioni</f:facet>    
