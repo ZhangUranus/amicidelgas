@@ -26,6 +26,10 @@ import org.jboss.seam.annotations.Scope;
 @Scope(value=ScopeType.SESSION)
 public class Patente implements java.io.Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4378682556118479971L;
 	private Integer idpatente;
 	private Utente utente;
 	private String tipo;

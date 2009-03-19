@@ -37,6 +37,10 @@ import org.jboss.seam.annotations.Role;
 @Scope(value=ScopeType.SESSION)
 public class Utente implements java.io.Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8844807917627730444L;
 	private String codiceFiscale;
 	private Comune comuneByComuneNascita;
 	private Comune comuneByIdcomune;

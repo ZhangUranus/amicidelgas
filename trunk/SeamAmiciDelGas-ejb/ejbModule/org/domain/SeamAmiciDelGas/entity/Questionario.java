@@ -29,6 +29,10 @@ import org.jboss.seam.annotations.Scope;
 @Scope(value=ScopeType.PAGE)
 public class Questionario implements java.io.Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3401997466446040086L;
 	private Integer idquestionario;
 	private Account account;
 	private Cybercontadino cybercontadino;

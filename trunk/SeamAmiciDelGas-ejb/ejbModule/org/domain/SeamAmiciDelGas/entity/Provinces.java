@@ -21,6 +21,10 @@ import org.hibernate.validator.NotNull;
 @Table(name = "provinces", catalog = "database_gas")
 public class Provinces implements java.io.Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1134900126946124833L;
 	private String idprovinces;
 	private String nome;
 	private Set<Comune> comunes = new HashSet<Comune>(0);

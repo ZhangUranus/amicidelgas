@@ -34,6 +34,7 @@ import org.jboss.seam.annotations.Scope;
 
 public class Comune implements java.io.Serializable {
 
+	private static final long serialVersionUID = -3551031391004206879L;
 	private Integer idcomune;
 	private Provinces provinces;
 	private String nome;

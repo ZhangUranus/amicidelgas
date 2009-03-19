@@ -25,6 +25,7 @@ import org.hibernate.validator.NotNull;
 @Table(name = "articolo", catalog = "database_gas")
 public class Articolo implements java.io.Serializable {
 
+	private static final long serialVersionUID = 2967434424485676201L;
 	private Integer idarticolo;
 	private Cybercontadino cybercontadino;
 	private String codiceEsterno;
