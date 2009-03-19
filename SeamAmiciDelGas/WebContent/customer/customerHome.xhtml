@@ -58,7 +58,7 @@
 					    </td>
 					    <td valign="bottom" width="40%"><div align="left" class="colore_1">Bentornato <b>#{currentUser.nome} #{currentUser.cognome}</b></div></td>			      
 					  	<td valign="bottom" width="40%">
-					  		<s:decorate rendered="#{(!(filtraNotificaAltaPriorita.getBecomeDriverStartByMe('riceviMessaggio',currentAccount.username)>0)) and (currentAccount.punteggioFeedback >= 3.5) and (!(loginSelectBean.calculateMaxRole()=='driver'))}">
+					  		<s:decorate rendered="#{(!(filtraNotificaAltaPriorita.getBecomeDriverStartByMe('riceviMessaggio', currentAccount.username) > 0) ) and (currentAccount.punteggioFeedback >= 3.5) and (!(loginSelectBean.calculateMaxRole()=='driver'))}">
 					  			<div align="center" class="min_bold" onclick="javascript:infolevel();" style="cursor: pointer" >
 					  			<img src="/SeamAmiciDelGas/img/driver_mini.png" border="0" id="plus_img_infolevel" align="middle" /> Proponiti come driver
 					  			</div>
