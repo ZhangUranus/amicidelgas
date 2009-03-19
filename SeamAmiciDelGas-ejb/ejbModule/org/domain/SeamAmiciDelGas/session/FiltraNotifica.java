@@ -2,10 +2,13 @@ package org.domain.SeamAmiciDelGas.session;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.domain.SeamAmiciDelGas.entity.Account;
+import org.domain.SeamAmiciDelGas.entity.Articolo;
 import org.domain.SeamAmiciDelGas.entity.Cybercontadino;
 import org.domain.SeamAmiciDelGas.entity.Itinerario;
+import org.domain.SeamAmiciDelGas.entity.Ordine;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
@@ -211,7 +214,7 @@ public class FiltraNotifica {
 		List<TaskInstance> tasks = new ArrayList<TaskInstance>();
 		Message notifica;
 		for (TaskInstance ti: pooledTaskInstanceList) {
-			notifica = (Message) ti.getVariable("accetta_ordine");
+			notifica = (Message) ti.getVariable("notificaDriverContadino");
 			if (notifica!=null && notifica.getRecipients().contains(credentials.getUsername()))
 				tasks.add(ti);
 		}
@@ -223,12 +226,39 @@ public class FiltraNotifica {
 		int count = 0;
 		Message notifica;
 		for (TaskInstance ti: pooledTaskInstanceList) {
-			notifica = (Message) ti.getVariable("accetta_ordine");
+			notifica = (Message) ti.getVariable("notificaDriverContadino");
 			if (notifica!=null && notifica.getRecipients().contains(credentials.getUsername()))
 				count++;
 		}
 		return count;
 	}
 	
+	//mi restituisce tutti i task in cui il contadino non è il responsabile di consegna
+	// ed è uno dei contadini dell'ordine
+	public List<TaskInstance> taskInstanceForContadino(String taskFilter) {
+		List<TaskInstance> tasks = this.getAllPooledTaskInstanceList(taskFilter);
+		List<TaskInstance> output = new ArrayList<TaskInstance>();
+		Ordine ordine;
+		Set<Articolo> articoli;
+		Cybercontadino contadino;
+		Account responsabileConsegna;
+		for (TaskInstance ti: tasks) {
+			ordine = (Ordine) ti.getVariable("ordine");
+			responsabileConsegna = (Account) ti.getVariable("responsabileConsegna");
+			articoli = ordine.getArticolos();
+			if (!responsabileConsegna.getUsername().equals(credentials.getUsername()))
+				for (Articolo articolo: articoli) {
+					contadino = (Cybercontadino) articolo.getCybercontadino();
+					if (contadino.getAccount().getUsername().equals(credentials.getUsername()))
+						output.add(ti);
+				}
+				
+		}
+		return output;
+	}
+	
+	public Itinerario getItinerario() {
+		return new Itinerario();
+	}
 
 }

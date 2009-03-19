@@ -1,0 +1,122 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a="http://richfaces.org/a4j" template="/layout/template.xhtml">
+
+
+
+	<ui:define id="defineUI" name="body">
+	
+	<h:form id="browseContadiniForm">
+		<rich:simpleTogglePanel id="simpleTogglePanelOrdini" switchType="ajax" label="Customer">
+	
+				<h:selectOneRadio value="#{takeInHandForContadinoToCustomer.stringaCustomer}" required="true">
+                 	<a:support event="onclick" ajaxSingle="true" reRender="decoratepanelGridInfoCustomer,simpleTogglePanelContadinoToCustomer"/>
+               		<s:selectItems var="_stringa" label="Customer #{_stringa}" value="#{takeInHandForContadinoToCustomer.stringhe}" />
+                </h:selectOneRadio>
+                
+            <a:outputPanel ajaxRendered="true"> 
+				<s:decorate id="decoratepanelGridInfoCustomer" rendered="#{not empty takeInHandForContadinoToCustomer.currentAccount}">
+                	<h:panelGrid id="panelGridInfoItinerario" columns="2" >
+                		<rich:column>
+							<table id="table_nome" cellpadding="10" cellspacing="0" border="0" width="100%"	>
+								<tr><td>
+										<b>Nome</b>
+								</td></tr>
+								<tr><td>
+										<h:outputText value="#{takeInHandForContadinoToCustomer.currentAccount.utente.nome}"/>
+								</td></tr>
+							</table>
+	        			</rich:column>
+	        			<rich:column>
+							<table id="table_cognome" cellpadding="10" cellspacing="0" border="0" width="100%"	>
+								<tr><td>
+									<b>Cognome</b>
+								</td></tr>
+								<tr><td>
+									<h:outputText value="#{takeInHandForContadinoToCustomer.currentAccount.utente.cognome}"/>	
+								</td></tr>
+							</table>
+	        			</rich:column>
+                	</h:panelGrid>      
+				</s:decorate>
+			</a:outputPanel> 
+        </rich:simpleTogglePanel>
+     </h:form>
+     
+     <br/>
+ 	<br/>
+ 	<br/>
+                
+            <a:outputPanel ajaxRendered="true">   
+            <rich:simpleTogglePanel id="simpleTogglePanelContadinoToCustomer" switchType="ajax" label="Rilascia feedback ai customer">    
+			
+				<s:decorate id="rilasciaFeedbackField1" rendered="#{not empty takeInHandForContadinoToCustomer.currentAccount}">
+					<h:form>
+					<h:panelGrid id="panelGridInfoCustomer" columns="3" >
+						
+						<rich:column>
+							<table id="table_Cognome" cellpadding="10" cellspacing="0" border="0" width="100%"	>
+								<tr><td>
+									<b>Username</b>
+								</td></tr>
+								<tr><td>
+									<h:outputText value="#{takeInHandForContadinoToCustomer.currentAccount.username}"/>
+								</td></tr>
+							</table>
+	        			</rich:column>
+	        			
+	        			
+	        		<rich:column>
+	        			<s:decorate template="/layout/edit.xhtml">
+               				<f:facet name="header">
+								<h:outputText value="Voto feedback" />
+							</f:facet>
+               				<h:selectOneRadio value="#{takeInHandForContadinoToCustomer.infoFeedbackCustomer.feedback}" required="true" 
+               					requiredMessage="inserire una valutazione">
+			  					<f:selectItem itemLabel="Basso" itemValue="1" ></f:selectItem>
+			  					<f:selectItem itemLabel="Normale" itemValue="2" ></f:selectItem>
+			  					<f:selectItem itemLabel="Alto" itemValue="3"></f:selectItem>
+			  					<f:selectItem itemLabel="Utopico" itemValue="4"></f:selectItem>
+			  					<f:selectItem itemLabel="Divino" itemValue="5"></f:selectItem>
+			  					<a:support	event="onclick" ajaxSingle="true"/>
+			  				</h:selectOneRadio>
+           				</s:decorate>
+	        		</rich:column>
+			        		
+			        		
+	        		<rich:column>
+	        			<s:decorate template="/layout/edit.xhtml">
+               				<f:facet name="header">
+								<h:outputText value="Commento" />
+							</f:facet>
+	        				<h:inputTextarea value="#{takeInHandForContadinoToCustomer.infoFeedbackCustomer.comment}">
+	        					<a:support	event="onblur" ajaxSingle="true"/>
+			  				</h:inputTextarea>
+	        			</s:decorate>
+	        		</rich:column>
+					</h:panelGrid>
+					
+	        			<h:commandButton value="Assegna Feedback"
+	        					  action="#{closeTaskInstance.closefbContadinoToCustomer(takeInHandForContadinoToCustomer)}">
+	        			</h:commandButton>
+	        			
+	        			
+					</h:form>
+				</s:decorate>
+
+			</rich:simpleTogglePanel>
+			</a:outputPanel>
+		
+		<br/>
+ 		<br/>
+ 		<br/>
+     
+	</ui:define>
+
+</ui:composition>
