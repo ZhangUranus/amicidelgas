@@ -229,6 +229,8 @@ public class OrderProcessing {
 			myOrdine.setEvaso(true);
 			this.dataConsegna = itinerario.getDataConsegna();
 			this.itinerario = itinerario;
+			this.itinerario.getCybercontadinos();
+			this.itinerario.getPuntiDiConsegnas();
 			saveOrdine(); //salvo l'ordine nel database
 			messageStatoOrdine.setContent("Ordine preso in carico da "+ credentials.getUsername()+" ordine = "+ordine.getIdordine());
 		}
