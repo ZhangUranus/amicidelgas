@@ -7,7 +7,6 @@
     xmlns:rich="http://richfaces.org/rich"
     xmlns:a="http://richfaces.org/a4j">
 <table align="center" width="100%" cellpadding="2" cellspacing="0" border="0" style="background: url('/SeamAmiciDelGas/img/shadow.png');">
-    
     <tr align="center">
     	<td width="64">	
     	</td>
@@ -278,9 +277,14 @@
     		    	<div align="left" class="colore_white_bold" style="height: 28px;  padding-top: 4px;">Questionari cybercontadino</div>
     		    </s:link>
     		</s:decorate>    		
-    		<s:decorate rendered="#{((filtraNotificaAltaPriorita.getNumRispostaMediatoreDriver('riceviRisposta',currentAccount.username) > 0) and (loginSelectBean.calculateMaxRole()=='utenteGas'))}">
+    		<s:decorate rendered="#{((filtraNotificaAltaPriorita.getNumRispostaMediatoreDriver('riceviRisposta',currentAccount.username) > 0) and (loginSelectBean.calculateMaxRole()=='utenteGas' or loginSelectBean.calculateMaxRole()=='driver'))}">
     			<s:link view="/mediatore/visualizzaNotificheAltaPriorita.xhtml" propagation="none">
     		    	<div align="left" class="colore_white_bold" style="height: 28px;  padding-top: 4px;">Risposta richiesta driver</div>
+    		    </s:link>
+    		</s:decorate>
+    		<s:decorate rendered="#{((filtraNotificaAltaPriorita.getAllPooledTaskInstanceList('visualizzaQuestionari').size() > 0) and (loginSelectBean.calculateMaxRole()=='admin'))}">
+    			<s:link view="/admin/riepilogoRegistrazioneContadini.xhtml" propagation="none">
+    		    	<div align="left" class="colore_white_bold" style="height: 28px;  padding-top: 4px;">Scheda registrazione contadino</div>
     		    </s:link>
     		</s:decorate>
 	    </td>
@@ -303,8 +307,11 @@
     		<s:decorate rendered="#{((filtraNotificaAltaPriorita.getSizeForAllContadinoForTaskInstanceType(currentAccount.username,'riceviRisposta') > 0) and (loginSelectBean.calculateMaxRole()=='mediatore' or loginSelectBean.calculateMaxRole()=='admin'))}">
     			<div align="center" class="colore_white_bold" style="background:transparent url('/SeamAmiciDelGas/img/red_number2.png') no-repeat; width:26px; height: 28px; padding-top: 4px; padding-right: 1px;" >#{filtraNotificaAltaPriorita.getSizeForAllContadinoForTaskInstanceType(currentAccount.username,'riceviRisposta')}</div>
     		</s:decorate>
-    		<s:decorate rendered="#{((filtraNotificaAltaPriorita.getNumRispostaMediatoreDriver('riceviRisposta',currentAccount.username) > 0) and (loginSelectBean.calculateMaxRole()=='utenteGas'))}">
-    			<div align="center" class="colore_white_bold" style="background:transparent url('/SeamAmiciDelGas/img/red_number2.png') no-repeat; width:26px; height: 28px; padding-top: 4px; padding-right: 1px;" >#{(filtraNotificaAltaPriorita.getNumRispostaMediatoreDriver('riceviRisposta',currentAccount.username) > 0)}</div>
+    		<s:decorate rendered="#{((filtraNotificaAltaPriorita.getNumRispostaMediatoreDriver('riceviRisposta',currentAccount.username) > 0) and (loginSelectBean.calculateMaxRole()=='utenteGas' or loginSelectBean.calculateMaxRole()=='driver'))}">
+    			<div align="center" class="colore_white_bold" style="background:transparent url('/SeamAmiciDelGas/img/red_number2.png') no-repeat; width:26px; height: 28px; padding-top: 4px; padding-right: 1px;" >#{filtraNotificaAltaPriorita.getNumRispostaMediatoreDriver('riceviRisposta',currentAccount.username)}</div>
+    		</s:decorate>    		
+    		<s:decorate rendered="#{((filtraNotificaAltaPriorita.getAllPooledTaskInstanceList('visualizzaQuestionari').size() > 0) and (loginSelectBean.calculateMaxRole()=='admin'))}">
+    			<div align="center" class="colore_white_bold" style="background:transparent url('/SeamAmiciDelGas/img/red_number2.png') no-repeat; width:26px; height: 28px; padding-top: 4px; padding-right: 1px;" >#{filtraNotificaAltaPriorita.getAllPooledTaskInstanceList('visualizzaQuestionari').size()}</div>
     		</s:decorate>
 	    </td>
 	  	<td background="/SeamAmiciDelGas/img/shadow_est.png"></td>
