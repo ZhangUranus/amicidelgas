@@ -9,6 +9,7 @@ import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
+import org.jbpm.JbpmContext;
 import org.jbpm.taskmgmt.def.Task;
 import org.jbpm.taskmgmt.exe.TaskInstance;
 
@@ -24,7 +25,7 @@ public class FiltraNotificaAltaPriorita {
 	/*
 	 * ritorno il numero di notifiche per gruppi
 	 */
-	
+	@In protected JbpmContext jbpmContext;
 
 	public int numberOfHighPriorityTask(String SingleOrGroupTask)
 	{
@@ -163,20 +164,48 @@ public class FiltraNotificaAltaPriorita {
 	public int getBecomeDriverStartByMe(String taskName, String username)
 	{
 		System.out.println("come si chiamava quel film col robottino... corto circuito?");
-		List<TaskInstance> tasks= taskInstanceSingleList(taskName);
+		System.out.println("nome: "+taskName+" username: "+username);
+		ArrayList<String> gruppi = new ArrayList<String>();
+		gruppi.add("mediatore");
+		jbpmContext.getGroupTaskList(gruppi);
+		List<TaskInstance> tasks= jbpmContext.getGroupTaskList(gruppi);
 		List<TaskInstance> tasksUser = new ArrayList<TaskInstance>();
+		System.out.println("come si chiamava quel film col robottino... corto circuito?"+tasksUser.toString());		
 		String nome;
 		for(TaskInstance temp : tasks)
 		{
 			nome = (String) temp.getVariable("nomeMittente");
-			System.out.println("nome: "+nome+" username: "+username);
-			if(temp.getPriority() == Task.PRIORITY_HIGH  && nome.equals(username)){
-				tasksUser.add(temp);
-				System.out.println("Era il cognome: "+nome);
+			if(nome != null)
+			{
+				System.out.println("nome: "+nome+" username: "+username);
+				if(temp.getName().equals(taskName) && temp.getPriority() == Task.PRIORITY_HIGH  && nome.equals(username))
+				{
+					tasksUser.add(temp);
+					System.out.println("Era il cognome: "+nome);
+				}
+				System.out.println("come si chiamava quel film col robottino... corto circuito?"+tasksUser.toString());
 			}
-					
 		}
-		return tasksUser.size();
+		System.out.println("come si chiamava quel film col robottino... corto circuito? -->"+tasksUser.size());
+		int primoValore = tasksUser.size(); 
+		tasks= taskInstanceSingleList("riceviRisposta");
+		tasksUser = new ArrayList<TaskInstance>();
+		for(TaskInstance temp : tasks)
+		{
+			nome = (String) temp.getVariable("nomeMittente");
+			if(nome != null)
+			{
+				System.out.println("nome: "+nome+" username: "+username);
+				if(temp.getPriority() == Task.PRIORITY_HIGH  && nome.equals(username))
+				{
+					tasksUser.add(temp);
+					System.out.println("Era il cognome: "+nome);
+				}
+				System.out.println("come si chiamava quel film col robottino... corto circuito?"+tasksUser.toString());
+			}
+		}
+		int secondoValore = tasksUser.size(); 
+		return (secondoValore + primoValore);
 	}
 	
 	public List<TaskInstance> getRispostaMediatoreDriver(String taskName , String username)
