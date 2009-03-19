@@ -108,6 +108,17 @@
 						<f:facet name="header">Contenuto messaggio</f:facet>    
 				         <h:outputText value="#{_task.variables.notificaDriverContadino.content}"/>
 					</rich:column>
+					<rich:column align="center">
+                		<f:facet name="header">Dettagli Ordine</f:facet>
+				                	
+		                	<a:commandLink ajaxSingle="true" id="dettagliOrdinePendenteLink"
+		                    	oncomplete="#{rich:component('dettagliOrdinePanel')}.show()">
+		                    	<f:setPropertyActionListener value="#{ordineBean.getOrdineFromTask(_task)}" 
+		                    								target="#{ordineBean.currentMyOrder}" />
+			                    <h:graphicImage value="/img/modifica_mini.png" style="border:0" />
+			                </a:commandLink>
+                		<rich:toolTip for="dettagliOrdinePendenteLink" value="Visualizza i dettagli dell'ordine"/>
+	            	</rich:column>
 					<rich:column width="10%">
 						<f:facet name="header">Accetta</f:facet>
 						<s:button taskInstance="#{_task}" action="#{orderProcessing.verificaDisponibilita(matchItinerarioOrdine.currentItinerario)}"
@@ -119,6 +130,44 @@
 			</s:decorate>
 		</rich:simpleTogglePanel>
 		
+		<a:outputPanel ajaxRendered="true">
+		<rich:modalPanel id="dettagliOrdinePanel" autosized="true" width="350">
+       		<f:facet name="header">
+            	<h:outputText value="Dettagli ordini" />
+        	</f:facet>
+       		<f:facet name="controls">
+            	<h:panelGroup>
+                	<h:graphicImage value="/img/close.png" styleClass="hidelink" id="hidelink2"/>
+               	 	<rich:componentControl for="dettagliOrdinePanel" attachTo="hidelink2" operation="hide" event="onclick" />
+            	</h:panelGroup>
+        	</f:facet>
+			<ui:define name="label">Prodotti dell'ordine</ui:define>
+			<rich:dataTable var="_itemCarrello" id="itemsDataTableOrdiniFatti"
+				value="#{ordineBean.currentMyOrder.itemQuantita}">
+				<rich:column>
+						<f:facet name="header">Nome prodotto</f:facet>
+						<h:outputText value="#{_itemCarrello.item.name}"/>
+				</rich:column>	
+				<rich:column>
+					<f:facet name="header">Username contadino</f:facet>
+					<h:outputText value="#{_itemCarrello.cybercontadino.account.username}"/>
+				</rich:column>	
+				<rich:column>
+						<f:facet name="header">Quantita prodotto</f:facet>
+						<h:outputText value="#{_itemCarrello.quantita}"/>
+				</rich:column>	
+				<rich:column>
+						<f:facet name="header">Totale per prodotto</f:facet>
+						<h:outputText value="#{_itemCarrello.quantita * _itemCarrello.item.prezzo} euro"/>
+				</rich:column>
+				<rich:column>
+					<f:facet name="header">Quantita minima</f:facet>
+					<h:outputText value="#{_itemCarrello.quantitaParziale}"/>
+				</rich:column>				
+			</rich:dataTable>
+
+       	</rich:modalPanel>
+     </a:outputPanel>
 		
 	</ui:define>
 	

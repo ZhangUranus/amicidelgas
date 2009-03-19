@@ -56,6 +56,8 @@ public class OrdineBean {
 	
 	private List<MyOrdine> ordini;
 	
+	private List<Articolo> articoli;
+	
 	private Ordine currentOrdine;
 	
 	private MyOrdine currentMyOrder;
@@ -155,6 +157,17 @@ public class OrdineBean {
 		Set<Articolo> articoloSet = currentOrdine.getArticolos();
 		articoloList.addAll(articoloSet);
 		return articoloList;
+	}
+
+	public List<Articolo> getArticoli() {
+		articoli = new ArrayList<Articolo>();
+		if (currentOrdine!=null)
+			articoli.addAll(currentOrdine.getArticolos());
+		return articoli;
+	}
+
+	public void setArticoli(List<Articolo> articoli) {
+		this.articoli = articoli;
 	}
 
 }

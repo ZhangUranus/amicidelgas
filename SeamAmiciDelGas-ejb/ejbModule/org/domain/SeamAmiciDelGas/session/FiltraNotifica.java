@@ -257,8 +257,4 @@ public class FiltraNotifica {
 		return output;
 	}
 	
-	public Itinerario getItinerario() {
-		return new Itinerario();
-	}
-
 }

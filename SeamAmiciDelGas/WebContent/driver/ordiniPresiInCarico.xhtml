@@ -11,28 +11,10 @@
 
 	<ui:define name="body">
 		
-		<h:form id="filtraOrdini" styleClass="edit">
-			<rich:simpleTogglePanel label="Filtra Ordini" switchType="ajax">
-				
-				<table>
-					<td width="25%">
-					 <s:decorate template="/layout/display.xhtml">
-		                <ui:define name="label">Tipi di ordine</ui:define>
-		                <h:selectOneMenu value="#{ordineBean.tipoOrdine}" required="true" 
-		                title="seleziona il tipo di ordine che vuoi visualizzare" style=" width : 149px;">
-		                	<a:support event="onchange" ajaxSingle="true" reRender="ordiniPresiInCarico" />
-		                	<f:selectItem itemLabel="Ordini presi in carico" itemValue="1"/>
-		                	<f:selectItem itemLabel="Ordine conclusi" itemValue="2"/>
-		                </h:selectOneMenu>
-		             </s:decorate>
-		            </td>
-				</table>	
-			
-			</rich:simpleTogglePanel>
-			
-		</h:form>
-		<br/>
-		<br/>
+		
+	
+	<rich:simpleTogglePanel label="Filtra Ordini" switchType="ajax">		
+		
 		<rich:panel>
 			<f:facet name="header">Ordini presi in carico #{identity.username}</f:facet>
 				<s:decorate id="ordiniPresiInCarico" rendered="#{ordineBean.tipoOrdine=='1'}">
@@ -118,6 +100,8 @@
 			</rich:dataTable>
        	</rich:modalPanel>
      </a:outputPanel>
+     
+     </rich:simpleTogglePanel>
 	</ui:define>
 
 </ui:composition>
