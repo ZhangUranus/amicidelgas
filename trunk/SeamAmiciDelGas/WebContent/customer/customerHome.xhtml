@@ -47,18 +47,19 @@
 
 		<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center" >
 			<tr>
-				<td colspan="3" width="70%">
+			
+				<td width="70%">
 					<table width="99%" border="0" cellspacing="6" cellpadding="0" align="left" >
 					  <tr>			    
-					    <td rowspan="2" width="20%" align="center">
+					    <td rowspan="2" width="25%" align="center">
 					    	<s:decorate rendered="#{loginSelectBean.calculateMaxRole()=='admin'}"><img alt="statistiche" border="0" src="/SeamAmiciDelGas/img/admin.png"/></s:decorate>
 					    	<s:decorate rendered="#{loginSelectBean.calculateMaxRole()=='mediatore'}"><img alt="statistiche" border="0" src="/SeamAmiciDelGas/img/contatti.png"/></s:decorate>
 					    	<s:decorate rendered="#{loginSelectBean.calculateMaxRole()=='utenteGas'}"><img alt="statistiche" border="0" src="/SeamAmiciDelGas/img/contatti.png"/></s:decorate>
 					    	<s:decorate rendered="#{loginSelectBean.calculateMaxRole()=='driver'}"><img alt="statistiche" border="0" src="/SeamAmiciDelGas/img/driver.png"/></s:decorate>
 					    </td>
 					    <td valign="bottom" width="40%"><div align="left" class="colore_1">Bentornato <b>#{currentUser.nome} #{currentUser.cognome}</b></div></td>			      
-					  	<td valign="bottom" width="40%">
-					  		<s:decorate rendered="#{(!(filtraNotificaAltaPriorita.getBecomeDriverStartByMe('riceviMessaggio', currentAccount.username) > 0) ) and (currentAccount.punteggioFeedback >= 3.5) and (!(loginSelectBean.calculateMaxRole()=='driver'))}">
+					  	<td valign="bottom" width="35%">
+					  		<s:decorate rendered="#{(!(filtraNotificaAltaPriorita.getBecomeDriverStartByMe('riceviMessaggio',currentAccount.username)>0)) and (currentAccount.punteggioFeedback >= 3.5) and (!(loginSelectBean.calculateMaxRole()=='driver'))}">
 					  			<div align="center" class="min_bold" onclick="javascript:infolevel();" style="cursor: pointer" >
 					  			<img src="/SeamAmiciDelGas/img/driver_mini.png" border="0" id="plus_img_infolevel" align="middle" /> Proponiti come driver
 					  			</div>
@@ -66,30 +67,36 @@
 					  	</td>			      
 					  </tr>
 					  <tr>
-					    <td valign="top" ><div align="left" class="explorer">
-					    	<h:graphicImage value="/img/star_full.png" rendered="#{currentAccount.punteggioFeedback > 0.5}" />
-							<h:graphicImage value="/img/star_full.png" rendered="#{currentAccount.punteggioFeedback > 1.5}" />
-							<h:graphicImage value="/img/star_full.png" rendered="#{currentAccount.punteggioFeedback > 2.5}" />
-							<h:graphicImage value="/img/star_full.png" rendered="#{currentAccount.punteggioFeedback > 3.5}" />
-							<h:graphicImage value="/img/star_full.png" rendered="#{currentAccount.punteggioFeedback > 4.5}" />
-							<h:graphicImage value="/img/star_half.png" rendered="#{currentAccount.punteggioFeedback == 0.5}" />
-							<h:graphicImage value="/img/star_half.png" rendered="#{currentAccount.punteggioFeedback == 1.5}" />
-							<h:graphicImage value="/img/star_half.png" rendered="#{currentAccount.punteggioFeedback == 2.5}" />
-							<h:graphicImage value="/img/star_half.png" rendered="#{currentAccount.punteggioFeedback == 3.5}" />
-							<h:graphicImage value="/img/star_half.png" rendered="#{currentAccount.punteggioFeedback == 4.5}" />
-							<h:graphicImage value="/img/star_empty.png" rendered="#{!(currentAccount.punteggioFeedback > 0)}" />
-							<h:graphicImage value="/img/star_empty.png" rendered="#{!(currentAccount.punteggioFeedback > 1)}" />
-							<h:graphicImage value="/img/star_empty.png" rendered="#{!(currentAccount.punteggioFeedback > 2)}" />
-							<h:graphicImage value="/img/star_empty.png" rendered="#{!(currentAccount.punteggioFeedback > 3)}" />
-							<h:graphicImage value="/img/star_empty.png" rendered="#{!(currentAccount.punteggioFeedback > 4)}" />
-							<li>Codice fiscale: #{currentUser.codiceFiscale}</li>                        	
-                        	<li>Data Attivazione: <b>#{currentAccount.dataAccettazione}</b></li>
-                        	<hr noshade="noshade" width="85%" align="left"/>
-                        	<span class="colore_1">I tuoi contatti</span>
-                        	<li>E-mail: #{currentUser.email}</li>
-                        	<li>Telefono: #{currentUser.recapitoTelefonico}</li>
-                        	<li>Indirizzo: #{currentUser.indirizzo}</li>
-						</div></td>
+					    <td valign="top" >
+					    	<br />
+					    	<div align="left" style="cursor:pointer;" >
+						    	<h:graphicImage value="/img/star_full.png" rendered="#{currentAccount.punteggioFeedback > 0.5}" />
+								<h:graphicImage value="/img/star_full.png" rendered="#{currentAccount.punteggioFeedback > 1.5}" />
+								<h:graphicImage value="/img/star_full.png" rendered="#{currentAccount.punteggioFeedback > 2.5}" />
+								<h:graphicImage value="/img/star_full.png" rendered="#{currentAccount.punteggioFeedback > 3.5}" />
+								<h:graphicImage value="/img/star_full.png" rendered="#{currentAccount.punteggioFeedback > 4.5}" />
+								<h:graphicImage value="/img/star_half.png" rendered="#{currentAccount.punteggioFeedback == 0.5}" />
+								<h:graphicImage value="/img/star_half.png" rendered="#{currentAccount.punteggioFeedback == 1.5}" />
+								<h:graphicImage value="/img/star_half.png" rendered="#{currentAccount.punteggioFeedback == 2.5}" />
+								<h:graphicImage value="/img/star_half.png" rendered="#{currentAccount.punteggioFeedback == 3.5}" />
+								<h:graphicImage value="/img/star_half.png" rendered="#{currentAccount.punteggioFeedback == 4.5}" />
+								<h:graphicImage value="/img/star_empty.png" rendered="#{!(currentAccount.punteggioFeedback > 0)}" />
+								<h:graphicImage value="/img/star_empty.png" rendered="#{!(currentAccount.punteggioFeedback > 1)}" />
+								<h:graphicImage value="/img/star_empty.png" rendered="#{!(currentAccount.punteggioFeedback > 2)}" />
+								<h:graphicImage value="/img/star_empty.png" rendered="#{!(currentAccount.punteggioFeedback > 3)}" />
+								<h:graphicImage value="/img/star_empty.png" rendered="#{!(currentAccount.punteggioFeedback > 4)}" />
+							</div>	
+							<div align="left" class="explorer">
+								<br />
+								<li>Codice fiscale: #{currentUser.codiceFiscale}</li>                        	
+	                        	<li>Data Attivazione: <b>#{currentAccount.dataAccettazione}</b></li>
+	                        	<hr noshade="noshade" width="85%" align="left"/>
+	                        	<span class="colore_1">I tuoi contatti</span>
+	                        	<li>E-mail: #{currentUser.email}</li>
+	                        	<li>Telefono: #{currentUser.recapitoTelefonico}</li>
+	                        	<li>Indirizzo: #{currentUser.indirizzo}</li>
+							</div>
+						</td>
 						<script type="text/javascript"><!--
 							function setInput() {
 								document.getElementById('becameDriverForm:driver_div:destinatario_hidden').value='mediatore';
@@ -133,6 +140,8 @@
 					  </tr>
 					</table>	
 				</td>
+				
+				
 				<td width ="30%">
 					<table width="99%" border="0" cellspacing="6" cellpadding="0" align="left" >
 					  <tr>			    
@@ -216,58 +225,22 @@
 				</td>
 			</tr>
 			<tr>
-				<td colspan="4" height="16"><hr noshade="noshade" />	
+				<td colspan="2" height="32"><hr noshade="noshade" />				
 				</td>
 			</tr>
 		</table>
 		
 		<s:decorate rendered="#{(loginSelectBean.calculateMaxRole()=='admin') or (loginSelectBean.calculateMaxRole()=='mediatore') or (loginSelectBean.calculateMaxRole()=='driver')}">
-		<table width="100%" border="1" cellspacing="0" cellpadding="0" align="center" >
+		<table width="90%" border="0" cellspacing="0" cellpadding="0" align="center" >		
 			<tr>
-				<td width="25%">
-					<table width="98%" border="0" cellspacing="6" cellpadding="0" align="center" >
+				<td width="50%">
+					<table width="85%" border="0" cellspacing="8" cellpadding="0" align="center" >
 					  <tr>			    
-					    <td rowspan="2" align="left"><a href="/SeamAmiciDelGas/driver/itinerario.seam"><img alt="statistiche" border="0" src="/SeamAmiciDelGas/img/itinerario.png"/></a></td>
-					    <td valign="bottom"><div align="left" class="colore_1"><a href="/SeamAmiciDelGas/driver/itinerario.seam">itinerario</a></div></td>			      
-					  </tr>
-					  <tr>
-					    <td valign="top"><div align="left" class="explorer">Crea un nuovo itinerario di visita</div></td>
-					  </tr>
-					</table>
-				</td>
-				<td width="25%">
-					<s:decorate rendered="#{(loginSelectBean.calculateMaxRole()=='mediatore') or (loginSelectBean.calculateMaxRole()=='admin')}">
-						<table width="98%" border="0" cellspacing="6" cellpadding="0" align="center" >
-						  <tr>			    
-						    <td rowspan="2" align="left"><a href="/SeamAmiciDelGas/mediatore/puntiDiConsegna.seam"><img alt="statistiche" border="0" src="/SeamAmiciDelGas/img/punto_consegna.png"/></a></td>
-						    <td valign="bottom"><div align="left" class="colore_1"><a href="/SeamAmiciDelGas/mediatore/puntiDiConsegna.seam">Punti di consegna</a></div></td>			      
-						  </tr>
-						  <tr>
-						    <td valign="top"><div align="left" class="explorer">Aggiungi, Modifica, Elimina i Punti di Consegna </div></td>
-						  </tr>
-						</table>					
-					</s:decorate>
-				</td>
-				<td width="25%">
-
-				</td>
-			</tr>
-		
-		
-		<s:decorate rendered="#{loginSelectBean.calculateMaxRole()=='admin'}">	
-			<tr>
-			<td width="25%">
-					<table width="99%" border="0" cellspacing="6" cellpadding="0" align="center" >
-					  <tr>			    
-					    <td rowspan="2" align="left">
+					    <td width="50px" rowspan="2" align="left">
 					    	<s:link view="/admin/editDatiUtenti.xhtml"
 				             propagation="none"
 				                      id="editDatiUtentiRegistratiImg"
 				                rendered="#{empty from}">
-				                <f:param name="utenteCodiceFiscale"
-				                        value="#{currentUser.codiceFiscale}"/>
-				                <f:param name="accountUsername"
-				                        value="#{currentAccount.username}"/>
 					    	<img alt="statistiche" border="0" src="/SeamAmiciDelGas/img/utenti.png"/>
 					    	</s:link>
 					    	</td>
@@ -277,10 +250,6 @@
 				             propagation="none"
 				                      id="editDatiUtentiRegistrati2"
 				                rendered="#{empty from}">
-				                <f:param name="utenteCodiceFiscale"
-				                        value="#{currentUser.codiceFiscale}"/>
-				                <f:param name="accountUsername"
-				                        value="#{currentAccount.username}"/>
 				            </s:link>
 					    	</div></td>			      
 					  </tr>
@@ -289,19 +258,14 @@
 					  </tr>
 					</table>
 				</td>
-			
-			<td width="25%">
-					<table width="99%" border="0" cellspacing="6" cellpadding="0" align="center" >
+				<td width="50%">
+					<table width="85%" border="0" cellspacing="8" cellpadding="0" align="center" >
 					  <tr>			    
-					    <td rowspan="2" align="left">
+					    <td width="50px" rowspan="2" align="left">
 					    	<s:link view="/admin/editDatiCybercontadino.xhtml"
 				             propagation="none"
 				                      id="editDatiCybercontadiniRegistratiImg"
 				                rendered="#{empty from}">
-				                <f:param name="utenteCodiceFiscale"
-				                        value="#{currentUser.codiceFiscale}"/>
-				                <f:param name="accountUsername"
-				                        value="#{currentAccount.username}"/>
 					    	<img alt="statistiche" border="0" src="/SeamAmiciDelGas/img/contadini_registrati.png"/>
 					    	</s:link>
 					    	</td>
@@ -311,15 +275,40 @@
 				             propagation="none"
 				                      id="editDatiCybercontadiniRegistrati2"
 				                rendered="#{empty from}">
-				                <f:param name="utenteCodiceFiscale"
-				                        value="#{currentUser.codiceFiscale}"/>
-				                <f:param name="accountUsername"
-				                        value="#{currentAccount.username}"/>
 				            </s:link>
 					    	</div></td>			      
 					  </tr>
 					  <tr>
 					    <td valign="top"><div align="left" class="explorer">Visualizza e modifica i dati dei cybercontadini</div></td>
+					  </tr>
+					</table>
+				</td>
+			</tr>
+		
+		
+		<s:decorate rendered="#{loginSelectBean.calculateMaxRole()=='admin'}">	
+			<tr>
+			<td width="50%">
+				<s:decorate rendered="#{(loginSelectBean.calculateMaxRole()=='mediatore') or (loginSelectBean.calculateMaxRole()=='admin')}">
+					<table width="85%" border="0" cellspacing="8" cellpadding="0" align="center" >
+					  <tr>			    
+					    <td width="50px" rowspan="2" align="left"><a href="/SeamAmiciDelGas/mediatore/puntiDiConsegna.seam"><img alt="statistiche" border="0" src="/SeamAmiciDelGas/img/punto_consegna.png"/></a></td>
+					    <td valign="bottom"><div align="left" class="colore_1"><a href="/SeamAmiciDelGas/mediatore/puntiDiConsegna.seam">Punti di consegna</a></div></td>			      
+					  </tr>
+					  <tr>
+					    <td valign="top"><div align="left" class="explorer">Aggiungi, Elimina i Punti di Consegna </div></td>
+					  </tr>
+					</table>					
+				</s:decorate>
+			</td>			
+			<td width="50%">
+					<table width="85%" border="0" cellspacing="8" cellpadding="0" align="center" >
+					  <tr>			    
+					    <td width="50px" rowspan="2" align="left" ><a href="/SeamAmiciDelGas/driver/itinerario.seam"><img alt="statistiche" border="0" src="/SeamAmiciDelGas/img/itinerario.png"/></a></td>
+					    <td valign="bottom"><div align="left" class="colore_1"><a href="/SeamAmiciDelGas/driver/itinerario.seam">Itinerario</a></div></td>			      
+					  </tr>
+					  <tr>
+					    <td valign="top"><div align="left" class="explorer">Crea un nuovo itinerario di visita</div></td>
 					  </tr>
 					</table>
 				</td>

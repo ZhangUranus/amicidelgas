@@ -1,14 +1,14 @@
 var geocoder = null;
 var point;
 var gasIcon, contadiniIcon;
-var markers = new Array();
+var markers_place = new Array();
 var markers_contadini = new Array();
+var partenza = "piazza roma, Benevento (Benevento)";
 var to_place = new Array();
 var from_place = new Array();
 var map;
 var gdir;
 var addressMarker;
-var toplaces = new Array();
 var prima_cybercontadino = 0;
 var solo_punti_di_consegna = 0;
 // i punti di consegna ed i cybercontadini massimi sono 3
@@ -27,6 +27,26 @@ function Indirizzo(via,comune,provincia){
 		return comune +" (" + provincia +")";
 	}
 }
+
+function puntoItinerario(mark, titolo, id, indirizzo){
+	this.mark = mark;
+	this.titolo = titolo;
+	this.id = id;
+	this.indirizzo = indirizzo;
+	
+	this.getMark = function (){
+		return mark;
+	}
+	this.getNomeAzienda = function (){
+		return nomeAzienda;
+	}
+	this.getId = function (){
+		return id;
+	}
+	this.getIndirizzo = function (){
+		return indirizzo; 
+	}
+}
 function load() {
 	if(geocoder==null){
      if (GBrowserIsCompatible()) {
@@ -38,9 +58,9 @@ function load() {
 		map.addControl(new GSmallMapControl());
        	map.addControl(new GMapTypeControl());
 		gasIcon = new GIcon();
-	     gasIcon.image= "/SeamAmiciDelGas/img/gmap_consegna.png";
-	     gasIcon.shadow="/SeamAmiciDelGas/img/gmap_fiamma_ombra.png";
-	     gasIcon.iconSize= new GSize(25 , 32);
+	    gasIcon.image= "/SeamAmiciDelGas/img/gmap_consegna.png";
+	    gasIcon.shadow="/SeamAmiciDelGas/img/gmap_fiamma_ombra.png";
+	    gasIcon.iconSize= new GSize(25 , 32);
 	    gasIcon.iconAnchor = new GPoint(5, 34);
 	    gasIcon.infoWindowAnchor = new GPoint(5, 2);
 	    gasIcon.infoShadowAnchor = new GPoint(14, 25);
@@ -96,7 +116,10 @@ function load() {
 			var point2 = new GLatLng(point[1],point[0]);
 			var mark = new GMarker(point2, {title: "Punto di consegna: "+indirizzo.getAddress(), icon:gasIcon});
 			map.addOverlay(mark);
-			markers[idmark] = mark;
+			
+			var place = new puntoItinerario(mark, 'Punto di consegna', idmark, indirizzo);
+			
+			markers_place[idmark] = place;
 			
 			map.panTo(mark.getPoint());
 					
@@ -122,19 +145,35 @@ function load() {
 			var point2 = new GLatLng(point[1],point[0]);
 			var mark = new GMarker(point2, {title: nome_azienda+", "+indirizzo.getAddress(), icon:contadiniIcon});
 			map.addOverlay(mark);
-			markers_contadini[idmark] = mark;
+			
+			var contadino = new puntoItinerario(mark, nome_azienda, idmark, indirizzo);
+			
+			markers_contadini[idmark] = contadino;
 			
 			map.panTo(mark.getPoint());
 					
 			GEvent.addListener(mark, "click", function() {
 				if(solo_punti_di_consegna==0){
-					if(true){
-					
-					}
-					count_contadini++;
-					if(count_contadini==1){
-						prima_cybercontadino++;
-						alert("count 1");
+					if(from_place[idmark]==null){
+						from_place[idmark] = contadino;
+						count_contadini++;
+						if(count_contadini==1){
+							prima_cybercontadino=1; //consenta di aggiungere un punto di consegna
+							setDirections(partenza, contadino.getIndirizzo().getAddress(), "it_IT");
+							//alert("Primo contadino aggiunto, selezionare un altro contadino o un punto di consegna per creare un itinerario.");
+						} else if(count_contadini <= 3){
+							setDirections(partenza, contadino.getIndirizzo().getAddress(), "it_IT");
+						} else {
+							alert("Non puoi aggiungere altri cybercontadini allì'itinerario.");
+						}					
+					} else {
+						from_place[idmark] = null;
+						count_contadini--;
+						if(count_contadini==0){
+							prima_cybercontadino=0; //non si può aggiungere un punto di consegna
+							alert("Contadino rimosso dall'itinerario, nessun contadino presente nell'itinerario.");
+						}
+						
 					}
 				} else {
 					alert("Per poter aggiungere un cybercontadino deselezionare tutti i punti di consegna");
@@ -157,9 +196,9 @@ function initialize() {
    //setDirections("via mellusi, Benevento (Benevento)","via delle puglie, Benevento (Benevento)", "via napoli, Benevento (Benevento)", "it_IT");
 }
 
-function setDirections(fromAddress, toAddress, toAddress2, locale) {
-  gdir.load("from: " + fromAddress + " to: " + toAddress + " to: " + toAddress2,
-            { "locale": locale });
+function setDirections(fromAddress, toAddress, locale) {
+  gdir.load("from: " + fromAddress + " to: " + toAddress,
+            { "locale": locale , "preserveViewport": false});
 }
 
 function handleErrors(){

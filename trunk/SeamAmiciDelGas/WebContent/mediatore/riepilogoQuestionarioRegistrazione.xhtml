@@ -77,7 +77,8 @@
 													<h:graphicImage value="/img/accepted.png" rendered="#{_inviato.variables.compilato}" /><h:graphicImage value="/img/not_valid.png" rendered="#{!(_inviato.variables.compilato)}" />
 											</div></td>
 											<td width="10%"><div align="right" class="explorer" >
-												<s:link taskInstance="#{_inviato}" action="#{inviaRichiestaRisposta.riceviRisposta}">
+												<div id="pulsante_driver_loading" style="display: none;"><img src="/SeamAmiciDelGas/img/loading.gif" /></div>
+												<s:link id="link_feedback" taskInstance="#{_inviato}" action="#{inviaRichiestaRisposta.riceviRisposta}" onmouseup="disable_this(this.id, 'pulsante_driver_loading');" >
 													<h:graphicImage value="/img/feedback_up.png" rendered="#{_inviato.variables.compilato}" /><h:graphicImage value="/img/feedback_down.png" rendered="#{!(_inviato.variables.compilato)}" />
 												</s:link>
 											</div></td>
