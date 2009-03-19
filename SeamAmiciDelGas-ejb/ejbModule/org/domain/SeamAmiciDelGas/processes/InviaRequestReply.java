@@ -3,10 +3,8 @@ package org.domain.SeamAmiciDelGas.processes;
 import java.util.Date;
 import javax.persistence.EntityManager;
 import org.domain.SeamAmiciDelGas.crud.AccountHome;
-import org.domain.SeamAmiciDelGas.crud.FeedbackListExtended;
 import org.domain.SeamAmiciDelGas.entity.Account;
 import org.domain.SeamAmiciDelGas.entity.Cybercontadino;
-import org.domain.SeamAmiciDelGas.entity.Feedback;
 import org.domain.SeamAmiciDelGas.entity.Questionario;
 import org.domain.SeamAmiciDelGas.entity.Role;
 import org.domain.SeamAmiciDelGas.session.Message;
@@ -58,18 +56,14 @@ public class InviaRequestReply {
 	private AccountHome accounthome;
 	
 	@In(value="newQuestionario", required=false)
+	//@In(value="newQuestionario")
 	private Questionario questionario;
-	
-	@In(value="newFeedback" , create=true)
-	private Feedback feedback;
-	
-	@In(value="newFeedbackListExtended",create=true)
-	private FeedbackListExtended feedbackList;
-	
+
 	@StartTask @EndTask(transition="inviaReply")
 	public String riceviMessaggio(int risposta)
 	{
 		//System.out.println("RICEVI MESSAGGIO");
+		//if(message.getTipo().equals("becomeDriver"))
 		if(questionario == null)
 		{
 			System.out.println("BECOMEDRIVER"+risposta);
@@ -77,7 +71,7 @@ public class InviaRequestReply {
 		}
 		else
 		{
-			
+			System.out.println("YAMMMMMMMMMMMMMMMMMMM");
 			compilato = true;
 			if(questionario == null)
 			{
@@ -145,7 +139,7 @@ public class InviaRequestReply {
 		}
 		else
 		{
-			message.setContent("La tua richiesta di divenire driver � stata rifiutata.");
+			message.setContent("La tua richiesta di divenire driver e' stata rifiutata.");
 			
 		}
 		message.setDestinatario(nomeMittente);
@@ -153,55 +147,3 @@ public class InviaRequestReply {
     }
 
 }
-
-/*
-@In protected FacesMessages facesMessages;
-	@In protected EntityManager entityManager;
-	@Out(value="notificaDecisioneDriver", scope= ScopeType.BUSINESS_PROCESS, required=false)
-	protected Message message;
-	private String msg="";
-	
-	
-	@BeginTask @EndTask(transition="approva")
-	public void approve(){
-		String nomeRichiedente=(String) Component.getInstance("nomeRichiedente", ScopeType.BUSINESS_PROCESS);
-		
-		Account account = (Account) entityManager.createQuery(
-				"select account from Account account " +
-				"where account.username = #{nomeRichiedente}")
-				.getSingleResult();
-		Role r= new Role();
-		r.setName("driver");
-		r.setAccount(account);
-		entityManager.persist(r);
-		message= new Message();
-		String approveMsg="La tua richiesta di divenire driver � stata accettata.";
-		if(msg!=null)
-			approveMsg+="Il responsabile ha incluso il seguente messaggio:\n\""+msg+"\"";
-		message.setContent(approveMsg);
-		message.addRecipient(nomeRichiedente);
-		facesMessages.add("L'utente � stato reso driver");
-	}
-	
-	@BeginTask @EndTask(transition="rifiuta")
-	public void reject(){
-		String nomeRichiedente=(String) Component.getInstance("nomeRichiedente", ScopeType.BUSINESS_PROCESS);
-		message= new Message();
-		String rejectMsg="La tua richiesta di divenire driver � stata rifiutata.";
-		if(msg!=null)
-			rejectMsg+="Il responsabile ha incluso il seguente messaggio:\n\""+msg+"\"";
-		message.setContent(rejectMsg);
-		message.addRecipient(nomeRichiedente);
-		
-		facesMessages.add("La richiesta dell'utente � stata rifiutata");
-	}
-	
-	@BypassInterceptors
-	public String getMsg() {
-		return msg;
-	}
-	@BypassInterceptors
-	public void setMsg(String msg) {
-		this.msg = msg;
-	}
-*/
