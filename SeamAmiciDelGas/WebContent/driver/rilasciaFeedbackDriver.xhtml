@@ -60,7 +60,7 @@
             <a:outputPanel ajaxRendered="true">   
             <rich:simpleTogglePanel id="simpleTogglePanelDriverToContadini" switchType="ajax" label="Rilascia feedback ai contadini">    
 			
-				<s:decorate id="rilasciaFeedbackField1" rendered="#{not empty takeInHandForDriver.currentTaskResponsabileToContadino}">
+				<s:decorate id="rilasciaFeedbackField1" rendered="#{not empty takeInHandForDriver.listCybercontadini()}">
 					<h:form>
 					<h:dataTable value="#{takeInHandForDriver.listCybercontadini()}" var="_contadino">
 							<rich:column>
@@ -114,7 +114,7 @@
 		<a:outputPanel ajaxRendered="true">   
             <rich:simpleTogglePanel id="simpleTogglePanelDriverToCustomer" switchType="ajax" label="Rilascia feedback ai customer">    
 			
-				<s:decorate id="rilasciaFeedbackField2" rendered="#{not empty takeInHandForDriver.currentTaskResponsabileToCustomer}">
+				<s:decorate id="rilasciaFeedbackField2" rendered="#{not empty takeInHandForDriver.listCustomer()}">
 					<h:form>
 					<h:dataTable value="#{takeInHandForDriver.listCustomer()}" var="_customer">
 							<rich:column>
