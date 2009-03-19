@@ -36,8 +36,8 @@ public class InviaRequestReply {
     @In(value="contadino", scope= ScopeType.BUSINESS_PROCESS ,required =false)
     private Cybercontadino contadino;
     
-    @In(value="nomeDestinatario", scope= ScopeType.BUSINESS_PROCESS, required =false)
-	private String nomeUtente;
+    //@In(value="nomeDestinatario", scope= ScopeType.BUSINESS_PROCESS, required =false)
+	//private String nomeDestinatario;
 	
 	@In(value="notifyMessageRequest",scope=ScopeType.BUSINESS_PROCESS, required=false) 
 	@Out(value="notifyMessageReply", scope= ScopeType.BUSINESS_PROCESS, required=false)
@@ -128,7 +128,6 @@ public class InviaRequestReply {
     {
 		if(i==1)
 		{
-			System.out.println("DRIVERRRRRRRRRRRRRRRRRRRRRRRRRSIIIIIIIIIIIIIII"+nomeUtente);
 			accounthome.setAccountUsername(nomeMittente);
 			Account accountUtente = accounthome.find();
 			Role r= new Role();
@@ -143,6 +142,7 @@ public class InviaRequestReply {
 			
 		}
 		message.setDestinatario(nomeMittente);
+		message.setTipo("becomeDriver");
 		return true;
     }
 

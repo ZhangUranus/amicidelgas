@@ -59,9 +59,9 @@ public class InviaNotificaRegistrazioni {
 				return null;
 			}				
 			else {
-		    	String urlWsdl=contadino.getUrlWsdl();
-		    	ServicePublisher sp= new ServicePublisher(); 
-		    	sp.publishService(contadino.getPartitaIva(), "CatalogService", urlWsdl, contadino.getNameSpaceWsdl());
+//		    	String urlWsdl=contadino.getUrlWsdl();
+//		    	ServicePublisher sp= new ServicePublisher(); 
+//		    	sp.publishService(contadino.getPartitaIva(), "CatalogService", urlWsdl, contadino.getNameSpaceWsdl());
 			}
 		}
 		else

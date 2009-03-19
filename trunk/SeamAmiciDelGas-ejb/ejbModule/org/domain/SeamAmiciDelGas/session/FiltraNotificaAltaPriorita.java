@@ -9,7 +9,6 @@ import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
-import org.jboss.seam.security.Credentials;
 import org.jbpm.taskmgmt.def.Task;
 import org.jbpm.taskmgmt.exe.TaskInstance;
 
@@ -183,14 +182,14 @@ public class FiltraNotificaAltaPriorita {
 	public List<TaskInstance> getRispostaMediatoreDriver(String taskName , String username)
 	{
 		// ritorna i task assegnati solo a me per un particolare taskName e un particolare contadino
-		System.out.println("AIUTOOOOOOOOOOOOOOOOOO TASKKKKKKKKKKKKKKK");
+		System.out.println("getRispostaMediatoreDriver");
 		List<TaskInstance> tasks= taskInstanceSingleList(taskName);
 		List<TaskInstance> tasksUser = new ArrayList<TaskInstance>();
 		String nome;
 		for(TaskInstance temp : tasks)
 		{
 			nome = (String) temp.getVariable("nomeMittente");
-			if(temp.getPriority() == Task.PRIORITY_HIGH  && nome.equals(username));
+			if(temp.getPriority() == Task.PRIORITY_HIGH  && nome.equals(username))
 					tasksUser.add(temp);
 			System.out.println("STAMPA Risposta mediatore driver "+tasksUser.toString());
 		}
@@ -200,14 +199,14 @@ public class FiltraNotificaAltaPriorita {
 	public int getNumRispostaMediatoreDriver(String taskName , String username)
 	{
 		// ritorna i task assegnati solo a me per un particolare taskName e un particolare contadino
-		System.out.println("AIUTOOOOOOOOOOOOOOOOOO TASKKKKKKKKKKKKKKK");
+		System.out.println("getNumRispostaMediatoreDriver");
 		List<TaskInstance> tasks= taskInstanceSingleList(taskName);
 		List<TaskInstance> tasksUser = new ArrayList<TaskInstance>();
 		String nome;
 		for(TaskInstance temp : tasks)
 		{
 			nome = (String) temp.getVariable("nomeMittente");
-			if(temp.getPriority() == Task.PRIORITY_HIGH  && nome.equals(username));
+			if(temp.getPriority() == Task.PRIORITY_HIGH  && nome.equals(username))
 					tasksUser.add(temp);
 			System.out.println("STAMPA Risposta mediatore driver numero "+tasksUser.size());
 		}
