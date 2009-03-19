@@ -178,7 +178,7 @@
         </td>
         </s:decorate>
         <s:decorate rendered="#{!identity.loggedIn}">
-        <td height="32" align="left" >
+        <td height="32" align="left" width="96" >
 			<s:link view="/login.xhtml" value="Login" propagation="none" rendered="#{!identity.loggedIn}"/>
         </td>
         </s:decorate>
@@ -188,8 +188,8 @@
         </td>
         </s:decorate>
         <s:decorate rendered="#{identity.loggedIn}">
-        <td height="32" align="left" >
-	        <s:link view="/home.xhtml" action="#{identity.logout}" value="LOGOUT" propagation="none" rendered="#{identity.loggedIn}" />
+        <td height="32" align="left" width="96" >
+	        <s:link view="/home.xhtml" action="#{identity.logout}" value="Logout" propagation="none" rendered="#{identity.loggedIn}" />
     	</td>
         </s:decorate> 
         <s:decorate rendered="#{identity.loggedIn}">
