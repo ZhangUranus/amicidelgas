@@ -176,8 +176,9 @@ public class Ordine implements java.io.Serializable {
 		this.driver = driver;
 	}
 	
-	public boolean equals(Ordine o) {
-		return o.getIdordine().equals(idordine);
+	public boolean equals(Object o) {
+		Ordine ordine = (Ordine) o;
+		return ordine.getIdordine().equals(idordine);
 	}
 
 }

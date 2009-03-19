@@ -29,6 +29,10 @@ import org.hibernate.validator.NotNull;
 @Table(name = "itinerario", catalog = "database_gas")
 public class Itinerario implements java.io.Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7853361748929253666L;
 	private Integer iditinerario;
 	private Account account;
 	private Date dataPartenza;
@@ -147,7 +151,8 @@ public class Itinerario implements java.io.Serializable {
 		this.cybercontadinos = cybercontadinos;
 	}
 	
-	public boolean equals(Itinerario it) {
+	public boolean equals(Object obj) {
+		Itinerario it = (Itinerario) obj;
 		return iditinerario.equals(it.getIditinerario());
 	}
 
