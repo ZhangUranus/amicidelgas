@@ -31,23 +31,50 @@ public class CloseTaskInstance {
 	
 	@Logger private Log log;
 	
+	@In protected JbpmContext jbpmContext;
+	
+	
 	//chiudo i task di tipo fb_responsabile_to_customer
 	public String closefbResponsabileConsegnaToCustomer() {
 		
 		Hashtable<String, InfoFeedback> hashTableCustomer = takeInHandForDriver.getHashTableCustomer();
-		
+		log.info("******* task size " +takeInHandForDriver.getTaskInstanceCustomerForItinerario().size());
+
 		for (TaskInstance t: takeInHandForDriver.getTaskInstanceCustomerForItinerario()) {
-			JbpmContext jbpmContext = org.jbpm.JbpmConfiguration.getInstance().createJbpmContext();
+
 			TaskInstance managedTaskInstance = jbpmContext.getTaskInstance(t.getId());
-			managedTaskInstance.start();
-			Account account = (Account) managedTaskInstance.getVariable("customer");
 			
+			Account account = (Account) managedTaskInstance.getVariable("customer");
+			log.info("******* task customer " +account.getUsername());
+			
+
 			InfoFeedback infoFeedback = hashTableCustomer.get(account.getUsername());
 			gestioneFeedback.assegnaFeedback(account.getUsername(), (Ordine) managedTaskInstance.getVariable("ordine"), (float) infoFeedback.getFeedback(), infoFeedback.getComment());
 			log.info("******* task instance " +managedTaskInstance.toString());
-			managedTaskInstance.getToken().signal("fb_responsabile_to_customer");
-			managedTaskInstance.cancel("fb_responsabile_to_customer");
-			//cancel("fb_responsabile_to_customer");
+
+			managedTaskInstance.end("fb_responsabile_to_customer");
+
+			//settare il booleano
+		}
+
+		takeInHandForDriver.reset();
+		return "fb_responsabile_to_customer";
+	}
+	
+public String closefbResponsabileConsegnaToContadino() {
+		
+		Hashtable<String, InfoFeedback> hashTableContadini = takeInHandForDriver.getHashTableContadini();
+		
+		for (TaskInstance t: takeInHandForDriver.getTaskInstanceContadinoForItinerario()) {
+
+			TaskInstance managedTaskInstance = jbpmContext.getTaskInstance(t.getId());
+			
+			Account account = (Account) managedTaskInstance.getVariable("customer");
+			InfoFeedback infoFeedback = hashTableContadini.get(account.getUsername());
+			gestioneFeedback.assegnaFeedback(account.getUsername(), (Ordine) managedTaskInstance.getVariable("ordine"), (float) infoFeedback.getFeedback(), infoFeedback.getComment());
+			log.info("******* task instance " +managedTaskInstance.toString());
+
+			managedTaskInstance.end("fb_contadino_to_responsabile_consegna");
 
 			//settare il booleano
 		}
