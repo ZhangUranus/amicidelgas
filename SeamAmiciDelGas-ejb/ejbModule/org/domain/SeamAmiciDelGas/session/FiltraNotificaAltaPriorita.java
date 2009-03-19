@@ -22,6 +22,7 @@ public class FiltraNotificaAltaPriorita {
 	
 	@In(value="taskInstanceList", create=true)
 	private List<TaskInstance> taskInstanceList;
+	
 	/*
 	 * ritorno il numero di notifiche per gruppi
 	 */
