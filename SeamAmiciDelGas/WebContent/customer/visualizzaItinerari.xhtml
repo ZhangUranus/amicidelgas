@@ -22,19 +22,25 @@
 								</rich:column>
 								<rich:column>
 									<f:facet name="header">Data Creazione</f:facet>							    
-							        <h:outputText value="#{_itinerario.dataCreazione}"/>
+							        <h:outputText value="#{_itinerario.dataCreazione}" >
+							        <f:convertDateTime type="date" dateStyle="medium" locale="Locale.ITALY"/>
+							        </h:outputText>
 								</rich:column>
 								<rich:column>
 									<f:facet name="header">Data Partenza</f:facet>							    
-							        <h:outputText value="#{_itinerario.dataPartenza}"/>
+							        <h:outputText value="#{_itinerario.dataPartenza}">
+							        <f:convertDateTime type="date" dateStyle="medium" locale="Locale.ITALY"/>
+							        </h:outputText>
 								</rich:column>
 								<rich:column>
 									<f:facet name="header">Data Consegna</f:facet>							    
-							        <h:outputText value="#{_itinerario.dataConsegna}"/>
+							        <h:outputText value="#{_itinerario.dataConsegna}">
+							        <f:convertDateTime type="date" dateStyle="medium" locale="Locale.ITALY"/>
+							        </h:outputText>
 								</rich:column>
 								<rich:column>
 									<f:facet name="header">Contadini</f:facet>
-									<rich:dataTable id="dataTableContadini"  value="#{_itinerario.cybercontadinos.resultList}" var="_contadino">
+									<rich:dataTable id="dataTableContadini"  value="#{gestioneItinerario.contadiniAssociati(_itinerario)}" var="_contadino">
 										<rich:column>	
 										<f:facet name="header">Nome Azienda</f:facet>		    
 								     	   <h:outputText value="#{_contadino.nomeAzienda}"/>
@@ -46,14 +52,14 @@
 										<rich:column>			    
 										<f:facet name="header">Sede Azienda</f:facet>
 								     	   <h:outputText >
-								     	   #{_contadino.comune.nome} , (#{_contadino.comune.provincia.nome})
+								     	   #{_contadino.comune.nome} , (#{_contadino.comune.provinces.idprovinces})
 								     	   </h:outputText>
 										</rich:column>
 									</rich:dataTable>							    
 								</rich:column>
 								<rich:column>
 									<f:facet name="header">Punti di Consegna</f:facet>
-									<rich:dataTable id="dataTablePuntiDiConsegna"  value="#{_itinerario.puntiDiConsegnas}" var="_puntoDiConsegna">
+									<rich:dataTable id="dataTablePuntiDiConsegna"  value="#{gestioneItinerario.puntiDiConsegnaAssociati(_itinerario)}" var="_puntoDiConsegna">
 										<rich:column>	
 											<f:facet name="header">Indirizzo</f:facet>			    
 								     	   <h:outputText value="#{_puntoDiConsegna.indirizzo}"/>
@@ -61,7 +67,7 @@
 										<rich:column>	
 											<f:facet name="header">Citta</f:facet>			    
 								     	   <h:outputText >
-								     	   #{_puntoDiConsegna.comune.nome} , (#{_puntoDiConsegna.comune.provincia.nome})
+								     	   #{_puntoDiConsegna.comune.nome} , (#{_puntoDiConsegna.comune.provinces.idprovinces})
 								     	   </h:outputText>
 										</rich:column>
 									</rich:dataTable>							    

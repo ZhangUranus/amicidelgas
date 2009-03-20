@@ -2,6 +2,7 @@ package org.domain.SeamAmiciDelGas.session;
 
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -10,7 +11,7 @@ import javax.persistence.EntityManager;
 import org.domain.SeamAmiciDelGas.crud.AccountHome;
 import org.domain.SeamAmiciDelGas.crud.AccountList;
 import org.domain.SeamAmiciDelGas.crud.FeedbackHome;
-import org.domain.SeamAmiciDelGas.crud.FeedbackListExtended;
+import org.domain.SeamAmiciDelGas.crud.FeedbackList;
 import org.domain.SeamAmiciDelGas.entity.Account;
 import org.domain.SeamAmiciDelGas.entity.Cybercontadino;
 import org.domain.SeamAmiciDelGas.entity.Feedback;
@@ -21,6 +22,7 @@ import org.jboss.seam.annotations.Logger;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.log.Log;
+import org.jboss.seam.security.Credentials;
 
 @Name(value="gestioneFeedback")
 @Scope(ScopeType.SESSION)
@@ -38,9 +40,18 @@ public class GestioneFeedback {
 	@In(value="entityManager")
     private EntityManager em;
 	
+	@In 
+	private Credentials credentials;
+	
+	@In(value="feedbackList",create=true)
+	private FeedbackList feedbackList;
+	
 	@Logger private Log log;
 	
 	private Cybercontadino currentContadino;
+	
+	private List<Feedback> myFeedback;
+	
 	
 	public Cybercontadino getCurrentContadino() {
 		return currentContadino;
@@ -102,5 +113,12 @@ public class GestioneFeedback {
 		em.persist(newFeedback);
 		newFeedback = new Feedback();
 	}
+	
+	public List<Feedback> getMyFeedback()
+	 {
+		feedbackList.setEjbql("select feedback from Feedback feedback where feedback.accountByDestinatario.username= '"+credentials.getUsername()+"' and feedback.analizzato = true");
+		myFeedback = feedbackList.getResultList();
+		return myFeedback;
+	 }
 
 }

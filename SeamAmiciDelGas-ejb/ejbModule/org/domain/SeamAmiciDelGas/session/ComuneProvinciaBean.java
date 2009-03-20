@@ -51,7 +51,7 @@ public class ComuneProvinciaBean{
 	public List<myComuneBean> autocomplete(Object suggest) {
 		if (provincia==null)
 			return null;
-		log.info("Inizia l'autocomplete -la provincia selezionata è "+ provincia.getNome());
+		log.info("Inizia l'autocomplete -la provincia selezionata ï¿½ "+ provincia.getNome());
         comuneList.setEjbql("select comune from Comune comune where comune.provinces.nome='"+provincia.getNome()+"'");
         autoCompleteList= comuneList.getResultList();
         String pref = (String)suggest;
@@ -117,8 +117,8 @@ public class ComuneProvinciaBean{
 	}
 
 	public void setComune(myComuneBean comune) {
-		log.info("E' stato selezionato un comune - il comune attuale è " +comune.getNome());
-		this.comune = comune;
+		if(comune != null)
+			this.comune = comune;
 	}
 
 	public boolean isSelectedProvincia() {
@@ -126,7 +126,7 @@ public class ComuneProvinciaBean{
 	}
 
 	public void setSelectedProvincia(boolean selectedProvincia) {
-		log.info("E' stata selezionata una provincia - la provincia attuale è: "+ provincia.getNome());
+		log.info("E' stata selezionata una provincia - la provincia attuale ï¿½: "+ provincia.getNome());
 		this.selectedProvincia = selectedProvincia;
 	}
 

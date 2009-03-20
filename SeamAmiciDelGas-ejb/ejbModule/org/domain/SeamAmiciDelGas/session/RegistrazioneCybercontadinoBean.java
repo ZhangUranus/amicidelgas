@@ -9,6 +9,7 @@ import javax.persistence.PersistenceContext;
 import org.domain.SeamAmiciDelGas.action.RegistrationMailer;
 import org.domain.SeamAmiciDelGas.crud.ComuneList;
 import org.domain.SeamAmiciDelGas.entity.Account;
+import org.domain.SeamAmiciDelGas.entity.CodiceContadino;
 import org.domain.SeamAmiciDelGas.entity.Comune;
 import org.domain.SeamAmiciDelGas.entity.Cybercontadino;
 import org.domain.SeamAmiciDelGas.entity.Pagamentoelettronico;
@@ -48,6 +49,8 @@ public class RegistrazioneCybercontadinoBean implements RegistrazioneCybercontad
     private PasswordManager passwordManager;
     @In(value="newFileUpload", create=true)
     private FileUpload fileUpload;
+    @In(value="newCodiceContadino", required=false)
+    private CodiceContadino codiceContadino;
     @In(value="newPagamento", create=true)
     private Pagamentoelettronico pagamento;
     @In(value="newControlloBean", create=true)
@@ -93,7 +96,10 @@ public class RegistrazioneCybercontadinoBean implements RegistrazioneCybercontad
     	account.setDataRichiesta(date);
     	account.setPunteggioFeedback((float) 3.0);
     	em.persist(account);
-    	
+    	codiceContadino = new CodiceContadino(); 
+    	codiceContadino.setDescrizione(contadino.getNomeAzienda());
+    	em.persist(codiceContadino);
+    	contadino.setCodiceContadino(codiceContadino);
     	contadino.setAccount(account);
     	em.persist(contadino);
     	

@@ -3,7 +3,6 @@ package org.domain.SeamAmiciDelGas.processes;
 import java.util.Date;
 import javax.persistence.EntityManager;
 import org.domain.SeamAmiciDelGas.crud.AccountHome;
-import org.domain.SeamAmiciDelGas.crud.FeedbackListExtended;
 import org.domain.SeamAmiciDelGas.entity.Account;
 import org.domain.SeamAmiciDelGas.entity.Cybercontadino;
 import org.domain.SeamAmiciDelGas.entity.Feedback;
@@ -51,9 +50,6 @@ public class InviaRichiestaRisposta {
 
 	@In(value="newFeedback" , create=true)
 	private Feedback feedback;
-	
-	@In(value="newFeedbackListExtended",create=true)
-	private FeedbackListExtended feedbackList;
 	
 	private Date dataCorrente;
 
