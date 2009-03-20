@@ -173,7 +173,7 @@ public class OrderProcessing {
 	public String verificaDisponibilita(Itinerario itinerario){
 
 		Hashtable<String,String> transactionIdList = new Hashtable<String,String>();
-		boolean isAvailable=true;
+		int isAvailable=0;
 		//verifico la disponibilità per ogni contandino
 		for (ItemQuantita iq : myOrdine.getItemQuantita()) {
 			String partitaIva= iq.getCybercontadino().getPartitaIva();
@@ -186,13 +186,13 @@ public class OrderProcessing {
 				transactionIdList.put(partitaIva, uuid);
 			}
 			isAvailable=catalog.reserveItem(uuid, iq.getItem(),iq.getQuantitaParziale(), iq.getQuantita());
-			if(!isAvailable)
+			if(isAvailable==0)
 				break;
 		}
 		messageStatoOrdine =new Message();
 		messageStatoOrdine.setMittente(credentials.getUsername());
 		messageStatoOrdine.addRecipient(customer.getUsername());
-		if(!isAvailable) //uno degli itemquantita non è disponibile
+		if(isAvailable==0) //uno degli itemquantita non è disponibile
 		{
 			Enumeration<String> enumContadini = transactionIdList.keys();
 			while(enumContadini.hasMoreElements())
