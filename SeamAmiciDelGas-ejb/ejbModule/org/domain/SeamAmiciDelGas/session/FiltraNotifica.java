@@ -97,7 +97,7 @@ public class FiltraNotifica {
 	 */
 	
 	public List<TaskInstance> taskInstanceSingleListForCustomer() {
-		return getAllSingleTaskInstanceList("ReceiveMessage",
+		return getAllSingleTaskInstanceListByFilters("ReceiveMessage",
 												 "ReceiveOrderFailed","ReceiveOrderAccepted");
 	}
 	
@@ -113,7 +113,7 @@ public class FiltraNotifica {
 	 * @param filters Una o pi� stringhe che rappresentano i filtri
 	 * @return ritorna una lista di TaskInstance 
 	 */
-	public List<TaskInstance> getAllSingleTaskInstanceList(String... filters)
+	public List<TaskInstance> getAllSingleTaskInstanceListByFilters(String... filters)
 	{
 		List<TaskInstance> tasks= new ArrayList<TaskInstance>();
 		for(String taskFilter : filters)
@@ -147,7 +147,7 @@ public class FiltraNotifica {
 	}
 	
 	public List<TaskInstance> taskInstanceSingleListForItinerario(int idItinerario, String filter) {
-		List<TaskInstance> tasks = getAllSingleTaskInstanceList(filter);
+		List<TaskInstance> tasks = getAllSingleTaskInstanceListByFilters(filter);
 		List<TaskInstance> tasksForItinerario = new ArrayList<TaskInstance>();
 		for(TaskInstance task : tasks) {
 			Itinerario iter = (Itinerario) task.getVariable("itinerario");
