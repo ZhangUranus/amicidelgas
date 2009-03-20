@@ -4,6 +4,8 @@ import java.util.Date;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.jboss.seam.contexts.Context;
+import org.jboss.seam.contexts.Contexts;
 import org.jbpm.graph.def.ActionHandler;
 import org.jbpm.graph.exe.ExecutionContext;
 import org.jbpm.job.Timer;
@@ -20,7 +22,7 @@ public class ChangeTimerDate implements ActionHandler{
 	
 	public void execute(ExecutionContext executionContext ) {
 	    
-		 
+		  Context businessContext = Contexts.getBusinessProcessContext();
 		  System.out.println("AChengeTimerDate");
 		
 		  try {
@@ -28,8 +30,10 @@ public class ChangeTimerDate implements ActionHandler{
 	          Timer timer = executionContext.getTimer();
 	          
 	          if (timer != null && nomeTimer.equals(timer.getName())) {
-	               Date data = (Date) executionContext.getVariable(nomeDueDate);
-	               System.out.println("DataIMPOSTATA: "+data);
+	               //Date data = (Date) executionContext.getVariable(nomeDueDate);
+	        	  Date data= (Date) businessContext.get(nomeDueDate);
+	    		   
+	        	  System.out.println("DataIMPOSTATA: "+data);
 	               if(data != null)
 	               {
 	            	   timer.setDueDate(data);
