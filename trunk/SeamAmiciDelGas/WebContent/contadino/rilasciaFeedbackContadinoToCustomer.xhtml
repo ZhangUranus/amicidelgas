@@ -99,9 +99,11 @@
 			        		</rich:column>
 						</h:dataTable>
 					
-	        			<s:button taskInstance="#{takeInHandForCustomer.currentTaskCustomerToContadino}" value="Assegna Feedback"
-	        					  action="#{orderProcessing.fb_customer_to_contadino(takeInHandForCustomer)}">	
-	        			</s:button>
+	        			<div id="pulsante_contadino_loading1" style="display: none;"><img src="/SeamAmiciDelGas/img/loading.gif" /></div>	
+	        			<h:commandButton id="idCommandButtonContadino" value="Assegna Feedback"
+	        					  action="#{closeTaskInstance.closefbContadinoToCustomer()}"
+	        					  onmouseup="disable_this(this.id, 'pulsante_driver_loading1');" >
+	        			</h:commandButton>
 						
 						
 					</h:form>
