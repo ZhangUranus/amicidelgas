@@ -50,7 +50,7 @@ window.onload = function(){
 <ui:repeat value="#{cybercontadinoList.resultList}" var="_contadino">
 <script type="text/javascript"><!--
 	load();
-	pushContadini("#{_contadino.nomeAzienda}","#{_contadino.indirizzo}","#{_contadino.comune.nome}","#{_contadino.comune.provinces.nome}","#{_contadino.partitaIva}");	
+	pushContadini("#{_contadino.nomeAzienda}","#{_contadino.indirizzo}","#{_contadino.comune.nome}","#{_contadino.comune.provinces.nome}","#{_contadino.codiceContadino.id}");	
 --></script>
 </ui:repeat> 
 

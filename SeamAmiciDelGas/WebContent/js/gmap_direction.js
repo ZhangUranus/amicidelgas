@@ -3,7 +3,7 @@ var point;
 var gasIcon, contadiniIcon;
 var markers_place = new Array();
 var markers_contadini = new Array();
-var partenza = "piazza roma, Benevento (Benevento)";
+var partenza = "via traiano, Benevento (Benevento)";
 var to_place = new Array();
 var from_place = new Array();
 var map;
@@ -72,6 +72,9 @@ function load() {
 	    contadiniIcon.iconAnchor = new GPoint(5, 34);
 	    contadiniIcon.infoWindowAnchor = new GPoint(5, 2);
 	    contadiniIcon.infoShadowAnchor = new GPoint(14, 25);
+		
+		//G_START_ICON.image = "./doesntexist.png";
+		//G_END_ICON.image = "./doesntexisteither.png"; 
 		
 		// Set up our GMarkerOptions object
 		markerOptions = { 
@@ -190,7 +193,7 @@ function load() {
 function initialize() {
        
    gdir = new GDirections(map, document.getElementById("directions"));
-   GEvent.addListener(gdir, "load", onGDirectionsLoad);
+   GEvent.addListener(gdir, "addoverlay", onGDirectionsLoad);
    GEvent.addListener(gdir, "error", handleErrors);
 	
    //setDirections("via mellusi, Benevento (Benevento)","via delle puglie, Benevento (Benevento)", "via napoli, Benevento (Benevento)", "it_IT");
@@ -198,7 +201,7 @@ function initialize() {
 
 function setDirections(fromAddress, toAddress, locale) {
   gdir.load("from: " + fromAddress + " to: " + toAddress,
-            { "locale": locale , "preserveViewport": false});
+            { "locale": locale , "preserveViewport": false });
 }
 
 function handleErrors(){
@@ -220,5 +223,9 @@ function handleErrors(){
 }
 
 function onGDirectionsLoad(){
-
+	var numero = gdir.getNumRoutes();
+	for(i=1; i<= numero; i++){
+		var mark = gdir.getMarker(i);
+		map.removeOverlay(mark);
+	}
 }
