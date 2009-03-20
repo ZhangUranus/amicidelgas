@@ -14,25 +14,25 @@
 	<h:form id="passo3Form">
     <rich:panel>
     	
-        <f:facet name="header">riepilogo finale</f:facet>
+        <f:facet name="header">Registrazione: Passo 3 - Riepilogo Dati</f:facet>
 
 		<s:decorate id="codicefiscale" template="/layout/display.xhtml">
-            <ui:define name="label">codice fiscale</ui:define>
+            <ui:define name="label">Codice Fiscale</ui:define>
             <h:outputText value="#{newUtente.codiceFiscale}"/>
         </s:decorate>
         
         <s:decorate id="nome" template="/layout/display.xhtml">
-            <ui:define name="label">nome</ui:define>
+            <ui:define name="label">Nome</ui:define>
             <h:outputText value="#{newUtente.nome}"/>
         </s:decorate>
         
         <s:decorate id="cognome" template="/layout/display.xhtml">
-            <ui:define name="label">cognome</ui:define>
+            <ui:define name="label">Cognome</ui:define>
             <h:outputText value="#{newUtente.cognome}"/>
         </s:decorate>
 
 		<s:decorate id="datanascita" template="/layout/display.xhtml">
-            <ui:define name="label">data di nascita</ui:define>
+            <ui:define name="label">Data di Nascita</ui:define>
             <h:outputText value="#{newUtente.dataNascita}"/>
         </s:decorate>
         
@@ -47,62 +47,62 @@
         </s:decorate>
         
         <s:decorate id="provincianascita" template="/layout/display.xhtml">
-            <ui:define name="label">Provincia di nascita</ui:define>
+            <ui:define name="label">Provincia di Nascita</ui:define>
             <h:outputText value="#{newComuneProvinciaBean.provincia.nome}"/>
         </s:decorate>
         
         <s:decorate id="comunenascita" template="/layout/display.xhtml">
-            <ui:define name="label">Comune di nascita</ui:define>
+            <ui:define name="label">Comune di Nascita</ui:define>
             <h:outputText value="#{newComuneProvinciaBean.comune.nome}"/>
         </s:decorate>
         
          <s:decorate id="provinciaresidenza" template="/layout/display.xhtml">
-            <ui:define name="label">Provincia di residenza</ui:define>
+            <ui:define name="label">Provincia di Residenza</ui:define>
             <h:outputText value="#{newComuneProvinciaResidenzaBean.provincia.nome}"/>
         </s:decorate>
         
         <s:decorate id="comuneresidenza" template="/layout/display.xhtml">
-            <ui:define name="label">Comune di residenza</ui:define>
+            <ui:define name="label">Comune di Residenza</ui:define>
             <h:outputText value="#{newComuneProvinciaResidenzaBean.comune.nome}"/>
         </s:decorate>
         
         <s:decorate id="indirizzo" template="/layout/display.xhtml">
-            <ui:define name="label">indirizzo</ui:define>
+            <ui:define name="label">Indirizzo</ui:define>
             <h:outputText value="#{newUtente.indirizzo}"/>
         </s:decorate>
         
         <s:decorate id="recapitotelefonico" template="/layout/display.xhtml">
-            <ui:define name="label">recapito telefonico</ui:define>
+            <ui:define name="label">Recapito Telefonico</ui:define>
             <h:outputText value="#{newUtente.recapitoTelefonico}"/>
         </s:decorate>
         
         <s:decorate id="email" template="/layout/display.xhtml">
-            <ui:define name="label">e-mail</ui:define>
+            <ui:define name="label">E-mail</ui:define>
             <h:outputText value="#{newUtente.email}"/>
         </s:decorate>
         
         <s:decorate id="username" template="/layout/display.xhtml">
-            <ui:define name="label">username</ui:define>
+            <ui:define name="label">Username</ui:define>
             <h:outputText value="#{newAccount.username}"/>
         </s:decorate>
         
         <s:decorate id="password" template="/layout/display.xhtml">
-            <ui:define name="label">password</ui:define>
+            <ui:define name="label">Password</ui:define>
             <h:outputText value="#{passwordBean.password}"/>
         </s:decorate>
         
         <s:decorate id="tipocarta" template="/layout/display.xhtml">
-            <ui:define name="label">tipo carta</ui:define>
+            <ui:define name="label">Tipo Carta Credito</ui:define>
             <h:outputText value="#{newPagamento.tipoCarta}"/>
         </s:decorate>
         
         <s:decorate id="numerocarta" template="/layout/display.xhtml">
-            <ui:define name="label">numerocarta</ui:define>
-            <h:outputText value="#{newPagamento.numeroCarta}"/>
+            <ui:define name="label">Numero Carta Credito</ui:define>
+            <h:outputText  value="XXXX XXXX XXXX #{newPagamento.numeroCarta.substring(11, 15)}" />
         </s:decorate>
         
         <s:decorate id="tipo" template="/layout/display.xhtml">
-            <ui:define name="label">tipopatente</ui:define>
+            <ui:define name="label">Patente</ui:define>
             <h:outputText value="#{newPatente.tipo}"/>
         </s:decorate>
 		
