@@ -49,13 +49,19 @@
 		<task name="ReceiveOrderAccepted">
 			<assignment actor-id="#{customer.username}"></assignment>
 		</task>
-		<transition to="fork2" name="attendi_consegna"></transition>
+		<timer duedate="30 seconds" name="timerInviaNotifica" transition="attendi_consegna">
+			<action></action>
+		</timer>
+		<transition to="state1" name="attendi_consegna"></transition>
 	</task-node>
 
 	<task-node name="Fb from responsabile consegna to contadino">
 		<task name="fbResponsabileConsegnaToContadino">
 			<assignment actor-id="#{responsabileConsegna.username}"></assignment>
 		</task>
+		<timer duedate="30 seconds" name="timer_fb_responsabile_consegna_to_contadino" transition="fb_responsabile_consegna_to_contadino">
+			<action></action>
+		</timer>
 		<transition to="join1" name="fb_responsabile_consegna_to_contadino"></transition>
 	</task-node>
 
@@ -63,6 +69,9 @@
 		<task name="fbCustomerToContadino">
 			<assignment actor-id="#{customer.username}"></assignment>
 		</task>
+		<timer duedate="30 seconds" name="timer_fb_customer_to_contadino" transition="fb_customer_to_contadino">
+			<action></action>
+		</timer>
 		<transition to="join2" name="fb_customer_to_contadino"></transition>
 	</task-node>
 
@@ -99,6 +108,9 @@
 		<task name="fbCustomerToResponsabileConsegna">
 			<assignment actor-id="#{customer.username}"></assignment>
 		</task>
+		<timer duedate="30 seconds" name="timer_fb_customer_to_responsabile_consegna" transition="fb_customer_to_responsabile_consegna">
+			<action></action>
+		</timer>
 		<transition to="join2" name="fb_customer_to_responsabile_consegna"></transition>
 	</task-node>
 
@@ -106,6 +118,9 @@
 		<task name="fbResponsabileConsegnaToCustomer">
 			<assignment actor-id="#{responsabileConsegna.username}"></assignment>
 		</task>
+		<timer duedate="30 seconds" name="timer_fb_responsabile_consegna_to_customer" transition="fb_responsabile_to_customer">
+			<action></action>
+		</timer>
 		<transition to="join2" name="fb_responsabile_to_customer"></transition>
 	</task-node>
 
@@ -113,6 +128,9 @@
 		<task name="fbContadinoToResponsabile">
 			<assignment pooled-actors="utenteContadino"></assignment>
 		</task>
+		<timer duedate="30 seconds" name="timer_fb_contadino_to_responsabile_consegna" transition="fb_contadino_to_responsabile_consegna">
+			<action></action>
+		</timer>
 		<transition to="join1" name="fb_contadino_to_responsabile_consegna"></transition>
 	</task-node>
 
@@ -125,6 +143,17 @@
 		<transition to="join2" name="toTask7"></transition>
 	</join>
 
+	<state name="state1">
+	<event type="timer-create">
+      <action name="timerDataMassimaScaduta" class="org.domain.SeamAmiciDelGas.processes.ChangeDueDateTimerOrdine">
+        <timerName>inviaFeedback</timerName>
+        <nomeData>dataConsegna</nomeData>
+      </action>
+	</event>
+	<timer duedate="9 years" name="inviaFeedback" transition="assegna_feedback" />
+		<transition to="fork2" name="assegna_feedback"></transition>
+</state>
+
 
 	<end-state name="end-state1"></end-state>
 
@@ -132,7 +161,7 @@
 
 	<end-state name="end-state3">
 		<event type="node-enter">
-			<action name="perstistAllInfo"></action>
+			<action name="perstistAllInfo" class="org.domain.SeamAmiciDelGas.processes.PersistHandler"></action>
 		</event>
 	</end-state>
 

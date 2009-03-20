@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<root-container name="myOrderProcessing" width="1225" height="1261">
+<root-container name="myOrderProcessing" width="1225" height="1268">
   <node name="L&apos;utente sottomette un ordine" x="332" y="69" width="214" height="36">
     <edge>
       <label x="-203" y="-10"/>
@@ -35,7 +35,7 @@
   </node>
   <node name="Fb from responsabile consegna to contadino" x="866" y="894" width="285" height="36">
     <edge>
-      <label x="-13" y="-24"/>
+      <label x="-72" y="-19"/>
     </edge>
   </node>
   <node name="Fb from customer to contadino per qualita" x="19" y="962" width="334" height="36">
@@ -83,18 +83,17 @@
   </node>
   <node name="Fb from customer to responsabile consegna" x="224" y="1009" width="304" height="36">
     <edge>
-      <label x="-103" y="4"/>
+      <label x="5" y="-10"/>
     </edge>
   </node>
   <node name="Fb from responsabile cosegna to customer" x="419" y="961" width="279" height="36">
     <edge>
       <label x="5" y="-10"/>
-      <bendpoint w1="1" h1="111" w2="162" h2="-75"/>
     </edge>
   </node>
   <node name="Fb from contadino to responsabile consegna" x="556" y="893" width="304" height="36">
     <edge>
-      <label x="-124" y="-16"/>
+      <label x="-115" y="12"/>
     </edge>
   </node>
   <node name="fork1" x="738" y="792" width="252" height="24">
@@ -112,5 +111,13 @@
   </node>
   <node name="end-state1" x="239" y="276" width="132" height="36"/>
   <node name="end-state2" x="896" y="371" width="132" height="36"/>
-  <node name="end-state3" x="327" y="1224" width="140" height="36"/>
+  <node name="end-state3" x="324" y="1231" width="140" height="36"/>
+  <node name="state1" x="212" y="545" width="158" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
 </root-container>
