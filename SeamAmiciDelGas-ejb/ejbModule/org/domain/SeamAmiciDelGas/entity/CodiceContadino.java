@@ -1,27 +1,14 @@
 package org.domain.SeamAmiciDelGas.entity;
 
 import static javax.persistence.GenerationType.IDENTITY;
-
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
-import org.hibernate.validator.Length;
 import org.hibernate.validator.NotNull;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.Name;
-import org.jboss.seam.annotations.Role;
 import org.jboss.seam.annotations.Scope;
 
 @Entity
@@ -31,13 +18,13 @@ import org.jboss.seam.annotations.Scope;
 public class CodiceContadino {
 	
 	private Integer id;
-	private Cybercontadino cybercontadino;
+	private String descrizione;
 
 	public CodiceContadino() {
 	}
 
-	public CodiceContadino(Cybercontadino cybercontadino) {
-		this.cybercontadino = cybercontadino;
+	public CodiceContadino(String descrizione) {
+		this.descrizione = descrizione;
 	}
 
 	@Id
@@ -51,15 +38,14 @@ public class CodiceContadino {
 		this.id = id;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "PartitaIva", nullable = false)
+	@Column(name = "descrizione", nullable = false)
 	@NotNull
-	public Cybercontadino getCybercontadino() {
-		return this.cybercontadino;
+	public String getDescrizione() {
+		return this.descrizione;
 	}
 
-	public void setCybercontadino(Cybercontadino cybercontadino) {
-		this.cybercontadino = cybercontadino;
+	public void setDescrizione(String descrizione) {
+		this.descrizione = descrizione;
 	}
 
 }
