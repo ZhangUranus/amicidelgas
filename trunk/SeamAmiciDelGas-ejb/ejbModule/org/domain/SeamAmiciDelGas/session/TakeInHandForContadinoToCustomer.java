@@ -87,17 +87,10 @@ public class TakeInHandForContadinoToCustomer {
 		
 		private void addList(List<TaskInstance> taskInstanceList) {
 			//filtro le istanze
-			String username = credentials.getUsername();
 			for (TaskInstance t2: taskInstanceList) {
 			Account account = (Account) t2.getVariable("customer");
 			if (!listCustomer.contains(account)) {
-				//se il contadino ha già votato il customer non inserisco l'istanza
-				Hashtable<String,Boolean> hashTable = (Hashtable<String,Boolean>) t2.getVariable("booleanFeedbackContadini");
-				Boolean hasVotato = hashTable.get(username);
-				if (hasVotato!=null && !hasVotato) {
-					listCustomer.add(account);
-					stringhe.add(account.getUsername());
-				}
+				stringhe.add(account.getUsername());
 			}
 		}
 	}
