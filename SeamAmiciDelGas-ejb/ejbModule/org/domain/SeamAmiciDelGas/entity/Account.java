@@ -305,6 +305,7 @@ public class Account implements java.io.Serializable {
 	}
 
 	public boolean equals(Object obj) {
+		if(obj==null) return false;
 		Account account = (Account) obj;
 		return this.username.equals(account.getUsername());
 	}

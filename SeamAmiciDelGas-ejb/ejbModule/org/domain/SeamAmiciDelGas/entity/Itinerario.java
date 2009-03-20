@@ -152,6 +152,7 @@ public class Itinerario implements java.io.Serializable, Comparable<Itinerario> 
 	}
 	
 	public boolean equals(Object obj) {
+		if(obj==null) return false;
 		Itinerario it = (Itinerario) obj;
 		return iditinerario.equals(it.getIditinerario());
 	}
