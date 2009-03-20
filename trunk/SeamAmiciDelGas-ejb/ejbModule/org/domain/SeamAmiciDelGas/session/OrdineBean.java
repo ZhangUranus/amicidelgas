@@ -11,6 +11,7 @@ import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.hibernate.Session;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.Destroy;
 import org.jboss.seam.annotations.In;
@@ -21,6 +22,8 @@ import org.jboss.seam.annotations.Transactional;
 import org.jboss.seam.log.Log;
 import org.jboss.seam.security.Credentials;
 import org.jboss.seam.security.Identity;
+import org.jbpm.JbpmContext;
+import org.jbpm.graph.exe.ExecutionContext;
 import org.jbpm.taskmgmt.exe.TaskInstance;
 import org.domain.SeamAmiciDelGas.crud.AccountList;
 import org.domain.SeamAmiciDelGas.crud.OrdineList;
@@ -141,11 +144,22 @@ public class OrdineBean {
 		{
 			ItemQuantita iq = itemQuantitaList.get(index);
 			log.info("***** itemQuantita"+iq.getItem().getName() +" ********" );
-			if(iq.getItem().equals(itemSelected.getItem()))
+			if(iq.getItem().getId().equalsIgnoreCase(itemSelected.getItem().getId()) && iq.getCybercontadino().getPartitaIva().equalsIgnoreCase(itemSelected.getCybercontadino().getPartitaIva()))
 			{
 				log.info("\n\n*****\n\n itemQuantita rimosso..."+iq.getItem().getName() +" \n\n********\n\n" );
 				itemQuantitaList.remove(index);
-				return;
+				if(itemQuantitaList.size()==0){
+					JbpmContext jbpmContext= JbpmContext.getCurrentJbpmContext();
+					TaskInstance managedTaskInstance=jbpmContext.getTaskInstance(currentTask.getId());
+					managedTaskInstance.end("ordine_eliminato_dall_utente");
+					return;
+				}
+				else{
+					currentTask.setVariable("myOrdine", currentMyOrder);
+					JbpmContext jbpmContext= JbpmContext.getCurrentJbpmContext();
+					jbpmContext.save(currentTask);
+					return;
+				}
 			}
 		}
 	}
