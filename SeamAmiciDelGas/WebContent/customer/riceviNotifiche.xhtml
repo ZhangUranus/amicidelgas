@@ -13,10 +13,10 @@
 
 			<rich:simpleTogglePanel label="Notifiche Personali">
 			<h:form>
-				<s:decorate rendered="#{not empty filtraNotifica.getAllSingleTaskInstanceList('ReceiveMessage')}">
+				<s:decorate rendered="#{not empty filtraNotifica.getAllSingleTaskInstanceListByFilters('ReceiveMessage')}">
 					<b><h:outputText value="Messaggi da altri utenti" /></b><br/><br/>
 					<rich:dataTable id="dataTableUtente" width="90%" align="center" 
-									value="#{filtraNotifica.getAllSingleTaskInstanceList('ReceiveMessage')}" var="_task">
+									value="#{filtraNotifica.getAllSingleTaskInstanceListByFilters('ReceiveMessage')}" var="_task">
 						<rich:column>
 							<f:facet name="header">Processo</f:facet>							    
 					         <h:outputText value="#{_task.name}"/>
@@ -37,10 +37,10 @@
 					<br/><br/><br/>
 				</s:decorate>
 				
-				<s:decorate rendered="#{not empty filtraNotifica.getAllSingleTaskInstanceList('ReceiveOrderFailed','ReceiveOrderAccepted')}">
+				<s:decorate rendered="#{not empty filtraNotifica.getAllSingleTaskInstanceListByFilters('ReceiveOrderFailed','ReceiveOrderAccepted')}">
 					<b><h:outputText value="Messaggi dal driver o contadino" /></b><br/><br/>
 					<rich:dataTable id="dataTableUtente" width="90%" align="center" 
-									value="#{filtraNotifica.getAllSingleTaskInstanceList('ReceiveOrderFailed','ReceiveOrderAccepted')}" var="_task">
+									value="#{filtraNotifica.getAllSingleTaskInstanceListByFilters('ReceiveOrderFailed','ReceiveOrderAccepted')}" var="_task">
 						<rich:column>
 							<f:facet name="header">Processo</f:facet>							    
 					         <h:outputText value="#{_task.name}"/>
@@ -81,10 +81,10 @@
 					</rich:dataTable>
 				</s:decorate>
 				
-				<s:decorate rendered="#{not empty filtraNotifica.getAllSingleTaskInstanceList('timeOutDataMassima')}">
+				<s:decorate rendered="#{not empty filtraNotifica.getAllSingleTaskInstanceListByFilters('timeOutDataMassima')}">
 					<b><h:outputText value="Ordini scaduti" /></b><br/><br/>
 					<rich:dataTable id="dataTableOrdiniScaduti" width="90%" align="center" 
-									value="#{filtraNotifica.getAllSingleTaskInstanceList('timeOutDataMassima')}" var="_task">
+									value="#{filtraNotifica.getAllSingleTaskInstanceListByFilters('timeOutDataMassima')}" var="_task">
 						<rich:column>
 							<f:facet name="header">Processo</f:facet>							    
 					         <h:outputText value="#{_task.name}"/>
