@@ -110,8 +110,10 @@ public class TakeInHandForCustomer {
 		}
 
 		public List<String> getStringhe() {
-			tasksCustomerToContadino = filtraNotifica.getAllSingleTaskInstanceList("fbCustomerToContadino");
-			tasksCustomerToResponsabileConsegna = filtraNotifica.getAllSingleTaskInstanceList("fbCustomerToResponsabileConsegna");
+			tasksCustomerToContadino = filtraNotifica.getAllSingleTaskInstanceListByFilters("fbCustomerToContadino");
+			tasksCustomerToResponsabileConsegna = filtraNotifica.getAllSingleTaskInstanceListByFilters("fbCustomerToResponsabileConsegna");
+			
+			hashTable = new Hashtable<String, InfoFeedback>();
 			
 			ordini = new ArrayList<Ordine>();
 			stringhe = new ArrayList<String>();
@@ -150,7 +152,8 @@ public class TakeInHandForCustomer {
 			currentOrdine = null;
 			currentTaskCustomerToContadino = null;
 			currentTaskCustomerToResponsabileConsegna = null;
-
+			infoFeedbackResponsabile = null;
+			
 			for (TaskInstance t1: tasksCustomerToContadino) {
 				Ordine ordine = (Ordine) t1.getVariable("ordine");
 				if (ordine.getIdordine().equals(new Integer(idOrdine)))

@@ -94,7 +94,7 @@ public class Feedback implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "IDOrdine")
+	@JoinColumn(name = "IDOrdine", nullable=true)
 	public Ordine getOrdine() {
 		return this.ordine;
 	}

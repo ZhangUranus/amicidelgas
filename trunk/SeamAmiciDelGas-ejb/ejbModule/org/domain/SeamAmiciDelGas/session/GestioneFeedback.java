@@ -94,7 +94,8 @@ public class GestioneFeedback {
 		newFeedback.setAnalizzato(false);
 		newFeedback.setDataSegnalazione(new GregorianCalendar().getTime());
 		newFeedback.setPunteggio(feedback);
-		newFeedback.setOrdine(ordine);
+		if(ordine!=null)
+			newFeedback.setOrdine(ordine);
 		newFeedback.setAccountByValidatore(currentAccount);
 		newFeedback.setAccountBySegnalatore(currentAccount);
 		newFeedback.setAccountByDestinatario(accountDaModificare);

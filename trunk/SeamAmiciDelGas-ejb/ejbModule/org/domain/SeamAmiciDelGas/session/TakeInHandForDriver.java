@@ -44,9 +44,9 @@ public class TakeInHandForDriver {
 	
 	private List<TaskInstance> taskInstanceContadinoForItinerario;
 	
-	private TaskInstance currentTaskResponsabileToCustomer;
+	//private TaskInstance currentTaskResponsabileToCustomer;
 	
-	private TaskInstance currentTaskResponsabileToContadino;
+	//private TaskInstance currentTaskResponsabileToContadino;
 	
 	private List<TaskInstance> tasksResponsabileToCustomer;
 	
@@ -62,10 +62,12 @@ public class TakeInHandForDriver {
 
 		hashTableContadini = new Hashtable<String, InfoFeedback>();
 		hashTableCustomer = new Hashtable<String, InfoFeedback>();
-		currentTaskResponsabileToCustomer=null;
-		currentTaskResponsabileToContadino=null;
+		//currentTaskResponsabileToCustomer=null;
+		//currentTaskResponsabileToContadino=null;
 		tasksResponsabileToCustomer = new ArrayList<TaskInstance>();
 		tasksResponsabileToContadino  = new ArrayList<TaskInstance>();
+		taskInstanceCustomerForItinerario = new ArrayList<TaskInstance>();
+		taskInstanceContadinoForItinerario = new ArrayList<TaskInstance>();
 		currentItinerario=null;
 		itinerari = new ArrayList<Itinerario>();
 		stringa = null;
@@ -94,7 +96,8 @@ public class TakeInHandForDriver {
 	
 	public List<Cybercontadino> listCybercontadini() {
 		List<Cybercontadino> contadini = new ArrayList<Cybercontadino>();
-		if(currentItinerario!=null) {
+
+		if(currentItinerario!=null && taskInstanceContadinoForItinerario.size()!=0) {
 			log.info("***** SIZEEEE"+currentItinerario.getCybercontadinos().size());
 			contadini.addAll(currentItinerario.getCybercontadinos());
 		}
@@ -114,13 +117,6 @@ public class TakeInHandForDriver {
 		return customerList;
 	}
 
-	
-	public Account responsabileConsegna() {
-		if (currentTaskResponsabileToContadino!=null)
-			return (Account) currentTaskResponsabileToContadino.getVariable("responsabileConsegna");
-		return null;
-	}
-
 		public Hashtable<String, InfoFeedback> getHashTableContadini() {
 			return hashTableContadini;
 		}
@@ -130,8 +126,8 @@ public class TakeInHandForDriver {
 		}
 
 		public List<String> getStringhe() {
-			tasksResponsabileToCustomer = filtraNotifica.getAllSingleTaskInstanceList("fbResponsabileConsegnaToCustomer");
-			tasksResponsabileToContadino = filtraNotifica.getAllSingleTaskInstanceList("fbResponsabileConsegnaToContadino");
+			tasksResponsabileToCustomer = filtraNotifica.getAllSingleTaskInstanceListByFilters("fbResponsabileConsegnaToCustomer");
+			tasksResponsabileToContadino = filtraNotifica.getAllSingleTaskInstanceListByFilters("fbResponsabileConsegnaToContadino");
 			
 			itinerari = new ArrayList<Itinerario>();
 			stringhe = new ArrayList<String>();
@@ -169,17 +165,19 @@ public class TakeInHandForDriver {
 			this.stringa = idItinerario;
 			log.info("Codice Itinerario "+idItinerario);
 			
-			currentTaskResponsabileToCustomer = null;
-			currentTaskResponsabileToContadino = null;
+			//currentTaskResponsabileToCustomer = null;
+			//currentTaskResponsabileToContadino = null;
 			taskInstanceCustomerForItinerario = new ArrayList<TaskInstance>();
 			taskInstanceContadinoForItinerario = new ArrayList<TaskInstance>();
-
+			hashTableContadini = new Hashtable<String, InfoFeedback>();
+			hashTableCustomer = new Hashtable<String, InfoFeedback>();
+			
 			for (TaskInstance t1: tasksResponsabileToCustomer) {
 				Itinerario it = (Itinerario) t1.getVariable("itinerario");
 				if (it.getIditinerario().equals(new Integer(idItinerario)))
 				{
 					taskInstanceCustomerForItinerario.add(t1);
-					currentTaskResponsabileToCustomer = t1;
+					//currentTaskResponsabileToCustomer = t1;
 					currentItinerario = it;
 				}
 			}
@@ -188,29 +186,11 @@ public class TakeInHandForDriver {
 				if (it.getIditinerario().equals(new Integer(idItinerario)))
 				{
 					taskInstanceContadinoForItinerario.add(t2);
-					currentTaskResponsabileToContadino = t2;
+					//currentTaskResponsabileToContadino = t2;
 					currentItinerario = it;
 				}
 			}
 			log.info("******* current itinerario = " +currentItinerario.getIditinerario());
-		}
-
-		public TaskInstance getCurrentTaskResponsabileToCustomer() {
-			return currentTaskResponsabileToCustomer;
-		}
-
-		public void setCurrentTaskResponsabileToCustomer(
-				TaskInstance currentTaskResponsabileToCustomer) {
-			this.currentTaskResponsabileToCustomer = currentTaskResponsabileToCustomer;
-		}
-
-		public TaskInstance getCurrentTaskResponsabileToContadino() {
-			return currentTaskResponsabileToContadino;
-		}
-
-		public void setCurrentTaskResponsabileToContadino(
-				TaskInstance currentTaskResponsabileToContadino) {
-			this.currentTaskResponsabileToContadino = currentTaskResponsabileToContadino;
 		}
 
 		public List<TaskInstance> getTasksResponsabileToCustomer() {

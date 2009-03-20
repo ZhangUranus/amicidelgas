@@ -59,6 +59,8 @@ public class CloseTaskInstance {
 		takeInHandForDriver.reset();
 		return "fb_responsabile_to_customer";
 	}
+	
+	
 		public String closefbResponsabileConsegnaToContadino() {
 
 		Hashtable<String, InfoFeedback> hashTableContadini = takeInHandForDriver.getHashTableContadini();
@@ -71,7 +73,14 @@ public class CloseTaskInstance {
 			
 			log.info("******* task contadino " +uContadino);
 			InfoFeedback infoFeedback = hashTableContadini.get(uContadino);
-			gestioneFeedback.assegnaFeedback(uContadino, null, (float) infoFeedback.getFeedback(), infoFeedback.getComment());
+			if(infoFeedback!=null)
+				gestioneFeedback.assegnaFeedback(uContadino, null, (float) infoFeedback.getFeedback(), infoFeedback.getComment());
+			else
+			{	
+				log.info("******* task contadino mannaggiaaaaaaaaaaaaa" +uContadino);
+				infoFeedback = new InfoFeedback("",3);
+				gestioneFeedback.assegnaFeedback(uContadino, null, (float) infoFeedback.getFeedback(), infoFeedback.getComment());
+			}
 			//settare il booleano
 		}
 		//chiudiamo le task instance...

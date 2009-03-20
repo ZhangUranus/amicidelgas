@@ -71,7 +71,7 @@ public class TakeInHandForContadinoToCustomer {
 		public List<String> getStringhe() {
 			//prendo tutti i task in cui il contadino è responsabile della consegna
 			hashTable = new Hashtable<Integer,InfoFeedback>();
-			tasksContadinoToCustomer = filtraNotifica.getAllSingleTaskInstanceList("fbResponsabileConsegnaToCustomer");
+			tasksContadinoToCustomer = filtraNotifica.getAllSingleTaskInstanceListByFilters("fbResponsabileConsegnaToCustomer");
 			
 			//lista di customer a cui assegnare i feedback
 			listCustomer = new ArrayList<Account>();
