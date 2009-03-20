@@ -15,6 +15,7 @@ import org.jboss.seam.annotations.Logger;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.log.Log;
+import org.jboss.seam.security.Credentials;
 import org.jbpm.taskmgmt.exe.TaskInstance;
 
 @Name(value="takeInHandForContadinoToDriver") 
@@ -47,6 +48,8 @@ public class TakeInHandForContadinoToDriver {
 
 	private Account currentResponsabile;
 	
+	@In private Credentials credentials;
+	
 	private List<String> stringheResponsabiliConsegna;
 	
 	public void reset() {
@@ -77,8 +80,8 @@ public class TakeInHandForContadinoToDriver {
 
 		public List<String> getStringheResponsabiliConsegna() {
 			hashTable = new Hashtable<Integer,InfoFeedback>();
-			//task assegnati dal contadino in cui non è il responsabile di consegna
-			tasksContadinoToResponsabileConsegna = filtraNotifica.taskInstanceForContadino("fbContadinoToResponsabile");
+			//task assegnati dal contadino in cui non è il responsabile di consegna e per cui non ha dato il voto al driver
+			tasksContadinoToResponsabileConsegna = filtraNotifica.taskInstanceForContadinoNoResponsabile("fbContadinoToResponsabile");
 			
 			responsabili = new ArrayList<Account>();
 			stringheResponsabiliConsegna = new ArrayList<String>();
@@ -92,19 +95,22 @@ public class TakeInHandForContadinoToDriver {
 		}
 		
 		private void addList(List<TaskInstance> taskInstanceList) {
+			String username = credentials.getUsername();
 			for (TaskInstance t2: taskInstanceList) {
 				Account responsabile = (Account) t2.getVariable("responsabileConsegna");
 				if (responsabile!=null) {
 					if (!responsabili.contains(responsabile)) {
-						responsabili.add(responsabile);
-						stringheResponsabiliConsegna.add(responsabile.getUsername());
+						//se il contadino ha già votato il driver non inserisco l'istanza
+							responsabili.add(responsabile);
+							stringheResponsabiliConsegna.add(responsabile.getUsername());
+						}
 					}
 				}
 			}
-		}
 		
 
 		public void setStringaResponsabileConsegna(String usernameResponsabile) {
+			String username = credentials.getUsername();
 			itinerarioForDriver = new ArrayList<Itinerario>();
 			this.stringaResponsabileConsegna = usernameResponsabile;
 			log.info("Responsabile "+stringaResponsabileConsegna);
@@ -123,8 +129,7 @@ public class TakeInHandForContadinoToDriver {
 				if (it!=null)
 					if (!itinerarioForDriver.contains(it))
 						itinerarioForDriver.add(it);
-			}
-			log.info("******** CONTADINO "+taskInstanceListForResponsabile.size());
+				}
 		}
 
 		

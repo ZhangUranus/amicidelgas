@@ -1,6 +1,7 @@
 package org.domain.SeamAmiciDelGas.session;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Set;
 
@@ -234,24 +235,21 @@ public class FiltraNotifica {
 	}
 	
 	//mi restituisce tutti i task in cui il contadino non è il responsabile di consegna
-	// ed è uno dei contadini dell'ordine
-	public List<TaskInstance> taskInstanceForContadino(String taskFilter) {
+	// ed è uno dei contadini dell'ordine e non ha dato il voto
+	public List<TaskInstance> taskInstanceForContadinoNoResponsabile(String taskFilter) {
 		List<TaskInstance> tasks = this.getAllPooledTaskInstanceList(taskFilter);
 		List<TaskInstance> output = new ArrayList<TaskInstance>();
-		Ordine ordine;
-		Set<Articolo> articoli;
-		Cybercontadino contadino;
 		Account responsabileConsegna;
 		for (TaskInstance ti: tasks) {
-			ordine = (Ordine) ti.getVariable("ordine");
 			responsabileConsegna = (Account) ti.getVariable("responsabileConsegna");
-			articoli = ordine.getArticolos();
-			if (!responsabileConsegna.getUsername().equals(credentials.getUsername()))
-				for (Articolo articolo: articoli) {
-					contadino = (Cybercontadino) articolo.getCybercontadino();
-					if (contadino.getAccount().getUsername().equals(credentials.getUsername()))
+			if (!responsabileConsegna.getUsername().equals(credentials.getUsername())) {
+				//controllo se il contadino è uno dei contadini dell'ordine e se non ha dato il voto 
+				Hashtable<String,Boolean> hashTable = (Hashtable<String,Boolean>) ti.getVariable("booleanFeedbackContadiniToResponsabile");
+				Boolean hasVotato = hashTable.get(credentials.getUsername());
+				if (hasVotato!=null && !hasVotato) {
 						output.add(ti);
 				}
+			}
 				
 		}
 		return output;
