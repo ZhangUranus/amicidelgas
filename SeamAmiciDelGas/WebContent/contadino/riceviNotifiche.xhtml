@@ -13,10 +13,10 @@
 		
 			<rich:simpleTogglePanel label="Notifiche Personali">
 			
-				<s:decorate rendered="#{not empty filtraNotifica.getAllSingleTaskInstanceList('ReceiveMessage')}">
+				<s:decorate rendered="#{not empty filtraNotifica.getAllSingleTaskInstanceListByFilters('ReceiveMessage')}">
 					<b><h:outputText value="Messaggi da altri utenti" /></b><br/><br/>
 					<rich:dataTable id="dataTableUtente" width="90%" align="center" 
-									value="#{filtraNotifica.getAllSingleTaskInstanceList('ReceiveMessage')}" var="_task">
+									value="#{filtraNotifica.getAllSingleTaskInstanceListByFilters('ReceiveMessage')}" var="_task">
 						<rich:column>
 							<f:facet name="header">Processo</f:facet>							    
 					         <h:outputText value="#{_task.name}"/>
