@@ -170,7 +170,7 @@ public class OrderProcessing {
 	}
 	
 	@BeginTask @EndTask(transition="ordine_preso_in_carico")
-	public void verificaDisponibilita(Itinerario itinerario){
+	public String verificaDisponibilita(Itinerario itinerario){
 
 		Hashtable<String,String> transactionIdList = new Hashtable<String,String>();
 		boolean isAvailable=true;
@@ -230,6 +230,7 @@ public class OrderProcessing {
 			saveOrdine(); //salvo l'ordine nel database
 			messageStatoOrdine.setContent("L'ordine "+ordine.getIdordine()+" e' stato preso in carico da "+ credentials.getUsername()+".");
 		}
+		return "ordine_preso_in_carico";
 	}
 	
 	private void setFeedbackVariable() {
@@ -357,7 +358,6 @@ public class OrderProcessing {
 			InfoFeedback infoFeedback = hashTableContadini.get(username);
 			gestioneFeedback.assegnaFeedback(username, ordine, (float) infoFeedback.getFeedback(), infoFeedback.getComment());
 		}
-		takeInHandForDriver.reset();
 		return "fb_responsabile_consegna_to_contadino";
 	}
 	

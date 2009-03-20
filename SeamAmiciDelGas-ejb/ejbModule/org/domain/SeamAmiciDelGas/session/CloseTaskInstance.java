@@ -1,8 +1,10 @@
 package org.domain.SeamAmiciDelGas.session;
 
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Set;
 
 import org.domain.SeamAmiciDelGas.entity.Account;
 import org.domain.SeamAmiciDelGas.entity.Ordine;
@@ -38,8 +40,8 @@ public class CloseTaskInstance {
 	public String closefbResponsabileConsegnaToCustomer() {
 		
 		Hashtable<String, InfoFeedback> hashTableCustomer = takeInHandForDriver.getHashTableCustomer();
-		log.info("******* task size " +takeInHandForDriver.getTaskInstanceCustomerForItinerario().size());
-
+		log.info("******* task size customer " +takeInHandForDriver.getTaskInstanceCustomerForItinerario().size());
+		
 		for (TaskInstance t: takeInHandForDriver.getTaskInstanceCustomerForItinerario()) {
 
 			TaskInstance managedTaskInstance = jbpmContext.getTaskInstance(t.getId());
@@ -47,41 +49,39 @@ public class CloseTaskInstance {
 			Account account = (Account) managedTaskInstance.getVariable("customer");
 			log.info("******* task customer " +account.getUsername());
 			
-
 			InfoFeedback infoFeedback = hashTableCustomer.get(account.getUsername());
 			gestioneFeedback.assegnaFeedback(account.getUsername(), (Ordine) managedTaskInstance.getVariable("ordine"), (float) infoFeedback.getFeedback(), infoFeedback.getComment());
 			log.info("******* task instance " +managedTaskInstance.toString());
 
 			managedTaskInstance.end("fb_responsabile_to_customer");
-
 			//settare il booleano
 		}
-
 		takeInHandForDriver.reset();
 		return "fb_responsabile_to_customer";
 	}
-	
-public String closefbResponsabileConsegnaToContadino() {
-		
+		public String closefbResponsabileConsegnaToContadino() {
+
 		Hashtable<String, InfoFeedback> hashTableContadini = takeInHandForDriver.getHashTableContadini();
+		log.info("******* task size contadini " +takeInHandForDriver.getTaskInstanceContadinoForItinerario().size());
 		
-		for (TaskInstance t: takeInHandForDriver.getTaskInstanceContadinoForItinerario()) {
-
-			TaskInstance managedTaskInstance = jbpmContext.getTaskInstance(t.getId());
+		List<String> usernameContadini = new ArrayList<String>(); 
+		usernameContadini.addAll(hashTableContadini.keySet());
+		
+		for(String uContadino : usernameContadini) {
 			
-			Account account = (Account) managedTaskInstance.getVariable("customer");
-			InfoFeedback infoFeedback = hashTableContadini.get(account.getUsername());
-			gestioneFeedback.assegnaFeedback(account.getUsername(), (Ordine) managedTaskInstance.getVariable("ordine"), (float) infoFeedback.getFeedback(), infoFeedback.getComment());
-			log.info("******* task instance " +managedTaskInstance.toString());
-
-			managedTaskInstance.end("fb_contadino_to_responsabile_consegna");
-
+			log.info("******* task contadino " +uContadino);
+			InfoFeedback infoFeedback = hashTableContadini.get(uContadino);
+			gestioneFeedback.assegnaFeedback(uContadino, null, (float) infoFeedback.getFeedback(), infoFeedback.getComment());
 			//settare il booleano
+		}
+		//chiudiamo le task instance...
+		for (TaskInstance t: takeInHandForDriver.getTaskInstanceContadinoForItinerario()) {
+			TaskInstance managedTaskInstance = jbpmContext.getTaskInstance(t.getId());
+			log.info("******* task instance " +managedTaskInstance.toString());
+			managedTaskInstance.end("fb_responsabile_consegna_to_contadino");
 		}
 
 		takeInHandForDriver.reset();
-		return "fb_responsabile_to_customer";
+		return "fb_responsabile_consegna_to_contadino";
 	}
-	
-	
 }

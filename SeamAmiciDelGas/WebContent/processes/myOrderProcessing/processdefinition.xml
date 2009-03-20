@@ -53,7 +53,9 @@
 	</task-node>
 
 	<task-node name="Fb from responsabile consegna to contadino">
-		<task name="fbResponsabileConsegnaToContadino"></task>
+		<task name="fbResponsabileConsegnaToContadino">
+			<assignment actor-id="#{responsabileConsegna.username}"></assignment>
+		</task>
 		<transition to="join1" name="fb_responsabile_consegna_to_contadino"></transition>
 	</task-node>
 

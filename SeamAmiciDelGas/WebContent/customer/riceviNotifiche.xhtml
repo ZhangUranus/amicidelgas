@@ -12,9 +12,7 @@
 	<ui:define name="body">
 
 			<rich:simpleTogglePanel label="Notifiche Personali">
-			
-				
-				
+			<h:form>
 				<s:decorate rendered="#{not empty filtraNotifica.getAllSingleTaskInstanceList('ReceiveMessage')}">
 					<b><h:outputText value="Messaggi da altri utenti" /></b><br/><br/>
 					<rich:dataTable id="dataTableUtente" width="90%" align="center" 
@@ -60,6 +58,16 @@
 							<f:facet name="header">Info Filter</f:facet>    
 						    <h:outputText value="#{_task.variables.notifyMessageStatoOrdine.infoFilter}"/>
 						</rich:column>
+						<rich:column align="center">
+                		<f:facet name="header">Dettagli Ordine</f:facet>	
+		                	<a:commandLink ajaxSingle="true" id="dettagliOrdinePendenteLink"
+		                    	oncomplete="#{rich:component('dettagliOrdinePanel')}.show()">
+		                    	<f:setPropertyActionListener value="#{ordineBean.getOrdineFromTask(_task)}" 
+		                    								target="#{ordineBean.currentMyOrder}" />
+			                    <h:graphicImage value="/img/modifica_mini.png" style="border:0" />
+			                </a:commandLink>
+                		<rich:toolTip for="dettagliOrdinePendenteLink" value="Visualizza i dettagli dell'ordine"/>
+	            	</rich:column>
 						<rich:column width="10%">
 							<s:decorate rendered="#{_task.variables.notifyMessageStatoOrdine.infoFilter=='orderProcessingNonPreso'}">
 								<s:button taskInstance="#{_task}" action="#{orderProcessing.notificaOrdineNonDisponibile()}"
@@ -99,12 +107,13 @@
 					</rich:dataTable>
 					<br/><br/><br/>
 				</s:decorate>
-				
+			</h:form>	
 			</rich:simpleTogglePanel>
 				
 				<br/><br/>
 				
 			<rich:simpleTogglePanel label="Notifiche di gruppo">
+			<h:form>
 				<s:decorate rendered="#{not empty filtraNotifica.getAllPooledTaskInstanceList('ReceiveMessage')}">
 					<b><h:outputText value="Messaggi di gruppo da altri utenti" /></b><br/><br/>
 					<rich:dataTable id="dataTableGroup" 
@@ -132,9 +141,47 @@
 						</rich:column>
 					</rich:dataTable>
 				</s:decorate>
-				
+			</h:form>	
 			</rich:simpleTogglePanel>
-		
+			
+		<a:outputPanel ajaxRendered="true">
+		<rich:modalPanel id="dettagliOrdinePanel" autosized="true" width="350">
+       		<f:facet name="header">
+            	<h:outputText value="Dettagli ordini" />
+        	</f:facet>
+       		<f:facet name="controls">
+            	<h:panelGroup>
+                	<h:graphicImage value="/img/close.png" styleClass="hidelink" id="hidelink4"/>
+               	 	<rich:componentControl for="dettagliOrdinePanel" attachTo="hidelink4" operation="hide" event="onclick" />
+            	</h:panelGroup>
+        	</f:facet>
+			<ui:define name="label">Prodotti dell'ordine</ui:define>
+			<rich:dataTable var="_itemCarrello" id="itemsDataTableOrdiniFatti"
+				value="#{ordineBean.currentMyOrder.itemQuantita}">
+				<rich:column>
+						<f:facet name="header">Nome prodotto</f:facet>
+						<h:outputText value="#{_itemCarrello.item.name}"/>
+				</rich:column>	
+				<rich:column>
+					<f:facet name="header">Username contadino</f:facet>
+					<h:outputText value="#{_itemCarrello.cybercontadino.account.username}"/>
+				</rich:column>	
+				<rich:column>
+						<f:facet name="header">Quantita prodotto</f:facet>
+						<h:outputText value="#{_itemCarrello.quantita}"/>
+				</rich:column>	
+				<rich:column>
+						<f:facet name="header">Totale per prodotto</f:facet>
+						<h:outputText value="#{_itemCarrello.quantita * _itemCarrello.item.prezzo} euro"/>
+				</rich:column>
+				<rich:column>
+					<f:facet name="header">Quantita minima</f:facet>
+					<h:outputText value="#{_itemCarrello.quantitaParziale}"/>
+				</rich:column>				
+			</rich:dataTable>
+
+       	</rich:modalPanel>
+     </a:outputPanel>
 		
 	</ui:define>
 	
