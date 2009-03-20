@@ -21,7 +21,7 @@ public interface CatalogInterface extends java.rmi.Remote{
 	
 	public long getAvailableQuantity(Item item);
 	
-	public boolean reserveItem(String transactionId, Item item, int minimalQuantity, int quantity);
+	public int reserveItem(String transactionId, Item item, int minimalQuantity, int quantity);
 	
 	public long rollBackTransaction(String transactionId);
 	

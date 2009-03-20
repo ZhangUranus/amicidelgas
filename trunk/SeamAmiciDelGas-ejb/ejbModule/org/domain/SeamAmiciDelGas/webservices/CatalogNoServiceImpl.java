@@ -132,10 +132,10 @@ public class CatalogNoServiceImpl implements CatalogInterface{
 		return 0;
 	}
 
-	public boolean reserveItem( String transactionId,
+	public int reserveItem( String transactionId,
 			Item item, int minimalQuantity, int quantity) {
 		// TODO Auto-generated method stub
-		return true;
+		return quantity;
 	}
 
 }

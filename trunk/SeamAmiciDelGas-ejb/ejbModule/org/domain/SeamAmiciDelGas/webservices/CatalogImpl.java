@@ -41,7 +41,7 @@ public class CatalogImpl {
 		if(idContadino == null)
 			return null;
 		CatalogInterface  cat = (CatalogInterface) instances.get(idContadino);
-		boolean sviluppoClelioStefano=true;
+		boolean sviluppoClelioStefano=false;
 		if(sviluppoClelioStefano){
 			return CatalogImpl.staticCatalog();
 		}
@@ -102,8 +102,7 @@ public class CatalogImpl {
 			}
 			
 			Remote rProxy= afs.getPort(portName, CatalogInterface.class);
-			    		
-			  return rProxy;
+				  return rProxy;
 			}
 			catch(Exception e){
 				e.printStackTrace();
