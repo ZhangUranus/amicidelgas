@@ -28,10 +28,14 @@ public class TakeInHandForContadinoToDriver {
 	@Logger
 	private Log log;
 	
+	private Hashtable<Integer, InfoFeedback> hashTable = new Hashtable<Integer, InfoFeedback>();
+	
 	@In(value="filtraNotifica", create=true)
 	private FiltraNotifica filtraNotifica;
 	
 	private InfoFeedback infoFeedbackResponsabile;
+	
+	private List<Itinerario> itinerarioForDriver;
 	
 	//list di taskInstance da terminare per il responsabile corrente
 	private List<TaskInstance> taskInstanceListForResponsabile;
@@ -56,6 +60,14 @@ public class TakeInHandForContadinoToDriver {
 		log.info("\n\n******** RESET ***********\n\n");
 
 	}
+	
+	public InfoFeedback getInfoFeedbackForOrdine(Integer idItinerario){
+		if(idItinerario==null)
+			return null;
+		if(hashTable.get(idItinerario)==null)
+			hashTable.put(idItinerario, new InfoFeedback("",3));
+		return hashTable.get(idItinerario);
+	}
 		
 	public InfoFeedback getInfoFeedbackResponsabile() {
 		if(infoFeedbackResponsabile==null)
@@ -64,14 +76,12 @@ public class TakeInHandForContadinoToDriver {
 	}
 
 		public List<String> getStringheResponsabiliConsegna() {
-			//task assegnati al contadino che è il responsabile della consegna
-			//tasksContadinoToCustomer = filtraNotifica.getAllSingleTaskInstanceList("fbResponsabileConsegnaToCustomer");
+			hashTable = new Hashtable<Integer,InfoFeedback>();
 			//task assegnati dal contadino in cui non è il responsabile di consegna
 			tasksContadinoToResponsabileConsegna = filtraNotifica.taskInstanceForContadino("fbContadinoToResponsabile");
 			
 			responsabili = new ArrayList<Account>();
 			stringheResponsabiliConsegna = new ArrayList<String>();
-
 			//addList(tasksContadinoToCustomer);
 			
 			//setto i responsabili
@@ -95,6 +105,7 @@ public class TakeInHandForContadinoToDriver {
 		
 
 		public void setStringaResponsabileConsegna(String usernameResponsabile) {
+			itinerarioForDriver = new ArrayList<Itinerario>();
 			this.stringaResponsabileConsegna = usernameResponsabile;
 			log.info("Responsabile "+stringaResponsabileConsegna);
 
@@ -107,6 +118,11 @@ public class TakeInHandForContadinoToDriver {
 					currentResponsabile = responsabile;
 					taskInstanceListForResponsabile.add(t1);
 				}
+				//carico gli itinerari da visualizzare
+				Itinerario it = (Itinerario) t1.getVariable("itinerario");
+				if (it!=null)
+					if (!itinerarioForDriver.contains(it))
+						itinerarioForDriver.add(it);
 			}
 			log.info("******** CONTADINO "+taskInstanceListForResponsabile.size());
 		}
@@ -159,6 +175,22 @@ public class TakeInHandForContadinoToDriver {
 
 		public void setCurrentResponsabile(Account currentResponsabile) {
 			this.currentResponsabile = currentResponsabile;
+		}
+
+		public Hashtable<Integer, InfoFeedback> getHashTable() {
+			return hashTable;
+		}
+
+		public void setHashTable(Hashtable<Integer, InfoFeedback> hashTable) {
+			this.hashTable = hashTable;
+		}
+
+		public List<Itinerario> getItinerarioForDriver() {
+			return itinerarioForDriver;
+		}
+
+		public void setItinerarioForDriver(List<Itinerario> itinerarioForDriver) {
+			this.itinerarioForDriver = itinerarioForDriver;
 		}
 
 }

@@ -58,53 +58,52 @@
 			
 				<s:decorate id="rilasciaFeedbackField1" rendered="#{not empty takeInHandForContadinoToDriver.currentResponsabile}">
 					<h:form>
-						<h:panelGrid id="panelGridInfoItinerario" columns="3" >
-						
-						<rich:column>
-							<table id="table_Cognome" cellpadding="10" cellspacing="0" border="0" width="100%"	>
-								<tr><td>
-									<b>Username</b>
-								</td></tr>
-								<tr><td>
-									<h:outputText value="#{takeInHandForContadinoToDriver.currentResponsabile.username}"/>
-								</td></tr>
-							</table>
-	        			</rich:column>
-	        			
-	        			
-	        		<rich:column>
-	        			<s:decorate template="/layout/edit.xhtml">
-               				<f:facet name="header">
-								<h:outputText value="Voto feedback" />
-							</f:facet>
-               				<h:selectOneRadio value="#{takeInHandForContadinoToDriver.infoFeedbackResponsabile.feedback}" required="true" 
-               					requiredMessage="inserire una valutazione">
-			  					<f:selectItem itemLabel="Basso" itemValue="1" ></f:selectItem>
-			  					<f:selectItem itemLabel="Normale" itemValue="2" ></f:selectItem>
-			  					<f:selectItem itemLabel="Alto" itemValue="3"></f:selectItem>
-			  					<f:selectItem itemLabel="Utopico" itemValue="4"></f:selectItem>
-			  					<f:selectItem itemLabel="Divino" itemValue="5"></f:selectItem>
-			  					<a:support	event="onclick" ajaxSingle="true"/>
-			  				</h:selectOneRadio>
-           				</s:decorate>
-	        		</rich:column>
-			        		
-			        		
-	        		<rich:column>
-	        			<s:decorate template="/layout/edit.xhtml">
-               				<f:facet name="header">
-								<h:outputText value="Commento" />
-							</f:facet>
-	        				<h:inputTextarea value="#{takeInHandForContadinoToDriver.infoFeedbackResponsabile.comment}">
-	        					<a:support	event="onblur" ajaxSingle="true"/>
-			  				</h:inputTextarea>
-	        			</s:decorate>
-	        		</rich:column>
-					</h:panelGrid>
+						<h:dataTable value="#{takeInHandForContadinoToDriver.itinerarioForDriver}" var="_itinerario">
+							<rich:column>
+									<f:facet name="header">
+										<h:outputText value="Itinerario" />
+									</f:facet>
+									<h:outputText value="#{_itinerario.iditinerario}"></h:outputText>
+			        		</rich:column>
+			        		<rich:column>
+							<f:facet name="header">Data consegna</f:facet>    
+								<h:outputText value="#{_itinerario.dataConsegna}">
+									<f:convertDateTime type="date" dateStyle="medium" locale="Locale.ITALY"/>
+								</h:outputText>
+							</rich:column>
+			        		<rich:column>
+			        			<s:decorate template="/layout/edit.xhtml">
+	                				<f:facet name="header">
+										<h:outputText value="Voto feedback" />
+									</f:facet>
+	                				<h:selectOneRadio value="#{takeInHandForContadinoToCustomer.getInfoFeedbackForOrdine(_ordine.idordine).feedback}" required="true" 
+	                					requiredMessage="inserire una valutazione">
+					  					<f:selectItem itemLabel="Basso" itemValue="1" ></f:selectItem>
+					  					<f:selectItem itemLabel="Normale" itemValue="2" ></f:selectItem>
+					  					<f:selectItem itemLabel="Alto" itemValue="3"></f:selectItem>
+					  					<f:selectItem itemLabel="Utopico" itemValue="4"></f:selectItem>
+					  					<f:selectItem itemLabel="Divino" itemValue="5"></f:selectItem>
+					  					<a:support	event="onclick" ajaxSingle="true"/>
+					  				</h:selectOneRadio>
+	            				</s:decorate>
+			        		</rich:column>
+			        		<rich:column>
+			        			<s:decorate template="/layout/edit.xhtml">
+	                				<f:facet name="header">
+										<h:outputText value="Commento" />
+									</f:facet>
+			        				<h:inputTextarea value="#{takeInHandForContadinoToCustomer.getInfoFeedbackForOrdine(_ordine.idordine).comment}">
+			        					<a:support	event="onblur" ajaxSingle="true"/>
+					  				</h:inputTextarea>
+			        			</s:decorate>
+			        		</rich:column>
+						</h:dataTable>
 					
-	        			<h:commandButton value="Assegna Feedback"
-	        					  action="#{closeTaskInstance.closefbContadinoToResponsabile(takeInHandForContadinoToDriver)}">
-	        			</h:commandButton>
+	        			<s:button taskInstance="#{takeInHandForCustomer.currentTaskCustomerToContadino}" value="Assegna Feedback"
+	        					  action="#{orderProcessing.fb_customer_to_contadino(takeInHandForCustomer)}">	
+	        			</s:button>
+						
+						
 	        			
 					</h:form>
 				</s:decorate>

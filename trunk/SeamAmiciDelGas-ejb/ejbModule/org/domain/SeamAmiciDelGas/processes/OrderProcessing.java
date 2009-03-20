@@ -130,7 +130,9 @@ public class OrderProcessing {
 	@In(value="loginSelectBean", scope=ScopeType.SESSION, required=false)
 	private LoginSelectBean loginSelectBean;
 	
-	
+	@In(value="booleanFeedbackContadini", scope=ScopeType.BUSINESS_PROCESS,required=false)
+	@Out(value="booleanFeedbackContadini", scope=ScopeType.BUSINESS_PROCESS,required=false)
+	private Hashtable<String, Boolean> booleanFeedbackContadini;
 	
 	@CreateProcess(definition="myOrderProcessing")
 	public String startOrder(List<ItemQuantita> itemQ, Date dm){
@@ -139,6 +141,7 @@ public class OrderProcessing {
 		customer = currentAccount;
 		
 		myOrdine = MyOrdine.createMyOrder(itemQ, dm);
+		myOrdine.setItemQuantita(itemQ);
 		dataRichiesta = myOrdine.getDataRichiesta();
 		
 		
@@ -223,8 +226,21 @@ public class OrderProcessing {
 			this.dataConsegna = itinerario.getDataConsegna();
 			myOrdine.setPendente(false);
 			myOrdine.setEvaso(true);
+			this.setFeedbackVariable();
 			saveOrdine(); //salvo l'ordine nel database
 			messageStatoOrdine.setContent("L'ordine "+ordine.getIdordine()+" e' stato preso in carico da "+ credentials.getUsername()+".");
+		}
+	}
+	
+	private void setFeedbackVariable() {
+		List<String> contadiniEffettivi = new ArrayList<String>();
+		booleanFeedbackContadini = new Hashtable();
+		List<ItemQuantita> items = myOrdine.getItemQuantita();
+		for(ItemQuantita iq: items) {
+			String username = iq.getCybercontadino().getAccount().getUsername();
+			if (!contadiniEffettivi.contains(username))
+				contadiniEffettivi.add(username);
+				booleanFeedbackContadini.put(username, new Boolean(false));
 		}
 	}
 	
