@@ -41,6 +41,9 @@
 				
 				
 				<b><h:outputText value="Messaggi di richiesta ordini" /></b><br/><br/>
+				
+		<h:form>
+	        <a:region>
 				<rich:dataTable id="dataTableUtenteRichiestaOrdini" 
 								value="#{filtraNotifica.taskInstanceSingleListForContadino()}" var="_task"
 								width="90%" align="center" >
@@ -55,7 +58,6 @@
 					
 					<rich:column align="center">
                 		<f:facet name="header">Dettagli Ordine</f:facet>
-				                	
 		                	<a:commandLink ajaxSingle="true" id="dettagliOrdinePendenteLink"
 		                    	oncomplete="#{rich:component('dettagliOrdinePanel')}.show()">
 		                    	<f:setPropertyActionListener value="#{ordineBean.getOrdineFromTask(_task)}" 
@@ -70,6 +72,8 @@
 								  value="Accetta ordine"/>
 					</rich:column>
 				</rich:dataTable>
+			</a:region>
+		</h:form>	
 				
 				<br/>
 				<h:form>

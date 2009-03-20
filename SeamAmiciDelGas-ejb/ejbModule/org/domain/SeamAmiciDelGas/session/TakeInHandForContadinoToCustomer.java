@@ -7,11 +7,13 @@ import java.util.List;
 
 
 import org.domain.SeamAmiciDelGas.entity.Account;
+import org.domain.SeamAmiciDelGas.entity.Ordine;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Logger;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.log.Log;
+import org.jboss.seam.security.Credentials;
 
 import org.jboss.seam.ScopeType;
 import org.jbpm.taskmgmt.exe.TaskInstance;
@@ -30,13 +32,17 @@ public class TakeInHandForContadinoToCustomer {
 	@In(value="filtraNotifica", create=true)
 	private FiltraNotifica filtraNotifica;
 	
-	private Hashtable<String, InfoFeedback> hashTable = new Hashtable<String, InfoFeedback>();
+	private Hashtable<Integer, InfoFeedback> hashTable = new Hashtable<Integer, InfoFeedback>();
 
 	private List<TaskInstance> taskInstanceForCurrentAccount;
 	
 	private List<TaskInstance> tasksContadinoToCustomer;
 	
 	private List<Account> listCustomer;
+	
+	@In private Credentials credentials;
+	
+	private List<Ordine> ordiniForCustomer;
 	
 	private Account currentAccount;
 	
@@ -46,19 +52,25 @@ public class TakeInHandForContadinoToCustomer {
 	
 	public void reset() {
 		
-		hashTable = new Hashtable<String, InfoFeedback>();
 		tasksContadinoToCustomer = new ArrayList<TaskInstance>();
 		stringaCustomer = null;
 		stringhe = new ArrayList<String>();
 		log.info("\n\n******** RESET ***********\n\n");
 	}
 	
-	
+	public InfoFeedback getInfoFeedbackForOrdine(Integer idOrdine){
+		if(idOrdine==null)
+			return null;
+		if(hashTable.get(idOrdine)==null)
+			hashTable.put(idOrdine, new InfoFeedback("",3));
+		return hashTable.get(idOrdine);
+	}
 
 
 		
 		public List<String> getStringhe() {
 			//prendo tutti i task in cui il contadino è responsabile della consegna
+			hashTable = new Hashtable<Integer,InfoFeedback>();
 			tasksContadinoToCustomer = filtraNotifica.getAllSingleTaskInstanceList("fbResponsabileConsegnaToCustomer");
 			
 			//lista di customer a cui assegnare i feedback
@@ -74,11 +86,18 @@ public class TakeInHandForContadinoToCustomer {
 		}
 		
 		private void addList(List<TaskInstance> taskInstanceList) {
+			//filtro le istanze
+			String username = credentials.getUsername();
 			for (TaskInstance t2: taskInstanceList) {
 			Account account = (Account) t2.getVariable("customer");
 			if (!listCustomer.contains(account)) {
-				listCustomer.add(account);
-				stringhe.add(account.getUsername());
+				//se il contadino ha già votato il customer non inserisco l'istanza
+				Hashtable<String,Boolean> hashTable = (Hashtable<String,Boolean>) t2.getVariable("booleanFeedbackContadini");
+				Boolean hasVotato = hashTable.get(username);
+				if (hasVotato!=null && !hasVotato) {
+					listCustomer.add(account);
+					stringhe.add(account.getUsername());
+				}
 			}
 		}
 	}
@@ -93,13 +112,14 @@ public class TakeInHandForContadinoToCustomer {
 			this.stringaCustomer = usernameCustomer;
 			currentAccount = null;
 			taskInstanceForCurrentAccount = new ArrayList<TaskInstance>();
-
+			ordiniForCustomer = new ArrayList<Ordine>();
 			for (TaskInstance t1: tasksContadinoToCustomer) {
 				Account account = (Account) t1.getVariable("customer");
 				if (account.getUsername().equals(stringaCustomer))
 				{
 					currentAccount = account;
 					taskInstanceForCurrentAccount.add(t1);
+					ordiniForCustomer.add((Ordine) t1.getVariable("ordine"));
 				}
 
 			}
@@ -146,6 +166,22 @@ public class TakeInHandForContadinoToCustomer {
 
 		public String getStringaCustomer() {
 			return stringaCustomer;
+		}
+
+		public List<Ordine> getOrdiniForCustomer() {
+			return ordiniForCustomer;
+		}
+
+		public void setOrdiniForCustomer(List<Ordine> ordiniForCustomer) {
+			this.ordiniForCustomer = ordiniForCustomer;
+		}
+
+		public Hashtable<Integer, InfoFeedback> getHashTable() {
+			return hashTable;
+		}
+
+		public void setHashTable(Hashtable<Integer, InfoFeedback> hashTable) {
+			this.hashTable = hashTable;
 		}
 
 }
