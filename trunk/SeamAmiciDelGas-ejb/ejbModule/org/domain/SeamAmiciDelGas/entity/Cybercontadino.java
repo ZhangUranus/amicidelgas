@@ -56,6 +56,7 @@ public class Cybercontadino implements java.io.Serializable {
 	private String nameSpaceWsdl;
 	private String descrizioneAzienda;
 	private String recapitoTelefonico;
+	private CodiceContadino codiceContadino;
 	@Email (message="errore")
 	private String email;
 	private String coordinate;
@@ -69,7 +70,7 @@ public class Cybercontadino implements java.io.Serializable {
 
 	public Cybercontadino(String partitaIva, Account account, Comune comune,
 			String nomePresidente, String indirizzo, String cognomePresidente,
-			String nomeAzienda, String pathAsl, String recapitoTelefonico,
+			String nomeAzienda, String pathAsl, String recapitoTelefonico, CodiceContadino codiceContadino,
 			String email) {
 		this.partitaIva = partitaIva;
 		this.account = account;
@@ -81,12 +82,13 @@ public class Cybercontadino implements java.io.Serializable {
 		this.pathAsl = pathAsl;
 		this.recapitoTelefonico = recapitoTelefonico;
 		this.email = email;
+		this.codiceContadino = codiceContadino;
 	}
 
 	public Cybercontadino(String partitaIva, Account account, Comune comune,
 			String nomePresidente, String indirizzo, String cognomePresidente,
 			String nomeAzienda, String pathAsl, String urlWsdl,
-			String descrizioneAzienda, String recapitoTelefonico, String email,
+			String descrizioneAzienda, String recapitoTelefonico, CodiceContadino codiceContadino, String email,
 			String coordinate, Set<Questionario> questionarios,
 			Set<Itinerario> itinerarios, Set<Articolo> articolos) {
 		this.partitaIva = partitaIva;
@@ -105,6 +107,7 @@ public class Cybercontadino implements java.io.Serializable {
 		this.questionarios = questionarios;
 		this.itinerarios = itinerarios;
 		this.articolos = articolos;
+		this.codiceContadino = codiceContadino;
 	}
 
 	@Id
@@ -307,6 +310,17 @@ public class Cybercontadino implements java.io.Serializable {
 
 	public void setNameSpaceWsdl(String nameSpaceWsdl) {
 		this.nameSpaceWsdl = nameSpaceWsdl;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "codicecontadino", nullable = false)
+	@NotNull
+	public CodiceContadino getCodiceContadino() {
+		return codiceContadino;
+	}
+
+	public void setCodiceContadino(CodiceContadino codiceContadino) {
+		this.codiceContadino = codiceContadino;
 	}
 	
 
