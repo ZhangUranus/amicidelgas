@@ -16,7 +16,8 @@
 		<rich:simpleTogglePanel id="simpleTogglePanelOrdini" switchType="ajax" label="Ordini">
 	
 				<h:selectOneRadio value="#{takeInHandForDriver.stringa}" required="true">
-                 	<a:support event="onclick" ajaxSingle="true" reRender="decoratepanelGridInfoItinerario,simpleTogglePanelDriverToContadini,simpleTogglePanelDriverToCustomer"/>
+                 	<a:support event="onclick" ajaxSingle="true" 
+                 		reRender="decoratepanelGridInfoItinerario,simpleTogglePanelDriverToContadini,simpleTogglePanelDriverToCustomer"/>
                		<s:selectItems var="_stringa" label="Itinerario #{_stringa}" value="#{takeInHandForDriver.stringhe}" />
                 </h:selectOneRadio>
                 
@@ -59,9 +60,9 @@
                 
             <a:outputPanel ajaxRendered="true">   
             <rich:simpleTogglePanel id="simpleTogglePanelDriverToContadini" switchType="ajax" label="Rilascia feedback ai contadini">    
-			
+				<h:form>
 				<s:decorate id="rilasciaFeedbackField1" rendered="#{not empty takeInHandForDriver.listCybercontadini()}">
-					<h:form>
+					
 					<h:dataTable value="#{takeInHandForDriver.listCybercontadini()}" var="_contadino">
 							<rich:column>
 									<f:facet name="header">
@@ -96,27 +97,21 @@
 			        			</s:decorate>
 			        		</rich:column>
 						</h:dataTable>
-					
-	        			<h:commandButton value="Assegna Feedback"
-	        					  action="#{closeTaskInstance.closefbResponsabileConsegnaToCustomer(takeInHandForDriver)}">
+						
+						<div id="pulsante_driver_loading1" style="display: none;"><img src="/SeamAmiciDelGas/img/loading.gif" /></div>	
+	        			<h:commandButton id="idCommandButtonContadino" value="Assegna Feedback"
+	        					  action="#{closeTaskInstance.closefbResponsabileConsegnaToContadino()}"
+	        					  onmouseup="disable_this(this.id, 'pulsante_driver_loading1');" >
 	        			</h:commandButton>
-	        			
-					</h:form>
-				</s:decorate>
-
+						
+					</s:decorate>
+				</h:form>
 			</rich:simpleTogglePanel>
-			</a:outputPanel>
-		
-		<br/>
- 		<br/>
- 		<br/>
-		
-		<a:outputPanel ajaxRendered="true">   
-            <rich:simpleTogglePanel id="simpleTogglePanelDriverToCustomer" switchType="ajax" label="Rilascia feedback ai customer">    
 			
+			<rich:simpleTogglePanel id="simpleTogglePanelDriverToCustomer" switchType="ajax" label="Rilascia feedback ai customer">    
+				<h:form>
 				<s:decorate id="rilasciaFeedbackField2" rendered="#{not empty takeInHandForDriver.listCustomer()}">
-					<h:form>
-					<h:dataTable value="#{takeInHandForDriver.listCustomer()}" var="_customer">
+						<h:dataTable value="#{takeInHandForDriver.listCustomer()}" var="_customer">
 							<rich:column>
 									<f:facet name="header">
 										<h:outputText value="Username customer" />
@@ -151,14 +146,14 @@
 			        		</rich:column>
 			        		
 						</h:dataTable>
-					
-	        			<h:commandButton value="Assegna Feedback"
-	        					  action="#{closeTaskInstance.closefbResponsabileConsegnaToCustomer()}">
+						<div id="pulsante_driver_loading2" style="display: none;"><img src="/SeamAmiciDelGas/img/loading.gif" /></div>	
+	        			<h:commandButton id="idCommandButtonCustomer" value="Assegna Feedback"
+	        					  action="#{closeTaskInstance.closefbResponsabileConsegnaToCustomer()}"
+	        					  onmouseup="disable_this(this.id, 'pulsante_driver_loading2');" >
 	        			</h:commandButton>
 					
-					</h:form>
 				</s:decorate>
-
+			</h:form>	
 			</rich:simpleTogglePanel>
 			</a:outputPanel>
 	

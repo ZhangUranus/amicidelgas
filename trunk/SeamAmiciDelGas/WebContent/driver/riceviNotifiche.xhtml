@@ -11,7 +11,7 @@
 
 	<ui:define name="body">
 		
-		<rich:simpleTogglePanel label="Itinerari...">
+		<rich:simpleTogglePanel label="Itinerari creati">
 		<h:form>
 		        <a:region>
 			<rich:dataTable id="dataTableItinerari" 
@@ -34,11 +34,19 @@
 					</h:outputText>
 				</rich:column>
 				<rich:column>
-					<f:facet name="header">Contadini</f:facet>    
+					<f:facet name="header">Contadini da visitare</f:facet>    
 					<a:commandLink ajaxSingle="true" id="listaContadiniPerItinerarioLink"
 				        	oncomplete="#{rich:component('listaContadiniPerItinerario')}.show()">
 				        <f:setPropertyActionListener value="#{_itinerario}" target="#{matchItinerarioOrdine.currentItinerario}" />
-					    <h:graphicImage value="/img/modifica_mini.png" style="border:0" />
+					    <h:graphicImage value="/img/contadino50x36.gif" style="border:0" />
+					</a:commandLink>
+				</rich:column>
+				<rich:column>
+					<f:facet name="header">Punti di consegna</f:facet>    
+					<a:commandLink ajaxSingle="true" id="puntiDiConsegnaLink"
+				        	oncomplete="#{rich:component('puntiDiConsegnaPanel')}.show()">
+				        <f:setPropertyActionListener value="#{_itinerario}" target="#{matchItinerarioOrdine.currentItinerario}" />
+					    <h:graphicImage value="/img/itinerario_small.png" style="border:0" />
 					</a:commandLink>
 				</rich:column>
 				<rich:column>
@@ -91,10 +99,39 @@
 			</a:outputPanel>	
        	</rich:modalPanel>
 		
+		<rich:modalPanel id="puntiDiConsegnaPanel" autosized="true" width="350">
+       		<f:facet name="header">
+            	<h:outputText value="Punti di consegna"/>
+        	</f:facet>
+       		<f:facet name="controls">
+            	<h:panelGroup>
+                	<h:graphicImage value="/img/close.png"
+                    	id="hidelink2" />
+               	 	<rich:componentControl for="puntiDiConsegnaPanel" attachTo="hidelink2"
+                    	operation="hide" event="onclick" />
+            	</h:panelGroup>
+        	</f:facet>
+        	<a:outputPanel ajaxRendered="true">
+	        	<rich:dataTable id="dataTableItinerari2" 
+								value="#{matchItinerarioOrdine.currentListPuntiDiConsegna}" var="_puntoDiConsegna"
+								width="90%" align="center" >
+				<h:column>
+					<f:facet name="header">Comune</f:facet>
+					<h:outputText value="#{_puntoDiConsegna.comune.nome}"/>
+				</h:column>			
+				<h:column>
+					<f:facet name="header">Indirizzo</f:facet>
+					<h:outputText value="#{_puntoDiConsegna.indirizzo}"/>
+				</h:column>						
+				</rich:dataTable>
+			</a:outputPanel>	
+       	</rich:modalPanel>
+       	
+		
 		<br/><br/><br/>
 		
 		<rich:simpleTogglePanel label="Ordini per itinerario">
-			<s:decorate id="ordiniPerItinerarioCorrente">
+			<s:decorate id="ordiniPerItinerarioCorrente" >
 			<a:outputPanel ajaxRendered="true">
 			<h:form>	
 				<rich:dataTable id="ordini" width="90%" align="center"
@@ -137,8 +174,8 @@
         	</f:facet>
        		<f:facet name="controls">
             	<h:panelGroup>
-                	<h:graphicImage value="/img/close.png" styleClass="hidelink" id="hidelink2"/>
-               	 	<rich:componentControl for="dettagliOrdinePanel" attachTo="hidelink2" operation="hide" event="onclick" />
+                	<h:graphicImage value="/img/close.png" styleClass="hidelink" id="hidelink4"/>
+               	 	<rich:componentControl for="dettagliOrdinePanel" attachTo="hidelink4" operation="hide" event="onclick" />
             	</h:panelGroup>
         	</f:facet>
 			<ui:define name="label">Prodotti dell'ordine</ui:define>

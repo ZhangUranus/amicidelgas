@@ -9,6 +9,7 @@ import org.domain.SeamAmiciDelGas.crud.ItinerarioList;
 import org.domain.SeamAmiciDelGas.entity.Account;
 import org.domain.SeamAmiciDelGas.entity.Cybercontadino;
 import org.domain.SeamAmiciDelGas.entity.Itinerario;
+import org.domain.SeamAmiciDelGas.entity.PuntiDiConsegna;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Logger;
@@ -33,8 +34,10 @@ public class MatchItinerarioOrdine implements Serializable{
 	private ItinerarioList itinerarioList;
 	
 	private Itinerario currentItinerario;
-	
+
 	private List<Cybercontadino> currentListCybercontadino;
+	
+	private List<PuntiDiConsegna> currentListPuntiDiConsegna;
 	
 	@In(value="filtraNotifica",create=true)
 	private FiltraNotifica filtraNotifica;
@@ -49,9 +52,10 @@ public class MatchItinerarioOrdine implements Serializable{
 									"where itinerario.account.username='"+credentials.getUsername()+"'");
 		List<Itinerario> tempItinerario = itinerarioList.getResultList();
 		log.info("\n\n******** ITINERARIO dim = " +tempItinerario.size() +" **************");
-		
 		return tempItinerario;
-	}
+	}	
+	
+	
 	/**
 	 * vedo quali ordini nei taskInstance("accetta_ordine") possono essere
 	 * soddisfatti dall'itinerario scelto.
@@ -118,6 +122,9 @@ public class MatchItinerarioOrdine implements Serializable{
 		this.currentItinerario = currentItinerario;
 		currentListCybercontadino = new ArrayList<Cybercontadino>();
 		currentListCybercontadino.addAll(currentItinerario.getCybercontadinos());
+		currentListPuntiDiConsegna = new ArrayList<PuntiDiConsegna>();
+		currentListPuntiDiConsegna.addAll(currentItinerario.getPuntiDiConsegnas());
+		
 	}
 	public List<Cybercontadino> getCurrentListCybercontadino() {
 		return currentListCybercontadino;
@@ -126,5 +133,19 @@ public class MatchItinerarioOrdine implements Serializable{
 		this.currentListCybercontadino = currentListCybercontadino;
 	}
 
+
+
+
+	public List<PuntiDiConsegna> getCurrentListPuntiDiConsegna() {
+		return currentListPuntiDiConsegna;
+	}
+
+	public void setCurrentListPuntiDiConsegna(
+			List<PuntiDiConsegna> currentListPuntiDiConsegna) {
+		this.currentListPuntiDiConsegna = currentListPuntiDiConsegna;
+	}
+
+
+	
 }
 
