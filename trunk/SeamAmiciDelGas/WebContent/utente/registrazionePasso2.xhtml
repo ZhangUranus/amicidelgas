@@ -14,7 +14,7 @@
 	<h:form id="passo2Form">
 
     <rich:panel>
-        <f:facet name="header">Passo 2 - dati pagamento</f:facet>
+        <f:facet name="header">Registrazione: Passo 2 - Dati Account</f:facet>
 
         
 
@@ -33,7 +33,7 @@
             
             <s:decorate id="tipocartaField" template="/layout/edit.xhtml">
                 <ui:define name="label">Carta di credito</ui:define>
-                <h:selectOneRadio value="#{newPagamento.tipoCarta}" required="true" requiredMessage="Inserire numero carta di credito">
+                <h:selectOneRadio value="#{newPagamento.tipoCarta}" required="true" requiredMessage="Inserire il tipo della carta di credito">
 				  <f:selectItem itemLabel="  " itemValue="Visa" ><img src="/SeamAmiciDelGas/img/creditcard_visa.png" /></f:selectItem>
 				  <f:selectItem itemLabel="  " itemValue="MasterCard" ><img src="/SeamAmiciDelGas/img/creditcard_mastercard.png" /></f:selectItem>
 				  <f:selectItem itemLabel="  " itemValue="AmericanExpress"><img src="/SeamAmiciDelGas/img/creditcard_american_express.png" /></f:selectItem>
@@ -45,6 +45,7 @@
                 <ui:define name="label">Numero carta</ui:define>
                 <h:inputText id="numerocarta"
                        required="true"
+                       requiredMessage="Inserire il numero di carta di credito"
                            size="16"
                       maxlength="16"
                           value="#{newPagamento.numeroCarta}">
@@ -56,6 +57,7 @@
                 <ui:define name="label">Username</ui:define>
                 <h:inputText id="username"
                        required="true"
+                       requiredMessage="Inserire un username"
                            size="20"
                       maxlength="20"
                           value="#{newAccount.username}">
@@ -88,6 +90,7 @@
                 <ui:define name="label">Password</ui:define>
                 <h:inputText id="password"
                        required="true"
+                       requiredMessage="Inserire una password"
                            size="16"
                       maxlength="16"
                           value="#{passwordBean.password}">
@@ -99,6 +102,7 @@
                 <h:inputText id="confirmPassword"
                 		onblur="verificaPassword()"
                        required="true"
+                       requiredMessage="Ripetere la password"
                            size="16"
                       maxlength="16"
                           value="#{passwordBean.confirm}"

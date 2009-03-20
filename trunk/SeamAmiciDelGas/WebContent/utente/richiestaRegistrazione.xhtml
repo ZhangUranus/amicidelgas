@@ -14,12 +14,13 @@
 	<h:form id="richiestaRegistrazioneForm">
 	
     <rich:panel>
-        <f:facet name="header">Passo 1 - Richiesta registrazione</f:facet>    
+        <f:facet name="header">Registrazione: Passo 1 - Dati Personali</f:facet>    
 
 			<s:decorate id="codiceFiscaleField" template="/layout/edit.xhtml">
                 <ui:define name="label">Codice fiscale</ui:define>
                 <h:inputText id="codiceFiscale"
                        required="true"
+                       requiredMessage="Inserire il codice fiscale"
                            size="32"
                       maxlength="16"
                       value="#{newUtente.codiceFiscale}">
@@ -37,6 +38,7 @@
                 <ui:define name="label">Nome</ui:define>
                 <h:inputText id="nome"
                        required="true"
+                       requiredMessage="Inserire il nome"
                            size="32"
                       maxlength="50"
                           value="#{newUtente.nome}">
@@ -49,6 +51,7 @@
                 <ui:define name="label">Cognome</ui:define>
                 <h:inputText id="cognome"
                        required="true"
+                       requiredMessage="Inserire il cognome"
                            size="32"
                       maxlength="50"
                           value="#{newUtente.cognome}">
@@ -61,6 +64,7 @@
                 <ui:define name="label">Data nascita</ui:define>
                 <rich:calendar id="dataNascita"
                        required="true"
+                       requiredMessage="Inserire la data di nascita"
                        value="#{newUtente.dataNascita}" datePattern="MM/dd/yyyy">
                    <a:support event="onchange" reRender="dataNascitaField" bypassUpdates="true" ajaxSingle="true"/>
                 </rich:calendar>
@@ -70,7 +74,10 @@
             <s:decorate id="sessoField" template="/layout/edit.xhtml">
                 <ui:define name="label">Sesso</ui:define>
                 
-              <h:selectOneMenu id="sessoSelect" value="#{newUtente.sesso}">
+              <h:selectOneMenu id="sessoSelect" value="#{newUtente.sesso}"
+              required="true"
+              requiredMessage="Inserire il sesso"
+              >
         		<f:selectItem itemLabel="Maschio" itemValue="M"/>            
         		<f:selectItem itemLabel="Femmina" itemValue="F"/>
         		
@@ -84,7 +91,10 @@
                 <ui:define name="label">Provincia di nascita</ui:define>
                 <h:selectOneMenu 
                 	id="provinciaSelect"
-                	value="#{newComuneProvinciaBean.provincia}">
+                	value="#{newComuneProvinciaBean.provincia}"
+                	required="true"
+                	requiredMessage="Inserire la provincia"
+                	>
                  <a:support event="onchange" ajaxSingle="true" reRender="provinciaField" 
                  />
           
@@ -107,6 +117,8 @@
                 	size="32"
                		value="Seleziona prima una provincia"
                		onclick="resetValue()"
+               		 required="true"
+                         requiredMessage="Inserire il comune di nascita"
                >
                 </h:inputText>
                 <script type="text/javascript">
@@ -137,7 +149,9 @@
                 <ui:define name="label">Provincia di residenza</ui:define>
                 <h:selectOneMenu 
                 	id="provinciaResidenzaSelect"
-                	value="#{newComuneProvinciaResidenzaBean.provincia}">
+                	value="#{newComuneProvinciaResidenzaBean.provincia}"
+                	 required="true"
+                       requiredMessage="Inserire la provincia di residenza">
                  <a:support event="onchange" ajaxSingle="true" reRender="provinciaResidenzaField" 
                  />
           
@@ -160,6 +174,8 @@
                		value="Seleziona prima una provincia"
                		size="32"
                		onclick="resetResidenzaValue()"
+               		 required="true"
+                         requiredMessage="Inserire il comune di residenza"
                >
                 </h:inputText>
                 <script type="text/javascript">
@@ -189,6 +205,7 @@
                 <ui:define name="label">Indirizzo</ui:define>
                 <h:inputText id="indirizzo"
                        required="true"
+                        requiredMessage="Inserire l'indirizzo"
                            size="32"
                       maxlength="100"
                           value="#{newUtente.indirizzo}">
@@ -201,6 +218,7 @@
                 <ui:define name="label">Recapito telefonico</ui:define>
                 <h:inputText id="recapitoTelefonico"
                        required="true"
+                        requiredMessage="Inserire il numero di telefono"
                            size="32"
                       maxlength="45"
                           value="#{newUtente.recapitoTelefonico}">
@@ -213,6 +231,7 @@
                 <ui:define name="label">Email</ui:define>
                 <h:inputText id="email"
                        required="true"
+                        requiredMessage="Inserire l'indirizzo e-mail"
                            size="32"
                       maxlength="70"
                           value="#{newUtente.email}">
