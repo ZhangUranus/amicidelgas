@@ -12,7 +12,7 @@
 	<ui:define name="body">
 		
 			<rich:simpleTogglePanel label="Notifiche Personali">
-			
+			<h:form>
 				<s:decorate rendered="#{not empty filtraNotifica.getAllSingleTaskInstanceListByFilters('ReceiveMessage')}">
 					<b><h:outputText value="Messaggi da altri utenti" /></b><br/><br/>
 					<rich:dataTable id="dataTableUtente" width="90%" align="center" 
@@ -66,26 +66,29 @@
 			                </a:commandLink>
                 		<rich:toolTip for="dettagliOrdinePendenteLink" value="Visualizza i dettagli dell'ordine"/>
 	            	</rich:column>
-										
+									
+					<rich:column>
+					<s:decorate id="dataConsegnaField" template="/layout/edit.xhtml">
+						<rich:calendar id="dataConsegnaCalendar" value="#{notificaBean.dataConsegna}"
+									datePattern="dd/MM/yyyy" >
+							
+						</rich:calendar>
+					</s:decorate>
+					</rich:column>	
+									
 					<rich:column width="10%">
-						<s:button taskInstance="#{_task}" action="#{orderProcessing.verificaDisponibilita(notificaBean.itinerario)}"
-								  value="Accetta ordine"/>
+					<h:commandLink value="Accetta ordine" 
+	            			action="#{orderProcessing.verificaDisponibilita(notificaBean.itinerario)}">
+	            			<f:param name="taskId" value="#{_task}"/>
+	            		</h:commandLink>	
 					</rich:column>
 				</rich:dataTable>
 			</a:region>
 		</h:form>	
 				
-				<br/>
-				<h:form>
-					<s:decorate id="dataConsegnaField" template="/layout/edit.xhtml">
-						<rich:calendar id="dataConsegnaCalendar" value="#{notificaBean.dataConsegna}"
-									datePattern="dd/MM/yyyy" >
-							<a:support event="onchange" bypassUpdates="true" ajaxSingle="true" />
-						</rich:calendar>
-					</s:decorate>	
-				</h:form>		    
+				<br/>	    
 			</s:decorate>
-				
+				</h:form>
 		</rich:simpleTogglePanel>
 				
 				<br/><br/><br/>

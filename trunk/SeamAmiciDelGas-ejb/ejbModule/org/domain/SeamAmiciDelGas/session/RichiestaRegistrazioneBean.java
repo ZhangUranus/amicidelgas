@@ -84,8 +84,12 @@ public class RichiestaRegistrazioneBean implements RichiestaRegistrazione
     	utente.setComuneByIdcomune(comuneList.getResultList().get(0));
     	
     	em.persist(utente);
+    	if(patente.getTipo().equals("Nessuna"))
+    	{
+    		System.out.println("AIUTOOOOOOOOOO NESSUNAAAAAAAAAAAa");
     	patente.setUtente(utente);
     	em.persist(patente);
+    	}
     	
     	em.persist(pagamento);
     	
