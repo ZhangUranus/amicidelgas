@@ -1,0 +1,59 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:a="http://richfaces.org/a4j"
+    template="/layout/template.xhtml">
+
+	<ui:define name="body">
+	<s:decorate >
+		<div align="center" class="colore_1"><b>I Miei FeedBack</b></div><br/>
+			<rich:dataTable id="dataTableFeedbackUtente" width="90%" align="center" 
+											value="#{gestioneFeedback.myFeedback}" var="_feedback">
+								<rich:column>
+									<f:facet name="header">Segnalatore</f:facet>							    
+							        <h:outputText value="#{_feedback.accountBySegnalatore.username}"/>
+								</rich:column>
+								<rich:column>
+									<f:facet name="header">Validatore</f:facet>							    
+							        <h:outputText value="#{_feedback.accountBySegnalatore.username}"/>
+								</rich:column>
+								<rich:column >
+									<f:facet name="header">Descrizione</f:facet>							    
+							        <h:outputText value="#{_feedback.descrizione}"/>
+								</rich:column>
+								<rich:column width="128">
+									<f:facet name="header">Punteggio</f:facet>	
+									
+									<div align="center" >
+										<h:graphicImage value="/img/star_full_mini.png" rendered="#{_feedback.punteggio > 0.5}" />
+										<h:graphicImage value="/img/star_full_mini.png" rendered="#{_feedback.punteggio > 1.5}" />
+										<h:graphicImage value="/img/star_full_mini.png" rendered="#{_feedback.punteggio > 2.5}" />
+										<h:graphicImage value="/img/star_full_mini.png" rendered="#{_feedback.punteggio > 3.5}" />
+										<h:graphicImage value="/img/star_full_mini.png" rendered="#{_feedback.punteggio > 4.5}" />
+										<h:graphicImage value="/img/star_empty_mini.png" rendered="#{!(_feedback.punteggio > 0)}" />
+										<h:graphicImage value="/img/star_empty_mini.png" rendered="#{!(_feedback.punteggio > 1)}" />
+										<h:graphicImage value="/img/star_empty_mini.png" rendered="#{!(_feedback.punteggio > 2)}" />
+										<h:graphicImage value="/img/star_empty_mini.png" rendered="#{!(_feedback.punteggio > 3)}" />
+										<h:graphicImage value="/img/star_empty_mini.png" rendered="#{!(_feedback.punteggio > 4)}" />
+									</div>				
+								</rich:column>
+								<rich:column>
+									<f:facet name="header">Data Segnalazione</f:facet>							    
+							        <h:outputText value="#{_feedback.dataValidazione}"/>
+								</rich:column>
+								<rich:column>
+									<f:facet name="header">Tipo</f:facet>	
+									<h:graphicImage value="/img/accepted.png" rendered="#{_feedback.punteggio > 3.0}" />
+									<h:graphicImage value="/img/not_valid.png" rendered="#{!(_feedback.punteggio > 3.0)}" />
+								</rich:column>
+			</rich:dataTable>
+	</s:decorate>
+	
+	</ui:define>
+</ui:composition>
+
