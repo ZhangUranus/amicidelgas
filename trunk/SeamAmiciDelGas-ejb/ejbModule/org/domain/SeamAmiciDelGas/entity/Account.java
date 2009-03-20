@@ -38,6 +38,7 @@ import org.jboss.seam.annotations.security.management.UserRoles;
 @Scope(value=ScopeType.SESSION)
 public class Account implements java.io.Serializable {
 
+	private static final long serialVersionUID = -3377764798266168594L;
 	private String username;
 	private Utente utente;
 	private Pagamentoelettronico pagamentoelettronico;
