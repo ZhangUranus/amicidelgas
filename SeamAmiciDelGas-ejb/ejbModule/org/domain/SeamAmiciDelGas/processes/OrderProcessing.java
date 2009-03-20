@@ -127,12 +127,13 @@ public class OrderProcessing {
 	@Out(value="responsabileIsDriver", scope=ScopeType.BUSINESS_PROCESS,required=false)
 	private Boolean responsabileIsDriver = new Boolean(false);
 	
+	//feedback dei contadini al driver
+	@In(value="booleanFeedbackContadiniToResponsabile", scope=ScopeType.BUSINESS_PROCESS,required=false)
+	@Out(value="booleanFeedbackContadiniToResponsabile", scope=ScopeType.BUSINESS_PROCESS,required=false)
+	private Hashtable<String, Boolean> booleanFeedbackContadiniToResponsabile;
+	
 	@In(value="loginSelectBean", scope=ScopeType.SESSION, required=false)
 	private LoginSelectBean loginSelectBean;
-	
-	@In(value="booleanFeedbackContadini", scope=ScopeType.BUSINESS_PROCESS,required=false)
-	@Out(value="booleanFeedbackContadini", scope=ScopeType.BUSINESS_PROCESS,required=false)
-	private Hashtable<String, Boolean> booleanFeedbackContadini;
 	
 	@CreateProcess(definition="myOrderProcessing")
 	public String startOrder(List<ItemQuantita> itemQ, Date dm){
@@ -173,7 +174,8 @@ public class OrderProcessing {
 	public String verificaDisponibilita(Itinerario itinerario){
 
 		Hashtable<String,String> transactionIdList = new Hashtable<String,String>();
-		int isAvailable=0;
+		boolean isAvailable=true;
+		int[] quantitaOttenute = new int[myOrdine.getItemQuantita().size()];
 		//verifico la disponibilità per ogni contandino
 		for (ItemQuantita iq : myOrdine.getItemQuantita()) {
 			String partitaIva= iq.getCybercontadino().getPartitaIva();
@@ -185,14 +187,16 @@ public class OrderProcessing {
 				uuid = catalog.beginTransaction(myOrdine.getDataMassima());
 				transactionIdList.put(partitaIva, uuid);
 			}
-			isAvailable=catalog.reserveItem(uuid, iq.getItem(),iq.getQuantitaParziale(), iq.getQuantita());
-			if(isAvailable==0)
+			int q=catalog.reserveItem(uuid, iq.getItem(),iq.getQuantitaParziale(), iq.getQuantita());
+			if (q==0) {
+				isAvailable = false;
 				break;
+			}
 		}
 		messageStatoOrdine =new Message();
 		messageStatoOrdine.setMittente(credentials.getUsername());
 		messageStatoOrdine.addRecipient(customer.getUsername());
-		if(isAvailable==0) //uno degli itemquantita non è disponibile
+		if(!isAvailable) //uno degli itemquantita non è disponibile
 		{
 			Enumeration<String> enumContadini = transactionIdList.keys();
 			while(enumContadini.hasMoreElements())
@@ -227,7 +231,7 @@ public class OrderProcessing {
 			myOrdine.setPendente(false);
 			myOrdine.setEvaso(true);
 			this.setFeedbackVariable();
-			saveOrdine(); //salvo l'ordine nel database
+			saveOrdine(quantitaOttenute); //salvo l'ordine nel database
 			messageStatoOrdine.setContent("L'ordine "+ordine.getIdordine()+" e' stato preso in carico da "+ credentials.getUsername()+".");
 		}
 		return "ordine_preso_in_carico";
@@ -235,18 +239,18 @@ public class OrderProcessing {
 	
 	private void setFeedbackVariable() {
 		List<String> contadiniEffettivi = new ArrayList<String>();
-		booleanFeedbackContadini = new Hashtable();
+		booleanFeedbackContadiniToResponsabile = new Hashtable();
 		List<ItemQuantita> items = myOrdine.getItemQuantita();
 		for(ItemQuantita iq: items) {
 			String username = iq.getCybercontadino().getAccount().getUsername();
 			if (!contadiniEffettivi.contains(username))
 				contadiniEffettivi.add(username);
-				booleanFeedbackContadini.put(username, new Boolean(false));
+				booleanFeedbackContadiniToResponsabile.put(username, new Boolean(false));
 		}
 	}
 	
 	@Transactional
-	private void saveOrdine() {
+	private void saveOrdine(int[] quantitaOttenute) {
 		ordine = new Ordine();
 		ordine.setAccount(customer);
 		ordine.setConcluso(false);
@@ -258,11 +262,14 @@ public class OrderProcessing {
 		em.persist(ordine);
 		
 		Articolo articolo;
-		Set<Articolo> articoli = new HashSet<Articolo>(0); 
+		Set<Articolo> articoli = new HashSet<Articolo>(0);
+		int i = 0;
 		for (ItemQuantita iq: myOrdine.getItemQuantita()) {
 			articolo = new Articolo();
 			articolo.setCodiceEsterno(iq.getItem().getName());
 			articolo.setCybercontadino(iq.getCybercontadino());
+			articolo.setQuantitaOttenuta(quantitaOttenute[i]);
+			i++;
 			articolo.setDescrizione(iq.getItem().getDescription());
 			articolo.setPrezzo((float) iq.getItem().getPrezzo());
 			if (!iq.isBooleanIsQuantitaMinima())
