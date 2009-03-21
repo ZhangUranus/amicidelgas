@@ -13,6 +13,45 @@ var current_notifiche = 0;
 var current_focus = 0;
 
 
+function calcola_numero_notifiche(){
+	var num = 0;
+	var tmp;
+	if(document.getElementById('num_notifiche_1')!=null){
+		num = num + document.getElementById('num_notifiche_1').value;
+		tmp = document.getElementById('num_notifiche_1').value;
+	}
+	if(document.getElementById('num_notifiche_2')!=null){
+		num = num + document.getElementById('num_notifiche_2').value;
+		tmp = document.getElementById('num_notifiche_2').value;
+	}
+	if(document.getElementById('num_notifiche_3')!=null){
+		num = num + document.getElementById('num_notifiche_3').value;
+		tmp = document.getElementById('num_notifiche_3').value;
+	}
+	if(document.getElementById('num_notifiche_4')!=null){
+		num = num + document.getElementById('num_notifiche_4').value;
+		tmp = document.getElementById('num_notifiche_4').value;
+	}
+	if(document.getElementById('num_notifiche_5')!=null){
+		num = num + document.getElementById('num_notifiche_5').value;
+		tmp = document.getElementById('num_notifiche_5').value;
+	}
+	if(document.getElementById('num_notifiche_6')!=null){
+		num = num + document.getElementById('num_notifiche_6').value;
+		tmp = document.getElementById('num_notifiche_6').value;
+	}
+	if(document.getElementById('num_notifiche_7')!=null){
+		num = num + document.getElementById('num_notifiche_7').value;
+		tmp = document.getElementById('num_notifiche_7').value;
+	}
+	if(document.getElementById('num_notifiche_8')!=null){
+		num = num + document.getElementById('num_notifiche_8').value;
+		tmp = document.getElementById('num_notifiche_8').value;
+	}
+	document.getElementById('notifiche_div').style.visibility = "visible";
+	document.getElementById('notifiche_number_div').innerHTML = num;	
+}
+
 function altrimenti_non_funge(){
 }
 
