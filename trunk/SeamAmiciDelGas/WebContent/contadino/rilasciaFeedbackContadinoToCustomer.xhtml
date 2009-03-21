@@ -43,6 +43,16 @@
 								</td></tr>
 							</table>
 	        			</rich:column>
+	        			<rich:column>
+							<table id="table_comune" cellpadding="10" cellspacing="0" border="0" width="100%"	>
+								<tr><td>
+									<b>Comune di residenza</b>
+								</td></tr>
+								<tr><td>
+									<h:outputText value="#{takeInHandForContadinoToCustomer.currentAccount.utente.comuneByIdcomune.nome}"/>	
+								</td></tr>
+							</table>
+	        			</rich:column>
                 	</h:panelGrid>      
 				</s:decorate>
 			</a:outputPanel> 
@@ -59,18 +69,31 @@
 				<s:decorate id="rilasciaFeedbackField1" rendered="#{not empty takeInHandForContadinoToCustomer.currentAccount}">
 					<h:form>
 					<h:dataTable value="#{takeInHandForContadinoToCustomer.ordiniForCustomer}" var="_ordine">
-							<rich:column>
+							<rich:column align="center">
 									<f:facet name="header">
 										<h:outputText value="Ordine" />
 									</f:facet>
 									<h:outputText value="#{_ordine.idordine}"></h:outputText>
 			        		</rich:column>
-			        		<rich:column>
+			        		<rich:column align="center">
 							<f:facet name="header">Data consegna</f:facet>    
 								<h:outputText value="#{_ordine.dataConclusione}">
 									<f:convertDateTime type="date" dateStyle="medium" locale="Locale.ITALY"/>
 								</h:outputText>
 							</rich:column>
+							
+							<rich:column align="center">
+                				<f:facet name="header">Dettagli Ordine</f:facet>
+				                	
+		                		<a:commandLink ajaxSingle="true" id="dettagliOrdinePendenteLink"
+		                    		oncomplete="#{rich:component('dettagliOrdinePanel')}.show()">
+		                    		<f:setPropertyActionListener value="#{takeInHandForContadinoToCustomer.currentOrdine}" 
+		                    								target="#{_ordine}" />
+			                    	<h:graphicImage value="/img/modifica_mini.png" style="border:0" />
+			                	</a:commandLink>
+                				<rich:toolTip for="dettagliOrdineLink" value="Visualizza i dettagli dell'ordine"/>
+	            			</rich:column>
+							
 			        		<rich:column>
 			        			<s:decorate template="/layout/edit.xhtml">
 	                				<f:facet name="header">
@@ -115,6 +138,37 @@
 		<br/>
  		<br/>
  		<br/>
+     
+     <a:outputPanel ajaxRendered="true">
+		<rich:modalPanel id="dettagliOrdinePanel" autosized="true" width="350">
+       		<f:facet name="header">
+            	<h:outputText value="Dettagli ordini" />
+        	</f:facet>
+       		<f:facet name="controls">
+            	<h:panelGroup>
+                	<h:graphicImage value="/img/close.png" styleClass="hidelink" id="hidelink4"/>
+               	 	<rich:componentControl for="dettagliOrdinePanel" attachTo="hidelink4" operation="hide" event="onclick" />
+            	</h:panelGroup>
+        	</f:facet>
+			<ui:define name="label">Prodotti dell'ordine</ui:define>
+			<rich:dataTable var="_articolo" id="itemsDataTableOrdiniFatti"
+				value="#{takeInHandForContadinoToCustomer.articoliForCurrentOrdine}">
+				<rich:column>
+						<f:facet name="header">Nome prodotto</f:facet>
+						<h:outputText value="#{_articolo.codiceEsterno}"/>
+				</rich:column>		
+				<rich:column>
+						<f:facet name="header">Quantita prodotto</f:facet>
+						<h:outputText value="#{_articolo.quantitaOttenuta}"/>
+				</rich:column>	
+				<rich:column>
+						<f:facet name="header">Prezzo Totale</f:facet>
+						<h:outputText value="#{_articolo.quantitaOttenuta * _articolo.prezzo} euro"/>
+				</rich:column>			
+			</rich:dataTable>
+
+       	</rich:modalPanel>
+     </a:outputPanel>     
      
 	</ui:define>
 

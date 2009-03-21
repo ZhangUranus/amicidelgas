@@ -113,15 +113,19 @@ public class OrderProcessing {
 	
 	@In(value="booleanCustomerToContadino", scope=ScopeType.BUSINESS_PROCESS, required=false)
 	@Out(value="booleanCustomerToContadino", scope=ScopeType.BUSINESS_PROCESS, required=false)
-	private Boolean booleanCustomerToContadino = new Boolean(false);
+	private Boolean booleanCustomerToContadino;
 	
 	@In(value="booleanCustomerToResponsabileConsegna", scope=ScopeType.BUSINESS_PROCESS, required=false)
 	@Out(value="booleanCustomerToResponsabileConsegna", scope=ScopeType.BUSINESS_PROCESS, required=false)
-	private Boolean booleanCustomerToResponsabileConsegna = new Boolean(false);
+	private Boolean booleanCustomerToResponsabileConsegna;
 	
-	@In(value="booleanResponsabileConsegnaToDriver", scope=ScopeType.BUSINESS_PROCESS, required=false)
-	@Out(value="booleanResponsabileConsegnaToDriver", scope=ScopeType.BUSINESS_PROCESS, required=false)
-	private Boolean booleanResponsabileConsegnaToDriver = new Boolean(false);
+	@In(value="booleanResponsabileConsegnaToContadino", scope=ScopeType.BUSINESS_PROCESS, required=false)
+	@Out(value="booleanResponsabileConsegnaToContadino", scope=ScopeType.BUSINESS_PROCESS, required=false)
+	private Boolean booleanResponsabileConsegnaToContadino;
+	
+	@In(value="booleanResponsabileConsegnaToCustomer", scope=ScopeType.BUSINESS_PROCESS, required=false)
+	@Out(value="booleanResponsabileConsegnaToCustomer", scope=ScopeType.BUSINESS_PROCESS, required=false)
+	private Boolean booleanResponsabileConsegnaToCustomer;
 	
 	@In(value="responsabileIsDriver", scope=ScopeType.BUSINESS_PROCESS,required=false)
 	@Out(value="responsabileIsDriver", scope=ScopeType.BUSINESS_PROCESS,required=false)
@@ -247,6 +251,11 @@ public class OrderProcessing {
 				contadiniEffettivi.add(username);
 				booleanFeedbackContadiniToResponsabile.put(username, new Boolean(false));
 		}
+		booleanResponsabileConsegnaToContadino = new Boolean(false);
+		booleanResponsabileConsegnaToCustomer = new Boolean(false);
+		booleanCustomerToResponsabileConsegna = new Boolean(false);
+		booleanCustomerToContadino = new Boolean(false);
+		
 	}
 	
 	@Transactional
@@ -357,7 +366,7 @@ public class OrderProcessing {
 	@BeginTask @EndTask(beforeRedirect=true,transition="fb_responsabile_consegna_to_contadino")
 	public String fb_responsabile_consegna_to_contadino(TakeInHandForDriver takeInHandForDriver) {
 		//list..
-		booleanResponsabileConsegnaToDriver = new Boolean(true);
+		booleanResponsabileConsegnaToContadino = new Boolean(true);
 		Hashtable<String, InfoFeedback> hashTableContadini = takeInHandForDriver.getHashTableContadini();
 		Enumeration<String> enum1 = hashTableContadini.keys();
 		while(enum1.hasMoreElements()) {
