@@ -1,0 +1,3 @@
+Bug: l'utente inserisce manualmente un comune non presente nella lista, aggirando l'autocompletamento
+Manifestazione: NullPointerException alla riga 82 di registrazionebean
+Causa: noi leggiamo sempre e comunque il comune dal db, se non è presente generiamo una nullpointerexception
