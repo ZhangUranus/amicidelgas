@@ -181,6 +181,7 @@ public class OrderProcessing {
 		boolean isAvailable=true;
 		int[] quantitaOttenute = new int[myOrdine.getItemQuantita().size()];
 		//verifico la disponibilità per ogni contandino
+		int i = 0;
 		for (ItemQuantita iq : myOrdine.getItemQuantita()) {
 			String partitaIva= iq.getCybercontadino().getPartitaIva();
 			CatalogInterface catalog = CatalogImpl.getInstanceForContadino(partitaIva);
@@ -191,11 +192,12 @@ public class OrderProcessing {
 				uuid = catalog.beginTransaction(myOrdine.getDataMassima());
 				transactionIdList.put(partitaIva, uuid);
 			}
-			int q=catalog.reserveItem(uuid, iq.getItem(),iq.getQuantitaParziale(), iq.getQuantita());
-			if (q==0) {
+			quantitaOttenute[i]=catalog.reserveItem(uuid, iq.getItem(),iq.getQuantitaParziale(), iq.getQuantita());
+			if (quantitaOttenute[i]==0) {
 				isAvailable = false;
 				break;
 			}
+			i++;
 		}
 		messageStatoOrdine =new Message();
 		messageStatoOrdine.setMittente(credentials.getUsername());
