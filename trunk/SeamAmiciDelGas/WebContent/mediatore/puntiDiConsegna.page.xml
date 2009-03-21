@@ -16,5 +16,5 @@
 	  </rule>
 	 </navigation>
 	
-	<restrict>#{s:hasRole('mediatore')}</restrict>  	
+	<restrict>#{s:hasRole('mediatore') or s:hasRole('admin')}</restrict>  	
 </page>

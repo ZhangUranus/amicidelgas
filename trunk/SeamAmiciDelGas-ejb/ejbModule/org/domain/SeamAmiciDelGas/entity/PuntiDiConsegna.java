@@ -28,7 +28,7 @@ import org.jboss.seam.annotations.Scope;
 @Entity
 @Table(name = "punti_di_consegna", catalog = "database_gas")
 @Name("newPuntiDiConsegna")
-@Scope(value=ScopeType.SESSION)
+@Scope(value=ScopeType.PAGE)
 public class PuntiDiConsegna implements java.io.Serializable {
 
 	/**
