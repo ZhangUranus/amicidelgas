@@ -15,40 +15,30 @@ var current_focus = 0;
 
 function calcola_numero_notifiche(){
 	var num = 0;
-	var tmp;
-	// tmp va eliminata, al momento mi serve per capire se funzia o meno il .value
 	
 	if(document.getElementById('num_notifiche_1')!=null){
-		num = num + document.getElementById('num_notifiche_1').value;
-		tmp = document.getElementById('num_notifiche_1').value;
+		num = num + parseInt(document.getElementById('num_notifiche_1').innerHTML);
 	}
 	if(document.getElementById('num_notifiche_2')!=null){
-		num = num + document.getElementById('num_notifiche_2').value;
-		tmp = document.getElementById('num_notifiche_2').value;
+		num = num + parseInt(document.getElementById('num_notifiche_2').innerHTML);
 	}
 	if(document.getElementById('num_notifiche_3')!=null){
-		num = num + document.getElementById('num_notifiche_3').value;
-		tmp = document.getElementById('num_notifiche_3').value;
+		num = num + parseInt(document.getElementById('num_notifiche_3').innerHTML);
 	}
 	if(document.getElementById('num_notifiche_4')!=null){
-		num = num + document.getElementById('num_notifiche_4').value;
-		tmp = document.getElementById('num_notifiche_4').value;
+		num = num + parseInt(document.getElementById('num_notifiche_4').innerHTML);
 	}
 	if(document.getElementById('num_notifiche_5')!=null){
-		num = num + document.getElementById('num_notifiche_5').value;
-		tmp = document.getElementById('num_notifiche_5').value;
+		num = num + parseInt(document.getElementById('num_notifiche_5').innerHTML);
 	}
 	if(document.getElementById('num_notifiche_6')!=null){
-		num = num + document.getElementById('num_notifiche_6').value;
-		tmp = document.getElementById('num_notifiche_6').value;
+		num = num + parseInt(document.getElementById('num_notifiche_6').innerHTML);
 	}
 	if(document.getElementById('num_notifiche_7')!=null){
-		num = num + document.getElementById('num_notifiche_7').value;
-		tmp = document.getElementById('num_notifiche_7').value;
+		num = num + parseInt(document.getElementById('num_notifiche_7').innerHTML);
 	}
 	if(document.getElementById('num_notifiche_8')!=null){
-		num = num + document.getElementById('num_notifiche_8').value;
-		tmp = document.getElementById('num_notifiche_8').value;
+		num = num + parseInt(document.getElementById('num_notifiche_8').innerHTML);
 	}
 	if((document.getElementById('notifiche_div')!=null) && (document.getElementById('notifiche_number_div')!=null)){
 		document.getElementById('notifiche_div').style.visibility = "visible";
