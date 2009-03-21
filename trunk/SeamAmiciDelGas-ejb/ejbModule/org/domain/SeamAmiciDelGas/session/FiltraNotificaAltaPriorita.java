@@ -14,7 +14,7 @@ import org.jbpm.taskmgmt.def.Task;
 import org.jbpm.taskmgmt.exe.TaskInstance;
 
 @Name("filtraNotificaAltaPriorita")
-@Scope(ScopeType.SESSION)
+@Scope(ScopeType.PAGE)
 public class FiltraNotificaAltaPriorita {
 
 	@In(value="pooledTaskInstanceList", create=true)
@@ -92,36 +92,7 @@ public class FiltraNotificaAltaPriorita {
 			return true;
 	}
 	
-	public boolean PooledTaskInstanceListForAllUserButMeNot(String username, String taskName)
-	{
-		System.out.println("AIUTOOOOOOOOOOOOOOOOOO TASKKKKKKKKKKKKKKK");
-		List<TaskInstance> tasks= getAllPooledTaskInstanceList(taskName);
-		List<TaskInstance> tasksUser = new ArrayList<TaskInstance>();
-		
-		ArrayList<String> arraylist = null;
-		
-		for(TaskInstance temp : tasks)
-		{
-			arraylist = (ArrayList<String>) temp.getVariable("inviati");
-			
-			if(arraylist==null)
-			{
-				System.out.println("VUOTOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
-				return true;
-			} 
-			else 
-			{
-				System.out.println("PIENOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
-				if(!(arraylist.contains(username)))
-					tasksUser.add(temp);
-			}
-			
-		}
-		if(tasksUser.isEmpty())
-			return false;
-		else
-			return true;
-	}
+	
 	
 	public List<TaskInstance> getAllHighestPriorityTaskInstanceListForMe(String username, String taskName, String partitaIva)
 	{
@@ -294,15 +265,69 @@ public class FiltraNotificaAltaPriorita {
 				System.out.println("PIENOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
 				if(!(arraylist.contains(username)))
 					tasksUser.add(temp);
+				System.out.println("ARRAYLISTTTTTTTTTTTt"+arraylist.toString());
 			}
 			
 		}
 		return tasksUser;
 	}
+	public boolean PooledTaskInstanceListForAllUserButMeNot(String username, String taskName)
+	{
+		System.out.println("AIUTOOOOOOOOOOOOOOOOOO TASKKKKKKKKKKKKKKK");
+		List<TaskInstance> tasks= getAllPooledTaskInstanceList(taskName);
+		List<TaskInstance> tasksUser = new ArrayList<TaskInstance>();
+		
+		ArrayList<String> arraylist = null;
+		
+		for(TaskInstance temp : tasks)
+		{
+			arraylist = (ArrayList<String>) temp.getVariable("inviati");
+			
+			if(arraylist==null)
+			{
+				System.out.println("VUOTOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+				return true;
+			} 
+			else 
+			{
+				System.out.println("PIENOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+				if(!(arraylist.contains(username)))
+					tasksUser.add(temp);
+			}
+			
+		}
+		if(tasksUser.isEmpty())
+			return false;
+		else
+			return true;
+	}
 	
+	public List<TaskInstance> getAllSingleTaskInstanceList(String username , String taskName)
+	{
+		List<TaskInstance> tasks= taskInstanceSingleList(taskName);
+		List<TaskInstance> taskList = new ArrayList<TaskInstance>();
+		String nome;
+		for (TaskInstance ti: tasks) {
+			nome = ti.getActorId();
+			if((nome.equals(username)))
+			{
+				if (ti.getName().equals(taskName))
+					taskList.add(ti);
+			}
+		}
+		return tasks;
+	}
 	
-	public int numberOfHighestPriorityTaskForSingle()	{
-		return numberOfHighPriorityTask("taskForSingle");
+	public int numberOfHighestPriorityTaskForSingle(String taskName)	
+	{
+		List<TaskInstance> tempTaskInstance = taskInstanceList;
+		if(tempTaskInstance.size() == 0)
+			return 0; //tempTaskInstance = null; //per verifica
+		int count = 0;
+		for (TaskInstance ti: tempTaskInstance)
+			if ((ti.getPriority() == Task.PRIORITY_HIGHEST) && ti.getName().equals(taskName))
+				count++;
+		return count;
 	}
 	
 	public int getNumerOfAllTaskInstanceListForContadino(String username, String taskName, String contadino)

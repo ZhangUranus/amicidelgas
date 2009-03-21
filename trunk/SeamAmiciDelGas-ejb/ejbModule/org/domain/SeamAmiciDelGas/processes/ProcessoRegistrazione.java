@@ -114,7 +114,7 @@ public class ProcessoRegistrazione {
 		messageSubProcess.setTipo("questionario");
 		gc= new GregorianCalendar();
 		gc.setTime((Date) dataQuestionario.clone());
-		gc.add(Calendar.MINUTE, +10);
+		gc.add(Calendar.MINUTE, +50);
 		dataTimer = gc.getTime();
 		MediatoreCheManda = credentials.getUsername();
 		compilato = false;
