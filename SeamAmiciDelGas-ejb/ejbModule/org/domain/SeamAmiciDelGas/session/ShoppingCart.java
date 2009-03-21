@@ -169,6 +169,9 @@ public class ShoppingCart {
 			ItemQuantita iq=itemInShoppingCart.get(index);
 			if(iq.isCheckedForOrdine())
 			{	
+				//setto la quantita minima
+				if (!iq.isBooleanIsQuantitaMinima())
+					iq.setQuantitaParziale(iq.getQuantita());
 				prezzoOrdine+=iq.getPrezzoTotale();
 				selectedItem.add(iq); 
 				itemInShoppingCart.remove(index--);
