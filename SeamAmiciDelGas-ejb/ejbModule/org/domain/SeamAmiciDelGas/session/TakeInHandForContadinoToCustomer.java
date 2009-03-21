@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Set;
 
 
 import org.domain.SeamAmiciDelGas.entity.Account;
+import org.domain.SeamAmiciDelGas.entity.Articolo;
 import org.domain.SeamAmiciDelGas.entity.Ordine;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Logger;
@@ -44,6 +46,10 @@ public class TakeInHandForContadinoToCustomer {
 	
 	private List<Ordine> ordiniForCustomer;
 	
+	private Ordine currentOrdine;
+	
+	private List<Articolo> articoliForCurrentOrdine;
+	
 	private Account currentAccount;
 	
 	private InfoFeedback infoFeedbackCustomer;
@@ -51,9 +57,12 @@ public class TakeInHandForContadinoToCustomer {
 	private List<String> stringhe;
 	
 	public void reset() {
-		
+		taskInstanceForCurrentAccount = new ArrayList<TaskInstance>();
 		tasksContadinoToCustomer = new ArrayList<TaskInstance>();
+		listCustomer = new ArrayList<Account>();
+		currentAccount = null;
 		stringaCustomer = null;
+		ordiniForCustomer = null;
 		stringhe = new ArrayList<String>();
 		log.info("\n\n******** RESET ***********\n\n");
 	}
@@ -90,6 +99,7 @@ public class TakeInHandForContadinoToCustomer {
 			for (TaskInstance t2: taskInstanceList) {
 			Account account = (Account) t2.getVariable("customer");
 			if (!listCustomer.contains(account)) {
+				listCustomer.add(account);
 				stringhe.add(account.getUsername());
 			}
 		}
@@ -111,7 +121,9 @@ public class TakeInHandForContadinoToCustomer {
 				if (account.getUsername().equals(stringaCustomer))
 				{
 					currentAccount = account;
+					//task instance che dovrò chiudere
 					taskInstanceForCurrentAccount.add(t1);
+					//ordini che devo visualizzare
 					ordiniForCustomer.add((Ordine) t1.getVariable("ordine"));
 				}
 
@@ -175,6 +187,27 @@ public class TakeInHandForContadinoToCustomer {
 
 		public void setHashTable(Hashtable<Integer, InfoFeedback> hashTable) {
 			this.hashTable = hashTable;
+		}
+
+		public Ordine getCurrentOrdine() {
+			return currentOrdine;
+		}
+
+		public void setCurrentOrdine(Ordine currentOrdine) {
+			this.currentOrdine = currentOrdine;
+		}
+
+		public List<Articolo> getArticoliForCurrentOrdine() {
+			articoliForCurrentOrdine = new ArrayList<Articolo>();
+			if (currentOrdine!=null) {
+				Set<Articolo> articoli = currentOrdine.getArticolos();
+				articoliForCurrentOrdine.addAll(articoli);
+			}
+			return articoliForCurrentOrdine;
+		}
+
+		public void setArticoliForCurrentOrdine(List<Articolo> articoliForCurrentOrdine) {
+			this.articoliForCurrentOrdine = articoliForCurrentOrdine;
 		}
 
 }

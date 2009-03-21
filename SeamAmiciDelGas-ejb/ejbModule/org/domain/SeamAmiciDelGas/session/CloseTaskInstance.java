@@ -36,11 +36,11 @@ public class CloseTaskInstance {
 	
 	@In(value="takeInHandForContadinoToDriver", create=true)
 	@Out(value="takeInHandForContadinoToDriver",scope=ScopeType.SESSION,required=false)
-	private TakeInHandForContadinoToCustomer takeInHandForContadinoToCustomer;
+	private TakeInHandForContadinoToDriver takeInHandForContadinoToDriver;
 	
 	@In(value="takeInHandForContadinoToCustomer", create=true)
 	@Out(value="takeInHandForContadinoToCustomer",scope=ScopeType.SESSION,required=false)
-	private TakeInHandForContadinoToDriver takeInHandForContadinoToDriver;
+	private TakeInHandForContadinoToCustomer takeInHandForContadinoToCustomer;
 	
 	
 	@Logger private Log log;
@@ -71,6 +71,7 @@ public class CloseTaskInstance {
 		takeInHandForDriver.reset();
 		return "fb_responsabile_to_customer";
 	}
+	
 	
 	
 	public String closefbResponsabileConsegnaToContadino() {
@@ -119,19 +120,22 @@ public class CloseTaskInstance {
 			Account account = (Account) managedTaskInstance.getVariable("customer");
 			log.info("******* task customer " +account.getUsername());
 			
-			InfoFeedback infoFeedback = hashTable.get(account.getUsername());
-			gestioneFeedback.assegnaFeedback(account.getUsername(), (Ordine) managedTaskInstance.getVariable("ordine"), (float) infoFeedback.getFeedback(), infoFeedback.getComment());
+			Ordine ordine = (Ordine) managedTaskInstance.getVariable("ordine");
+			
+			InfoFeedback infoFeedback = hashTable.get(ordine.getIdordine());
+			if (infoFeedback!=null)
+				gestioneFeedback.assegnaFeedback(account.getUsername(), ordine, (float) infoFeedback.getFeedback(), infoFeedback.getComment());
 			log.info("******* task instance " +managedTaskInstance.toString());
 
 			//setto il fatto che il contadino ha rilasciato il feedback al driver
-			Boolean votatoContadinoToDriver = (Boolean) t.getVariable("booleanCustomerToContadino");
+			Boolean votatoContadinoToDriver = (Boolean) managedTaskInstance.getVariable("booleanCustomerToContadino");
 			votatoContadinoToDriver = new Boolean(true);
 			managedTaskInstance.setVariable("booleanCustomerToContadino", votatoContadinoToDriver);
 			
 			managedTaskInstance.end("fb_responsabile_to_customer");
 			
 		}
-		takeInHandForDriver.reset();
+		takeInHandForContadinoToCustomer.reset();
 		
 		return "fb_responsabile_to_customer";
 	}
