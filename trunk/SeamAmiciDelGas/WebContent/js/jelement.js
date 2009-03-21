@@ -16,6 +16,8 @@ var current_focus = 0;
 function calcola_numero_notifiche(){
 	var num = 0;
 	var tmp;
+	// tmp va eliminata, al momento mi serve per capire se funzia o meno il .value
+	
 	if(document.getElementById('num_notifiche_1')!=null){
 		num = num + document.getElementById('num_notifiche_1').value;
 		tmp = document.getElementById('num_notifiche_1').value;
@@ -48,8 +50,10 @@ function calcola_numero_notifiche(){
 		num = num + document.getElementById('num_notifiche_8').value;
 		tmp = document.getElementById('num_notifiche_8').value;
 	}
-	document.getElementById('notifiche_div').style.visibility = "visible";
-	document.getElementById('notifiche_number_div').innerHTML = num;	
+	if((document.getElementById('notifiche_div')!=null) && (document.getElementById('notifiche_number_div')!=null)){
+		document.getElementById('notifiche_div').style.visibility = "visible";
+		document.getElementById('notifiche_number_div').innerHTML = num;
+	}		
 }
 
 function altrimenti_non_funge(){
