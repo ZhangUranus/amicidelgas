@@ -255,7 +255,7 @@
       <tr>
 	  	<td background="/SeamAmiciDelGas/img/shadow_ovest.png"></td>
 	    <td background="/SeamAmiciDelGas/img/shadow_n.png" align="left" >
-	    	<s:decorate rendered="#{(filtraNotificaAltaPriorita.numberOfHighestPriorityTaskForSingle() > 0)}" >
+	    	<s:decorate rendered="#{(filtraNotificaAltaPriorita.numberOfHighestPriorityTaskForSingle('riceviMessaggio') > 0)}" >
 	    		<s:link view="/customer/visualizzaNotificheAltaPriorita.xhtml" propagation="none" >
     		    	<div align="left" class="colore_yellow" style="height: 28px;  padding-top: 4px;"><b>Notifiche alta priorita'</b></div>
     		    </s:link>
@@ -286,8 +286,8 @@
     		    </s:link>
     		</s:decorate>    		
     		<s:decorate rendered="#{((filtraNotificaAltaPriorita.getNumRispostaMediatoreDriver('riceviRisposta',currentAccount.username) > 0) and (loginSelectBean.calculateMaxRole()=='utenteGas' or loginSelectBean.calculateMaxRole()=='driver'))}">
-    			<s:link view="/mediatore/visualizzaNotificheAltaPriorita.xhtml" propagation="none">
-    		    	<div align="left" class="colore_white_bold" style="height: 28px;  padding-top: 4px;">Risposta richiesta driver</div>
+    			<s:link view="/customer/visualizzaNotificheAltaPriorita.xhtml" propagation="none">
+    		    	<div align="left" class="colore_white_bold" style="height: 28px;  padding-top: 4px;">Risposta richiesta Driver</div>
     		    </s:link>
     		</s:decorate>
     		<s:decorate rendered="#{((filtraNotificaAltaPriorita.getAllPooledTaskInstanceList('visualizzaQuestionari').size() > 0) and (loginSelectBean.calculateMaxRole()=='admin'))}">
@@ -297,14 +297,14 @@
     		</s:decorate>
 	    </td>
 	    <td width="26px" background="/SeamAmiciDelGas/img/shadow_n.png" align="left" >
-	    	<s:decorate rendered="#{(filtraNotificaAltaPriorita.numberOfHighestPriorityTaskForSingle() > 0)}">
-    		    <div align="center" class="colore_white_bold" style="background:transparent url('/SeamAmiciDelGas/img/red_number3.png') no-repeat; width:26px; height: 28px; padding-top: 4px; padding-right: 1px;" >#{filtraNotificaAltaPriorita.numberOfHighestPriorityTaskForSingle()}</div>
+	    	<s:decorate rendered="#{(filtraNotificaAltaPriorita.numberOfHighestPriorityTaskForSingle('riceviMessaggio') > 0)}">
+    		    <div align="center" class="colore_white_bold" style="background:transparent url('/SeamAmiciDelGas/img/red_number3.png') no-repeat; width:26px; height: 28px; padding-top: 4px; padding-right: 1px;" >#{filtraNotificaAltaPriorita.numberOfHighestPriorityTaskForSingle('riceviMessaggio')}</div>
     		</s:decorate>
     		<s:decorate rendered="#{(filtraNotifica.numberForGroupForCustomer() + filtraNotifica.numberForSingleForCustomer()) > 0}">
     		    <div align="center" class="colore_white_bold" style="background:transparent url('/SeamAmiciDelGas/img/red_number2.png') no-repeat; width:26px; height: 28px; padding-top: 4px; padding-right: 1px;" >#{(filtraNotifica.numberForGroupForCustomer() + filtraNotifica.numberForSingleForCustomer())}</div>
     		</s:decorate>
     		<s:decorate rendered="#{((filtraNotificaAltaPriorita.numberOfTask('taskForGroup' , 'partecipa_alla_visita') > 0) and ( filtraNotificaAltaPriorita.PooledTaskInstanceListForAllUserButMeNot(currentAccount.username , 'partecipa_alla_visita')))}">
-    		    <div align="center" class="colore_white_bold" style="background:transparent url('/SeamAmiciDelGas/img/red_number2.png') no-repeat; width:26px; height: 28px; padding-top: 4px; padding-right: 1px;" >#{filtraNotificaAltaPriorita.numberOfTask('taskForGroup' , 'partecipa_alla_visita')}</div>
+    		    <div align="center" class="colore_white_bold" style="background:transparent url('/SeamAmiciDelGas/img/red_number2.png') no-repeat; width:26px; height: 28px; padding-top: 4px; padding-right: 1px;" >#{filtraNotificaAltaPriorita.getPooledTaskInstanceListForAllUserButMeNot(currentAccount.username , 'partecipa_alla_visita').size()}</div>
     		</s:decorate>    		 
     		<s:decorate rendered="#{((filtraNotificaAltaPriorita.getNumberBecomeDriver('riceviMessaggio') > 0) and (loginSelectBean.calculateMaxRole()=='mediatore' or loginSelectBean.calculateMaxRole()=='admin'))}">
     		    <div align="center" class="colore_white_bold" style="background:transparent url('/SeamAmiciDelGas/img/red_number2.png') no-repeat; width:26px; height: 28px; padding-top: 4px; padding-right: 1px;" >#{filtraNotificaAltaPriorita.getNumberBecomeDriver('riceviMessaggio')}</div>

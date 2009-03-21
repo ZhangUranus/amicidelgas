@@ -1,7 +1,10 @@
 package org.domain.SeamAmiciDelGas.session;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Set;
 
@@ -41,13 +44,14 @@ public class GestioneItinerario
 		
 	}
 
-	public List<Itinerario> getItinerariCorrenti() {
+	public List<Itinerario> getItinerariCorrenti() 
+	{
 		Date dataCorrente = new Date(System.currentTimeMillis());
-		//itinerarioList.setEjbql("select itinerario from Itinerario itinerario where itinerario.dataPartenza  >= '"+dataCorrente+"'");
-		System.out.println("select itinerario from Itinerario itinerario where itinerario.dataPartenza  >= '"+dataCorrente+"'");
-		itinerarioList.setEjbql("select itinerario from Itinerario itinerario ");
+		GregorianCalendar gc = new GregorianCalendar();
+		gc.setTime(dataCorrente);
+		String format = "yyyy-MM-dd-HH-mm";
+		itinerarioList.setEjbql("select itinerario from Itinerario itinerario where itinerario.dataPartenza  >= '"+new SimpleDateFormat(format).format(gc.getTime())+"'");
 		itinerariCorrenti = itinerarioList.getResultList();
-		System.out.println("ITINERARIADSAFDAS"+itinerariCorrenti.size());
 		return itinerariCorrenti;
 	}
 
