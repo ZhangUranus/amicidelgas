@@ -234,7 +234,7 @@ public class FiltraNotifica {
 		return count;
 	}
 	
-	//mi restituisce tutti i task in cui il contadino non è il responsabile di consegna
+	//mi restituisce tutti i task in cui il contadino corrente non è il responsabile di consegna
 	// ed è uno dei contadini dell'ordine e non ha dato il voto
 	public List<TaskInstance> taskInstanceForContadinoNoResponsabile(String taskFilter) {
 		List<TaskInstance> tasks = this.getAllPooledTaskInstanceList(taskFilter);
@@ -242,12 +242,13 @@ public class FiltraNotifica {
 		Account responsabileConsegna;
 		for (TaskInstance ti: tasks) {
 			responsabileConsegna = (Account) ti.getVariable("responsabileConsegna");
+			//il responsabile di consegna non deve essere il contadino
 			if (!responsabileConsegna.getUsername().equals(credentials.getUsername())) {
 				//controllo se il contadino è uno dei contadini dell'ordine e se non ha dato il voto 
 				Hashtable<String,Boolean> hashTable = (Hashtable<String,Boolean>) ti.getVariable("booleanFeedbackContadiniToResponsabile");
 				Boolean hasVotato = hashTable.get(credentials.getUsername());
 				if (hasVotato!=null && !hasVotato) {
-						output.add(ti);
+					output.add(ti);
 				}
 			}
 				

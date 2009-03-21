@@ -128,9 +128,9 @@ public class CloseTaskInstance {
 			log.info("******* task instance " +managedTaskInstance.toString());
 
 			//setto il fatto che il contadino ha rilasciato il feedback al driver
-			Boolean votatoContadinoToDriver = (Boolean) managedTaskInstance.getVariable("booleanCustomerToContadino");
+			Boolean votatoContadinoToDriver = (Boolean) managedTaskInstance.getVariable("booleanResponsabileConsegnaToCustomer");
 			votatoContadinoToDriver = new Boolean(true);
-			managedTaskInstance.setVariable("booleanCustomerToContadino", votatoContadinoToDriver);
+			managedTaskInstance.setVariable("booleanResponsabileConsegnaToCustomer", votatoContadinoToDriver);
 			
 			managedTaskInstance.end("fb_responsabile_to_customer");
 			
