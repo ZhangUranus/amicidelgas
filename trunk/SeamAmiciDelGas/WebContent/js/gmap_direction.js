@@ -4,6 +4,7 @@ var gasIcon, contadiniIcon;
 var markers_place = new Array();
 var markers_contadini = new Array();
 var partenza = "via traiano, Benevento (Benevento)";
+var locale = "it_IT";
 var to_place = new Array();
 var from_place = new Array();
 var map;
@@ -130,8 +131,25 @@ function load() {
 				if(prima_cybercontadino==0){
 					alert("Seleziona prima uno o più cybercontadini, i punti di consegna vanno selezionati per ultimi");
 				} else {
-					solo_punti_di_consegna++;
-					alert("count_punti");
+					
+					if(to_place[idmark]==null){
+						to_place[idmark] = place;
+						count_punti_di_consegna++;
+						
+						solo_punti_di_consegna++;
+						setDirections();
+											
+					} else {
+						to_place[idmark] = null;
+						count_punti_di_consegna--;
+						
+						setDirections();
+						if(count_punti_di_consegna==0){
+							solo_punti_di_consegna=0; //non si può aggiungere un punto di consegna
+							alert("Nessun punto di consenga presente nell'itinerario.");
+						}
+						
+					}
 				}
 			});
 		}
@@ -162,16 +180,17 @@ function load() {
 						count_contadini++;
 						if(count_contadini==1){
 							prima_cybercontadino=1; //consenta di aggiungere un punto di consegna
-							setDirections(partenza, contadino.getIndirizzo().getAddress(), "it_IT");
+							setDirections();
 							//alert("Primo contadino aggiunto, selezionare un altro contadino o un punto di consegna per creare un itinerario.");
 						} else if(count_contadini <= 3){
-							setDirections(partenza, contadino.getIndirizzo().getAddress(), "it_IT");
+							setDirections();
 						} else {
 							alert("Non puoi aggiungere altri cybercontadini allì'itinerario.");
 						}					
 					} else {
 						from_place[idmark] = null;
 						count_contadini--;
+						setDirections();
 						if(count_contadini==0){
 							prima_cybercontadino=0; //non si può aggiungere un punto di consegna
 							alert("Contadino rimosso dall'itinerario, nessun contadino presente nell'itinerario.");
@@ -190,18 +209,30 @@ function load() {
 	});
 }	
 
-function initialize() {
-       
+function initialize() {      
    gdir = new GDirections(map, document.getElementById("directions"));
    GEvent.addListener(gdir, "addoverlay", onGDirectionsLoad);
    GEvent.addListener(gdir, "error", handleErrors);
-	
-   //setDirections("via mellusi, Benevento (Benevento)","via delle puglie, Benevento (Benevento)", "via napoli, Benevento (Benevento)", "it_IT");
 }
 
-function setDirections(fromAddress, toAddress, locale) {
-  gdir.load("from: " + fromAddress + " to: " + toAddress,
-            { "locale": locale , "preserveViewport": false });
+function setDirections() {
+	//il cuore di tutto.... che commento a ca***
+	
+	var query = "from: " + partenza;
+	
+	if(from_place.length > 0){
+		for(z=0; z < from_place.length ;z++){
+			if(from_place[z]!=null){
+				query = query + " to: "+from_place[z].getIndirizzo().getAddress();
+			}
+		}
+		for(t=0; t < to_place.length ;t++){
+			if(to_place[t]!=null){
+				query = query + " to: "+to_place[t].getIndirizzo().getAddress();
+			}
+		}
+		gdir.load(query,{ "locale": locale , "preserveViewport": false });
+	}
 }
 
 function handleErrors(){
