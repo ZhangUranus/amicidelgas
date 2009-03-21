@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<root-container name="ProcessoEmailConferma" width="636" height="435">
+<root-container name="ProcessoEmailConferma" width="879" height="386">
   <node name="register" x="252" y="61" width="132" height="36">
     <edge>
       <label x="5" y="-10"/>
@@ -9,11 +9,6 @@
   <node name="confirm" x="249" y="188" width="132" height="36">
     <edge>
       <label x="5" y="-10"/>
-      <bendpoint w1="115" h1="83" w2="94" h2="-83"/>
-    </edge>
-    <edge>
-      <label x="5" y="-10"/>
-      <bendpoint w1="-130" h1="82" w2="-151" h2="-84"/>
     </edge>
   </node>
   <node name="end" x="243" y="326" width="132" height="36"/>

@@ -1,17 +1,13 @@
 package org.domain.SeamAmiciDelGas.session;
 
 import java.util.Date;
-
 import javax.ejb.Remove;
 import javax.ejb.Stateful;
-import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-
 import org.domain.SeamAmiciDelGas.action.RegistrationMailer;
 import org.domain.SeamAmiciDelGas.crud.ComuneList;
 import org.domain.SeamAmiciDelGas.entity.Account;
-import org.domain.SeamAmiciDelGas.entity.Comune;
 import org.domain.SeamAmiciDelGas.entity.Pagamentoelettronico;
 import org.domain.SeamAmiciDelGas.entity.Patente;
 import org.domain.SeamAmiciDelGas.entity.Role;
@@ -37,25 +33,24 @@ public class RichiestaRegistrazioneBean implements RichiestaRegistrazione
 
     @PersistenceContext
     private EntityManager em;
-    @In(value="newUtente")
+    @In(value="newUtente" , create=true)
     @Out(value="utenteCreato")
     private Utente utente;
-    @In(value="newAccount")
+    @In(value="newAccount" , create=true)
     private Account account;
-    @In(value="newPatente")
+    @In(value="newPatente", create=true)
     private Patente patente;
-    @In(value="newPagamento")
+    @In(value="newPagamento", create=true)
     private Pagamentoelettronico pagamento;
-    @In(value="newComuneProvinciaBean")
+    @In(value="newComuneProvinciaBean", create=true)
     private ComuneProvinciaBean comuneProvinciaBean;
-    @In(value="newComuneProvinciaResidenzaBean")
+    @In(value="newComuneProvinciaResidenzaBean", create=true)
     private ComuneProvinciaBean comuneProvinciaResidenzaBean;
-    @In(value="passwordBean")
+    @In(value="passwordBean", create=true)
     private PasswordBean passwordBean;
     @In(value="passwordManager",create=true)
     private PasswordManager passwordManager;
-    @In(value="registrationMailer",create=true)
-    private RegistrationMailer registrationMailer;
+
     @In StatusMessages statusMessages;
     
     @Transactional public boolean richiestaRegistrazione()
@@ -84,11 +79,11 @@ public class RichiestaRegistrazioneBean implements RichiestaRegistrazione
     	utente.setComuneByIdcomune(comuneList.getResultList().get(0));
     	
     	em.persist(utente);
-    	if(patente.getTipo().equals("Nessuna"))
+    	if(!(patente.getTipo().equals("NO")))
     	{
     		System.out.println("AIUTOOOOOOOOOO NESSUNAAAAAAAAAAAa");
-    	patente.setUtente(utente);
-    	em.persist(patente);
+    		patente.setUtente(utente);
+    		em.persist(patente);
     	}
     	
     	em.persist(pagamento);
@@ -109,8 +104,6 @@ public class RichiestaRegistrazioneBean implements RichiestaRegistrazione
     	role.setAccount(account);
     	role.setName("utenteGas");
     	em.persist(role);
-    	
-    	registrationMailer.sendWelcomeEmail();
     	
         // implement your business logic here
         log.info("richiestaRegistrazione.richiestaRegistrazione() action called");
