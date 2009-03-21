@@ -58,7 +58,7 @@
 			
 				<s:decorate id="rilasciaFeedbackField1" rendered="#{not empty takeInHandForContadinoToDriver.currentResponsabile}">
 					<h:form>
-						<h:dataTable value="#{takeInHandForContadinoToDriver.itinerarioForDriver}" var="_itinerario">
+						<h:dataTable value="#{takeInHandForContadinoToDriver.itinerariForDriver}" var="_itinerario">
 							<rich:column>
 									<f:facet name="header">
 										<h:outputText value="Itinerario" />
@@ -76,7 +76,7 @@
 	                				<f:facet name="header">
 										<h:outputText value="Voto feedback" />
 									</f:facet>
-	                				<h:selectOneRadio value="#{takeInHandForContadinoToCustomer.getInfoFeedbackForOrdine(_ordine.idordine).feedback}" required="true" 
+	                				<h:selectOneRadio value="#{takeInHandForContadinoToDriver.getInfoFeedbackForItinerario(_itinerario.iditinerario).feedback}" required="true" 
 	                					requiredMessage="inserire una valutazione">
 					  					<f:selectItem itemLabel="Basso" itemValue="1" ></f:selectItem>
 					  					<f:selectItem itemLabel="Normale" itemValue="2" ></f:selectItem>
@@ -92,7 +92,7 @@
 	                				<f:facet name="header">
 										<h:outputText value="Commento" />
 									</f:facet>
-			        				<h:inputTextarea value="#{takeInHandForContadinoToCustomer.getInfoFeedbackForOrdine(_ordine.idordine).comment}">
+			        				<h:inputTextarea value="#{takeInHandForContadinoToDriver.getInfoFeedbackForItinerario(_itinerario.iditinerario).comment}">
 			        					<a:support	event="onblur" ajaxSingle="true"/>
 					  				</h:inputTextarea>
 			        			</s:decorate>

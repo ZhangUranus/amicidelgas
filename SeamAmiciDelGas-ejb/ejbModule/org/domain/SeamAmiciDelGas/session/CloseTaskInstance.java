@@ -65,6 +65,11 @@ public class CloseTaskInstance {
 			gestioneFeedback.assegnaFeedback(account.getUsername(), (Ordine) managedTaskInstance.getVariable("ordine"), (float) infoFeedback.getFeedback(), infoFeedback.getComment());
 			log.info("******* task instance " +managedTaskInstance.toString());
 
+			//setto il fatto che il contadino ha rilasciato il feedback al driver
+			Boolean votatoDriverToCustomer = (Boolean) managedTaskInstance.getVariable("booleanResponsabileConsegnaToCustomer");
+			votatoDriverToCustomer = new Boolean(true);
+			managedTaskInstance.setVariable("booleanResponsabileConsegnaToCustomer", votatoDriverToCustomer);
+			
 			managedTaskInstance.end("fb_responsabile_to_customer");
 			//settare il booleano
 		}
@@ -94,11 +99,16 @@ public class CloseTaskInstance {
 			infoFeedback = new InfoFeedback("",3);
 			gestioneFeedback.assegnaFeedback(uContadino, null, (float) infoFeedback.getFeedback(), infoFeedback.getComment());
 		}
-		//settare il booleano
 	}
 	//chiudiamo le task instance...
 	for (TaskInstance t: takeInHandForDriver.getTaskInstanceContadinoForItinerario()) {
 		TaskInstance managedTaskInstance = jbpmContext.getTaskInstance(t.getId());
+		
+		//setto il fatto che il contadino ha rilasciato il feedback al driver
+		Boolean votatoDriverToContadino = (Boolean) managedTaskInstance.getVariable("booleanResponsabileConsegnaToContadino");
+		votatoDriverToContadino = new Boolean(true);
+		managedTaskInstance.setVariable("booleanResponsabileConsegnaToContadino", votatoDriverToContadino);
+		
 		log.info("******* task instance " +managedTaskInstance.toString());
 		managedTaskInstance.end("fb_responsabile_consegna_to_contadino");
 	}
@@ -166,6 +176,7 @@ public class CloseTaskInstance {
 			
 			//tengo traccia che il contadino corrente ha votato il driver
 			Hashtable<String,Boolean> booleanFeedbackContadiniToResponsabile = (Hashtable<String,Boolean>) t.getVariable("booleanFeedbackContadiniToResponsabile");
+			booleanFeedbackContadiniToResponsabile.put(credentials.getUsername(), new Boolean(true));
 			Boolean votato = booleanFeedbackContadiniToResponsabile.get(credentials.getUsername());
 			votato = new Boolean(true);
 			managedTaskInstance.setVariable("booleanFeedbackContadiniToResponsabile", booleanFeedbackContadiniToResponsabile);
@@ -180,11 +191,11 @@ public class CloseTaskInstance {
 	
 	//verifica se tutti i contadini hanno votato il driver
 	private boolean allHannoVotato(Hashtable<String,Boolean> booleanFeedbackContadiniToResponsabile) {
-		Enumeration<Boolean> enumeration = (Enumeration<Boolean>) booleanFeedbackContadiniToResponsabile.values();
+		Enumeration<Boolean> enumeration = (Enumeration<Boolean>) booleanFeedbackContadiniToResponsabile.elements();
 		boolean all = true;
 		while (enumeration.hasMoreElements()) {
 			Boolean votato = enumeration.nextElement();
-			if (!votato) {
+			if (!(votato.booleanValue())) {
 				all=false;
 				break;
 			}
