@@ -43,16 +43,6 @@
 								</td></tr>
 							</table>
 	        			</rich:column>
-	        			<rich:column>
-							<table id="table_comune" cellpadding="10" cellspacing="0" border="0" width="100%"	>
-								<tr><td>
-									<b>Comune di residenza</b>
-								</td></tr>
-								<tr><td>
-									<h:outputText value="#{takeInHandForContadinoToCustomer.currentAccount.utente.comuneByIdcomune.nome}"/>	
-								</td></tr>
-							</table>
-	        			</rich:column>
                 	</h:panelGrid>      
 				</s:decorate>
 			</a:outputPanel> 
@@ -87,7 +77,7 @@
 				                	
 		                		<a:commandLink ajaxSingle="true" id="dettagliOrdinePendenteLink"
 		                    		oncomplete="#{rich:component('dettagliOrdinePanel')}.show()">
-		                    		<f:setPropertyActionListener value="#{takeInHandForContadinoToCustomer.currentOrdine}" 
+		                    		<f:setPropertyActionListener value="#{takeInHandForContadinoToCustomer.currentOrdineForCustomer}" 
 		                    								target="#{_ordine}" />
 			                    	<h:graphicImage value="/img/modifica_mini.png" style="border:0" />
 			                	</a:commandLink>

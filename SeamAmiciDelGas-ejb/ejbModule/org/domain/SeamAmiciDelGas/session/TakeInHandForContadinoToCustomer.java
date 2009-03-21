@@ -46,7 +46,7 @@ public class TakeInHandForContadinoToCustomer {
 	
 	private List<Ordine> ordiniForCustomer;
 	
-	private Ordine currentOrdine;
+	private Ordine currentOrdineForCustomer;
 	
 	private List<Articolo> articoliForCurrentOrdine;
 	
@@ -62,6 +62,8 @@ public class TakeInHandForContadinoToCustomer {
 		listCustomer = new ArrayList<Account>();
 		currentAccount = null;
 		stringaCustomer = null;
+		currentOrdineForCustomer = null;
+		articoliForCurrentOrdine = new ArrayList<Articolo>();
 		ordiniForCustomer = null;
 		stringhe = new ArrayList<String>();
 		log.info("\n\n******** RESET ***********\n\n");
@@ -189,25 +191,24 @@ public class TakeInHandForContadinoToCustomer {
 			this.hashTable = hashTable;
 		}
 
-		public Ordine getCurrentOrdine() {
-			return currentOrdine;
-		}
-
-		public void setCurrentOrdine(Ordine currentOrdine) {
-			this.currentOrdine = currentOrdine;
-		}
-
 		public List<Articolo> getArticoliForCurrentOrdine() {
 			articoliForCurrentOrdine = new ArrayList<Articolo>();
-			if (currentOrdine!=null) {
-				Set<Articolo> articoli = currentOrdine.getArticolos();
-				articoliForCurrentOrdine.addAll(articoli);
-			}
+			if (currentOrdineForCustomer!=null)
+				articoliForCurrentOrdine.addAll(currentOrdineForCustomer.getArticolos());
 			return articoliForCurrentOrdine;
 		}
 
 		public void setArticoliForCurrentOrdine(List<Articolo> articoliForCurrentOrdine) {
 			this.articoliForCurrentOrdine = articoliForCurrentOrdine;
+		}
+
+		public Ordine getCurrentOrdineForCustomer() {
+			return currentOrdineForCustomer;
+		}
+
+		public void setCurrentOrdineForCustomer(Ordine currentOrdineForCustomer) {
+			log.info("****** $ ");
+			this.currentOrdineForCustomer = currentOrdineForCustomer;
 		}
 
 }

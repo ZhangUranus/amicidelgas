@@ -111,25 +111,25 @@ public class TakeInHandForContadinoToDriver {
 
 		public void setStringaResponsabileConsegna(String usernameResponsabile) {
 			String username = credentials.getUsername();
+			//itinerari da visualizzare
 			itinerarioForDriver = new ArrayList<Itinerario>();
 			this.stringaResponsabileConsegna = usernameResponsabile;
 			log.info("Responsabile "+stringaResponsabileConsegna);
-
+			
+			//taskInstance che dovrò chiudere per il responsabile corrente
 			taskInstanceListForResponsabile = new ArrayList<TaskInstance>();
 			
 			for (TaskInstance t1: tasksContadinoToResponsabileConsegna) {
 				Account responsabile = (Account) t1.getVariable("responsabileConsegna");
+				Itinerario it = (Itinerario) t1.getVariable("itinerario");
 				if (responsabile.getUsername().equals(stringaResponsabileConsegna))
 				{
+					if (!itinerarioForDriver.contains(it))
+						itinerarioForDriver.add(it);
 					currentResponsabile = responsabile;
 					taskInstanceListForResponsabile.add(t1);
 				}
-				//carico gli itinerari da visualizzare
-				Itinerario it = (Itinerario) t1.getVariable("itinerario");
-				if (it!=null)
-					if (!itinerarioForDriver.contains(it))
-						itinerarioForDriver.add(it);
-				}
+			}
 		}
 
 		
