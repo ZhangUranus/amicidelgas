@@ -17,12 +17,13 @@
         <f:facet name="header">Registrazione: Passo 1 - Dati Personali</f:facet>    
 
 			<s:decorate id="codiceFiscaleField" template="/layout/edit.xhtml">
-                <ui:define name="label">Codice fiscale</ui:define>
+                <ui:define name="label">Codice Fiscale</ui:define>
                 <h:inputText id="codiceFiscale"
                        required="true"
                        requiredMessage="Inserire il codice fiscale"
                            size="32"
                       maxlength="16"
+                      minlength="16"
                       value="#{newUtente.codiceFiscale}">
                     <a:support event="onblur" 
                     reRender="codiceFiscaleField" 
@@ -215,7 +216,7 @@
 
 	
             <s:decorate id="recapitoTelefonicoField" template="/layout/edit.xhtml">
-                <ui:define name="label">Recapito telefonico</ui:define>
+                <ui:define name="label">Recapito Telefonico</ui:define>
                 <h:inputText id="recapitoTelefonico"
                        required="true"
                         requiredMessage="Inserire il numero di telefono"
@@ -246,7 +247,7 @@
 
 			<div style="clear:both">
                 <span class="required">*</span>
-                Campi richiesti
+                Campi Richiesti
             </div>
 
 	</rich:panel>

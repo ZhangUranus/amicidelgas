@@ -40,10 +40,6 @@
             <ui:define name="label">Sesso</ui:define>
             <h:outputText value="Maschio" rendered="#{newUtente.sesso=='M'}"/>
             <h:outputText value="Femmina" rendered="#{newUtente.sesso=='F'}"/>
-            <!-- <h:outputText value="#{newUtente.sesso}">
-            <f:converter converterId="ConverterSesso"/>
-             
-            </h:outputText> -->
         </s:decorate>
         
         <s:decorate id="provincianascita" template="/layout/display.xhtml">
@@ -108,7 +104,7 @@
 		
 		<div style="clear:both">
                 <span class="required">*</span>
-                Campi richiesti
+                Campi Richiesti
             </div>
 		
     </rich:panel>

@@ -8,43 +8,28 @@
 	name="ProcessoEmailConferma">
 
 	<start-state name="register">
-		<event type="after-signal">
-			<script>System.out.println("A new golfer has registered");</script>
-		</event>
 		<transition name="request confirmation" to="confirm"/>
 	</start-state>
 
 	<task-node name="confirm">
 		<task description="Respond to the registration confirmation email">
-			<assignment actor-id="#{utenteCreato.username}"/>
+			<assignment actor-id="#{currentAccountUtente.username}"/>
 			<event type="task-assign">
 				<!--<mail name="send confirmation email" template="confirm-registration" async="true"/>-->
-				<mail name="send confirmation email" async="true" to="#{utenteCreato.emailAddress}">
+				<mail name="send confirmation email" async="true" to="#{currentAccountUtente.utente.email}">
 					<subject>Confirm Registration</subject>
-					<text><![CDATA[#{utenteCreato.name},
-
-Thanks for registering! Before you can login, you must verify your
-e-mail address by clicking on the following link:
+					<text><![CDATA[#{currentAccountUtente.utente.nome},
+Grazie per la registrazione! Prima di loggarti, devi verificare
+il tuo indirizzo e-mail clikkando sul seguente link:
 
 http://localhost:8080/SeamAmiciDelGas/utente/confirmRegistration.seam?code=#{confirmationCode}&amp;taskId=#{taskInstance.id}
 
-Open 18
-...a place for golfers
+Seam Amici Del GAS
 Member Services]]></text>
 				</mail>
 			</event>
-			<timer name="confirmation timeout"
-				duedate="1 hour" transition="timed out">
-				<script>
-					System.out.println("Registration canceled");
-					taskInstance.end();
-				</script>
-			</timer>
 		</task>
-		<transition name="timed out" to="end"/>
-		<transition name="confirmed" to="end">
-			<script>System.out.println("Registration confirmed");</script>
-		</transition>
+	<transition name="confirmed" to="end" />
 	</task-node>
 
 	<end-state name="end"/>

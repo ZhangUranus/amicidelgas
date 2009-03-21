@@ -18,7 +18,6 @@ import org.richfaces.model.UploadItem;
 
 @Name("newFileUpload")
 @Scope(value=ScopeType.SESSION)
-//@Table(name = "fileupload", catalog = "database_gas")
 public class FileUpload implements Serializable
 {
     private String savePath;
