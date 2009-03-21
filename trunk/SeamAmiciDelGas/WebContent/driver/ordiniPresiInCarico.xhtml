@@ -13,7 +13,7 @@
 		
 		
 	
-	<rich:simpleTogglePanel label="Filtra Ordini" switchType="ajax">		
+	
 		
 		<rich:panel>
 			<f:facet name="header">Ordini presi in carico #{identity.username}</f:facet>
@@ -95,13 +95,13 @@
 				</rich:column>
 				<rich:column>
 					<f:facet name="header">Quantita minima</f:facet>
-						<h:outputText value="#{_prodotto.quantitaMinRichiesta} euro"/>
+						<h:outputText value="#{_prodotto.quantitaMinRichiesta}"/>
 				</rich:column>
 			</rich:dataTable>
        	</rich:modalPanel>
      </a:outputPanel>
      
-     </rich:simpleTogglePanel>
+    
 	</ui:define>
 
 </ui:composition>

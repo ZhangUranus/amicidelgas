@@ -249,9 +249,10 @@ public class OrderProcessing {
 		List<ItemQuantita> items = myOrdine.getItemQuantita();
 		for(ItemQuantita iq: items) {
 			String username = iq.getCybercontadino().getAccount().getUsername();
-			if (!contadiniEffettivi.contains(username))
+			if (!contadiniEffettivi.contains(username)) {
 				contadiniEffettivi.add(username);
 				booleanFeedbackContadiniToResponsabile.put(username, new Boolean(false));
+			}
 		}
 		booleanResponsabileConsegnaToContadino = new Boolean(false);
 		booleanResponsabileConsegnaToCustomer = new Boolean(false);

@@ -108,6 +108,15 @@
 										<f:convertDateTime type="date" dateStyle="medium" locale="Locale.ITALY"/>
 									</h:outputText>	
 			        			</rich:column>
+			        			<rich:column>
+									<f:facet name="header">
+										<h:outputText value="Data Consegna" />
+									</f:facet>
+									<h:outputText value="#{_ordine.dataConclusione}">
+										<f:convertDateTime type="date" dateStyle="medium" locale="Locale.ITALY"/>
+									</h:outputText>	
+			        			</rich:column>
+			        			
 			        			<rich:column align="center">
 				                	<f:facet name="header">
 			                        	<h:outputText value="Dettagli ordini" />

@@ -34,9 +34,7 @@ public class TakeInHandForContadinoToDriver {
 	@In(value="filtraNotifica", create=true)
 	private FiltraNotifica filtraNotifica;
 	
-	private InfoFeedback infoFeedbackResponsabile;
-	
-	private List<Itinerario> itinerarioForDriver;
+	private List<Itinerario> itinerariForDriver;
 	
 	//list di taskInstance da terminare per il responsabile corrente
 	private List<TaskInstance> taskInstanceListForResponsabile;
@@ -53,8 +51,7 @@ public class TakeInHandForContadinoToDriver {
 	private List<String> stringheResponsabiliConsegna;
 	
 	public void reset() {
-
-		infoFeedbackResponsabile=null;
+		itinerariForDriver = new ArrayList<Itinerario>();
 		tasksContadinoToResponsabileConsegna = new ArrayList<TaskInstance>();
 		responsabili = new ArrayList<Account>();
 		stringaResponsabileConsegna = null;
@@ -64,7 +61,7 @@ public class TakeInHandForContadinoToDriver {
 
 	}
 	
-	public InfoFeedback getInfoFeedbackForOrdine(Integer idItinerario){
+	public InfoFeedback getInfoFeedbackForItinerario(Integer idItinerario){
 		if(idItinerario==null)
 			return null;
 		if(hashTable.get(idItinerario)==null)
@@ -72,12 +69,6 @@ public class TakeInHandForContadinoToDriver {
 		return hashTable.get(idItinerario);
 	}
 		
-	public InfoFeedback getInfoFeedbackResponsabile() {
-		if(infoFeedbackResponsabile==null)
-			infoFeedbackResponsabile= new InfoFeedback("",3);
-		return infoFeedbackResponsabile;
-	}
-
 		public List<String> getStringheResponsabiliConsegna() {
 			hashTable = new Hashtable<Integer,InfoFeedback>();
 			//task assegnati dal contadino in cui non è il responsabile di consegna e per cui non ha dato il voto al driver
@@ -100,7 +91,6 @@ public class TakeInHandForContadinoToDriver {
 				Account responsabile = (Account) t2.getVariable("responsabileConsegna");
 				if (responsabile!=null) {
 					if (!responsabili.contains(responsabile)) {
-						//se il contadino ha già votato il driver non inserisco l'istanza
 							responsabili.add(responsabile);
 							stringheResponsabiliConsegna.add(responsabile.getUsername());
 						}
@@ -112,7 +102,7 @@ public class TakeInHandForContadinoToDriver {
 		public void setStringaResponsabileConsegna(String usernameResponsabile) {
 			String username = credentials.getUsername();
 			//itinerari da visualizzare
-			itinerarioForDriver = new ArrayList<Itinerario>();
+			itinerariForDriver = new ArrayList<Itinerario>();
 			this.stringaResponsabileConsegna = usernameResponsabile;
 			log.info("Responsabile "+stringaResponsabileConsegna);
 			
@@ -124,8 +114,8 @@ public class TakeInHandForContadinoToDriver {
 				Itinerario it = (Itinerario) t1.getVariable("itinerario");
 				if (responsabile.getUsername().equals(stringaResponsabileConsegna))
 				{
-					if (!itinerarioForDriver.contains(it))
-						itinerarioForDriver.add(it);
+					if (!itinerariForDriver.contains(it))
+						itinerariForDriver.add(it);
 					currentResponsabile = responsabile;
 					taskInstanceListForResponsabile.add(t1);
 				}
@@ -170,10 +160,6 @@ public class TakeInHandForContadinoToDriver {
 			this.taskInstanceListForResponsabile = taskInstanceListForResponsabile;
 		}
 
-		public void setInfoFeedbackResponsabile(InfoFeedback infoFeedbackResponsabile) {
-			this.infoFeedbackResponsabile = infoFeedbackResponsabile;
-		}
-
 		public Account getCurrentResponsabile() {
 			return currentResponsabile;
 		}
@@ -190,12 +176,13 @@ public class TakeInHandForContadinoToDriver {
 			this.hashTable = hashTable;
 		}
 
-		public List<Itinerario> getItinerarioForDriver() {
-			return itinerarioForDriver;
+		public List<Itinerario> getItinerariForDriver() {
+			return itinerariForDriver;
 		}
 
-		public void setItinerarioForDriver(List<Itinerario> itinerarioForDriver) {
-			this.itinerarioForDriver = itinerarioForDriver;
+		public void setItinerariForDriver(List<Itinerario> itinerariForDriver) {
+			this.itinerariForDriver = itinerariForDriver;
 		}
+
 
 }
