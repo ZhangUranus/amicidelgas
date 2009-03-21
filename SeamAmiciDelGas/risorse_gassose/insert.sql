@@ -10629,7 +10629,8 @@ COMMIT;
 
 INSERT INTO `punti_di_consegna` VALUES
  (1,'viale mellusi','coordinate1',10252),
- (2,'via napoli','coordinate2',10252);
+ (2,'via napoli','coordinate2',10252),
+ (3,'avellino 15','coordinate3',10252);
 COMMIT;
 
 INSERT INTO `itinerario_has_punti_di_consegna` VALUES

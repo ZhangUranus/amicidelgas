@@ -15,7 +15,7 @@ import org.jboss.seam.international.StatusMessages;
 
 @Stateless
 @Name("addPuntiDiConsegna")
-@Scope(value=ScopeType.SESSION)
+@Scope(value=ScopeType.PAGE)
 public class AddPuntiDiConsegnaBean implements AddPuntiDiConsegna
 {
     @Logger private Log log;
