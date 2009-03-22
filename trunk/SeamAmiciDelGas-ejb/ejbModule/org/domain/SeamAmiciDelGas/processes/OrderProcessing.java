@@ -225,9 +225,9 @@ public class OrderProcessing {
 			}
 			messageStatoOrdine.setInfoFilter("orderProcessingPreso");
 			responsabileConsegna = currentAccount;
+			this.itinerario = itinerario;
 			if (loginSelectBean.isDriver()) {
 				responsabileIsDriver = new Boolean(true);
-				this.itinerario = itinerario;
 				this.itinerario.getCybercontadinos();
 				this.itinerario.getPuntiDiConsegnas();
 			}

@@ -12,7 +12,7 @@
 	<ui:define name="body">
 		
 			<rich:simpleTogglePanel label="Notifiche Personali">
-			<h:form>
+			
 				<s:decorate rendered="#{not empty filtraNotifica.getAllSingleTaskInstanceListByFilters('ReceiveMessage')}">
 					<b><h:outputText value="Messaggi da altri utenti" /></b><br/><br/>
 					<rich:dataTable id="dataTableUtente" width="90%" align="center" 
@@ -37,20 +37,23 @@
 					<br/><br/><br/>
 				</s:decorate>
 			
+			
 			<s:decorate rendered="#{not empty filtraNotifica.taskInstanceSingleListForContadino()}">
 				
 				
-				<b><h:outputText value="Messaggi di richiesta ordini" /></b><br/><br/>
+				<b><h:outputText value="Messaggi di richiesta ordine" /></b><br/><br/>
 				
-		<h:form>
-	        <a:region>
+				<h:form>
 				<rich:dataTable id="dataTableUtenteRichiestaOrdini" 
 								value="#{filtraNotifica.taskInstanceSingleListForContadino()}" var="_task"
 								width="90%" align="center" >
+					
+					
 					<rich:column>
 						<f:facet name="header">Mittente</f:facet>    
 				         <h:outputText value="#{_task.variables.customer.username}"/>
 					</rich:column>
+					
 					<rich:column>
 						<f:facet name="header">Contenuto messaggio</f:facet>    
 				         <h:outputText value="#{_task.variables.notificaDriverContadino.content}"/>
@@ -66,34 +69,44 @@
 			                </a:commandLink>
                 		<rich:toolTip for="dettagliOrdinePendenteLink" value="Visualizza i dettagli dell'ordine"/>
 	            	</rich:column>
-									
-					<rich:column>
-					<s:decorate id="dataConsegnaField" template="/layout/edit.xhtml">
-						<rich:calendar id="dataConsegnaCalendar" value="#{notificaBean.dataConsegna}"
-									datePattern="dd/MM/yyyy" >
-							
-						</rich:calendar>
-					</s:decorate>
-					</rich:column>	
-									
+												
 					<rich:column width="10%">
-					<h:commandLink value="Accetta ordine" 
-	            			action="#{orderProcessing.verificaDisponibilita(notificaBean.itinerario)}">
-	            			<f:param name="taskId" value="#{_task}"/>
-	            		</h:commandLink>	
+						<h:commandLink value="Accetta ordine"
+		            			action="#{orderProcessing.verificaDisponibilita(newItinerario)}">
+		            			<f:param name="taskId" value="#{_task.id}"/>
+	           			</h:commandLink>
 					</rich:column>
+					
 				</rich:dataTable>
-			</a:region>
-		</h:form>	
 				
+				
+				<s:decorate id="dataConsegnaField" template="/layout/edit.xhtml">
+                	<ui:define name="label">Inserire la data di consegna</ui:define>
+                		<rich:calendar id="dataVisita"
+                       		required="true" requiredMessage="Inserire una data"
+                    		value="#{newItinerario.dataConsegna}" datePattern="dd/MM/yyyy HH:mm">
+                   		<a:support event="onchange" reRender="dataConsegnaField" bypassUpdates="true" ajaxSingle="true"/>
+                		</rich:calendar>
+            	</s:decorate>
+            	
+            	<s:decorate id="puntoConsegnaField" template="/layout/edit.xhtml">
+            	<ui:define name="label">Seleziona il punto di consegna</ui:define>
+            	<h:selectOneMenu value="#{newItinerario.}" required="true"
+		                	title="seleziona il tipo di ordine che vuoi visualizzare" style=" width : 149px;">
+		                	<a:support event="onchange" ajaxSingle="true" reRender="ordiniPendenti,ordiniEvasiConclusi" />
+		                	<s:selectItems var="_punto" label="#{_punto.comune}" value="#{puntiDiConsegnaList.resultList}" />
+		                </h:selectOneMenu>
+                </s:decorate>
+			
+			</h:form>
 				<br/>	    
 			</s:decorate>
-				</h:form>
 		</rich:simpleTogglePanel>
 				
 				<br/><br/><br/>
 				
 				<rich:simpleTogglePanel label="Notifiche di gruppo">
+					<h:form>
 						<rich:dataTable id="dataTableGroup" 
 									value="#{filtraNotifica.getAllPooledTaskInstanceList('ReceiveMessage')}" var="_pooledTask"
 									width="90%" align="center" >
@@ -114,7 +127,7 @@
 									  value="Cancella messaggio"/>
 						</rich:column>
 						</rich:dataTable>
-				
+				</h:form>
 			</rich:simpleTogglePanel>
 		
 		

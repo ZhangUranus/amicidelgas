@@ -8,6 +8,7 @@ import java.util.List;
 import org.domain.SeamAmiciDelGas.entity.Account;
 import org.domain.SeamAmiciDelGas.entity.Itinerario;
 import org.domain.SeamAmiciDelGas.processes.NotifyBean;
+import org.hibernate.validator.Future;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Logger;
 import org.jboss.seam.annotations.Name;
@@ -27,8 +28,6 @@ public class NotificaBean {
 	private Account utenteScelto;
 	private Account utenteCancellato;
 	private String messaggio;
-	
-	private Date dataConsegna = new GregorianCalendar().getTime();
 	
 	@In(value="notifyBean", create=true)
 	private NotifyBean notifyBean;
@@ -125,24 +124,6 @@ public class NotificaBean {
 				myAccountList.remove(a);	
 				return;
 			}
-	}
-
-	public Date getDataConsegna() {
-		return dataConsegna;
-	}
-
-	public void setDataConsegna(Date dataConsegna) {
-		log.info("*****DATA CONSEGNA "+dataConsegna);
-		this.dataConsegna = dataConsegna;
-	}
-
-	public Itinerario getItinerario() {
-		Itinerario it = new Itinerario();
-		log.info("******* "+dataConsegna);
-		it.setDataConsegna(dataConsegna);
-		return it;
-	}
-
-	
+	}	
 	
 }
