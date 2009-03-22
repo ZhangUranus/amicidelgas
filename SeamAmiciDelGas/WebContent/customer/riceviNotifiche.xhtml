@@ -57,8 +57,12 @@
 						    <h:outputText value="#{_task.variables.notifyMessageStatoOrdine.content}"/>
 						</rich:column>
 						<rich:column>
-							<f:facet name="header">Info Filter</f:facet>    
-						    <h:outputText value="#{_task.variables.notifyMessageStatoOrdine.infoFilter}"/>
+							<f:facet name="header">Data Consegna</f:facet>
+							    <s:decorate rendered="#{_task.variables.myOrdine.evaso}">
+						    		<h:outputText value="#{_task.variables.dataConsegna}">
+						    			<f:convertDateTime type="date" dateStyle="medium" locale="Locale.ITALY"/>
+						    		</h:outputText>
+						    	</s:decorate>
 						</rich:column>
 						<rich:column align="center">
                 		<f:facet name="header">Dettagli Ordine</f:facet>	
