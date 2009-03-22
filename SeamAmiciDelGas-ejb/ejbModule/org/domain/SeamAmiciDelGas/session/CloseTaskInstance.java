@@ -168,7 +168,7 @@ public class CloseTaskInstance {
 			if(infoFeedback!=null)
 				gestioneFeedback.assegnaFeedback(usernameDriver, null, (float) infoFeedback.getFeedback(), infoFeedback.getComment());
 		}
-		
+		   
 		//chiudo le task instance
 		for (TaskInstance t: takeInHandForContadinoToDriver.getTaskInstanceListForResponsabile()) {
 			TaskInstance managedTaskInstance = jbpmContext.getTaskInstance(t.getId());
@@ -177,8 +177,6 @@ public class CloseTaskInstance {
 			//tengo traccia che il contadino corrente ha votato il driver
 			Hashtable<String,Boolean> booleanFeedbackContadiniToResponsabile = (Hashtable<String,Boolean>) t.getVariable("booleanFeedbackContadiniToResponsabile");
 			booleanFeedbackContadiniToResponsabile.put(credentials.getUsername(), new Boolean(true));
-			Boolean votato = booleanFeedbackContadiniToResponsabile.get(credentials.getUsername());
-			votato = new Boolean(true);
 			managedTaskInstance.setVariable("booleanFeedbackContadiniToResponsabile", booleanFeedbackContadiniToResponsabile);
 			
 			if (this.allHannoVotato(booleanFeedbackContadiniToResponsabile))
