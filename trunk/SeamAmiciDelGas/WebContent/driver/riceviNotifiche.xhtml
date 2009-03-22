@@ -1,4 +1,4 @@
-<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
     xmlns:s="http://jboss.com/products/seam/taglib"
@@ -12,28 +12,28 @@
 	<ui:define name="body">
 		
 		<rich:simpleTogglePanel label="Itinerari creati">
-		<h:form>
+		<h:form> 
 		        <a:region>
 			<rich:dataTable id="dataTableItinerari" 
 								value="#{matchItinerarioOrdine.loadItinerari()}" var="_itinerario"
 								width="90%" align="center" >
-				<rich:column>
+				<rich:column align="center">
 					<f:facet name="header">Id</f:facet>    
 					<h:outputText value="#{_itinerario.iditinerario}"/>
 				</rich:column>
-				<rich:column>
+				<rich:column align="center">
 					<f:facet name="header">Data creazione</f:facet>    
 					<h:outputText value="#{_itinerario.dataCreazione}">
 						<f:convertDateTime type="date" dateStyle="medium" locale="Locale.ITALY"/>
 					</h:outputText>
 				</rich:column>
-				<rich:column>
+				<rich:column align="center">
 					<f:facet name="header">Data consegna</f:facet>    
 					<h:outputText value="#{_itinerario.dataConsegna}">
 						<f:convertDateTime type="date" dateStyle="medium" locale="Locale.ITALY"/>
 					</h:outputText>
 				</rich:column>
-				<rich:column>
+				<rich:column align="center">
 					<f:facet name="header">Contadini da visitare</f:facet>    
 					<a:commandLink ajaxSingle="true" id="listaContadiniPerItinerarioLink"
 				        	oncomplete="#{rich:component('listaContadiniPerItinerario')}.show()">
@@ -41,7 +41,7 @@
 					    <h:graphicImage value="/img/contadino50x36.gif" style="border:0" />
 					</a:commandLink>
 				</rich:column>
-				<rich:column>
+				<rich:column align="center">
 					<f:facet name="header">Punti di consegna</f:facet>    
 					<a:commandLink ajaxSingle="true" id="puntiDiConsegnaLink"
 				        	oncomplete="#{rich:component('puntiDiConsegnaPanel')}.show()">

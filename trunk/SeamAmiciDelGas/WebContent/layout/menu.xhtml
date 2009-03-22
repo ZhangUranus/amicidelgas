@@ -54,15 +54,11 @@
             </f:facet>
             
             <rich:menuItem submitMode="none" >
-                    <s:link view="/customer/rilasciaFeedback.xhtml" value="FEEDBACK" propagation="none"/>
+                    <s:link view="/customer/rilasciaFeedback.xhtml" value="ASSEGNA FEEDBACK" propagation="none"/>
              </rich:menuItem>
              
               <rich:menuItem submitMode="none" >
                     <s:link view="/customer/riepilogoFeedback.xhtml" value="I MIEI FEEDBACK" propagation="none"/>
-             </rich:menuItem>
-             
-              <rich:menuItem submitMode="none" >
-                    <s:link view="/customer/visualizzaItinerari.xhtml" value="VISUALIZZA ITINERARI" propagation="none"/>
              </rich:menuItem>
         	
         	 <rich:menuItem submitMode="none"  >
@@ -84,12 +80,12 @@
 		            <f:param name="accountUsername" value="#{currentAccount.username}"/>
              </rich:menuItem> 
              
-             <rich:menuItem submitMode="none"  >
-                    <s:link view="/customer/browseCatalog.xhtml" value="VEDI CATALOGO" propagation="none"/>
+             <rich:menuItem submitMode="none" >
+                    <s:link view="/customer/visualizzaOrdini.xhtml" value="VISUALIZZA ORDINI" propagation="none"/>
              </rich:menuItem>
              
              <rich:menuItem submitMode="none" >
-                    <s:link view="/customer/visualizzaOrdini.xhtml" value="VISUALIZZA ORDINI" propagation="none"/>
+                    <s:link view="/customer/visualizzaItinerari.xhtml" value="VISUALIZZA ITINERARI" propagation="none"/>
              </rich:menuItem> 	
         	
         </rich:dropDownMenu>	
