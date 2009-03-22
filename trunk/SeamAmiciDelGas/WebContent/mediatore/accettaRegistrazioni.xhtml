@@ -211,8 +211,12 @@ function attivaCalendar() {
             		</h:panelGroup>
             		</f:facet>
 				<h:panelGrid columns="1">	
-	        	<h:outputText>Contatta: #{gestioneRegistrazioniBean.currentCustomer.utente.nome} #{gestioneRegistrazioniBean.currentCustomer.utente.cognome}</h:outputText>
+				<a:outputPanel ajaxRendered="true">
+	        			<h:panelGrid columns="2">
 				<h:form>
+	        		<h:outputText>Contatta: #{gestioneRegistrazioniBean.currentCustomer.utente.nome} #{gestioneRegistrazioniBean.currentCustomer.utente.cognome}</h:outputText>
+	        		<br/>
+	        		<br/>
         		 	<h:outputText >Data Intervista: </h:outputText>
         			<rich:calendar id="dataIntervista"
                        			required="true"
@@ -223,6 +227,8 @@ function attivaCalendar() {
                        			<a:support event="oncollapse" action="#{gestioneRegistrazioniBean.inviaEmail()}" reRender="dataVisitaIntervista" limitToList="true"></a:support>
                   	</rich:calendar>
              	 </h:form>
+             	 </h:panelGrid>
+	        		</a:outputPanel>
               </h:panelGrid>
        	</rich:modalPanel>
        	
