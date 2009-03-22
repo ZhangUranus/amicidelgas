@@ -145,6 +145,7 @@ function load() {
 						
 						setDirections();
 						if(count_punti_di_consegna==0){
+							controlForm();
 							solo_punti_di_consegna=0; //non si può aggiungere un punto di consegna
 							alert("Nessun punto di consenga presente nell'itinerario.");
 						}
@@ -193,6 +194,7 @@ function load() {
 						setDirections();
 						if(count_contadini==0){
 							prima_cybercontadino=0; //non si può aggiungere un punto di consegna
+							controlForm();
 							alert("Contadino rimosso dall'itinerario, nessun contadino presente nell'itinerario.");
 						}
 						
@@ -232,6 +234,23 @@ function setDirections() {
 			}
 		}
 		gdir.load(query,{ "locale": locale , "preserveViewport": false });
+		controlForm();
+	}
+}
+
+function controlForm(){
+	if(prima_cybercontadino > 0){
+		if(solo_punti_di_consegna > 0){
+			//verde
+			document.getElementById('status_itinerario').innerHTML = "Ora seleziona la data di partenza e poi crea l'itinerario <img src=\"/SeamAmiciDelGas/img/valid.png\" />";
+		}else {
+			//arancione
+			document.getElementById('status_itinerario').innerHTML = "Adesso seleziona almeno un punto di consegna per poter creare un nuovo itinerario <img src=\"/SeamAmiciDelGas/img/notyet_valid.png\" />";
+		}
+	} else {
+		//rosso
+		document.getElementById('status_itinerario').innerHTML = "Seleziona almeno un cybercontadino ed un punto di consegna per poter creare un nuovo itinerario <img src=\"/SeamAmiciDelGas/img/not_valid.png\" />";
+			
 	}
 }
 

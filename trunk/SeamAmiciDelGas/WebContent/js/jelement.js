@@ -40,7 +40,7 @@ function calcola_numero_notifiche(){
 	if(document.getElementById('num_notifiche_8')!=null){
 		num = num + parseInt(document.getElementById('num_notifiche_8').innerHTML);
 	}
-	if((document.getElementById('notifiche_div')!=null) && (document.getElementById('notifiche_number_div')!=null)){
+	if((document.getElementById('notifiche_div')!=null) && (document.getElementById('notifiche_number_div')!=null) && (num > 0)){
 		document.getElementById('notifiche_div').style.visibility = "visible";
 		document.getElementById('notifiche_number_div').innerHTML = num;
 	}		
