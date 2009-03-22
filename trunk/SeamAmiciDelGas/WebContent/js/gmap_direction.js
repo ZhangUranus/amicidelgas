@@ -16,6 +16,8 @@ var solo_punti_di_consegna = 0;
 var count_punti_di_consegna = 0;
 var count_contadini = 0;
 var ultimo_controllo = 0;
+var format_string;
+var	format_string_place;
 
 function Indirizzo(via,comune,provincia){
 	this.via = via;
@@ -222,16 +224,20 @@ function setDirections() {
 	//il cuore di tutto.... che commento a ca***
 	
 	var query = "from: " + partenza;
+	format_string= "";
+	format_string_place="";
 	
 	if(from_place.length > 0){
 		for(z=0; z < from_place.length ;z++){
 			if(from_place[z]!=null){
 				query = query + " to: "+from_place[z].getIndirizzo().getAddress();
+				format_string = format_string + "" + from_place[z].getId() + " | ";
 			}
 		}
 		for(t=0; t < to_place.length ;t++){
 			if(to_place[t]!=null){
 				query = query + " to: "+to_place[t].getIndirizzo().getAddress();
+				format_string_place = format_string_place + "" + to_place[t].getId() + " | ";
 			}
 		}
 		gdir.load(query,{ "locale": locale , "preserveViewport": false });
@@ -246,8 +252,9 @@ function controlForm(){
 			if(ultimo_controllo > 0){
 				document.getElementById('status_itinerario').innerHTML = "<img src=\"/SeamAmiciDelGas/img/valid.png\" /> Ora puoi creare l'itinerario";
 				document.getElementById('crea_itinerario_pulsante').style.display = "";
-				
-				document.getElementById('crea_itinerario:itinerario_hidden').value='becomeDriver';
+
+				document.getElementById('crea_itinerario:itinerario_hidden').value=format_string;
+				document.getElementById('crea_itinerario:itinerario_hidden2').value=format_string_place;
 			} else {
 				document.getElementById('status_itinerario').innerHTML = "<img src=\"/SeamAmiciDelGas/img/notyet_valid.png\" /> Ora seleziona la data di partenza e poi crea l'itinerario";
 				document.getElementById('crea_itinerario_pulsante').style.display = "none";
