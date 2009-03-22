@@ -6,4 +6,11 @@
       no-conversation-view-id="/itinerario.xhtml"
       login-required="true">
 
+<restrict>#{s:hasRole('driver') or s:hasRole('admin')}</restrict>
+ <navigation>
+  <rule if-outcome="OutcomeItinerario">
+   <redirect view-id="/driver/visualizzaItinerario.xhtml"/>
+  </rule>
+ </navigation>
+
 </page>

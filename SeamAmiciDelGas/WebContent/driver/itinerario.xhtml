@@ -43,14 +43,15 @@ window.onload = function(){
 						                       			required="true"
 						                       			showApplyButton="true"
 						                       			oncollapse="setPass()"
-						                       			value="#{addItinerario.date}" datePattern="MM/dd/yyyy HH:mm">
+						                       			value="#{addItinerario.dataPartenza}" datePattern="MM/dd/yyyy HH:mm">
 						                  			</rich:calendar>
 									            </s:decorate>
 									            <h:inputHidden id="itinerario_hidden" value="#{addItinerario.all_id}" ></h:inputHidden>
+									            <h:inputHidden id="itinerario_hidden2" value="#{addItinerario.all_id_puntiConsegna}" ></h:inputHidden>
 											</td>
 											<td width="20%" align="center">
 												<div id="crea_itinerario_pulsante" style="display:none;">
-													<h:commandLink action="#{processoRegistrazione.dataProposta}" value="Crea Itinerario" />
+													<h:commandLink action="#{addItinerario.addItinerario}" value="Crea Itinerario" />
 												</div>												
 											</td>
 										</tr>
