@@ -75,10 +75,10 @@
 							<rich:column align="center">
                 				<f:facet name="header">Dettagli Ordine</f:facet>
 				                	
-		                		<a:commandLink ajaxSingle="true" id="dettagliOrdinePendenteLink"
+		                		<a:commandLink ajaxSingle="true" id="dettagliOrdineLink"
 		                    		oncomplete="#{rich:component('dettagliOrdinePanel')}.show()">
-		                    		<f:setPropertyActionListener value="#{takeInHandForContadinoToCustomer.currentOrdineForCustomer}" 
-		                    								target="#{_ordine}" />
+		                    		<f:setPropertyActionListener value="#{_ordine}" 
+		                    								target="#{takeInHandForContadinoToCustomer.currentOrdineForCustomer}" />
 			                    	<h:graphicImage value="/img/modifica_mini.png" style="border:0" />
 			                	</a:commandLink>
                 				<rich:toolTip for="dettagliOrdineLink" value="Visualizza i dettagli dell'ordine"/>

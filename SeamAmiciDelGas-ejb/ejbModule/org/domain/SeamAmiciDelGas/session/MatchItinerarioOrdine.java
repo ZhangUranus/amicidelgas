@@ -1,7 +1,10 @@
 package org.domain.SeamAmiciDelGas.session;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Set;
 
@@ -47,9 +50,14 @@ public class MatchItinerarioOrdine implements Serializable{
 	private List<Itinerario> itinerariValidi;
 	
 	public List<Itinerario> loadItinerari() {
+		Date dataCorrente = new Date(System.currentTimeMillis());
+		GregorianCalendar gc = new GregorianCalendar();
+		gc.setTime(dataCorrente);
+		String format = "yyyy-MM-dd-HH-mm";
 		//query per tornare gli itinerari del driver
 		itinerarioList.setEjbql("select itinerario from Itinerario itinerario " +
-									"where itinerario.account.username='"+credentials.getUsername()+"'");
+									"where itinerario.account.username='"+credentials.getUsername()+
+									"' and itinerario.dataPartenza  >= '"+new SimpleDateFormat(format).format(gc.getTime())+"'");
 		List<Itinerario> tempItinerario = itinerarioList.getResultList();
 		log.info("\n\n******** ITINERARIO dim = " +tempItinerario.size() +" **************");
 		return tempItinerario;

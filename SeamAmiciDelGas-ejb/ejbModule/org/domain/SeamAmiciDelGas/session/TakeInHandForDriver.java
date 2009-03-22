@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.domain.SeamAmiciDelGas.entity.Account;
 import org.domain.SeamAmiciDelGas.entity.Articolo;
@@ -93,13 +95,25 @@ public class TakeInHandForDriver {
 	}
 
 	
-	
+	//carico i cybercontadini ai quali è associato almeno un ordine
 	public List<Cybercontadino> listCybercontadini() {
 		List<Cybercontadino> contadini = new ArrayList<Cybercontadino>();
-
 		if(currentItinerario!=null && taskInstanceContadinoForItinerario.size()!=0) {
-			log.info("***** SIZEEEE"+currentItinerario.getCybercontadinos().size());
-			contadini.addAll(currentItinerario.getCybercontadinos());
+			Set<Cybercontadino> setContadini = currentItinerario.getCybercontadinos();
+			Iterator<Cybercontadino> iterator = setContadini.iterator();
+			Cybercontadino c;
+			Hashtable<String,Boolean> hashTable;
+			while (iterator.hasNext()) {
+				c = iterator.next();
+				for (TaskInstance t1: taskInstanceContadinoForItinerario) {
+						hashTable = (Hashtable<String,Boolean>) t1.getVariable("booleanFeedbackContadiniToResponsabile");
+						Boolean voto = hashTable.get(c.getAccount().getUsername());
+						if (voto!=null) {
+							contadini.add(c);
+							break;
+						}
+				}
+			}
 		}
 		return contadini;
 	}
@@ -107,10 +121,10 @@ public class TakeInHandForDriver {
 	public List<Account> listCustomer() {
 		List<Account> customerList = new ArrayList<Account>();
 		if(currentItinerario!=null) {
-			for (TaskInstance t1: tasksResponsabileToCustomer) {
-				Itinerario it = (Itinerario) t1.getVariable("itinerario");
+			for (TaskInstance t1: taskInstanceCustomerForItinerario) {
+				//Itinerario it = (Itinerario) t1.getVariable("itinerario");
 				Account currAccount = (Account) t1.getVariable("customer");
-				if (currentItinerario.equals(it) && !customerList.contains(currAccount))
+				if (!customerList.contains(currAccount))
 					customerList.add(currAccount);
 			}
 		}
