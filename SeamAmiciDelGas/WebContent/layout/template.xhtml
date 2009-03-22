@@ -54,23 +54,26 @@
     <td height="22" background="/SeamAmiciDelGas/img/shadow_top.png"></td>
    </tr>
    <tr>
-     <td background="/SeamAmiciDelGas/img/shadow.png">
+   	 <td width="25%" background="/SeamAmiciDelGas/img/shadow.png">
+   	 	<h:messages id="messages" globalOnly="true" styleClass="message"
+      				errorClass="errormsg" infoClass="infomsg" warnClass="warnmsg"
+      				rendered="#{showGlobalMessages != 'false'}"/>
+     </td>
+     <td width="50%" background="/SeamAmiciDelGas/img/shadow.png">
 			<div align="center"  ><img src="/SeamAmiciDelGas/img/title.png" border="0" align="middle" /></div>			    
+     </td>
+     <td width="25%" background="/SeamAmiciDelGas/img/shadow.png">		    
      </td>
    </tr>
    <tr valign="top">
-     <td background="/SeamAmiciDelGas/img/shadow.png" valign="top">
+     <td colspan="3" background="/SeamAmiciDelGas/img/shadow.png" valign="top">
      		<div class="body">
-     			<h:messages id="messages" globalOnly="true" styleClass="message"
-		        				errorClass="errormsg" infoClass="infomsg" warnClass="warnmsg"
-		        				rendered="#{showGlobalMessages != 'false'}"/>
-		    	
 		    	<ui:insert name="body"/>
 		  	</div>
      </td>
    </tr>
    <tr>
-    <td height="22" background="/SeamAmiciDelGas/img/shadow_bottom.png"></td>
+    <td colspan="3" height="22" background="/SeamAmiciDelGas/img/shadow_bottom.png"></td>
    </tr>
 </table>
 

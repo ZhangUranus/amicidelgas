@@ -15,6 +15,7 @@ var solo_punti_di_consegna = 0;
 // i punti di consegna ed i cybercontadini massimi sono 3
 var count_punti_di_consegna = 0;
 var count_contadini = 0;
+var ultimo_controllo = 0;
 
 function Indirizzo(via,comune,provincia){
 	this.via = via;
@@ -144,10 +145,10 @@ function load() {
 						count_punti_di_consegna--;
 						
 						setDirections();
-						if(count_punti_di_consegna==0){
-							controlForm();
+						if(count_punti_di_consegna==0){							
 							solo_punti_di_consegna=0; //non si può aggiungere un punto di consegna
 							alert("Nessun punto di consenga presente nell'itinerario.");
+							controlForm();
 						}
 						
 					}
@@ -242,16 +243,31 @@ function controlForm(){
 	if(prima_cybercontadino > 0){
 		if(solo_punti_di_consegna > 0){
 			//verde
-			document.getElementById('status_itinerario').innerHTML = "Ora seleziona la data di partenza e poi crea l'itinerario <img src=\"/SeamAmiciDelGas/img/valid.png\" />";
+			if(ultimo_controllo > 0){
+				document.getElementById('status_itinerario').innerHTML = "<img src=\"/SeamAmiciDelGas/img/valid.png\" /> Ora puoi creare l'itinerario";
+				document.getElementById('crea_itinerario_pulsante').style.display = "";
+				
+				document.getElementById('crea_itinerario:itinerario_hidden').value='becomeDriver';
+			} else {
+				document.getElementById('status_itinerario').innerHTML = "<img src=\"/SeamAmiciDelGas/img/notyet_valid.png\" /> Ora seleziona la data di partenza e poi crea l'itinerario";
+				document.getElementById('crea_itinerario_pulsante').style.display = "none";
+			}
 		}else {
 			//arancione
-			document.getElementById('status_itinerario').innerHTML = "Adesso seleziona almeno un punto di consegna per poter creare un nuovo itinerario <img src=\"/SeamAmiciDelGas/img/notyet_valid.png\" />";
+			document.getElementById('status_itinerario').innerHTML = "<img src=\"/SeamAmiciDelGas/img/notyet_valid.png\" /> Adesso seleziona almeno un punto di consegna per poter creare un nuovo itinerario";
+			document.getElementById('crea_itinerario_pulsante').style.display = "none";
 		}
 	} else {
 		//rosso
-		document.getElementById('status_itinerario').innerHTML = "Seleziona almeno un cybercontadino ed un punto di consegna per poter creare un nuovo itinerario <img src=\"/SeamAmiciDelGas/img/not_valid.png\" />";
+		document.getElementById('status_itinerario').innerHTML = "<img src=\"/SeamAmiciDelGas/img/not_valid.png\" /> Seleziona almeno un cybercontadino ed un punto di consegna per poter creare un nuovo itinerario";
+		document.getElementById('crea_itinerario_pulsante').style.display = "none";
 			
 	}
+}
+
+function setPass(){
+	ultimo_controllo = 1;
+	controlForm();
 }
 
 function handleErrors(){
