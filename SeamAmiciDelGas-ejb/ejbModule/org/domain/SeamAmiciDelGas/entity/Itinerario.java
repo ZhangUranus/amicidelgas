@@ -98,6 +98,7 @@ public class Itinerario implements java.io.Serializable, Comparable<Itinerario> 
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DataPartenza", nullable = false, length = 19)
+	@Future
 	@NotNull
 	public Date getDataPartenza() {
 		return this.dataPartenza;
@@ -109,8 +110,8 @@ public class Itinerario implements java.io.Serializable, Comparable<Itinerario> 
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DataConsegna", nullable = false, length = 19)
-	@NotNull
 	@Future
+	@NotNull
 	public Date getDataConsegna() {
 		return this.dataConsegna;
 	}
@@ -131,7 +132,6 @@ public class Itinerario implements java.io.Serializable, Comparable<Itinerario> 
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DataCreazione", nullable = false, length = 19)
-	@Future
 	@NotNull
 	public Date getDataCreazione() {
 		return this.dataCreazione;
