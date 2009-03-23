@@ -9,6 +9,7 @@ public class Item implements Serializable{
 	private String id;
 	private String name;
 	private double prezzo;
+	private String smallImageUri;
 	public Item() {
 		
 	}
@@ -63,6 +64,18 @@ public class Item implements Serializable{
 
 	public void setPrezzo(double prezzo) {
 		this.prezzo = prezzo;
+	}
+
+
+
+	public String getSmallImageUri() {
+		return smallImageUri;
+	}
+
+
+
+	public void setSmallImageUri(String smallImageUri) {
+		this.smallImageUri = smallImageUri;
 	}
 	
 
