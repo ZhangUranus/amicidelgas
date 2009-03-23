@@ -194,8 +194,8 @@ public class ControlloBean {
 
 	
 	public void controllaPuntiDiConsegna() {
-		if (newPunto==null)
-			myResponsePuntoDiConsegna = "Selezionare un punto di consegna";
+		if (newPunto.getIndirizzo()==null)
+			myResponsePuntoDiConsegna = " Selezionare un punto di consegna";
 		else
 			myResponsePuntoDiConsegna = null;
 	}

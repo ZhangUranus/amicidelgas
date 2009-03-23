@@ -17,10 +17,7 @@
 					<b><h:outputText value="Messaggi da altri utenti" /></b><br/><br/>
 					<rich:dataTable id="dataTableUtente" width="90%" align="center" 
 									value="#{filtraNotifica.getAllSingleTaskInstanceListByFilters('ReceiveMessage')}" var="_task">
-						<rich:column>
-							<f:facet name="header">Processo</f:facet>							    
-					         <h:outputText value="#{_task.name}"/>
-						</rich:column>
+			
 						<rich:column>
 							<f:facet name="header">Mittente</f:facet>    
 						        <h:outputText value="#{_task.variables.sender}"/>
@@ -91,13 +88,10 @@
             	
             	<s:decorate id="puntoConsegnaField" template="/layout/edit.xhtml">
             	<ui:define name="label">Seleziona il punto di consegna</ui:define>
-            	<h:selectOneMenu  value="#{newPuntiDiConsegna}" required="true"
+            	<h:selectOneMenu  value="#{newPuntiDiConsegna}" required="true" requiredMessage="Selezionare un punto di consegna"
 		                	title="seleziona il punto di consegna" style=" width : 149px;">
 		                	
-		                	<a:support event="onblur" bypassUpdates="true"
-		                	action="#{newControlloBean.controllaPuntiDiConsegna()}" 
-		                	ajaxSingle="true" />
-		                	
+		            
 		                	<s:selectItems noSelectionLabel="Seleziona un punto di consegna" 
 		                	var="_punto" reRender="puntoConsegnaField" label="#{_punto.comune.nome} #{_punto.indirizzo}" 
 		                	value="#{puntiDiConsegnaList.resultList}" />
