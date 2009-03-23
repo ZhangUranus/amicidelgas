@@ -116,4 +116,9 @@
   <node name="end-state1" x="239" y="276" width="132" height="36"/>
   <node name="end-state2" x="896" y="371" width="132" height="36"/>
   <node name="end-state3" x="314" y="1304" width="159" height="36"/>
+  <node name="state2" x="180" y="1219" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
 </root-container>
