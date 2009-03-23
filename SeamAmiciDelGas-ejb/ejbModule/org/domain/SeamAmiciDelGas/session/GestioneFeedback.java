@@ -1,6 +1,7 @@
 package org.domain.SeamAmiciDelGas.session;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.GregorianCalendar;
@@ -26,7 +27,12 @@ import org.jboss.seam.security.Credentials;
 
 @Name(value="gestioneFeedback")
 @Scope(ScopeType.SESSION)
-public class GestioneFeedback {
+public class GestioneFeedback  implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6615681325977116252L;
 
 	@In(value="accountHome", create=true)
 	private AccountHome accountHome;
@@ -90,6 +96,11 @@ public class GestioneFeedback {
 	public void assegnaFeedbackFromToDefault(String usernameFrom, String usernameTo, Ordine ordine)
 	{
 		//account dell'username
+		log.info("******* aaaaaaaaaaaaaaaaaaaaaaaaaa");
+		log.info("******* from " +usernameFrom);
+		log.info("******* to " +usernameTo);
+		log.info("******* aaaaaaaaaaaaaaaaaaaaaaaaaa");
+		log.info("******* ");
 		accountHome.setAccountUsername(usernameFrom);
 		Account accountFrom = accountHome.find();
 		accountHome.setAccountUsername(usernameTo);

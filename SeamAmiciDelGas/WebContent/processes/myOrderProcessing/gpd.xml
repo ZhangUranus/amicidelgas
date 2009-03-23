@@ -35,12 +35,12 @@
   </node>
   <node name="Fb from responsabile consegna to contadino" x="866" y="894" width="285" height="36">
     <edge>
-      <label x="-72" y="-19"/>
+      <label x="-63" y="-62"/>
     </edge>
   </node>
   <node name="Fb from customer to contadino per qualita" x="19" y="962" width="334" height="36">
     <edge>
-      <label x="5" y="-10"/>
+      <label x="-144" y="-12"/>
     </edge>
   </node>
   <node name="Verifica disponibilita" x="379" y="294" width="169" height="36">
@@ -72,7 +72,7 @@
       <label x="5" y="-10"/>
     </edge>
     <edge>
-      <label x="5" y="-10"/>
+      <label x="-88" y="-10"/>
     </edge>
   </node>
   <node name="join2" x="271" y="1153" width="252" height="24">
@@ -82,17 +82,17 @@
   </node>
   <node name="Fb from customer to responsabile consegna" x="224" y="1009" width="304" height="36">
     <edge>
-      <label x="5" y="-10"/>
+      <label x="-99" y="-47"/>
     </edge>
   </node>
   <node name="Fb from responsabile cosegna to customer" x="419" y="961" width="279" height="36">
     <edge>
-      <label x="5" y="-10"/>
+      <label x="-20" y="18"/>
     </edge>
   </node>
   <node name="Fb from contadino to responsabile consegna" x="556" y="893" width="304" height="36">
     <edge>
-      <label x="-115" y="12"/>
+      <label x="-130" y="-65"/>
     </edge>
   </node>
   <node name="fork1" x="738" y="792" width="252" height="24">
@@ -108,7 +108,7 @@
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="state1" x="42" y="562" width="158" height="36">
+  <node name="state1" x="207" y="562" width="158" height="36">
     <edge>
       <label x="5" y="-10"/>
     </edge>
