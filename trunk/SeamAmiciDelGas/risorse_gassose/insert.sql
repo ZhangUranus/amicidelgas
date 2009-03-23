@@ -1,4 +1,4 @@
-﻿-- MySQL Administrator dump 1.4
+-- MySQL Administrator dump 1.4
 --
 -- ------------------------------------------------------
 -- Server version	5.1.30-community
@@ -10639,10 +10639,10 @@ INSERT INTO `itinerario_has_punti_di_consegna` VALUES
  (1,3);
 COMMIT;
 
-INSERT INTO `itinerario` (`IDItinerario`,`DataPartenza`,`DataConsegna`,`DocumentazionePath`,`DataCreazione`,`puntoDiConsegna`,`Username`) VALUES
- (1,'2009-04-12','2009-04-12','documentazionePath1','2009-03-14','1','esteban'),
- (2,'2009-04-24','2009-04-24','documentazionePath2','2009-03-14','2','esteban'),
- (3,'2009-04-24','2009-04-24','documentazionePath3','2009-03-14','3','zlatan');
+INSERT INTO `itinerario` (`IDItinerario`,`DataPartenza`,`DataConsegna`,`DocumentazionePath`,`DataCreazione`,`Username`) VALUES
+ (1,'2009-04-12','2009-04-12','documentazionePath1','2009-03-14','esteban'),
+ (2,'2009-04-24','2009-04-24','documentazionePath2','2009-03-14','esteban'),
+ (3,'2009-04-24','2009-04-24','documentazionePath3','2009-03-14','zlatan');
 COMMIT;
 
 

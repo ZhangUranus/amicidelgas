@@ -32,7 +32,7 @@ import org.jboss.seam.annotations.Role;
  */
 @Entity
 @Name(value="newItinerario")
-@Role(name = "creaItinerario", scope = ScopeType.PAGE)
+@Role(name = "creaItinerario", scope = ScopeType.SESSION)
 @Table(name = "itinerario", catalog = "database_gas")
 public class Itinerario implements java.io.Serializable, Comparable<Itinerario> {
 
@@ -46,7 +46,6 @@ public class Itinerario implements java.io.Serializable, Comparable<Itinerario> 
 	private Date dataConsegna;
 	private String documentazionePath;
 	private Date dataCreazione;
-	private PuntiDiConsegna puntoDiConsegna;
 	private Set<PuntiDiConsegna> puntiDiConsegnas = new HashSet<PuntiDiConsegna>(
 			0);
 	private Set<Cybercontadino> cybercontadinos = new HashSet<Cybercontadino>(0);
@@ -132,6 +131,7 @@ public class Itinerario implements java.io.Serializable, Comparable<Itinerario> 
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DataCreazione", nullable = false, length = 19)
+	@Future
 	@NotNull
 	public Date getDataCreazione() {
 		return this.dataCreazione;
@@ -170,18 +170,5 @@ public class Itinerario implements java.io.Serializable, Comparable<Itinerario> 
 	public int compareTo(Itinerario iter) {
 		return this.getIditinerario().compareTo(iter.getIditinerario());
 	}
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "puntodiConsegna")
-	public PuntiDiConsegna getPuntoDiConsegna() {
-		return puntoDiConsegna;
-	}
-
-	public void setPuntoDiConsegna(PuntiDiConsegna puntoDiConsegna) {
-		this.puntoDiConsegna = puntoDiConsegna;
-		puntiDiConsegnas.add(puntoDiConsegna);
-	}
-	
-	
 
 }
