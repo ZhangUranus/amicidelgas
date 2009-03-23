@@ -128,6 +128,10 @@
              </rich:suggestionbox>  
             
              </s:decorate>
+             
+             <s:decorate id="erroreField" template="/layout/edit.xhtml">
+            <h:outputText styleClass="errors" value="#{newControlloBean.myResponseComuneSede}" />
+            </s:decorate>
 			
             <s:decorate id="indirizzoField" template="/layout/edit.xhtml">
                 <ui:define name="label">Indirizzo</ui:define>
