@@ -50,7 +50,7 @@
 		<task name="ReceiveOrderAccepted">
 			<assignment actor-id="#{customer.username}"></assignment>
 		</task>
-		<timer  duedate="20 seconds" name="timerInviaNotifica" transition="attendi_consegna">
+		<timer  duedate="10 seconds" name="timerInviaNotifica" transition="attendi_consegna">
 			<action></action>
 		</timer>
 		<transition to="state1" name="attendi_consegna"></transition>
@@ -63,7 +63,7 @@
 				<nomeDestinatario>responsabileConsegna</nomeDestinatario>
 		</assignment>
 		</task>
-		<timer duedate="40 seconds" name="timer_fb_responsabile_consegna_to_contadino" transition="fb_responsabile_consegna_to_contadino">
+		<timer duedate="60 seconds" name="timer_fb_responsabile_consegna_to_contadino" transition="fb_responsabile_consegna_to_contadino">
 			<action name="perstistAllInfo" class="org.domain.SeamAmiciDelGas.processes.PersistHandler">
 				<taskNameOrdine>fbResponsabileConsegnaToContadino</taskNameOrdine>
 				<usernameFrom>responsabileConsegna</usernameFrom>
@@ -80,7 +80,7 @@
 				<nomeDestinatario>customer</nomeDestinatario>
 			</assignment>
 		</task>
-		<timer duedate="45 seconds" name="timer_fb_customer_to_contadino" transition="fb_customer_to_contadino">
+		<timer duedate="60 seconds" name="timer_fb_customer_to_contadino" transition="fb_customer_to_contadino">
 			<action name="perstistAllInfo" class="org.domain.SeamAmiciDelGas.processes.PersistHandler">
 				<taskNameOrdine>fbCustomerToContadino</taskNameOrdine>
 				<usernameFrom>customer</usernameFrom>
@@ -129,7 +129,7 @@
 				<nomeDestinatario>customer</nomeDestinatario>
 			</assignment>
 		</task>
-		<timer duedate="50 seconds" name="timer_fb_customer_to_responsabile_consegna" transition="fb_customer_to_responsabile_consegna">
+		<timer duedate="60 seconds" name="timer_fb_customer_to_responsabile_consegna" transition="fb_customer_to_responsabile_consegna">
 			<action name="perstistAllInfo" class="org.domain.SeamAmiciDelGas.processes.PersistHandler">
 				<taskNameOrdine>fbCustomerToResponsabileConsegna</taskNameOrdine>
 				<usernameFrom>customer</usernameFrom>
@@ -147,7 +147,7 @@
 				<nomeDestinatario>responsabileConsegna</nomeDestinatario>
 			</assignment>
 		</task>
-		<timer duedate="55 seconds" name="timer_fb_responsabile_consegna_to_customer" transition="fb_responsabile_to_customer">
+		<timer duedate="60 seconds" name="timer_fb_responsabile_consegna_to_customer" transition="fb_responsabile_to_customer">
 			<action name="perstistAllInfo" class="org.domain.SeamAmiciDelGas.processes.PersistHandler">
 				<taskNameOrdine>fbResponsabileConsegnaToCustomer</taskNameOrdine>
 				<usernameFrom>responsabileConsegna</usernameFrom>
@@ -197,8 +197,7 @@
 
 	<end-state name="end-state2"></end-state>
 
-	<end-state name="end-state3">
-	</end-state>
+	<end-state name="end-state3"></end-state>
 
 
 </process-definition>
