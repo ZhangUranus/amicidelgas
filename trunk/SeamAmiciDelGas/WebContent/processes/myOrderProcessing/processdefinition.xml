@@ -52,15 +52,19 @@
 		<timer duedate="30 seconds" name="timerInviaNotifica" transition="attendi_consegna">
 			<action></action>
 		</timer>
-		<transition to="state1" name="attendi_consegna"></transition>
+		<transition to="fork2" name="attendi_consegna"></transition>
 	</task-node>
 
 	<task-node name="Fb from responsabile consegna to contadino">
 		<task name="fbResponsabileConsegnaToContadino">
 			<assignment actor-id="#{responsabileConsegna.username}"></assignment>
 		</task>
-		<timer duedate="30 seconds" name="timer_fb_responsabile_consegna_to_contadino" transition="fb_responsabile_consegna_to_contadino">
-			<action></action>
+		<timer duedate="600 seconds" name="timer_fb_responsabile_consegna_to_contadino" transition="fb_responsabile_consegna_to_contadino">
+			<action name="perstistAllInfo" class="org.domain.SeamAmiciDelGas.processes.PersistHandler">
+				<taskNameOrdine>fbResponsabileConsegnaToContadino</taskNameOrdine>
+				<usernameFrom>driverUsernameString</usernameFrom>
+				<idCase>5</idCase>
+			</action>
 		</timer>
 		<transition to="join1" name="fb_responsabile_consegna_to_contadino"></transition>
 	</task-node>
@@ -69,9 +73,15 @@
 		<task name="fbCustomerToContadino">
 			<assignment actor-id="#{customer.username}"></assignment>
 		</task>
-		<timer duedate="30 seconds" name="timer_fb_customer_to_contadino" transition="fb_customer_to_contadino">
-			<action></action>
-		</timer>
+		<event type="node-leave">
+			<action name="perstistAllInfo" class="org.domain.SeamAmiciDelGas.processes.PersistHandler">
+				<taskNameOrdine>fbCustomerToContadino</taskNameOrdine>
+				<usernameFrom>customerUsernameString</usernameFrom>
+				<idCase>1</idCase>
+			</action>
+		</event>
+		<timer duedate="60 seconds" name="timer_fb_customer_to_contadino" transition="fb_customer_to_contadino"/>
+		
 		<transition to="join2" name="fb_customer_to_contadino"></transition>
 	</task-node>
 
@@ -94,22 +104,27 @@
 	</decision>
 
 	<fork name="fork2">
-		<transition to="Il driver ha partecipato alla spesa" name="toTask4"></transition>
-		<transition to="Fb from customer to contadino per qualita" name="toTask1"></transition>
-		<transition to="Fb from customer to responsabile consegna" name="toTask2"></transition>
-		<transition to="Fb from responsabile cosegna to customer" name="toTask3"></transition>
+		<transition to="Fb from customer to contadino per qualita" name="to Fb from customer to contadino per qualita"></transition>
+		<transition to="Fb from customer to responsabile consegna" name="to Fb from customer to responsabile consegna"></transition>
+		<transition to="Fb from responsabile cosegna to customer" name="to Fb from responsabile cosegna to customer"></transition>
+		<transition to="Il driver ha partecipato alla spesa" name="to Il driver ha partecipato alla spesa"></transition>
 	</fork>
 
 	<join name="join2">
-		<transition to="end-state3"></transition>
+		<transition to="end-state3" name="to-end-state"></transition>
 	</join>
 
 	<task-node name="Fb from customer to responsabile consegna">
 		<task name="fbCustomerToResponsabileConsegna">
 			<assignment actor-id="#{customer.username}"></assignment>
 		</task>
-		<timer duedate="30 seconds" name="timer_fb_customer_to_responsabile_consegna" transition="fb_customer_to_responsabile_consegna">
-			<action></action>
+		<timer duedate="600 seconds" name="timer_fb_customer_to_responsabile_consegna" transition="fb_customer_to_responsabile_consegna">
+			<action name="perstistAllInfo" class="org.domain.SeamAmiciDelGas.processes.PersistHandler">
+				<taskNameOrdine>fbCustomerToResponsabileConsegna</taskNameOrdine>
+				<usernameFrom>customerUsernameString</usernameFrom>
+				<usernameTo>driverUsernameString</usernameTo>
+				<idCase>2</idCase>
+			</action>
 		</timer>
 		<transition to="join2" name="fb_customer_to_responsabile_consegna"></transition>
 	</task-node>
@@ -118,8 +133,13 @@
 		<task name="fbResponsabileConsegnaToCustomer">
 			<assignment actor-id="#{responsabileConsegna.username}"></assignment>
 		</task>
-		<timer duedate="30 seconds" name="timer_fb_responsabile_consegna_to_customer" transition="fb_responsabile_to_customer">
-			<action></action>
+		<timer duedate="600 seconds" name="timer_fb_responsabile_consegna_to_customer" transition="fb_responsabile_to_customer">
+			<action name="perstistAllInfo" class="org.domain.SeamAmiciDelGas.processes.PersistHandler">
+				<taskNameOrdine>fbResponsabileConsegnaToCustomer</taskNameOrdine>
+				<usernameFrom>driverUsernameString</usernameFrom>
+				<usernameTo>customerUsernameString</usernameTo>
+				<idCase>3</idCase>
+			</action>
 		</timer>
 		<transition to="join2" name="fb_responsabile_to_customer"></transition>
 	</task-node>
@@ -128,8 +148,12 @@
 		<task name="fbContadinoToResponsabile">
 			<assignment pooled-actors="utenteContadino"></assignment>
 		</task>
-		<timer duedate="30 seconds" name="timer_fb_contadino_to_responsabile_consegna" transition="fb_contadino_to_responsabile_consegna">
-			<action></action>
+		<timer duedate="600 seconds" name="timer_fb_contadino_to_responsabile_consegna" transition="fb_contadino_to_responsabile_consegna">
+			<action name="perstistAllInfo" class="org.domain.SeamAmiciDelGas.processes.PersistHandler">
+				<taskNameOrdine>fbContadinoToResponsabile</taskNameOrdine>
+				<usernameTo>driverUsernameString</usernameTo>
+				<idCase>4</idCase>
+			</action>
 		</timer>
 		<transition to="join1" name="fb_contadino_to_responsabile_consegna"></transition>
 	</task-node>
@@ -160,9 +184,7 @@
 	<end-state name="end-state2"></end-state>
 
 	<end-state name="end-state3">
-		<event type="node-enter">
-			<action name="perstistAllInfo" class="org.domain.SeamAmiciDelGas.processes.PersistHandler"></action>
-		</event>
+		
 	</end-state>
 
 
