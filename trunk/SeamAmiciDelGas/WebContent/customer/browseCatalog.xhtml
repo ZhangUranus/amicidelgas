@@ -77,6 +77,11 @@
 						</rich:column>
 						
 						<rich:column>
+							<f:facet name="header">Immagine</f:facet>
+							<h:graphicImage rendered="#{_item.smallImageUri!=null}" url="#{_item.smallImageUri}" />
+						</rich:column>
+						
+						<rich:column>
 							<f:facet name="header">Nome Prodotto</f:facet>
 							<h:outputText value="#{_item.name}" />
 						</rich:column>
@@ -162,7 +167,7 @@
 											<a:support event="onclick"
 												reRender="qParzialeCarrello"
 												ajaxSingle="true"
-												requestDelay="500" />
+												requestDelay="100" />
 										</rich:inputNumberSpinner>
 									</s:decorate>
 								</a:outputPanel>
@@ -243,7 +248,6 @@
 				rendered="#{ (not shoppingCart.fondo) and (not empty shoppingCart.itemInShoppingCart) }">
 				<h:outputText value="Fondo non sufficiente per evadere l'ordine" />
 			</s:decorate>
-
 			</h:form>
 
 		</rich:simpleTogglePanel>
