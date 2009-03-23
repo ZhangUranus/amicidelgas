@@ -72,7 +72,17 @@ public class OrdineBean {
 	private MyOrdine currentMyOrder;
 	
 	private TaskInstance currentTask;
+	
+	private TaskInstance currentTaskContadino;
 
+
+	public TaskInstance getCurrentTaskContadino() {
+		return currentTaskContadino;
+	}
+
+	public void setCurrentTaskContadino(TaskInstance currentTaskContadino) {
+		this.currentTaskContadino = currentTaskContadino;
+	}
 
 	public Ordine getCurrentOrdine() {
 		return currentOrdine;

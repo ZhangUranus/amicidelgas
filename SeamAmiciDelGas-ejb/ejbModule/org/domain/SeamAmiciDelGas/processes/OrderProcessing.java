@@ -102,7 +102,11 @@ public class OrderProcessing {
 	private List<ItemQuantita> selectedItem;
 	
 	@Out(value="dataMassimaShoppingCart",scope=ScopeType.BUSINESS_PROCESS,required=false)
+	@In(value="dataMassimaShoppingCart",scope=ScopeType.BUSINESS_PROCESS,required=false)
 	private Date dataMassima;
+
+	@Out(value="errorData",scope=ScopeType.BUSINESS_PROCESS,required=false)
+	private String errorData;
 	
 	@In private Credentials credentials;
 	
@@ -146,11 +150,13 @@ public class OrderProcessing {
 		selectedItem = itemQ;
 		dataMassima = dm;
 		customer = currentAccount;
-		 
+		
 		myOrdine = MyOrdine.createMyOrder(itemQ, dm);
 		myOrdine.setItemQuantita(itemQ);
 		dataRichiesta = myOrdine.getDataRichiesta();
 		
+		
+
 		boolean isStessoContadino=true;
 		messageDriverContadino = new Message();
 		
@@ -176,7 +182,15 @@ public class OrderProcessing {
 	
 	@BeginTask @EndTask(transition="ordine_preso_in_carico")
 	public String verificaDisponibilita(Itinerario itinerario, PuntiDiConsegna punto){
-
+		
+		//faccio il controllo sulla data di consegna
+		errorData = null;
+		Date dataConsegnaTemp = itinerario.getDataConsegna();
+		if (dataConsegnaTemp.after(this.dataMassima)) {
+			errorData = "Data inserita successiva a quella massima";
+			return null;
+		}
+		
 		Hashtable<String,String> transactionIdList = new Hashtable<String,String>();
 		boolean isAvailable=true;
 		int[] quantitaOttenute = new int[myOrdine.getItemQuantita().size()];
@@ -226,7 +240,6 @@ public class OrderProcessing {
 			messageStatoOrdine.setInfoFilter("orderProcessingPreso");
 			responsabileConsegna = currentAccount;
 			this.itinerario = itinerario;
-
 			if (loginSelectBean.isDriver()) {
 				responsabileIsDriver = new Boolean(true);
 				this.itinerario.getCybercontadinos();
@@ -245,7 +258,6 @@ public class OrderProcessing {
 			saveOrdine(quantitaOttenute); //salvo l'ordine nel database
 			messageStatoOrdine.setContent("L'ordine "+ordine.getIdordine()+" e' stato preso in carico da "+ credentials.getUsername()+".");
 		}
-
 		return "ordine_preso_in_carico";
 	}
 	
