@@ -8,22 +8,14 @@ import org.jbpm.taskmgmt.exe.TaskInstance;
 import org.domain.SeamAmiciDelGas.session.*;
 
 
-public class DestinatarioHandler implements AssignmentHandler{
-
-	/**
-	 * 
-	 */
+public class DestinatarioHandler implements AssignmentHandler
+{
 	private static final long serialVersionUID = 8901841172235529657L;
-
 	String nameTask;
-	
 	public void assign(Assignable assign, ExecutionContext executionContext) throws Exception 
 	{
-		
-		System.out.println("AIUTOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
 		Message messaggio = (Message) executionContext.getVariable("notifyMessageRequest");
 		String destinatario = messaggio.getDestinatario();
-    	System.out.println("Messaggio NON BROADCAST +"+destinatario);
     	assign.setActorId(destinatario);
     	TaskInstance ti = executionContext.getTaskInstance();
     	if(messaggio.isBroadcast())
@@ -39,5 +31,4 @@ public class DestinatarioHandler implements AssignmentHandler{
 	public void setNameTask(String nameTask) {
 		this.nameTask = nameTask;
 	}
-
 }

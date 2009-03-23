@@ -1,9 +1,6 @@
 package org.domain.SeamAmiciDelGas.processes;
 
 import java.util.Date;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.jboss.seam.contexts.Context;
 import org.jboss.seam.contexts.Contexts;
 import org.jbpm.graph.def.ActionHandler;
@@ -15,41 +12,22 @@ public class ChangeTimerDate implements ActionHandler{
 	private static final long serialVersionUID = -2215287520579897722L;
 
 	String nomeTimer;
-	
 	String nomeDueDate;
-	  
-	private static final Log log = LogFactory.getLog(ChangeTimerDate.class);
-	
+
 	public void execute(ExecutionContext executionContext ) {
 	    
-		  Context businessContext = Contexts.getBusinessProcessContext();
-		  System.out.println("AChengeTimerDate");
-		
+		  Context businessContext = Contexts.getBusinessProcessContext();	
 		  try {
-
 	          Timer timer = executionContext.getTimer();
-	          
-	          if (timer != null && nomeTimer.equals(timer.getName())) {
-	               //Date data = (Date) executionContext.getVariable(nomeDueDate);
+	          if (timer != null && nomeTimer.equals(timer.getName())) 
+	          {
 	        	  Date data= (Date) businessContext.get(nomeDueDate);
-	    		   
-	        	  System.out.println("DataIMPOSTATA: "+data);
-	               if(data != null)
-	               {
-	            	   timer.setDueDate(data);
-	               }
-	               System.out.println("ORROREEEEEEEEEEEE DATA");
-	               System.out.println(nomeTimer);
-	               System.out.println("DataCAMBIATA: "+data);
-	           
-	          } else {
-	               log.debug("Doesn't match: " + timer);
+	        	  if(data != null)
+	        		  timer.setDueDate(data);
 	          }
 	     } catch (Exception ex) {
 	          ex.printStackTrace();
 	     }
-	 
-		 
 	  }
 	
 	public String getNomeTimer() {
@@ -67,6 +45,4 @@ public class ChangeTimerDate implements ActionHandler{
 	public void setNomeDueDate(String nomeDueDate) {
 		this.nomeDueDate = nomeDueDate;
 	}
-	  
-
 }
