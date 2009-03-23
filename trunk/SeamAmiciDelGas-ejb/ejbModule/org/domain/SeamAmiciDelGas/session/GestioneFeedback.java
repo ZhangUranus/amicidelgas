@@ -86,6 +86,25 @@ public class GestioneFeedback {
 		accountHome.update();
 		log.info(" accountDaModificare username = "+accountDaModificare.getUsername()+ " aggiornato");
 	}
+	
+	public void assegnaFeedbackFromToDefault(String usernameFrom, String usernameTo, Ordine ordine)
+	{
+		//account dell'username
+		accountHome.setAccountUsername(usernameFrom);
+		Account accountFrom = accountHome.find();
+		accountHome.setAccountUsername(usernameTo);
+		Account accountDaModificare = accountHome.find();
+		//modifico feedback
+		float newMedia = calcolaPunteggioFeedback(accountDaModificare,3);
+		accountDaModificare.setPunteggioFeedback(newMedia);
+		accountDaModificare.setNumeroVotanti(accountDaModificare.getNumeroVotanti()+1);
+		
+		//salvo info feedback
+		salvaFeedbackFromTo(accountFrom, accountDaModificare, ordine, 3, "default...");
+		
+		//aggiorno account
+		accountHome.update();
+	}
 
 	private float calcolaPunteggioFeedback(Account accountDaModificare, float punteggioFeedback)
 	{
@@ -109,6 +128,22 @@ public class GestioneFeedback {
 			newFeedback.setOrdine(ordine);
 		newFeedback.setAccountByValidatore(currentAccount);
 		newFeedback.setAccountBySegnalatore(currentAccount);
+		newFeedback.setAccountByDestinatario(accountDaModificare);
+		em.persist(newFeedback);
+		newFeedback = new Feedback();
+	}
+	
+	private void salvaFeedbackFromTo(Account accountFrom, Account accountDaModificare, Ordine ordine, float feedback, String commento)
+	{
+		Feedback newFeedback = new Feedback();
+		newFeedback.setDescrizione(commento);
+		newFeedback.setAnalizzato(false);
+		newFeedback.setDataSegnalazione(new GregorianCalendar().getTime());
+		newFeedback.setPunteggio(feedback);
+		if(ordine!=null)
+			newFeedback.setOrdine(ordine);
+		newFeedback.setAccountByValidatore(accountFrom);
+		newFeedback.setAccountBySegnalatore(accountFrom);
 		newFeedback.setAccountByDestinatario(accountDaModificare);
 		em.persist(newFeedback);
 		newFeedback = new Feedback();
