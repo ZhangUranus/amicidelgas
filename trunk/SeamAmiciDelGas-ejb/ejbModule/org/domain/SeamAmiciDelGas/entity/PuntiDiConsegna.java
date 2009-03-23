@@ -39,7 +39,6 @@ public class PuntiDiConsegna implements java.io.Serializable {
 	private Comune comune;
 	private String indirizzo;
 	private String coordinate;
-	private Set<Itinerario> itinerarios = new HashSet<Itinerario>(0);
 
 	public PuntiDiConsegna() {
 	}
@@ -49,12 +48,10 @@ public class PuntiDiConsegna implements java.io.Serializable {
 		this.indirizzo = indirizzo;
 	}
 
-	public PuntiDiConsegna(Comune comune, String indirizzo, String coordinate,
-			Set<Itinerario> itinerarios) {
+	public PuntiDiConsegna(Comune comune, String indirizzo, String coordinate) {
 		this.comune = comune;
 		this.indirizzo = indirizzo;
 		this.coordinate = coordinate;
-		this.itinerarios = itinerarios;
 	}
 
 	@Id
@@ -100,14 +97,5 @@ public class PuntiDiConsegna implements java.io.Serializable {
 		this.coordinate = coordinate;
 	}
 
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinTable(name = "itinerario_has_punti_di_consegna", catalog = "database_gas", joinColumns = { @JoinColumn(name = "IDPuntiConsegna", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "IDItinerario", nullable = false, updatable = false) })
-	public Set<Itinerario> getItinerarios() {
-		return this.itinerarios;
-	}
-
-	public void setItinerarios(Set<Itinerario> itinerarios) {
-		this.itinerarios = itinerarios;
-	}
 
 }
