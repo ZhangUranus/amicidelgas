@@ -11,13 +11,13 @@
     <tr align="center">
     	<td width="64">	
     	</td>
-    	<s:decorate rendered="#{identity.loggedIn and loginSelectBean.isCustomer}">
+    	<s:decorate rendered="#{identity.loggedIn}">
         <td height="32" width="48" align="center" >
 	        <s:link view="/customer/customerHome.xhtml" value="" propagation="none" rendered="#{identity.loggedIn and loginSelectBean.isCustomer}" >
 	        	 <h:graphicImage value="/img/menu_home.png" />
 	        	 <rich:toolTip value=""><span class="colore_black">Home Page</span></rich:toolTip>
 	        </s:link>
-	        <s:link view="/contadino/contadinoHome.xhtml" value="HOME" propagation="none" rendered="#{identity.loggedIn and !loginSelectBean.isCustomer}">
+	        <s:link view="/contadino/contadinoHome.xhtml" value="" propagation="none" rendered="#{identity.loggedIn and !loginSelectBean.isCustomer}">
 	        	<h:graphicImage value="/img/menu_home.png" />
 	        	 <rich:toolTip value=""><span class="colore_black">Home Page</span></rich:toolTip>
 	        </s:link>
@@ -60,10 +60,6 @@
               <rich:menuItem submitMode="none" >
                     <s:link view="/customer/riepilogoFeedback.xhtml" value="I MIEI FEEDBACK" propagation="none"/>
              </rich:menuItem>
-             
-              <rich:menuItem submitMode="none" >
-                    <s:link view="/customer/visualizzaItinerari.xhtml" value="VISUALIZZA ITINERARI" propagation="none"/>
-             </rich:menuItem>
         	
         	 <rich:menuItem submitMode="none"  >
                     <s:link view="/customer/editDati.xhtml" value="PROFILO" propagation="none">
@@ -86,6 +82,10 @@
              
              <rich:menuItem submitMode="none" >
                     <s:link view="/customer/visualizzaOrdini.xhtml" value="VISUALIZZA ORDINI" propagation="none"/>
+             </rich:menuItem>
+             
+             <rich:menuItem submitMode="none" >
+                    <s:link view="/customer/visualizzaItinerari.xhtml" value="VISUALIZZA ITINERARI" propagation="none"/>
              </rich:menuItem> 	
         	
         </rich:dropDownMenu>	
@@ -108,7 +108,11 @@
 	             <rich:menuItem submitMode="none">
 	                    <s:link view="/mediatore/puntiDiConsegna.xhtml" value="PUNTI DI CONSEGNA" propagation="none"/>
 	             </rich:menuItem>
-
+	             
+	             <rich:menuItem submitMode="none">
+	                    <s:link view="/mediatore/richiesteDriver.xhtml" value="RICHIESTE DRIVER" propagation="none"/>
+	             </rich:menuItem>
+	        	
 	        </rich:dropDownMenu>        
         </td>
         </s:decorate>
@@ -150,11 +154,15 @@
             </f:facet>
             
             <rich:menuItem submitMode="none" >
-                    <s:link view="/driver/rilasciaFeedbackDriver.xhtml" value="FEEDBACK" propagation="none"/>
+                    <s:link view="/driver/ordiniPresiInCarico.xhtml" value="FEEDBACK" propagation="none"/>
              </rich:menuItem>
              
              <rich:menuItem submitMode="none" >
                     <s:link view="/driver/riceviNotifiche.xhtml" value="Possibili ordini (#{filtraNotifica.numberForGroupForDriver() + filtraNotifica.numberForSingleForDriver()})" propagation="none"/>
+             </rich:menuItem>
+            
+            <rich:menuItem submitMode="none" >
+                    <s:link view="/driver/riceviNotifiche.xhtml" value="ORDINI PRESI IN CARICO" propagation="none"/>
              </rich:menuItem>
             
             </rich:dropDownMenu>
@@ -174,6 +182,10 @@
                     <s:link view="/contadino/riceviNotifiche.xhtml" value="NOTIFICHE RICEVUTE (#{filtraNotifica.numberForSingleForContadino()})" propagation="none"/>
                     <f:param name="utenteCodiceFiscale" value="#{currentUser.codiceFiscale}"/>
 		            <f:param name="accountUsername" value="#{currentAccount.username}"/>
+             	</rich:menuItem>
+             	
+             	<rich:menuItem submitMode="none" >
+                    <s:link view="/contadino/riepilogoFeedback.xhtml" value="I MIEI FEEDBACK" propagation="none"/>
              	</rich:menuItem>
              	
              	<rich:menuItem submitMode="none" >

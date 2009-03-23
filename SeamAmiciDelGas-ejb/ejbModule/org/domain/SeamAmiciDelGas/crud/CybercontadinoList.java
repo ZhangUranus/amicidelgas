@@ -3,7 +3,10 @@ package org.domain.SeamAmiciDelGas.crud;
 import org.domain.SeamAmiciDelGas.entity.*;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.framework.EntityQuery;
+
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 @Name("cybercontadinoList")
 public class CybercontadinoList extends EntityQuery<Cybercontadino> {
@@ -31,5 +34,10 @@ public class CybercontadinoList extends EntityQuery<Cybercontadino> {
 
 	public Cybercontadino getCybercontadino() {
 		return cybercontadino;
+	}
+	
+	public List<Cybercontadino> loadContadini() {
+		this.setEjbql("select contadino fron Cybercontadino contadino where contadino.account.attivato==true and contadino.account.bloccato==false and contadino.account.elimato==false");
+		return this.getResultList();
 	}
 }

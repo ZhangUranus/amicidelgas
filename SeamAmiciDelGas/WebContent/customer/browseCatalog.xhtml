@@ -16,7 +16,7 @@
 			<h:form id="browseForm">
 				<s:decorate id="contadinoField" template="/layout/edit.xhtml">
 					<rich:dataTable id="tabellaContadini"
-						value="#{cybercontadinoList.resultList}" var="_contadino">
+						value="#{cybercontadinoList.loadContadini()}" var="_contadino">
 						<rich:column>
 							<f:facet name="header">Nome Azienda</f:facet>
 							<h:outputText value="#{_contadino.nomeAzienda}" />
