@@ -1,5 +1,6 @@
 package org.domain.SeamAmiciDelGas.session;
 
+import java.util.Date;
 import java.util.List;
 import org.domain.SeamAmiciDelGas.crud.AccountList;
 import org.domain.SeamAmiciDelGas.crud.ComuneList;
@@ -7,6 +8,7 @@ import org.domain.SeamAmiciDelGas.crud.CybercontadinoList;
 import org.domain.SeamAmiciDelGas.crud.UtenteList;
 import org.domain.SeamAmiciDelGas.entity.Account;
 import org.domain.SeamAmiciDelGas.entity.Cybercontadino;
+import org.domain.SeamAmiciDelGas.entity.Itinerario;
 import org.domain.SeamAmiciDelGas.entity.Utente;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Logger;
@@ -41,6 +43,9 @@ public class ControlloBean {
 	@In(value="newCybercontadino", create=true)
 	private Cybercontadino contadino;
 	
+	@In(value="newItinerario", create=true)
+	private Itinerario newItinerario;
+	
 	@In(value="cybercontadinoList",create=true)
 	private CybercontadinoList contadinoList;
 	
@@ -49,6 +54,10 @@ public class ControlloBean {
 	
 	//Controllo se esiste gia' un codice fiscale
 	private String myResponseCodiceFiscale;
+	
+	//Controllo se è stata selezionato un punto di consegna
+	private String myResponsePuntoDiConsegna;
+	
 	
 	private String myResponseComune;
 	
@@ -181,6 +190,26 @@ public class ControlloBean {
 			return null;//uno dei due campi o tutti e due sono giï¿½ presenti del database
 			
 	}
+	
+	public void controllaPuntiDiConsegna() {
+		if (newItinerario.getPuntoDiConsegna()==null)
+			myResponsePuntoDiConsegna = "Selezionare un punto di consegna";
+		else
+			myResponsePuntoDiConsegna = null;
+	}
+
+	public String getMyResponsePuntoDiConsegna() {
+		return myResponsePuntoDiConsegna;
+	}
+
+	public void setMyResponsePuntoDiConsegna(String myResponsePuntoDiConsegna) {
+		this.myResponsePuntoDiConsegna = myResponsePuntoDiConsegna;
+	}
+
+	
+	
+
+	
 
 	public void setMyResponseComune(String myResponseComune) {
 		this.myResponseComune = myResponseComune;
