@@ -21,7 +21,7 @@ import org.jboss.seam.international.StatusMessages;
 import org.jboss.seam.ScopeType;
 
 @Name("addItinerario")
-@Scope(value=ScopeType.SESSION)
+@Scope(value=ScopeType.PAGE)
 public class AddItinerarioBean implements AddItinerario
 {
 

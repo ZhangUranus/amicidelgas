@@ -32,7 +32,7 @@ import org.jboss.seam.annotations.Role;
  */
 @Entity
 @Name(value="newItinerario")
-@Role(name = "creaItinerario", scope = ScopeType.SESSION)
+@Role(name = "creaItinerario", scope = ScopeType.PAGE)
 @Table(name = "itinerario", catalog = "database_gas")
 public class Itinerario implements java.io.Serializable, Comparable<Itinerario> {
 
