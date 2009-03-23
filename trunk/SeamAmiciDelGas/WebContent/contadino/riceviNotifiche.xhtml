@@ -56,6 +56,13 @@
 				         <h:outputText value="#{_task.variables.notificaDriverContadino.content}"/>
 					</rich:column>
 					
+					<rich:column>
+						<f:facet name="header">Data Massima</f:facet>    
+				         <h:outputText value="#{_task.variables.dataMassimaShoppingCart}">
+				         	<f:convertDateTime type="date" dateStyle="medium" locale="Locale.ITALY"/>
+				         </h:outputText>
+					</rich:column>
+					
 					<rich:column align="center">
                 		<f:facet name="header">Dettagli Ordine</f:facet>
 		                	<a:commandLink ajaxSingle="true" id="dettagliOrdinePendenteLink"
@@ -70,6 +77,7 @@
 					<rich:column width="10%">
 						<h:commandLink value="Accetta ordine"
 		            			action="#{orderProcessing.verificaDisponibilita(newItinerario, newPuntiDiConsegna)}">
+		            			<f:setPropertyActionListener value="#{_task}" target="#{ordineBean.currentTaskContadino}" />
 		            			<f:param name="taskId" value="#{_task.id}"/>
 	           			</h:commandLink>
 					</rich:column>
@@ -82,7 +90,7 @@
                 		<rich:calendar id="dataVisita"
                        		required="true" requiredMessage="Inserire una data"
                     		value="#{newItinerario.dataConsegna}" datePattern="dd/MM/yyyy HH:mm">
-                   		<a:support event="onchange" action="#{newControlloBean.controllaDataConsegna()}" reRender="dataConsegnaField" bypassUpdates="true" ajaxSingle="true"/>
+                   		<a:support event="onchange" reRender="dataConsegnaField" bypassUpdates="true" ajaxSingle="true"/>
                 		</rich:calendar>
             	</s:decorate>
             	
@@ -99,8 +107,11 @@
 		               		<s:convertEntity></s:convertEntity>
 		                </h:selectOneMenu>
                 </s:decorate>
-               
-			
+				<br/>
+				<s:decorate>
+					<h:outputText value="#{ordineBean.currentTaskContadino.variables.errorData}" style="color:red;" />
+				</s:decorate>
+				
 			</h:form>
 				<br/>	    
 			</s:decorate>
