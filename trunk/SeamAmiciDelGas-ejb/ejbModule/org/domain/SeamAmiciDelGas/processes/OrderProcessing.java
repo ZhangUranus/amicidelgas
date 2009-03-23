@@ -103,13 +103,14 @@ public class OrderProcessing {
 	
 	@Out(value="dataMassimaShoppingCart",scope=ScopeType.BUSINESS_PROCESS,required=false)
 	private Date dataMassima;
-
+	
 	@In private Credentials credentials;
 	
 	@In(value="gestioneFondo", create=true)
 	private GestioneFondo gestioneFondo;
 	
 	@In(value="gestioneFeedback", create=true)
+	@Out(value="gestioneFeedback",scope=ScopeType.BUSINESS_PROCESS,required=false)
 	private GestioneFeedback gestioneFeedback;
 	
 	@In(value="booleanCustomerToContadino", scope=ScopeType.BUSINESS_PROCESS, required=false)
@@ -145,13 +146,11 @@ public class OrderProcessing {
 		selectedItem = itemQ;
 		dataMassima = dm;
 		customer = currentAccount;
-		
+		 
 		myOrdine = MyOrdine.createMyOrder(itemQ, dm);
 		myOrdine.setItemQuantita(itemQ);
 		dataRichiesta = myOrdine.getDataRichiesta();
 		
-		
-
 		boolean isStessoContadino=true;
 		messageDriverContadino = new Message();
 		
@@ -227,6 +226,7 @@ public class OrderProcessing {
 			messageStatoOrdine.setInfoFilter("orderProcessingPreso");
 			responsabileConsegna = currentAccount;
 			this.itinerario = itinerario;
+
 			if (loginSelectBean.isDriver()) {
 				responsabileIsDriver = new Boolean(true);
 				this.itinerario.getCybercontadinos();
@@ -245,12 +245,13 @@ public class OrderProcessing {
 			saveOrdine(quantitaOttenute); //salvo l'ordine nel database
 			messageStatoOrdine.setContent("L'ordine "+ordine.getIdordine()+" e' stato preso in carico da "+ credentials.getUsername()+".");
 		}
+
 		return "ordine_preso_in_carico";
 	}
 	
 	private void setFeedbackVariable() {
 		List<String> contadiniEffettivi = new ArrayList<String>();
-		booleanFeedbackContadiniToResponsabile = new Hashtable();
+		booleanFeedbackContadiniToResponsabile = new Hashtable<String, Boolean>();
 		List<ItemQuantita> items = myOrdine.getItemQuantita();
 		for(ItemQuantita iq: items) {
 			String username = iq.getCybercontadino().getAccount().getUsername();
@@ -383,12 +384,6 @@ public class OrderProcessing {
 			gestioneFeedback.assegnaFeedback(username, ordine, (float) infoFeedback.getFeedback(), infoFeedback.getComment());
 		}
 		return "fb_responsabile_consegna_to_contadino";
-	}
-	
-	@BeginTask @EndTask(beforeRedirect=true,transition="pontetask")
-	public String ponteTask()
-	{
-		return "deleted";
 	}
 	
 	/*

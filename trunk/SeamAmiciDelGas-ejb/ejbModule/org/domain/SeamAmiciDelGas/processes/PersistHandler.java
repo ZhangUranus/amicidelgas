@@ -52,10 +52,9 @@ public class PersistHandler implements ActionHandler{
 
 	public void execute(ExecutionContext executionContext) throws Exception 
 	{
-		Context businessContext = Contexts.getSessionContext();
+		Context businessContext = Contexts.getBusinessProcessContext();
 		gestioneFeedback = (GestioneFeedback) businessContext.get("gestioneFeedback");
-		
-		
+		System.out.println("gestione feedback = "+gestioneFeedback.toString());
 		Collection<TaskInstance> col  = executionContext.getTaskMgmtInstance().getTaskInstances();
 		List<TaskInstance> taskInstanceList = new ArrayList<TaskInstance>();
 		taskInstanceList.addAll(col);
@@ -91,10 +90,14 @@ public class PersistHandler implements ActionHandler{
 	}
 	
 	private void closeTaskInstance(TaskInstance taskInstance) {
+		Context businessContext = Contexts.getBusinessProcessContext();
+		Account accountFrom = (Account) businessContext.get(usernameFrom);
+		Account accountTo = (Account) businessContext.get(usernameTo);
 		if(taskInstance.getName().equals(taskNameOrdine) && taskInstance.isOpen())
 		{
 			Ordine ordine = (Ordine) taskInstance.getVariable("ordine");
-			gestioneFeedback.assegnaFeedbackFromToDefault(usernameFrom, usernameTo, ordine);
+
+			gestioneFeedback.assegnaFeedbackFromToDefault(accountFrom.getUsername(), accountTo.getUsername(), ordine);
 			System.out.println("Task ID: "+taskNameOrdine);
 			taskInstance.setSignalling(false);
 			taskInstance.cancel();
@@ -102,6 +105,8 @@ public class PersistHandler implements ActionHandler{
 	}
 	
 	private void closeTaskInstanceCustomerToContadino(TaskInstance taskInstance) {
+		Context businessContext = Contexts.getBusinessProcessContext();
+		Account accountFrom = (Account) businessContext.get(usernameFrom);
 		if(taskInstance.getName().equals(taskNameOrdine) && taskInstance.isOpen())
 		{
 			Ordine ordine = (Ordine) taskInstance.getVariable("ordine");
@@ -109,7 +114,7 @@ public class PersistHandler implements ActionHandler{
 			List<Cybercontadino> contadinoList = new ArrayList<Cybercontadino>();
 			contadinoList.addAll(itinerario.getCybercontadinos());
 			for (Cybercontadino cybercontadino : contadinoList) {
-				gestioneFeedback.assegnaFeedbackFromToDefault(usernameFrom, cybercontadino.getAccount().getUsername(), ordine);
+				gestioneFeedback.assegnaFeedbackFromToDefault(accountFrom.getUsername(), cybercontadino.getAccount().getUsername(), ordine);
 			}
 			System.out.println("Task ID: "+taskNameOrdine);
 			taskInstance.setSignalling(false);
@@ -118,6 +123,8 @@ public class PersistHandler implements ActionHandler{
 	}
 	
 	private void closeTaskInstanceContadinoToResponsabile(TaskInstance taskInstance) {
+		Context businessContext = Contexts.getBusinessProcessContext();
+		Account accountTo = (Account) businessContext.get(usernameTo);
 		if(taskInstance.getName().equals(taskNameOrdine) && taskInstance.isOpen())
 		{
 			Ordine ordine = (Ordine) taskInstance.getVariable("ordine");
@@ -125,7 +132,7 @@ public class PersistHandler implements ActionHandler{
 			List<Cybercontadino> contadinoList = new ArrayList<Cybercontadino>();
 			contadinoList.addAll(itinerario.getCybercontadinos());
 			for (Cybercontadino cybercontadino : contadinoList) {
-				gestioneFeedback.assegnaFeedbackFromToDefault(cybercontadino.getAccount().getUsername(), usernameTo, ordine);
+				gestioneFeedback.assegnaFeedbackFromToDefault(cybercontadino.getAccount().getUsername(), accountTo.getUsername(), ordine);
 			}
 			System.out.println("Task ID: "+taskNameOrdine);
 			taskInstance.setSignalling(false);
@@ -134,6 +141,8 @@ public class PersistHandler implements ActionHandler{
 	}
 	
 	private void closeTaskInstanceResponsabileToContadino(TaskInstance taskInstance) {
+		Context businessContext = Contexts.getBusinessProcessContext();
+		Account accountFrom = (Account) businessContext.get(usernameFrom);
 		if(taskInstance.getName().equals(taskInstance) && taskInstance.isOpen())
 		{
 			Ordine ordine = (Ordine) taskInstance.getVariable("ordine");
@@ -141,7 +150,7 @@ public class PersistHandler implements ActionHandler{
 			List<Cybercontadino> contadinoList = new ArrayList<Cybercontadino>();
 			contadinoList.addAll(itinerario.getCybercontadinos());
 			for (Cybercontadino cybercontadino : contadinoList) {
-				gestioneFeedback.assegnaFeedbackFromToDefault(usernameFrom, cybercontadino.getAccount().getUsername(), ordine);
+				gestioneFeedback.assegnaFeedbackFromToDefault(accountFrom.getUsername(), cybercontadino.getAccount().getUsername(), ordine);
 			}
 			System.out.println("Task ID: "+taskInstance);
 			taskInstance.setSignalling(false);
@@ -156,5 +165,29 @@ public class PersistHandler implements ActionHandler{
 
 	public void setTaskNameOrdine(String taskNameOrdine) {
 		this.taskNameOrdine = taskNameOrdine;
+	}
+
+	public String getUsernameFrom() {
+		return usernameFrom;
+	}
+
+	public void setUsernameFrom(String usernameFrom) {
+		this.usernameFrom = usernameFrom;
+	}
+
+	public String getUsernameTo() {
+		return usernameTo;
+	}
+
+	public void setUsernameTo(String usernameTo) {
+		this.usernameTo = usernameTo;
+	}
+
+	public String getIdCase() {
+		return idCase;
+	}
+
+	public void setIdCase(String idCase) {
+		this.idCase = idCase;
 	}
 }
