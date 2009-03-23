@@ -35,9 +35,6 @@ public class InviaRequestReply {
 	
     @In(value="contadino", scope= ScopeType.BUSINESS_PROCESS ,required =false)
     private Cybercontadino contadino;
-    
-    //@In(value="nomeDestinatario", scope= ScopeType.BUSINESS_PROCESS, required =false)
-	//private String nomeDestinatario;
 	
 	@In(value="notifyMessageRequest",scope=ScopeType.BUSINESS_PROCESS, required=false) 
 	@Out(value="notifyMessageReply", scope= ScopeType.BUSINESS_PROCESS, required=false)
@@ -56,14 +53,11 @@ public class InviaRequestReply {
 	private AccountHome accounthome;
 	
 	@In(value="newQuestionario", required=false)
-	//@In(value="newQuestionario")
 	private Questionario questionario;
 
 	@StartTask @EndTask(transition="inviaReply")
 	public String riceviMessaggio(int risposta)
 	{
-		//System.out.println("RICEVI MESSAGGIO");
-		//if(message.getTipo().equals("becomeDriver"))
 		if(questionario == null)
 		{
 			System.out.println("BECOMEDRIVER"+risposta);
