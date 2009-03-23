@@ -57,7 +57,7 @@ public class MatchItinerarioOrdine implements Serializable{
 		//query per tornare gli itinerari del driver
 		itinerarioList.setEjbql("select itinerario from Itinerario itinerario " +
 									"where itinerario.account.username='"+credentials.getUsername()+
-									"' and itinerario.dataPartenza  >= '"+new SimpleDateFormat(format).format(gc.getTime())+"'");
+									"' and itinerario.dataConsegna  >= '"+new SimpleDateFormat(format).format(gc.getTime())+"'");
 		List<Itinerario> tempItinerario = itinerarioList.getResultList();
 		log.info("\n\n******** ITINERARIO dim = " +tempItinerario.size() +" **************");
 		return tempItinerario;
