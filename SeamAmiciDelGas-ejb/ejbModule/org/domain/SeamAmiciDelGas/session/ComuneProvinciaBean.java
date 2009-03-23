@@ -3,15 +3,9 @@ package org.domain.SeamAmiciDelGas.session;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
-import javax.faces.event.AbortProcessingException;
-import javax.faces.event.ValueChangeEvent;
-import javax.faces.event.ValueChangeListener;
-
 import org.domain.SeamAmiciDelGas.crud.ComuneList;
 import org.domain.SeamAmiciDelGas.entity.Comune;
 import org.domain.SeamAmiciDelGas.entity.Provinces;
-import org.hibernate.validator.Length;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Logger;
@@ -32,9 +26,20 @@ public class ComuneProvinciaBean{
 	private Log log;
 	@In(value="comuneList",create=true)
 	private ComuneList comuneList;
+
+	public String getControlloComuneNascita() {
+		return controlloComuneNascita;
+	}
+
+	public void setControlloComuneNascita(String controlloComuneNascita) {
+		this.controlloComuneNascita = controlloComuneNascita;
+	}
+
 	private List<Comune> autoCompleteList;
 	private myComuneBean comune;
 	private Provinces provincia;
+	private String controlloComuneNascita;
+	
 	private boolean selectedProvincia=false;
 	public Provinces getProvincia() {
 		return this.provincia;
@@ -119,7 +124,23 @@ public class ComuneProvinciaBean{
 	public void setComune(myComuneBean comune) {
 		if(comune != null)
 			this.comune = comune;
+		//controlloComuneNascita = controllaComune(comune.nome);
+		
 	}
+	/*
+	public String controllaComune(String nomeComune) {
+		List<Comune> listaDiComuni = new ArrayList<Comune>();
+		listaDiComuni = comuneList.getResultList();
+		boolean isPresent = false;
+		for (Comune comune : listaDiComuni) {
+			if(comune.equals(nomeComune))
+			{	isPresent=true; break; }
+		}
+		if(isPresent)
+			return nomeComune;
+		return "Comune non presente del db, riprovare grazie";
+		
+	}*/
 
 	public boolean isSelectedProvincia() {
 		return provincia!=null;

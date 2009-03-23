@@ -1,11 +1,8 @@
 package org.domain.SeamAmiciDelGas.session;
 
 import java.util.List;
-
-import javax.faces.application.FacesMessage;
-import javax.faces.validator.ValidatorException;
-
 import org.domain.SeamAmiciDelGas.crud.AccountList;
+import org.domain.SeamAmiciDelGas.crud.ComuneList;
 import org.domain.SeamAmiciDelGas.crud.CybercontadinoList;
 import org.domain.SeamAmiciDelGas.crud.UtenteList;
 import org.domain.SeamAmiciDelGas.entity.Account;
@@ -15,11 +12,7 @@ import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Logger;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
-import org.jboss.seam.annotations.faces.Validator;
-import org.jboss.seam.annotations.intercept.BypassInterceptors;
-import org.jboss.seam.international.StatusMessages;
 import org.jboss.seam.log.Log;
-import org.jboss.seam.Component;
 import org.jboss.seam.ScopeType;
 
 @Name(value="newControlloBean")
@@ -38,15 +31,30 @@ public class ControlloBean {
 	@In(value="utenteList",create=true)
 	private UtenteList utenteList;
 	
+	@In(value="newComuneProvinciaBean" , create=true)
+	private ComuneProvinciaBean comuneProvincia;
+	
+	
+	@In(value="newComuneProvinciaResidenzaBean" , create=true)
+	private ComuneProvinciaBean comuneProvinciaResidenza;
+	
 	@In(value="newCybercontadino", create=true)
 	private Cybercontadino contadino;
 	
 	@In(value="cybercontadinoList",create=true)
 	private CybercontadinoList contadinoList;
 	
+	@In(value="comuneList",create=true)
+	private ComuneList comuneList;
 	
 	//Controllo se esiste gia' un codice fiscale
 	private String myResponseCodiceFiscale;
+	
+	private String myResponseComune;
+	
+	private String myResponseComuneSede;
+	
+	private String myResponseComuneResidenza;
 	
 	public void controllaCodiceFiscale()
 	{
@@ -130,7 +138,7 @@ public class ControlloBean {
 		else
 			myResponsePartitaIva = null;
     }
-
+	
     // add additional action methods
     
     public String getMyResponsePartitaIva() {
@@ -145,7 +153,15 @@ public class ControlloBean {
 	//nel database non faccio procedere al passo 2 della registrazione
 	public String controlloPresenzaDatiDatabase()
 	{
-		if(myResponseCodiceFiscale==null && myResponseEmail==null)
+		if(comuneProvincia.getComune() == null)
+			myResponseComune = " Il comune di nascita non esiste";
+		else
+			myResponseComune = null;
+		if(comuneProvinciaResidenza.getComune() == null)
+			myResponseComuneResidenza = " Il comune di residenza non esiste";
+		else
+			myResponseComuneResidenza = null;
+		if(myResponseCodiceFiscale==null && myResponseEmail==null  && myResponseComune == null && myResponseComuneResidenza == null)
 			return "passo1Outcome"; //posso procedere con la registrazione passo2 :-)
 		else
 			return null;//uno dei due campi o tutti e due sono gi� presenti del database
@@ -154,11 +170,40 @@ public class ControlloBean {
 	
 	public String action()
 	{
-		if(myResponsePartitaIva==null)
+		if(comuneProvincia.getComune() == null)
+			myResponseComuneSede = " Il comune non esiste";
+		else
+			myResponseComuneSede = null;
+		
+		if(myResponsePartitaIva==null && myResponseComuneSede == null)
 			return "passo1Outcome"; //posso procedere con la registrazione passo2 :-)
 		else
 			return null;//uno dei due campi o tutti e due sono gi� presenti del database
 			
+	}
+
+	public void setMyResponseComune(String myResponseComune) {
+		this.myResponseComune = myResponseComune;
+	}
+
+	public String getMyResponseComune() {
+		return myResponseComune;
+	}
+
+	public String getMyResponseComuneResidenza() {
+		return myResponseComuneResidenza;
+	}
+
+	public void setMyResponseComuneResidenza(String myResponseComuneResidenza) {
+		this.myResponseComuneResidenza = myResponseComuneResidenza;
+	}
+
+	public String getMyResponseComuneSede() {
+		return myResponseComuneSede;
+	}
+
+	public void setMyResponseComuneSede(String myResponseComuneSede) {
+		this.myResponseComuneSede = myResponseComuneSede;
 	}
 
 }

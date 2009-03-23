@@ -135,16 +135,21 @@
              		suggestionAction="#{newComuneProvinciaBean.autocomplete}" var="_comuneSugg"
                     for="comuneNascitaSuggestion" fetchValue="#{_comuneSugg.nome}" tokens=",[]"
                     >
-                    <a:support event="onselect" ajaxSingle="true"  
+                    <a:support event="onselect" ajaxSingle="true" reRender="outputTextComune"  
                  	action="#{newComuneProvinciaBean.setComune(_comuneSugg)}"/>
                  <s:convertEntity></s:convertEntity>
+                   
                     <h:column>
-                        <h:outputText value="#{_comuneSugg.nome}" />
+                           <h:outputText id ="outputTextComune" value="#{_comuneSugg.nome}" />
+         
                     </h:column>
-             </rich:suggestionbox>  
-            
+                    </rich:suggestionbox>  
+          
              </s:decorate>
-			
+            
+            <s:decorate id="erroreField" template="/layout/edit.xhtml">
+            <h:outputText styleClass="errors" value="#{newControlloBean.myResponseComune}" />
+            </s:decorate>
             
             <s:decorate id="provinciaResidenzaField" template="/layout/edit.xhtml">
                 <ui:define name="label">Provincia di residenza</ui:define>
@@ -201,6 +206,10 @@
              </rich:suggestionbox>  
             
              </s:decorate>
+             
+             <s:decorate id="erroreFieldResidenza" template="/layout/edit.xhtml">
+            <h:outputText styleClass="errors" value="#{newControlloBean.myResponseComuneResidenza}" />
+            </s:decorate>
             
             <s:decorate id="indirizzoField" template="/layout/edit.xhtml">
                 <ui:define name="label">Indirizzo</ui:define>
