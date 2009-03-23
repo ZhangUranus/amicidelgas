@@ -40,6 +40,7 @@
 		<task name="timeOutDataMassima" >
 			<assignment name="AssegnamentoTaskDataMassimaScaduta" class="org.domain.SeamAmiciDelGas.processes.DestinatarioHandlerOrdineDataMassimaScaduta">
 				<nameTask>timeOutDataMassima</nameTask>
+				<nomeDestinatario>customer</nomeDestinatario>
 			</assignment>
 		</task>
 		<transition to="end-state2" name="notifica_inviata_ordine_non_preso_in_carico_termina_processo"></transition>
@@ -49,15 +50,18 @@
 		<task name="ReceiveOrderAccepted">
 			<assignment actor-id="#{customer.username}"></assignment>
 		</task>
-		<timer duedate="30 seconds" name="timerInviaNotifica" transition="attendi_consegna">
+		<timer  duedate="30 seconds" name="timerInviaNotifica" transition="attendi_consegna">
 			<action></action>
 		</timer>
-		<transition to="fork2" name="attendi_consegna"></transition>
+		<transition to="state1" name="attendi_consegna"></transition>
 	</task-node>
 
 	<task-node name="Fb from responsabile consegna to contadino">
 		<task name="fbResponsabileConsegnaToContadino">
-			<assignment actor-id="#{responsabileConsegna.username}"></assignment>
+		<assignment name="AssegnamentoTaskResponsabileConsegnaToContadino" class="org.domain.SeamAmiciDelGas.processes.DestinatarioHandlerOrdineDataMassimaScaduta">
+				<nameTask>fbResponsabileConsegnaToContadino</nameTask>
+				<nomeDestinatario>responsabileConsegna</nomeDestinatario>
+		</assignment>
 		</task>
 		<timer duedate="600 seconds" name="timer_fb_responsabile_consegna_to_contadino" transition="fb_responsabile_consegna_to_contadino">
 			<action name="perstistAllInfo" class="org.domain.SeamAmiciDelGas.processes.PersistHandler">
@@ -71,17 +75,18 @@
 
 	<task-node name="Fb from customer to contadino per qualita">
 		<task name="fbCustomerToContadino">
-			<assignment actor-id="#{customer.username}"></assignment>
+			<assignment name="AssegnamentoTaskCustomerToContadinoPerQualita" class="org.domain.SeamAmiciDelGas.processes.DestinatarioHandlerOrdineDataMassimaScaduta">
+				<nameTask>fbCustomerToContadino</nameTask>
+				<nomeDestinatario>customer</nomeDestinatario>
+			</assignment>
 		</task>
-		<event type="node-leave">
+		<timer duedate="600 seconds" name="timer_fb_customer_to_contadino" transition="fb_customer_to_contadino">
 			<action name="perstistAllInfo" class="org.domain.SeamAmiciDelGas.processes.PersistHandler">
 				<taskNameOrdine>fbCustomerToContadino</taskNameOrdine>
 				<usernameFrom>customerUsernameString</usernameFrom>
 				<idCase>1</idCase>
 			</action>
-		</event>
-		<timer duedate="60 seconds" name="timer_fb_customer_to_contadino" transition="fb_customer_to_contadino"/>
-		
+		</timer>
 		<transition to="join2" name="fb_customer_to_contadino"></transition>
 	</task-node>
 
@@ -95,11 +100,14 @@
 	</decision>
 
 	<decision name="Il driver ha partecipato alla spesa">
+		<handler class="org.domain.SeamAmiciDelGas.processes.DriverHaPartecipatoAllaSpesaDecisionHandler">
+			<responsabileIsDriver>
+				responsabileIsDriver
+			</responsabileIsDriver>
+		</handler>
 		<transition to="fork1" name="Si">
-			<condition expression="#{responsabileIsDriver}"></condition>
 		</transition>
 		<transition to="join2" name="No">
-			<condition expression="#{!(responsabileIsDriver)}"></condition>
 		</transition>
 	</decision>
 
@@ -111,12 +119,15 @@
 	</fork>
 
 	<join name="join2">
-		<transition to="end-state3" name="to-end-state"></transition>
+		<transition to="end-state3"></transition>
 	</join>
 
 	<task-node name="Fb from customer to responsabile consegna">
 		<task name="fbCustomerToResponsabileConsegna">
-			<assignment actor-id="#{customer.username}"></assignment>
+			<assignment name="AssegnamentoTaskCustomerToResponsabileConsegna" class="org.domain.SeamAmiciDelGas.processes.DestinatarioHandlerOrdineDataMassimaScaduta">
+				<nameTask>fbCustomerToResponsabileConsegna</nameTask>
+				<nomeDestinatario>customer</nomeDestinatario>
+			</assignment>
 		</task>
 		<timer duedate="600 seconds" name="timer_fb_customer_to_responsabile_consegna" transition="fb_customer_to_responsabile_consegna">
 			<action name="perstistAllInfo" class="org.domain.SeamAmiciDelGas.processes.PersistHandler">
@@ -131,7 +142,10 @@
 
 	<task-node name="Fb from responsabile cosegna to customer">
 		<task name="fbResponsabileConsegnaToCustomer">
-			<assignment actor-id="#{responsabileConsegna.username}"></assignment>
+			<assignment name="AssegnamentoTaskResponsabileConsegnaToCustomer" class="org.domain.SeamAmiciDelGas.processes.DestinatarioHandlerOrdineDataMassimaScaduta">
+				<nameTask>fbResponsabileConsegnaToCustomer</nameTask>
+				<nomeDestinatario>responsabileConsegna</nomeDestinatario>
+			</assignment>
 		</task>
 		<timer duedate="600 seconds" name="timer_fb_responsabile_consegna_to_customer" transition="fb_responsabile_to_customer">
 			<action name="perstistAllInfo" class="org.domain.SeamAmiciDelGas.processes.PersistHandler">
@@ -174,7 +188,7 @@
         <nomeData>dataConsegna</nomeData>
       </action>
 	</event>
-	<timer duedate="9 years" name="inviaFeedback" transition="assegna_feedback" />
+	<timer duedate="9 years" name="inviaFeedback"  transition="assegna_feedback" />
 		<transition to="fork2" name="assegna_feedback"></transition>
 </state>
 
@@ -184,7 +198,6 @@
 	<end-state name="end-state2"></end-state>
 
 	<end-state name="end-state3">
-		
 	</end-state>
 
 
