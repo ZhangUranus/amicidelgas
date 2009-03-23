@@ -85,18 +85,32 @@
                 		<rich:calendar id="dataVisita"
                        		required="true" requiredMessage="Inserire una data"
                     		value="#{newItinerario.dataConsegna}" datePattern="dd/MM/yyyy HH:mm">
-                   		<a:support event="onchange" reRender="dataConsegnaField" bypassUpdates="true" ajaxSingle="true"/>
+                   		<a:support event="onchange" action="#{newControlloBean.controllaDataConsegna()}" reRender="dataConsegnaField" bypassUpdates="true" ajaxSingle="true"/>
                 		</rich:calendar>
             	</s:decorate>
             	
             	<s:decorate id="puntoConsegnaField" template="/layout/edit.xhtml">
             	<ui:define name="label">Seleziona il punto di consegna</ui:define>
-            	<h:selectOneMenu value="#{newItinerario.}" required="true"
-		                	title="seleziona il tipo di ordine che vuoi visualizzare" style=" width : 149px;">
-		                	<a:support event="onchange" ajaxSingle="true" reRender="ordiniPendenti,ordiniEvasiConclusi" />
-		                	<s:selectItems var="_punto" label="#{_punto.comune}" value="#{puntiDiConsegnaList.resultList}" />
+            	<h:selectOneMenu  value="#{newItinerario.puntoDiConsegna}" required="true"
+		                	title="seleziona il punto di consegna" style=" width : 149px;">
+		                	
+		                	<a:support event="onblur" bypassUpdates="true"
+		                	action="#{newControlloBean.controllaPuntiDiConsegna()}" 
+		                	ajaxSingle="true" />
+		                	
+		                	<s:selectItems noSelectionLabel="Seleziona un punto di consegna" 
+		                	var="_punto" reRender="puntoConsegnaField" label="#{_punto.comune.nome} #{_punto.indirizzo}" 
+		                	value="#{puntiDiConsegnaList.resultList}" />
+		                	
+		               		<s:convertEntity></s:convertEntity>
 		                </h:selectOneMenu>
+		                 <h:outputText styleClass="errors" value="#{newControlloBean.myResponsePuntoDiConsegna}" 
+                				style="color:red;"/>
                 </s:decorate>
+                
+                <a:outputPanel ajaxRendered="true">
+                	<h:outputText value="#{newItinerario.puntoDiConsegna}" />
+                </a:outputPanel>
 			
 			</h:form>
 				<br/>	    

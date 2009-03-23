@@ -29,7 +29,9 @@ import org.domain.SeamAmiciDelGas.crud.AccountList;
 import org.domain.SeamAmiciDelGas.crud.OrdineList;
 import org.domain.SeamAmiciDelGas.entity.Account;
 import org.domain.SeamAmiciDelGas.entity.Articolo;
+import org.domain.SeamAmiciDelGas.entity.Itinerario;
 import org.domain.SeamAmiciDelGas.entity.Ordine;
+import org.domain.SeamAmiciDelGas.entity.PuntiDiConsegna;
 import org.domain.SeamAmiciDelGas.processes.OrderProcessing;
 import org.domain.SeamAmiciDelGas.webservices.Item;
 
@@ -58,6 +60,10 @@ public class OrdineBean {
 	private String tipoOrdine="1";
 	
 	private List<MyOrdine> ordini;
+	
+	private Itinerario currentItinerario;
+	
+	private List<PuntiDiConsegna> puntiDiConsegna;
 	
 	private List<Articolo> articoli;
 	
@@ -182,6 +188,25 @@ public class OrdineBean {
 
 	public void setArticoli(List<Articolo> articoli) {
 		this.articoli = articoli;
+	}
+
+	public List<PuntiDiConsegna> getPuntiDiConsegna() {
+		puntiDiConsegna = new ArrayList<PuntiDiConsegna>();
+		if (currentItinerario!=null)
+			puntiDiConsegna.addAll(currentItinerario.getPuntiDiConsegnas());
+		return puntiDiConsegna;
+	}
+
+	public void setPuntiDiConsegna(List<PuntiDiConsegna> puntiDiConsegna) {
+		this.puntiDiConsegna = puntiDiConsegna;
+	}
+
+	public Itinerario getCurrentItinerario() {
+		return currentItinerario;
+	}
+
+	public void setCurrentItinerario(Itinerario currentItinerario) {
+		this.currentItinerario = currentItinerario;
 	}
 
 }

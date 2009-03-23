@@ -238,6 +238,11 @@
 					rendered="#{ shoppingCart.dataMassimaBeforeToday and (not empty shoppingCart.itemInShoppingCart) }">
 					<h:outputText value="Data massima non valida, troppo presto" />
 				</s:decorate>
+				<s:decorate template="/layout/edit.xhtml"
+						id="fondoNonSufficiente"
+				rendered="#{ (not shoppingCart.fondo) and (not empty shoppingCart.itemInShoppingCart) }">
+				<h:outputText value="Fondo non sufficiente per evadere l'ordine" />
+			</s:decorate>
 
 			</h:form>
 
