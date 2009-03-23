@@ -10640,10 +10640,11 @@ INSERT INTO `itinerario_has_punti_di_consegna` VALUES
 COMMIT;
 
 INSERT INTO `itinerario` VALUES
- (1,'2009-04-12','2009-04-12','documentazionePath1','2009-03-14','esteban'),
- (2,'2009-04-24','2009-04-24','documentazionePath2','2009-03-14','esteban'),
- (3,'2009-04-24','2009-04-24','documentazionePath3','2009-03-14','zlatan');
+ (1,'2009-04-12','2009-04-12','documentazionePath1','2009-03-14','1','esteban'),
+ (2,'2009-04-24','2009-04-24','documentazionePath2','2009-03-14','2','esteban'),
+ (3,'2009-04-24','2009-04-24','documentazionePath3','2009-03-14','3','zlatan');
 COMMIT;
+
 
 INSERT INTO `itinerario_has_cybercontadino` VALUES
  (1,01139780629),
