@@ -27,9 +27,9 @@ public class UDDIConfigurator {
 
 	public static final String DEFAULT_TRANSPORT_CLASS_NAME="org.uddi4j.transport.ApacheAxisTransport";
 	private static final String DEFAULT_LOG_ENABLED = "false";
-	private static final String DEFAULT_INQUIRY_URL="http://localhost:8787/juddi/inquiry";
-	private static final String DEFAULT_PUBLISH_URL="http://localhost:8787/juddi/publish";
-	private static final String DEFAULT_ADMIN_URL="http://localhost:8787/juddi/admin";
+	private static final String DEFAULT_INQUIRY_URL="http://192.168.2.6:8787/juddi/inquiry";
+	private static final String DEFAULT_PUBLISH_URL="http://192.168.2.6:8787/juddi/publish";
+	private static final String DEFAULT_ADMIN_URL="http://192.168.2.6:8787/juddi/admin";
 	private static final String DEFAULT__USERID="juddi";
    /**
     * Loads configuration file. File may require
