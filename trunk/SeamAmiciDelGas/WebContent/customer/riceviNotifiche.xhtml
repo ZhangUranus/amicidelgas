@@ -16,20 +16,17 @@
 				<s:decorate rendered="#{not empty filtraNotifica.getAllSingleTaskInstanceListByFilters('ReceiveMessage')}">
 					<b><h:outputText value="Messaggi da altri utenti" /></b><br/><br/>
 					<rich:dataTable id="dataTableUtente" width="90%" align="center" 
-									value="#{filtraNotifica.getAllSingleTaskInstanceListByFilters('ReceiveMessage')}" var="_task">
-						<rich:column>
-							<f:facet name="header">Processo</f:facet>							    
-					         <h:outputText value="#{_task.name}"/>
-						</rich:column>
-						<rich:column>
+									value="#{filtraNotifica.getAllSingleTaskInstanceListByFilters('ReceiveMessage')}" var="_task" >
+					
+						<rich:column rendered="#{!(_task.variables.sender.equalsIgnoreCase(credentials.getUsername()))}">
 							<f:facet name="header">Mittente</f:facet>    
 						        <h:outputText value="#{_task.variables.sender}"/>
 						</rich:column>
-						<rich:column>
+						<rich:column rendered="#{!(_task.variables.sender.equalsIgnoreCase(credentials.getUsername()))}">
 							<f:facet name="header">Contenuto messaggio</f:facet>    
 						    <h:outputText value="#{_task.variables.notifyMessage.content}"/>
 						</rich:column>
-						<rich:column width="10%">
+						<rich:column width="10%" rendered="#{!(_task.variables.sender.equalsIgnoreCase(credentials.getUsername()))}">
 							<div id="pulsante_driver_loading" style="display: none;"><img src="/SeamAmiciDelGas/img/loading.gif" /></div>	
 							<s:button taskInstance="#{_task}" action="#{notifyBean.receive()}"
 									value="Cancella messaggio"
@@ -43,10 +40,7 @@
 					<b><h:outputText value="Messaggi dal driver o contadino" /></b><br/><br/>
 					<rich:dataTable id="dataTableUtente" width="90%" align="center" 
 									value="#{filtraNotifica.getAllSingleTaskInstanceListByFilters('ReceiveOrderFailed','ReceiveOrderAccepted')}" var="_task">
-						<rich:column>
-							<f:facet name="header">Processo</f:facet>							    
-					         <h:outputText value="#{_task.name}"/>
-						</rich:column>
+						
 						<rich:column>
 							<f:facet name="header">Mittente</f:facet>    
 						        <h:outputText value="#{_task.variables.notifyMessageStatoOrdine.mittente}"/>
@@ -95,10 +89,7 @@
 					<b><h:outputText value="Ordini scaduti" /></b><br/><br/>
 					<rich:dataTable id="dataTableOrdiniScaduti" width="90%" align="center" 
 									value="#{filtraNotifica.getAllSingleTaskInstanceListByFilters('timeOutDataMassima')}" var="_task">
-						<rich:column>
-							<f:facet name="header">Processo</f:facet>							    
-					         <h:outputText value="#{_task.name}"/>
-						</rich:column>
+						
 						<rich:column>
 							<f:facet name="header">Mittente</f:facet>
 								<h:outputText value="#{_task.variables.notificaDataMassimaScaduta.mittente}"/>    
@@ -129,23 +120,20 @@
 					<rich:dataTable id="dataTableGroup" 
 								value="#{filtraNotifica.getAllPooledTaskInstanceList('ReceiveMessage')}" var="_pooledTask"
 								width="90%" align="center" >
-						<rich:column>
-							<f:facet name="header">Processo</f:facet>							    
-					         <h:outputText value="#{_pooledTask.name}"/>
-						</rich:column>
-						<rich:column>
+						
+						<rich:column rendered="#{!(_pooledTask.variables.sender.equalsIgnoreCase(credentials.getUsername()))}">
 							<f:facet name="header">Mittente</f:facet>    
 					         <h:outputText value="#{_pooledTask.variables.sender}"/>
 						</rich:column>
-						<rich:column>
+						<rich:column rendered="#{!(_pooledTask.variables.sender.equalsIgnoreCase(credentials.getUsername()))}">
 							<f:facet name="header">Gruppo</f:facet>    
 					         <h:outputText value="#{_pooledTask.variables.notifyMessage.recipient}"/>
 						</rich:column>
-						<rich:column>
+						<rich:column rendered="#{!(_pooledTask.variables.sender.equalsIgnoreCase(credentials.getUsername()))}">
 							<f:facet name="header">Contenuto messaggio</f:facet>    
 					         <h:outputText value="#{_pooledTask.variables.notifyMessage.content}"/>
 						</rich:column>
-						<rich:column width="10%">
+						<rich:column width="10%" rendered="#{!(_pooledTask.variables.sender.equalsIgnoreCase(credentials.getUsername()))}">
 							<div id="pulsante_driver_loading4" style="display: none;"><img src="/SeamAmiciDelGas/img/loading.gif" /></div>	
 							<s:button taskInstance="#{_pooledTask}" action="#{notifyBean.receive()}"
 									  value="Cancella messaggio"
