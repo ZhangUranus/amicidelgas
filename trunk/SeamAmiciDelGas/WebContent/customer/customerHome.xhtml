@@ -233,18 +233,20 @@
 		</table>
 		
 		<s:decorate rendered="#{(loginSelectBean.calculateMaxRole()=='admin') or (loginSelectBean.calculateMaxRole()=='mediatore') or (loginSelectBean.calculateMaxRole()=='driver')}">
+		
 		<table width="90%" border="0" cellspacing="0" cellpadding="0" align="center" >		
 			<tr>
 				<td width="50%">
+				<s:decorate rendered="#{(loginSelectBean.calculateMaxRole()=='admin') or (loginSelectBean.calculateMaxRole()=='mediatore')}">
 					<table width="85%" border="0" cellspacing="8" cellpadding="0" align="center" >
 					  <tr>			    
 					    <td width="50px" rowspan="2" align="left">
-					    	<s:link view="/admin/editDatiUtenti.xhtml"
-				             propagation="none"
-				                      id="editDatiUtentiRegistratiImg"
-				                rendered="#{empty from}">
-					    	<img alt="statistiche" border="0" src="/SeamAmiciDelGas/img/utenti.png"/>
-					    	</s:link>
+						    	<s:link view="/admin/editDatiUtenti.xhtml"
+					             propagation="none"
+					                      id="editDatiUtentiRegistratiImg"
+					                rendered="#{empty from}">
+						    	<img alt="statistiche" border="0" src="/SeamAmiciDelGas/img/utenti.png"/>
+						    	</s:link>
 					    	</td>
 					    <td valign="bottom"><div align="left" class="colore_1">
 					    	<s:link view="/admin/editDatiUtenti.xhtml"
@@ -259,8 +261,10 @@
 					    <td valign="top"><div align="left" class="explorer">Visualizza e modifica i dati degli utenti</div></td>
 					  </tr>
 					</table>
+					</s:decorate>
 				</td>
 				<td width="50%">
+				<s:decorate rendered="#{(loginSelectBean.calculateMaxRole()=='admin') or (loginSelectBean.calculateMaxRole()=='mediatore')}">
 					<table width="85%" border="0" cellspacing="8" cellpadding="0" align="center" >
 					  <tr>			    
 					    <td width="50px" rowspan="2" align="left">
@@ -284,6 +288,7 @@
 					    <td valign="top"><div align="left" class="explorer">Visualizza e modifica i dati dei cybercontadini</div></td>
 					  </tr>
 					</table>
+					</s:decorate>
 				</td>
 			</tr>
 		
