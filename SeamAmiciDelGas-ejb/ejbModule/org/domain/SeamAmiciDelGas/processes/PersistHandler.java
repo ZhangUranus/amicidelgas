@@ -54,7 +54,6 @@ public class PersistHandler implements ActionHandler{
 	{
 		Context businessContext = Contexts.getBusinessProcessContext();
 		gestioneFeedback = (GestioneFeedback) businessContext.get("gestioneFeedback");
-		System.out.println("gestione feedback = "+gestioneFeedback.toString());
 		Collection<TaskInstance> col  = executionContext.getTaskMgmtInstance().getTaskInstances();
 		List<TaskInstance> taskInstanceList = new ArrayList<TaskInstance>();
 		taskInstanceList.addAll(col);
@@ -98,7 +97,6 @@ public class PersistHandler implements ActionHandler{
 			Ordine ordine = (Ordine) taskInstance.getVariable("ordine");
 
 			gestioneFeedback.assegnaFeedbackFromToDefault(accountFrom.getUsername(), accountTo.getUsername(), ordine);
-			System.out.println("Task ID: "+taskNameOrdine);
 			taskInstance.setSignalling(false);
 			taskInstance.cancel();
 		}
@@ -116,7 +114,6 @@ public class PersistHandler implements ActionHandler{
 			for (Cybercontadino cybercontadino : contadinoList) {
 				gestioneFeedback.assegnaFeedbackFromToDefault(accountFrom.getUsername(), cybercontadino.getAccount().getUsername(), ordine);
 			}
-			System.out.println("Task ID: "+taskNameOrdine);
 			taskInstance.setSignalling(false);
 			taskInstance.cancel();
 		}
@@ -134,7 +131,6 @@ public class PersistHandler implements ActionHandler{
 			for (Cybercontadino cybercontadino : contadinoList) {
 				gestioneFeedback.assegnaFeedbackFromToDefault(cybercontadino.getAccount().getUsername(), accountTo.getUsername(), ordine);
 			}
-			System.out.println("Task ID: "+taskNameOrdine);
 			taskInstance.setSignalling(false);
 			taskInstance.cancel();
 		}
@@ -152,7 +148,6 @@ public class PersistHandler implements ActionHandler{
 			for (Cybercontadino cybercontadino : contadinoList) {
 				gestioneFeedback.assegnaFeedbackFromToDefault(accountFrom.getUsername(), cybercontadino.getAccount().getUsername(), ordine);
 			}
-			System.out.println("Task ID: "+taskInstance);
 			taskInstance.setSignalling(false);
 			taskInstance.cancel();
 		}

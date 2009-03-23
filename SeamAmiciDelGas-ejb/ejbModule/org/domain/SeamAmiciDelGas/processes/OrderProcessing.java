@@ -150,13 +150,11 @@ public class OrderProcessing {
 		selectedItem = itemQ;
 		dataMassima = dm;
 		customer = currentAccount;
-		
+		 
 		myOrdine = MyOrdine.createMyOrder(itemQ, dm);
 		myOrdine.setItemQuantita(itemQ);
 		dataRichiesta = myOrdine.getDataRichiesta();
 		
-		
-
 		boolean isStessoContadino=true;
 		messageDriverContadino = new Message();
 		
@@ -240,6 +238,7 @@ public class OrderProcessing {
 			messageStatoOrdine.setInfoFilter("orderProcessingPreso");
 			responsabileConsegna = currentAccount;
 			this.itinerario = itinerario;
+
 			if (loginSelectBean.isDriver()) {
 				responsabileIsDriver = new Boolean(true);
 				this.itinerario.getCybercontadinos();
@@ -258,6 +257,7 @@ public class OrderProcessing {
 			saveOrdine(quantitaOttenute); //salvo l'ordine nel database
 			messageStatoOrdine.setContent("L'ordine "+ordine.getIdordine()+" e' stato preso in carico da "+ credentials.getUsername()+".");
 		}
+
 		return "ordine_preso_in_carico";
 	}
 	
