@@ -37,7 +37,7 @@ public class CybercontadinoList extends EntityQuery<Cybercontadino> {
 	}
 	
 	public List<Cybercontadino> loadContadini() {
-		this.setEjbql("select contadino fron Cybercontadino contadino where contadino.account.attivato==true and contadino.account.bloccato==false and contadino.account.elimato==false");
+		this.setEjbql("select contadino from Cybercontadino contadino where contadino.account.attivato=true and contadino.account.bloccato=false and contadino.account.elimato=false");
 		return this.getResultList();
 	}
 }
