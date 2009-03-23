@@ -56,7 +56,7 @@ public class ControlloBean {
 	//Controllo se esiste gia' un codice fiscale
 	private String myResponseCodiceFiscale;
 	
-	//Controllo se è stata selezionato un punto di consegna
+	//Controllo se ï¿½ stata selezionato un punto di consegna
 	private String myResponsePuntoDiConsegna;
 	
 	
@@ -191,6 +191,7 @@ public class ControlloBean {
 			return null;//uno dei due campi o tutti e due sono giï¿½ presenti del database
 			
 	}
+
 	
 	public void controllaPuntiDiConsegna() {
 		if (newPunto==null)

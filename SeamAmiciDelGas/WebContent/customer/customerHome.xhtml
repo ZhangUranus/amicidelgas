@@ -288,7 +288,7 @@
 			</tr>
 		
 		
-		<s:decorate rendered="#{loginSelectBean.calculateMaxRole()=='admin'}">	
+		<s:decorate >	
 			<tr>
 			<td width="50%">
 				<s:decorate rendered="#{(loginSelectBean.calculateMaxRole()=='mediatore') or (loginSelectBean.calculateMaxRole()=='admin')}">
@@ -304,6 +304,7 @@
 				</s:decorate>
 			</td>			
 			<td width="50%">
+			<s:decorate rendered="#{loginSelectBean.calculateMaxRole()=='driver' or (loginSelectBean.calculateMaxRole()=='admin')}">
 					<table width="85%" border="0" cellspacing="8" cellpadding="0" align="center" >
 					  <tr>			    
 					    <td width="50px" rowspan="2" align="left" ><a href="/SeamAmiciDelGas/driver/itinerario.seam"><img alt="statistiche" border="0" src="/SeamAmiciDelGas/img/itinerario.png"/></a></td>
@@ -313,6 +314,7 @@
 					    <td valign="top"><div align="left" class="explorer">Crea un nuovo itinerario di visita</div></td>
 					  </tr>
 					</table>
+					</s:decorate>
 				</td>
 			</tr>
 		</s:decorate>	

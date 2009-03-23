@@ -98,7 +98,6 @@ public class Itinerario implements java.io.Serializable, Comparable<Itinerario> 
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DataPartenza", nullable = false, length = 19)
-	@Future
 	@NotNull
 	public Date getDataPartenza() {
 		return this.dataPartenza;
