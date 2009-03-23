@@ -23,6 +23,7 @@ import org.domain.SeamAmiciDelGas.entity.Articolo;
 import org.domain.SeamAmiciDelGas.entity.Cybercontadino;
 import org.domain.SeamAmiciDelGas.entity.Itinerario;
 import org.domain.SeamAmiciDelGas.entity.Ordine;
+import org.domain.SeamAmiciDelGas.entity.PuntiDiConsegna;
 import org.domain.SeamAmiciDelGas.session.GestioneFeedback;
 import org.domain.SeamAmiciDelGas.session.GestioneFondo;
 import org.domain.SeamAmiciDelGas.session.ItemQuantita;
@@ -175,7 +176,7 @@ public class OrderProcessing {
 	}
 	
 	@BeginTask @EndTask(transition="ordine_preso_in_carico")
-	public String verificaDisponibilita(Itinerario itinerario){
+	public String verificaDisponibilita(Itinerario itinerario, PuntiDiConsegna punto){
 
 		Hashtable<String,String> transactionIdList = new Hashtable<String,String>();
 		boolean isAvailable=true;
@@ -231,8 +232,12 @@ public class OrderProcessing {
 				this.itinerario.getCybercontadinos();
 				this.itinerario.getPuntiDiConsegnas();
 			}
-			else
+			else {
 				responsabileIsDriver = new Boolean(false);
+				Set<PuntiDiConsegna> puntiDiConsegnas = new HashSet<PuntiDiConsegna>(0);
+				puntiDiConsegnas.add(punto);
+				itinerario.setPuntiDiConsegnas(puntiDiConsegnas);
+			}
 			this.dataConsegna = itinerario.getDataConsegna();
 			myOrdine.setPendente(false);
 			myOrdine.setEvaso(true);

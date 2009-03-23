@@ -9,6 +9,7 @@ import org.domain.SeamAmiciDelGas.crud.UtenteList;
 import org.domain.SeamAmiciDelGas.entity.Account;
 import org.domain.SeamAmiciDelGas.entity.Cybercontadino;
 import org.domain.SeamAmiciDelGas.entity.Itinerario;
+import org.domain.SeamAmiciDelGas.entity.PuntiDiConsegna;
 import org.domain.SeamAmiciDelGas.entity.Utente;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Logger;
@@ -43,8 +44,8 @@ public class ControlloBean {
 	@In(value="newCybercontadino", create=true)
 	private Cybercontadino contadino;
 	
-	@In(value="newItinerario", create=true)
-	private Itinerario newItinerario;
+	@In(value="newPuntiDiConsegna", create=true)
+	private PuntiDiConsegna newPunto;
 	
 	@In(value="cybercontadinoList",create=true)
 	private CybercontadinoList contadinoList;
@@ -192,7 +193,7 @@ public class ControlloBean {
 	}
 	
 	public void controllaPuntiDiConsegna() {
-		if (newItinerario.getPuntoDiConsegna()==null)
+		if (newPunto==null)
 			myResponsePuntoDiConsegna = "Selezionare un punto di consegna";
 		else
 			myResponsePuntoDiConsegna = null;
