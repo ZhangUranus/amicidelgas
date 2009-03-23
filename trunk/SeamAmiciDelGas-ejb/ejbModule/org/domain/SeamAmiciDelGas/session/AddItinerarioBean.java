@@ -17,6 +17,7 @@ import org.domain.SeamAmiciDelGas.entity.PuntiDiConsegna;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
+import org.jboss.seam.annotations.Transactional;
 import org.jboss.seam.international.StatusMessages;
 import org.jboss.seam.ScopeType;
 
@@ -47,13 +48,10 @@ public class AddItinerarioBean implements AddItinerario
     private String all_id;
     private Date dataPartenza;
     private String all_id_puntiConsegna;
-
-    public String addItinerario()
+    
+    @Transactional public boolean aggiungiItinerario()
     {
-    	System.out.println("DATA: "+dataPartenza);
-    	System.out.println("String: "+all_id+" : "+all_id_puntiConsegna);
-        statusMessages.add("itinerario salvato correttamente");
-        Itinerario itinerario = new Itinerario();
+    	Itinerario itinerario = new Itinerario();
         Set<Cybercontadino> contadini = new HashSet<Cybercontadino>(0);
         StringTokenizer st = new StringTokenizer(all_id);
         while (st.hasMoreTokens()) {
@@ -85,8 +83,22 @@ public class AddItinerarioBean implements AddItinerario
         
         itinerarioHome.setInstance(itinerario);
         itinerarioHome.persist();
-        
-        return "OutcomeItinerario";
+    	return true;  
+    	
+    }
+
+    public String addItinerario()
+    {
+    	Date dataCorrente = new Date(System.currentTimeMillis());
+    	if(dataPartenza.after(dataCorrente))
+    	{
+    		if(this.aggiungiItinerario())
+    			return "OutcomeItinerario";
+    		else
+
+    			return null;
+    	}
+        return null;
     }
     
 
