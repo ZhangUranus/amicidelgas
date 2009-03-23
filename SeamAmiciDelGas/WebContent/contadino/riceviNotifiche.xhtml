@@ -91,7 +91,7 @@
             	
             	<s:decorate id="puntoConsegnaField" template="/layout/edit.xhtml">
             	<ui:define name="label">Seleziona il punto di consegna</ui:define>
-            	<h:selectOneMenu  value="#{newItinerario.puntoDiConsegna}" required="true"
+            	<h:selectOneMenu  value="#{newItinerario.puntiDiConsegnas.add(_punto)}" required="true"
 		                	title="seleziona il punto di consegna" style=" width : 149px;">
 		                	
 		                	<a:support event="onblur" bypassUpdates="true"
