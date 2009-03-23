@@ -143,7 +143,7 @@ public class PersistHandler implements ActionHandler{
 	private void closeTaskInstanceResponsabileToContadino(TaskInstance taskInstance) {
 		Context businessContext = Contexts.getBusinessProcessContext();
 		Account accountFrom = (Account) businessContext.get(usernameFrom);
-		if(taskInstance.getName().equals(taskInstance) && taskInstance.isOpen())
+		if(taskInstance.getName().equals(taskNameOrdine) && taskInstance.isOpen())
 		{
 			Ordine ordine = (Ordine) taskInstance.getVariable("ordine");
 			Itinerario itinerario = (Itinerario) taskInstance.getVariable("itinerario");

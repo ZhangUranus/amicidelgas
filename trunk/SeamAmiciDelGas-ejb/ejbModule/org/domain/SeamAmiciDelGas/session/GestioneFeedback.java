@@ -111,7 +111,7 @@ public class GestioneFeedback  implements Serializable{
 		accountDaModificare.setNumeroVotanti(accountDaModificare.getNumeroVotanti()+1);
 		
 		//salvo info feedback
-		salvaFeedbackFromTo(accountFrom, accountDaModificare, ordine, 3, "default...");
+		salvaFeedbackFromTo(accountFrom, accountDaModificare, ordine, 3, "Feedback assegnato automaticamente per l'ordine "+ordine.getIdordine()+".");
 		
 		//aggiorno account
 		accountHome.update();
@@ -148,8 +148,9 @@ public class GestioneFeedback  implements Serializable{
 	{
 		Feedback newFeedback = new Feedback();
 		newFeedback.setDescrizione(commento);
-		newFeedback.setAnalizzato(false);
+		newFeedback.setAnalizzato(true);
 		newFeedback.setDataSegnalazione(new GregorianCalendar().getTime());
+		newFeedback.setDataValidazione(new GregorianCalendar().getTime());
 		newFeedback.setPunteggio(feedback);
 		if(ordine!=null)
 			newFeedback.setOrdine(ordine);
