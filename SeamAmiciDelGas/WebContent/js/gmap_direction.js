@@ -231,13 +231,13 @@ function setDirections() {
 		for(z=0; z < from_place.length ;z++){
 			if(from_place[z]!=null){
 				query = query + " to: "+from_place[z].getIndirizzo().getAddress();
-				format_string = format_string + "" + from_place[z].getId() + " | ";
+				format_string = format_string + "" + from_place[z].getId() + " ";
 			}
 		}
 		for(t=0; t < to_place.length ;t++){
 			if(to_place[t]!=null){
 				query = query + " to: "+to_place[t].getIndirizzo().getAddress();
-				format_string_place = format_string_place + "" + to_place[t].getId() + " | ";
+				format_string_place = format_string_place + "" + to_place[t].getId() + " ";
 			}
 		}
 		gdir.load(query,{ "locale": locale , "preserveViewport": false });

@@ -9,7 +9,7 @@
 <restrict>#{s:hasRole('driver') or s:hasRole('admin')}</restrict>
  <navigation>
   <rule if-outcome="OutcomeItinerario">
-   <redirect view-id="/driver/visualizzaItinerario.xhtml"/>
+   <redirect view-id="/driver/visualizzaItinerari.xhtml"/>
   </rule>
  </navigation>
 
