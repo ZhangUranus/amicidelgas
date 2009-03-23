@@ -26,8 +26,8 @@ function Indirizzo(via,comune,provincia,categoria_mark,categoria_mark2,categoria
 	this.categoria_mark3 = categoria_mark3;
 	
 	this.getCognomeNome = function(){
-	if (categoria_mark3!=null) return categoria_mark + "," + categoria_mark2+ "," + categoria_mark3;
-		return categoria_mark + "," + categoria_mark2;
+	if (categoria_mark3!=null) return categoria_mark + "  " + categoria_mark2+ " " + categoria_mark3;
+		return categoria_mark + " " + categoria_mark2;
 	}
 	
 	this.getAddress = function (){

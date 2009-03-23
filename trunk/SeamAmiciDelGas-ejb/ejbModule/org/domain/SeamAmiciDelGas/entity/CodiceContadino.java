@@ -15,8 +15,12 @@ import org.jboss.seam.annotations.Scope;
 @Table(name = "codicecontadino", catalog = "database_gas")
 @Name("newCodiceContadino")
 @Scope(value=ScopeType.SESSION)
-public class CodiceContadino {
+public class CodiceContadino implements java.io.Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8181615707166663412L;
 	private Integer id;
 	private String descrizione;
 

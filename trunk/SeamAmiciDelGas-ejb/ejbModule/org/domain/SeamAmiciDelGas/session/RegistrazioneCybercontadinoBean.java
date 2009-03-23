@@ -5,12 +5,9 @@ import javax.ejb.Remove;
 import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-
-import org.domain.SeamAmiciDelGas.action.RegistrationMailer;
 import org.domain.SeamAmiciDelGas.crud.ComuneList;
 import org.domain.SeamAmiciDelGas.entity.Account;
 import org.domain.SeamAmiciDelGas.entity.CodiceContadino;
-import org.domain.SeamAmiciDelGas.entity.Comune;
 import org.domain.SeamAmiciDelGas.entity.Cybercontadino;
 import org.domain.SeamAmiciDelGas.entity.Pagamentoelettronico;
 import org.domain.SeamAmiciDelGas.entity.Role;
@@ -19,11 +16,9 @@ import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.Destroy;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.In;
-import org.jboss.seam.annotations.Logger;
 import org.jboss.seam.annotations.Out;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.annotations.Transactional;
-import org.jboss.seam.log.Log;
 import org.jboss.seam.faces.FacesMessages;
 import org.jboss.seam.international.StatusMessages;
 
@@ -32,8 +27,6 @@ import org.jboss.seam.international.StatusMessages;
 @Scope(value=ScopeType.SESSION)
 public class RegistrazioneCybercontadinoBean implements RegistrazioneCybercontadino
 {
-    @Logger private Log log;
-    
     @PersistenceContext
     private EntityManager em;
     @In(value="newCybercontadino" , create=true)
@@ -57,10 +50,7 @@ public class RegistrazioneCybercontadinoBean implements RegistrazioneCybercontad
     private ControlloBean controllo;
     @In(value="processoRegistrazione",create=true)
     private ProcessoRegistrazione processo;
-    @In(value="currentContadino", create=true)
-    private Cybercontadino contadinoCorrente;
-//   @In(value="registrationMailer",create=true)
-//    private RegistrationMailer registrationMailer;
+
     
     
     @In StatusMessages statusMessages;
@@ -71,21 +61,13 @@ public class RegistrazioneCybercontadinoBean implements RegistrazioneCybercontad
         if (!passwordBean.verify()) {
     		FacesMessages.instance()
     		.addToControl("confirm", "value does not match password");
-    	}
-    	
+    	} 	
     	ComuneList comuneList = new ComuneList();
-    	comuneList.setEjbql("select comune from Comune comune where comune.idcomune= "+ comuneProvinciaBean.getComune().getId());
-//    	comuneList.getComune().setIdcomune(comuneNascita.getIdcomune());
-//    	comuneList.refresh();
-//    	log.error("prova id comune: "+comuneNascita.getIdcomune());
-    	log.error("prova query: "+comuneList.getEjbql());
-    	
+    	comuneList.setEjbql("select comune from Comune comune where comune.idcomune= "+ comuneProvinciaBean.getComune().getId()); 	
     	account.setPasswordHash(passwordManager.hash(passwordBean.getPassword()));
     	contadino.setComune(comuneList.getResultList().get(0));
-    	contadino.setPathAsl(fileUpload.getSavePath());
-    	
+    	contadino.setPathAsl(fileUpload.getSavePath());	
     	em.persist(pagamento);
-    	
     	account.setPagamentoelettronico(pagamento);
     	account.setAttivato(false);
     	account.setBloccato(false);
@@ -102,21 +84,11 @@ public class RegistrazioneCybercontadinoBean implements RegistrazioneCybercontad
     	contadino.setCodiceContadino(codiceContadino);
     	contadino.setAccount(account);
     	em.persist(contadino);
-    	
     	Role role = new Role();
     	role.setAccount(account);
     	role.setName("utenteContadino");
     	em.persist(role);
-    	
-    	
-    	//registrationMailer.sendWelcomeEmail();
-    	
-    	
-
-    	// implement your business logic here
-    	log.info("registrazionecybercontadino.registrazionecybercontadino() action called");
-        statusMessages.add("Avvenuta Registrazione Cybercontadino");
-        
+        statusMessages.add("Avvenuta Registrazione Cybercontadino");     
         return true;
     }
     
@@ -142,21 +114,17 @@ public class RegistrazioneCybercontadinoBean implements RegistrazioneCybercontad
     		fileUpload.setErrore("Aggiungere la documentazione ASL");
     		return null;
     	}
-    	
     }
-    
-    // Clelio non lo usare mai!!!
-    public boolean testProcesso()
-    {
-    	log.info("TEstPRocesso chiamato");
-        statusMessages.add("Avviato processo");
-    	contadino = contadinoCorrente;
-    	processo.inviaRegistrazione();
-    	return true;
-    }
-    // add additional action methods
     
     @Destroy @Remove
     public void destroy() {}
+
+	public Cybercontadino getContadino() {
+		return contadino;
+	}
+
+	public void setContadino(Cybercontadino contadino) {
+		this.contadino = contadino;
+	}
 
 }

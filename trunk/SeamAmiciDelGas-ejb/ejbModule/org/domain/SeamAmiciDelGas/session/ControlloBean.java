@@ -1,6 +1,5 @@
 package org.domain.SeamAmiciDelGas.session;
 
-import java.util.Date;
 import java.util.List;
 import org.domain.SeamAmiciDelGas.crud.AccountList;
 import org.domain.SeamAmiciDelGas.crud.ComuneList;
@@ -8,7 +7,6 @@ import org.domain.SeamAmiciDelGas.crud.CybercontadinoList;
 import org.domain.SeamAmiciDelGas.crud.UtenteList;
 import org.domain.SeamAmiciDelGas.entity.Account;
 import org.domain.SeamAmiciDelGas.entity.Cybercontadino;
-import org.domain.SeamAmiciDelGas.entity.Itinerario;
 import org.domain.SeamAmiciDelGas.entity.PuntiDiConsegna;
 import org.domain.SeamAmiciDelGas.entity.Utente;
 import org.jboss.seam.annotations.In;
@@ -37,7 +35,6 @@ public class ControlloBean {
 	@In(value="newComuneProvinciaBean" , create=true)
 	private ComuneProvinciaBean comuneProvincia;
 	
-	
 	@In(value="newComuneProvinciaResidenzaBean" , create=true)
 	private ComuneProvinciaBean comuneProvinciaResidenza;
 	
@@ -50,15 +47,8 @@ public class ControlloBean {
 	@In(value="cybercontadinoList",create=true)
 	private CybercontadinoList contadinoList;
 	
-	@In(value="comuneList",create=true)
-	private ComuneList comuneList;
-	
 	//Controllo se esiste gia' un codice fiscale
 	private String myResponseCodiceFiscale;
-	
-	//Controllo se � stata selezionato un punto di consegna
-	private String myResponsePuntoDiConsegna;
-	
 	
 	private String myResponseComune;
 	
@@ -191,27 +181,6 @@ public class ControlloBean {
 			return null;//uno dei due campi o tutti e due sono gi� presenti del database
 			
 	}
-
-	
-	public void controllaPuntiDiConsegna() {
-		if (newPunto.getIndirizzo()==null)
-			myResponsePuntoDiConsegna = " Selezionare un punto di consegna";
-		else
-			myResponsePuntoDiConsegna = null;
-	}
-
-	public String getMyResponsePuntoDiConsegna() {
-		return myResponsePuntoDiConsegna;
-	}
-
-	public void setMyResponsePuntoDiConsegna(String myResponsePuntoDiConsegna) {
-		this.myResponsePuntoDiConsegna = myResponsePuntoDiConsegna;
-	}
-
-	
-	
-
-	
 
 	public void setMyResponseComune(String myResponseComune) {
 		this.myResponseComune = myResponseComune;

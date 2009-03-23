@@ -2,8 +2,6 @@ package org.domain.SeamAmiciDelGas.processes;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.GregorianCalendar;
-
 import org.domain.SeamAmiciDelGas.crud.AccountHome;
 import org.domain.SeamAmiciDelGas.entity.Account;
 import org.domain.SeamAmiciDelGas.entity.Cybercontadino;
@@ -46,7 +44,6 @@ public class InviaNotificaRegistrazioni {
 	{
 		usernameInviati.add(credentials.getUsername());
 		postiOccupati++;
-		System.out.println("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBb "+postiOccupati);
 	}
 	
 	@StartTask @EndTask(beforeRedirect=true , transition="decisioneAdmin")
@@ -58,10 +55,11 @@ public class InviaNotificaRegistrazioni {
 			if(!(this.accettaContadino())){
 				return null;
 			}				
-			else {
-//		    	String urlWsdl=contadino.getUrlWsdl();
-//		    	ServicePublisher sp= new ServicePublisher(); 
-//		    	sp.publishService(contadino.getPartitaIva(), "CatalogService", urlWsdl, contadino.getNameSpaceWsdl());
+			else 
+			{
+		    	String urlWsdl=contadino.getUrlWsdl();
+		    	ServicePublisher sp= new ServicePublisher(); 
+		    	sp.publishService(contadino.getPartitaIva(), "CatalogService", urlWsdl, contadino.getNameSpaceWsdl());
 			}
 		}
 		else
@@ -103,8 +101,4 @@ public class InviaNotificaRegistrazioni {
 		return true; 
 		
     }
-	
-	
-
-
 }
