@@ -119,7 +119,7 @@
 	</fork>
 
 	<join name="join2">
-		<transition to="end-state3" name="to-end_state-3"></transition>
+		<transition to="state2" name="to-end_state-3"></transition>
 	</join>
 
 	<task-node name="Fb from customer to responsabile consegna">
@@ -191,6 +191,14 @@
 	<timer duedate="9 years" name="inviaFeedback"  transition="assegna_feedback" />
 		<transition to="fork2" name="assegna_feedback"></transition>
 </state>
+
+	<state name="state2">
+		<timer duedate="30 seconds" name="timer assegna ordine concluso" transition="to_end_state_3_finish">
+			<action name="persistOrdineConcluso" class="org.domain.SeamAmiciDelGas.processes.PersistHandlerOrdine">
+			</action>
+		</timer>
+		<transition to="end-state3" name="to_end_state_3_finish"></transition>
+	</state>
 
 
 	<end-state name="end-state1"></end-state>
