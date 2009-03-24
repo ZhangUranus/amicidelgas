@@ -89,7 +89,6 @@ public class OrdineBean {
 	}
 
 	public void setCurrentOrdine(Ordine currentOrdine) {
-		log.info("\n\n******** CURRENT ORDINE == " +currentOrdine.getDriver() +" **********");
 		this.currentOrdine = currentOrdine;
 	}
 
@@ -155,14 +154,11 @@ public class OrdineBean {
 	public void deleteItemFromMyOrdine(ItemQuantita itemSelected)
 	{
 		List<ItemQuantita> itemQuantitaList = currentMyOrder.getItemQuantita();
-		log.info("***** deleteItemFromMyOrdine(Item itemSelected) ********");
 		for(int index=0; index<itemQuantitaList.size(); index++)
 		{
 			ItemQuantita iq = itemQuantitaList.get(index);
-			log.info("***** itemQuantita"+iq.getItem().getName() +" ********" );
 			if(iq.getItem().getId().equalsIgnoreCase(itemSelected.getItem().getId()) && iq.getCybercontadino().getPartitaIva().equalsIgnoreCase(itemSelected.getCybercontadino().getPartitaIva()))
 			{
-				log.info("\n\n*****\n\n itemQuantita rimosso..."+iq.getItem().getName() +" \n\n********\n\n" );
 				itemQuantitaList.remove(index);
 				if(itemQuantitaList.size()==0){
 					JbpmContext jbpmContext= JbpmContext.getCurrentJbpmContext();

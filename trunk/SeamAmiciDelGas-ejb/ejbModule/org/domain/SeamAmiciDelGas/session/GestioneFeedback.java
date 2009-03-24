@@ -75,11 +75,8 @@ public class GestioneFeedback  implements Serializable{
 	public void assegnaFeedback(String username, Ordine ordine, float feedbackAssegnato, String commento)
 	{
 		//account dell'username
-		log.info("******** ssegnaFeedback *********");
-		log.info("------> username = "+username);
 		accountHome.setAccountUsername(username);
 		Account accountDaModificare = accountHome.find();	
-		log.info(" accountDaModificare username = "+accountDaModificare.getUsername());
 		//modifico feedback
 		float newMedia = calcolaPunteggioFeedback(accountDaModificare,feedbackAssegnato);
 		accountDaModificare.setPunteggioFeedback(newMedia);
@@ -90,17 +87,11 @@ public class GestioneFeedback  implements Serializable{
 		
 		//aggiorno account
 		accountHome.update();
-		log.info(" accountDaModificare username = "+accountDaModificare.getUsername()+ " aggiornato");
 	}
 	
 	public void assegnaFeedbackFromToDefault(String usernameFrom, String usernameTo, Ordine ordine)
 	{
 		//account dell'username
-		log.info("******* aaaaaaaaaaaaaaaaaaaaaaaaaa");
-		log.info("******* from " +usernameFrom);
-		log.info("******* to " +usernameTo);
-		log.info("******* aaaaaaaaaaaaaaaaaaaaaaaaaa");
-		log.info("******* ");
 		accountHome.setAccountUsername(usernameFrom);
 		Account accountFrom = accountHome.find();
 		accountHome.setAccountUsername(usernameTo);

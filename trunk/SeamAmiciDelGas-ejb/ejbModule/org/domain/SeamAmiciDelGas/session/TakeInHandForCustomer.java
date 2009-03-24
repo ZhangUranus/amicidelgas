@@ -121,9 +121,6 @@ public class TakeInHandForCustomer {
 			addList(tasksCustomerToContadino);
 			addList(tasksCustomerToResponsabileConsegna);
 			
-			log.info("****TASKS1**"+tasksCustomerToContadino.size());
-			log.info("****TASKS2**"+tasksCustomerToResponsabileConsegna.size());
-			
 			Collections.sort(stringhe);
 			return stringhe;
 		}
@@ -171,8 +168,6 @@ public class TakeInHandForCustomer {
 					currentOrdine = ordine;
 				}
 			}
-			
-			log.info("******* current ordine = " +currentOrdine.getDataConclusione().toString());
 		}
 
 		public List<Articolo> getArticoloForCurrentOrdine() {

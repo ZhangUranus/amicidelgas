@@ -104,7 +104,6 @@ public class TakeInHandForContadinoToDriver {
 			//itinerari da visualizzare
 			itinerariForDriver = new ArrayList<Itinerario>();
 			this.stringaResponsabileConsegna = usernameResponsabile;
-			log.info("Responsabile "+stringaResponsabileConsegna);
 			
 			//taskInstance che dovrò chiudere per il responsabile corrente
 			taskInstanceListForResponsabile = new ArrayList<TaskInstance>();

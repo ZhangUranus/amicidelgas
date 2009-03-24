@@ -24,7 +24,6 @@ public class ItemQuantita implements Serializable
 		private Cybercontadino cybercontadino; 
 		private boolean booleanIsQuantitaMinima= false;
 		private int quantitaParziale;
-		//private Date dataMassimaAcquisto;
 		private boolean checkedForOrdine=false;
 		private float prezzoTotale;
 		

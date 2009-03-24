@@ -1,6 +1,0 @@
-1) Se ci sono tre errori in FeedbackHome bisogna modificare le variabili "accountHome" 
-con tre nomi diversi e poi aggiungere un annotazione per ogni di questa variabile:
-@In(create=true, value="accountHome")
-2) Se ci sono due errori in UtenteHome bisogna modificare le variabili "comuneHome" 
-con due nomi diversi e poi aggiungere un annotazione per ogni di questa variabile:
-@In(create=true, value="comuneHome")

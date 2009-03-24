@@ -59,7 +59,6 @@ public class MatchItinerarioOrdine implements Serializable{
 									"where itinerario.account.username='"+credentials.getUsername()+
 									"' and itinerario.dataConsegna  >= '"+new SimpleDateFormat(format).format(gc.getTime())+"'");
 		List<Itinerario> tempItinerario = itinerarioList.getResultList();
-		log.info("\n\n******** ITINERARIO dim = " +tempItinerario.size() +" **************");
 		return tempItinerario;
 	}	
 	
@@ -75,7 +74,6 @@ public class MatchItinerarioOrdine implements Serializable{
 			return new ArrayList<TaskInstance>();
 		List<TaskInstance> tasks = filtraNotifica.taskInstanceGroupListForDriver();
 
-		log.info("***********task size = " +tasks.size());
 		List<TaskInstance> taskValidi = new ArrayList<TaskInstance>() ;
 		MyOrdine myOrdine;
 		for(TaskInstance ti : tasks)
@@ -85,7 +83,6 @@ public class MatchItinerarioOrdine implements Serializable{
 				if(compareOrdineWithItinerario(myOrdine,currentItinerario))
 					taskValidi.add(ti);
 		}
-		log.info("***********taskValidi size = " +taskValidi.size());
 		return taskValidi;
 	}
 	

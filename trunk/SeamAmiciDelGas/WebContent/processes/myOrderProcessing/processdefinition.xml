@@ -26,7 +26,7 @@
 		<timer duedate="10 years" name="dataMassimaTimer" transition="ordine_non_preso_in_carico_entro_datamax"/>
 		<transition to="Notifica utente ordine non preso in carico" name="ordine_non_preso_in_carico_entro_datamax"></transition>
 		<transition to="Verifica disponibilita" name="ordine_preso_in_carico"></transition>
-		<transition to="end-state1" name="ordine_eliminato_dall_utente"></transition>
+		<transition to="ordine eliminato" name="ordine_eliminato_dall_utente"></transition>
 	</task-node>
 
 	<task-node name="Notifica utente ordine non disponibile">
@@ -43,7 +43,7 @@
 				<nomeDestinatario>customer</nomeDestinatario>
 			</assignment>
 		</task>
-		<transition to="end-state2" name="notifica_inviata_ordine_non_preso_in_carico_termina_processo"></transition>
+		<transition to="data massima ordine scaduta" name="notifica_inviata_ordine_non_preso_in_carico_termina_processo"></transition>
 	</task-node>
 
 	<task-node name="Notifica utente ordine preso in carico">
@@ -53,7 +53,7 @@
 		<timer  duedate="10 seconds" name="timerInviaNotifica" transition="attendi_consegna">
 			<action></action>
 		</timer>
-		<transition to="state1" name="attendi_consegna"></transition>
+		<transition to="attesa consegna ordine" name="attendi_consegna"></transition>
 	</task-node>
 
 	<task-node name="Fb from responsabile consegna to contadino">
@@ -119,7 +119,7 @@
 	</fork>
 
 	<join name="join2">
-		<transition to="state2" name="to-end_state-3"></transition>
+		<transition to="aggiorno stato ordine" name="to_aggiorna_ordine"></transition>
 	</join>
 
 	<task-node name="Fb from customer to responsabile consegna">
@@ -181,7 +181,7 @@
 		<transition to="join2" name="toTask7"></transition>
 	</join>
 
-	<state name="state1">
+	<state name="attesa consegna ordine">
 	<event type="timer-create">
       <action name="timerDataMassimaScaduta" class="org.domain.SeamAmiciDelGas.processes.ChangeDueDateTimerOrdine">
         <timerName>inviaFeedback</timerName>
@@ -192,20 +192,20 @@
 		<transition to="fork2" name="assegna_feedback"></transition>
 </state>
 
-	<state name="state2">
+	<state name="aggiorno stato ordine">
 		<timer duedate="30 seconds" name="timer assegna ordine concluso" transition="to_end_state_3_finish">
 			<action name="persistOrdineConcluso" class="org.domain.SeamAmiciDelGas.processes.PersistHandlerOrdine">
 			</action>
 		</timer>
-		<transition to="end-state3" name="to_end_state_3_finish"></transition>
+		<transition to="ordine concluso con successo" name="to_end_state_3_finish"></transition>
 	</state>
 
 
-	<end-state name="end-state1"></end-state>
+	<end-state name="ordine eliminato"></end-state>
 
-	<end-state name="end-state2"></end-state>
+	<end-state name="data massima ordine scaduta"></end-state>
 
-	<end-state name="end-state3"></end-state>
+	<end-state name="ordine concluso con successo"></end-state>
 
 
 </process-definition>

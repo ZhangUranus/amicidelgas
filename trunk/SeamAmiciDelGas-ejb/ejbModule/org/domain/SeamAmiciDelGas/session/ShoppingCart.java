@@ -50,60 +50,18 @@ public class ShoppingCart {
 	
 	private boolean fondo = true;
 	
-	public boolean isFondo() {
-		return fondo;
-	}
 
-	public void setFondo(boolean fondo) {
-		this.fondo = fondo;
-	}
-
-	public Date getDataMassima() {
-		return dataMassima;
-	}
-
-	public void setDataMassima(Date dataMassima) {
-		this.dataMassima = dataMassima;
-	}
-
-	public ShoppingCart(){}
-	
-	public String getQuantita() {
-		return quantita;
-	}
-
-	public void setQuantita(String quantita) {
-		this.quantita = quantita;
-	}
-
-	public boolean isEmpyShoppingCart()
-	{
-		if(itemInShoppingCart.size()==0)
-			return true;
-		return false;
-	}
-
-	public List<ItemQuantita> getItemInShoppingCart() {
-		return itemInShoppingCart;
-	}
-
-	public void setItemInShoppingCart(List<ItemQuantita> itemInShoppingCart) {
-		this.itemInShoppingCart = itemInShoppingCart;
-	}
-	
 	public void addItemInShoppingCart(Item item, int quantita, Cybercontadino contadino)
 	{
 		if(quantita==0){
 			log.info("tentativo di aggiunta di item con quantita 0");
-			
-			return;
+		return;
 		}
 		
 		for(ItemQuantita iq : itemInShoppingCart)
 		{
 			if(iq.getItem().getId().equalsIgnoreCase(item.getId()) && iq.getCybercontadino().getPartitaIva().equalsIgnoreCase(contadino.getPartitaIva()))
 			{	iq.addQuantita(quantita); 
-				log.info("******** aggiunto item gia esistente: "+item.getName() +" quantita = "+quantita);
 				return;	}
 		}
 		log.info("******** aggiunto nuovo item : "+item.getName() +" quantita = "+quantita +"nome" +contadino.getCognomePresidente());
@@ -153,8 +111,6 @@ public class ShoppingCart {
 			if(iq.isCheckedForOrdine())
 				prezzoOrdine+=iq.getPrezzoTotale();
 		}
-		log.info("******PREZZOORDINE*******");
-		log.info("******"+prezzoOrdine+"******");
 		if (!gestioneFondo.isFondoSufficiente(prezzoOrdine)) {
 			log.info("*****FONDO INSUFFICIENTE********");
 			fondo=false;
@@ -162,8 +118,6 @@ public class ShoppingCart {
 		}
 		fondo = true;
 		gestioneFondo.lessFondo(prezzoOrdine);
-		log.info("******FONDO SUFFICIENTE******");
-		log.info("*****"+gestioneFondo.getFondo()+"********");
 		for(int index=0; index<itemInShoppingCart.size(); index++)//aggiungo i prodotti all'ordine da fare
 		{	
 			ItemQuantita iq=itemInShoppingCart.get(index);
@@ -175,19 +129,16 @@ public class ShoppingCart {
 				prezzoOrdine+=iq.getPrezzoTotale();
 				selectedItem.add(iq); 
 				itemInShoppingCart.remove(index--);
-				log.info("******** Item SELEZIONATO "+iq.getItem().getName()+"************");	
 			}
 		}
 		noSelect = (selectedItem.size()==0) ? true : false;
 		if(noSelect)
 		{
-			log.info("*******nessun item selezionato, ritorno*********");
 			return;
 		}
 		//controllo se il fondo è sufficiente a fare l'ordine
 		
 		dataMassimaBeforeToday=false;
-		log.info("*******data massima = " +dataMassima.toString() +" ************");
 		String logInfo = orderProcessing.startOrder(selectedItem,dataMassima);
 		log.info("*********** "+logInfo);
 		//se l'ordine nn va a buon fine devo fare il rollback e riaggiungere
@@ -212,8 +163,6 @@ public class ShoppingCart {
 		Date currentDate = gc.getTime();
 		if(dataMassima.before(currentDate))
 		{
-			log.info("*******data massima = " +dataMassima.toString() +" ************");
-			log.info("******* TROPPO PRESTOOOOOOOOOOOOOOOOO ************");
 			dataMassimaBeforeToday=true;
 			return true;
 		}
@@ -235,6 +184,48 @@ public class ShoppingCart {
 	public void setPrezzoOrdine(float prezzoOrdine) {
 		this.prezzoOrdine = prezzoOrdine;
 	}
+	
+	public boolean isFondo() {
+		return fondo;
+	}
+
+	public void setFondo(boolean fondo) {
+		this.fondo = fondo;
+	}
+
+	public Date getDataMassima() {
+		return dataMassima;
+	}
+
+	public void setDataMassima(Date dataMassima) {
+		this.dataMassima = dataMassima;
+	}
+
+	public ShoppingCart(){}
+	
+	public String getQuantita() {
+		return quantita;
+	}
+
+	public void setQuantita(String quantita) {
+		this.quantita = quantita;
+	}
+
+	public boolean isEmpyShoppingCart()
+	{
+		if(itemInShoppingCart.size()==0)
+			return true;
+		return false;
+	}
+
+	public List<ItemQuantita> getItemInShoppingCart() {
+		return itemInShoppingCart;
+	}
+
+	public void setItemInShoppingCart(List<ItemQuantita> itemInShoppingCart) {
+		this.itemInShoppingCart = itemInShoppingCart;
+	}
+	
 }
 
 	

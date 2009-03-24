@@ -65,31 +65,9 @@ public class TakeInHand {
 		return q;
 	}
 	
-	/*
-	public String getHowMuchForItem(Item i)
-	{	//torno la quantita per l'item corrispondente
-		
-		if(i==null || contadinoSelezionato==null)
-			return "0";
-		ItemContadino itContadino= new ItemContadino(i.getId(), contadinoSelezionato.getPartitaIva());
-		Integer quantita= quantitaItem.get(itContadino);
-		if(quantita == null)
-			return "0";
-		return quantita.toString();
-	}
-	
-	public String incrementHowMuchForItem(Item i)
-	{
-		String howMuch=this.getHowMuchForItem(i);
-		System.out.println("Eureka!!");
-		ItemContadino itContadino= new ItemContadino(i.getId(), contadinoSelezionato.getPartitaIva());
-		quantitaItem.put(itContadino, new Integer(Integer.parseInt(howMuch)+1));
-		return "updated";
-	}*/
-	
 	private class ItemContadino{
 		public ItemContadino(String id, String partitaIva) {
-			this.partitaIva=partitaIva;// TODO Auto-generated constructor stub
+			this.partitaIva=partitaIva;
 			this.codiceItem=id;
 		}
 		private String partitaIva;
