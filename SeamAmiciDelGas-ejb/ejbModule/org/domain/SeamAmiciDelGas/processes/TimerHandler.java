@@ -15,28 +15,18 @@ public class TimerHandler implements ActionHandler {
 	  
 	  private static final Log log = LogFactory.getLog(TimerHandler.class);
 	
-	public void execute(ExecutionContext executionContext ) {
-	    
-		 
-		  System.out.println("AAAAAAAAAAAAAAAncora");
-		
-		  try {
-
-			  
+	public void execute(ExecutionContext executionContext ) 
+	{
+		  try 
+		  {
 	          Timer timer = executionContext.getTimer();
-	          
 	          if (timer != null && timerName.equals(timer.getName())) {
 	               Date dataQuestionario = (Date) executionContext.getVariable("dataQuestionario");
-	               System.out.println("DataQuestonario: "+dataQuestionario);
 	               timer.setDueDate(dataQuestionario);
-	          } else {
-	               log.debug("Doesn't match: " + timer);
 	          }
 	     } catch (Exception ex) {
 	          ex.printStackTrace();
 	     }
-	 
-		 
 	  }
 
 	public String getTimerName() {
@@ -45,7 +35,6 @@ public class TimerHandler implements ActionHandler {
 
 	public void setTimerName(String timerName) {
 		this.timerName = timerName;
-	}
-	  
+	}  
 }
 

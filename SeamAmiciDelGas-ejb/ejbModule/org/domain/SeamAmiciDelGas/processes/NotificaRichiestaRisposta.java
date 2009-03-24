@@ -51,18 +51,13 @@ public class NotificaRichiestaRisposta {
 	@CreateProcess(definition="notificaRequestReply")
 	public void notificaRequest()
 	{
-		log.info("Inoltrata la richiesta RequestReply");
 		nomeMittente= credentials.getUsername();
 		message=new Message();
-		//content = "Tutto bien?! Posso diventare Driver?";
 		message.setContent(content);
-		//message.setDestinatario("Mediatore");
 		message.setDestinatario(destinatario);
-		//message.setBroadcast(true);
 		message.setBroadcast(broadcast);
 		message.setTipo(tipo);
 		compilato = true;
-		System.out.println("La richiesta � stata inoltrata TUREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE"+broadcast);
 		facesMessages.add("La richiesta � stata inoltrata");
 	}
 
@@ -74,7 +69,6 @@ public class NotificaRichiestaRisposta {
 		this.content = content;
 	}
 
-	
 	public boolean isBroadcast() {
 		return broadcast;
 	}
@@ -90,15 +84,7 @@ public class NotificaRichiestaRisposta {
 	public void setMessage(Message message) {
 		this.message = message;
 	}
-/*
-	public void setMittente(String mittente) {
-		this.mittente = mittente;
-	}
 
-	public String getMittente() {
-		return mittente;
-	}
-*/
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}

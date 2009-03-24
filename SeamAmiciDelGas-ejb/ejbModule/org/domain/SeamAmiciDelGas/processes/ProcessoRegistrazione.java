@@ -30,7 +30,6 @@ public class ProcessoRegistrazione {
 	private Log log;
 	@In private Credentials credentials;
 	
-	
 	@Out(value="notificaMediatore", scope= ScopeType.BUSINESS_PROCESS, required=false)
 	private Message message;
 	
@@ -45,9 +44,6 @@ public class ProcessoRegistrazione {
 	protected Message messageUtente;
 	
 	@In private FacesMessages facesMessages;
-	
-//	@Out(value="nomeContadino",scope=ScopeType.BUSINESS_PROCESS, required=false)
-//	private String nomeContadino;
 	
 	@Out(value="MediatoreCheManda",scope=ScopeType.BUSINESS_PROCESS, required=false)
 	private String MediatoreCheManda;
@@ -72,8 +68,7 @@ public class ProcessoRegistrazione {
 	
 	@Out(value="inviati",scope=ScopeType.BUSINESS_PROCESS, required= false)
 	private List<String> usernameInviati;
-	
-	
+		
 	// contadino che serve per il panel della jsf (Clelio)
 	private Cybercontadino contadinoCorrente;
 	
@@ -103,7 +98,6 @@ public class ProcessoRegistrazione {
 		messageUtente.setContent(content+"\nIn data "+(new SimpleDateFormat(format)).format(gc.getTime())
 				+" alle ore: "+gc.get(Calendar.HOUR_OF_DAY)+":"+gc.get(Calendar.MINUTE)+" .");
 		messageUtente.setMittente(mittente);
-		System.out.println("CONTENTTTTTTTTTTtt: "+content+mittente);
 		usernameInviati = new ArrayList<String>();
 		messageSubProcess = new Message();
 		messageSubProcess.setContent("Ora puoi compilare il questionario per dare il tuo parere "
@@ -124,7 +118,6 @@ public class ProcessoRegistrazione {
 		return contadinoCorrente;
 	}
 
-
 	public void setContadinoCorrente(Cybercontadino contadinoCorrente) {
 		this.contadinoCorrente = contadinoCorrente;
 	}
@@ -133,44 +126,33 @@ public class ProcessoRegistrazione {
 		return dataProposta;
 	}
 
-
 	public void setDataProposta(Date dataProposta) {
 		this.dataProposta = dataProposta;
 	}
-
 
 	public TaskInstance getTaskCorrente() {
 		return taskCorrente;
 	}
 
-
 	public void setTaskCorrente(TaskInstance taskCorrente) {
 		this.taskCorrente = taskCorrente;
 	}
 	
-
-	public void update(){
-		log.info("Update- la data corrente �: "+ dataProposta);
-	}
-
+	public void update(){}
 
 	public void setContent(String content) {
 		this.content = content;
 	}
 
-
 	public String getContent() {
 		return content;
 	}
-
 
 	public void setMittente(String mittente) {
 		this.mittente = mittente;
 	}
 
-
 	public String getMittente() {
 		return mittente;
-	}
-	
+	}	
 }
