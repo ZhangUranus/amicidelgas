@@ -56,7 +56,6 @@ public class InviaRichiestaRisposta {
 	@StartTask @EndTask(beforeRedirect=true , transition="fine")
 	public String riceviRisposta()
 	{
-		System.out.println("OKKKK");
 		if(message != null && message.getTipo().equals("becomeDriver"))
 		{
 			
@@ -101,8 +100,6 @@ public class InviaRichiestaRisposta {
 		accountUtente.setNumeroVotanti(numvotanti);
 		accounthome.update();
 		em.persist(feedback);
-		
-		return true; 
-		
+		return true; 		
     }
 }

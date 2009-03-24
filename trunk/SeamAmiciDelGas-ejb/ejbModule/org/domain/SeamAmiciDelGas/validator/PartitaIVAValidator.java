@@ -8,10 +8,6 @@ import org.hibernate.validator.Validator;
 
 public class PartitaIVAValidator implements Validator, Serializable
 {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 3599243249440591195L;
 
 	public void initialize(PartitaIVA arg0) {

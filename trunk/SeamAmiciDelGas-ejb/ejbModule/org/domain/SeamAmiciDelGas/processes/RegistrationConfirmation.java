@@ -6,13 +6,11 @@ import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Observer;
 import org.jboss.seam.annotations.Out;
-import org.jboss.seam.annotations.bpm.BeginTask;
 import org.jboss.seam.annotations.bpm.CreateProcess;
 import org.jboss.seam.annotations.bpm.EndTask;
 import org.jboss.seam.annotations.bpm.StartTask;
 import org.jboss.seam.annotations.web.RequestParameter;
 import org.jboss.seam.faces.FacesMessages;
-import org.jbpm.JbpmContext;
 
 @Name("registrationConfirmation")
 public class RegistrationConfirmation 
@@ -35,7 +33,7 @@ public class RegistrationConfirmation
 		currentAccountUtente = a;
 	}
 	
-	@StartTask @EndTask(transition = "confirmed")
+	@StartTask @EndTask(beforeRedirect=true , transition = "confirmed")
 	public String confirm() {
 		if (confirmationCodeVerify != null &&
 			confirmationCodeVerify.equals(confirmationCode)) {

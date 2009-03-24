@@ -60,16 +60,13 @@ public class InviaRequestReply {
 	{
 		if(questionario == null)
 		{
-			System.out.println("BECOMEDRIVER"+risposta);
 			this.setDriver(risposta);
 		}
 		else
 		{
-			System.out.println("YAMMMMMMMMMMMMMMMMMMM");
 			compilato = true;
 			if(questionario == null)
 			{
-				System.out.println("QUESTIONARIO NULLOOOOOOOOOOOOOOO");
 				return null;
 			}
 			else
