@@ -11,7 +11,7 @@
 	<ui:define name="body">
 	<table width="96%" border="0" cellspacing="0" cellpadding="0" align="center" >
 		<tr>
-			<td width="45%" align="center">
+			<td width="90%" align="center">
 				<table width="100%" border="0" cellspacing="4" cellpadding="0" align="center" >
 				  <tr>			    
 				    <td valign="top"><div align="center" ><b>Riepilogo dati personali</b></div></td>			      
@@ -40,55 +40,13 @@
 				  </tr>				  
 				</table>
 			</td>
-			<td width="10%">
-			</td>
-			<td width="45%">
-				<div class="colore_1" align="center">Modifica Contatti</div>
-				<h:form>
-			        <a:region>
-					<rich:dataTable value="#{utenteHome.instance}" var="_dati" id="table" width="80%">
-							<rich:column >
-								<f:facet name="header">
-									<h:outputText value="E-mail" />
-								</f:facet>
-								<h:outputText value="#{_dati.email}" id="email" />
-			        		</rich:column>
-			        			
-			        		<rich:column>
-								<f:facet name="header">
-									<h:outputText value="Indirizzo" />
-								</f:facet>
-								<h:outputText value="#{_dati.indirizzo}" id="indirizzo" />
-			        		</rich:column>
-			        		
-			        		<rich:column>
-								<f:facet name="header">
-									<h:outputText value="Telefono" />
-								</f:facet>
-								<h:outputText value="#{_dati.recapitoTelefonico}" id="telefono" />
-			        		</rich:column>
-			        		
-			        		<rich:column align="center">
-				                <f:facet name="header">
-				                        Modifica
-				                </f:facet>
-				                <a:commandLink ajaxSingle="true" id="editcontatti"
-				                    oncomplete="#{rich:component('editPanel')}.show()">
-				                    <h:graphicImage value="/img/modifica_mini.png" style="border:0"/>
-				                </a:commandLink>
-				                <rich:toolTip for="editcontatti" value="Modifica Recapiti"/>
-				            </rich:column>     			
-					</rich:dataTable>
-					</a:region>
-			    </h:form>
-			</td>
 		</tr>
 		<tr>
-			<td colspan="3" height="16"></td>
+			<td height="16"></td>
 		</tr>
 		<tr>
-			<td width="45%">
-				<table width="90%" align="center" cellpadding="0" cellspacing="0" border="0">
+			<td width="90%">
+				<table width="40%" align="center" cellpadding="0" cellspacing="0" border="0">
 					<tr>
 						<td width="40%">
 							<li>Codice fiscale: </li>
@@ -107,50 +65,13 @@
 					</tr>
 				</table>	
 			</td>
-			<td width="10%">
-			</td>
-			<td width="45%">
-				<div class="colore_1" align="center">Modifica Dati Pagamento</div>
-				<h:form>
-			        <a:region>
-					<rich:dataTable value="#{accountHome.instance}" var="_dati" id="table" width="80%">
-							<rich:column >
-								<f:facet name="header">
-									<h:outputText value="Tipo Carta" />
-								</f:facet>
-								<h:outputText value="#{_dati.pagamentoelettronico.tipoCarta}" id="tipocarta" />
-			        		</rich:column>
-			        			
-			        		<rich:column>
-								<f:facet name="header">
-									<h:outputText value="Numero Carta" />
-								</f:facet>
-								<h:outputText value="#{_dati.pagamentoelettronico.numeroCarta}" id="numerocarta" />
-			        		</rich:column>
-			        		
-			        		<rich:column  align="center">
-				                <f:facet name="header">
-				                        Modifica
-				                </f:facet>
-				                <a:commandLink ajaxSingle="true" id="editpagamento"
-				                    oncomplete="#{rich:component('editPagamento')}.show()">
-				                    <h:graphicImage value="/img/modifica_mini.png" style="border:0"/>
-				                    
-				                </a:commandLink>
-				                <rich:toolTip for="editpagamento" value="Modifica dati di pagamento"/>
-				            </rich:column>     		
-			        		
-					</rich:dataTable>
-					</a:region>
-			    </h:form>
-			</td>
 		</tr>
 		<tr>
-			<td colspan="3" height="16"></td>
+			<td height="16"></td>
 		</tr>
 		<tr>
-			<td width="45%">
-				<table width="90%" align="center" cellpadding="0" cellspacing="0" border="0">
+			<td width="90%">
+				<table width="40%" align="center" cellpadding="0" cellspacing="0" border="0">
 					<tr>
 						<td width="40%">
 							<li>E-mail: </li>
@@ -172,188 +93,8 @@
 					</tr>
 				</table>				
 			</td>
-			<td width="10%">
-			</td>
-			<td width="45%">
-				<div class="colore_1" align="center">Modifica Dati Patente</div>
-				<h:form>
-			        <a:region>
-			        <div align="center">
-						<a:commandLink ajaxSingle="true" id="addpatente" 
-						     oncomplete="#{rich:component('addPatente')}.show()">
-		                    <h:graphicImage value="/img/add.png" style="border:0"/>
-		                </a:commandLink>
-		                <rich:toolTip for="addpatente" value="Aggiungi una patente"/>
-					</div>
-					<rich:dataTable value="#{utenteHome.patentes}" var="_dati" id="table_patente" width="80%">
-							<rich:column >
-								<f:facet name="header">
-									<h:outputText value="Tipo Patente" />
-								</f:facet>
-								<h:outputText value="#{_dati.tipo}" id="tipopatente" />
-			        		</rich:column>
-			        		
-			        		<rich:column  align="center">
-				                <f:facet name="header">
-				                        Azioni
-				                </f:facet>
-				                <a:commandLink ajaxSingle="true" id="cancelpatente"
-				                    oncomplete="#{rich:component('deletePanel')}.show()">
-				                    <h:graphicImage value="/img/cancel.png" style="border:0"/>
-				                    <f:setPropertyActionListener value="#{_dati.idpatente}"
-                        				target="#{patenteHome.id}" />
-				                </a:commandLink>
-				                <rich:toolTip for="cancelpatente" value="Elimina questa patente"/>
-				            </rich:column>     		
-			        		
-					</rich:dataTable>
-					</a:region>
-			    </h:form>
-			</td>
 		</tr>
 	</table>
-	
-		<rich:modalPanel id="editPagamento" autosized="true" width="400">
-	        <f:facet name="header">
-	            <h:outputText value="Modifica i dati di pagamento elettronico" />
-	        </f:facet>
-	        <f:facet name="controls">
-	            <h:panelGroup>
-	                <h:graphicImage value="/img/close.png"
-	                    id="hidelink0" />
-	                <rich:componentControl for="editPagamento" attachTo="hidelink0"
-	                    operation="hide" event="onclick" />
-	            </h:panelGroup>
-	        </f:facet>
-	        <h:form>
-	            <rich:messages style="color:red;"></rich:messages>
-	            <h:panelGrid columns="1">
-	            <a:outputPanel ajaxRendered="true">
-	                <h:panelGrid columns="2">
-	                    <h:outputText value="Tipo carta"/>
-		                <h:selectOneRadio value="#{accountHome.instance.pagamentoelettronico.tipoCarta}" required="yes" requiredMessage="true">
-						  <f:selectItem itemLabel="  Visa" itemValue="Visa" ><img src="/SeamAmiciDelGas/img/creditcard_visa.png" /></f:selectItem>
-						  <f:selectItem itemLabel="  MCard" itemValue="MasterCard" ><img src="/SeamAmiciDelGas/img/creditcard_mastercard.png" /></f:selectItem>
-						  <f:selectItem itemLabel="  AmeEx" itemValue="AmericanExpress"><img src="/SeamAmiciDelGas/img/creditcard_american_express.png" /></f:selectItem>
-						  <f:selectItem itemLabel="  PayPal" itemValue="PayPal"><img src="/SeamAmiciDelGas/img/creditcard_paypal.png"/></f:selectItem>
-						</h:selectOneRadio>	                    
-	                    <h:outputText value="Numero carta" />
-	                    <h:inputText id="campo-numerocarta" value="#{accountHome.instance.pagamentoelettronico.numeroCarta}" required="true" size="16" maxlength="16" />
-	                </h:panelGrid>
-	                <rich:message showSummary="true" showDetail="false" for="campo-tipocarta"/>
-	            </a:outputPanel>
-	            <a:commandButton value="Salva"
-	                action="#{accountHome.update()}"
-	                reRender="numerocarta, tipocarta, out_numerocarta, out_tipocarta"
-	                oncomplete="#{rich:component('editPagamento')}.hide();" />
-	            </h:panelGrid>  
-	        </h:form>
-	    </rich:modalPanel>
-		 
-		 <rich:modalPanel id="editPanel" autosized="true" width="500">
-	        <f:facet name="header">
-	            <h:outputText value="Modifica i recapiti telefonici" />
-	        </f:facet>
-	        <f:facet name="controls">
-	            <h:panelGroup>
-	                <h:graphicImage value="/img/close.png"
-	                    id="hidelink" />
-	                <rich:componentControl for="editPanel" attachTo="hidelink"
-	                    operation="hide" event="onclick" />
-	            </h:panelGroup>
-	        </f:facet>
-	        <h:form>
-	            <rich:messages style="color:red;"></rich:messages>
-	            <h:panelGrid columns="1">
-	            <a:outputPanel ajaxRendered="true">
-	                <h:panelGrid columns="2">
-	                	<s:decorate id="emailField" template="/layout/edit.xhtml">
-			                <ui:define name="label">E-mail</ui:define>
-			                <h:inputText id="email"
-			                       required="true"
-			                           size="32"
-			                      maxlength="70"
-			                          value="#{utenteHome.instance.email}">
-			                    <a:support event="onblur" 
-			                    reRender="emailField" 
-			                    action="#{newControlloBean.controllaEmail()}"
-			                    ajaxSingle="true"/>   
-			                </h:inputText>
-			                <h:outputText value="#{newControlloBean.myResponseEmail}"
-			                style="color:red;"/>
-			            </s:decorate>
-			            <s:decorate id="indirizzoField" template="/layout/edit.xhtml">
-			                <ui:define name="label">Indirizzo</ui:define>
-			                <h:inputText id="indirizzo"
-			                       required="true"
-			                           size="32"
-			                      maxlength="100"
-			                          value="#{utenteHome.instance.indirizzo}">
-			                    <a:support event="onblur" reRender="indirizzoField" bypassUpdates="true" ajaxSingle="true"/>
-			                </h:inputText>
-			            </s:decorate>
-			            <s:decorate id="recapitoTelefonicoField" template="/layout/edit.xhtml">
-			                <ui:define name="label">Recapito telefonico</ui:define>
-			                <h:inputText id="recapitoTelefonico"
-			                       required="true"
-			                           size="32"
-			                      maxlength="45"
-			                          value="#{utenteHome.instance.recapitoTelefonico}">
-			                    <a:support event="onblur" reRender="recapitoTelefonicoField" bypassUpdates="true" ajaxSingle="true"/>
-			                </h:inputText>
-			            </s:decorate>
-	                </h:panelGrid>
-	                <rich:message showSummary="true" showDetail="false" for="campo-email"/>
-	            </a:outputPanel>
-	            <a:commandButton value="Salva"
-	                action="#{utenteHome.update()}"
-	                reRender="emailField, indirizzoField, recapitoTelefonicoField, out_email, out_telefono, out_indirizzo"
-	                oncomplete="#{rich:component('editPanel')}.hide();" />
-	            </h:panelGrid>  
-	        </h:form>
-	    </rich:modalPanel> 
-		
-		<rich:modalPanel id="deletePanel" autosized="true" width="200">
-	        <f:facet name="header">
-	            <h:outputText value="Vuoi eliminare questa patente?"
-	                style="padding-right:15px;" />
-	        </f:facet>
-	        <f:facet name="controls">
-	            <h:panelGroup>
-	                <h:graphicImage value="/img/close.png"
-	                    styleClass="hidelink" id="hidelink2" />
-	                <rich:componentControl for="deletePanel" attachTo="hidelink2"
-	                    operation="hide" event="onclick" />
-	            </h:panelGroup>
-	        </f:facet>
-	        <h:form>
-	            <table width="100%">
-	                <tbody>
-	                    <tr>
-	                        <td align="center" width="50%">
-	                <a:commandButton value="Yes" ajaxSingle="true"
-	                    action="#{patenteHome.remove()}"
-	                    oncomplete="#{rich:component('deletePanel')}.hide();"
-	                    reRender="table_patente, repeat_patente" />
-	                        </td>
-	                        <td align="center" width="50%">
-	                <a:commandButton value="Elimina"
-	                    onclick="#{rich:component('deletePanel')}.hide();return false;" />
-	                        </td>
-	                    </tr>
-	                </tbody>
-	            </table>
-	        </h:form>
-	    </rich:modalPanel>
-	
-	    <a:status onstart="#{rich:component('wait')}.show()" onstop="#{rich:component('wait')}.hide()"/>
-	    <rich:modalPanel id="wait" autosized="true" width="200" height="120" moveable="false" resizeable="false">
-	        <f:facet name="header">
-	            <h:outputText value="Processando le modifiche"/>
-	        </f:facet>
-	        <h:outputText value="attendere..."/>
-	    </rich:modalPanel>
-	    <rich:messages></rich:messages>
 	
 	</ui:define>
 
