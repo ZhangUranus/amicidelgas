@@ -66,7 +66,6 @@ public class TakeInHandForCustomer {
 		ordini = new ArrayList<Ordine>();
 		stringa = null;
 		stringhe = new ArrayList<String>();
-		log.info("\n\n******** RESET ***********\n\n");
 	}
 	
 	public InfoFeedback getInfoFeedbackContadini(String username){

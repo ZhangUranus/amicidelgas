@@ -65,10 +65,6 @@ public class RichiestaRegistrazioneBean implements RichiestaRegistrazione
     	
     	ComuneList comuneList = new ComuneList();
     	comuneList.setEjbql("select comune from Comune comune where comune.idcomune= "+ comuneProvinciaBean.getComune().getId());
-//    	comuneList.getComune().setIdcomune(comuneNascita.getIdcomune());
-//    	comuneList.refresh();
-//    	log.error("prova id comune: "+comuneNascita.getIdcomune());
-    	log.error("prova query: "+comuneList.getEjbql());
     	
     	account.setPasswordHash(passwordManager.hash(passwordBean.getPassword()));
     	utente.setComuneByComuneNascita(comuneList.getResultList().get(0));
@@ -81,7 +77,6 @@ public class RichiestaRegistrazioneBean implements RichiestaRegistrazione
     	em.persist(utente);
     	if(!(patente.getTipo().equals("NO")))
     	{
-    		System.out.println("AIUTOOOOOOOOOO NESSUNAAAAAAAAAAAa");
     		patente.setUtente(utente);
     		em.persist(patente);
     	}
@@ -106,7 +101,6 @@ public class RichiestaRegistrazioneBean implements RichiestaRegistrazione
     	em.persist(role);
     	
         // implement your business logic here
-        log.info("richiestaRegistrazione.richiestaRegistrazione() action called");
         statusMessages.add("Avvenuta Registrazione");
         
         return true;

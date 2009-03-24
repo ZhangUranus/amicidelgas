@@ -56,22 +56,17 @@ public class AddItinerarioBean implements AddItinerario
         StringTokenizer st = new StringTokenizer(all_id);
         while (st.hasMoreTokens()) {
         	cybercontadinolist.setEjbql("select contadino from Cybercontadino contadino where contadino.codiceContadino= "+ st.nextToken().trim());
-        	System.out.println("Contadini belli");
         	contadini.add(cybercontadinolist.getSingleResult());
-        	System.out.println("Contadini belli 2");
         }
         itinerario.setCybercontadinos(contadini);
-        System.out.println("size contadini: "+contadini.size());
         
         Set<PuntiDiConsegna> puntiDiConsegnas = new HashSet<PuntiDiConsegna>(0);
         StringTokenizer st_consegna = new StringTokenizer(all_id_puntiConsegna);
         while (st_consegna.hasMoreTokens()) {
-        	System.out.println("punti belli");
         	puntiDiConsegnaList.setEjbql("select punti from PuntiDiConsegna punti where punti.idpuntiConsegna= "+ st_consegna.nextToken().trim());
         	puntiDiConsegnas.add(puntiDiConsegnaList.getSingleResult());
         }
         itinerario.setPuntiDiConsegnas(puntiDiConsegnas);
-        System.out.println("size punti: "+puntiDiConsegnas.size());
         
         GregorianCalendar gc = new GregorianCalendar();
         gc.setTime(dataPartenza);

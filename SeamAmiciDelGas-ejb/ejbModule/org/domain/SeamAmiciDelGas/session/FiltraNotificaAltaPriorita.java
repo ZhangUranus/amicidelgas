@@ -57,13 +57,11 @@ public class FiltraNotificaAltaPriorita {
 		for (TaskInstance ti: tempTaskInstance)
 			if(ti.getName().equals(taskName))
 					count++;
-		System.out.println("COUNTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTtt"+count);
 		return count;
 	}
 	
 	public boolean TaskInstanceListForAllUserButMeNot(String username, String taskName)
 	{
-		System.out.println("AIUTOOOOOOOOOOOOOOOOOO TASKKKKKKKKKKKKKKK");
 		List<TaskInstance> tasks= taskInstanceSingleList(taskName);
 		List<TaskInstance> tasksUser = new ArrayList<TaskInstance>();
 		
@@ -75,12 +73,10 @@ public class FiltraNotificaAltaPriorita {
 			
 			if(arraylist==null)
 			{
-				System.out.println("VUOTOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
 				return true;
 			} 
 			else 
 			{
-				System.out.println("PIENOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
 				if(!(arraylist.contains(username)))
 					tasksUser.add(temp);
 			}
@@ -97,7 +93,6 @@ public class FiltraNotificaAltaPriorita {
 	public List<TaskInstance> getAllHighestPriorityTaskInstanceListForMe(String username, String taskName, String partitaIva)
 	{
 		// ritorna i task assegnati solo a me per un particolare taskName e un particolare contadino
-		System.out.println("AIUTOOOOOOOOOOOOOOOOOO TASKKKKKKKKKKKKKKK");
 		List<TaskInstance> tasks= taskInstanceSingleList(taskName);
 		List<TaskInstance> tasksUser = new ArrayList<TaskInstance>();
 		Cybercontadino contadino ;
@@ -106,7 +101,6 @@ public class FiltraNotificaAltaPriorita {
 			contadino = (Cybercontadino) temp.getVariable("contadino");
 			if(contadino.getPartitaIva().equals(partitaIva) && (temp.getPriority() == Task.PRIORITY_HIGHEST))
 					tasksUser.add(temp);
-			System.out.println("STAMPATIIIII "+tasksUser.toString()+"  "+contadino.getPartitaIva() + "  partita: " +partitaIva + " taskname:"+taskName);
 		}
 		return tasksUser;
 	}
@@ -114,7 +108,6 @@ public class FiltraNotificaAltaPriorita {
 	public List<TaskInstance> getBecomeDriver(String taskName)
 	{
 		// ritorna i task assegnati solo a me per un particolare taskName e un particolare contadino
-		System.out.println("AIUTOOOOOOOOOOOOOOOOOO TASKKKKKKKKKKKKKKK");
 		List<TaskInstance> tasks= getAllPooledTaskInstanceList(taskName);
 		List<TaskInstance> tasksUser = new ArrayList<TaskInstance>();
 		
@@ -135,30 +128,23 @@ public class FiltraNotificaAltaPriorita {
 	 */
 	public int getBecomeDriverStartByMe(String taskName, String username)
 	{
-		System.out.println("come si chiamava quel film col robottino... corto circuito?");
-		System.out.println("nome: "+taskName+" username: "+username);
 		ArrayList<String> gruppi = new ArrayList<String>();
 		gruppi.add("mediatore");
 		jbpmContext.getGroupTaskList(gruppi);
 		List<TaskInstance> tasks= jbpmContext.getGroupTaskList(gruppi);
-		List<TaskInstance> tasksUser = new ArrayList<TaskInstance>();
-		System.out.println("come si chiamava quel film col robottino... corto circuito?"+tasksUser.toString());		
+		List<TaskInstance> tasksUser = new ArrayList<TaskInstance>();	
 		String nome;
 		for(TaskInstance temp : tasks)
 		{
 			nome = (String) temp.getVariable("nomeMittente");
 			if(nome != null)
 			{
-				System.out.println("nome: "+nome+" username: "+username);
 				if(temp.getName().equals(taskName) && temp.getPriority() == Task.PRIORITY_HIGH  && nome.equals(username))
 				{
 					tasksUser.add(temp);
-					System.out.println("Era il cognome: "+nome);
 				}
-				System.out.println("come si chiamava quel film col robottino... corto circuito?"+tasksUser.toString());
 			}
 		}
-		System.out.println("come si chiamava quel film col robottino... corto circuito? -->"+tasksUser.size());
 		int primoValore = tasksUser.size(); 
 		tasks= taskInstanceSingleList("riceviRisposta");
 		tasksUser = new ArrayList<TaskInstance>();
@@ -167,13 +153,10 @@ public class FiltraNotificaAltaPriorita {
 			nome = (String) temp.getVariable("nomeMittente");
 			if(nome != null)
 			{
-				System.out.println("nome: "+nome+" username: "+username);
 				if(temp.getPriority() == Task.PRIORITY_HIGH  && nome.equals(username))
 				{
 					tasksUser.add(temp);
-					System.out.println("Era il cognome: "+nome);
 				}
-				System.out.println("come si chiamava quel film col robottino... corto circuito?"+tasksUser.toString());
 			}
 		}
 		int secondoValore = tasksUser.size(); 
@@ -183,7 +166,6 @@ public class FiltraNotificaAltaPriorita {
 	public List<TaskInstance> getRispostaMediatoreDriver(String taskName , String username)
 	{
 		// ritorna i task assegnati solo a me per un particolare taskName e un particolare contadino
-		System.out.println("getRispostaMediatoreDriver");
 		List<TaskInstance> tasks= taskInstanceSingleList(taskName);
 		List<TaskInstance> tasksUser = new ArrayList<TaskInstance>();
 		String nome;
@@ -192,7 +174,6 @@ public class FiltraNotificaAltaPriorita {
 			nome = (String) temp.getVariable("nomeMittente");
 			if(temp.getPriority() == Task.PRIORITY_HIGH  && nome.equals(username))
 					tasksUser.add(temp);
-			System.out.println("STAMPA Risposta mediatore driver "+tasksUser.toString());
 		}
 		return tasksUser;
 	}
@@ -200,7 +181,6 @@ public class FiltraNotificaAltaPriorita {
 	public int getNumRispostaMediatoreDriver(String taskName , String username)
 	{
 		// ritorna i task assegnati solo a me per un particolare taskName e un particolare contadino
-		System.out.println("getNumRispostaMediatoreDriver");
 		List<TaskInstance> tasks= taskInstanceSingleList(taskName);
 		List<TaskInstance> tasksUser = new ArrayList<TaskInstance>();
 		String nome;
@@ -209,7 +189,6 @@ public class FiltraNotificaAltaPriorita {
 			nome = (String) temp.getVariable("nomeMittente");
 			if(temp.getPriority() == Task.PRIORITY_HIGH  && nome.equals(username))
 					tasksUser.add(temp);
-			System.out.println("STAMPA Risposta mediatore driver numero "+tasksUser.size());
 		}
 		return tasksUser.size();
 	}
@@ -230,7 +209,6 @@ public class FiltraNotificaAltaPriorita {
 	public int getNumberAllHighestPriorityTaskInstanceListForMe(String username, String taskName, String partitaIva)
 	{
 		// ritorna il numero di task assegnati solo a me per un particolare taskName e un particolare contadino
-		System.out.println("AIUTOOOOOOOOOOOOOOOOOO TASKKKKKKKKKKKKKKK");
 		List<TaskInstance> tasks= taskInstanceSingleList(taskName);
 		List<TaskInstance> tasksUser = new ArrayList<TaskInstance>();
 		Cybercontadino contadino ;
@@ -239,14 +217,12 @@ public class FiltraNotificaAltaPriorita {
 			contadino = (Cybercontadino) temp.getVariable("contadino");
 			if(contadino.getPartitaIva().equals(partitaIva) && (temp.getPriority() == Task.PRIORITY_HIGHEST))
 					tasksUser.add(temp);
-			System.out.println("STAMPATIIIII "+tasksUser.toString()+"  "+contadino.getPartitaIva() + "  partita: " +partitaIva + " taskname:"+taskName);
 		}
 		return tasksUser.size();
 	}
 	
 	public List<TaskInstance> getPooledTaskInstanceListForAllUserButMeNot(String username, String taskName)
 	{
-		System.out.println("AIUTOOOOOOOOOOOOOOOOOO TASKKKKKKKKKKKKKKK");
 		List<TaskInstance> tasks= getAllPooledTaskInstanceList(taskName);
 		List<TaskInstance> tasksUser = new ArrayList<TaskInstance>();
 		
@@ -258,14 +234,11 @@ public class FiltraNotificaAltaPriorita {
 			
 			if(arraylist==null)
 			{
-				System.out.println("VUOTOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
 			} 
 			else 
 			{
-				System.out.println("PIENOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
 				if(!(arraylist.contains(username)))
 					tasksUser.add(temp);
-				System.out.println("ARRAYLISTTTTTTTTTTTt"+arraylist.toString());
 			}
 			
 		}
@@ -273,7 +246,6 @@ public class FiltraNotificaAltaPriorita {
 	}
 	public boolean PooledTaskInstanceListForAllUserButMeNot(String username, String taskName)
 	{
-		System.out.println("AIUTOOOOOOOOOOOOOOOOOO TASKKKKKKKKKKKKKKK");
 		List<TaskInstance> tasks= getAllPooledTaskInstanceList(taskName);
 		List<TaskInstance> tasksUser = new ArrayList<TaskInstance>();
 		
@@ -285,12 +257,10 @@ public class FiltraNotificaAltaPriorita {
 			
 			if(arraylist==null)
 			{
-				System.out.println("VUOTOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
 				return true;
 			} 
 			else 
 			{
-				System.out.println("PIENOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
 				if(!(arraylist.contains(username)))
 					tasksUser.add(temp);
 			}
@@ -425,11 +395,9 @@ public class FiltraNotificaAltaPriorita {
 	{
 		List<TaskInstance> tasks = taskInstanceSingleList(taskName);
 		List<TaskInstance> tasksUser = new ArrayList<TaskInstance>();
-		//Account account = null;
 		String nome;
 		for(TaskInstance temp : tasks)
 		{
-			//account = (Account) temp.getVariable("currentAccount");
 			nome = temp.getActorId();
 			if(nome != null)
 			{
@@ -469,9 +437,7 @@ public class FiltraNotificaAltaPriorita {
 			
 			if(arraylist==null){
 				tasksUser.add(temp);
-				System.out.println("vuoto");
 			} else {
-				System.out.println("pieno");
 				if(!(arraylist.contains(username)))
 					tasksUser.add(temp);
 			}

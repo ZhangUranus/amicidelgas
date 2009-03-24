@@ -40,8 +40,6 @@ public class Authenticator
     private EntityManager entityManager;
     @Transactional public boolean authenticate()
     {
-    	
-        log.info("authenticating {0}", credentials.getUsername());
         try{
         account=(Account) entityManager.createQuery(
         		"select account from Account account where account.username = :username").setParameter("username", credentials.getUsername()).getSingleResult();
@@ -67,13 +65,11 @@ public class Authenticator
 			{
 				contadino=(Cybercontadino) entityManager.createQuery(
 	    		"select contadino from Cybercontadino contadino where contadino.account.username = :username").setParameter("username", credentials.getUsername()).getSingleResult();
-	        	System.out.println(contadino.getPartitaIva());
 	        	break;
 			}
 			else
 	        {
 	        	utente = account.getUtente();
-	        	log.info("authenticating {1}", utente.getNome());
 	        	break;
 	        }
 		}

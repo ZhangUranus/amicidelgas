@@ -81,11 +81,10 @@ public class ControlloBean {
 	
 	public void controllaEmail()
 	{
-		log.info(utente.getEmail());
 		utenteList.setEjbql("select utente from Utente utente where utente.email='"+utente.getEmail()+"'");
 		List<Utente> lu = utenteList.getResultList();
 		if(!lu.isEmpty())
-			myResponseEmail = "  L'email inserita ï¿½ giï¿½ presente nel database";
+			myResponseEmail = "  L'email inserita è già presente nel database";
 		else
 			myResponseEmail  = null;
 	}
@@ -105,7 +104,6 @@ public class ControlloBean {
 	
 	public void controllaUserName()
 	{
-		log.info(account.getUsername());
 		accountList.setEjbql("select account from Account account where account.username='"+account.getUsername()+"'");
 		List<Account> lu = accountList.getResultList();
 		if(!lu.isEmpty())
@@ -130,7 +128,6 @@ public class ControlloBean {
 	public void controllaPartitaIva()
     {
         // implement your business logic here
-        log.info("ControllaParitaIva.controllaParitaIva() action called");
         contadinoList.setEjbql("select contadino from Cybercontadino contadino where contadino.partitaIva='"+contadino.getPartitaIva()+"'");
 		List<Cybercontadino> lu = contadinoList.getResultList();
 		if(!lu.isEmpty())

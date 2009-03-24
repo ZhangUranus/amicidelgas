@@ -125,6 +125,7 @@ public class GestioneFeedback  implements Serializable{
 		newFeedback.setDescrizione(commento);
 		newFeedback.setAnalizzato(false);
 		newFeedback.setDataSegnalazione(new GregorianCalendar().getTime());
+		newFeedback.setDataValidazione(new GregorianCalendar().getTime());
 		newFeedback.setPunteggio(feedback);
 		if(ordine!=null)
 			newFeedback.setOrdine(ordine);
@@ -154,7 +155,7 @@ public class GestioneFeedback  implements Serializable{
 	
 	public List<Feedback> getMyFeedback()
 	 {
-		feedbackList.setEjbql("select feedback from Feedback feedback where feedback.accountByDestinatario.username= '"+credentials.getUsername()+"' and feedback.analizzato = true");
+		feedbackList.setEjbql("select feedback from Feedback feedback where feedback.accountByDestinatario.username= '"+credentials.getUsername()+"'");
 		myFeedback = feedbackList.getResultList();
 		return myFeedback;
 	 }

@@ -54,8 +54,7 @@ public class ShoppingCart {
 	public void addItemInShoppingCart(Item item, int quantita, Cybercontadino contadino)
 	{
 		if(quantita==0){
-			log.info("tentativo di aggiunta di item con quantita 0");
-		return;
+			return;
 		}
 		
 		for(ItemQuantita iq : itemInShoppingCart)
@@ -64,7 +63,6 @@ public class ShoppingCart {
 			{	iq.addQuantita(quantita); 
 				return;	}
 		}
-		log.info("******** aggiunto nuovo item : "+item.getName() +" quantita = "+quantita +"nome" +contadino.getCognomePresidente());
 		itemInShoppingCart.add(new ItemQuantita(item,new Integer(quantita),contadino));
 	}
 	
@@ -95,7 +93,6 @@ public class ShoppingCart {
 	
 	public void buySelectedItem()
 	{
-		log.info("******** buyAllItem************");
 		fondo=true;
 		if(dataMassima==null)
 		{
@@ -112,7 +109,6 @@ public class ShoppingCart {
 				prezzoOrdine+=iq.getPrezzoTotale();
 		}
 		if (!gestioneFondo.isFondoSufficiente(prezzoOrdine)) {
-			log.info("*****FONDO INSUFFICIENTE********");
 			fondo=false;
 			return;
 		}
@@ -140,7 +136,7 @@ public class ShoppingCart {
 		
 		dataMassimaBeforeToday=false;
 		String logInfo = orderProcessing.startOrder(selectedItem,dataMassima);
-		log.info("*********** "+logInfo);
+		//log.info("*********** "+logInfo);
 		//se l'ordine nn va a buon fine devo fare il rollback e riaggiungere
 		//gli item nel carrello...
 	}

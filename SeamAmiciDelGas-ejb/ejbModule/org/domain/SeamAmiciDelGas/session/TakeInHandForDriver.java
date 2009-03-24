@@ -68,8 +68,6 @@ public class TakeInHandForDriver {
 		itinerari = new ArrayList<Itinerario>();
 		stringa = null;
 		stringhe = new ArrayList<String>();
-		log.info("\n\n******** RESET ***********\n\n");
-
 	}
 	
 	public InfoFeedback getInfoFeedbackContadini(String username){
@@ -190,7 +188,6 @@ public class TakeInHandForDriver {
 					currentItinerario = it;
 				}
 			}
-			log.info("******* current itinerario = " +currentItinerario.getIditinerario());
 		}
 
 		public List<TaskInstance> getTasksResponsabileToCustomer() {

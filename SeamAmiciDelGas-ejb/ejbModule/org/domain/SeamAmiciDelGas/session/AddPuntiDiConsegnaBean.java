@@ -32,7 +32,6 @@ public class AddPuntiDiConsegnaBean implements AddPuntiDiConsegna
     public void addPuntiDiConsegna()
     {
         // implement your business logic here
-        log.info("newPuntiDiConsegna.newPuntiDiConsegna() action called");
         statusMessages.add("newPuntiDiConsegna");
     }
     
@@ -41,8 +40,6 @@ public class AddPuntiDiConsegnaBean implements AddPuntiDiConsegna
 		ComuneList comuneList = new ComuneList();
     	comuneList.setEjbql("select comune from Comune comune where comune.idcomune= "+ comuneProvinciaBean.getComune().getId());
 
-    	log.error("prova query: "+comuneList.getEjbql());
-    	
     	puntiDiConsegna.setComune(comuneList.getResultList().get(0));
     	
     	em.persist(puntiDiConsegna);

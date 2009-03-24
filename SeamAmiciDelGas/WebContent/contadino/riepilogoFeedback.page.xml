@@ -6,6 +6,6 @@
       no-conversation-view-id="/riepilogoFeedback.xhtml"
       login-required="true">
       
-<restrict>#{s:hasRole('utenteGas')}</restrict>
+<restrict>#{s:hasRole('utenteContadino')}</restrict>
       
 </page>

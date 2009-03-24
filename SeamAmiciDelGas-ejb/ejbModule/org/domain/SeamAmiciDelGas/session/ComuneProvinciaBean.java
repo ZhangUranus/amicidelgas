@@ -56,7 +56,6 @@ public class ComuneProvinciaBean{
 	public List<myComuneBean> autocomplete(Object suggest) {
 		if (provincia==null)
 			return null;
-		log.info("Inizia l'autocomplete -la provincia selezionata � "+ provincia.getNome());
         comuneList.setEjbql("select comune from Comune comune where comune.provinces.nome='"+provincia.getNome()+"'");
         autoCompleteList= comuneList.getResultList();
         String pref = (String)suggest;
@@ -127,27 +126,12 @@ public class ComuneProvinciaBean{
 		//controlloComuneNascita = controllaComune(comune.nome);
 		
 	}
-	/*
-	public String controllaComune(String nomeComune) {
-		List<Comune> listaDiComuni = new ArrayList<Comune>();
-		listaDiComuni = comuneList.getResultList();
-		boolean isPresent = false;
-		for (Comune comune : listaDiComuni) {
-			if(comune.equals(nomeComune))
-			{	isPresent=true; break; }
-		}
-		if(isPresent)
-			return nomeComune;
-		return "Comune non presente del db, riprovare grazie";
-		
-	}*/
 
 	public boolean isSelectedProvincia() {
 		return provincia!=null;
 	}
 
 	public void setSelectedProvincia(boolean selectedProvincia) {
-		log.info("E' stata selezionata una provincia - la provincia attuale �: "+ provincia.getNome());
 		this.selectedProvincia = selectedProvincia;
 	}
 

@@ -41,7 +41,7 @@ public class CatalogImpl {
 		if(idContadino == null)
 			return null;
 		CatalogInterface  cat = (CatalogInterface) instances.get(idContadino);
-		boolean sviluppoClelioStefano=true;
+		boolean sviluppoClelioStefano=false;
 		if(sviluppoClelioStefano){
 			return CatalogImpl.staticCatalog();
 		}

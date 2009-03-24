@@ -89,7 +89,7 @@
                 	<ui:define name="label">Inserire la data di consegna</ui:define>
                 		<rich:calendar id="dataVisita"
                        		required="true" requiredMessage="Inserire una data"
-                    		value="#{newItinerario.dataConsegna}" datePattern="dd/MM/yyyy HH:mm">
+                    		value="#{newItinerario.dataConsegna}" datePattern="dd/MM/yyyy HH:mm" enableManualInput="true">
                    		<a:support event="onchange" reRender="dataConsegnaField" bypassUpdates="true" ajaxSingle="true"/>
                 		</rich:calendar>
             	</s:decorate>
@@ -97,7 +97,7 @@
             	<s:decorate id="puntoConsegnaField" template="/layout/edit.xhtml">
             	<ui:define name="label">Seleziona il punto di consegna</ui:define>
             	<h:selectOneMenu  value="#{newPuntiDiConsegna}" required="true" requiredMessage="Selezionare un punto di consegna"
-		                	title="seleziona il punto di consegna" style=" width : 149px;">
+		                	title="seleziona il punto di consegna" style=" width : 220px;">
 		                	
 		            
 		                	<s:selectItems noSelectionLabel="Seleziona un punto di consegna" 
