@@ -15,6 +15,6 @@ import org.hibernate.validator.ValidatorClass;
 
 public @interface PartitaIVA 
 {
-	String message() default "La partita IVA non Ã© valida: "
+	String message() default "La partita IVA non è valida: "
 		+ "il codice di controllo non corrisponde.";
 }

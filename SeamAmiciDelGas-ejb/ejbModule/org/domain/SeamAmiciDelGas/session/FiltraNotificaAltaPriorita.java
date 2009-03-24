@@ -423,7 +423,7 @@ public class FiltraNotificaAltaPriorita {
 		return tasksUser;
 		
 	}
-	// non fare un altro metodo con lo stesso nome altrimenti non si puÃ² applicare "String ..filters" come argomento del metodo
+	// non fare un altro metodo con lo stesso nome altrimenti non si può applicare "String ..filters" come argomento del metodo
 	public List<TaskInstance> getAllPooledTaskInstanceListForAllUserButMeNot(String username, String... filters)
 	{
 		List<TaskInstance> tasks= getAllPooledTaskInstanceList(filters);
