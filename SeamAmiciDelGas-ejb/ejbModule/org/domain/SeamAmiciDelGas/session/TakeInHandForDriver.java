@@ -46,10 +46,6 @@ public class TakeInHandForDriver {
 	
 	private List<TaskInstance> taskInstanceContadinoForItinerario;
 	
-	//private TaskInstance currentTaskResponsabileToCustomer;
-	
-	//private TaskInstance currentTaskResponsabileToContadino;
-	
 	private List<TaskInstance> tasksResponsabileToCustomer;
 	
 	private List<TaskInstance> tasksResponsabileToContadino;
@@ -64,8 +60,6 @@ public class TakeInHandForDriver {
 
 		hashTableContadini = new Hashtable<String, InfoFeedback>();
 		hashTableCustomer = new Hashtable<String, InfoFeedback>();
-		//currentTaskResponsabileToCustomer=null;
-		//currentTaskResponsabileToContadino=null;
 		tasksResponsabileToCustomer = new ArrayList<TaskInstance>();
 		tasksResponsabileToContadino  = new ArrayList<TaskInstance>();
 		taskInstanceCustomerForItinerario = new ArrayList<TaskInstance>();
@@ -122,7 +116,6 @@ public class TakeInHandForDriver {
 		List<Account> customerList = new ArrayList<Account>();
 		if(currentItinerario!=null) {
 			for (TaskInstance t1: taskInstanceCustomerForItinerario) {
-				//Itinerario it = (Itinerario) t1.getVariable("itinerario");
 				Account currAccount = (Account) t1.getVariable("customer");
 				if (!customerList.contains(currAccount))
 					customerList.add(currAccount);
@@ -148,9 +141,6 @@ public class TakeInHandForDriver {
 
 			addList(tasksResponsabileToCustomer);
 			addList(tasksResponsabileToContadino);
-			
-			log.info("****TASKS1**"+tasksResponsabileToCustomer.size());
-			log.info("****TASKS2**"+tasksResponsabileToContadino.size());
 			
 			Collections.sort(stringhe);
 			return stringhe;
@@ -179,8 +169,6 @@ public class TakeInHandForDriver {
 			this.stringa = idItinerario;
 			log.info("Codice Itinerario "+idItinerario);
 			
-			//currentTaskResponsabileToCustomer = null;
-			//currentTaskResponsabileToContadino = null;
 			taskInstanceCustomerForItinerario = new ArrayList<TaskInstance>();
 			taskInstanceContadinoForItinerario = new ArrayList<TaskInstance>();
 			hashTableContadini = new Hashtable<String, InfoFeedback>();
@@ -191,7 +179,6 @@ public class TakeInHandForDriver {
 				if (it.getIditinerario().equals(new Integer(idItinerario)))
 				{
 					taskInstanceCustomerForItinerario.add(t1);
-					//currentTaskResponsabileToCustomer = t1;
 					currentItinerario = it;
 				}
 			}
@@ -200,7 +187,6 @@ public class TakeInHandForDriver {
 				if (it.getIditinerario().equals(new Integer(idItinerario)))
 				{
 					taskInstanceContadinoForItinerario.add(t2);
-					//currentTaskResponsabileToContadino = t2;
 					currentItinerario = it;
 				}
 			}

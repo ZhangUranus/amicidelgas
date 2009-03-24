@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<root-container name="myOrderProcessing" width="1225" height="1341">
-  <node name="L&apos;utente sottomette un ordine" x="332" y="69" width="214" height="36">
+<root-container name="myOrderProcessing" width="1152" height="1341">
+  <node name="L&apos;utente sottomette un ordine" x="351" y="69" width="214" height="36">
     <edge>
       <label x="-203" y="-10"/>
     </edge>
   </node>
-  <node name="Ordine notificato a driver e contadini" x="348" y="189" width="243" height="36">
+  <node name="Ordine notificato a driver e contadini" x="339" y="189" width="243" height="36">
     <edge>
-      <label x="5" y="-10"/>
+      <label x="-74" y="-9"/>
     </edge>
     <edge>
       <label x="5" y="-10"/>
@@ -23,9 +23,9 @@
       <bendpoint w1="-85" h1="-183" w2="168" h2="30"/>
     </edge>
   </node>
-  <node name="Notifica utente ordine non preso in carico" x="720" y="90" width="298" height="36">
+  <node name="Notifica utente ordine non preso in carico" x="688" y="81" width="298" height="36">
     <edge>
-      <label x="5" y="-10"/>
+      <label x="-132" y="-10"/>
     </edge>
   </node>
   <node name="Notifica utente ordine preso in carico" x="154" y="407" width="262" height="36">
@@ -40,15 +40,16 @@
   </node>
   <node name="Fb from customer to contadino per qualita" x="19" y="962" width="334" height="36">
     <edge>
-      <label x="-144" y="-12"/>
+      <label x="-42" y="11"/>
+      <bendpoint w1="49" h1="111" w2="-162" h2="-74"/>
     </edge>
   </node>
   <node name="Verifica disponibilita" x="379" y="294" width="169" height="36">
     <edge>
-      <label x="5" y="-10"/>
+      <label x="-30" y="-7"/>
     </edge>
     <edge>
-      <label x="5" y="-10"/>
+      <label x="-47" y="-6"/>
     </edge>
   </node>
   <node name="Il driver ha partecipato alla spesa" x="747" y="706" width="236" height="36">
@@ -58,7 +59,7 @@
     <edge>
       <label x="5" y="-10"/>
       <bendpoint w1="251" h1="-3" w2="770" h2="-448"/>
-      <bendpoint w1="251" h1="443" w2="770" h2="-2"/>
+      <bendpoint w1="250" h1="439" w2="718" h2="-2"/>
     </edge>
   </node>
   <node name="fork2" x="250" y="710" width="252" height="24">
@@ -66,13 +67,13 @@
       <label x="-156" y="-12"/>
     </edge>
     <edge>
-      <label x="5" y="-10"/>
+      <label x="-103" y="21"/>
     </edge>
     <edge>
-      <label x="5" y="-10"/>
+      <label x="-57" y="-9"/>
     </edge>
     <edge>
-      <label x="-88" y="-10"/>
+      <label x="-88" y="-17"/>
     </edge>
   </node>
   <node name="join2" x="271" y="1153" width="252" height="24">
@@ -87,7 +88,8 @@
   </node>
   <node name="Fb from responsabile cosegna to customer" x="419" y="961" width="279" height="36">
     <edge>
-      <label x="-20" y="18"/>
+      <label x="-104" y="10"/>
+      <bendpoint w1="-37" h1="114" w2="124" h2="-72"/>
     </edge>
   </node>
   <node name="Fb from contadino to responsabile consegna" x="556" y="893" width="304" height="36">
@@ -108,17 +110,17 @@
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="state1" x="207" y="562" width="158" height="36">
+  <node name="attesa consegna ordine" x="207" y="562" width="174" height="36">
     <edge>
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="end-state1" x="239" y="276" width="132" height="36"/>
-  <node name="end-state2" x="896" y="371" width="132" height="36"/>
-  <node name="end-state3" x="314" y="1304" width="159" height="36"/>
-  <node name="state2" x="180" y="1219" width="132" height="36">
+  <node name="aggiorno stato ordine" x="180" y="1219" width="165" height="36">
     <edge>
       <label x="5" y="-10"/>
     </edge>
   </node>
+  <node name="ordine eliminato" x="172" y="277" width="132" height="36"/>
+  <node name="data massima ordine scaduta" x="765" y="329" width="223" height="36"/>
+  <node name="ordine concluso con successo" x="314" y="1304" width="203" height="36"/>
 </root-container>

@@ -90,8 +90,6 @@ public class TakeInHandForContadinoToCustomer {
 
 			addList(tasksContadinoToCustomer);
 			
-			log.info("****TASKS1**"+tasksContadinoToCustomer.size());
-			
 			Collections.sort(stringhe);
 			return stringhe;
 		}
@@ -130,8 +128,6 @@ public class TakeInHandForContadinoToCustomer {
 				}
 
 			}
-			
-			log.info("******* current account = " +currentAccount.getUsername());
 		}
 	
 
