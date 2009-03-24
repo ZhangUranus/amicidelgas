@@ -84,11 +84,11 @@ public class InviaRichiestaRisposta {
 		feedback.setDataSegnalazione(dataCorrente);
 		feedback.setDataValidazione(dataCorrente);
 		if(compilato)
-			feedback.setDescrizione("Feedback Positivo inserito perchÃ¨ l'utente " +
+			feedback.setDescrizione("Feedback Positivo inserito perchè l'utente " +
 				"ha compilato il questionario in tempo per l'azienda "+contadino.getNomeAzienda()+" in seguito alla visita" +
 						" in data "+dataVisita);
 		else
-			feedback.setDescrizione("Feedback Negativo inserito perchÃ¨ l'utente non " +
+			feedback.setDescrizione("Feedback Negativo inserito perchè l'utente non " +
 					"ha compilato il questionario in tempo per l'azienda "+contadino.getNomeAzienda()+" in seguito alla visita" +
 							" in data "+dataVisita);
 		feedback.setAnalizzato(true);

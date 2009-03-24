@@ -23,7 +23,6 @@ public class RiepilogoQuestionari {
 	
 	public ArrayList<Integer> getVotoByVisitatore(String usernameVisitatore, String cybercontadino)
 	{
-		//System.out.println("ONNNNNNNNNNNNNNNNNNNN2");
 		questionarioList.setEjbql("select questionario from Questionario questionario where questionario.account.username='"+usernameVisitatore+"' and questionario.cybercontadino.partitaIva='"+cybercontadino+"'");
 		List<Questionario> lu = questionarioList.getResultList();
 	

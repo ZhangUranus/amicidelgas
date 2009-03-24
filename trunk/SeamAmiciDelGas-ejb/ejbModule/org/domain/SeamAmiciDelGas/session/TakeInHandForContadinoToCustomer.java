@@ -66,7 +66,6 @@ public class TakeInHandForContadinoToCustomer {
 		articoliForCurrentOrdine = new ArrayList<Articolo>();
 		ordiniForCustomer = null;
 		stringhe = new ArrayList<String>();
-		log.info("\n\n******** RESET ***********\n\n");
 	}
 	
 	public InfoFeedback getInfoFeedbackForOrdine(Integer idOrdine){

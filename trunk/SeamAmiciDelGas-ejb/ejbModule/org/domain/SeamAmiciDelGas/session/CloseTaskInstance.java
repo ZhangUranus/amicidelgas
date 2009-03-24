@@ -109,14 +109,12 @@ public class CloseTaskInstance {
 			TaskInstance managedTaskInstance = jbpmContext.getTaskInstance(t.getId());
 			
 			Account account = (Account) managedTaskInstance.getVariable("customer");
-			log.info("******* task customer " +account.getUsername());
 			
 			Ordine ordine = (Ordine) managedTaskInstance.getVariable("ordine");
 			
 			InfoFeedback infoFeedback = hashTable.get(ordine.getIdordine());
 			if (infoFeedback!=null)
 				gestioneFeedback.assegnaFeedback(account.getUsername(), ordine, (float) infoFeedback.getFeedback(), infoFeedback.getComment());
-			log.info("******* task instance " +managedTaskInstance.toString());
 
 			//setto il fatto che il contadino ha rilasciato il feedback al customer
 			managedTaskInstance.setVariable("booleanResponsabileConsegnaToCustomer", new Boolean(true));
@@ -134,9 +132,7 @@ public class CloseTaskInstance {
 	public String closefbContadinoToResponsabile() {
 		
 		Hashtable<Integer, InfoFeedback> hashTable = takeInHandForContadinoToDriver.getHashTable();
-		log.info("******* num di feedback da assegnare "+hashTable.size());
 		String usernameDriver = takeInHandForContadinoToDriver.getStringaResponsabileConsegna();
-		log.info("******* Driver corrente "+usernameDriver);
 		
 		//salvo i feedback
 		Enumeration<Integer> enumeration = hashTable.keys();
@@ -151,7 +147,6 @@ public class CloseTaskInstance {
 		//chiudo le task instance
 		for (TaskInstance t: takeInHandForContadinoToDriver.getTaskInstanceListForResponsabile()) {
 			TaskInstance managedTaskInstance = jbpmContext.getTaskInstance(t.getId());
-			log.info("******* task instance " +managedTaskInstance.toString());
 			
 			//tengo traccia che il contadino corrente ha votato il driver
 			Hashtable<String,Boolean> booleanFeedbackContadiniToResponsabile = (Hashtable<String,Boolean>) t.getVariable("booleanFeedbackContadiniToResponsabile");

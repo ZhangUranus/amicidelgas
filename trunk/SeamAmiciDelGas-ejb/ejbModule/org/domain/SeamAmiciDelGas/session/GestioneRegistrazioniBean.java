@@ -111,7 +111,6 @@ public class GestioneRegistrazioniBean {
 	
 	public void inviaEmail()
 	{
-		System.out.println("EMAILLLLLLLLLLLLLLLLLLLLLLLL"+dataIntervista);
 		//registrationMailer.sendWelcomeEmail(dataIntervista);
 	}
 	
