@@ -383,7 +383,7 @@ Ext.onReady(function(){
             disabled: true,
             handler : function(e,val,sel){
             	if(idArticle != null){
-        			Ext.MessageBox.confirm('Confirm', 'Attenzione, la rimozione dell\'articolo √® permanente.<br>Procedere con la rimozione?', deleteItem);
+        			Ext.MessageBox.confirm('Confirm', 'Attenzione, la rimozione dell\'articolo Ë permanente.<br>Procedere con la rimozione?', deleteItem);
 				}else{
 					Ext.MessageBox.alert("Attenzione", "Selezionare l'articolo da cancellare");
 				}
@@ -540,7 +540,7 @@ Ext.onReady(function(){
             {header: "categoria", width: 220, sortable: true, renderer: renderCategorieX, dataIndex: 'categoriaX'},
             {header: "donato il", width: 75, sortable: true, renderer: Ext.util.Format.dateRenderer('d/m/Y'), dataIndex: 'dataAssegnazioneX'},
             {header: "donato a", width: 150, sortable: true, renderer: formatNomeX, dataIndex: 'cognomeX'},
-            {header: "quantit√†", width: 60, sortable: true, renderer: quantitaX, dataIndex: 'quantitaX'},
+            {header: "quantit‡†", width: 60, sortable: true, renderer: quantitaX, dataIndex: 'quantitaX'},
             {header: "prov.", width: 40, sortable: true, renderer: small, dataIndex: 'provinciaX'},
             {header: "valore ‚Ç¨", width: 55, sortable: true, renderer: euro, dataIndex: 'valore2X'},
             {header: "ricevuta", width: 70, sortable: true, renderer: ricevuta, dataIndex: 'ricevutaX'}
@@ -617,7 +617,7 @@ Ext.onReady(function(){
 	var form_modifica = new Ext.form.BasicForm(
 		'form_modifica',
 		{
-		standardSubmit: true //post di tipo SINCRONO (di default √® ajax asincrono)
+		standardSubmit: true //post di tipo SINCRONO (di default Ë ajax asincrono)
 		}
 	);
 	var id_modifica = new Ext.form.Field({
@@ -628,7 +628,7 @@ Ext.onReady(function(){
 	form_cancella = new Ext.form.BasicForm(
 		'form_cancella',
 		{
-		standardSubmit: true //post di tipo SINCRONO (di default √® ajax asincrono)
+		standardSubmit: true //post di tipo SINCRONO (di default Ë ajax asincrono)
 		}
 	);
 	id_cancella = new Ext.form.Field({
@@ -639,7 +639,7 @@ Ext.onReady(function(){
 	var form_assegna = new Ext.form.BasicForm(
 		'form_assegna',
 		{
-		standardSubmit: true //post di tipo SINCRONO (di default √® ajax asincrono)
+		standardSubmit: true //post di tipo SINCRONO (di default Ë ajax asincrono)
 		}
 	);
 	var id_assegna = new Ext.form.Field({
@@ -905,7 +905,7 @@ window.onunload = function(){
 									<tr>
 										<td background="/santaclaus/img/icon_left_i.png"></td>
 										<td valign="middle" bgcolor="#FFE8A7">
-										<div class="colore_avviso" align="justify"><b>Problema di compatibilit√†:</b> per visualizzare correttamente la mappa √® necessario un browser compatibile, provare con Firefox o Safari | <a href="http://www.spreadfirefox.com/node&id=0&t=312"><img align="middle" border="0" alt="Firefox 3" title="Firefox 3" src="http://sfx-images.mozilla.org/affiliates/Buttons/firefox3/FF3_80x15_o.png"/></a></div>
+										<div class="colore_avviso" align="justify"><b>Problema di compatibilitË†:</b> per visualizzare correttamente la mappa Ë necessario un browser compatibile, provare con Firefox o Safari | <a href="http://www.spreadfirefox.com/node&id=0&t=312"><img align="middle" border="0" alt="Firefox 3" title="Firefox 3" src="http://sfx-images.mozilla.org/affiliates/Buttons/firefox3/FF3_80x15_o.png"/></a></div>
 										</td>
 										<td background="/santaclaus/img/icon_right_i.png"></td>
 									</tr>
