@@ -26,7 +26,7 @@
 		<timer duedate="10 years" name="dataMassimaTimer" transition="ordine_non_preso_in_carico_entro_datamax"/>
 		<transition to="Notifica utente ordine non preso in carico" name="ordine_non_preso_in_carico_entro_datamax"></transition>
 		<transition to="Verifica disponibilita" name="ordine_preso_in_carico"></transition>
-		<transition to="ordine eliminato" name="ordine_eliminato_dall_utente"></transition>
+		<transition to="ordine eliminato da utente" name="ordine_eliminato_dall_utente"></transition>
 	</task-node>
 
 	<task-node name="Notifica utente ordine non disponibile">
@@ -174,12 +174,12 @@
 	</task-node>
 
 	<fork name="fork1">
-		<transition to="Fb from contadino to responsabile consegna" name="toTask5"></transition>
-		<transition to="Fb from responsabile consegna to contadino" name="toTask6"></transition>
+		<transition to="Fb from contadino to responsabile consegna" name="to_Fb_contadino_to_responsabile"></transition>
+		<transition to="Fb from responsabile consegna to contadino" name="to_Fb_responsabile_to_contadino"></transition>
 	</fork>
 
 	<join name="join1">
-		<transition to="join2" name="toTask7"></transition>
+		<transition to="join2" name="to_join_2"></transition>
 	</join>
 
 	<state name="attesa consegna ordine">
@@ -196,7 +196,7 @@
 		<transition to="fork2" name="assegna_feedback"></transition>
 </state>
 
-	<end-state name="ordine eliminato"></end-state>
+	<end-state name="ordine eliminato da utente"></end-state>
 
 	<end-state name="data massima ordine scaduta"></end-state>
 
