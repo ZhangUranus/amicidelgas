@@ -19,9 +19,9 @@ USE database_gas;
 /*!40000 ALTER TABLE `account` DISABLE KEYS */;
 SET AUTOCOMMIT=0;
 INSERT INTO `account` (`Username`,`passwordHash`,`Bloccato`,`Elimato`,`Cancellato`,`Attivato`,`DataRichiesta`,`DataAccettazione`,`PunteggioFeedback`,`Utente_CodiceFiscale`,`fondo`,`PagamentoElettronico_idPagamentoElettronico`,`numeroVotanti`) VALUES
- ('admin','8ff430762890cbf91b3af84032d6f3ceda61644f',0x00,0x00,0x00,0x1,'2009-02-17',NULL,3,'gasgas00f03f123y',0,1,1),
-('soloadmin','8ff430762890cbf91b3af84032d6f3ceda61644f',0x00,0x00,0x00,0x1,'2009-02-17',NULL,3,'gassol00f03f123y',0,1,1),
-('mediatore','8ff430762890cbf91b3af84032d6f3ceda61644f',0x00,0x00,0x00,0x1,'2009-02-17',NULL,3,'gasmed00f03f123y',0,1,1);
+ ('admin','8ff430762890cbf91b3af84032d6f3ceda61644f',0x00,0x00,0x00,0x1,'2009-02-17',NULL,3,'gasgas00f03f123y',100,1,1),
+('soloadmin','8ff430762890cbf91b3af84032d6f3ceda61644f',0x00,0x00,0x00,0x1,'2009-02-17',NULL,3,'gassol00f03f123y',200,1,1),
+('mediatore','8ff430762890cbf91b3af84032d6f3ceda61644f',0x00,0x00,0x00,0x1,'2009-02-17',NULL,3,'gasmed00f03f123y',300,1,1);
 COMMIT;
 /*!40000 ALTER TABLE `account` ENABLE KEYS */;
 

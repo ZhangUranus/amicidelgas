@@ -19,9 +19,9 @@ USE database_gas;
 /*!40000 ALTER TABLE `account` DISABLE KEYS */;
 SET AUTOCOMMIT=0;
 INSERT INTO `account` (`Username`,`passwordHash`,`Bloccato`,`Elimato`,`Cancellato`,`Attivato`,`DataRichiesta`,`DataAccettazione`,`PunteggioFeedback`,`Utente_CodiceFiscale`,`fondo`,`PagamentoElettronico_idPagamentoElettronico`,`numeroVotanti`) VALUES
- ('admin','8ff430762890cbf91b3af84032d6f3ceda61644f',0x00,0x00,0x00,0x1,'2009-02-17',NULL,3,'gasgas00f03f123y',0,1,1),
-('soloadmin','8ff430762890cbf91b3af84032d6f3ceda61644f',0x00,0x00,0x00,0x1,'2009-02-17',NULL,3,'gassol00f03f123y',0,1,1),
-('mediatore','8ff430762890cbf91b3af84032d6f3ceda61644f',0x00,0x00,0x00,0x1,'2009-02-17',NULL,3,'gasmed00f03f123y',0,1,1);
+ ('admin','8ff430762890cbf91b3af84032d6f3ceda61644f',0x00,0x00,0x00,0x1,'2009-02-17',NULL,3,'gasgas00f03f123y',100,1,1),
+('soloadmin','8ff430762890cbf91b3af84032d6f3ceda61644f',0x00,0x00,0x00,0x1,'2009-02-17',NULL,3,'gassol00f03f123y',150,1,1),
+('mediatore','8ff430762890cbf91b3af84032d6f3ceda61644f',0x00,0x00,0x00,0x1,'2009-02-17',NULL,3,'gasmed00f03f123y',300,1,1);
 COMMIT;
 /*!40000 ALTER TABLE `account` ENABLE KEYS */;
 
@@ -10553,9 +10553,9 @@ COMMIT;
 /*!40000 ALTER TABLE `utente` DISABLE KEYS */;
 SET AUTOCOMMIT=0;
 INSERT INTO `utente` (`CodiceFiscale`,`Nome`,`Indirizzo`,`RecapitoTelefonico`,`email`,`Cognome`,`DataNascita`,`Sesso`,`PathQuestionario`,`Comune_nascita`,`IDComune`) VALUES 
- ('gasgas00f03f123y','admin_gas','Labis','666','comelatua@undominio.com','admin_gas','1989-02-14','M',NULL,10252,10252),
- ('gasmed00f03f123y','mediatore','Labis','666','come@undominio.com','mediatore','1989-02-14','M',NULL,10252,10252),
-('gassol00f03f123y','admin_only','Labis','666','comerr@undominio.com','admin','1989-02-14','M',NULL,10252,10252);
+ ('gasgas00f03f123y','admin_gas','Labis','0824','comelatua@undominio.com','admin_gas','1989-02-14','M',NULL,10252,10252),
+ ('gasmed00f03f123y','mediatore','Labis','0825','come@undominio.com','mediatore','1989-02-14','M',NULL,10252,10252),
+('gassol00f03f123y','admin_only','Labis','0826','comerr@undominio.com','admin','1989-02-14','M',NULL,10252,10252);
 COMMIT;
 /*!40000 ALTER TABLE `utente` ENABLE KEYS */;
 INSERT INTO `utente` (`CodiceFiscale`,`Nome`,`Indirizzo`,`RecapitoTelefonico`,`email`,`Cognome`,`DataNascita`,`Sesso`,`PathQuestionario`,`Comune_nascita`,`IDComune`) VALUES

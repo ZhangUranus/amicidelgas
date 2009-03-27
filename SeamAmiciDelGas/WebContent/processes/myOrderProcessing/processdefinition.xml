@@ -53,6 +53,7 @@
 		<timer  duedate="10 seconds" name="timerInviaNotifica" transition="attendi_consegna">
 			<action></action>
 		</timer>
+		
 		<transition to="attesa consegna ordine" name="attendi_consegna"></transition>
 	</task-node>
 
@@ -119,7 +120,7 @@
 	</fork>
 
 	<join name="join2">
-		<transition to="aggiorno stato ordine" name="to_aggiorna_ordine"></transition>
+		<transition to="ordine concluso con successo" name="to_ordine_concluso_end"></transition>
 	</join>
 
 	<task-node name="Fb from customer to responsabile consegna">
@@ -188,18 +189,12 @@
         <nomeData>dataConsegna</nomeData>
       </action>
 	</event>
-	<timer duedate="9 years" name="inviaFeedback"  transition="assegna_feedback" />
+	<timer duedate="9 years" name="inviaFeedback"  transition="assegna_feedback">
+		<action name="persistOrdineConcluso" class="org.domain.SeamAmiciDelGas.processes.PersistHandlerOrdine">
+		</action>
+	</timer>
 		<transition to="fork2" name="assegna_feedback"></transition>
 </state>
-
-	<state name="aggiorno stato ordine">
-		<timer duedate="15 seconds" name="timer assegna ordine concluso" transition="to_end_state_3_finish">
-			<action name="persistOrdineConcluso" class="org.domain.SeamAmiciDelGas.processes.PersistHandlerOrdine">
-			</action>
-		</timer>
-		<transition to="ordine concluso con successo" name="to_end_state_3_finish"></transition>
-	</state>
-
 
 	<end-state name="ordine eliminato"></end-state>
 

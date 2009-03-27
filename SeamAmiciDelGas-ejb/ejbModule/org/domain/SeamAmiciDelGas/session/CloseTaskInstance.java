@@ -54,8 +54,9 @@ public class CloseTaskInstance {
 		Hashtable<String, InfoFeedback> hashTableCustomer = takeInHandForDriver.getHashTableCustomer();
 		
 		for (TaskInstance t: takeInHandForDriver.getTaskInstanceCustomerForItinerario()) {
-
 			TaskInstance managedTaskInstance = jbpmContext.getTaskInstance(t.getId());
+			if(!managedTaskInstance.isOpen())
+				return "fb_responsabile_to_customer";
 			Account account = (Account) managedTaskInstance.getVariable("customer");
 			InfoFeedback infoFeedback = hashTableCustomer.get(account.getUsername());
 			gestioneFeedback.assegnaFeedback(account.getUsername(), (Ordine) managedTaskInstance.getVariable("ordine"), (float) infoFeedback.getFeedback(), infoFeedback.getComment());
@@ -87,7 +88,11 @@ public class CloseTaskInstance {
 	}
 
 	for (TaskInstance t: takeInHandForDriver.getTaskInstanceContadinoForItinerario()) {
+		//if(!t.isOpen())
+			//return "fb_responsabile_consegna_to_contadino";
 		TaskInstance managedTaskInstance = jbpmContext.getTaskInstance(t.getId());
+		if(!managedTaskInstance.isOpen())
+			return "fb_responsabile_consegna_to_contadino";
 		//setto il booleano associato a true
 		managedTaskInstance.setVariable("booleanResponsabileConsegnaToContadino", new Boolean(true));
 		//chiudo l'instanza del task
@@ -105,9 +110,11 @@ public class CloseTaskInstance {
 		log.info("******* Number of order " +hashTable.size());
 		
 		for (TaskInstance t: takeInHandForContadinoToCustomer.getTaskInstanceForCurrentAccount()) {
-
+			//if(!t.isOpen())
+				//return "fb_responsabile_to_customer";
 			TaskInstance managedTaskInstance = jbpmContext.getTaskInstance(t.getId());
-			
+			if(!managedTaskInstance.isOpen())
+				return "fb_responsabile_to_customer";
 			Account account = (Account) managedTaskInstance.getVariable("customer");
 			
 			Ordine ordine = (Ordine) managedTaskInstance.getVariable("ordine");
@@ -147,6 +154,8 @@ public class CloseTaskInstance {
 		//chiudo le task instance
 		for (TaskInstance t: takeInHandForContadinoToDriver.getTaskInstanceListForResponsabile()) {
 			TaskInstance managedTaskInstance = jbpmContext.getTaskInstance(t.getId());
+			if(!managedTaskInstance.isOpen())
+				return "fb_contadino_to_responsabile_consegna";
 			
 			//tengo traccia che il contadino corrente ha votato il driver
 			Hashtable<String,Boolean> booleanFeedbackContadiniToResponsabile = (Hashtable<String,Boolean>) t.getVariable("booleanFeedbackContadiniToResponsabile");
