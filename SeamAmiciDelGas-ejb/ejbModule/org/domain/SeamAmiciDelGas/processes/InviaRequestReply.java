@@ -45,7 +45,7 @@ public class InviaRequestReply {
 	
 	@In(value="compilato", scope= ScopeType.BUSINESS_PROCESS, required=false)
 	@Out(value="compilato", scope= ScopeType.BUSINESS_PROCESS, required=false)
-	private boolean compilato;
+	private boolean compilatoQuestionario;
 	
 	private Date dataCorrente;
 	
@@ -64,7 +64,7 @@ public class InviaRequestReply {
 		}
 		else
 		{
-			compilato = true;
+			compilatoQuestionario = true;
 			if(questionario == null)
 			{
 				return null;

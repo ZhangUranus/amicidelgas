@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<root-container name="ProcessoEmailConferma" width="879" height="386">
+<root-container name="ProcessoEmailConferma" width="619" height="414">
   <node name="register" x="252" y="61" width="132" height="36">
     <edge>
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="confirm" x="249" y="188" width="132" height="36">
+  <node name="confirm" x="250" y="133" width="132" height="36">
     <edge>
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="end" x="243" y="326" width="132" height="36"/>
+  <node name="end" x="248" y="215" width="132" height="36"/>
 </root-container>
