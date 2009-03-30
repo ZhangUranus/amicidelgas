@@ -51,8 +51,8 @@ public class ProcessoRegistrazione {
 	@Out(value="dataProposta", scope= ScopeType.BUSINESS_PROCESS, required =false)
 	private Date dataProposta;
 	
-	@Out(value="compilato", scope= ScopeType.BUSINESS_PROCESS, required =false)
-	private boolean compilato;
+	@Out(value="compilatoQuestionario", scope= ScopeType.BUSINESS_PROCESS, required =false)
+	private boolean compilatoQuestionario;
 	
 	@Out(value="dataQuestionario", scope= ScopeType.BUSINESS_PROCESS, required =false)
 	private Date dataQuestionario ;
@@ -108,10 +108,10 @@ public class ProcessoRegistrazione {
 		messageSubProcess.setTipo("questionario");
 		gc= new GregorianCalendar();
 		gc.setTime((Date) dataQuestionario.clone());
-		gc.add(Calendar.MINUTE, +6);
+		gc.add(Calendar.MINUTE, +2);
 		dataTimer = gc.getTime();
 		MediatoreCheManda = credentials.getUsername();
-		compilato = false;
+		compilatoQuestionario = false;
 	}
 	
 	public Cybercontadino getContadinoCorrente() {

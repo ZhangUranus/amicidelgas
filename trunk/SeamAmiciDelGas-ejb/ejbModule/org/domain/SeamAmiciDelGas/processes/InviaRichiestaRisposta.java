@@ -43,7 +43,7 @@ public class InviaRichiestaRisposta {
 	private String nomeDestinatario;
 	
 	@In(value="compilato", scope= ScopeType.BUSINESS_PROCESS, required=false)
-	private Boolean compilato;
+	private Boolean compilatoQuestionario;
 	
 	@In(value="accountHome", create=true)
 	private AccountHome accounthome;
@@ -63,7 +63,7 @@ public class InviaRichiestaRisposta {
 		}
 		else
 		{
-			if(compilato)
+			if(compilatoQuestionario)
 				this.inserisciFeedback(4.0f);
 			else
 				this.inserisciFeedback(2.0f);
@@ -83,12 +83,12 @@ public class InviaRichiestaRisposta {
 		feedback.setAccountByDestinatario(accountUtente);
 		feedback.setDataSegnalazione(dataCorrente);
 		feedback.setDataValidazione(dataCorrente);
-		if(compilato)
-			feedback.setDescrizione("Feedback Positivo inserito perchè l'utente " +
+		if(compilatoQuestionario)
+			feedback.setDescrizione("Feedback Positivo inserito perchï¿½ l'utente " +
 				"ha compilato il questionario in tempo per l'azienda "+contadino.getNomeAzienda()+" in seguito alla visita" +
 						" in data "+dataVisita);
 		else
-			feedback.setDescrizione("Feedback Negativo inserito perchè l'utente non " +
+			feedback.setDescrizione("Feedback Negativo inserito perchï¿½ l'utente non " +
 					"ha compilato il questionario in tempo per l'azienda "+contadino.getNomeAzienda()+" in seguito alla visita" +
 							" in data "+dataVisita);
 		feedback.setAnalizzato(true);
