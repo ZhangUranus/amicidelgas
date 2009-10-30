@@ -1,0 +1,188 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:a="http://richfaces.org/a4j"
+    template="/layout/template.xhtml">
+
+<ui:define name="body">
+
+	<h:form id="passo2Form">
+
+    <rich:panel>
+        <f:facet name="header">Richiesta registrazione: Passo 2 - Dati Account</f:facet>
+            
+            <s:decorate id="tipocartaField" template="/layout/edit.xhtml">
+                <ui:define name="label">Carta di Credito</ui:define>
+                <h:selectOneRadio value="#{newPagamento.tipoCarta}" required="true" requiredMessage="Scegliere il tipo di carta di credito">
+				  <f:selectItem itemLabel="  " itemValue="Visa" ><img src="/GAS/img/creditcard_visa.png" /></f:selectItem>
+				  <f:selectItem itemLabel="  " itemValue="MasterCard" ><img src="/GAS/img/creditcard_mastercard.png" /></f:selectItem>
+				  <f:selectItem itemLabel="  " itemValue="AmericanExpress"><img src="/GAS/img/creditcard_american_express.png" /></f:selectItem>
+				  <f:selectItem itemLabel="  " itemValue="PayPal"><img src="/GAS/img/creditcard_paypal.png"/></f:selectItem>
+				</h:selectOneRadio>
+            </s:decorate>
+
+			<s:decorate id="numerocartaField" template="/layout/edit.xhtml">
+                <ui:define name="label">Numero Carta</ui:define>
+                <h:inputText id="numerocarta"
+                       required="true"
+                       requiredMessage="Inserire il numero della carta di credito"
+                           size="24"
+                      maxlength="16"
+                          value="#{newPagamento.numeroCarta}">
+                    <a:support event="onblur" reRender="numerocartaField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+            
+            <s:decorate id="usernameField" template="/layout/edit.xhtml">
+                <ui:define name="label">Username</ui:define>
+                <h:inputText id="username"
+                       required="true"
+                       requiredMessage="Inserire un'username valido"
+                           size="24"
+                      maxlength="20"
+                          value="#{newAccount.username}"
+                          >
+                    <a:support event="onblur" 
+                    reRender="usernameField" 
+                    action="#{newControlloBean.controllaUserName()}"
+                    ajaxSingle="true"/>   
+                </h:inputText>
+              <h:outputText value="#{newControlloBean.myResponseUserName}" 
+                style="color:red;" />
+            </s:decorate>
+            
+            <script type="text/javascript">
+				<!--
+					function verificaPassword(){
+						var one = document.getElementById('passo2Form:passwordField:password').value;
+						var two = document.getElementById('passo2Form:confirmPasswordField:confirmPassword').value;
+						
+						if ((one != two) || (one == "") ) {
+							document.getElementById('passo2Form:confirmPasswordField:confirmPassword').value = "";
+							document.getElementById('passo2Form:controlloPasswordField:controlloPassword').innerHTML = "<img src=\"/GAS/img/not_valid.png\"/>";
+						} else {
+							document.getElementById('passo2Form:controlloPasswordField:controlloPassword').innerHTML = "<img src=\"/GAS/img/accepted.png\"/>";
+						}
+					}
+				//-->
+				</script>
+            
+            <s:decorate id="passwordField" template="/layout/edit.xhtml">
+                <ui:define name="label">Password</ui:define>
+                <h:inputText id="password"
+                       required="true"
+                       requiredMessage="Inserire una password valida"
+                           size="24"
+                      maxlength="16"
+                          value="#{passwordBean.password}">
+                    <a:support event="onblur" reRender="passwordField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+             <s:decorate id="confirmPasswordField" template="/layout/edit.xhtml">
+                <ui:define name="label">Conferma Password</ui:define>
+                <h:inputText id="confirmPassword"
+                		onblur="verificaPassword()"
+                       required="true"
+                       requiredMessage="Ripetere la password"
+                           size="24"
+                      maxlength="16"
+                          value="#{passwordBean.confirm}"
+                          >
+                    <a:support event="onblur" reRender="confirmPasswordField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+            
+            <s:decorate id="controlloPasswordField" template="/layout/edit.xhtml">
+                <ui:define name="label">Controllo Password</ui:define>
+                <h:outputText id="controlloPassword" value="...in attesa" />
+            </s:decorate>
+            
+            <s:decorate id="uploadFileField" template="/layout/edit.xhtml">
+            	<ui:define name="label">Documentazione ASL</ui:define>
+	       <h:panelGrid columns="3" columnClasses="top,top">
+	            <rich:fileUpload
+	            id="upload"
+	            	addControlLabel="Add file..."
+	            	listHeight="60px"
+	            	listWidth="350px"
+	            	clearAllControlLabel="Clear all" 
+                    stopEntryControlLabel="Stop process" 
+                    uploadControlLabel="Upload file" 
+	            	fileUploadListener="#{newFileUpload.listener}"
+	                maxFilesQuantity="#{newFileUpload.uploadsAvailable}"
+	                immediateUpload="#{newFileUpload.autoUpload}"
+	                acceptedTypes="doc, pdf, docx" 
+	                allowFlash="#{newFileUpload.useFlash}"
+	                required="true" 
+	                requiredMessage="Inserire la documentazione ASL richiesta"
+	                >
+	                <f:facet name="label">
+                	<h:outputText value="{_KB}KB from {KB}KB uploaded --- {mm}:{ss}" />
+					</f:facet>
+					<a:support event="onuploadcomplete" reRender="info" bypassUpdates="true" ajaxSingle="true"/>
+	            </rich:fileUpload>
+	            
+	            <h:panelGroup id="info" >
+                <rich:panel bodyClass="info" style="width:300px; height:100px;">
+                    <f:facet name="header">
+                        <h:outputText value="Uploaded Files Info" />
+                    </f:facet>
+                    <h:outputText value="No files currently uploaded"
+                        rendered="#{newFileUpload.size==0}" />
+                     <h:panelGrid columns="2" rendered="#{newFileUpload.size>0}">
+                                    <h:outputText value="File Name: " />
+                                    <h:outputText value="#{newFileUpload.filename}" />
+                                    <h:outputText value="File Length(bytes): " />
+                                    <h:outputText value="#{newFileUpload.length}" />
+                                </h:panelGrid>
+                </rich:panel>
+                <a:commandButton action="#{newFileUpload.clearUploadData}"
+                    reRender="info, upload" value="Clear Uploaded Data"
+                    rendered="#{newFileUpload.size>0}" bypassUpdates="true" ajaxSingle="true" />
+            </h:panelGroup>
+        </h:panelGrid>
+
+          </s:decorate>
+          
+          <s:decorate id="erroreField" template="/layout/edit.xhtml">
+            <h:outputText styleClass="errors" value="#{newFileUpload.errore}" />
+            </s:decorate>
+            
+            <s:decorate id="dataVisitaField" template="/layout/edit.xhtml">
+                <ui:define name="label">Inserire una data in cui si è disponibili a effettuare la visita in azienda</ui:define>
+                <rich:calendar id="dataVisita"
+                       required="true"
+                       requiredMessage="Inserire una data"
+                       value="#{newCybercontadino.dataVisita}" datePattern="MM/dd/yyyy">
+                   <a:support event="onchange" reRender="dataVisitaField" bypassUpdates="true" ajaxSingle="true"/>
+                </rich:calendar>
+            </s:decorate>
+          
+          <s:decorate id="verifyCaptchaField" template="/layout/edit.xhtml">
+				<ui:define name="label">Security Check</ui:define>
+				<h:graphicImage value="/seam/resource/captcha"/>
+				<h:inputText value="#{captcha.response}" required="true"
+				requiredMessage="Inserire la somma dei numeri per continuare la registrazione"/>
+			</s:decorate>
+
+			<div style="clear:both">
+                <span class="required">*</span>
+                Campi Richiesti
+            </div>
+
+    </rich:panel>
+    
+    	<div class="actionButtons">
+            <h:commandButton id="passo3" value="procedi al passo 3" action="#{registrazioneCybercontadino.action}"/>
+        </div>
+    
+    </h:form>
+    
+
+</ui:define>
+
+</ui:composition>

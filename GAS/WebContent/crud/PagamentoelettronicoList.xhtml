@@ -1,0 +1,143 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    template="layout/template.xhtml">
+
+<ui:define name="body">
+
+    <h:form id="pagamentoelettronicoSearch" styleClass="edit">
+
+        <rich:simpleTogglePanel label="Pagamentoelettronico Search Filter" switchType="ajax">
+
+            <s:decorate template="layout/display.xhtml">
+                <ui:define name="label">Tipo carta</ui:define>
+                <h:inputText id="tipoCarta" value="#{pagamentoelettronicoList.pagamentoelettronico.tipoCarta}"/>
+            </s:decorate>
+
+
+        </rich:simpleTogglePanel>
+
+        <div class="actionButtons">
+            <h:commandButton id="search" value="Search" action="/PagamentoelettronicoList.xhtml"/>
+            <s:button id="reset" value="Reset" includePageParams="false"/>
+        </div>
+
+    </h:form>
+
+    <rich:panel>
+        <f:facet name="header">Pagamentoelettronico Search Results</f:facet>
+    <div class="results" id="pagamentoelettronicoList">
+
+    <h:outputText value="The pagamentoelettronico search returned no results."
+               rendered="#{empty pagamentoelettronicoList.resultList}"/>
+
+    <rich:dataTable id="pagamentoelettronicoList"
+                var="_pagamentoelettronico"
+              value="#{pagamentoelettronicoList.resultList}"
+           rendered="#{not empty pagamentoelettronicoList.resultList}">
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{pagamentoelettronicoList}"/>
+                    <ui:param name="propertyLabel" value="Id pagamento elettronico"/>
+                    <ui:param name="propertyPath" value="pagamentoelettronico.idPagamentoElettronico"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_pagamentoelettronico.idPagamentoElettronico}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{pagamentoelettronicoList}"/>
+                    <ui:param name="propertyLabel" value="Tipo carta"/>
+                    <ui:param name="propertyPath" value="pagamentoelettronico.tipoCarta"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_pagamentoelettronico.tipoCarta}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{pagamentoelettronicoList}"/>
+                    <ui:param name="propertyLabel" value="Numero carta"/>
+                    <ui:param name="propertyPath" value="pagamentoelettronico.numeroCarta"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_pagamentoelettronico.numeroCarta}"/>
+        </h:column>
+        <rich:column styleClass="action">
+            <f:facet name="header">Action</f:facet>
+            <s:link view="/#{empty from ? 'Pagamentoelettronico' : from}.xhtml"
+                   value="#{empty from ? 'View' : 'Select'}"
+             propagation="#{empty from ? 'none' : 'default'}"
+                      id="pagamentoelettronico">
+                <f:param name="pagamentoelettronicoIdPagamentoElettronico"
+                        value="#{_pagamentoelettronico.idPagamentoElettronico}"/>
+            </s:link>
+            #{' '}
+            <s:link view="/PagamentoelettronicoEdit.xhtml"
+                   value="Edit"
+             propagation="none"
+                      id="pagamentoelettronicoEdit"
+                rendered="#{empty from}">
+                <f:param name="pagamentoelettronicoIdPagamentoElettronico"
+                        value="#{_pagamentoelettronico.idPagamentoElettronico}"/>
+            </s:link>
+        </rich:column>
+    </rich:dataTable>
+
+    </div>
+    </rich:panel>
+
+    <div class="tableControl">
+
+        <s:link view="/PagamentoelettronicoList.xhtml"
+            rendered="#{pagamentoelettronicoList.previousExists}"
+               value="#{messages.left}#{messages.left} First Page"
+                  id="firstPage">
+          <f:param name="firstResult" value="0"/>
+        </s:link>
+
+        <s:link view="/PagamentoelettronicoList.xhtml"
+            rendered="#{pagamentoelettronicoList.previousExists}"
+               value="#{messages.left} Previous Page"
+                  id="previousPage">
+            <f:param name="firstResult"
+                    value="#{pagamentoelettronicoList.previousFirstResult}"/>
+        </s:link>
+
+        <s:link view="/PagamentoelettronicoList.xhtml"
+            rendered="#{pagamentoelettronicoList.nextExists}"
+               value="Next Page #{messages.right}"
+                  id="nextPage">
+            <f:param name="firstResult"
+                    value="#{pagamentoelettronicoList.nextFirstResult}"/>
+        </s:link>
+
+        <s:link view="/PagamentoelettronicoList.xhtml"
+            rendered="#{pagamentoelettronicoList.nextExists}"
+               value="Last Page #{messages.right}#{messages.right}"
+                  id="lastPage">
+            <f:param name="firstResult"
+                    value="#{pagamentoelettronicoList.lastFirstResult}"/>
+        </s:link>
+
+    </div>
+
+    <s:div styleClass="actionButtons" rendered="#{empty from}">
+        <s:button view="/PagamentoelettronicoEdit.xhtml"
+                    id="create"
+           propagation="none"
+                 value="Create pagamentoelettronico">
+            <f:param name="pagamentoelettronicoIdPagamentoElettronico"/>
+        </s:button>
+    </s:div>
+
+</ui:define>
+
+</ui:composition>

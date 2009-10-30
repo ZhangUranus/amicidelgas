@@ -1,0 +1,211 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:a="http://richfaces.org/a4j"
+    template="/layout/template.xhtml">
+
+	<ui:define name="body">
+	
+
+			<h:form id="accountSearch" styleClass="edit">
+		        <rich:simpleTogglePanel label="Utente Search Filter" switchType="ajax">
+					<table>
+						<td width="25%">
+						 <s:decorate template="/layout/display.xhtml">
+			                <ui:define name="label">Username</ui:define>
+			                <h:inputText id="username" value="#{accountListExtended.account.username}"/>
+			             </s:decorate>
+			            </td>
+		
+			            <td width="25%">
+			             <s:decorate template="/layout/display.xhtml">
+			                <ui:define name="label">Cognome</ui:define>
+			                <h:inputText id="cognome" value="#{utenteList.utente.cognome}"/>
+			             </s:decorate>
+					    </td>
+					    
+					    <td width="25%">
+			             <s:decorate template="/layout/display.xhtml">
+			                <ui:define name="label">Nome</ui:define>
+			                <h:inputText id="nome" value="#{utenteList.utente.nome}"/>
+			             </s:decorate>
+					    </td>
+					     
+					    <td width="25%">
+			             <s:decorate template="/layout/display.xhtml">
+			                <ui:define name="label">Feedback >= </ui:define>
+			                <h:inputText id="punteggioFeedback" value="#{accountListExtended.account.punteggioFeedback}"/>
+			             </s:decorate>
+					    </td>
+					</table>
+		        </rich:simpleTogglePanel>
+			  
+		        <div class="actionButtons">   
+		            <h:commandButton value="Search" id="search" action="admin/editDatiUtenti.xhtml"/>  
+		            <s:button id="reset" value="Reset" includePageParams="false"/>
+		        </div>
+		    </h:form>
+		    
+		    
+		    <f:facet name="header">Account Utente Search Results</f:facet>
+		   		<div class="results" id="accountListExtended">
+				<h:form>
+			        <a:region>
+				    <rich:dataTable id="myAccountListExtended"
+				                var="_accountVar"
+				                value="#{accountListExtended.resultList}"
+				              rendered="#{not empty accountListExtended.resultList}"
+				              rows="5"
+				              rowKeyVar="row">
+			    				              
+				     <rich:column>          
+					     <f:facet name="header">
+				                <ui:include src="/layout/sort.xhtml">
+				                    <ui:param name="entityList" value="#{accountListExtended}"/>
+				                    <ui:param name="propertyLabel" value="Username"/>
+				                    <ui:param name="propertyPath" value="account.username"/>
+				                </ui:include>
+				          </f:facet>         
+				          <h:outputText value="#{_accountVar.username}"/>
+			         </rich:column>
+			         
+			         <rich:column>          
+					     <f:facet name="header">
+				                <ui:include src="/layout/sort.xhtml">
+				                    <ui:param name="entityList" value="#{accountListExtended}"/>
+				                    <ui:param name="propertyLabel" value="Cognome"/>
+				                    <ui:param name="propertyPath" value="account.utente.cognome"/>
+				                </ui:include>
+				          </f:facet>         
+				          <h:outputText value="#{_accountVar.utente.cognome}"/>
+			         </rich:column>
+			         
+			         <rich:column>
+			            <f:facet name="header">
+			                <ui:include src="/layout/sort.xhtml">
+			                    <ui:param name="entityList" value="#{accountListExtended}"/>
+			                    <ui:param name="propertyLabel" value="Nome"/>
+			                    <ui:param name="propertyPath" value="account.utente.nome"/>
+			                </ui:include>
+			            </f:facet>
+			            <h:outputText value="#{_accountVar.utente.nome}"/>
+			        </rich:column>        
+			        
+			        <rich:column>
+			            <f:facet name="header">
+			                <ui:include src="/layout/sort.xhtml">
+			                    <ui:param name="entityList" value="#{accountListExtended}"/>
+			                    <ui:param name="propertyLabel" value="Recapito telefonico"/>
+			                    <ui:param name="propertyPath" value="account.utente.recapitoTelefonico"/>
+			                </ui:include>
+			            </f:facet>
+			            <h:outputText value="#{_accountVar.utente.recapitoTelefonico}"/>
+			        </rich:column>
+			       
+			        <rich:column>
+			            <f:facet name="header">
+			                <ui:include src="/layout/sort.xhtml">
+			                    <ui:param name="entityList" value="#{accountListExtended}"/>
+			                    <ui:param name="propertyLabel" value="Email"/>
+			                    <ui:param name="propertyPath" value="account.utente.email"/>
+			                </ui:include>
+			            </f:facet>
+			            <h:outputText value="#{_accountVar.utente.email}"/>
+			        </rich:column>
+			
+					<rich:column>
+			            <f:facet name="header">
+			                <ui:include src="/layout/sort.xhtml">
+			                    <ui:param name="entityList" value="#{accountListExtended}"/>
+			                    <ui:param name="propertyLabel" value="Feedback"/>
+			                    <ui:param name="propertyPath" value="account.punteggioFeedback"/>
+			                </ui:include>
+			            </f:facet>
+			            <h:outputText value="#{_accountVar.punteggioFeedback}"/>
+			        </rich:column>
+			        
+			        <rich:column>
+			            <f:facet name="header">Stato</f:facet>
+			               <div align="center">
+								<h:graphicImage id="nonCancellato" value="/img/customer40x50.jpg" rendered="#{!_accountVar.eliminato}" width="30%"/>
+									<rich:toolTip for="nonCancellato" value="Utente non cancellato"/>
+								<h:graphicImage id="cancellato" value="/img/customer40x50eliminato.jpg" rendered="#{_accountVar.eliminato}" width="30%"/>
+									<rich:toolTip for="cancellato" value="Utente cancellato"/>
+						   </div>
+			        </rich:column>
+			         
+			         
+			        <rich:column align="center">
+			            <f:facet name="header">Action</f:facet>
+			                <a:commandLink ajaxSingle="true" id="confermaCancellaUtenteLink" disabled="#{_accountVar.eliminato}"
+			                    oncomplete="#{rich:component('confermaCancellaUtente')}.show()">
+				                <h:graphicImage value="/img/cancel.png" style="border:0"/>
+				            	<f:setPropertyActionListener value="#{_accountVar.utente.codiceFiscale}" 
+				            							target="#{utenteHome.id}" />
+				            </a:commandLink>
+				            <rich:toolTip for="confermaCancellaUtenteLink" value="Cancella l'utente selezionato" rendered="#{!_accountVar.eliminato}"/>
+			        </rich:column>
+			        
+				  </rich:dataTable>
+				  <rich:datascroller align="center" for="myAccountListExtended" id="sc1" rendered="true"/>
+				  </a:region>
+				  </h:form>
+			    </div>
+			    
+		   	
+		   	<s:link view="/admin/editDatiCybercontadino.xhtml">Pagina Cybercontadini</s:link>
+			<img alt="statistiche" border="0" src="/GAS/img/contadino.gif" width="5%"/>
+
+
+		<rich:modalPanel id="confermaCancellaUtente" autosized="true" width="200">
+	        <f:facet name="header">
+	            <h:outputText value="Sei sicuro di voler eliminare l'utente?"
+	                style="padding-right:15px;" />
+	        </f:facet>
+	        <h:panelGrid columns="1">
+	          <a:outputPanel ajaxRendered="true">
+	            <h:panelGrid columns="2">
+	            	<h:outputText value="Cognome: " />
+	            	<h:outputText value="#{utenteHome.instance.cognome}"/>
+	            	<h:outputText value="Nome: "/>
+	            	<h:outputText value="#{utenteHome.instance.nome}"/>
+	        	</h:panelGrid>
+	          </a:outputPanel>
+	        </h:panelGrid>		
+	        <f:facet name="controls">
+	            <h:panelGroup>
+	                <h:graphicImage value="/img/close.png"
+	                    styleClass="hidelink" id="hidelink2" />
+	                <rich:componentControl for="confermaCancellaUtente" attachTo="hidelink2"
+	                    operation="hide" event="onclick" />
+	            </h:panelGroup>
+	        </f:facet>
+	        <h:form>
+	            <table width="100%">
+	                <tbody>
+	                    <tr>
+                        <td align="center" width="50%">
+			                <a:commandButton value="Si" ajaxSingle="true"
+			                    action="#{utenteHome.remove()}"
+			                    oncomplete="#{rich:component('confermaCancellaUtente')}.hide();"
+			                    reRender="myAccountListExtended"/>
+                        </td>
+                        <td align="center" width="50%">
+			                <a:commandButton value="Annulla"
+			                    onclick="#{rich:component('confermaCancellaUtente')}.hide();return false;" />
+                        </td>
+	                    </tr>
+	                </tbody>
+	            </table>
+	        </h:form>
+		</rich:modalPanel>
+	    
+	    
+	</ui:define>
+
+</ui:composition>

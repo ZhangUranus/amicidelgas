@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:a="http://richfaces.org/a4j"
+    template="/layout/template.xhtml">
+
+	<ui:define name="body">
+
+	<rich:dataTable id="tabellaRiepilogo" width="100%" align="center" value="#{filtraNotificaAltaPriorita.getAllContadinoForTaskInstanceType(currentAccount.username, 'riceviRisposta')}" var="_contadino">
+		<rich:column>
+			<f:facet name="header">Riepilogo questionari per l'azienda</f:facet>
+				<table width="100%" border="0" cellspacing="2" cellpadding="0" align="center" >
+					<tr>
+						<td width="25%" valign="top">
+							<table width="100%" border="0" cellspacing="4" cellpadding="0" align="center">
+								<tr>
+									<td width="100%">
+									
+										<s:decorate  template="/layout/edit.xhtml">
+							                <ui:define name="label">Nome Azienda</ui:define>
+							                <h:outputText id="nomeAziendaContadino" value="#{_contadino.nomeAzienda}" ></h:outputText>
+							            </s:decorate>
+							            
+										<s:decorate  template="/layout/edit.xhtml">
+							                <ui:define name="label">Partita IVA</ui:define>
+							                <h:outputText id="partitaIvaContadino" value="#{_contadino.partitaIva}" ></h:outputText>
+							            </s:decorate>
+							            
+							            <s:decorate  template="/layout/edit.xhtml">
+							                <ui:define name="label">Nome Presidente</ui:define>
+							                <h:outputText id="nomePresidenteContadino" value="#{_contadino.nomePresidente}" ></h:outputText>
+							            </s:decorate>
+							            
+							            <s:decorate  template="/layout/edit.xhtml">
+							                <ui:define name="label">Cognome Presidente</ui:define>
+							                <h:outputText id="cognomePresidenteContadino" value="#{_contadino.cognomePresidente}" ></h:outputText>
+							            </s:decorate>
+							            
+							            <s:decorate  template="/layout/edit.xhtml">
+							                <ui:define name="label">Data Visita Azienda</ui:define>
+							                <h:outputText id="dataVisitaContadino" value="#{_contadino.dataVisita}" ></h:outputText>
+							            </s:decorate>
+							            				            
+							            <s:decorate  template="/layout/edit.xhtml">
+							                <ui:define name="label">Indirizzo</ui:define>
+							                <h:outputText id="indirizzoContadino" value="#{_contadino.indirizzo}" ></h:outputText>  
+							            </s:decorate>
+									</td>						
+								</tr>
+							</table>
+						</td>
+						<td width="75%" valign="top">
+							<table width="100%" border="0" cellspacing="4" cellpadding="0" align="center">
+								<tr>
+									<td width="100%" colspan="4" align="center" valign="top">
+										<div align="center" class="colore_1" >Visitatori: #{filtraNotificaAltaPriorita.getNumerOfAllTaskInstanceListForContadino(currentAccount.username, 'riceviRisposta',_contadino.partitaIva)} di 10</div>
+									</td>					
+								</tr>
+								<tr>
+									<td width="15%" ><div align="left" ><b>Nome Inviato</b></div></td>
+									<td width="50%" ><div align="left" ><b>Testo messaggio</b></div></td>
+									<td width="25%" ><div align="center" ><b>Questionario Compilato?</b></div></td>
+									<td width="10%" ><div align="right" ><b>Azione</b></div></td>
+								</tr>
+							</table>
+							<rich:dataTable id="tabellaRiepilogoInviati" width="100%" align="center" value="#{filtraNotificaAltaPriorita.getAllTaskInstanceListForContadino(currentAccount.username, 'riceviRisposta',_contadino.partitaIva)}" var="_inviato" >
+								<rich:column>
+									<table width="100%" border="0" cellspacing="4" cellpadding="0" align="center">
+										<tr>
+											<td width="15%"><div align="left" class="explorer" >#{_inviato.variables.nomeDestinatario}</div></td>
+											<td width="50%"><div align="left" class="explorer" >#{_inviato.variables.notifyMessageReply.content}</div></td>
+											<td width="25%"><div align="center" class="explorer" >
+													<h:graphicImage value="/img/accepted.png" rendered="#{_inviato.variables.compilato}" /><h:graphicImage value="/img/not_valid.png" rendered="#{!(_inviato.variables.compilato)}" />
+											</div></td>
+											<td width="10%"><div align="right" class="explorer" >
+												<div id="pulsante_driver_loading" style="display: none;"><img src="/GAS/img/loading.gif" /></div>
+												<s:link id="link_feedback" taskInstance="#{_inviato}" action="#{inviaRichiestaRisposta.riceviRisposta}" onmouseup="disable_this(this.id, 'pulsante_driver_loading');" >
+													<h:graphicImage value="/img/feedback_up.png" rendered="#{_inviato.variables.compilato}" /><h:graphicImage value="/img/feedback_down.png" rendered="#{!(_inviato.variables.compilato)}" />
+												</s:link>
+											</div></td>
+										</tr>
+									</table>
+								</rich:column>
+							</rich:dataTable>
+						</td>	
+					</tr>
+				</table>
+		</rich:column>
+	</rich:dataTable>
+	
+	
+	</ui:define>
+</ui:composition>

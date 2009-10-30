@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process-definition  xmlns=""  name="notificatore">
+
+
+	<start-state name="notifyMessage">
+		<transition to="NotificheSingole"></transition>
+	</start-state>
+
+
+	<task-node name="NotificheSingole" create-tasks="false">
+		<event type="node-enter">
+			<action name="CreateNotifyTasks" expression="#{multipleNotifyActionHandler.execute()}"></action>
+		</event>
+		<task name="ReceiveMessage">
+		</task>
+		<transition to="end-state1" name="ack"></transition>
+	</task-node>
+
+
+	<end-state name="end-state1"></end-state>
+
+
+</process-definition>

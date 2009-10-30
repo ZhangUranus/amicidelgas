@@ -1,0 +1,87 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:a="http://richfaces.org/a4j"
+    template="/layout/template.xhtml">
+
+	<ui:define name="body">
+	<s:decorate rendered="#{gestioneItinerario.itinerariCorrenti.size() > 0}">
+		<div align="center" class="colore_1"><b>Itinerari</b></div><br/>
+			<rich:dataTable id="dataTableItinerariCorrenti" width="90%" align="center" 
+											value="#{gestioneItinerario.itinerariCorrenti}" var="_itinerario"
+											
+											>
+								<rich:column>
+									<f:facet name="header">Driver</f:facet>							    
+							        <h:outputText value="#{_itinerario.account.username}"/>
+								</rich:column>
+								<rich:column>
+									<f:facet name="header">Data Creazione</f:facet>							    
+							        <h:outputText value="#{_itinerario.dataCreazione}" >
+							        <f:convertDateTime type="date" dateStyle="medium" locale="Locale.ITALY"/>
+							        </h:outputText>
+								</rich:column>
+								<rich:column>
+									<f:facet name="header">Data Partenza</f:facet>							    
+							        <h:outputText value="#{_itinerario.dataPartenza}">
+							        <f:convertDateTime type="date" dateStyle="medium" locale="Locale.ITALY"/>
+							        </h:outputText>
+								</rich:column>
+								<rich:column>
+									<f:facet name="header">Data Consegna</f:facet>							    
+							        <h:outputText value="#{_itinerario.dataConsegna}">
+							        <f:convertDateTime type="date" dateStyle="medium" locale="Locale.ITALY"/>
+							        </h:outputText>
+								</rich:column>
+								<rich:column>
+									<f:facet name="header">Contadini</f:facet>
+									<rich:dataTable id="dataTableContadini"  value="#{gestioneItinerario.contadiniAssociati(_itinerario)}" var="_contadino">
+										<rich:column>	
+										<f:facet name="header">Nome Azienda</f:facet>		    
+								     	   <h:outputText value="#{_contadino.nomeAzienda}"/>
+										</rich:column>
+										<rich:column>
+										<f:facet name="header">Indirizzo Azienda</f:facet>			    
+								     	   <h:outputText value="#{_contadino.comune.nome}"/>
+										</rich:column>
+										<rich:column>			    
+										<f:facet name="header">Sede Azienda</f:facet>
+								     	   <h:outputText >
+								     	   #{_contadino.comune.nome} , (#{_contadino.comune.provinces.idprovinces})
+								     	   </h:outputText>
+										</rich:column>
+									</rich:dataTable>							    
+								</rich:column>
+								<rich:column>
+									<f:facet name="header">Punti di Consegna</f:facet>
+									<rich:dataTable id="dataTablePuntiDiConsegna"  value="#{gestioneItinerario.puntiDiConsegnaAssociati(_itinerario)}" var="_puntoDiConsegna">
+										<rich:column>	
+											<f:facet name="header">Indirizzo</f:facet>			    
+								     	   <h:outputText value="#{_puntoDiConsegna.indirizzo}"/>
+										</rich:column>
+										<rich:column>	
+											<f:facet name="header">Citta</f:facet>			    
+								     	   <h:outputText >
+								     	   #{_puntoDiConsegna.comune.nome} , (#{_puntoDiConsegna.comune.provinces.idprovinces})
+								     	   </h:outputText>
+										</rich:column>
+									</rich:dataTable>							    
+								</rich:column>
+								
+			</rich:dataTable>
+	</s:decorate>
+	<s:decorate rendered="#{!(gestioneItinerario.itinerariCorrenti.size() > 0)}">
+	<div align="center" class="colore_black_bold">
+			<h:outputText>NON CI SONO ITINERARI ESISTENTI</h:outputText>
+	</div>
+	
+	</s:decorate>
+	
+	</ui:define>
+</ui:composition>
+

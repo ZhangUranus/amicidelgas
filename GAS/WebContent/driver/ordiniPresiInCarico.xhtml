@@ -1,0 +1,107 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:a="http://richfaces.org/a4j"
+    template="/layout/template.xhtml">
+
+	<ui:define name="body">
+		
+		
+	
+	
+		
+		<rich:panel>
+			<f:facet name="header">Ordini presi in carico #{identity.username}</f:facet>
+				<s:decorate id="ordiniPresiInCarico" rendered="#{ordineBean.tipoOrdine=='1'}">
+					<h:form>
+			        	<a:region>
+				    		<rich:dataTable value="#{ordineBean.ordiniPresiInCarico()}" var="_ordine" id="table1" rows="20" width="50%">
+								<rich:column>
+									<f:facet name="header">
+										<h:outputText value="Data di consegna" />
+									</f:facet>
+									<h:outputText value="#{_ordine.dataConclusione}">
+										<f:convertDateTime type="date" dateStyle="medium" locale="Locale.ITALY"/>
+									</h:outputText>
+			        			</rich:column>
+								<rich:column>
+									<f:facet name="header">
+										<h:outputText value="Data Richiesta" />
+									</f:facet>
+									<h:outputText value="#{_ordine.dataRichiesta}">
+										<f:convertDateTime type="date" dateStyle="medium" locale="Locale.ITALY"/>
+									</h:outputText>
+			        			</rich:column>
+			        			<rich:column>
+									<f:facet name="header">
+										<h:outputText value="Data Massima" />
+									</f:facet>
+									<h:outputText value="#{_ordine.dataMassimaConsegna}">
+										<f:convertDateTime type="date" dateStyle="medium" locale="Locale.ITALY"/>
+									</h:outputText>	
+			        			</rich:column>
+			        			<rich:column align="center">
+				                	<f:facet name="header">
+			                        	<h:outputText value="Dettagli ordini" />
+				                	</f:facet>
+				                	<a:commandLink ajaxSingle="true" id="dettagliOrdineConclusiLink1"
+				                    	oncomplete="#{rich:component('dettagliOrdinePanel')}.show()">
+				                    	<f:setPropertyActionListener value="#{_ordine}" target="#{ordineBean.currentOrdine}" />
+					                    <h:graphicImage value="/img/modifica_mini.png" style="border:0" />
+					                </a:commandLink>
+					                <rich:toolTip for="dettagliOrdineConclusiLink1" value="Visualizza dettagli ordine"/>
+				            	</rich:column>
+							</rich:dataTable>
+							<rich:datascroller align="center" for="table1" id="sc1" rendered="true"/>
+						</a:region>
+					</h:form>
+				</s:decorate>
+		</rich:panel>
+		
+	<a:outputPanel ajaxRendered="true">
+		<rich:modalPanel id="dettagliOrdinePanel" autosized="true" width="350">
+       		<f:facet name="header">
+            	<h:outputText value="Dettagli ordini" />
+        	</f:facet>
+       		<f:facet name="controls">
+            	<h:panelGroup>
+                	<h:graphicImage value="/img/close.png" styleClass="hidelink" id="hidelink2"/>
+               	 	<rich:componentControl for="dettagliOrdinePanel" attachTo="hidelink2" operation="hide" event="onclick" />
+            	</h:panelGroup>
+        	</f:facet>
+			<ui:define name="label">Prodotti dell'ordine</ui:define>
+			<rich:dataTable var="_prodotto" id="itemsDataTableOrdiniFatti"
+				value="#{ordineBean.currentArticolosForOrdine()}">
+				<rich:column>
+						<f:facet name="header">Nome prodotto</f:facet>
+						<h:outputText value="#{_prodotto.codiceEsterno}"/>
+				</rich:column>	
+				<rich:column>
+					<f:facet name="header">Username contadino</f:facet>
+					<h:outputText value="#{_prodotto.cybercontadino.account.username}"/>
+				</rich:column>	
+				<rich:column>
+						<f:facet name="header">Quantita prodotto</f:facet>
+						<h:outputText value="#{_prodotto.quantitaRichiesta}"/>
+				</rich:column>	
+				<rich:column>
+						<f:facet name="header">Totale per prodotto</f:facet>
+						<h:outputText value="#{_prodotto.quantitaRichiesta * _prodotto.prezzo} euro"/>
+				</rich:column>
+				<rich:column>
+					<f:facet name="header">Quantita minima</f:facet>
+						<h:outputText value="#{_prodotto.quantitaMinRichiesta}"/>
+				</rich:column>
+			</rich:dataTable>
+       	</rich:modalPanel>
+     </a:outputPanel>
+     
+    
+	</ui:define>
+
+</ui:composition>

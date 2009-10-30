@@ -1,0 +1,326 @@
+html {
+	overflow-y: scroll;
+	margin:0;
+    padding:0;
+    height:100%;
+    border:none;	
+}
+
+body {
+	background: #b0b0b0 url("/GAS/img/sfondo.jpg") repeat-x;
+	font-size: 12px;
+	margin: 0px;
+	padding:0;
+    height:100%;
+    border:none;
+}
+
+.a:hover {
+	text-decoration: none;
+}
+.a:active, a:link, a:visited {
+	text-decoration: none;
+}
+
+a img {
+	border: none;
+}
+
+h1 {
+	font-size: 1.6em;
+	margin-top: 0;
+}
+
+input[type=submit], input[type=button] {
+	font-size: 10px;
+	margin: 5px 5px 5px 0;
+	cursor: pointer;
+}
+
+input[type=text], input[type=password], textarea {
+	font-size: 11px;
+	padding-left: 1px;
+}
+
+.table_max{
+	height:100%;
+}
+
+.logo{
+	background:transparent;
+	position:fixed;
+	z-index: 102;
+	top: 4px;
+	left: 4px;
+}
+
+.logo_unisannio{
+	background:transparent;
+	position:fixed;
+	z-index: 102;
+	top: 4px;
+	right: 4px;
+}
+
+.googledir{
+	font-size: 9px;	
+}
+
+.button_notifiche{
+	z-index: 134;
+	position:relative;
+}
+
+.focus_style{
+	position:fixed;
+	zoom:1;
+	top: 0px;
+	left: 0px;
+}
+
+.div_notifiche_lista_class{
+	background:transparent;
+	position:fixed;
+	zoom:1;
+	z-index: 118;
+	top: 38px;
+	left: 50px;
+}
+
+.notifiche_class{
+	background:transparent;
+	position:fixed;
+	zoom:1;
+	z-index: 135;
+	top: 18px;
+	left: 150px;
+}
+
+.notifiche_num_class{
+	background:transparent;
+	position:absolute;
+	zoom:1;
+	text-align:center;
+	z-index: 136;
+	top: 22px;
+	left: 155px;
+	font-size: 12px;
+	font-weight:bold; 
+	color: #FFFFFF;
+}
+
+.notifiche_schiccheria_class{
+	background:transparent;
+	position:fixed;
+	zoom:1;
+	z-index: 131;
+	top: 38px;
+	left: 5%;
+}
+
+.custom-menu {
+	background-image:url(/GAS/img/shadow.png);
+	background-position:left top;
+	background-repeat:repeat-x;
+	border:0px solid;
+	padding:0;
+}
+
+.dockvaleriobar_plus{
+	background:transparent;
+	width:100%;
+	position:fixed;
+	z-index: 100;
+	top: 0px;
+}
+
+.dockvaleriobar_bottom{
+	background:transparent;
+	width:100%;
+	position:fixed;
+	z-index: 100;
+	bottom: 0%;
+	left: 0%;
+}
+
+.normal{ font-size: 14px;}
+.min{ font-size: 12px;}
+
+.tableControl, .actionButtons {
+	width: 100%;
+}
+
+.tableControl a {
+	padding-left: 10px;
+}
+
+.tableControl {
+	text-align: right;
+}
+
+.footer {
+	text-align: center;
+	font-size: 11px;
+	margin-bottom: 10px;
+}
+
+.rich-table {
+	width: 100%;
+}
+
+.body {
+	padding: 30px;
+}
+
+.columnHeader:hover {
+	color: #FF6600;
+}
+
+.message {
+	padding: 5px;
+	list-style: none;
+	border: 0;
+	background: none;
+	padding: 0;
+	color: #000000;
+	margin: 5px 0 8px 0;
+	font-size: 12px;
+}
+
+.colore_1 {	font-size: 14px; color: #0000CC;}
+.colore_yellow { font-size: 14px; color: #FFD700;}
+.colore_black {	font-size: 11px; color: #000000;}
+.colore_white_bold { font-size: 13px; font-weight:bold; color: #FFFFFF;}
+.colore_black_bold { font-size: 13px; font-weight:bold; color: #000000;}
+.explorer{ font-size: 14px; color: #666666;}
+.explorer_white{ font-size: 14px; color: #FFFFFF;}
+
+.message li {
+	background: no-repeat left center;
+	padding-top: 1px;
+	padding-left: 20px;
+	margin-left: 3px;
+}
+
+.message li.infomsg {
+	background-image: url(../img/msginfo.png);
+}
+
+.message li.errormsg {
+	background-image: url(../img/msgerror.png);
+}
+
+.message li.warnmsg {
+	background-image: url(../img/msgwarn.png);
+}
+
+.name {
+	vertical-align: top;
+	font-weight: bold;
+	width: 115px;
+	float: left;
+	padding: 5px;
+	margin-top: 3px;
+	clear: left;
+}
+
+.value {
+	float: left;
+	padding: 5px;
+}
+
+.error {
+	float: left;
+	padding: 5px;
+}
+
+.errors {
+	color: red;
+	vertical-align: middle;
+}
+
+img.errors {
+	padding-right: 5px;
+}
+
+.errors input, .errors textarea {
+	border: 1px solid red !important;
+}
+
+.required {
+	color: red;
+	padding-left: 2px;
+}
+
+.rich-stglpanel-body {
+	overflow: auto;
+} 
+
+/* the specificity here is necessary to override the defaults */
+.rich-panel .rich-panel-header,
+.rich-stglpanel .rich-stglpanel-header {
+	padding: 2px 3px;
+}
+
+
+select {
+	font-size: 12px;
+}
+
+.rich-panel input[type=submit], .rich-panel input[type=button],
+.rich-tabpanel input[type=submit], .rich-tabpanel input[type=button] {
+	margin-bottom: 0;
+}
+
+.tableControl input[type=submit], .tableControl input[type=button], .tableControl select {
+	margin: 5px 0 5px 5px;
+}
+
+/* I don't know why this is necessary, but the select is off by a pixel on the top and is padding too much on the left */
+.tableControl select {
+	margin-left: 2px;
+	position: relative;
+	top: 1px;
+}
+
+.actionButtons {
+	padding-left: 1px;
+}
+
+.actionButtons select {
+	margin: 5px 5px 5px 0;
+	vertical-align: bottom;
+}
+
+.rich-datalist {
+	list-style: square;
+	margin: 6px 0 1px 0;
+	padding-left: 18px;
+}
+
+.rich-list-item {
+	padding-bottom: 4px;
+}
+
+div.info {
+	font-size: 1.2em;
+}
+
+ul.bullets {
+	list-style: square;
+}
+
+ul.bullets li {
+	padding-bottom: 2px;
+}
+
+td.action {
+	text-align: center;
+	width: 8em;
+	white-space: nowrap;
+}
+
+td.action a {
+	padding-left: 1px;
+	padding-right: 1px;
+}

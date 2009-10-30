@@ -1,0 +1,393 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:a="http://richfaces.org/a4j"
+    template="/layout/template.xhtml">
+    
+	<ui:define name="body">
+<script type="text/javascript"><!--
+function attivaCalendar() {
+	document.getElementById('formVisitaField:tabellaField:campoNascosto').value='#{currentAccount.username}';
+}
+--></script>
+
+		<div class="colore_1" align="center">Richieste Registrazioni Customer</div>
+			<h:form>
+		        <a:region>
+			    	<rich:dataTable value="#{gestioneRegistrazioniBean.richiesteCustomer}" var="_accountRichiesta" id="table1" rows="5" width="50%">
+			    		
+			    		<rich:column>
+							<f:facet name="header">
+								<h:outputText value="Username" />
+							</f:facet>
+								<h:outputText value="#{_accountRichiesta.username}" id="username" />
+		        		</rich:column>
+			        		
+			        	<rich:column >
+							<f:facet name="header">
+								<h:outputText value="Cognome" />
+							</f:facet>
+								<h:outputText value="#{_accountRichiesta.utente.cognome}" id="cognome" />
+		        		</rich:column>
+		        		
+		        		<rich:column >
+							<f:facet name="header">
+								<h:outputText value="Nome" />
+							</f:facet>
+								<h:outputText value="#{_accountRichiesta.utente.nome}" id="nome" />
+		        		</rich:column>
+		        		
+		        		<rich:column >
+							<f:facet name="header">
+								<h:outputText value="Comune" />
+							</f:facet>
+								<h:outputText value="#{_accountRichiesta.utente.comuneByIdcomune.nome}" id="comune" />
+		        		</rich:column>	
+			    
+		    			<rich:column >
+							<f:facet name="header">
+								<h:outputText value="Data Richiesta" />
+							</f:facet>
+								<h:outputText value="#{_accountRichiesta.dataRichiesta}" id="dataRichiesta">
+								<f:convertDateTime type="date" dateStyle="medium" locale="Locale.ITALY"/>
+								</h:outputText>
+		        		</rich:column>
+			    
+			    		<rich:column >
+							<f:facet name="header">
+								<h:outputText value="E-mail" />
+							</f:facet>
+								<h:outputText value="#{_accountRichiesta.utente.email}" id="email" />
+		        		</rich:column>
+		        		
+		        		<rich:column align="center">
+			                <f:facet name="header">
+		                        Notifica Intervista
+			                </f:facet>
+			                <a:commandLink ajaxSingle="true" id="contattaCustomerlink"
+			                    oncomplete="#{rich:component('contattaCustomerPanel')}.show()">
+			                    <f:setPropertyActionListener value="#{_accountRichiesta}" target="#{gestioneRegistrazioniBean.currentCustomer}" />
+				                    <h:graphicImage value="/img/email.jpg" style="border:" width="41" height="32"/>
+				                </a:commandLink>
+				                <rich:toolTip for="contattaCustomerlink" value="Invia un messaggio per intervistare l'utente"/>
+				            </rich:column>
+		        		
+		        		<rich:column align="center">
+			                <f:facet name="header">
+		                        Azione
+			                </f:facet>
+			                <a:commandLink ajaxSingle="true" id="richiestaCustomerLink"
+			                    oncomplete="#{rich:component('richiestaCustomerPanel')}.show()">
+			                    	<f:setPropertyActionListener value="#{_accountRichiesta}" target="#{gestioneRegistrazioniBean.currentCustomer}" />
+				                    <h:graphicImage value="/img/modifica_mini.png" style="border:0" />
+				                </a:commandLink>
+				                <rich:toolTip for="richiestaCustomerLink" value="Valuta la richiesta di registrazione"/>
+			            </rich:column>
+               
+			    	</rich:dataTable>
+			    	<rich:datascroller align="center" for="table1" id="sc1" rendered="true"/>    
+		        </a:region>
+		    </h:form>
+		      
+		    <br/>
+		    <br/>
+		    <br/>
+		    <br/>
+		    
+		    <div class="colore_1" align="center">Richieste Registrazioni Cybercontadino</div>
+			<h:form>
+		        <a:region>
+			    	<rich:dataTable  value="#{pooledTaskInstanceListForType['crea_visita']}"
+			    	 var="_task" id="table2" rows="5" width="50%">
+		       			
+		       			<rich:column>
+							<f:facet name="header">
+								<h:outputText value="Username" />
+							</f:facet>
+								<h:outputText value="#{_task.variables.contadinoCreato.account.username}" id="usernameContadino" />
+		        		</rich:column>
+		        		
+		        		<rich:column>
+							<f:facet name="header">
+								<h:outputText value="Nome Azienda" />
+							</f:facet>
+								<h:outputText value="#{_task.variables.contadinoCreato.nomeAzienda}" id="nomeAzienda" />
+		        		</rich:column>
+		       			
+		       		       			
+		       			<rich:column align="center">
+			                <f:facet name="header">
+		                        Dettagli
+			                </f:facet>
+			                <a:commandLink ajaxSingle="true" id="dettagliContadinoLink"
+			                    oncomplete="#{rich:component('dettagliContadinoPanel')}.show()">
+			                    	<f:setPropertyActionListener value="#{_task.variables.contadinoCreato}" target="#{gestioneRegistrazioniBean.currentContadino}" />
+				                    <h:graphicImage value="/img/modifica_mini.png" style="border:0" />
+				                </a:commandLink>
+				                <rich:toolTip for="dettagliContadinoLink" value="Visualizza i dati del cyber contadino"/>
+				            </rich:column>
+		        		
+		        		<rich:column align="center">
+			                <f:facet name="header">
+		                        Crea visita azienda
+			                </f:facet>
+			                <a:commandLink ajaxSingle="true" id="requestInviatilink"
+			                	oncomplete="#{rich:component('creaVisitaAziendaPanel')}.show()">
+				                    <f:setPropertyActionListener value="#{_task.variables.contadinoCreato}" target="#{processoRegistrazione.contadinoCorrente}" />
+				                    <f:setPropertyActionListener value="#{_task}" target="#{processoRegistrazione.taskCorrente}" />
+				                    <h:graphicImage value="/img/email.jpg" style="border:" width="41" height="32"/>
+				                </a:commandLink>
+				                <rich:toolTip for="requestInviatilink" value="Proponi agli utenti Gas di diventare inviati"/>
+			            </rich:column>
+		       		</rich:dataTable>
+		       		<rich:datascroller align="center" for="table2" id="sc2" rendered="true"/>
+	       		</a:region>
+       		</h:form>	    
+		
+			<rich:modalPanel id="richiestaCustomerPanel" autosized="true" width="500">
+	        	<f:facet name="header">
+	            	<h:outputText value="Valuta la richiesta di registrazione" />
+	        	</f:facet>
+	        	<f:facet name="controls">
+	            	<h:panelGroup>
+	                	<h:graphicImage value="/img/close.png"
+	                    	id="hidelink" />
+	               	 	<rich:componentControl for="richiestaCustomerPanel" attachTo="hidelink"
+	                    	operation="hide" event="onclick" />
+	            	</h:panelGroup>
+	        	</f:facet>
+	        	<h:form>
+	        	<h:panelGrid columns="1">
+	        		<a:outputPanel ajaxRendered="true">
+	        			<h:panelGrid columns="2">
+	        				<h:outputText><b>Username: </b></h:outputText>
+	        				<h:outputText value="#{gestioneRegistrazioniBean.currentCustomer.username}"/>
+	        				<h:outputText><b>Codice fiscale: </b></h:outputText>
+	        				<h:outputText value="#{gestioneRegistrazioniBean.currentCustomer.utente.codiceFiscale}"/>
+	        				<h:outputText><b>Cognome: </b></h:outputText>
+	        				<h:outputText value="#{gestioneRegistrazioniBean.currentCustomer.utente.cognome}"/>
+	        				<h:outputText><b>Nome: </b></h:outputText>
+	        				<h:outputText value="#{gestioneRegistrazioniBean.currentCustomer.utente.nome}"/>
+	        				<h:outputText><b>Data Richiesta Account: </b></h:outputText>
+	        				<h:outputText value="#{gestioneRegistrazioniBean.currentCustomer.dataRichiesta}">
+	        					<f:convertDateTime type="date" dateStyle="medium" locale="Locale.ITALY"/>
+							</h:outputText>
+							<h:outputText><b>E-mail: </b></h:outputText>
+							<h:outputText value="#{gestioneRegistrazioniBean.currentCustomer.utente.email}"/>
+							<h:outputText><b>Telefono: </b></h:outputText>
+							<h:outputText value="#{gestioneRegistrazioniBean.currentCustomer.utente.recapitoTelefonico}"/>
+							<h:outputText><b>Indirizzo: </b></h:outputText>
+							<h:outputText value="#{gestioneRegistrazioniBean.currentCustomer.utente.indirizzo}"/>
+							<h:outputText><b>Tipo di carta: </b></h:outputText>
+							<h:outputText value="#{gestioneRegistrazioniBean.currentCustomer.pagamentoelettronico.tipoCarta}"/>
+							<h:outputText><b>Numero della carta: </b></h:outputText>
+							<h:outputText value="#{gestioneRegistrazioniBean.currentCustomer.pagamentoelettronico.numeroCarta}"/>
+	        				<a:commandButton bypassUpdates="true" ajaxSingle="true" value="Accetta richiesta"
+	                			action="#{gestioneRegistrazioniBean.accettaRegistrazioneCustomer}"
+	                			reRender="table1, sc1"
+	                			oncomplete="#{rich:component('richiestaCustomerPanel')}.hide(); if (#{gestioneRegistrazioniBean.updeted==true})  #{rich:component('richiestaAccettataCustomerPanel')}.show(); if (#{gestioneRegistrazioniBean.updeted==false}) #{rich:component('errorePanel')}.show();" />
+                			<a:commandButton bypassUpdates="true" ajaxSingle="true" value="Rifiuta richiesta"
+	                			action="#{gestioneRegistrazioniBean.rifiutaRegistrazioneCustomer}"
+	                			reRender="table1, sc1"
+	                			oncomplete="#{rich:component('richiestaCustomerPanel')}.hide(); if (#{gestioneRegistrazioniBean.updeted==true}) #{rich:component('richiestaRifiutataCustomerPanel')}.show(); if (#{gestioneRegistrazioniBean.updeted==false}) #{rich:component('errorePanel')}.show();" />
+	        			</h:panelGrid>
+	        		</a:outputPanel>
+                </h:panelGrid>
+                </h:form>
+	    </rich:modalPanel>
+		
+		<rich:modalPanel id="contattaCustomerPanel" autosized="true" width="500">
+				<f:facet name="header">
+	            	<h:outputText value="Notifica Intervista" />
+	        	</f:facet>
+	        	<f:facet name="controls">
+	        	<h:panelGroup>
+                	<h:graphicImage value="/img/close.png" id="hidelink1" />
+               	 	<rich:componentControl for="contattaCustomerPanel" attachTo="hidelink1" operation="hide" event="onclick" />
+            		</h:panelGroup>
+            		</f:facet>
+				<h:panelGrid columns="1">	
+				<a:outputPanel ajaxRendered="true">
+	        			<h:panelGrid columns="2">
+				<h:form>
+	        		<h:outputText>Contatta: #{gestioneRegistrazioniBean.currentCustomer.utente.nome} #{gestioneRegistrazioniBean.currentCustomer.utente.cognome}</h:outputText>
+	        		<br/>
+	        		<br/>
+        		 	<h:outputText >Data Intervista: </h:outputText>
+        			<rich:calendar id="dataIntervista"
+                       			required="true"
+                       			showApplyButton="true"
+                       			value="#{gestioneRegistrazioniBean.dataIntervista}" 
+                       			datePattern="MM/dd/yyyy HH:mm"
+                       			>
+                       			<a:support event="oncollapse" action="#{gestioneRegistrazioniBean.inviaEmail()}" reRender="dataVisitaIntervista" limitToList="true"></a:support>
+                  	</rich:calendar>
+             	 </h:form>
+             	 </h:panelGrid>
+	        		</a:outputPanel>
+              </h:panelGrid>
+       	</rich:modalPanel>
+       	
+       	<rich:modalPanel id="richiestaAccettataCustomerPanel" autosized="true" width="350">
+       		<f:facet name="header">
+            	<h:outputText value="Esito operazione" />
+        	</f:facet>
+       		<f:facet name="controls">
+            	<h:panelGroup>
+                	<h:graphicImage value="/img/close.png"
+                    	id="hidelink2" />
+               	 	<rich:componentControl for="richiestaAccettataCustomerPanel" attachTo="hidelink2"
+                    	operation="hide" event="onclick" />
+            	</h:panelGroup>
+        	</f:facet>
+	        <h:panelGrid columns="1">
+	        	<a:outputPanel ajaxRendered="true">
+	        		<h:outputText value="L'account dell'utente #{gestioneRegistrazioniBean.currentCustomer.utente.cognome} #{gestioneRegistrazioniBean.currentCustomer.utente.nome} e' stato attivato con successo"/>
+       			</a:outputPanel>
+       		</h:panelGrid>
+       	</rich:modalPanel>
+       	
+       	<rich:modalPanel id="richiestaRifiutataCustomerPanel" autosized="true" width="350">
+       		<f:facet name="header">
+            	<h:outputText value="Esito operazione" />
+        	</f:facet>
+       		<f:facet name="controls">
+            	<h:panelGroup>
+                	<h:graphicImage value="/img/close.png"
+                    	id="hidelink3" />
+               	 	<rich:componentControl for="richiestaRifiutataCustomerPanel" attachTo="hidelink3"
+                    	operation="hide" event="onclick" />
+            	</h:panelGroup>
+        	</f:facet>
+	        <h:panelGrid columns="1">
+	        	<a:outputPanel ajaxRendered="true">
+	        		<h:outputText value="L'account dell'utente #{gestioneRegistrazioniBean.currentCustomer.utente.cognome} #{gestioneRegistrazioniBean.currentCustomer.utente.nome} e' stato eliminato con successo"/>
+       			</a:outputPanel>
+       		</h:panelGrid>
+       	</rich:modalPanel>
+       	
+       	<rich:modalPanel id="errorePanel" autosized="true" width="300">
+	        	<f:facet name="header">
+	            	<h:outputText value="Errore" />
+	        	</f:facet>
+	        	<f:facet name="controls">
+            	<h:panelGroup>
+                	<h:graphicImage value="/img/close.png"
+                    	id="hidelink4" />
+               	 	<rich:componentControl for="errorePanel" attachTo="hidelink4"
+                    	operation="hide" event="onclick" />
+            	</h:panelGroup>
+        	</f:facet>
+        	<h:panelGrid columns="1">
+        		<h:outputText value="Aggiornamento non eseguito"/>
+       		</h:panelGrid>
+       	</rich:modalPanel>
+
+     <a:outputPanel ajaxRendered="true">
+       	<rich:modalPanel id="dettagliContadinoPanel" autosized="true" width="500">
+	        	<f:facet name="header">
+	            	<h:outputText value="Informazioni dell'azienda #{gestioneRegistrazioniBean.currentContadino.nomeAzienda}" />
+	        	</f:facet>
+	        	<f:facet name="controls">
+            	<h:panelGroup>
+                	<h:graphicImage value="/img/close.png"
+                    	id="hidelink8" />
+               	 	<rich:componentControl for="dettagliContadinoPanel" attachTo="hidelink8"
+                    	operation="hide" event="onclick" />
+            	</h:panelGroup>
+        	</f:facet>
+        	<h:form>
+	        	<h:panelGrid columns="1">
+	        		<a:outputPanel ajaxRendered="true">
+	        			<h:panelGrid columns="2">
+	        				<h:outputText><b>Presidente: </b></h:outputText>
+	        				<h:outputText value="#{gestioneRegistrazioniBean.currentContadino.nomePresidente} #{gestioneRegistrazioniBean.currentContadino.cognomePresidente}"/>
+	        				<h:outputText><b>Partita IVA: </b></h:outputText>
+	        				<h:outputText value="#{gestioneRegistrazioniBean.currentContadino.partitaIva}"/>
+	        				<h:outputText><b>Comune : </b></h:outputText>
+	        				<h:outputText value="#{gestioneRegistrazioniBean.currentContadino.comune.nome}"/>
+	        				<h:outputText><b>Indirizzo: </b></h:outputText>
+	        				<h:outputText value="#{gestioneRegistrazioniBean.currentContadino.indirizzo}"/>
+	        				<h:outputText><b>E-mail: </b></h:outputText>
+							<h:outputText value="#{gestioneRegistrazioniBean.currentContadino.email}"/>
+							<h:outputText><b>Telefono: </b></h:outputText>
+							<h:outputText value="#{gestioneRegistrazioniBean.currentContadino.recapitoTelefonico}"/>
+							<h:outputText><b>Data proposta per la visita: </b></h:outputText>
+							<h:outputText value="#{gestioneRegistrazioniBean.currentContadino.dataVisita}"/>
+						</h:panelGrid>
+	        		</a:outputPanel>
+                </h:panelGrid>
+                </h:form>
+       	</rich:modalPanel>
+       	</a:outputPanel>
+       	
+       	
+       	<a:outputPanel ajaxRendered="true">
+       	 <rich:modalPanel id="creaVisitaAziendaPanel" autosized="true" width="500">
+	        <f:facet name="header">
+	            <h:outputText value="Crea la visita all'azienda del cybercontadino" />
+	        </f:facet>
+	        <f:facet name="controls">
+	            <h:panelGroup>
+	                <h:graphicImage value="/img/close.png"
+	                    id="hideVisitaAziendaLink" />
+	                <rich:componentControl for="creaVisitaAziendaPanel" attachTo="hideVisitaAziendaLink"
+	                    operation="hide" event="onclick" />
+	            </h:panelGroup>
+	        </f:facet>
+	        <h:form id="formVisitaField">
+	            <rich:messages style="color:red;"></rich:messages>
+				<a:outputPanel ajaxRendered="true">
+	            <h:panelGrid columns="2">
+	            <s:decorate id="tabellaField" template="/layout/edit.xhtml" >
+			             <ui:define name="label">Messaggio da inviare agli utenti</ui:define>
+			            	<h:inputTextarea id="messaggioDaInviare"
+				                      required="true"
+				                          rows="2" style=" width : 279px; height : 63px;"
+				                	     value="#{processoRegistrazione.content}"
+				                	     onclick="attivaCalendar()">
+				 
+				        	</h:inputTextarea>
+				        <h:inputHidden  id="campoNascosto" value="#{processoRegistrazione.mittente}" />
+			            </s:decorate>
+			    </h:panelGrid>
+	                <h:panelGrid columns="2">
+	                	<s:decorate id="dataVisitaField" template="/layout/edit.xhtml">
+			                <ui:define name="label">Data della Visita</ui:define>
+			                 <rich:calendar id="dataVisita"
+                       			required="true"
+                       			showApplyButton="true"
+                       			value="#{processoRegistrazione.dataProposta}" datePattern="MM/dd/yyyy HH:mm">
+                  			</rich:calendar>
+			            </s:decorate>
+			       </h:panelGrid>
+	                <rich:message showSummary="true" showDetail="false" for="dataVisitaField"/>
+	            </a:outputPanel>
+	            
+	            <div id="pulsante_driver_loading" style="display: none;"><img src="/GAS/img/loading.gif" /></div>
+	            <s:decorate id="decorateQuestionario">					
+						<h:commandLink value="Invia Richiesta di Visita" id="invioVisitaLink"
+	            			action="#{processoRegistrazione.creaVisita()}" 
+	            			onmouseup="disable_this(this.id, 'pulsante_driver_loading');"
+	            			 >	            			
+	            			<f:param name="taskId" value="#{processoRegistrazione.taskCorrente.id}"/>
+	            		</h:commandLink>
+				</s:decorate>
+	            
+	   </h:form>
+	    </rich:modalPanel> 
+       	</a:outputPanel>
+	<script type="text/javascript">
+		<!--
+			function attiva_post(){
+				document.getElementById('formVisitaField:creaVisitaButton').style.display = "";
+			}			 
+		-->
+		</script>
+	</ui:define>    
+    
+</ui:composition>

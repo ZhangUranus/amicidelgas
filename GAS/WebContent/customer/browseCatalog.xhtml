@@ -1,0 +1,259 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a="http://richfaces.org/a4j" template="/layout/template.xhtml">
+
+
+
+	<ui:define name="body">
+		<rich:simpleTogglePanel
+			label="Seleziona il fornitore per visualizzare il catalogo">
+			<h:form id="browseForm">
+				<s:decorate id="contadinoField" template="/layout/edit.xhtml">
+					<rich:dataTable id="tabellaContadini"
+						value="#{cybercontadinoList.loadContadini()}" var="_contadino">
+						<rich:column>
+							<f:facet name="header">Nome Azienda</f:facet>
+							<h:outputText value="#{_contadino.nomeAzienda}" />
+						</rich:column>
+						<rich:column>
+							<f:facet name="header">Descrizione Azienda</f:facet>
+							<h:outputText value="#{_contadino.descrizioneAzienda}" />
+						</rich:column>
+						<rich:column>
+							<f:facet name="header">Comune</f:facet>
+							<h:outputText value="#{_contadino.comune.nome}" />
+						</rich:column>
+						<rich:column>
+							<f:facet name="header">Seleziona</f:facet>
+							<a:commandButton event="onclick"
+								value="Seleziona questo fornitore">
+								<f:setPropertyActionListener value="#{_contadino}"
+									target="#{catalogBrowser.contadino}" />
+								<a:support event="oncomplete" reRender="categoriesField"></a:support>
+							</a:commandButton>
+						</rich:column>
+					</rich:dataTable>
+					<rich:datascroller align="center" for="tabellaContadini" />
+				</s:decorate>
+			</h:form>
+		</rich:simpleTogglePanel>
+
+		<br />
+		<br />
+		<br />
+
+		<rich:simpleTogglePanel label="Categorie e prodotti">
+			<h:form id="formCategory">
+				<s:decorate id="categoriesField" template="/layout/edit.xhtml">
+					<rich:dataTable width="20%" value="#{catalogBrowser.categories}"
+						var="_category">
+						<rich:column>
+							<f:facet name="header">Categoria</f:facet>
+							<a:commandButton event="onclick" value="#{_category}"
+								action="#{catalogBrowser.getItemsForCategory(_category)}"
+								reRender="productsField" ajaxSingle="true">
+								<f:setPropertyActionListener value="#{_category}"
+									target="#{catalogBrowser.category}" />
+								<a:support event="onclick" action="#{takeInHand.reset}"
+									ajaxSingle="true" />
+							</a:commandButton>
+						</rich:column>
+					</rich:dataTable>
+				</s:decorate>
+
+				<s:decorate id="productsField" template="/layout/edit.xhtml">
+					<ui:define name="label">Prodotti</ui:define>
+					<rich:dataTable width="75%" var="_item" id="itemsDataTable"
+						value="#{catalogBrowser.getItemsForCategory(catalogBrowser.category)}">
+						<rich:column>
+							<f:facet name="header">Codice Prodotto</f:facet>
+							<h:outputText value="#{_item.id}" />
+						</rich:column>
+						
+						<rich:column>
+							<f:facet name="header">Immagine</f:facet>
+							<h:graphicImage rendered="#{_item.smallImageUri!=null}" url="#{_item.smallImageUri}" />
+						</rich:column>
+						
+						<rich:column>
+							<f:facet name="header">Nome Prodotto</f:facet>
+							<h:outputText value="#{_item.name}" />
+						</rich:column>
+						
+						<rich:column>
+							<f:facet name="header">Descrizione</f:facet>
+							<h:outputText value="#{_item.description}" />
+						</rich:column>
+						<rich:column>
+							<f:facet name="header">Prezzo unitario</f:facet>
+							<h:outputText value="#{_item.prezzo} euro" />
+						</rich:column>
+						<rich:column colspan="2">
+							<f:facet name="header">Aggiungi al carrello</f:facet>
+							<rich:inputNumberSpinner id="inputNumberSpinnerCarrello"
+							    minValue="0" maxValue="1000" step="1"
+								value="#{takeInHand.getQuantita(_item).quantity}"
+								style="height : 15px; width : 20px;">
+								<a:support event="onclick"
+									reRender="inputNumberSpinnerCarrello, valoreCarrelloColumn"
+									ajaxSingle="true"
+									requestDelay="500" />
+							</rich:inputNumberSpinner>
+							<a:commandButton id="commandButtonShoppingCart"
+								image="/img/shopping_cart2.jpg"
+								style="width : 25px; height : 25px;"
+								action="#{shoppingCart.addItemInShoppingCart(_item, takeInHand.getQuantita(_item).quantity,catalogBrowser.contadino)}"
+								reRender=" shoppingcartField, submitCarrello"
+								ajaxSingle="true">
+								<a:support event="oncomplete" action="#{takeInHand.resetQuantita(_item)}" 
+								 reRender="inputNumberSpinnerCarrello,valoreCarrelloColumn, shoppingcartField" ajaxSingle="true"/>
+							</a:commandButton>
+							<rich:toolTip for="commandButtonShoppingCart"
+								value="Aggiungi prodotto al carrello" />
+						</rich:column>
+						<rich:column id="valoreCarrelloColumn">
+							<f:facet name="header">Totale per prodotto</f:facet>
+							<h:outputText
+								value="#{takeInHand.getQuantita(_item).quantity * _item.prezzo} euro" />
+						</rich:column>
+					</rich:dataTable>
+				</s:decorate>
+
+
+				<s:decorate id="shoppingcartField" template="/layout/edit.xhtml">
+
+					<ui:define name="label">Prodotti nel carrello</ui:define>
+					<rich:dataTable var="_itemCarrello" id="itemsDataTableShoppingCart"
+						value="#{shoppingCart.itemInShoppingCart}">
+						<rich:column>
+							<f:facet name="header">Nome prodotto</f:facet>
+							<h:outputText value="#{_itemCarrello.item.name}" />
+						</rich:column>
+						<rich:column>
+							<f:facet name="header">Username contadino</f:facet>
+							<h:outputText
+								value="#{_itemCarrello.cybercontadino.account.username}" />
+						</rich:column>
+						<rich:column>
+							<f:facet name="header">Quantita prodotto</f:facet>
+							<h:outputText value="#{_itemCarrello.quantita}" />
+						</rich:column>
+						<rich:column>
+							<f:facet name="header">Totale per prodotto</f:facet>
+							<h:outputText
+								value="#{_itemCarrello.quantita * _itemCarrello.item.prezzo} euro" />
+						</rich:column>
+						<rich:column>
+							<f:facet name="header">Quantita minima</f:facet>
+							<h:form>
+								<h:selectBooleanCheckbox required="true"
+									value="#{_itemCarrello.booleanIsQuantitaMinima}">
+									<a:support event="onclick" ajaxSingle="true"
+										reRendered="qParzialeField" />
+								</h:selectBooleanCheckbox>
+								<a:outputPanel ajaxRendered="true">
+									<s:decorate id="qParzialeField"
+										rendered="#{_itemCarrello.booleanIsQuantitaMinima}" template="/layout/edit.xhtml">
+										<rich:inputNumberSpinner id="qParzialeCarrello" minValue="1"
+											maxValue="#{_itemCarrello.quantita-1}" step="0"
+											style="height : 15px; width : 20px;"
+											value="#{_itemCarrello.quantitaParziale}">
+											<a:support event="onclick"
+												reRender="qParzialeCarrello"
+												ajaxSingle="true"
+												requestDelay="100" />
+										</rich:inputNumberSpinner>
+									</s:decorate>
+								</a:outputPanel>
+							</h:form>
+						</rich:column>
+						<rich:column>
+							<f:facet name="header">Raggruppa ordine</f:facet>
+							<h:form>
+								<h:selectBooleanCheckbox required="true"
+									value="#{_itemCarrello.checkedForOrdine}">
+									<a:support event="onclick" ajaxSingle="true" />
+								</h:selectBooleanCheckbox>
+							</h:form>
+						</rich:column>
+						<rich:column>
+							<f:facet name="header">Elimina dal carrello</f:facet>
+							<a:commandButton id="commandButtonShoppingCartDelete"
+								image="/img/shopping_cart2_delete.jpg"
+								style="width : 25px; height : 25px;">
+								<a:support event="onclick" reRender="shoppingcartField, submitCarrello"
+									action="#{shoppingCart.deleteItemInShoppingCart(_itemCarrello.item)}" />
+							</a:commandButton>
+							<rich:toolTip for="commandButtonShoppingCartDelete"
+								value="Elimina prodotto dal carrello" />
+						</rich:column>
+					</rich:dataTable>
+				</s:decorate>
+				
+				<s:decorate id= "submitCarrello" template="/layout/edit.xhtml"> 
+				<h:panelGrid columns="2"
+					rendered="#{not empty shoppingCart.itemInShoppingCart}">
+					<b><h:outputText value="TOTALE" style="font-weight:800" /></b>
+					<b><h:outputText value="#{shoppingCart.calcolaTotale()} euro"
+						style="font-weight:600" /></b>
+				</h:panelGrid>
+
+				<h:panelGrid columns="1"
+					rendered="#{not empty shoppingCart.itemInShoppingCart}">
+					<s:decorate id="dataMassimaField" template="/layout/edit.xhtml">
+						<ui:define name="label">Data massima consegna</ui:define>
+						<rich:calendar id="dataMassimaCalendar" enableManualInput="true"
+							value="#{shoppingCart.dataMassima}"
+							datePattern="dd/MM/yyyy HH:mm">
+							<a:support event="onchange" reRender="dataMassimaField"
+								bypassUpdates="true" ajaxSingle="true" />
+						</rich:calendar>
+					</s:decorate>
+				</h:panelGrid>
+				
+				<h:commandButton id="commandButtonShoppingCartBuy"
+					image="/img/shoppingCartBuy.jpg"
+					rendered="#{not empty shoppingCart.itemInShoppingCart}"
+					reRender="shoppingcartField,outputTextSelectProduct,outputTextSelectDate,outputTextSelectDateBeforeToday"
+					action="#{shoppingCart.buySelectedItem()}">
+				</h:commandButton>
+				<rich:toolTip for="commandButtonShoppingCartBuy"
+					value="Concludi acquisto" />
+				</s:decorate>
+				
+				
+				<s:decorate template="/layout/edit.xhtml"
+					id="outputTextSelectProduct"
+					rendered="#{ shoppingCart.noSelect==true and (not empty shoppingCart.itemInShoppingCart) }">
+					<h:outputText value="Selezionare almeno un prodotto" />
+				</s:decorate>
+				<br />
+				<s:decorate template="/layout/edit.xhtml" id="outputTextSelectDate"
+					rendered="#{ empty shoppingCart.dataMassima and (not empty shoppingCart.itemInShoppingCart) }">
+					<h:outputText value="Selezionare una data massima di consegna" />
+				</s:decorate>
+				<s:decorate template="/layout/edit.xhtml"
+					id="outputTextSelectDateBeforeToday"
+					rendered="#{ shoppingCart.dataMassimaBeforeToday and (not empty shoppingCart.itemInShoppingCart) }">
+					<h:outputText value="Data massima non valida, troppo presto" />
+				</s:decorate>
+				<s:decorate template="/layout/edit.xhtml"
+						id="fondoNonSufficiente"
+				rendered="#{ (not shoppingCart.fondo) and (not empty shoppingCart.itemInShoppingCart) }">
+				<h:outputText value="Fondo non sufficiente per evadere l'ordine" />
+			</s:decorate>
+			</h:form>
+
+		</rich:simpleTogglePanel>
+
+
+	</ui:define>
+
+</ui:composition>
+

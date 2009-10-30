@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:a="http://richfaces.org/a4j"
+    template="/layout/template.xhtml">
+
+	<ui:define name="body">
+
+<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAe6zQXGxcN5oso9n8RAEHiBR2bDFzeCT1WBspxZrlXfH7Q6YWYhSEDZPxM-Moytw3P41JRHiBSp0Xug"
+      type="text/javascript"></script>
+<script type="text/javascript" src="/GAS/js/gmap_direction.js"></script>     
+<script type="text/javascript"><!--
+window.onunload = function(){
+	GUnload();	
+}
+window.onload = function(){
+	load();
+	initialize();
+}		
+--></script>
+
+	<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center" >
+		<tr>
+			<td>
+				<table width="100%" border="0" cellspacing="4" cellpadding="0" align="center">
+					<tr>
+						<td width="65%" height="48" valign="bottom">
+							<div align="left" id="status_itinerario" class="colore_black_bold"><img src="/GAS/img/not_valid.png" /> Seleziona almeno un cybercontadino ed un punto di consegna per poter creare un itinerario </div>
+						</td>
+						<td width="35%" height="48" valign="bottom">
+							<div align="center">
+								<h:form id="crea_itinerario">
+									<table width="100%" cellpadding="0" cellspacing="0" border="0" align="center">
+										<tr>
+											<td width="80%" align="center">
+												<s:decorate id="dataPartenzaField" template="/layout/edit.xhtml">
+									                <ui:define name="label">Data di consegna</ui:define>
+									                 <rich:calendar id="dataPartenzaItinerario"
+						                       			required="true"
+						                       			showApplyButton="true"
+						                       			oncollapse="setPass()"
+						                       			value="#{addItinerario.dataPartenza}" datePattern="MM/dd/yyyy HH:mm">
+						                  			</rich:calendar>
+									            </s:decorate>
+									            <h:inputHidden id="itinerario_hidden" value="#{addItinerario.all_id}" ></h:inputHidden>
+									            <h:inputHidden id="itinerario_hidden2" value="#{addItinerario.all_id_puntiConsegna}" ></h:inputHidden>
+											</td>
+											<td width="20%" align="center">
+												<div id="crea_itinerario_pulsante" style="display:none;">
+													<h:commandLink action="#{addItinerario.addItinerario}" value="Crea Itinerario" />
+												</div>												
+											</td>
+										</tr>
+									</table>
+								</h:form>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td width="65%">
+							<div id="map1"  align="center" style="width: 100%; height: 500px"></div>
+						</td>
+						<td width="35%">
+							<div id="directions"  align="center" style="width: 100%; height: 500px; overflow : auto;"></div>
+						</td>						
+					</tr>
+				</table>
+			</td>	
+		</tr>
+	</table>
+	
+<ui:repeat value="#{puntiDiConsegnaList.resultList}" var="_punto">
+<script type="text/javascript"><!--
+	load();
+	porcata("#{_punto.indirizzo}","#{_punto.comune.nome}","#{_punto.comune.provinces.nome}","#{_punto.idpuntiConsegna}");	
+--></script>
+</ui:repeat>
+
+<ui:repeat value="#{cybercontadinoList.resultList}" var="_contadino">
+<script type="text/javascript"><!--
+	load();
+	pushContadini("#{_contadino.nomeAzienda}","#{_contadino.indirizzo}","#{_contadino.comune.nome}","#{_contadino.comune.provinces.nome}","#{_contadino.codiceContadino.id}");	
+--></script>
+</ui:repeat> 
+
+	
+	</ui:define>
+</ui:composition>

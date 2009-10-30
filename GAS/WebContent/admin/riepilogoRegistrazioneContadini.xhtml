@@ -1,0 +1,132 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:a="http://richfaces.org/a4j"
+    template="/layout/template.xhtml">
+
+	<ui:define name="body">
+
+	<rich:dataTable id="tabellaRiepilogo" width="100%" align="center" value="#{filtraNotificaAltaPriorita.getAllPooledTaskInstanceList('visualizzaQuestionari')}" var="_contadinoTask">
+		<rich:column>
+			<f:facet name="header">Riepilogo questionari per l'azienda</f:facet>
+				<table width="100%" border="0" cellspacing="2" cellpadding="0" align="center" >
+					<tr>
+						<td width="25%" valign="top">
+							<table width="100%" border="0" cellspacing="4" cellpadding="0" align="center">
+								<tr>
+									<td width="100%">
+									
+										<s:decorate  template="/layout/edit.xhtml">
+							                <ui:define name="label">Nome Azienda</ui:define>
+							                <h:outputText id="nomeAziendaContadino" value="#{_contadinoTask.variables.contadinoCreato.nomeAzienda}" ></h:outputText>
+							            </s:decorate>
+							            
+										<s:decorate  template="/layout/edit.xhtml">
+							                <ui:define name="label">Partita IVA</ui:define>
+							                <h:outputText id="partitaIvaContadino" value="#{_contadinoTask.variables.contadinoCreato.partitaIva}" ></h:outputText>
+							            </s:decorate>
+							            
+							            <s:decorate  template="/layout/edit.xhtml">
+							                <ui:define name="label">Nome Presidente</ui:define>
+							                <h:outputText id="nomePresidenteContadino" value="#{_contadinoTask.variables.contadinoCreato.nomePresidente}" ></h:outputText>
+							            </s:decorate>
+							            
+							            <s:decorate  template="/layout/edit.xhtml">
+							                <ui:define name="label">Cognome Presidente</ui:define>
+							                <h:outputText id="cognomePresidenteContadino" value="#{_contadinoTask.variables.contadinoCreato.cognomePresidente}" ></h:outputText>
+							            </s:decorate>
+							            
+							            <s:decorate  template="/layout/edit.xhtml">
+							                <ui:define name="label">Data Visita Azienda'</ui:define>
+							                <h:outputText id="dataVisitaContadino" value="#{_contadinoTask.variables.contadinoCreato.dataVisita}" ></h:outputText>
+							            </s:decorate>
+							            				            
+							            <s:decorate  template="/layout/edit.xhtml">
+							                <ui:define name="label">Indirizzo</ui:define>
+							                <h:outputText id="indirizzoContadino" value="#{_contadinoTask.variables.contadinoCreato.indirizzo}" ></h:outputText>  
+							            </s:decorate>
+							            
+							            <s:decorate  template="/layout/edit.xhtml">
+							                <ui:define name="label">Documento asl</ui:define>
+							                <a href="#{_contadinoTask.variables.contadinoCreato.pathAsl}" target="_blank"><img src="/GAS/img/asl.png" border="0"/></a>  
+							            </s:decorate>
+									</td>						
+								</tr>
+							</table>
+						</td>
+						<td width="75%" valign="top">
+							<table width="100%" border="0" cellspacing="4" cellpadding="0" align="center">
+								<tr>
+									<td width="100%" colspan="6" align="center" valign="top">
+										<div align="center" class="colore_1" >Inviati che hanno partecipato alla visita: #{_contadinoTask.variables.inviati.size()} di 10</div>
+									</td>					
+								</tr>
+								<tr>
+									<td width="100%" colspan="6" align="center" valign="top">
+										<br />
+									</td>					
+								</tr>
+								<tr>
+									<td width="15%" ><div align="left" ><b>Nome Inviato</b></div></td>
+									<td width="17%" ><div align="center" ><b>Ambiente di lavoro</b></div></td>
+									<td width="17%" ><div align="center" ><b>Condizioni igienico sanitarie</b></div></td>
+									<td width="17%" ><div align="center" ><b>Qualita' dei prodotti</b></div></td>
+									<td width="17%" ><div align="center" ><b>Professionalita'</b></div></td>
+									<td width="17%" ><div align="center" ><b>Qualita' dello stabile</b></div></td>
+								</tr>
+							</table>
+							<rich:dataTable id="tabellaRiepilogoInviati" width="100%" align="center" value="#{_contadinoTask.variables.inviati}" var="_inviato"  >
+								<rich:column >
+									<table width="100%" border="0" cellspacing="4" cellpadding="0" align="center">
+										<tr>
+											<td width="15%"><div align="left" class="explorer" >#{_inviato}</div></td>
+											<ui:repeat value="#{newRiepilogoQuestionari.getVotoByVisitatore(_inviato, _contadinoTask.variables.contadinoCreato.partitaIva)}" var="_voto">
+												<td width="17%" ><div align="center" >
+													<h:graphicImage value="/img/star_full_mini.png" rendered="#{_voto > 0.5}" />
+													<h:graphicImage value="/img/star_full_mini.png" rendered="#{_voto > 1.5}" />
+													<h:graphicImage value="/img/star_full_mini.png" rendered="#{_voto > 2.5}" />
+													<h:graphicImage value="/img/star_full_mini.png" rendered="#{_voto > 3.5}" />
+													<h:graphicImage value="/img/star_full_mini.png" rendered="#{_voto > 4.5}" />
+													<h:graphicImage value="/img/star_empty_mini.png" rendered="#{!(_voto > 0)}" />
+													<h:graphicImage value="/img/star_empty_mini.png" rendered="#{!(_voto > 1)}" />
+													<h:graphicImage value="/img/star_empty_mini.png" rendered="#{!(_voto > 2)}" />
+													<h:graphicImage value="/img/star_empty_mini.png" rendered="#{!(_voto > 3)}" />
+													<h:graphicImage value="/img/star_empty_mini.png" rendered="#{!(_voto > 4)}" />
+												</div></td>
+											</ui:repeat>
+										</tr>
+									</table>
+								</rich:column>
+							</rich:dataTable>
+							<br />
+							<table width="100%" border="0" cellspacing="4" cellpadding="0" align="center">
+								<tr>
+									<td width="50%" align="center" >
+										<div align="center" >
+										<div id="pulsante_accetta_loading" style="display: none;"><img src="/GAS/img/loading.gif" /></div>					
+										<s:button id="accetta_fine" taskInstance="#{_contadinoTask}" action="#{inviaNotificaRegistrazioni.visualizzaQuestionari(1)}"
+									  value="Accetta" onmouseup="disable_this(this.id, 'pulsante_accetta_loading');"/>
+										</div>
+									</td>
+									<td width="50%" align="center" >
+										<div align="center" >
+										<div id="pulsante_rifiuta_loading" style="display: none;"><img src="/GAS/img/loading.gif" /></div>					
+										<s:button id="rifiuta_fine" taskInstance="#{_contadinoTask}" action="#{inviaNotificaRegistrazioni.visualizzaQuestionari(0)}"
+									  value="Rifiuta" onmouseup="disable_this(this.id, 'pulsante_rifiuta_loading');"/>
+										</div>
+									</td>					
+								</tr>								
+							</table>
+						</td>	
+					</tr>
+				</table>
+		</rich:column>
+	</rich:dataTable>
+	
+	
+	</ui:define>
+</ui:composition>

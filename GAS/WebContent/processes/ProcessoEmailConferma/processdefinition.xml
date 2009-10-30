@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process-definition xmlns="urn:jbpm.org:jpdl-3.2"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		urn:jbpm.org:jpdl-3.2
+		http://docs.jboss.org/jbpm/xsd/jpdl-3.2.xsd"
+	name="ProcessoEmailConferma">
+
+	<start-state name="register">
+		<transition name="request confirmation" to="confirm"/>
+	</start-state>
+
+	<task-node name="confirm">
+		<task description="Respond to the registration confirmation email">
+			<assignment actor-id="#{currentAccountUtente.username}"/>
+			<event type="task-assign">
+				<!--<mail name="send confirmation email" template="confirm-registration" async="true"/>-->
+				<mail name="send confirmation email" async="true" to="#{currentAccountUtente.utente.email}">
+					<subject>Confirm Registration</subject>
+					<text><![CDATA[#{currentAccountUtente.utente.nome},
+Grazie per la registrazione! Prima di loggarti, devi verificare
+il tuo indirizzo e-mail clikkando sul seguente link:
+
+http://localhost:8080/GAS/utente/confirmRegistration.seam?code=#{confirmationCode}&amp;taskId=#{taskInstance.id}
+
+Seam Amici Del GAS
+Member Services]]></text>
+				</mail>
+			</event>
+		</task>
+	<transition name="confirmed" to="end" />
+	</task-node>
+
+	<end-state name="end"/>
+
+</process-definition>

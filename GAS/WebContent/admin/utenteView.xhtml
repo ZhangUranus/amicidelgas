@@ -1,0 +1,294 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    template="/layout/template.xhtml">
+
+<ui:define name="body">
+
+    <rich:panel>
+        <f:facet name="header">Utente Details</f:facet>
+
+        <s:decorate id="codiceFiscale" template="/layout/display.xhtml">
+            <ui:define name="label">Codice fiscale</ui:define>
+            <h:outputText value="#{utenteHome.instance.codiceFiscale}"/>
+        </s:decorate>
+
+        <s:decorate id="nome" template="/layout/display.xhtml">
+            <ui:define name="label">Nome</ui:define>
+            <h:outputText value="#{utenteHome.instance.nome}"/>
+        </s:decorate>
+
+        <s:decorate id="indirizzo" template="/layout/display.xhtml">
+            <ui:define name="label">Indirizzo</ui:define>
+            <h:outputText value="#{utenteHome.instance.indirizzo}"/>
+        </s:decorate>
+
+        <s:decorate id="recapitoTelefonico" template="/layout/display.xhtml">
+            <ui:define name="label">Recapito telefonico</ui:define>
+            <h:outputText value="#{utenteHome.instance.recapitoTelefonico}"/>
+        </s:decorate>
+
+        <s:decorate id="email" template="/layout/display.xhtml">
+            <ui:define name="label">Email</ui:define>
+            <h:outputText value="#{utenteHome.instance.email}"/>
+        </s:decorate>
+
+        <s:decorate id="cognome" template="/layout/display.xhtml">
+            <ui:define name="label">Cognome</ui:define>
+            <h:outputText value="#{utenteHome.instance.cognome}"/>
+        </s:decorate>
+
+        <s:decorate id="dataNascita" template="/layout/display.xhtml">
+            <ui:define name="label">Data nascita</ui:define>
+            <h:outputText value="#{utenteHome.instance.dataNascita}">
+                <s:convertDateTime type="date" dateStyle="short"/>
+            </h:outputText>
+        </s:decorate>
+
+        <s:decorate id="sesso" template="/layout/display.xhtml">
+            <ui:define name="label">Sesso</ui:define>
+            <h:outputText value="#{utenteHome.instance.sesso}"/>
+        </s:decorate>
+
+    
+
+        <div style="clear:both"/>
+
+    </rich:panel>
+
+    <div class="actionButtons">
+
+        <s:button view="/admin/UtenteEdit.xhtml"
+                    id="edit"
+                 value="Edit"/>
+
+        <s:button view="/admin/#{empty utenteFrom ? 'UtenteList' : utenteFrom}.xhtml"
+                    id="done"
+                 value="Done"/>
+
+    </div>
+
+    <rich:tabPanel switchType="ajax">
+
+    <rich:tab>
+        <f:facet name="label">
+            <h:panelGroup><h:graphicImage value="/img/manytoone.gif" style="vertical-align: middle; padding-right: 4px;"/>Comune by comune nascita</h:panelGroup>
+        </f:facet>
+    <div class="association" id="comuneByComuneNascitaParent">
+
+        <h:outputText value="There is no comuneByComuneNascita associated with this utente."
+                   rendered="#{utenteHome.instance.comuneByComuneNascita == null}"/>
+
+        <rich:dataTable var="_comune"
+                   value="#{utenteHome.instance.comuneByComuneNascita}"
+                rendered="#{utenteHome.instance.comuneByComuneNascita != null}"
+              rowClasses="rvgRowOne,rvgRowTwo"
+                      id="comuneByComuneNascitaTable">
+            <h:column>
+                <f:facet name="header">Idcomune</f:facet>
+                <h:outputText value="#{_comune.idcomune}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Provinces idprovinces</f:facet>
+                <h:outputText value="#{_comune.provinces.idprovinces}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Nome</f:facet>
+                <h:outputText value="#{_comune.nome}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Cap</f:facet>
+                <h:outputText value="#{_comune.cap}"/>
+            </h:column>
+            <h:column styleClass="action">
+                <f:facet name="header">Action</f:facet>
+                <s:link id="viewcomune"
+                     value="View"
+                      view="/Comune.xhtml">
+                    <f:param name="comuneIdcomune"
+                           value="#{_comune.idcomune}"/>
+                </s:link>
+            </h:column>
+        </rich:dataTable>
+
+    </div>
+    </rich:tab>
+
+    <rich:tab>
+        <f:facet name="label">
+            <h:panelGroup><h:graphicImage value="/img/manytoone.gif" style="vertical-align: middle; padding-right: 4px;"/>Comune by idcomune</h:panelGroup>
+        </f:facet>
+    <div class="association" id="comuneByIdcomuneParent">
+
+        <h:outputText value="There is no comuneByIdcomune associated with this utente."
+                   rendered="#{utenteHome.instance.comuneByIdcomune == null}"/>
+
+        <rich:dataTable var="_comune"
+                   value="#{utenteHome.instance.comuneByIdcomune}"
+                rendered="#{utenteHome.instance.comuneByIdcomune != null}"
+              rowClasses="rvgRowOne,rvgRowTwo"
+                      id="comuneByIdcomuneTable">
+            <h:column>
+                <f:facet name="header">Idcomune</f:facet>
+                <h:outputText value="#{_comune.idcomune}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Provinces idprovinces</f:facet>
+                <h:outputText value="#{_comune.provinces.idprovinces}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Nome</f:facet>
+                <h:outputText value="#{_comune.nome}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Cap</f:facet>
+                <h:outputText value="#{_comune.cap}"/>
+            </h:column>
+            <h:column styleClass="action">
+                <f:facet name="header">Action</f:facet>
+                <s:link id="viewcomune"
+                     value="View"
+                      view="/Comune.xhtml">
+                    <f:param name="comuneIdcomune"
+                           value="#{_comune.idcomune}"/>
+                </s:link>
+            </h:column>
+        </rich:dataTable>
+
+    </div>
+    </rich:tab>
+
+    <rich:tab>
+        <f:facet name="label">
+            <h:panelGroup><h:graphicImage value="/img/onetomany.gif" style="vertical-align: middle; padding-right: 4px;"/>Patentes</h:panelGroup>
+        </f:facet>
+    <h:form styleClass="association" id="patentesChildren">
+
+        <h:outputText value="There are no patentes associated with this utente."
+                   rendered="#{empty utenteHome.patentes}"/>
+
+        <rich:dataTable value="#{utenteHome.patentes}"
+                       var="_patente"
+                  rendered="#{not empty utenteHome.patentes}"
+                rowClasses="rvgRowOne,rvgRowTwo"
+                        id="patentesTable">
+            <rich:column sortBy="#{_patente.idpatente}">
+                <f:facet name="header">Idpatente</f:facet>
+                <h:outputText value="#{_patente.idpatente}"/>
+            </rich:column>
+            <rich:column sortBy="#{_patente.tipo}">
+                <f:facet name="header">Tipo</f:facet>
+                <h:outputText value="#{_patente.tipo}"/>
+            </rich:column>
+            <h:column>
+                <f:facet name="header">Action</f:facet>
+                <s:link id="selectpatente"
+                     value="Select"
+                      view="/Patente.xhtml">
+                    <f:param name="patenteIdpatente"
+                            value="#{_patente.idpatente}"/>
+                    <f:param name="patenteFrom" value="Utente"/>
+                </s:link>
+            </h:column>
+        </rich:dataTable>
+
+    </h:form>
+
+    <div class="actionButtons">
+        <s:button
+               value="Add patente"
+                view="/PatenteEdit.xhtml">
+            <f:param name="utenteCodiceFiscale"
+                    value="#{utenteHome.instance.codiceFiscale}"/>
+            <f:param name="patenteFrom" value="Utente"/>
+        </s:button>
+    </div>
+    </rich:tab>
+
+    <rich:tab>
+        <f:facet name="label">
+            <h:panelGroup><h:graphicImage value="/img/onetomany.gif" style="vertical-align: middle; padding-right: 4px;"/>Accounts</h:panelGroup>
+        </f:facet>
+    <h:form styleClass="association" id="accountsChildren">
+
+        <h:outputText value="There are no accounts associated with this utente."
+                   rendered="#{empty utenteHome.accounts}"/>
+
+        <rich:dataTable value="#{utenteHome.accounts}"
+                       var="_account"
+                  rendered="#{not empty utenteHome.accounts}"
+                rowClasses="rvgRowOne,rvgRowTwo"
+                        id="accountsTable">
+            <rich:column sortBy="#{_account.username}">
+                <f:facet name="header">Username</f:facet>
+                <h:outputText value="#{_account.username}"/>
+            </rich:column>
+            <rich:column sortBy="#{_account.passwordHash}">
+                <f:facet name="header">Password hash</f:facet>
+                <h:outputText value="#{_account.passwordHash}"/>
+            </rich:column>
+            <rich:column sortBy="#{_account.bloccato}">
+                <f:facet name="header">Bloccato</f:facet>
+                <h:outputText value="#{_account.bloccato}"/>
+            </rich:column>
+            <rich:column sortBy="#{_account.eliminato}">
+                <f:facet name="header">Eliminato</f:facet>
+                <h:outputText value="#{_account.eliminato}"/>
+            </rich:column>
+            <rich:column sortBy="#{_account.cancellato}">
+                <f:facet name="header">Cancellato</f:facet>
+                <h:outputText value="#{_account.cancellato}"/>
+            </rich:column>
+            <rich:column sortBy="#{_account.attivato}">
+                <f:facet name="header">Attivato</f:facet>
+                <h:outputText value="#{_account.attivato}"/>
+            </rich:column>
+            <rich:column sortBy="#{_account.dataRichiesta}">
+                <f:facet name="header">Data richiesta</f:facet>
+                <h:outputText value="#{_account.dataRichiesta}">
+                    <s:convertDateTime type="date" dateStyle="short"/>
+                </h:outputText>
+            </rich:column>
+            <rich:column sortBy="#{_account.dataAccettazione}">
+                <f:facet name="header">Data accettazione</f:facet>
+                <h:outputText value="#{_account.dataAccettazione}">
+                    <s:convertDateTime type="date" dateStyle="short"/>
+                </h:outputText>
+            </rich:column>
+            <rich:column sortBy="#{_account.punteggioFeedback}">
+                <f:facet name="header">Punteggio feedback</f:facet>
+                <h:outputText value="#{_account.punteggioFeedback}"/>
+            </rich:column>
+            <h:column>
+                <f:facet name="header">Action</f:facet>
+                <s:link id="selectaccount"
+                     value="Select"
+                      view="/Account.xhtml">
+                    <f:param name="accountUsername"
+                            value="#{_account.username}"/>
+                    <f:param name="accountFrom" value="Utente"/>
+                </s:link>
+            </h:column>
+        </rich:dataTable>
+
+    </h:form>
+
+    <div class="actionButtons">
+        <s:button
+               value="Add account"
+                view="/AccountEdit.xhtml">
+            <f:param name="utenteCodiceFiscale"
+                    value="#{utenteHome.instance.codiceFiscale}"/>
+            <f:param name="accountFrom" value="Utente"/>
+        </s:button>
+    </div>
+    </rich:tab>
+</rich:tabPanel>
+</ui:define>
+
+</ui:composition>

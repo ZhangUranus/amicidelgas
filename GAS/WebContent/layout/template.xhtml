@@ -1,0 +1,109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<f:view contentType="text/html"
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:rich="http://richfaces.org/rich"
+        xmlns:a="http://richfaces.org/a4j"
+        xmlns:s="http://jboss.com/products/seam/taglib">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>GAS</title>
+    <link rel="shortcut icon" href="#{request.contextPath}/favicon.ico"/>
+    <a:loadStyle src="resource:///stylesheet/theme.xcss"/>
+    <a:loadStyle src="/stylesheet/theme.css"/>
+    <ui:insert name="head"/>
+    
+    <script type="text/javascript" src="/GAS/js/jelement.js"></script>
+    
+</head>
+
+<body>
+
+<div align="center" id="logo" class="logo">
+	<s:link view="/home.xhtml" value="" propagation="none">
+		<h:graphicImage value="/img/logo.png" />
+		<rich:toolTip value=""><span class="colore_black">Gruppo G.A.S.</span></rich:toolTip>
+	</s:link>
+</div>
+
+<div align="center" id="logo_unisannio" class="logo_unisannio">
+		<h:graphicImage value="/img/logo_unisannio.png" />
+</div>
+
+<div align="center" id="dockvaleriobar_plus" class="dockvaleriobar_plus">
+<ui:include src="menu.xhtml">
+    <ui:param name="projectName" value="GAS"/>
+</ui:include>				             
+</div>
+
+<div align="center" id="notifiche_schiccheria" class="notifiche_schiccheria_class" style="display: none;">
+	
+</div>
+
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" id="body_inter" class="table_max">
+   <tr>
+    <td height="34"></td>
+    <td height="34"></td>
+    <td height="34"></td>
+   </tr>	    
+   <tr>
+    <td height="22" background="/GAS/img/shadow_top.png"></td>
+   </tr>
+   <tr>
+   	 <td width="25%" background="/GAS/img/shadow.png">
+   	 	<h:messages id="messages" globalOnly="true" styleClass="message"
+      				errorClass="errormsg" infoClass="infomsg" warnClass="warnmsg"
+      				rendered="#{showGlobalMessages != 'false'}"/>
+     </td>
+     <td width="50%" background="/GAS/img/shadow.png">
+			<div align="center"  ><img src="/GAS/img/title.png" border="0" align="middle" /></div>			    
+     </td>
+     <td width="25%" background="/GAS/img/shadow.png">		    
+     </td>
+   </tr>
+   <tr valign="top">
+     <td colspan="3" background="/GAS/img/shadow.png" valign="top">
+     		<div class="body">
+		    	<ui:insert name="body"/>
+		  	</div>
+     </td>
+   </tr>
+   <tr>
+    <td colspan="3" height="22" background="/GAS/img/shadow_bottom.png"></td>
+   </tr>
+</table>
+
+<div align="center" id="dockvaleriobar_bottom" class="dockvaleriobar_bottom">
+	<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" >
+		<tr>
+			<td align="center" height="11"><img id="dock_img" border="0" alt="" src="/GAS/img/up.png" style="cursor: pointer;" onclick="javascript:dockplus();" /></td>
+		</tr>
+		<tr>
+			<td>
+				<div id="dock_plus" style="display: none;">
+				<table width="100%" align="center" cellpadding="0" cellspacing="0" border="0" >
+					<tr>
+						<td width="80" background="/GAS/img/shadow.png" align="center" valign="bottom">
+							<div ><img src="/GAS/img/jboss.png" width="74" height="32" border="0" align="middle" /></div>
+						</td>
+						<td width="140" background="/GAS/img/shadow.png" align="left" valign="middle">
+							<div align="left" class="min" style="padding-left: 10px;">Gruppo Acquisto Solidale</div>
+						</td>
+						<td background="/GAS/img/shadow.png" valign="middle" align="left">
+							<div class="min" align="left" style="padding-left: 8px;">Emanuele Zuzolo | Stefano Mastrocinque</div>
+						</td>						
+					</tr>
+				</table>
+				</div>
+			</td>
+		</tr>		
+	</table>
+</div>
+<script type="text/javascript">calcola_numero_notifiche();</script>
+</body>
+</html>
+</f:view>

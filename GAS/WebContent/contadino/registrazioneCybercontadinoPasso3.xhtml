@@ -1,0 +1,227 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:a="http://richfaces.org/a4j"
+    template="/layout/template.xhtml">
+
+<ui:define name="body">
+
+<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAe6zQXGxcN5oso9n8RAEHiBR2bDFzeCT1WBspxZrlXfH7Q6YWYhSEDZPxM-Moytw3P41JRHiBSp0Xug"
+      type="text/javascript"></script>
+<script type="text/javascript"><!--
+var geocoder;
+var point;
+var gasIcon;
+
+function Indirizzo(via,comune,provincia,categoria_mark,categoria_mark2,categoria_mark3){
+	this.via = via;
+	this.comune = comune;
+	this.provincia = provincia;
+	this.categoria_mark = categoria_mark;
+	this.categoria_mark2 = categoria_mark2;
+	this.categoria_mark3 = categoria_mark3;
+	
+	this.getCognomeNome = function(){
+	if (categoria_mark3!=null) return categoria_mark + "  " + categoria_mark2+ " " + categoria_mark3;
+		return categoria_mark + " " + categoria_mark2;
+	}
+	
+	this.getAddress = function (){
+		return via+", "+ comune +" (" + provincia +")";	
+	}
+	this.getComune = function(){
+		return comune +" (" + provincia +")";
+	}
+}
+   function load() {
+     if (GBrowserIsCompatible()) {
+
+       map = new GMap2(document.getElementById("map1"));
+	map.enableDoubleClickZoom();
+	map.enableContinuousZoom();
+       map.setCenter(new GLatLng(41.134193, 14.775925), 13);
+	map.addControl(new GSmallMapControl());
+       map.addControl(new GMapTypeControl());
+	// Create our "tiny" marker icon
+    //   var blueIcon = new GIcon();
+     // blueIcon.image = "http://gmaps-samples.googlecode.com/svn/trunk/markers/blue/blank.png";
+     gasIcon = new GIcon();
+     gasIcon.image= "/GAS/img/gmap_fiamma.png";
+     gasIcon.shadow="/GAS/img/gmap_fiamma_ombra.png";
+     gasIcon.iconSize= new GSize(18 , 28);
+    gasIcon.iconAnchor = new GPoint(5, 34);
+    gasIcon.infoWindowAnchor = new GPoint(5, 2);
+    gasIcon.infoShadowAnchor = new GPoint(14, 25);
+	
+	// Set up our GMarkerOptions object
+	markerOptions = { 
+//	icon:blueIcon ,
+	icon:gasIcon ,
+	clickable:true
+	};
+
+       // Add 10 markers to the map at random locations
+       var bounds = map.getBounds();
+       var southWest = bounds.getSouthWest();
+       var northEast = bounds.getNorthEast();
+       var lngSpan = northEast.lng() - southWest.lng();
+       var latSpan = northEast.lat() - southWest.lat();
+	var geocoder = null;
+	var addressPoint=null;
+	
+	//geocoder
+	geocoder = new GClientGeocoder();
+
+		
+	var indirizzo = new Indirizzo("#{newCybercontadino.indirizzo}","#{newComuneProvinciaBean.comune.nome}","#{newComuneProvinciaBean.provincia.nome}","#{newCybercontadino.nomeAzienda}","#{newCybercontadino.nomePresidente}","#{newCybercontadino.cognomePresidente}");
+
+	geocoder.getLocations(indirizzo.getAddress(), getCallBackFor(indirizzo,0));			
+     	
+   }
+   }
+   
+   function getCallBackFor(indirizzo,codice){
+			return (function(data, response){
+				if(data.Status.code == "200"){
+					point = data.Placemark[0].Point.coordinates;
+					
+					var point2 = new GLatLng(point[1],point[0]);
+					var mark = new GMarker(point2, {title: indirizzo.getCognomeNome() , icon:gasIcon} );
+					map.addOverlay(mark);
+					map.panTo(mark.getPoint());
+					setCoordinate();
+					mark.bindInfoWindowHtml('<b>Sede azienda</b><p>'+ mark.getTitle() +'</p><p><div align=\"center\" class=\"colore_1\">'+indirizzo.getAddress()+'</div></p>');
+							
+					GEvent.addListener(mark, "infowindowopen", function() {
+						map.setZoom(16);
+						map.panTo(mark.getPoint());
+						map.panDirection(0, 1);
+					});
+					GEvent.addListener(mark, "infowindowclose", function() {map.setZoom(13); map.panTo(mark.getPoint());});
+				}
+				else if(data.Status.code =="602" && codice == 0){
+					new GClientGeocoder().getLocations(indirizzo.getComune(), getCallBackFor(indirizzo,1));
+				}
+			});
+		}
+		
+window.onunload = function(){
+	GUnload();
+	
+}
+window.onload = function(){
+	load();
+	
+}		
+   --></script>
+
+	<h:form id="passo3Form">
+    <rich:panel>
+    	
+        <f:facet name="header">Richiesta Registrazione: Passo 3 - Riepilogo Dati</f:facet>
+
+		<s:decorate id="codicefiscale" template="/layout/display.xhtml">
+            <ui:define name="label">Partita IVA</ui:define>
+            <h:outputText value="#{newCybercontadino.partitaIva}"/>
+        </s:decorate>
+        
+        <s:decorate id="nomeAzienda" template="/layout/display.xhtml">
+            <ui:define name="label">Nome Azienda</ui:define>
+            <h:outputText value="#{newCybercontadino.nomeAzienda}"/>
+        </s:decorate>
+        
+        <s:decorate id="nomePresidente" template="/layout/display.xhtml">
+            <ui:define name="label">Nome Presidente</ui:define>
+            <h:outputText value="#{newCybercontadino.nomePresidente}"/>
+        </s:decorate>
+        
+        <s:decorate id="cognomePresidente" template="/layout/display.xhtml">
+            <ui:define name="label">Cognome Presidente</ui:define>
+            <h:outputText value="#{newCybercontadino.cognomePresidente}"/>
+        </s:decorate>
+
+        <s:decorate id="provincianascita" template="/layout/display.xhtml">
+            <ui:define name="label">Provincia Sede Azienda</ui:define>
+            <h:outputText value="#{newComuneProvinciaBean.provincia.nome}"/>
+        </s:decorate>
+        
+        <s:decorate id="comunenascita" template="/layout/display.xhtml">
+            <ui:define name="label">Comune Sede Azienda</ui:define>
+            <h:outputText value="#{newComuneProvinciaBean.comune.nome}"/>
+        </s:decorate>
+        
+        <s:decorate id="recapitotelefonico" template="/layout/display.xhtml">
+            <ui:define name="label">Recapito Telefonico</ui:define>
+            <h:outputText value="#{newCybercontadino.recapitoTelefonico}"/>
+        </s:decorate>
+        
+        <s:decorate id="email" template="/layout/display.xhtml">
+            <ui:define name="label">E-mail</ui:define>
+            <h:outputText value="#{newCybercontadino.email}"/>
+        </s:decorate>
+        
+        <s:decorate id="username" template="/layout/display.xhtml">
+            <ui:define name="label">Username</ui:define>
+            <h:outputText value="#{newAccount.username}"/>
+        </s:decorate>
+        
+        <s:decorate id="password" template="/layout/display.xhtml">
+            <ui:define name="label">Password</ui:define>
+            <h:outputText value="#{passwordBean.password}"/>
+        </s:decorate>
+        
+        <s:decorate id="tipocarta" template="/layout/display.xhtml">
+            <ui:define name="label">Tipo Carta Credito</ui:define>
+            <h:outputText value="#{newPagamento.tipoCarta}"/>
+        </s:decorate>
+        
+        <s:decorate id="numerocarta" template="/layout/display.xhtml">
+            <ui:define name="label">Numero Carta Credito</ui:define>
+            <h:outputText  value="XXXX XXXX XXXX #{newPagamento.numeroCarta.substring(11, 15)}" />  
+        </s:decorate>
+        <s:decorate id="coordinateField" template="/layout/display.xhtml">
+        <h:inputHidden 
+                	id="coordinate"
+                	value="#{newCybercontadino.coordinate}"
+          >
+         </h:inputHidden> 
+                <script type="text/javascript">
+				<!--
+					function setCoordinate(){
+					
+						pointString = point.toString()
+						pointSub = pointString.substring(0, (pointString.length-2));
+						document.getElementById('passo3Form:coordinateField:coordinate').value=pointSub;
+					}
+				//-->
+				</script>
+				</s:decorate>
+      
+      	<s:decorate id="posizione" template="/layout/display.xhtml">
+     		<ui:define name="label">Gmap: Posizione Azienda</ui:define>
+     	</s:decorate>
+     
+     
+           <s:decorate id="indirizzo" style="clear:both" >
+             <br />
+			<div id="map1"  align="right" style="width: 60%; height: 300px"></div>
+			<br />
+		</s:decorate>	
+		
+    </rich:panel>
+    
+    
+    
+    <div class="actionButtons">
+			<h:commandButton id="conferma" value="conferma registrazione" action="#{registrazioneCybercontadino.registrazioneCybercontadino}"/>
+        </div>
+    
+    </h:form>
+
+</ui:define>
+
+</ui:composition>
