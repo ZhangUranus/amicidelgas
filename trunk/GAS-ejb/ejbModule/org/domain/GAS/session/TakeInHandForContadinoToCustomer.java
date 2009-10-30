@@ -1,0 +1,209 @@
+package org.domain.GAS.session;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Hashtable;
+import java.util.List;
+import java.util.Set;
+
+
+import org.domain.GAS.entity.Account;
+import org.domain.GAS.entity.Articolo;
+import org.domain.GAS.entity.Ordine;
+import org.jboss.seam.annotations.In;
+import org.jboss.seam.annotations.Logger;
+import org.jboss.seam.annotations.Name;
+import org.jboss.seam.annotations.Scope;
+import org.jboss.seam.log.Log;
+import org.jboss.seam.security.Credentials;
+
+import org.jboss.seam.ScopeType;
+import org.jbpm.taskmgmt.exe.TaskInstance;
+
+@Name(value="takeInHandForContadinoToCustomer") 
+@Scope(ScopeType.SESSION)
+public class TakeInHandForContadinoToCustomer {
+
+	public TakeInHandForContadinoToCustomer(){}
+	
+	private String stringaCustomer;
+	
+	@Logger
+	private Log log;
+	
+	@In(value="filtraNotifica", create=true)
+	private FiltraNotifica filtraNotifica;
+	
+	private Hashtable<Integer, InfoFeedback> hashTable = new Hashtable<Integer, InfoFeedback>();
+
+	private List<TaskInstance> taskInstanceForCurrentAccount;
+	
+	private List<TaskInstance> tasksContadinoToCustomer;
+	
+	private List<Account> listCustomer;
+	
+	@In private Credentials credentials;
+	
+	private List<Ordine> ordiniForCustomer;
+	
+	private Ordine currentOrdineForCustomer;
+	
+	private List<Articolo> articoliForCurrentOrdine;
+	
+	private Account currentAccount;
+	
+	private InfoFeedback infoFeedbackCustomer;
+	
+	private List<String> stringhe;
+	
+	public void reset() {
+		taskInstanceForCurrentAccount = new ArrayList<TaskInstance>();
+		tasksContadinoToCustomer = new ArrayList<TaskInstance>();
+		listCustomer = new ArrayList<Account>();
+		currentAccount = null;
+		stringaCustomer = null;
+		currentOrdineForCustomer = null;
+		articoliForCurrentOrdine = new ArrayList<Articolo>();
+		ordiniForCustomer = null;
+		stringhe = new ArrayList<String>();
+	}
+	
+	public InfoFeedback getInfoFeedbackForOrdine(Integer idOrdine){
+		if(idOrdine==null)
+			return null;
+		if(hashTable.get(idOrdine)==null)
+			hashTable.put(idOrdine, new InfoFeedback("",3));
+		return hashTable.get(idOrdine);
+	}
+
+
+		
+		public List<String> getStringhe() {
+			//prendo tutti i task in cui il contadino � responsabile della consegna
+			hashTable = new Hashtable<Integer,InfoFeedback>();
+			tasksContadinoToCustomer = filtraNotifica.getAllSingleTaskInstanceListByFilters("fbResponsabileConsegnaToCustomer");
+			
+			//lista di customer a cui assegnare i feedback
+			listCustomer = new ArrayList<Account>();
+			stringhe = new ArrayList<String>();
+
+			addList(tasksContadinoToCustomer);
+			
+			Collections.sort(stringhe);
+			return stringhe;
+		}
+		
+		private void addList(List<TaskInstance> taskInstanceList) {
+			//filtro le istanze
+			for (TaskInstance t2: taskInstanceList) {
+			Account account = (Account) t2.getVariable("customer");
+			if (!listCustomer.contains(account)) {
+				listCustomer.add(account);
+				stringhe.add(account.getUsername());
+			}
+		}
+	}
+
+		public void setStringhe(List<String> stringhe) {
+			this.stringhe = stringhe;
+		}
+
+
+		public void setStringaCustomer(String usernameCustomer) {
+			
+			this.stringaCustomer = usernameCustomer;
+			currentAccount = null;
+			taskInstanceForCurrentAccount = new ArrayList<TaskInstance>();
+			ordiniForCustomer = new ArrayList<Ordine>();
+			for (TaskInstance t1: tasksContadinoToCustomer) {
+				Account account = (Account) t1.getVariable("customer");
+				if (account.getUsername().equals(stringaCustomer))
+				{
+					currentAccount = account;
+					//task instance che dovr� chiudere
+					taskInstanceForCurrentAccount.add(t1);
+					//ordini che devo visualizzare
+					ordiniForCustomer.add((Ordine) t1.getVariable("ordine"));
+				}
+
+			}
+		}
+	
+
+		
+		public List<Account> getListCustomer() {
+			return listCustomer;
+		}
+
+		public void setListCustomer(List<Account> listCustomer) {
+			this.listCustomer = listCustomer;
+		}
+
+		public Account getCurrentAccount() {
+			return currentAccount;
+		}
+
+		public void setCurrentAccount(Account currentAccount) {
+			this.currentAccount = currentAccount;
+		}
+
+		public List<TaskInstance> getTaskInstanceForCurrentAccount() {
+			return taskInstanceForCurrentAccount;
+		}
+
+		public void setTaskInstanceForCurrentAccount(
+				List<TaskInstance> taskInstanceForCurrentAccount) {
+			this.taskInstanceForCurrentAccount = taskInstanceForCurrentAccount;
+		}
+
+		public InfoFeedback getInfoFeedbackCustomer() {
+			if(infoFeedbackCustomer==null)
+				infoFeedbackCustomer= new InfoFeedback("",3);
+			return infoFeedbackCustomer;
+		}
+
+		public void setInfoFeedbackCustomer(InfoFeedback infoFeedbackCustomer) {
+			this.infoFeedbackCustomer = infoFeedbackCustomer;
+		}
+
+		public String getStringaCustomer() {
+			return stringaCustomer;
+		}
+
+		public List<Ordine> getOrdiniForCustomer() {
+			return ordiniForCustomer;
+		}
+
+		public void setOrdiniForCustomer(List<Ordine> ordiniForCustomer) {
+			this.ordiniForCustomer = ordiniForCustomer;
+		}
+
+		public Hashtable<Integer, InfoFeedback> getHashTable() {
+			return hashTable;
+		}
+
+		public void setHashTable(Hashtable<Integer, InfoFeedback> hashTable) {
+			this.hashTable = hashTable;
+		}
+
+		public List<Articolo> getArticoliForCurrentOrdine() {
+			articoliForCurrentOrdine = new ArrayList<Articolo>();
+			if (currentOrdineForCustomer!=null)
+				articoliForCurrentOrdine.addAll(currentOrdineForCustomer.getArticolos());
+			return articoliForCurrentOrdine;
+		}
+
+		public void setArticoliForCurrentOrdine(List<Articolo> articoliForCurrentOrdine) {
+			this.articoliForCurrentOrdine = articoliForCurrentOrdine;
+		}
+
+		public Ordine getCurrentOrdineForCustomer() {
+			return currentOrdineForCustomer;
+		}
+
+		public void setCurrentOrdineForCustomer(Ordine currentOrdineForCustomer) {
+			log.info("****** $ ");
+			this.currentOrdineForCustomer = currentOrdineForCustomer;
+		}
+
+}

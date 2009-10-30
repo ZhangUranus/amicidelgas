@@ -1,0 +1,13 @@
+per poter creare una classe converter:
+
+   1.  Create a class that implements javax.faces.converter.Converter  interface.
+   2. Import necessary packages and classes.
+   3. Implement two abstract classes "getAsObject()", "getAsString()" provided by Converter interface. getAsObject() method converts the String (User Input) to Object and getAsString() method converts the Object to String to send back to the page.
+   4. Configure the configuration file (faces-config.xml {in WEB-INF)) adding <converter> element. This element has child elements <converter-id> (name of the converter to be used while programming )and <converter-class> ( name of the converter class which we have created).
+   5. Create view page where <f:converter> tag is used with attribute "converterId" which specifies the name of the converter which we have specified in <converter-id> element of <converter> element in "faces-config.xml" file.
+
+
+
+
+Link di riferimento:
+http://www.roseindia.net/jsf/customconverter.shtml
