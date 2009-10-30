@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE datasources
+    PUBLIC "-//JBoss//DTD JBOSS JCA Config 1.5//EN"
+    "http://www.jboss.org/j2ee/dtd/jboss-ds_1_5.dtd">
+    
+<datasources>
+  
+  <xa-datasource>
+		<jndi-name>GASDatasource</jndi-name>
+		<use-java-context>true</use-java-context>
+		<track-connection-by-tx></track-connection-by-tx>
+		<xa-datasource-class>com.mysql.jdbc.jdbc2.optional.MysqlXADataSource</xa-datasource-class>
+		<xa-datasource-property name="URL">jdbc:mysql://localhost:3306/database_gas
+		</xa-datasource-property>
+		<user-name>Gas</user-name>
+		<password>gas</password>
+	</xa-datasource>
+	<xa-datasource>
+	<jndi-name>GASJbpmDatasource</jndi-name>
+		<use-java-context>true</use-java-context>
+		<track-connection-by-tx></track-connection-by-tx>
+		<xa-datasource-class>com.mysql.jdbc.jdbc2.optional.MysqlXADataSource</xa-datasource-class>
+		<xa-datasource-property name="URL">jdbc:mysql://localhost:3306/database_jbpm_gas
+		</xa-datasource-property>
+		<user-name>Gas</user-name>
+		<password>gas</password>
+	</xa-datasource>
+  
+<!--    
+   <local-tx-datasource>
+      <jndi-name>GASDatasource</jndi-name>
+      <connection-url>jdbc:mysql://localhost:3306/database_gas</connection-url>
+      <driver-class>com.mysql.jdbc.Driver</driver-class>
+      <user-name>Gas</user-name>
+      <password>gas</password>
+ 
+      <exception-sorter-class-name>
+         org.jboss.resource.adapter.jdbc.vendor.MySQLExceptionSorter
+      </exception-sorter-class-name>
+      <metadata>
+         <type-mapping>mySQL</type-mapping>
+      </metadata>
+
+   </local-tx-datasource>
+-->    
+</datasources>
+
