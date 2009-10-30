@@ -1,0 +1,67 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:a="http://richfaces.org/a4j"
+    template="/layout/template.xhtml">
+
+    <ui:define name="body">
+
+		<table width="96%" border="0" cellspacing="0" cellpadding="0" align="center" >
+			<tr>
+				<td colspan="3">
+					<table width="90%" border="0" cellspacing="4" cellpadding="0" align="left" >
+					  <tr>			    
+					    <td rowspan="2" width="160" align="left">
+					    	<s:decorate><img alt="statistiche" border="0" src="/GAS/img/president.jpg"/></s:decorate>
+					  	</td>
+					    <td valign="top"><div align="left" class="colore_1">Bentornato <b>#{currentContadino.nomePresidente} #{currentContadino.cognomePresidente}</b></div></td>			      	      
+					  </tr>
+					  <tr>
+					    <td valign="top"><div align="left" class="explorer">
+					    <s:link view="/contadino/riepilogoFeedback.xhtml">
+					    <div align="left" style="cursor:pointer;" >
+					    	<h:graphicImage value="/img/star_full.png" rendered="#{currentAccount.punteggioFeedback > 0.5}" />
+							<h:graphicImage value="/img/star_full.png" rendered="#{currentAccount.punteggioFeedback > 1.5}" />
+							<h:graphicImage value="/img/star_full.png" rendered="#{currentAccount.punteggioFeedback > 2.5}" />
+							<h:graphicImage value="/img/star_full.png" rendered="#{currentAccount.punteggioFeedback > 3.5}" />
+							<h:graphicImage value="/img/star_full.png" rendered="#{currentAccount.punteggioFeedback > 4.5}" />
+							<h:graphicImage value="/img/star_half.png" rendered="#{currentAccount.punteggioFeedback == 0.5}" />
+							<h:graphicImage value="/img/star_half.png" rendered="#{currentAccount.punteggioFeedback == 1.5}" />
+							<h:graphicImage value="/img/star_half.png" rendered="#{currentAccount.punteggioFeedback == 2.5}" />
+							<h:graphicImage value="/img/star_half.png" rendered="#{currentAccount.punteggioFeedback == 3.5}" />
+							<h:graphicImage value="/img/star_half.png" rendered="#{currentAccount.punteggioFeedback == 4.5}" />
+							<h:graphicImage value="/img/star_empty.png" rendered="#{!(currentAccount.punteggioFeedback > 0)}" />
+							<h:graphicImage value="/img/star_empty.png" rendered="#{!(currentAccount.punteggioFeedback > 1)}" />
+							<h:graphicImage value="/img/star_empty.png" rendered="#{!(currentAccount.punteggioFeedback > 2)}" />
+							<h:graphicImage value="/img/star_empty.png" rendered="#{!(currentAccount.punteggioFeedback > 3)}" />
+							<h:graphicImage value="/img/star_empty.png" rendered="#{!(currentAccount.punteggioFeedback > 4)}" />
+						</div>
+						</s:link>	
+							
+							<li>Partita IVA: #{currentContadino.partitaIva}</li>                        	
+                        	<li>Data Attivazione: <b>#{currentAccount.dataAccettazione}</b></li>
+                        	<hr noshade="noshade" width="85%" align="left"/>
+                        	<span class="colore_1">I tuoi contatti</span>
+                        	<li>E-mail: #{currentContadino.email}</li>
+                        	<li>Telefono: #{currentContadino.recapitoTelefonico}</li>
+                        	<li>Indirizzo: #{currentContadino.indirizzo}</li>
+						</div></td>
+					  </tr>
+					</table>	
+				</td>
+	
+			</tr>
+			<tr>
+				<td colspan="3" height="16"><hr noshade="noshade" />	
+				</td>
+			</tr>
+
+		</table>
+
+    </ui:define>
+</ui:composition>

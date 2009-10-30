@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root-container name="notificatore" width="712" height="526">
+  <node name="notifyMessage" x="193" y="46" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="NotificheSingole" x="194" y="183" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="end-state1" x="195" y="321" width="132" height="36"/>
+</root-container>

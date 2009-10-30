@@ -1,0 +1,242 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:a="http://richfaces.org/a4j"
+    template="/layout/template.xhtml">
+
+	<ui:define name="body">
+		
+		
+			<rich:simpleTogglePanel label="Filtra Ordini" switchType="ajax">
+		
+				<h:form id="filtraOrdini" styleClass="edit">			
+					 <s:decorate template="/layout/display.xhtml">
+		                <ui:define name="label">Tipi di ordine</ui:define>
+		                <h:selectOneMenu value="#{ordineBean.tipoOrdine}" required="true"
+		                	title="seleziona il tipo di ordine che vuoi visualizzare" style=" width : 149px;">
+		                	<a:support event="onchange" ajaxSingle="true" reRender="ordiniPendenti,ordiniEvasiConclusi" />
+		                	<f:selectItem itemLabel="Ordini Pendenti" itemValue="1"/>
+		                	<f:selectItem itemLabel="Ordini Evasi" itemValue="2"/>
+		                	<f:selectItem itemLabel="Ordini Conclusi" itemValue="3"/>
+		                </h:selectOneMenu>
+		                
+		                 <a:outputPanel ajaxRendered="true">
+		                	<h:outputText value="" />
+		                </a:outputPanel>
+		             </s:decorate>
+		         </h:form>
+		       
+			</rich:simpleTogglePanel>
+		<br/>
+		<br/>
+		<rich:panel>
+			<f:facet name="header">Ordini effettuati dall'utente #{identity.username}</f:facet>
+			<a:outputPanel ajaxRendered="true">	
+				<s:decorate id="ordiniPendenti" rendered="#{ordineBean.tipoOrdine=='1'}">
+					<h:form>
+			        	<a:region>
+				    		<rich:dataTable value="#{ordineBean.listOrdiniPendenti()}" var="_task" id="table1" rows="20" width="50%">
+								
+								<rich:column>
+									<f:facet name="header">
+										<h:outputText value="Data Richiesta" />
+									</f:facet>
+									<h:outputText value="#{ordineBean.getOrdineFromTask(_task).dataRichiesta}">
+										<f:convertDateTime type="date" dateStyle="medium" locale="Locale.ITALY"/>
+									</h:outputText>
+			        			</rich:column>
+			        			
+			        			<rich:column>
+									<f:facet name="header">
+										<h:outputText value="Data Massima" />
+									</f:facet>
+									<h:outputText value="#{ordineBean.getOrdineFromTask(_task).dataMassima}">
+										<f:convertDateTime type="date" dateStyle="medium" locale="Locale.ITALY"/>
+									</h:outputText>	
+			        			</rich:column>
+			        			
+			        			<rich:column align="center">
+				                	<f:facet name="header">Dettagli Ordine</f:facet>
+				                	
+				                	<a:commandLink ajaxSingle="true" id="dettagliOrdinePendenteLink"
+				                    	oncomplete="#{rich:component('dettagliOrdinePendentePanel')}.show()">
+				                    	<f:setPropertyActionListener value="#{ordineBean.getOrdineFromTask(_task)}" 
+				                    								target="#{ordineBean.currentMyOrder}" />
+					                    <h:graphicImage value="/img/modifica_mini.png" style="border:0" />
+					                </a:commandLink>
+					                <rich:toolTip for="dettagliOrdinePendenteLink" value="Visualizza i dettagli dell'ordine"/>
+				            	</rich:column>
+				            	
+				            	<rich:column align="center">
+				                	<f:facet name="header">Elimina Ordine</f:facet>
+				                	<s:link id="eliminaOrdinePendenteLink" taskInstance="#{_task}" action="#{orderProcessing.delete()}">
+					                    <h:graphicImage value="/img/cancel.png" style="border:0" />
+					                </s:link>
+					                <rich:toolTip for="eliminaOrdinePendenteLink" value="Elimina l'ordine"/>
+				            	</rich:column>
+								
+							</rich:dataTable>
+							<rich:datascroller align="center" for="table1" id="sc1" rendered="true"/>
+						</a:region>
+					</h:form>
+		
+				</s:decorate>
+				
+				<s:decorate id="ordiniEvasiConclusi" rendered="#{ordineBean.tipoOrdine=='2' or ordineBean.tipoOrdine=='3'}">
+					<h:form>
+			        	<a:region>
+				    		<rich:dataTable value="#{ordineBean.listOrdiniEvasiOrConclusi()}" var="_ordine" id="table2" rows="20" width="50%">
+								
+								<rich:column>
+									<f:facet name="header">
+										<h:outputText value="Data Richiesta" />
+									</f:facet>
+									<h:outputText value="#{_ordine.dataRichiesta}">
+										<f:convertDateTime type="date" dateStyle="medium" locale="Locale.ITALY"/>
+									</h:outputText>
+			        			</rich:column>
+			        			<rich:column>
+									<f:facet name="header">
+										<h:outputText value="Data Massima" />
+									</f:facet>
+									<h:outputText value="#{_ordine.dataMassimaConsegna}">
+										<f:convertDateTime type="date" dateStyle="medium" locale="Locale.ITALY"/>
+									</h:outputText>	
+			        			</rich:column>
+			        			<rich:column>
+									<f:facet name="header">
+										<h:outputText value="Data Consegna" />
+									</f:facet>
+									<h:outputText value="#{_ordine.dataConclusione}">
+										<f:convertDateTime type="date" dateStyle="medium" locale="Locale.ITALY"/>
+									</h:outputText>	
+			        			</rich:column>
+			        			
+			        			<rich:column align="center">
+				                	<f:facet name="header">
+			                        	<h:outputText value="Dettagli ordini" />
+				                	</f:facet>
+				                	<a:commandLink ajaxSingle="true" id="dettagliOrdinePendenteLink2"
+				                    	oncomplete="#{rich:component('dettagliOrdinePanel')}.show()">
+				                    	<f:setPropertyActionListener value="#{_ordine}" target="#{ordineBean.currentOrdine}" />
+					                    
+					                    <h:graphicImage value="/img/modifica_mini.png" style="border:0" />
+					                </a:commandLink>
+					                <rich:toolTip for="dettagliOrdinePendenteLink2" value="Visualizza dettagli ordine"/>
+				            	</rich:column>
+				            	
+							</rich:dataTable>
+							<rich:datascroller align="center" for="table2" id="sc2" rendered="true"/>
+						</a:region>
+					</h:form>
+				</s:decorate>
+			</a:outputPanel>
+		</rich:panel>
+		
+		<a:outputPanel ajaxRendered="true">
+		<rich:modalPanel id="dettagliOrdinePendentePanel" autosized="true" width="350">
+       		<f:facet name="header">
+            	<h:outputText value="Dettagli ordini" />
+        	</f:facet>
+       		<f:facet name="controls">
+            	<h:panelGroup>
+                	<h:graphicImage value="/img/close.png" styleClass="hidelink" id="hidelink2"/>
+               	 	<rich:componentControl for="dettagliOrdinePendentePanel" attachTo="hidelink2" operation="hide" event="onclick" />
+            	</h:panelGroup>
+        	</f:facet>
+			<ui:define name="label">Prodotti nel carrello</ui:define>
+			<rich:dataTable var="_itemCarrello" id="itemsDataTableOrdiniFatti"
+				value="#{ordineBean.currentMyOrder.itemQuantita}">
+				<rich:column>
+						<f:facet name="header">Nome prodotto</f:facet>
+						<h:outputText value="#{_itemCarrello.item.name}"/>
+				</rich:column>	
+				<rich:column>
+					<f:facet name="header">Username contadino</f:facet>
+					<h:outputText value="#{_itemCarrello.cybercontadino.account.username}"/>
+				</rich:column>	
+				<rich:column>
+						<f:facet name="header">Quantita prodotto</f:facet>
+						<h:outputText value="#{_itemCarrello.quantita}"/>
+				</rich:column>	
+				<rich:column>
+						<f:facet name="header">Totale per prodotto</f:facet>
+						<h:outputText value="#{_itemCarrello.quantita * _itemCarrello.item.prezzo} euro"/>
+				</rich:column>
+				<rich:column>
+					<f:facet name="header">Quantita minima</f:facet>
+					<h:form>
+						<h:selectBooleanCheckbox required="true" value="#{_itemCarrello.booleanIsQuantitaMinima}" > 
+							<a:support event="onclick" ajaxSingle="true" reRendered="qParzialeField"/>
+	  					</h:selectBooleanCheckbox>
+  						<a:outputPanel ajaxRendered="true">
+							<s:decorate id="qParzialeField" rendered="#{_itemCarrello.booleanIsQuantitaMinima}">
+								<rich:inputNumberSpinner id="qParzialeCarrello" 
+					 							minValue="0" maxValue="#{_itemCarrello.quantita-1}" step="1"
+					 							style="height : 15px; width : 20px;" 
+					 						    value="#{_itemCarrello.quantitaParziale}">
+					 			</rich:inputNumberSpinner>					
+							</s:decorate>
+						</a:outputPanel>
+					</h:form>
+				</rich:column>
+				<rich:column>
+				<f:facet name="header">Elimina prodotto</f:facet>
+					<h:form>
+						<a:commandButton id="commandButtonDeleteItem" image="/img/shopping_cart2_delete.jpg"
+													  style="width : 25px; height : 25px;">
+					 					<a:support event="onclick"  ajaxSingle="true"
+					 						   	reRender="#{rich:component('dettagliOrdinePanel')}.show()}"
+					 						   action="#{ordineBean.deleteItemFromMyOrdine(_itemCarrello)}"/>
+					 	</a:commandButton>
+					 	<rich:toolTip for="commandButtonDeleteItem" value="Elimina prodotto dall'ordine"/>
+					</h:form>
+				</rich:column>
+			</rich:dataTable>
+
+       	</rich:modalPanel>
+     </a:outputPanel>
+     
+     <a:outputPanel ajaxRendered="true">
+		<rich:modalPanel id="dettagliOrdinePanel" autosized="true" width="350">
+       		<f:facet name="header">
+            	<h:outputText value="Dettagli ordini" />
+        	</f:facet>
+       		<f:facet name="controls">
+            	<h:panelGroup>
+                	<h:graphicImage value="/img/close.png" styleClass="hidelink" id="hidelink3"/>
+               	 	<rich:componentControl for="dettagliOrdinePanel" attachTo="hidelink3" operation="hide" event="onclick" />
+            	</h:panelGroup>
+        	</f:facet>
+			<ui:define name="label">Prodotti dell'ordine</ui:define>
+     			<rich:dataTable value="#{ordineBean.articoli}" var="_ordine" id="table2" rows="20" width="50%">
+					
+				<rich:column>
+					<f:facet name="header">Nome prodotto</f:facet>
+					<h:outputText value="#{_ordine.codiceEsterno}"/>
+				</rich:column>	
+				<rich:column>
+					<f:facet name="header">Username contadino</f:facet>
+					<h:outputText value="#{_ordine.cybercontadino.account.username}"/>
+				</rich:column>	
+				<rich:column>
+						<f:facet name="header">Quantita ottenuta</f:facet>
+						<h:outputText value="#{_ordine.quantitaOttenuta}"/>
+				</rich:column>	
+				<rich:column>
+						<f:facet name="header">Totale per prodotto</f:facet>
+						<h:outputText value="#{_ordine.quantitaOttenuta * _ordine.prezzo} euro"/>
+				</rich:column>					
+			        			
+				</rich:dataTable>
+		</rich:modalPanel>
+	</a:outputPanel>
+     
+	</ui:define>
+
+</ui:composition>

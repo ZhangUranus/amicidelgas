@@ -1,0 +1,336 @@
+<h:form id="formMenu" 
+	xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:a="http://richfaces.org/a4j">
+    
+<table align="center" width="100%" cellpadding="2" cellspacing="0" border="0" style="background: url('/GAS/img/shadow.png');">
+    <tr align="center">
+    	<td width="64">	
+    	</td>
+    	<s:decorate rendered="#{identity.loggedIn}">
+        <td height="32" width="48" align="center" >
+	        <s:link view="/customer/customerHome.xhtml" value="" propagation="none" rendered="#{identity.loggedIn and loginSelectBean.isCustomer}" >
+	        	 <h:graphicImage value="/img/menu_home.png" />
+	        	 <rich:toolTip value=""><span class="colore_black">Home Page</span></rich:toolTip>
+	        </s:link>
+	        <s:link view="/contadino/contadinoHome.xhtml" value="" propagation="none" rendered="#{identity.loggedIn and !loginSelectBean.isCustomer}">
+	        	<h:graphicImage value="/img/menu_home.png" />
+	        	 <rich:toolTip value=""><span class="colore_black">Home Page</span></rich:toolTip>
+	        </s:link>
+        </td>
+        </s:decorate>
+        <s:decorate rendered="#{identity.loggedIn and loginSelectBean.isCustomer}">
+        <td height="32" width="48" align="center" >
+			<div onclick="show_notifiche()" style="cursor:pointer;"  >
+                    <img src="/GAS/img/menu_notifiche.png;" class="button_notifiche" />
+	            	<span id="notifiche_div" class="notifiche_class" style="visibility:hidden;" ><img src="/GAS/img/red_number.png" /></span>
+	            	<span style="width: 20px" id="notifiche_number_div" class="notifiche_num_class" ></span>
+	            	<rich:toolTip value=""><span class="colore_black">Notifiche</span></rich:toolTip>
+		    </div>
+        </td>
+        </s:decorate>
+        <s:decorate rendered="#{identity.loggedIn and loginSelectBean.isCustomer}">
+        <td height="32" width="48" align="center" >
+	        <s:link view="/customer/browseCatalog.xhtml" value="" propagation="none">
+	        	 <h:graphicImage value="/img/menu_carrello.png" />
+	        	 <rich:toolTip value=""><span class="colore_black">Carrello</span></rich:toolTip>
+	        </s:link>
+	        <s:link view="/contadino/contadinoHome.xhtml" value="HOME" propagation="none" rendered="#{identity.loggedIn and !loginSelectBean.isCustomer}"/>
+        </td>
+        </s:decorate>
+        <s:decorate rendered="#{identity.loggedIn and loginSelectBean.isCustomer}">
+    	<td height="32" align="left" >
+   			<rich:dropDownMenu style=" width : 100px;" rendered="#{identity.loggedIn and loginSelectBean.isCustomer}">
+        	
+        	<f:facet name="label"> 
+    	        <h:panelGroup cellpadding="0" cellspacing="0" columns="2">
+    	        	  <img id="customer_image" src="/GAS/img/menu_customer.png" align="middle" />
+                      <h:outputLabel value="CUSTOMER" for="customer_image" />
+                </h:panelGroup>
+            </f:facet>
+            
+            <rich:menuItem submitMode="none" >
+                    <s:link view="/customer/rilasciaFeedback.xhtml" value="ASSEGNA FEEDBACK" propagation="none"/>
+             </rich:menuItem>
+             
+              <rich:menuItem submitMode="none" >
+                    <s:link view="/customer/riepilogoFeedback.xhtml" value="I MIEI FEEDBACK" propagation="none"/>
+             </rich:menuItem>
+        	
+        	 <rich:menuItem submitMode="none"  >
+                    <s:link view="/customer/editDati.xhtml" value="PROFILO" propagation="none">
+                    	<f:param name="utenteCodiceFiscale" value="#{currentUser.codiceFiscale}"/>
+		                <f:param name="accountUsername" value="#{currentAccount.username}"/>
+		            </s:link>
+             </rich:menuItem>
+             
+             <rich:menuItem submitMode="none"  >
+                    <s:link view="/customer/inviaNotifiche.xhtml" value="INVIA NOTIFICHE" propagation="none"/>
+             </rich:menuItem> 
+             
+             <rich:menuItem submitMode="none" >
+                    <s:link view="/customer/riceviNotifiche.xhtml" value="NOTIFICHE RICEVUTE (#{filtraNotifica.numberOfTaskForGroup('ReceiveMessage') + 
+                    				filtraNotifica.numberOfTaskForSingle('ReceiveMessage','ReceiveOrderFailed','ReceiveOrderAccepted','timeOutDataMassima') })" 
+                    				propagation="none"/>
+                    <f:param name="utenteCodiceFiscale" value="#{currentUser.codiceFiscale}"/>
+		            <f:param name="accountUsername" value="#{currentAccount.username}"/>
+             </rich:menuItem> 
+             
+             <rich:menuItem submitMode="none" >
+                    <s:link view="/customer/visualizzaOrdini.xhtml" value="VISUALIZZA ORDINI" propagation="none"/>
+             </rich:menuItem> 	
+        	
+        </rich:dropDownMenu>	
+        </td>
+        </s:decorate>
+        <s:decorate rendered="#{identity.loggedIn and (loginSelectBean.calculateMaxRole()=='mediatore' or loginSelectBean.calculateMaxRole()=='admin')}">
+        <td height="32" align="left" >
+        	<rich:dropDownMenu style=" width : 100px;" rendered="#{identity.loggedIn and (loginSelectBean.calculateMaxRole()=='mediatore' or loginSelectBean.calculateMaxRole()=='admin')}">
+	        	<f:facet name="label"> 
+	    	        <h:panelGroup cellpadding="0" cellspacing="0" columns="2" align="center">
+	    	        	  <img id="mediatore_image" src="/GAS/img/menu_mediatore.png" align="middle" />
+	                      <h:outputText value="MEDIATORE" />
+	                </h:panelGroup>
+	            </f:facet>
+	            
+	            <rich:menuItem submitMode="none">
+	                    <s:link view="/mediatore/accettaRegistrazioni.xhtml" value="RICHIESTE REGISTRAZIONI" propagation="none"/>
+	             </rich:menuItem>
+	             
+	             <rich:menuItem submitMode="none">
+	                    <s:link view="/mediatore/puntiDiConsegna.xhtml" value="PUNTI DI CONSEGNA" propagation="none"/>
+	             </rich:menuItem>
+	             
+	             <rich:menuItem submitMode="none">
+	                    <s:link view="/mediatore/richiesteDriver.xhtml" value="RICHIESTE DRIVER" propagation="none"/>
+	             </rich:menuItem>
+	        	
+	        </rich:dropDownMenu>        
+        </td>
+        </s:decorate>
+        <s:decorate rendered="#{identity.loggedIn and loginSelectBean.calculateMaxRole()=='admin'}">
+        <td height="32" align="left" >
+        	<rich:dropDownMenu style=" width : 100px;" rendered="#{identity.loggedIn and loginSelectBean.calculateMaxRole()=='admin'}">
+	        	<f:facet name="label"> 
+	    	        <h:panelGroup cellpadding="0" cellspacing="0" columns="2">
+	    	        	  <img id="admin_image" src="/GAS/img/menu_admin.png" align="middle" />
+	                      <h:outputText value="ADMIN" />
+	                </h:panelGroup>
+	            </f:facet>
+	            	
+	        	<rich:menuItem submitMode="none">
+	                    <s:link view="/admin/editDatiUtenti.xhtml" value="UTENTI REGISTRATI" propagation="none">
+	             			<f:param name="utenteCodiceFiscale" value="#{currentUser.codiceFiscale}"/>
+			            	<f:param name="accountUsername" value="#{currentAccount.username}"/>
+			            </s:link>
+	             </rich:menuItem>
+	             
+	             <rich:menuItem submitMode="none">
+	                    <s:link view="/admin/editDatiCybercontadino.xhtml" value="CONTADINI REGISTRATI" propagation="none">
+	             			<f:param name="utenteCodiceFiscale" value="#{currentUser.codiceFiscale}"/>
+			            	<f:param name="accountUsername" value="#{currentAccount.username}"/>
+			            </s:link>
+	             </rich:menuItem> 	
+	        </rich:dropDownMenu>        
+        </td>
+        </s:decorate>
+        <s:decorate rendered="#{identity.loggedIn and loginSelectBean.driver}">
+        <td height="32" align="left" >
+        	<rich:dropDownMenu style=" width : 78px;" rendered="#{identity.loggedIn and loginSelectBean.driver}">
+        	
+        	<f:facet name="label"> 
+    	        <h:panelGroup cellpadding="0" cellspacing="0" columns="2">
+    	        	 <img id="driver_image" src="/GAS/img/menu_driver.png" align="middle" />
+                     <h:outputText value="DRIVER" />
+                </h:panelGroup>
+            </f:facet>
+            
+            <rich:menuItem submitMode="none" >
+                    <s:link view="/driver/rilasciaFeedbackDriver.xhtml" value="FEEDBACK" propagation="none"/>
+             </rich:menuItem>
+             
+             <rich:menuItem submitMode="none" >
+                    <s:link view="/driver/riceviNotifiche.xhtml" value="Possibili ordini (#{filtraNotifica.numberForGroupForDriver() + filtraNotifica.numberForSingleForDriver()})" propagation="none"/>
+             </rich:menuItem>
+            
+            <rich:menuItem submitMode="none" >
+                    <s:link view="/driver/ordiniPresiInCarico.xhtml" value="ORDINI PRESI IN CARICO" propagation="none"/>
+             </rich:menuItem>
+            
+            </rich:dropDownMenu>
+        </td>
+        </s:decorate>
+        <s:decorate rendered="#{identity.loggedIn and loginSelectBean.calculateMaxRole()=='utenteContadino'}">
+        <td height="32" align="left" >
+  	        <rich:dropDownMenu style=" width : 100px;" rendered="#{identity.loggedIn and loginSelectBean.calculateMaxRole()=='utenteContadino'}">       	
+	        	<f:facet name="label"> 
+	    	        <h:panelGroup cellpadding="0" cellspacing="0" columns="2">
+	    	        	  <img id="contadino_image" src="/GAS/img/menu_contadino.png" align="middle" />
+	                      <h:outputText value="CONTADINO"/>
+	                </h:panelGroup>
+	            </f:facet>
+	            
+	            <rich:menuItem submitMode="none" >
+                    <s:link view="/contadino/riceviNotifiche.xhtml" value="NOTIFICHE RICEVUTE (#{filtraNotifica.numberForSingleForContadino()})" propagation="none"/>
+                    <f:param name="utenteCodiceFiscale" value="#{currentUser.codiceFiscale}"/>
+		            <f:param name="accountUsername" value="#{currentAccount.username}"/>
+             	</rich:menuItem>
+             	
+             	<rich:menuItem submitMode="none" >
+                    <s:link view="/contadino/riepilogoFeedback.xhtml" value="I MIEI FEEDBACK" propagation="none"/>
+             	</rich:menuItem>
+             	
+             	<rich:menuItem submitMode="none" >
+                    <s:link view="/contadino/rilasciaFeedbackContadinoToDriver.xhtml" value="FEEDBACK AI DRIVER" propagation="none"/>
+             	</rich:menuItem>
+             	
+             	<rich:menuItem submitMode="none" >
+                    <s:link view="/contadino/rilasciaFeedbackContadinoToCustomer.xhtml" value="FEEDBACK AI CUSTOMER" propagation="none"/>
+             	</rich:menuItem>
+             	
+	        </rich:dropDownMenu>        
+        </td>
+        </s:decorate>
+        <s:decorate rendered="#{!identity.loggedIn}">
+        <td height="32" align="left" width="96" >
+			<s:link view="/login.xhtml" value="Login" propagation="none" rendered="#{!identity.loggedIn}"/>
+        </td>
+        </s:decorate>
+        <s:decorate rendered="#{!identity.loggedIn}">
+        <td height="32" align="left" >
+	        <s:link view="/registrazione.xhtml" value="Registrazione" propagation="none" rendered="#{!identity.loggedIn}"/>
+        </td>
+        </s:decorate>
+        <s:decorate rendered="#{identity.loggedIn}">
+        <td height="32" align="left" width="96" >
+	        <s:link view="/home.xhtml" action="#{identity.logout}" value="Logout" propagation="none" rendered="#{identity.loggedIn}" />
+    	</td>
+        </s:decorate> 
+        <s:decorate rendered="#{identity.loggedIn}">
+    	<td height="32" >	
+	        <h:outputText style="color:red" value="LOGGED AS: #{identity.username}" rendered="#{identity.loggedIn}" />
+    	</td>
+    	</s:decorate>
+    	<td width="64">	
+    	</td>
+    </tr>	
+</table >
+
+<s:decorate rendered="#{identity.loggedIn}">
+<div id="notifiche_lista" style="display:none;" class="div_notifiche_lista_class">
+	<table width="320px" cellpadding="0" cellspacing="0" border="0" id="table_notifiche_liste">
+	  <tr>
+	    <td width="13" height="12" background="/GAS/img/shadow_corner_a.png"></td>
+	    <td height="12" colspan="2" background="/GAS/img/shadow_top_n.png"></td>
+	    <td width="13" height="12" background="/GAS/img/shadow_corner_b.png"></td>
+	  </tr>
+	  <tr>
+	  	<td background="/GAS/img/shadow_ovest.png"></td>
+	    <td colspan="2" background="/GAS/img/shadow_n.png" align="right" >
+	    		<div onclick="show_notifiche()" style="cursor:pointer;" ><img src="/GAS/img/close.png" /></div>
+	    </td>
+	  	<td background="/GAS/img/shadow_est.png"></td>
+	  </tr>
+	  <tr>
+	  	<td background="/GAS/img/shadow_ovest.png"></td>
+	    <td colspan="2" background="/GAS/img/shadow_n.png" align="left" >
+	    	<s:link view="/customer/inviaNotifiche.xhtml" propagation="none">
+	    		<div class="colore_white_bold"><i>Invia notifica</i></div>
+	    	</s:link>
+	    </td>
+	  	<td background="/GAS/img/shadow_est.png"></td>
+	  </tr>
+	  <tr>
+	  	<td background="/GAS/img/shadow_ovest.png"></td>
+	    <td height="16" colspan="2" background="/GAS/img/shadow_n.png" align="left" >
+	    	<hr noshade="noshade" />    		
+	    </td>
+	  	<td background="/GAS/img/shadow_est.png"></td>
+	  </tr>
+      <tr>
+	  	<td background="/GAS/img/shadow_ovest.png"></td>
+	    <td background="/GAS/img/shadow_n.png" align="left" >
+	    	<s:decorate rendered="#{(filtraNotificaAltaPriorita.numberOfHighestPriorityTaskForSingle('riceviMessaggio') > 0)}" >
+	    		<s:link view="/customer/visualizzaNotificheAltaPriorita.xhtml" propagation="none" >
+    		    	<div align="left" class="colore_yellow" style="height: 28px;  padding-top: 4px;"><b>Notifiche alta priorita'</b></div>
+    		    </s:link>
+    		</s:decorate>
+	    	<s:decorate rendered="#{(filtraNotifica.numberForGroupForCustomer() + filtraNotifica.numberForSingleForCustomer()) > 0}">
+	    		<s:link view="/customer/riceviNotifiche.xhtml" propagation="none" >
+    		    	<div align="left" class="colore_white_bold" style="height: 28px;  padding-top: 4px;">Notifiche Personali</div>
+    		    </s:link>
+    		</s:decorate>
+    		<s:decorate rendered="#{((filtraNotificaAltaPriorita.numberOfTask('taskForGroup' , 'partecipa_alla_visita') > 0)  and (filtraNotificaAltaPriorita.PooledTaskInstanceListForAllUserButMeNot(currentAccount.username , 'partecipa_alla_visita')))}" >
+	    		<s:link view="/customer/visualizzaNotificheAltaPriorita.xhtml" propagation="none" >
+    		    	<div align="left" class="colore_white_bold" style="height: 28px;  padding-top: 4px;">Eventi Visita Azienda</div>
+    		    </s:link>
+    		</s:decorate>
+    		<s:decorate rendered="#{((filtraNotificaAltaPriorita.getNumberBecomeDriver('riceviMessaggio') > 0) and (loginSelectBean.calculateMaxRole()=='mediatore' or loginSelectBean.calculateMaxRole()=='admin'))}">
+    		    <s:link view="/customer/visualizzaNotificheAltaPriorita.xhtml" propagation="none" >
+    		    	<div align="left" class="colore_white_bold" style="height: 28px;  padding-top: 4px;">Richieste Driver</div>
+    		    </s:link>    		    
+    		</s:decorate>
+    		<s:decorate rendered="#{((filtraNotifica.numberOfTaskForGroup('crea_visita') > 0) and (loginSelectBean.calculateMaxRole()=='mediatore' or loginSelectBean.calculateMaxRole()=='admin'))}">
+    			<s:link view="/mediatore/accettaRegistrazioni.xhtml" propagation="none">
+    		    	<div align="left" class="colore_white_bold" style="height: 28px;  padding-top: 4px;">Registrazioni cybercontadino</div>
+    		    </s:link>
+    		</s:decorate>
+    		<s:decorate rendered="#{((filtraNotificaAltaPriorita.getSizeForAllContadinoForTaskInstanceType(currentAccount.username,'riceviRisposta') > 0) and (loginSelectBean.calculateMaxRole()=='mediatore' or loginSelectBean.calculateMaxRole()=='admin'))}">
+    			<s:link view="/mediatore/riepilogoQuestionarioRegistrazione.xhtml" propagation="none">
+    		    	<div align="left" class="colore_white_bold" style="height: 28px;  padding-top: 4px;">Questionari cybercontadino</div>
+    		    </s:link>
+    		</s:decorate>    		
+    		<s:decorate rendered="#{((filtraNotificaAltaPriorita.getNumRispostaMediatoreDriver('riceviRisposta',currentAccount.username) > 0) and (loginSelectBean.calculateMaxRole()=='utenteGAS' or loginSelectBean.calculateMaxRole()=='driver'))}">
+    			<s:link view="/customer/visualizzaNotificheAltaPriorita.xhtml" propagation="none">
+    		    	<div align="left" class="colore_white_bold" style="height: 28px;  padding-top: 4px;">Risposta richiesta Driver</div>
+    		    </s:link>
+    		</s:decorate>
+    		<s:decorate rendered="#{((filtraNotificaAltaPriorita.getAllPooledTaskInstanceList('visualizzaQuestionari').size() > 0) and (loginSelectBean.calculateMaxRole()=='admin'))}">
+    			<s:link view="/admin/riepilogoRegistrazioneContadini.xhtml" propagation="none">
+    		    	<div align="left" class="colore_white_bold" style="height: 28px;  padding-top: 4px;">Scheda registrazione contadino</div>
+    		    </s:link>
+    		</s:decorate>
+	    </td>
+	    <td width="26px" background="/GAS/img/shadow_n.png" align="left" >
+	    	<s:decorate rendered="#{(filtraNotificaAltaPriorita.numberOfHighestPriorityTaskForSingle('riceviMessaggio') > 0)}">
+    		    <div id="num_notifiche_1" align="center" class="colore_white_bold" style="background:transparent url('/GAS/img/red_number3.png') no-repeat; width:26px; height: 28px; padding-top: 4px; padding-right: 1px;" >#{filtraNotificaAltaPriorita.numberOfHighestPriorityTaskForSingle('riceviMessaggio')}</div>
+    		</s:decorate>
+    		<s:decorate rendered="#{(filtraNotifica.numberForGroupForCustomer() + filtraNotifica.numberForSingleForCustomer()) > 0}">
+    		    <div id="num_notifiche_2" align="center" class="colore_white_bold" style="background:transparent url('/GAS/img/red_number2.png') no-repeat; width:26px; height: 28px; padding-top: 4px; padding-right: 1px;" >#{(filtraNotifica.numberForGroupForCustomer() + filtraNotifica.numberForSingleForCustomer())}</div>
+    		</s:decorate>
+    		<s:decorate rendered="#{((filtraNotificaAltaPriorita.numberOfTask('taskForGroup' , 'partecipa_alla_visita') > 0) and ( filtraNotificaAltaPriorita.PooledTaskInstanceListForAllUserButMeNot(currentAccount.username , 'partecipa_alla_visita')))}">
+    		    <div id="num_notifiche_3" align="center" class="colore_white_bold" style="background:transparent url('/GAS/img/red_number2.png') no-repeat; width:26px; height: 28px; padding-top: 4px; padding-right: 1px;" >#{filtraNotificaAltaPriorita.getPooledTaskInstanceListForAllUserButMeNot(currentAccount.username , 'partecipa_alla_visita').size()}</div>
+    		</s:decorate>    		 
+    		<s:decorate rendered="#{((filtraNotificaAltaPriorita.getNumberBecomeDriver('riceviMessaggio') > 0) and (loginSelectBean.calculateMaxRole()=='mediatore' or loginSelectBean.calculateMaxRole()=='admin'))}">
+    		    <div id="num_notifiche_4" align="center" class="colore_white_bold" style="background:transparent url('/GAS/img/red_number2.png') no-repeat; width:26px; height: 28px; padding-top: 4px; padding-right: 1px;" >#{filtraNotificaAltaPriorita.getNumberBecomeDriver('riceviMessaggio')}</div>
+    		</s:decorate>    		 
+    		<s:decorate rendered="#{((filtraNotifica.numberOfTaskForGroup('crea_visita') > 0) and (loginSelectBean.calculateMaxRole()=='mediatore' or loginSelectBean.calculateMaxRole()=='admin'))}">
+    			<div id="num_notifiche_5" align="center" class="colore_white_bold" style="background:transparent url('/GAS/img/red_number2.png') no-repeat; width:26px; height: 28px; padding-top: 4px; padding-right: 1px;" >#{filtraNotifica.numberOfTaskForGroup('crea_visita')}</div>
+    		</s:decorate> 		
+    		<s:decorate rendered="#{((filtraNotificaAltaPriorita.getSizeForAllContadinoForTaskInstanceType(currentAccount.username,'riceviRisposta') > 0) and (loginSelectBean.calculateMaxRole()=='mediatore' or loginSelectBean.calculateMaxRole()=='admin'))}">
+    			<div id="num_notifiche_6" align="center" class="colore_white_bold" style="background:transparent url('/GAS/img/red_number2.png') no-repeat; width:26px; height: 28px; padding-top: 4px; padding-right: 1px;" >#{filtraNotificaAltaPriorita.getSizeForAllContadinoForTaskInstanceType(currentAccount.username,'riceviRisposta')}</div>
+    		</s:decorate>
+    		<s:decorate rendered="#{((filtraNotificaAltaPriorita.getNumRispostaMediatoreDriver('riceviRisposta',currentAccount.username) > 0) and (loginSelectBean.calculateMaxRole()=='utenteGAS' or loginSelectBean.calculateMaxRole()=='driver'))}">
+    			<div id="num_notifiche_7" align="center" class="colore_white_bold" style="background:transparent url('/GAS/img/red_number2.png') no-repeat; width:26px; height: 28px; padding-top: 4px; padding-right: 1px;" >#{filtraNotificaAltaPriorita.getNumRispostaMediatoreDriver('riceviRisposta',currentAccount.username)}</div>
+    		</s:decorate>    		
+    		<s:decorate rendered="#{((filtraNotificaAltaPriorita.getAllPooledTaskInstanceList('visualizzaQuestionari').size() > 0) and (loginSelectBean.calculateMaxRole()=='admin'))}">
+    			<div id="num_notifiche_8" align="center" class="colore_white_bold" style="background:transparent url('/GAS/img/red_number2.png') no-repeat; width:26px; height: 28px; padding-top: 4px; padding-right: 1px;" >#{filtraNotificaAltaPriorita.getAllPooledTaskInstanceList('visualizzaQuestionari').size()}</div>
+    		</s:decorate>
+	    </td>
+	  	<td background="/GAS/img/shadow_est.png"></td>
+	  </tr>
+	  <tr>
+	    <td width="13" height="12" background="/GAS/img/shadow_corner_d.png"></td>
+	    <td height="12" colspan="2" background="/GAS/img/shadow_bottom_n.png"></td>
+	    <td width="13" height="12" background="/GAS/img/shadow_corner_c.png"></td>
+	  </tr>
+	</table>
+</div>
+<div id="shadow_focus" class="focus_style" style="background: transparent url('/GAS/img/shadow0.png') ; width:100%; height:100%; display:none;">
+</div>
+</s:decorate>
+</h:form>

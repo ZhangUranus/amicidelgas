@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page xmlns="http://jboss.com/products/seam/pages"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:s="http://jboss.com/products/seam/taglib"
+      xsi:schemaLocation="http://jboss.com/products/seam/pages http://jboss.com/products/seam/pages-2.1.xsd"
+      no-conversation-view-id="/rilasciaFeedback.xhtml"
+      login-required="true">
+
+     
+ <navigation>
+  <rule if-outcome="fb_customer_to_contadino">
+   <redirect view-id="/customer/rilasciaFeedback.xhtml"/>
+  </rule>
+  <rule if-outcome="fb_customer_to_responsabile_consegna">
+   <redirect view-id="/customer/rilasciaFeedback.xhtml"/>
+  </rule>
+ </navigation>
+</page>

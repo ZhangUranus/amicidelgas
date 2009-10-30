@@ -1,0 +1,121 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a="http://richfaces.org/a4j" template="/layout/template.xhtml">
+
+
+
+	<ui:define id="defineUI" name="body">
+	
+	<h:form id="browseContadiniForm">
+		<rich:simpleTogglePanel id="simpleTogglePanelOrdini" switchType="ajax" label="Driver">
+	
+				<h:selectOneRadio value="#{takeInHandForContadinoToDriver.stringaResponsabileConsegna}" required="true">
+                 	<a:support event="onclick" ajaxSingle="true" reRender="decoratepanelGridInfoResponsabile,simpleTogglePanelContadinoToResponsabile"/>
+               		<s:selectItems var="_stringa" label="Driver #{_stringa}" value="#{takeInHandForContadinoToDriver.stringheResponsabiliConsegna}" />
+                </h:selectOneRadio>
+                
+            <a:outputPanel ajaxRendered="true"> 
+				<s:decorate id="decoratepanelGridInfoResponsabile" rendered="#{not empty takeInHandForContadinoToDriver.currentResponsabile}">
+                	<h:panelGrid id="panelGridInfoItinerario" columns="2" >
+                		<rich:column>
+							<table id="table_Cognome" cellpadding="10" cellspacing="0" border="0" width="100%"	>
+								<tr><td>
+										<b>Cognome</b>
+								</td></tr>
+								<tr><td>
+										<h:outputText value="#{takeInHandForContadinoToDriver.currentResponsabile.utente.cognome}"/>
+								</td></tr>
+							</table>
+	        			</rich:column>
+	        			<rich:column>
+							<table id="table_nome" cellpadding="10" cellspacing="0" border="0" width="100%"	>
+								<tr><td>
+									<b>Nome</b>
+								</td></tr>
+								<tr><td>
+									<h:outputText value="#{takeInHandForContadinoToDriver.currentResponsabile.utente.nome}"/>
+								</td></tr>
+							</table>
+	        			</rich:column>
+                	</h:panelGrid>      
+				</s:decorate>
+			</a:outputPanel> 
+        </rich:simpleTogglePanel>
+     </h:form>
+     
+     <br/>
+ 	<br/>
+ 	<br/>
+                
+            <a:outputPanel ajaxRendered="true">   
+            <rich:simpleTogglePanel id="simpleTogglePanelContadinoToResponsabile" switchType="ajax" label="Rilascia feedback al driver">    
+			
+				<s:decorate id="rilasciaFeedbackField1" rendered="#{not empty takeInHandForContadinoToDriver.currentResponsabile}">
+					<h:form>
+						<h:dataTable value="#{takeInHandForContadinoToDriver.itinerariForDriver}" var="_itinerario">
+							<rich:column>
+									<f:facet name="header">
+										<h:outputText value="Itinerario" />
+									</f:facet>
+									<h:outputText value="#{_itinerario.iditinerario}"></h:outputText>
+			        		</rich:column>
+			        		<rich:column>
+							<f:facet name="header">Data consegna</f:facet>    
+								<h:outputText value="#{_itinerario.dataConsegna}">
+									<f:convertDateTime type="date" dateStyle="medium" locale="Locale.ITALY"/>
+								</h:outputText>
+							</rich:column>
+			        		<rich:column>
+			        			<s:decorate template="/layout/edit.xhtml">
+	                				<f:facet name="header">
+										<h:outputText value="Voto feedback" />
+									</f:facet>
+	                				<h:selectOneRadio value="#{takeInHandForContadinoToDriver.getInfoFeedbackForItinerario(_itinerario.iditinerario).feedback}" required="true" 
+	                					requiredMessage="inserire una valutazione">
+					  					<f:selectItem itemLabel="Basso" itemValue="1" ></f:selectItem>
+					  					<f:selectItem itemLabel="Normale" itemValue="2" ></f:selectItem>
+					  					<f:selectItem itemLabel="Alto" itemValue="3"></f:selectItem>
+					  					<f:selectItem itemLabel="Utopico" itemValue="4"></f:selectItem>
+					  					<f:selectItem itemLabel="Divino" itemValue="5"></f:selectItem>
+					  					<a:support	event="onclick" ajaxSingle="true"/>
+					  				</h:selectOneRadio>
+	            				</s:decorate>
+			        		</rich:column>
+			        		<rich:column>
+			        			<s:decorate template="/layout/edit.xhtml">
+	                				<f:facet name="header">
+										<h:outputText value="Commento" />
+									</f:facet>
+			        				<h:inputTextarea value="#{takeInHandForContadinoToDriver.getInfoFeedbackForItinerario(_itinerario.iditinerario).comment}">
+			        					<a:support	event="onblur" ajaxSingle="true"/>
+					  				</h:inputTextarea>
+			        			</s:decorate>
+			        		</rich:column>
+						</h:dataTable>
+					
+	        			<div id="pulsante_contadino_loading1" style="display: none;"><img src="/GAS/img/loading.gif" /></div>	
+	        			<h:commandButton id="idCommandButtonContadino" value="Assegna Feedback"
+	        					  action="#{closeTaskInstance.closefbContadinoToResponsabile()}"
+	        					  onmouseup="disable_this(this.id, 'pulsante_driver_loading1');" >
+	        			</h:commandButton>
+				
+					</h:form>
+				</s:decorate>
+
+			</rich:simpleTogglePanel>
+			</a:outputPanel>
+		
+		<br/>
+ 		<br/>
+ 		<br/>
+     
+	</ui:define>
+
+</ui:composition>
+

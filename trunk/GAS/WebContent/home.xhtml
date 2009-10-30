@@ -1,0 +1,40 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    template="layout/template.xhtml">
+
+    <ui:define name="body">
+
+        <h1>Welcome to GAS!</h1>
+        <rich:panel>
+            <h:panelGrid columns="2">
+                <s:div styleClass="info">
+                    <p><strong>Cos'e' il GAS?</strong></p>
+                    <ul class="bullets">
+	                   	<p align="justify">L'acquisto di prodotti in un supermercato o in un qualsiasi negozio diventa un'impresa difficile 
+	                   	se vogliamo rispettare certi criteri di sicurezza alimentare, di equita' sociale e di salvaguardia 
+	                   	ambientale. Infatti le grandi imprese agroalimentari, che gestiscono la quasi totalita' della distribuzione 
+	                   	dei prodotti alimentari, non danno nessuna garanzia sul modo di produrre, esercitando una pressione costante 
+	                   	di sfruttamento sui lavoratori della terra, sugli operai addetti alla trasformazione degli alimenti, sul suolo, 
+	                   	sulle piante e sui semi.
+	                   	Ecco allora l'idea di diventare protagonisti diretti e critici dei nostri consumi, attivando una organizzazione di base, 
+	                   	il <strong>Gruppo di Acquisto Solidale (GAS)</strong>.
+	                   	Il Gas si forma volontariamente e si attiva per trovare il produttore e il prodotto osservando quattro criteri di base:
+	    				</p>
+                        <li><p align="justify"><strong>Piccolo Produttore</strong>: per non concentrare il potere economico nelle mani di grosse aziende.</p></li>
+                        <li><p align="justify"><strong>Produttore Locale</strong>: per creare un rapporto di fiducia tra produttore e consumatore, per valorizzare i prodotti e il lavoro locale , per non fare viaggiare le merci da un capo all'altro del mondo con costi ambientali e sociali che ne conseguono.</p></li>
+                        <li><p align="justify"><strong>Produttori rispettosi dell'uomo</strong>: per incentivare il rispetto delle condizioni di lavoro e far crescere l'occupazione.</p></li>
+                        <li><p align="justify"><strong>Produttori rispettosi dei prodotti e dell'ambiente</strong>: prodotti biologici, assenza di inquinamento, consumo limitato delle risorse, riduzione degli imballaggi.</p></li>
+                    </ul>
+                </s:div>
+                <h:graphicImage value="/img/home.jpg" style="border:" width="292" height="272"/>
+            </h:panelGrid>
+        </rich:panel>
+
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process-definition  xmlns=""  name="myOrderProcessing">
+
+
+	<start-state name="L'utente sottomette un ordine">
+		<transition to="Ordine notificato a driver e contadini" name="invia_notifica_ai_gruppi_driver_contadino"></transition>
+	</start-state>
+
+
+	<task-node name="Ordine notificato a driver e contadini">
+		<task name="accetta_ordine">
+			<assignment pooled-actors="driver,utenteContadino,utenteGas"></assignment>
+		</task>
+		<event type="timer-create">
+      <action name="timerDataMassimaScaduta" class="org.domain.GAS.processes.ChangeDueDateTimerOrdine">
+        <timerName>dataMassimaTimer</timerName>
+        <nomeData>dataMassimaShoppingCart</nomeData>
+      </action>
+    </event>
+		<event type="node-leave">
+			<action name="SpegniTuttoeVaiAvanti" class="org.domain.GAS.processes.CancelTaskAction">
+			 <taskName>accetta_ordine</taskName>
+			 </action>
+		</event>
+		<timer duedate="10 years" name="dataMassimaTimer" transition="ordine_non_preso_in_carico_entro_datamax"/>
+		<transition to="Notifica utente ordine non preso in carico" name="ordine_non_preso_in_carico_entro_datamax"></transition>
+		<transition to="Verifica disponibilita" name="ordine_preso_in_carico"></transition>
+		<transition to="ordine eliminato da utente" name="ordine_eliminato_dall_utente"></transition>
+	</task-node>
+
+	<task-node name="Notifica utente ordine non disponibile">
+		<task name="ReceiveOrderFailed">
+			<assignment actor-id="#{customer.username}"></assignment>
+		</task>
+		<transition to="Ordine notificato a driver e contadini" name="ordine_rimesso_nel_pool"></transition>
+	</task-node>
+
+	<task-node name="Notifica utente ordine non preso in carico">
+		<task name="timeOutDataMassima" >
+			<assignment name="AssegnamentoTaskDataMassimaScaduta" class="org.domain.GAS.processes.DestinatarioHandlerOrdineDataMassimaScaduta">
+				<nameTask>timeOutDataMassima</nameTask>
+				<nomeDestinatario>customer</nomeDestinatario>
+			</assignment>
+		</task>
+		<transition to="data massima ordine scaduta" name="notifica_inviata_ordine_non_preso_in_carico_termina_processo"></transition>
+	</task-node>
+
+	<task-node name="Notifica utente ordine preso in carico">
+		<task name="ReceiveOrderAccepted">
+			<assignment actor-id="#{customer.username}"></assignment>
+		</task>
+		<timer  duedate="10 seconds" name="timerInviaNotifica" transition="attendi_consegna">
+			<action></action>
+		</timer>
+		
+		<transition to="attesa consegna ordine" name="attendi_consegna"></transition>
+	</task-node>
+
+	<task-node name="Fb from responsabile consegna to contadino">
+		<task name="fbResponsabileConsegnaToContadino">
+		<assignment name="AssegnamentoTaskResponsabileConsegnaToContadino" class="org.domain.GAS.processes.DestinatarioHandlerOrdineDataMassimaScaduta">
+				<nameTask>fbResponsabileConsegnaToContadino</nameTask>
+				<nomeDestinatario>responsabileConsegna</nomeDestinatario>
+		</assignment>
+		</task>
+		<timer duedate="240 seconds" name="timer_fb_responsabile_consegna_to_contadino" transition="fb_responsabile_consegna_to_contadino">
+			<action name="perstistAllInfo" class="org.domain.GAS.processes.PersistHandler">
+				<taskNameOrdine>fbResponsabileConsegnaToContadino</taskNameOrdine>
+				<usernameFrom>responsabileConsegna</usernameFrom>
+				<idCase>5</idCase>
+			</action>
+		</timer>
+		<transition to="join1" name="fb_responsabile_consegna_to_contadino"></transition>
+	</task-node>
+
+	<task-node name="Fb from customer to contadino per qualita">
+		<task name="fbCustomerToContadino">
+			<assignment name="AssegnamentoTaskCustomerToContadinoPerQualita" class="org.domain.GAS.processes.DestinatarioHandlerOrdineDataMassimaScaduta">
+				<nameTask>fbCustomerToContadino</nameTask>
+				<nomeDestinatario>customer</nomeDestinatario>
+			</assignment>
+		</task>
+		<timer duedate="240 seconds" name="timer_fb_customer_to_contadino" transition="fb_customer_to_contadino">
+			<action name="perstistAllInfo" class="org.domain.GAS.processes.PersistHandler">
+				<taskNameOrdine>fbCustomerToContadino</taskNameOrdine>
+				<usernameFrom>customer</usernameFrom>
+				<idCase>1</idCase>
+			</action>
+		</timer>
+		<transition to="join2" name="fb_customer_to_contadino"></transition>
+	</task-node>
+
+	<decision name="Verifica disponibilita">
+		<transition to="Notifica utente ordine preso in carico" name="ordine_evaso">
+			<condition expression="#{!myOrdine.pendente and myOrdine.evaso}"></condition>
+		</transition>
+		<transition to="Notifica utente ordine non disponibile" name="ordine_non_evaso">
+		<condition expression="#{myOrdine.pendente and !myOrdine.evaso}"></condition>
+		</transition>
+	</decision>
+
+	<decision name="Il driver ha partecipato alla spesa">
+		<handler class="org.domain.GAS.processes.DriverHaPartecipatoAllaSpesaDecisionHandler">
+			<responsabileIsDriver>
+				responsabileIsDriver
+			</responsabileIsDriver>
+		</handler>
+		<transition to="fork1" name="Si">
+		</transition>
+		<transition to="join2" name="No">
+		</transition>
+	</decision>
+
+	<fork name="fork2">
+		<transition to="Fb from customer to contadino per qualita" name="to Fb from customer to contadino per qualita"></transition>
+		<transition to="Fb from customer to responsabile consegna" name="to Fb from customer to responsabile consegna"></transition>
+		<transition to="Fb from responsabile cosegna to customer" name="to Fb from responsabile cosegna to customer"></transition>
+		<transition to="Il driver ha partecipato alla spesa" name="to Il driver ha partecipato alla spesa"></transition>
+	</fork>
+
+	<join name="join2">
+		<transition to="ordine concluso con successo" name="to_ordine_concluso_end"></transition>
+	</join>
+
+	<task-node name="Fb from customer to responsabile consegna">
+		<task name="fbCustomerToResponsabileConsegna">
+			<assignment name="AssegnamentoTaskCustomerToResponsabileConsegna" class="org.domain.GAS.processes.DestinatarioHandlerOrdineDataMassimaScaduta">
+				<nameTask>fbCustomerToResponsabileConsegna</nameTask>
+				<nomeDestinatario>customer</nomeDestinatario>
+			</assignment>
+		</task>
+		<timer duedate="240 seconds" name="timer_fb_customer_to_responsabile_consegna" transition="fb_customer_to_responsabile_consegna">
+			<action name="perstistAllInfo" class="org.domain.GAS.processes.PersistHandler">
+				<taskNameOrdine>fbCustomerToResponsabileConsegna</taskNameOrdine>
+				<usernameFrom>customer</usernameFrom>
+				<usernameTo>responsabileConsegna</usernameTo>
+				<idCase>2</idCase>
+			</action>
+		</timer>
+		<transition to="join2" name="fb_customer_to_responsabile_consegna"></transition>
+	</task-node>
+
+	<task-node name="Fb from responsabile cosegna to customer">
+		<task name="fbResponsabileConsegnaToCustomer">
+			<assignment name="AssegnamentoTaskResponsabileConsegnaToCustomer" class="org.domain.GAS.processes.DestinatarioHandlerOrdineDataMassimaScaduta">
+				<nameTask>fbResponsabileConsegnaToCustomer</nameTask>
+				<nomeDestinatario>responsabileConsegna</nomeDestinatario>
+			</assignment>
+		</task>
+		<timer duedate="240 seconds" name="timer_fb_responsabile_consegna_to_customer" transition="fb_responsabile_to_customer">
+			<action name="perstistAllInfo" class="org.domain.GAS.processes.PersistHandler">
+				<taskNameOrdine>fbResponsabileConsegnaToCustomer</taskNameOrdine>
+				<usernameFrom>responsabileConsegna</usernameFrom>
+				<usernameTo>customer</usernameTo>
+				<idCase>3</idCase>
+			</action>
+		</timer>
+		<transition to="join2" name="fb_responsabile_to_customer"></transition>
+	</task-node>
+
+	<task-node name="Fb from contadino to responsabile consegna">
+		<task name="fbContadinoToResponsabile">
+			<assignment pooled-actors="utenteContadino"></assignment>
+		</task>
+		<timer duedate="240 seconds" name="timer_fb_contadino_to_responsabile_consegna" transition="fb_contadino_to_responsabile_consegna">
+			<action name="perstistAllInfo" class="org.domain.GAS.processes.PersistHandler">
+				<taskNameOrdine>fbContadinoToResponsabile</taskNameOrdine>
+				<usernameTo>responsabileConsegna</usernameTo>
+				<idCase>4</idCase>
+			</action>
+		</timer>
+		<transition to="join1" name="fb_contadino_to_responsabile_consegna"></transition>
+	</task-node>
+
+	<fork name="fork1">
+		<transition to="Fb from contadino to responsabile consegna" name="to_Fb_contadino_to_responsabile"></transition>
+		<transition to="Fb from responsabile consegna to contadino" name="to_Fb_responsabile_to_contadino"></transition>
+	</fork>
+
+	<join name="join1">
+		<transition to="join2" name="to_join_2"></transition>
+	</join>
+
+	<state name="attesa consegna ordine">
+	<event type="timer-create">
+      <action name="timerDataMassimaScaduta" class="org.domain.GAS.processes.ChangeDueDateTimerOrdine">
+        <timerName>inviaFeedback</timerName>
+        <nomeData>dataConsegna</nomeData>
+      </action>
+	</event>
+	<timer duedate="9 years" name="inviaFeedback"  transition="assegna_feedback">
+		<action name="persistOrdineConcluso" class="org.domain.GAS.processes.PersistHandlerOrdine">
+		</action>
+	</timer>
+		<transition to="fork2" name="assegna_feedback"></transition>
+</state>
+
+	<end-state name="ordine eliminato da utente"></end-state>
+
+	<end-state name="data massima ordine scaduta"></end-state>
+
+	<end-state name="ordine concluso con successo"></end-state>
+
+
+</process-definition>

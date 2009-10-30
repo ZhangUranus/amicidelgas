@@ -1,0 +1,273 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:a="http://richfaces.org/a4j"
+    template="/layout/template.xhtml">
+
+<ui:define name="body">
+
+	<h:form id="richiestaRegistrazioneForm">
+	
+    <rich:panel>
+        <f:facet name="header">Registrazione: Passo 1 - Dati Personali</f:facet>    
+
+			<s:decorate id="codiceFiscaleField" template="/layout/edit.xhtml">
+                <ui:define name="label">Codice Fiscale</ui:define>
+                <h:inputText id="codiceFiscale"
+                       required="true"
+                       requiredMessage="Inserire il codice fiscale"
+                           size="32"
+                      maxlength="16"
+                      minlength="16"
+                      value="#{newUtente.codiceFiscale}">
+                    <a:support event="onblur" 
+                    reRender="codiceFiscaleField" 
+                    action="#{newControlloBean.controllaCodiceFiscale()}"
+                    ajaxSingle="true"/>   
+                </h:inputText>
+                <h:outputText value="#{newControlloBean.myResponseCodiceFiscale}" 
+                style="color:red;"/>
+                
+            </s:decorate>
+
+			<s:decorate id="nomeField" template="/layout/edit.xhtml">
+                <ui:define name="label">Nome</ui:define>
+                <h:inputText id="nome"
+                       required="true"
+                       requiredMessage="Inserire il nome"
+                           size="32"
+                      maxlength="50"
+                          value="#{newUtente.nome}">
+                    <a:support event="onblur" reRender="nomeField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="cognomeField" template="/layout/edit.xhtml">
+                <ui:define name="label">Cognome</ui:define>
+                <h:inputText id="cognome"
+                       required="true"
+                       requiredMessage="Inserire il cognome"
+                           size="32"
+                      maxlength="50"
+                          value="#{newUtente.cognome}">
+                    <a:support event="onblur" reRender="cognomeField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="dataNascitaField" template="/layout/edit.xhtml">
+                <ui:define name="label">Data nascita</ui:define>
+                <rich:calendar id="dataNascita"
+                       required="true"
+                       requiredMessage="Inserire la data di nascita"
+                       value="#{newUtente.dataNascita}" datePattern="MM/dd/yyyy">
+                   <a:support event="onchange" reRender="dataNascitaField" bypassUpdates="true" ajaxSingle="true"/>
+                </rich:calendar>
+            </s:decorate>
+
+
+            <s:decorate id="sessoField" template="/layout/edit.xhtml">
+                <ui:define name="label">Sesso</ui:define>
+                
+              <h:selectOneMenu id="sessoSelect" value="#{newUtente.sesso}"
+              required="true"
+              requiredMessage="Inserire il sesso"
+              >
+        		<f:selectItem itemLabel="Maschio" itemValue="M"/>            
+        		<f:selectItem itemLabel="Femmina" itemValue="F"/>
+        		
+			  </h:selectOneMenu>
+			 
+             </s:decorate>
+			
+			
+			
+			<s:decorate id="provinciaField" template="/layout/edit.xhtml">
+                <ui:define name="label">Provincia di nascita</ui:define>
+                <h:selectOneMenu 
+                	id="provinciaSelect"
+                	value="#{newComuneProvinciaBean.provincia}"
+                	required="true"
+                	requiredMessage="Inserire la provincia"
+                	>
+                 <a:support event="onchange" ajaxSingle="true" reRender="provinciaField" 
+                 />
+          
+                <s:selectItems 
+                	noSelectionLabel="Seleziona una provincia"
+                	var="_provincia" 
+                	hideNoSelectionLabel="false"
+                	label="#{_provincia.nome}" 
+                	value="#{provincesList.resultList}">
+                </s:selectItems>
+                <s:convertEntity></s:convertEntity>
+                </h:selectOneMenu>
+             </s:decorate>
+			
+			
+			<s:decorate id="comuneNascitaSuggestionField" template="/layout/edit.xhtml">
+                <ui:define name="label">Comune di nascita</ui:define>
+                <h:inputText 
+                	id="comuneNascitaSuggestion"
+                	size="32"
+               		value="Seleziona prima una provincia"
+               		onclick="resetValue()"
+               		 required="true"
+                         requiredMessage="Inserire il comune di nascita"
+               >
+                </h:inputText>
+                <script type="text/javascript">
+				<!--
+					function resetValue(){
+						document.getElementById('richiestaRegistrazioneForm:comuneNascitaSuggestionField:comuneNascitaSuggestion').value="";
+					}
+				//-->
+				</script>
+             <rich:suggestionbox id="suggestionBoxId"
+             	 	nothingLabel="Nessun comune trovato per la provincia selezionata"
+             		usingSuggestObjects="true"
+             		suggestionAction="#{newComuneProvinciaBean.autocomplete}" var="_comuneSugg"
+                    for="comuneNascitaSuggestion" fetchValue="#{_comuneSugg.nome}" tokens=",[]"
+                    >
+                    <a:support event="onselect" ajaxSingle="true" reRender="outputTextComune"  
+                 	action="#{newComuneProvinciaBean.setComune(_comuneSugg)}"/>
+                 <s:convertEntity></s:convertEntity>
+                   
+                    <h:column>
+                           <h:outputText id ="outputTextComune" value="#{_comuneSugg.nome}" />
+         
+                    </h:column>
+                    </rich:suggestionbox>  
+          
+             </s:decorate>
+            
+            <s:decorate id="erroreField" template="/layout/edit.xhtml">
+            <h:outputText styleClass="errors" value="#{newControlloBean.myResponseComune}" />
+            </s:decorate>
+            
+            <s:decorate id="provinciaResidenzaField" template="/layout/edit.xhtml">
+                <ui:define name="label">Provincia di residenza</ui:define>
+                <h:selectOneMenu 
+                	id="provinciaResidenzaSelect"
+                	value="#{newComuneProvinciaResidenzaBean.provincia}"
+                	 required="true"
+                       requiredMessage="Inserire la provincia di residenza">
+                 <a:support event="onchange" ajaxSingle="true" reRender="provinciaResidenzaField" 
+                 />
+          
+                <s:selectItems 
+                	noSelectionLabel="Seleziona una provincia"
+                	var="_provinciaResidenza" 
+                	hideNoSelectionLabel="false"
+                	label="#{_provinciaResidenza.nome}" 
+                	value="#{provincesList.resultList}">
+                </s:selectItems>
+                <s:convertEntity></s:convertEntity>
+                </h:selectOneMenu>
+             </s:decorate>
+			
+			
+			<s:decorate id="comuneResidenzaSuggestionField" template="/layout/edit.xhtml">
+                <ui:define name="label">Comune di Residenza</ui:define>
+                <h:inputText 
+                	id="comuneResidenzaSuggestion"
+               		value="Seleziona prima una provincia"
+               		size="32"
+               		onclick="resetResidenzaValue()"
+               		 required="true"
+                         requiredMessage="Inserire il comune di residenza"
+               >
+                </h:inputText>
+                <script type="text/javascript">
+				<!--
+					function resetResidenzaValue(){
+						document.getElementById('richiestaRegistrazioneForm:comuneResidenzaSuggestionField:comuneResidenzaSuggestion').value="";
+					}
+				//-->
+				</script>
+             <rich:suggestionbox id="suggestionBoxResidenzaId"
+             	 	nothingLabel="Nessun comune trovato per la provincia selezionata"
+             		usingSuggestObjects="true"
+             		suggestionAction="#{newComuneProvinciaResidenzaBean.autocomplete}" var="_comuneResidenzaSugg"
+                    for="comuneResidenzaSuggestion" fetchValue="#{_comuneResidenzaSugg.nome}" tokens=",[]"
+                    >
+                    <a:support event="onselect" ajaxSingle="true"  
+                 	action="#{newComuneProvinciaResidenzaBean.setComune(_comuneResidenzaSugg)}"/>
+                 <s:convertEntity></s:convertEntity>
+                    <h:column>
+                        <h:outputText value="#{_comuneResidenzaSugg.nome}" />
+                    </h:column>
+             </rich:suggestionbox>  
+            
+             </s:decorate>
+             
+             <s:decorate id="erroreFieldResidenza" template="/layout/edit.xhtml">
+            <h:outputText styleClass="errors" value="#{newControlloBean.myResponseComuneResidenza}" />
+            </s:decorate>
+            
+            <s:decorate id="indirizzoField" template="/layout/edit.xhtml">
+                <ui:define name="label">Indirizzo</ui:define>
+                <h:inputText id="indirizzo"
+                       required="true"
+                        requiredMessage="Inserire l'indirizzo"
+                           size="32"
+                      maxlength="100"
+                          value="#{newUtente.indirizzo}">
+                    <a:support event="onblur" reRender="indirizzoField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+	
+            <s:decorate id="recapitoTelefonicoField" template="/layout/edit.xhtml">
+                <ui:define name="label">Recapito Telefonico</ui:define>
+                <h:inputText id="recapitoTelefonico"
+                       required="true"
+                        requiredMessage="Inserire il numero di telefono"
+                           size="32"
+                      maxlength="45"
+                          value="#{newUtente.recapitoTelefonico}">
+                    <a:support event="onblur" reRender="recapitoTelefonicoField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="emailField" template="/layout/edit.xhtml">
+                <ui:define name="label">Email</ui:define>
+                <h:inputText id="email"
+                       required="true"
+                        requiredMessage="Inserire l'indirizzo e-mail"
+                           size="32"
+                      maxlength="70"
+                          value="#{newUtente.email}">
+                    <a:support event="onblur" 
+                    reRender="emailField" 
+                    action="#{newControlloBean.controllaEmail()}"
+                    ajaxSingle="true"/>   
+                </h:inputText>
+                <h:outputText value="#{newControlloBean.myResponseEmail}"
+                style="color:red;"/>
+            </s:decorate>
+
+			<div style="clear:both">
+                <span class="required">*</span>
+                Campi Richiesti
+            </div>
+
+	</rich:panel>
+	
+		<div class="actionButtons">
+            <h:commandButton id="passo1" value="procedi al passo 2" action="#{newControlloBean.controlloPresenzaDatiDatabase}"/>
+        </div>    
+
+    
+    </h:form>
+
+</ui:define>
+
+</ui:composition>

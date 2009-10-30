@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process-definition  xmlns=""  name="notificaRequestReply">
+
+
+	<start-state name="NotificaRequest" >
+		<transition to="NotificaReply" name="inviaRequest"></transition>
+	</start-state>
+
+
+	<task-node name="NotificaReply" create-tasks="false">
+		<task name="riceviMessaggio"/>	
+		<event type="node-enter">
+			<action name="CambiaDestinatario" class="org.domain.GAS.processes.CambiaDestinatarioHandler">
+				<nameTask>riceviMessaggio</nameTask>
+			</action>
+		</event>
+		<event type="timer-create">
+      		<action name="timerCreated" class="org.domain.GAS.processes.DeleteCreateTimer">
+       			<timerName>timerOpzionale</timerName>
+      		</action>
+    	</event>
+		<event type="node-leave">
+			<action name="FermaTask" class="org.domain.GAS.processes.CancelTaskAction">
+				<taskName>riceviMessaggio</taskName>
+			</action>
+		</event>
+		<timer duedate="10 years" name="timerOpzionale" transition="inviaReply"/>
+		<transition to="VisualizzaReply" name="inviaReply"></transition>
+	</task-node>
+
+	<task-node name="VisualizzaReply">
+		<task name="riceviRisposta" priority="highest">
+			<assignment name="AssegnamentoRisposta" class="org.domain.GAS.processes.DestinatarioHandler">
+				<nameTask>riceviRisposta</nameTask>
+			</assignment>
+		</task>
+		<transition to="end-state" name="fine"></transition>
+	</task-node>
+
+
+	<end-state name="end-state"></end-state>
+
+
+</process-definition>

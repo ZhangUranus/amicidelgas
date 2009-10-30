@@ -1,0 +1,162 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:a="http://richfaces.org/a4j"
+    template="/layout/template.xhtml">
+
+	<ui:define name="body">
+
+		<h:form id="inviaNotifica" styleClass="edit">
+			<rich:simpleTogglePanel id = "simpleTogglePanel1" label="Invia Notifica" switchType="ajax">
+			<h:panelGrid id ="panelGrid1" columns="1">
+				<s:decorate id="destinatarioField" template="/layout/edit.xhtml">
+	                <ui:define name="label">Scegli il destinatario</ui:define>
+	                <h:selectOneRadio value="#{notificaBean.destinatario}" required="true" requiredMessage="Scegli il destinatario">
+					  <a:support event="onclick" ajaxSingle="true" reRender="gruppoField, utenteField">	</a:support>
+					  <f:selectItem itemLabel="Gruppo" itemValue="gruppo" />
+	  				  <f:selectItem itemLabel="Utente" itemValue="utente" />
+					</h:selectOneRadio>
+	            </s:decorate>
+				
+				<a:outputPanel ajaxRendered="true">
+					<s:decorate id="gruppoField" rendered="#{notificaBean.destinatario=='gruppo'}">
+						<h:selectOneMenu value="#{notificaBean.gruppoScelto}"  required="true"  requiredMessage="Seleziona il gruppo a cui vuoi inviare una notifica">
+		                	<f:selectItem itemDisabled="true"   itemLabel="Select-one"/>
+		                	<f:selectItem itemLabel="Utente Gas" itemValue="utenteGas"/>
+		                	<f:selectItem itemLabel="Cyber Contadino" itemValue="utenteContadino" />
+						  	<f:selectItem itemLabel="Mediatore" itemValue="mediatore" />
+						  	<f:selectItem itemLabel="Driver" itemValue="driver" />
+						  	<f:selectItem itemLabel="Admin" itemValue="admin" />	
+		                </h:selectOneMenu>
+					</s:decorate>
+				</a:outputPanel>
+				
+				<a:outputPanel ajaxRendered="true">
+				
+				<s:decorate id="utenteField" rendered="#{notificaBean.destinatario=='utente'}">
+				 <h:panelGrid columns="3">
+				  <h:column>		
+			
+				   		<div class="results" id="listaUtenti">
+						<h:form>
+					        <a:region>
+						    <rich:dataTable id="myUtentiList"
+						                var="_accountVar"
+						                value="#{accountListExtended.resultListNotEliminato}"
+						              rendered="#{not empty accountListExtended.resultListNotEliminato}"
+						              rows="5"
+						              rowKeyVar="row">
+					    	<f:facet name="header">Lista utenti</f:facet>		              
+						     <rich:column>          
+							     <f:facet name="header">
+						                <ui:include src="/layout/sort.xhtml">
+						                    <ui:param name="entityList" value="#{accountListExtended}"/>
+						                    <ui:param name="propertyLabel" value="Username"/>
+						                    <ui:param name="propertyPath" value="account.username"/>
+						                </ui:include>
+						          </f:facet>         
+						          <h:outputText value="#{_accountVar.username}"/>
+					         </rich:column>
+					         
+					         <rich:column>          
+							     <f:facet name="header">
+						                <ui:include src="/layout/sort.xhtml">
+						                    <ui:param name="entityList" value="#{accountListExtended}"/>
+						                    <ui:param name="propertyLabel" value="Cognome"/>
+						                    <ui:param name="propertyPath" value="account.utente.cognome"/>
+						                </ui:include>
+						          </f:facet>         
+						          <h:outputText value="#{_accountVar.utente.cognome}"/>
+					         </rich:column>
+					         
+					         <rich:column>
+					            <f:facet name="header">
+					                <ui:include src="/layout/sort.xhtml">
+					                    <ui:param name="entityList" value="#{accountListExtended}"/>
+					                    <ui:param name="propertyLabel" value="Nome"/>
+					                    <ui:param name="propertyPath" value="account.utente.nome"/>
+					                </ui:include>
+					            </f:facet>
+					            <h:outputText value="#{_accountVar.utente.nome}"/>
+					        </rich:column>        
+					         
+					        <rich:column align="center">
+					            <f:facet name="header">Select</f:facet>
+					            <a:commandLink
+					            	ajaxSingle="true"
+					            	oncomplete="#{rich:component('myUtentiListSelezionati')}.show()">
+					            	<h:graphicImage id="selezionaUtenteButton" value="/img/passed.gif" rendered="#{!_accountVar.eliminato}" width="30%"/>
+									<f:setPropertyActionListener value="#{_accountVar}" 
+						            							target="#{notificaBean.utenteScelto}" />
+					            </a:commandLink>
+					        </rich:column>
+					        
+						  </rich:dataTable>
+						  <rich:datascroller align="center" for="myUtentiList" id="sc1" rendered="true"/>
+						  </a:region>
+						  </h:form>
+					    </div>
+					</h:column>
+					<h:column><table/></h:column>
+					<h:column>
+						<rich:dataTable id="myUtentiListSelezionati"
+					                var="_utenti"
+					                value="#{notificaBean.myAccountList}"
+					              rendered="#{not empty notificaBean.myAccountList}"
+					              rows="5"
+					              rowKeyVar="row">
+					      	<f:facet name="header">Utenti selezionati</f:facet>        
+				            <rich:column>
+				            	<f:facet name="header">Username</f:facet>
+				              	<h:outputText value="#{_utenti.username}"/>
+				            </rich:column>
+				            <rich:column align="center">
+					            <f:facet name="header">Cancel</f:facet>
+					            	<a:commandLink
+					            		ajaxSingle="true"
+					            		oncomplete="#{rich:component('myUtentiListSelezionati')}.show()">
+					            		<h:graphicImage id="selezionaUtenteButton" value="/img/error1.gif" width="30%"/>
+					            		<f:setPropertyActionListener value="#{_utenti}" 
+						            							target="#{notificaBean.utenteCancellato}" />
+					            	</a:commandLink>
+					        </rich:column>
+						</rich:dataTable>
+					</h:column>
+				</h:panelGrid>
+			</s:decorate>
+		</a:outputPanel>	
+			<br/>
+			<br/>	
+			
+		<table>
+			<td>		
+				 <b>Messaggio da inviare</b>		
+				 <h:inputTextarea id="messaggioDaInviare"
+		                      required="true"
+		                          rows="2" style=" width : 279px; height : 63px;"
+		                	     value="#{notificaBean.messaggio}">
+		        </h:inputTextarea>
+			</td>
+			<td>
+			    <h:commandButton id="cbutton2" value="Invia" action="#{notificaBean.sendMessagge()}">
+			    </h:commandButton>
+			</td>
+      	</table>
+                 
+		</h:panelGrid>
+		</rich:simpleTogglePanel>
+		</h:form>
+		
+		<br/>
+		<br/>
+		
+		
+		
+	</ui:define>
+	
+</ui:composition>

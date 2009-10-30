@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root-container name="notificaRegistrazione" width="792" height="886">
+  <node name="RichiestaRegistrazione" x="29" y="22" width="192" height="36">
+    <edge>
+      <label x="-54" y="-32"/>
+    </edge>
+  </node>
+  <node name="CreaEventoAziendaVisitare" x="423" y="26" width="240" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="PartecipaVisita" x="34" y="230" width="216" height="42">
+    <edge>
+      <label x="5" y="-10"/>
+      <bendpoint w1="214" h1="-4" w2="-131" h2="55"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="VisualizzaQuestionari" x="476" y="543" width="313" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="AccettaAltriUtenti" x="338" y="158" width="132" height="36">
+    <edge>
+      <label x="12" y="-23"/>
+      <bendpoint w1="-262" h1="1" w2="0" h2="-74"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="fork1" x="495" y="112" width="252" height="24">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="join1" x="483" y="305" width="252" height="24">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="SubProcessNotifica" x="25" y="446" width="185" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="CustomNodeFork" x="54" y="364" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="CustomNodeJoin" x="-1" y="550" width="252" height="24">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="AspettaDataQuestionario" x="515" y="370" width="192" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="AccettaRifiuta" x="530" y="642" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="ContadinoAccettato" x="620" y="845" width="132" height="36"/>
+  <node name="ContadinoRifiutato" x="351" y="849" width="132" height="36"/>
+</root-container>

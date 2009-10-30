@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:a="http://richfaces.org/a4j"
+    template="/layout/template.xhtml">
+
+<ui:define name="body">
+<h:form id="passo4Form">
+    <rich:panel>
+    	
+        <f:facet name="header">Richiesta Registrazione: Passo 4 - Registrazione Inoltrata</f:facet>
+        
+        <s:decorate id="nome" template="/layout/display.xhtml">
+            <ui:define name="label">Ciao </ui:define>
+            <h:outputText value="#{contadinoCreato.nomePresidente}"/>
+        </s:decorate>
+     
+        <s:decorate id="email" template="/layout/display.xhtml">
+            <ui:define name="label">ti verra inviata una notifica alla tua e-mail:</ui:define>
+            <h:outputText value="#{contadinoCreato.email}"/>
+        </s:decorate>
+        
+        <s:decorate id="info" template="/layout/display.xhtml">
+            <ui:define name="label">per informarti dell'avvenuta registrazione.</ui:define>
+        </s:decorate>
+
+		<div style="clear:both">
+                GAS
+            </div>
+
+    </rich:panel>
+    
+    <div class="actionButtons">
+		<h:commandButton id="Home" value="vai alla Home" action="passo4Outcome"/>
+        </div>
+    
+    </h:form>
+
+</ui:define>
+
+</ui:composition>

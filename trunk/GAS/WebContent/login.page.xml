@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page xmlns="http://jboss.com/products/seam/pages"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://jboss.com/products/seam/pages http://jboss.com/products/seam/pages-2.1.xsd">
+
+   <navigation from-action="#{identity.login}">
+   			<rule if="#{loginSelectBean.calculateMaxRole() == 'admin'}">
+	             <redirect view-id="/customer/customerHome.xhtml"/>
+	  		</rule>
+	  		<rule if="#{loginSelectBean.calculateMaxRole() == 'mediatore'}">
+	             <redirect view-id="/customer/customerHome.xhtml"/>
+	  		</rule>
+	  		<rule if="#{loginSelectBean.calculateMaxRole() == 'driver'}">
+	             <redirect view-id="/customer/customerHome.xhtml"/>
+	  		</rule>
+      		<rule if="#{loginSelectBean.calculateMaxRole() == 'utenteGas'}">
+	             <redirect view-id="/customer/customerHome.xhtml"/>
+	  		</rule>
+	  		<rule if="#{loginSelectBean.calculateMaxRole() == 'utenteContadino'}">
+	             <redirect view-id="/contadino/contadinoHome.xhtml"/>
+	  		</rule>
+	  		
+   </navigation>
+
+</page>

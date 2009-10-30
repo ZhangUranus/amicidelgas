@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process-definition  xmlns=""  name="notificaRegistrazione">
+
+
+	<start-state name="RichiestaRegistrazione">
+		<transition to="CreaEventoAziendaVisitare" name="inviaRegistrazione"></transition>
+	</start-state>
+
+	<task-node name="CreaEventoAziendaVisitare">
+		<task name="crea_visita">
+			<assignment pooled-actors="mediatore"></assignment>
+		</task>
+		<transition to="fork1" name="invia"></transition>
+	</task-node>
+
+	<task-node name="PartecipaVisita">
+		<task name="partecipa_alla_visita" >
+			<assignment pooled-actors="utenteGas"></assignment>
+		</task>
+		 <event type="timer-create">
+      		<action name="nuovoTimer" class="org.domain.GAS.processes.ChangeTimerDate">
+        		<nomeTimer>varTimer</nomeTimer>
+				<nomeDueDate>dataMassimaAccettazione</nomeDueDate>
+      		</action>
+    	</event>
+		<event type="node-leave">
+			<action name="CancellaTaskAperti" class="org.domain.GAS.processes.CancelTaskAction">
+			 	<taskName>partecipa_alla_visita</taskName>
+			</action>
+		</event>
+    	<timer duedate="1 years" name="varTimer" transition="time-out"/>
+		<transition to="AccettaAltriUtenti" name="partecipa"></transition>
+		<transition to="join1" name="time-out"></transition>
+	</task-node>
+
+	<task-node name="VisualizzaQuestionari">
+		<task name="visualizzaQuestionari" priority="highest">
+			<assignment pooled-actors="admin"></assignment>
+		</task>
+		<transition to="AccettaRifiuta" name="decisioneAdmin"></transition>
+	</task-node>
+
+	<decision name="AccettaAltriUtenti">
+		<transition to="PartecipaVisita" name="posti disponibili">
+			<condition expression="#{!(postiOccupati &gt;= 10)}"></condition>
+		</transition>
+		<transition to="join1" name="posti esauriti">
+			<condition expression="#{postiOccupati ==10}"></condition>
+		</transition>
+	</decision>
+	
+	<fork name="fork1">
+		<transition to="AccettaAltriUtenti"></transition>
+		<transition to="join1" name="to EMAIL"></transition>
+	</fork>
+
+	<join name="join1">
+		<transition to="AspettaDataQuestionario" name="aspettaData"></transition>
+	</join>
+
+	<process-state name="SubProcessNotifica">
+		<sub-process name="notificaRequestReply" binding="late"/>
+		<variable access="read" name="messageSubProcess" mapped-name="notifyMessageRequest"></variable>
+		<variable access="read" name="inviato" mapped-name="nomeDestinatario"></variable>
+		<variable access="read" name="dataTimer" mapped-name="dataTimer"></variable>
+		<variable access="read" name="MediatoreCheManda" mapped-name="nomeMittente"></variable>
+		<variable access="read" name="compilatoQuestionario" mapped-name="compilato"></variable>
+		<variable access="read" name="dataProposta" mapped-name="dataVisita"></variable>
+		<variable access="read" name="contadinoCreato" mapped-name="contadino"></variable>
+		<transition to="CustomNodeJoin" name="fineSubProcess"></transition>
+	</process-state>
+
+	<node name="CustomNodeFork">
+	<action class="org.domain.GAS.processes.ForEachForkActionHandler"/>
+		<transition to="SubProcessNotifica" name="invocaSubProcess"></transition>
+	</node>
+
+	<join name="CustomNodeJoin" >
+		<transition to="VisualizzaQuestionari" name="notificaAdmin"></transition>
+	</join>
+
+	<state name="AspettaDataQuestionario">
+		<event type="timer-create">
+      		 <action name="CambiaTimerQuestionario" class="org.domain.GAS.processes.ChangeTimerDate">
+        		<nomeTimer>timerVarQuestionario</nomeTimer>
+				<nomeDueDate>dataQuestionario</nomeDueDate>
+      		</action>
+    	</event>
+    	<timer duedate="9 years" name="timerVarQuestionario" transition="notificaQuestionario"/>
+		<transition to="CustomNodeFork" name="notificaQuestionario"></transition>
+	</state>
+
+	<decision name="AccettaRifiuta">
+		<transition to="ContadinoAccettato" name="accetta">
+			<condition expression="#{decisione == 1}"></condition>
+		</transition>
+		<transition to="ContadinoRifiutato" name="rifiuta">
+			<condition expression="#{decisione == 0}"></condition>
+		</transition>
+	</decision>
+	
+	<end-state name="ContadinoAccettato"></end-state>
+	
+	<end-state name="ContadinoRifiutato"></end-state>
+
+</process-definition>

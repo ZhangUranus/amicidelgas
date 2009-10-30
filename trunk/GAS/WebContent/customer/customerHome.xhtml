@@ -1,0 +1,328 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:a="http://richfaces.org/a4j"
+    template="/layout/template.xhtml">
+
+    <ui:define name="body">
+    	<div id="shadow_focus_home" style="background: transparent url('/GAS/img/shadow0.png') ; width:100%; z-index:199; height:100%; left:0; top:0; display:none; position:fixed;" />
+		<div id="alert_div_focus" style="cursor:pointer; display:none; z-index: 200; position:fixed; left:40%; top:40%;" onclick="show_focus(); show_focus_timer();">
+			<table width="200px" border="0" cellspacing="0" cellpadding="0" align="center" >
+			  <tr>
+			    <td width="13" height="12" background="/GAS/img/shadow_corner_a.png"></td>
+			    <td height="12" background="/GAS/img/shadow_top_n.png"></td>
+			    <td width="13" height="12" background="/GAS/img/shadow_corner_b.png"></td>
+			  </tr>
+			  <tr>
+			  	<td background="/GAS/img/shadow_ovest.png"></td>
+			    <td background="/GAS/img/shadow_n.png" valign="top"><div align="center" >
+					<img alt="statistiche" border="0" src="/GAS/img/alert.png"/>
+			    </div></td>
+			    <td background="/GAS/img/shadow_est.png"></td>
+			  </tr>
+			  <tr>
+			  	<td background="/GAS/img/shadow_ovest.png"></td>			    
+			    <td background="/GAS/img/shadow_n.png" valign="bottom"><div align="center" class="colore_yellow">Avviso</div></td>
+			    <td background="/GAS/img/shadow_est.png"></td>			      
+			  </tr>
+			  <tr>
+			  	<td background="/GAS/img/shadow_ovest.png"></td>
+			    <td background="/GAS/img/shadow_n.png" valign="top"><div align="center" class="explorer_white">
+					Attenzione: hai #{filtraNotificaAltaPriorita.numberOfHighestPriorityTaskForSingle('riceviMessaggio')} avviso/i ad alta priorita' da risolvere
+			    </div></td>
+			    <td background="/GAS/img/shadow_est.png"></td>
+			  </tr>
+			  <tr>
+			    <td width="13" height="12" background="/GAS/img/shadow_corner_d.png"></td>
+			    <td height="12" background="/GAS/img/shadow_bottom_n.png"></td>
+			    <td width="13" height="12" background="/GAS/img/shadow_corner_c.png"></td>
+			  </tr>
+			</table>
+		</div>
+
+		<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center" >
+			<tr>
+			
+				<td width="70%">
+					<table width="99%" border="0" cellspacing="6" cellpadding="0" align="left" >
+					  <tr>			    
+					    <td rowspan="2" width="25%" align="center">
+					    	<s:decorate rendered="#{loginSelectBean.calculateMaxRole()=='admin'}"><img alt="statistiche" border="0" src="/GAS/img/admin.png"/></s:decorate>
+					    	<s:decorate rendered="#{loginSelectBean.calculateMaxRole()=='mediatore'}"><img alt="statistiche" border="0" src="/GAS/img/contatti.png"/></s:decorate>
+					    	<s:decorate rendered="#{loginSelectBean.calculateMaxRole()=='utenteGas'}"><img alt="statistiche" border="0" src="/GAS/img/contatti.png"/></s:decorate>
+					    	<s:decorate rendered="#{loginSelectBean.calculateMaxRole()=='driver'}"><img alt="statistiche" border="0" src="/GAS/img/driver.png"/></s:decorate>
+					    </td>
+					    <td valign="bottom" width="40%"><div align="left" class="colore_1">Bentornato <b>#{currentUser.nome} #{currentUser.cognome}</b></div></td>			      
+					  	<td valign="bottom" width="35%">
+					  		<s:decorate rendered="#{(!(filtraNotificaAltaPriorita.getBecomeDriverStartByMe('riceviMessaggio',currentAccount.username)>0)) and (currentAccount.punteggioFeedback >= 3.5) and (!(loginSelectBean.calculateMaxRole()=='driver'))}">
+					  			<div align="center" class="min_bold" onclick="javascript:infolevel();" style="cursor: pointer" >
+					  			<img src="/GAS/img/driver_mini.png" border="0" id="plus_img_infolevel" align="middle" /> Proponiti come driver
+					  			</div>
+					  		</s:decorate>
+					  	</td>			      
+					  </tr>
+					  <tr>
+					    <td valign="top" >
+					    	<br />
+					    	<s:link view="/customer/riepilogoFeedback.xhtml">
+					    	<div align="left" style="cursor:pointer;" >
+						    	<h:graphicImage value="/img/star_full.png" rendered="#{currentAccount.punteggioFeedback > 0.5}" />
+								<h:graphicImage value="/img/star_full.png" rendered="#{currentAccount.punteggioFeedback > 1.5}" />
+								<h:graphicImage value="/img/star_full.png" rendered="#{currentAccount.punteggioFeedback > 2.5}" />
+								<h:graphicImage value="/img/star_full.png" rendered="#{currentAccount.punteggioFeedback > 3.5}" />
+								<h:graphicImage value="/img/star_full.png" rendered="#{currentAccount.punteggioFeedback > 4.5}" />
+								<h:graphicImage value="/img/star_half.png" rendered="#{currentAccount.punteggioFeedback == 0.5}" />
+								<h:graphicImage value="/img/star_half.png" rendered="#{currentAccount.punteggioFeedback == 1.5}" />
+								<h:graphicImage value="/img/star_half.png" rendered="#{currentAccount.punteggioFeedback == 2.5}" />
+								<h:graphicImage value="/img/star_half.png" rendered="#{currentAccount.punteggioFeedback == 3.5}" />
+								<h:graphicImage value="/img/star_half.png" rendered="#{currentAccount.punteggioFeedback == 4.5}" />
+								<h:graphicImage value="/img/star_empty.png" rendered="#{!(currentAccount.punteggioFeedback > 0)}" />
+								<h:graphicImage value="/img/star_empty.png" rendered="#{!(currentAccount.punteggioFeedback > 1)}" />
+								<h:graphicImage value="/img/star_empty.png" rendered="#{!(currentAccount.punteggioFeedback > 2)}" />
+								<h:graphicImage value="/img/star_empty.png" rendered="#{!(currentAccount.punteggioFeedback > 3)}" />
+								<h:graphicImage value="/img/star_empty.png" rendered="#{!(currentAccount.punteggioFeedback > 4)}" />
+							</div>
+							</s:link>	
+							<div align="left" class="explorer">
+								<br />
+								<li>Codice fiscale: #{currentUser.codiceFiscale}</li>                        	
+	                        	<li>Data Attivazione: <b>#{currentAccount.dataAccettazione}</b></li>
+	                        	<hr noshade="noshade" width="85%" align="left"/>
+	                        	<span class="colore_1">I tuoi contatti</span>
+	                        	<li>E-mail: #{currentUser.email}</li>
+	                        	<li>Telefono: #{currentUser.recapitoTelefonico}</li>
+	                        	<li>Indirizzo: #{currentUser.indirizzo}</li>
+							</div>
+						</td>
+						<script type="text/javascript"><!--
+							function setInput() {
+								document.getElementById('becameDriverForm:driver_div:destinatario_hidden').value='mediatore';
+								document.getElementById('becameDriverForm:driver_div:broadcast_hidden').value=true;
+								document.getElementById('becameDriverForm:driver_div:tipo_hidden').value='becomeDriver';
+								document.getElementById('become_driver_button').style.display= "";
+							}
+						--></script>
+						<td valign="top" ><div  align="left" class="explorer">
+							<h:form id="becameDriverForm">
+							<s:decorate id="driver_div" rendered="#{(currentAccount.punteggioFeedback >= 3.5) and (!(loginSelectBean.calculateMaxRole()=='driver'))}">
+                       		<table border="0" align="left" cellpadding="0" cellspacing="8" id="table_show_info" style="display:none;border-color:#CCCCCC;">
+							  <tr>
+							    <td align="center" >
+				    				<div align="center" class="colore_1">Inserisci messaggio da mandare al mediatore</div>
+							    </td>
+							  </tr>
+						      <tr>
+							    <td align="center" >
+				    				<h:inputTextarea value="#{notificaRichiestaRisposta.content}" onkeypress="setInput();" />
+				    				<h:inputHidden id="destinatario_hidden" value="#{notificaRichiestaRisposta.destinatario}" ></h:inputHidden>
+				    				<h:inputHidden id="broadcast_hidden" value="#{notificaRichiestaRisposta.broadcast}" ></h:inputHidden>
+				    				<h:inputHidden id="tipo_hidden" value="#{notificaRichiestaRisposta.tipo}" ></h:inputHidden>
+							    </td>
+							  </tr>
+							  <tr>
+							    <td align="center">
+							    	<div id="become_driver_button" style="display:none;">
+							    	<div id="pulsante_driver_loading" style="display: none;"><img src="/GAS/img/loading.gif" /></div>					
+							    	<h:commandButton id="button" value="Proponiti come driver"
+				            			action="#{notificaRichiestaRisposta.notificaRequest}"
+				            			onmouseup="disable_this(this.id, 'pulsante_driver_loading');"  >	    
+				            		</h:commandButton>						  
+                   	    			</div>	
+							    </td>
+							  </tr>
+							</table>
+                        	</s:decorate>
+                        	</h:form>
+						</div></td>
+					  </tr>
+					</table>	
+				</td>
+				
+				
+				<td width ="30%">
+					<table width="99%" border="0" cellspacing="6" cellpadding="0" align="left" >
+					  <tr>			    
+					    <td width="50px" rowspan="2" align="left">
+					    	<img alt="statistiche" border="0" src="/GAS/img/ruoli.png"/>					    	
+					    </td>
+					    <td valign="bottom"><div align="left" class="colore_1">I tuoi ruoli</div></td>			      
+					  </tr>
+					  <tr>
+					    <td valign="top"><div align="left" class="explorer">
+							<a:repeat var="_ruolo" value="#{rolesPerAccount.resultList}">
+							<h:outputText value="#{_ruolo.name}"/>; 
+							</a:repeat>
+					    </div></td>
+					  </tr>
+					</table>
+					<table width="99%" border="0" cellspacing="6" cellpadding="0" align="left" >
+					  <tr>			    
+					    <td width="50px" rowspan="2" align="left">
+					    	<s:link view="/customer/editDati.xhtml"
+				             propagation="none"
+				                      id="utenteEditImg"
+				                rendered="#{empty from}">
+				                <f:param name="utenteCodiceFiscale"
+				                        value="#{currentUser.codiceFiscale}"/>
+				                <f:param name="accountUsername"
+				                        value="#{currentAccount.username}"/>
+					    	<img alt="statistiche" border="0" src="/GAS/img/profilo.png"/>
+					    	</s:link>
+					    	</td>
+					    <td valign="bottom"><div align="left" class="colore_1">
+					    	<s:link view="/customer/editDati.xhtml"
+				                   value="Profilo"
+				             propagation="none"
+				                      id="utenteEdit2"
+				                rendered="#{empty from}">
+				                <f:param name="utenteCodiceFiscale"
+				                        value="#{currentUser.codiceFiscale}"/>
+				                <f:param name="accountUsername"
+				                        value="#{currentAccount.username}"/>
+				            </s:link>
+					    	</div></td>			      
+					  </tr>
+					  <tr>
+					    <td valign="top"><div align="left" class="explorer">Visualizza i tuoi dati</div></td>
+					  </tr>
+					</table>
+					<table width="99%" border="0" cellspacing="6" cellpadding="0" align="left" >
+					  <tr>			    
+					    <td width="50px" rowspan="2" align="left">
+					    	<img alt="statistiche" border="0" src="/GAS/img/fondo.png"/>					    	
+					    </td>
+					    <td valign="bottom"><div align="left" class="colore_1">Il tuo fondo soldi</div></td>			      
+					  </tr>
+					  <tr>
+					    <td valign="top"><div align="left" class="explorer">#{currentAccount.fondo} &#8364;</div>
+					    </td>
+					  </tr>
+					</table>
+					<s:decorate rendered="#{(filtraNotificaAltaPriorita.numberOfHighestPriorityTaskForSingle('riceviMessaggio') > 0)}">
+						<div id="alert_div">
+							<script type="text/javascript">show_focus();</script>
+							<table width="99%" border="0" cellspacing="6" cellpadding="0" align="left" >
+							  <tr>			    
+							    <td width="50px" rowspan="2" align="left">
+							    	<img alt="statistiche" border="0" src="/GAS/img/alert.png"/>					    	
+							    </td>
+							    <td valign="bottom"><div align="left" class="colore_1">Avviso</div></td>			      
+							  </tr>
+							  <tr>
+							    <td valign="top"><div align="left" class="explorer">
+									Hai #{filtraNotificaAltaPriorita.numberOfHighestPriorityTaskForSingle('riceviMessaggio')} avviso/i ad alta priorita' da risolvere
+							    </div></td>
+							  </tr>
+							</table>
+						</div>
+					</s:decorate>					
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2" height="32"><hr noshade="noshade" />				
+				</td>
+			</tr>
+		</table>
+		
+		<s:decorate rendered="#{(loginSelectBean.calculateMaxRole()=='admin') or (loginSelectBean.calculateMaxRole()=='mediatore') or (loginSelectBean.calculateMaxRole()=='driver')}">
+		
+		<table width="90%" border="0" cellspacing="0" cellpadding="0" align="center" >		
+			<tr>
+				<td width="50%">
+				<s:decorate rendered="#{(loginSelectBean.calculateMaxRole()=='admin') or (loginSelectBean.calculateMaxRole()=='mediatore')}">
+					<table width="85%" border="0" cellspacing="8" cellpadding="0" align="center" >
+					  <tr>			    
+					    <td width="50px" rowspan="2" align="left">
+						    	<s:link view="/admin/editDatiUtenti.xhtml"
+					             propagation="none"
+					                      id="editDatiUtentiRegistratiImg"
+					                rendered="#{empty from}">
+						    	<img alt="statistiche" border="0" src="/GAS/img/utenti.png"/>
+						    	</s:link>
+					    	</td>
+					    <td valign="bottom"><div align="left" class="colore_1">
+					    	<s:link view="/admin/editDatiUtenti.xhtml"
+				                   value="Utenti registrati"
+				             propagation="none"
+				                      id="editDatiUtentiRegistrati2"
+				                rendered="#{empty from}">
+				            </s:link>
+					    	</div></td>			      
+					  </tr>
+					  <tr>
+					    <td valign="top"><div align="left" class="explorer">Visualizza e modifica i dati degli utenti</div></td>
+					  </tr>
+					</table>
+					</s:decorate>
+				</td>
+				<td width="50%">
+				<s:decorate rendered="#{(loginSelectBean.calculateMaxRole()=='admin') or (loginSelectBean.calculateMaxRole()=='mediatore')}">
+					<table width="85%" border="0" cellspacing="8" cellpadding="0" align="center" >
+					  <tr>			    
+					    <td width="50px" rowspan="2" align="left">
+					    	<s:link view="/admin/editDatiCybercontadino.xhtml"
+				             propagation="none"
+				                      id="editDatiCybercontadiniRegistratiImg"
+				                rendered="#{empty from}">
+					    	<img alt="statistiche" border="0" src="/GAS/img/contadini_registrati.png"/>
+					    	</s:link>
+					    	</td>
+					    <td valign="bottom"><div align="left" class="colore_1">
+					    	<s:link view="/admin/editDatiCybercontadino.xhtml"
+				                   value="Cybercontadini registrati"
+				             propagation="none"
+				                      id="editDatiCybercontadiniRegistrati2"
+				                rendered="#{empty from}">
+				            </s:link>
+					    	</div></td>			      
+					  </tr>
+					  <tr>
+					    <td valign="top"><div align="left" class="explorer">Visualizza e modifica i dati dei cybercontadini</div></td>
+					  </tr>
+					</table>
+					</s:decorate>
+				</td>
+			</tr>
+		
+		
+		<s:decorate >	
+			<tr>
+			<td width="50%">
+				<s:decorate rendered="#{(loginSelectBean.calculateMaxRole()=='mediatore') or (loginSelectBean.calculateMaxRole()=='admin')}">
+					<table width="85%" border="0" cellspacing="8" cellpadding="0" align="center" >
+					  <tr>			    
+					    <td width="50px" rowspan="2" align="left"><a href="/GAS/mediatore/puntiDiConsegna.seam"><img alt="statistiche" border="0" src="/GAS/img/punto_consegna.png"/></a></td>
+					    <td valign="bottom"><div align="left" class="colore_1"><a href="/GAS/mediatore/puntiDiConsegna.seam">Punti di consegna</a></div></td>			      
+					  </tr>
+					  <tr>
+					    <td valign="top"><div align="left" class="explorer">Aggiungi, Elimina i Punti di Consegna </div></td>
+					  </tr>
+					</table>					
+				</s:decorate>
+			</td>			
+			<td width="50%">
+			<s:decorate rendered="#{loginSelectBean.calculateMaxRole()=='driver' or (loginSelectBean.calculateMaxRole()=='admin')}">
+					<table width="85%" border="0" cellspacing="8" cellpadding="0" align="center" >
+					  <tr>			    
+					    <td width="50px" rowspan="2" align="left" ><a href="/GAS/driver/itinerario.seam"><img alt="statistiche" border="0" src="/GAS/img/itinerario.png"/></a></td>
+					    <td valign="bottom"><div align="left" class="colore_1"><a href="/GAS/driver/itinerario.seam">Itinerario</a></div></td>			      
+					  </tr>
+					  <tr>
+					    <td valign="top"><div align="left" class="explorer">Crea un nuovo itinerario di visita</div></td>
+					  </tr>
+					</table>
+					</s:decorate>
+				</td>
+			</tr>
+		</s:decorate>	
+			
+		</table>		
+		</s:decorate>
+			
+    </ui:define>
+</ui:composition>

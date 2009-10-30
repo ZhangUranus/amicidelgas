@@ -1,0 +1,190 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:a="http://richfaces.org/a4j"
+    template="/layout/template.xhtml">
+
+	<ui:define name="body">
+		
+			<rich:simpleTogglePanel label="Notifiche Personali">
+			
+				<s:decorate rendered="#{not empty filtraNotifica.getAllSingleTaskInstanceListByFilters('ReceiveMessage')}">
+					<b><h:outputText value="Messaggi da altri utenti" /></b><br/><br/>
+					<rich:dataTable id="dataTableUtente" width="90%" align="center" 
+									value="#{filtraNotifica.getAllSingleTaskInstanceListByFilters('ReceiveMessage')}" var="_task">
+			
+						<rich:column>
+							<f:facet name="header">Mittente</f:facet>    
+						        <h:outputText value="#{_task.variables.sender}"/>
+						</rich:column>
+						<rich:column>
+							<f:facet name="header">Contenuto messaggio</f:facet>    
+						    <h:outputText value="#{_task.variables.notifyMessage.content}"/>
+						</rich:column>
+						<rich:column width="10%">
+							<s:button taskInstance="#{_task}" action="#{notifyBean.receive()}"
+									value="Cancella messaggio"/>
+						</rich:column>
+					</rich:dataTable>
+					<br/><br/><br/>
+				</s:decorate>
+			
+			
+			<s:decorate rendered="#{not empty filtraNotifica.taskInstanceSingleListForContadino()}">
+				
+				
+				<b><h:outputText value="Messaggi di richiesta ordine" /></b><br/><br/>
+				
+				<h:form>
+				<rich:dataTable id="dataTableUtenteRichiestaOrdini" 
+								value="#{filtraNotifica.taskInstanceSingleListForContadino()}" var="_task"
+								width="90%" align="center" >
+					
+					
+					<rich:column>
+						<f:facet name="header">Mittente</f:facet>    
+				         <h:outputText value="#{_task.variables.customer.username}"/>
+					</rich:column>
+					
+					<rich:column>
+						<f:facet name="header">Contenuto messaggio</f:facet>    
+				         <h:outputText value="#{_task.variables.notificaDriverContadino.content}"/>
+					</rich:column>
+					
+					<rich:column>
+						<f:facet name="header">Data Massima</f:facet>    
+				         <h:outputText value="#{_task.variables.dataMassimaShoppingCart}">
+				         	<f:convertDateTime type="date" dateStyle="medium" locale="Locale.ITALY"/>
+				         </h:outputText>
+					</rich:column>
+					
+					<rich:column align="center">
+                		<f:facet name="header">Dettagli Ordine</f:facet>
+		                	<a:commandLink ajaxSingle="true" id="dettagliOrdinePendenteLink"
+		                    	oncomplete="#{rich:component('dettagliOrdinePanel')}.show()">
+		                    	<f:setPropertyActionListener value="#{ordineBean.getOrdineFromTask(_task)}" 
+		                    								target="#{ordineBean.currentMyOrder}" />
+			                    <h:graphicImage value="/img/modifica_mini.png" style="border:0" />
+			                </a:commandLink>
+                		<rich:toolTip for="dettagliOrdinePendenteLink" value="Visualizza i dettagli dell'ordine"/>
+	            	</rich:column>
+												
+					<rich:column width="10%">
+						<h:commandLink value="Accetta ordine"
+		            			action="#{orderProcessing.verificaDisponibilita(newItinerario, newPuntiDiConsegna)}">
+		            			<f:setPropertyActionListener value="#{_task}" target="#{ordineBean.currentTaskContadino}" />
+		            			<f:param name="taskId" value="#{_task.id}"/>
+	           			</h:commandLink>
+					</rich:column>
+					
+				</rich:dataTable>
+				
+				
+				<s:decorate id="dataConsegnaField" template="/layout/edit.xhtml">
+                	<ui:define name="label">Inserire la data di consegna</ui:define>
+                		<rich:calendar id="dataVisita"
+                       		required="true" requiredMessage="Inserire una data"
+                    		value="#{newItinerario.dataConsegna}" datePattern="dd/MM/yyyy HH:mm" enableManualInput="true">
+                   		<a:support event="onchange" reRender="dataConsegnaField" bypassUpdates="true" ajaxSingle="true"/>
+                		</rich:calendar>
+            	</s:decorate>
+            	
+            	<s:decorate id="puntoConsegnaField" template="/layout/edit.xhtml">
+            	<ui:define name="label">Seleziona il punto di consegna</ui:define>
+            	<h:selectOneMenu  value="#{newPuntiDiConsegna}" required="true" requiredMessage="Selezionare un punto di consegna"
+		                	title="seleziona il punto di consegna" style=" width : 220px;">
+		                	
+		            
+		                	<s:selectItems noSelectionLabel="Seleziona un punto di consegna" 
+		                	var="_punto" reRender="puntoConsegnaField" label="#{_punto.comune.nome} #{_punto.indirizzo}" 
+		                	value="#{puntiDiConsegnaList.resultList}" />
+		                	
+		               		<s:convertEntity></s:convertEntity>
+		                </h:selectOneMenu>
+                </s:decorate>
+				<br/>
+				<s:decorate>
+					<h:outputText value="#{ordineBean.currentTaskContadino.variables.errorData}" style="color:red;" />
+				</s:decorate>
+				
+			</h:form>
+				<br/>	    
+			</s:decorate>
+		</rich:simpleTogglePanel>
+				
+				<br/><br/><br/>
+				
+				<rich:simpleTogglePanel label="Notifiche di gruppo">
+					<h:form>
+						<rich:dataTable id="dataTableGroup" 
+									value="#{filtraNotifica.getAllPooledTaskInstanceList('ReceiveMessage')}" var="_pooledTask"
+									width="90%" align="center" >
+						<rich:column>
+							<f:facet name="header">Mittente</f:facet>    
+					         <h:outputText value="#{_pooledTask.variables.sender}"/>
+						</rich:column>
+						<rich:column>
+							<f:facet name="header">Gruppo</f:facet>    
+					         <h:outputText value="#{_pooledTask.variables.notifyMessage.recipient}"/>
+						</rich:column>
+						<rich:column>
+							<f:facet name="header">Contenuto messaggio</f:facet>    
+					         <h:outputText value="#{_pooledTask.variables.notifyMessage.content}"/>
+						</rich:column>
+						<rich:column width="10%">
+							<s:button taskInstance="#{_pooledTask}" action="#{notifyBean.receive()}"
+									  value="Cancella messaggio"/>
+						</rich:column>
+						</rich:dataTable>
+				</h:form>
+			</rich:simpleTogglePanel>
+		
+		
+		<a:outputPanel ajaxRendered="true">
+		<rich:modalPanel id="dettagliOrdinePanel" autosized="true" width="350">
+       		<f:facet name="header">
+            	<h:outputText value="Dettagli ordini" />
+        	</f:facet>
+       		<f:facet name="controls">
+            	<h:panelGroup>
+                	<h:graphicImage value="/img/close.png" styleClass="hidelink" id="hidelink2"/>
+               	 	<rich:componentControl for="dettagliOrdinePanel" attachTo="hidelink2" operation="hide" event="onclick" />
+            	</h:panelGroup>
+        	</f:facet>
+			<ui:define name="label">Prodotti dell'ordine</ui:define>
+			<rich:dataTable var="_itemCarrello" id="itemsDataTableOrdiniFatti"
+				value="#{ordineBean.currentMyOrder.itemQuantita}">
+				<rich:column>
+						<f:facet name="header">Nome prodotto</f:facet>
+						<h:outputText value="#{_itemCarrello.item.name}"/>
+				</rich:column>	
+				<rich:column>
+					<f:facet name="header">Username contadino</f:facet>
+					<h:outputText value="#{_itemCarrello.cybercontadino.account.username}"/>
+				</rich:column>	
+				<rich:column>
+						<f:facet name="header">Quantita prodotto</f:facet>
+						<h:outputText value="#{_itemCarrello.quantita}"/>
+				</rich:column>	
+				<rich:column>
+						<f:facet name="header">Totale per prodotto</f:facet>
+						<h:outputText value="#{_itemCarrello.quantita * _itemCarrello.item.prezzo} euro"/>
+				</rich:column>
+				<rich:column>
+					<f:facet name="header">Quantita minima</f:facet>
+					<h:outputText value="#{_itemCarrello.quantitaParziale}"/>
+				</rich:column>				
+			</rich:dataTable>
+
+       	</rich:modalPanel>
+     </a:outputPanel>
+		
+		
+	</ui:define>
+	
+</ui:composition>
