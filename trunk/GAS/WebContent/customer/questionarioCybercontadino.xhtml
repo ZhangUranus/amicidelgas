@@ -85,6 +85,7 @@
 	                <ui:define name="label">Anteprima punteggio valutazione</ui:define>
 	                <h:outputText id="punteggioContadino" value="#{newQuestionario.votoGlobale}" ></h:outputText>  
 	            </s:decorate>
+	            
 				
 				<div style="clear:both">
 	                <span class="required">*</span>
@@ -96,7 +97,7 @@
 	    		<s:decorate id="decorateQuestionario">					
 						<h:commandLink value="Post questionario" id="postQuestionario"
 	            			action="#{inviaRequestReply.riceviMessaggio(1)}" style="display:none;"  >	            			
-	            			<f:param name="taskId" value="#{param.taskId}"/>
+	            			<f:param name="taskId" value="#{param.taskId}"  />
 	            		</h:commandLink>
 				</s:decorate>
 	    </h:form>

@@ -77,7 +77,7 @@
                        required="true"
                        requiredMessage="Inserire una password valida"
                            size="24"
-                      maxlength="16"
+                      maxlength="40"
                           value="#{passwordBean.password}">
                     <a:support event="onblur" reRender="passwordField" bypassUpdates="true" ajaxSingle="true"/>
                 </h:inputText>
@@ -89,7 +89,7 @@
                        required="true"
                        requiredMessage="Ripetere la password"
                            size="24"
-                      maxlength="16"
+                      maxlength="40"
                           value="#{passwordBean.confirm}"
                           >
                     <a:support event="onblur" reRender="confirmPasswordField" bypassUpdates="true" ajaxSingle="true"/>

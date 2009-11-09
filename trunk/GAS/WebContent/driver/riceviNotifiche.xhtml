@@ -83,16 +83,16 @@
 								value="#{matchItinerarioOrdine.currentListCybercontadino}" var="_contadino"
 								width="90%" align="center" >
 				<h:column>
-					<f:facet name="header">Username</f:facet>
-					<h:outputText value="#{_contadino.account.username}"/>
+					<f:facet name="header">Nome azienda</f:facet>
+					<h:outputText value="#{_contadino.nomeAzienda}"/>
 				</h:column>			
 				<h:column>
-					<f:facet name="header">Comune</f:facet>
+					<f:facet name="header">Sede azienda</f:facet>
 					<h:outputText value="#{_contadino.comune.nome}"/>
 				</h:column>		
 				<h:column>
-					<f:facet name="header">Nome azienda</f:facet>
-					<h:outputText value="#{_contadino.nomeAzienda}"/>
+					<f:facet name="header">Indirizzo</f:facet>
+					<h:outputText value="#{_contadino.indirizzo}"/>
 				</h:column>						
 					
 				</rich:dataTable>

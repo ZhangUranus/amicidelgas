@@ -41,8 +41,15 @@
 							            </s:decorate>
 							            
 							            <s:decorate  template="/layout/edit.xhtml">
-							                <ui:define name="label">Data Visita Azienda'</ui:define>
-							                <h:outputText id="dataVisitaContadino" value="#{_contadinoTask.variables.contadinoCreato.dataVisita}" ></h:outputText>
+							                <ui:define name="label">Data visita in Azienda</ui:define>
+							                <h:outputText id="dataVisitaContadino" value="#{_contadinoTask.variables.dataProposta}" >
+							                <f:convertDateTime type="date" dateStyle="medium" locale="Locale.ITALY"/>
+							                </h:outputText>
+							            </s:decorate>
+							            
+							            <s:decorate  template="/layout/edit.xhtml">
+							                <ui:define name="label">Comune</ui:define>
+							                <h:outputText id="comuneContadino" value="#{_contadinoTask.variables.contadinoCreato.comune.nome}" ></h:outputText>  
 							            </s:decorate>
 							            				            
 							            <s:decorate  template="/layout/edit.xhtml">
@@ -51,7 +58,7 @@
 							            </s:decorate>
 							            
 							            <s:decorate  template="/layout/edit.xhtml">
-							                <ui:define name="label">Documento asl</ui:define>
+							                <ui:define name="label">Documento ASL</ui:define>
 							                <a href="#{_contadinoTask.variables.contadinoCreato.pathAsl}" target="_blank"><img src="/GAS/img/asl.png" border="0"/></a>  
 							            </s:decorate>
 									</td>						

@@ -13,6 +13,7 @@ function Indirizzo(via,comune,provincia){
 	this.getAddress = function (){
 		return via+", "+ comune +" (" + provincia +")";	
 	}
+	
 	this.getComune = function(){
 		return comune +" (" + provincia +")";
 	}
@@ -45,7 +46,6 @@ function load() {
 		
 		// Set up our GMarkerOptions object
 		markerOptions = { 
-	//	icon:blueIcon ,
 			icon:gasIcon ,
 			clickable:true
 		};
@@ -62,25 +62,24 @@ function load() {
    	}
    }
    
-   function porcata(get_indirizzo, get_comune, get_provincia, get_id){
+function porcata(get_indirizzo, get_comune, get_provincia, get_id){
    		
 		var indirizzo = new Indirizzo(get_indirizzo, get_comune, get_provincia);
-		geocoder.getLocations(indirizzo.getAddress(), getCallBackFor(indirizzo,0,get_id));				
+		geocoder.getLocations(indirizzo.getAddress(), getCallBackForPuntoDiConsegna(indirizzo,0,get_id));
+		//new GClientGeocoder().getLocations(indirizzo.getAddress(), getCallBackForPuntoDiConsegna(indirizzo,0,get_id));
    }
    
-   function pushContadini(get_indirizzo, get_comune, get_provincia, get_id){
-   		
-		var indirizzo = new Indirizzo(get_indirizzo, get_comune, get_provincia);
-		geocoder.getLocations(indirizzo.getAddress(), getCallBackForContadini(indirizzo,0,get_id));				
-   }
-   
-   function deletePoint(id){
+function deletePoint(id){
 		map.removeOverlay(markers[id]);
    }
    
-   function getCallBackFor(indirizzo,codice, idmark){
+function getCallBackForPuntoDiConsegna(indirizzo,codice, idmark){
 	return (function(data, response){
-		if(data.Status.code == "200"){
+		if(data.Status.code =="602" && codice == 0){
+			new GClientGeocoder().getLocations(indirizzo.getComune(), getCallBackForPuntoDiConsegna(indirizzo,1,idmark));
+		}
+		else 
+		{
 			point = data.Placemark[0].Point.coordinates;
 			
 			var point2 = new GLatLng(point[1],point[0]);
@@ -98,34 +97,5 @@ function load() {
 			});
 			GEvent.addListener(mark, "infowindowclose", function() {map.setZoom(13); map.panTo(mark.getPoint());});
 		}
-		else if(data.Status.code =="602" && codice == 0){
-			new GClientGeocoder().getLocations(indirizzo.getComune(), getCallBackFor(indirizzo,1,idmark));
-		}
 	});
 }
-	function getCallBackForContadini(indirizzo,codice, idmark){
-	return (function(data, response){
-		if(data.Status.code == "200"){
-			point = data.Placemark[0].Point.coordinates;
-			
-			var point2 = new GLatLng(point[1],point[0]);
-			var mark = new GMarker(point2, {title: indirizzo.getAddress(), icon:contadiniIcon});
-			map.addOverlay(mark);
-			markers_contadini[idmark] = mark;
-			
-			map.panTo(mark.getPoint());
-			mark.bindInfoWindowHtml('<div align=\"center\"><b>Punto di Consegna</b></div><p><div align=\"center\" class=\"colore_1\">'+indirizzo.getAddress()+'</div></p>');
-					
-			GEvent.addListener(mark, "infowindowopen", function() {
-				map.setZoom(16);
-				map.panTo(mark.getPoint());
-				map.panDirection(0, 1);
-			});
-			GEvent.addListener(mark, "infowindowclose", function() {map.setZoom(13); map.panTo(mark.getPoint());});
-		}
-		else if(data.Status.code =="602" && codice == 0){
-			new GClientGeocoder().getLocations(indirizzo.getComune(), getCallBackFor(indirizzo,1,idmark));
-		}
-	});
-}	
-		
