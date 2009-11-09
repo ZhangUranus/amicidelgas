@@ -9,7 +9,7 @@ import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Out;
 import org.jboss.seam.annotations.Scope;
 @Name("catalogBrowser")
-@Scope(ScopeType.SESSION)
+@Scope(ScopeType.PAGE)
 public class CatalogBrowser{
 	
 	@Out(value="contadinoSelezionato",scope=ScopeType.SESSION, required=false)
