@@ -16,5 +16,5 @@
    <param name="accountFrom"/>
    <param name="accountUsername" value="#{accountHome.accountUsername}"/>	
 	
-	<restrict>#{s:hasRole('utenteGas')}</restrict>  	
+	<restrict>#{s:hasRole('utenteGas') and accountUsername == currentAccount.username}</restrict>  	
 </page>
