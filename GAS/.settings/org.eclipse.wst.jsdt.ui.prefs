@@ -1,0 +1,12 @@
+#Thu Nov 05 23:03:06 CET 2009
+eclipse.preferences.version=1
+org.eclipse.wst.jsdt.ui.exception.name=e
+org.eclipse.wst.jsdt.ui.gettersetter.use.is=true
+org.eclipse.wst.jsdt.ui.ignorelowercasenames=true
+org.eclipse.wst.jsdt.ui.importorder=java;javax;org;com;
+org.eclipse.wst.jsdt.ui.javadoc=false
+org.eclipse.wst.jsdt.ui.keywordthis=false
+org.eclipse.wst.jsdt.ui.ondemandthreshold=99
+org.eclipse.wst.jsdt.ui.overrideannotation=true
+org.eclipse.wst.jsdt.ui.staticondemandthreshold=99
+org.eclipse.wst.jsdt.ui.text.custom_code_templates=<?xml version\="1.0" encoding\="UTF-8"?><templates/>

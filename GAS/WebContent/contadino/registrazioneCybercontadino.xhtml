@@ -171,13 +171,15 @@
                 </h:inputText>
             </s:decorate>
             
-             <s:decorate id="descrizione" template="/layout/edit.xhtml">
+             <s:decorate id="descrizioneField" template="/layout/edit.xhtml">
 	                <ui:define name="label">Descrizione Azienda</ui:define>
 	                <h:inputTextarea id="descrizioneArea"
 	                       required="true"
+	                       requiredMessage="Inserire descrizione azienda"
 	                           size="200"
 	                      maxlength="200"
 	                          value="#{newCybercontadino.descrizioneAzienda}">
+	                   <a:support event="onblur" reRender="descrizioneField" bypassUpdates="true" ajaxSingle="true"/>
 	                </h:inputTextarea>
 	            </s:decorate>
 

@@ -10,16 +10,19 @@
 
 	<ui:define name="body">
 
+
 <script type="text/javascript" src="/GAS/js/gmap.js"></script>
-<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAe6zQXGxcN5oso9n8RAEHiBR2bDFzeCT1WBspxZrlXfH7Q6YWYhSEDZPxM-Moytw3P41JRHiBSp0Xug"
-      type="text/javascript"></script>
+<script  src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAq_eedORwBS9kcDF4oHwW0hT2yXp_ZAY8_ufC3CFXhHIE1NvwkxRoB3ROMN2N9VIvBwvvB5fFkE2hBw"
+	type="text/javascript">
+</script>
 <script type="text/javascript"><!--
 window.onunload = function(){
 	GUnload();
 }
 window.onload = function(){
 	load();
-}		
+	resetValue();
+}			
 --></script>
 
 	<table width="99%" border="0" cellspacing="0" cellpadding="0" align="center" >
@@ -53,17 +56,17 @@ window.onload = function(){
 														function resetValue(){
 															document.getElementById('addPuntoDiConsegnaForm:comunePuntoField:comunePunto').value="";
 														}
-													//-->
+													-->
 													</script>
 									             <rich:suggestionbox id="suggestionBoxId"
 									             		size="50"
 									             	 	nothingLabel="Nessun comune trovato per la provincia selezionata"
 									             		usingSuggestObjects="true"
-									             		suggestionAction="#{newComuneProvinciaBean.autocompleteForBenevento}" var="_comuneSugg"
+									             		suggestionAction="#{newComunePuntoConsegna.autocompleteForBenevento}" var="_comuneSugg"
 									                    for="comunePunto" fetchValue="#{_comuneSugg.nome}" tokens=",[]"
 									                    >
 									                    <a:support event="onselect" ajaxSingle="true"  
-									                 	action="#{newComuneProvinciaBean.setComune(_comuneSugg)}"/>
+									                 	action="#{newComunePuntoConsegna.setComune(_comuneSugg)}"/>
 									                 <s:convertEntity></s:convertEntity>
 									                    <h:column>
 									                        <h:outputText value="#{_comuneSugg.nome}" />
@@ -153,7 +156,7 @@ window.onload = function(){
 	<ui:repeat value="#{puntiDiConsegnaList.resultList}" var="_punto">
 <script type="text/javascript"><!--
 	load();
-	porcata("#{_punto.indirizzo}","#{_punto.comune.nome}","#{_punto.comune.provinces.nome}","#{_punto.idpuntiConsegna}");	
+	porcata("#{_punto.indirizzo}","#{_punto.comune.nome}","#{_punto.comune.provinces.idprovinces}","#{_punto.idpuntiConsegna}");	
 --></script>
 </ui:repeat>
 	

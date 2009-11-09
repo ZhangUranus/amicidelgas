@@ -20,7 +20,7 @@
 
 			<s:decorate id="tipopatenteField" template="/layout/edit.xhtml">
                 <ui:define name="label">Patente</ui:define>
-                <h:selectOneMenu value="#{newPatente.tipo}"  required="true" requiredMessage="Inserire numero carta di credito" >
+                <h:selectOneMenu value="#{newPatente.tipo}"  required="true" requiredMessage="Inserire la patente" >
                 	<f:selectItem itemDisabled="true"   itemLabel="Select-one"/>
                 	<f:selectItem itemLabel=" Nessuna "    itemValue="NO"/>
                 	<f:selectItem itemLabel=" B " itemValue="B" />
@@ -92,7 +92,7 @@
                        required="true"
                        requiredMessage="Inserire una password valida"
                            size="24"
-                      maxlength="16"
+                      maxlength="40"
                           value="#{passwordBean.password}">
                     <a:support event="onblur" reRender="passwordField" bypassUpdates="true" ajaxSingle="true"/>
                 </h:inputText>
@@ -104,7 +104,7 @@
                        required="true"
                        requiredMessage="Ripetere la password"
                            size="24"
-                      maxlength="16"
+                      maxlength="40"
                           value="#{passwordBean.confirm}"
                           >
                     <a:support event="onblur" reRender="confirmPasswordField" bypassUpdates="true" ajaxSingle="true"/>
@@ -121,7 +121,8 @@
 			<s:decorate id="verifyCaptchaField" template="/layout/edit.xhtml">
 				<ui:define name="label">Security Check</ui:define>
 				<h:graphicImage value="/seam/resource/captcha"/>
-				<h:inputText value="#{captcha.response}" required="true"/>
+				<h:inputText value="#{captcha.response}" required="true"
+				requiredMessage="Inserire la somma dei numeri per continuare la registrazione"/>
 			</s:decorate>
 			
 			<div style="clear:both">

@@ -29,11 +29,13 @@
 								<rich:column>
 									<f:facet name="header">Data Partenza</f:facet>							    
 							        <h:outputText value="#{_itinerario.dataPartenza}">
+							        <f:convertDateTime type="date" dateStyle="medium" locale="Locale.ITALY"/>
 							        </h:outputText>
 								</rich:column>
 								<rich:column>
 									<f:facet name="header">Data Consegna</f:facet>							    
 							        <h:outputText value="#{_itinerario.dataConsegna}">
+							        <f:convertDateTime type="date" dateStyle="medium" locale="Locale.ITALY"/>
 							        </h:outputText>
 								</rich:column>
 								<rich:column>
@@ -45,7 +47,7 @@
 										</rich:column>
 										<rich:column>
 										<f:facet name="header">Indirizzo Azienda</f:facet>			    
-								     	   <h:outputText value="#{_contadino.comune.nome}"/>
+								     	   <h:outputText value="#{_contadino.indirizzo}"/>
 										</rich:column>
 										<rich:column>			    
 										<f:facet name="header">Sede Azienda</f:facet>

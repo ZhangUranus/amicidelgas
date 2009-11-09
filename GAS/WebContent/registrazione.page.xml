@@ -8,9 +8,11 @@
       
    <navigation>
       <rule if-outcome="passoUtente">
+      <begin-conversation/>
          <redirect view-id="/utente/richiestaRegistrazione.xhtml"/>
       </rule>
       <rule if-outcome="passoCybercontadino">
+      <begin-conversation/>
          <redirect view-id="/contadino/registrazioneCybercontadino.xhtml"/>
       </rule>
    </navigation>

@@ -1,4 +1,4 @@
-#Wed Oct 28 09:27:43 CET 2009
+#Tue Nov 03 17:39:13 CET 2009
 action.package=org.domain.GAS.session
 action.sources=/GAS-ejb/ejbModule
 eclipse.preferences.version=1
@@ -6,11 +6,11 @@ model.package=org.domain.GAS.entity
 model.sources=/GAS-ejb/ejbModule
 seam.ear.project=GAS-ear
 seam.ejb.project=GAS-ejb
-seam.project.connection.profile=New MySQL AmiciDelGas
+seam.project.connection.profile=New MySQL(2)
 seam.project.deployment.type=ear
 seam.project.settings.version=1.1
 seam.project.web.root.folder=/GAS/WebContent
-seam.runtime.name=SeamRuntime2.0
+seam.runtime.name=SeamRuntim
 seam.test.creating=true
 seam.test.project=GAS-test
 test.package=org.domain.GAS.test

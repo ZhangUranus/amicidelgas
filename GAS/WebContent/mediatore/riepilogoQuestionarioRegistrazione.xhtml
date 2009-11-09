@@ -74,12 +74,12 @@
 											<td width="15%"><div align="left" class="explorer" >#{_inviato.variables.nomeDestinatario}</div></td>
 											<td width="50%"><div align="left" class="explorer" >#{_inviato.variables.notifyMessageReply.content}</div></td>
 											<td width="25%"><div align="center" class="explorer" >
-													<h:graphicImage value="/img/accepted.png" rendered="#{_inviato.variables.compilato}" /><h:graphicImage value="/img/not_valid.png" rendered="#{!(_inviato.variables.compilato)}" />
+													<h:graphicImage value="/img/accepted.png" rendered="#{_inviato.variables.compilato}" /><h:graphicImage value="/img/not_valid.png"  rendered="#{(!(_inviato.variables.compilato))}"/>
 											</div></td>
 											<td width="10%"><div align="right" class="explorer" >
 												<div id="pulsante_driver_loading" style="display: none;"><img src="/GAS/img/loading.gif" /></div>
 												<s:link id="link_feedback" taskInstance="#{_inviato}" action="#{inviaRichiestaRisposta.riceviRisposta}" onmouseup="disable_this(this.id, 'pulsante_driver_loading');" >
-													<h:graphicImage value="/img/feedback_up.png" rendered="#{_inviato.variables.compilato}" /><h:graphicImage value="/img/feedback_down.png" rendered="#{!(_inviato.variables.compilato)}" />
+													<h:graphicImage value="/img/feedback_up.png" rendered="#{_inviato.variables.compilato}" /><h:graphicImage value="/img/feedback_down.png"  rendered="#{(!(_inviato.variables.compilato))}"/>
 												</s:link>
 											</div></td>
 										</tr>

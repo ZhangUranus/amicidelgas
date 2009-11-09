@@ -1,6 +1,3 @@
-/**
- * Creato da Valerio.ops 
- **/
 var current_infolevel = 0;
 var current_docslevel = 0;
 var current_groupslevel = 0;

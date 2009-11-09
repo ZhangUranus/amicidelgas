@@ -9,7 +9,7 @@
 <restrict>#{s:hasRole('utenteGas')}</restrict>
       
  <navigation>
-  <rule if-outcome="OutQuestionario">
+  <rule if-outcome="OutQuestionario2">
    <redirect view-id="/customer/customerHome.xhtml"/>
   </rule>
  </navigation>

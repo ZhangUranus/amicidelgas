@@ -59,7 +59,7 @@
 					    </td>
 					    <td valign="bottom" width="40%"><div align="left" class="colore_1">Bentornato <b>#{currentUser.nome} #{currentUser.cognome}</b></div></td>			      
 					  	<td valign="bottom" width="35%">
-					  		<s:decorate rendered="#{(!(filtraNotificaAltaPriorita.getBecomeDriverStartByMe('riceviMessaggio',currentAccount.username)>0)) and (currentAccount.punteggioFeedback >= 3.5) and (!(loginSelectBean.calculateMaxRole()=='driver'))}">
+					  		<s:decorate rendered="#{(!(filtraNotificaAltaPriorita.getBecomeDriverStartByMe('riceviMessaggio',currentAccount.username)>0)) and (currentAccount.punteggioFeedback >= 3.5) and (loginSelectBean.calculateMaxRole()=='utenteGas')}">
 					  			<div align="center" class="min_bold" onclick="javascript:infolevel();" style="cursor: pointer" >
 					  			<img src="/GAS/img/driver_mini.png" border="0" id="plus_img_infolevel" align="middle" /> Proponiti come driver
 					  			</div>
@@ -99,6 +99,7 @@
 	                        	<li>Indirizzo: #{currentUser.indirizzo}</li>
 							</div>
 						</td>
+						<td valign="top" ><div  align="left" class="explorer">
 						<script type="text/javascript"><!--
 							function setInput() {
 								document.getElementById('becameDriverForm:driver_div:destinatario_hidden').value='mediatore';
@@ -107,9 +108,8 @@
 								document.getElementById('become_driver_button').style.display= "";
 							}
 						--></script>
-						<td valign="top" ><div  align="left" class="explorer">
 							<h:form id="becameDriverForm">
-							<s:decorate id="driver_div" rendered="#{(currentAccount.punteggioFeedback >= 3.5) and (!(loginSelectBean.calculateMaxRole()=='driver'))}">
+							<s:decorate id="driver_div" rendered="#{(currentAccount.punteggioFeedback >= 6) and (loginSelectBean.calculateMaxRole()=='utenteGas')}">
                        		<table border="0" align="left" cellpadding="0" cellspacing="8" id="table_show_info" style="display:none;border-color:#CCCCCC;">
 							  <tr>
 							    <td align="center" >
@@ -119,19 +119,19 @@
 						      <tr>
 							    <td align="center" >
 				    				<h:inputTextarea value="#{notificaRichiestaRisposta.content}" onkeypress="setInput();" />
-				    				<h:inputHidden id="destinatario_hidden" value="#{notificaRichiestaRisposta.destinatario}" ></h:inputHidden>
-				    				<h:inputHidden id="broadcast_hidden" value="#{notificaRichiestaRisposta.broadcast}" ></h:inputHidden>
-				    				<h:inputHidden id="tipo_hidden" value="#{notificaRichiestaRisposta.tipo}" ></h:inputHidden>
+				    				<h:inputHidden id="destinatario_hidden" value="#{notificaRichiestaRisposta.destinatario}"/>
+				    				<h:inputHidden id="broadcast_hidden" value="#{notificaRichiestaRisposta.broadcast}" />
+				    				<h:inputHidden id="tipo_hidden" value="#{notificaRichiestaRisposta.tipo}" />
 							    </td>
 							  </tr>
 							  <tr>
 							    <td align="center">
 							    	<div id="become_driver_button" style="display:none;">
-							    	<div id="pulsante_driver_loading" style="display: none;"><img src="/GAS/img/loading.gif" /></div>					
+							    	<div id="pulsante_driver_loading" style="display:none;"><img src="/GAS/img/loading.gif" /></div>					
 							    	<h:commandButton id="button" value="Proponiti come driver"
 				            			action="#{notificaRichiestaRisposta.notificaRequest}"
 				            			onmouseup="disable_this(this.id, 'pulsante_driver_loading');"  >	    
-				            		</h:commandButton>						  
+				            		</h:commandButton>				  
                    	    			</div>	
 							    </td>
 							  </tr>

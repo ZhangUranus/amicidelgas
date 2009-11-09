@@ -41,9 +41,6 @@ function puntoItinerario(mark, titolo, id, indirizzo){
 	this.getMark = function (){
 		return mark;
 	}
-	this.getNomeAzienda = function (){
-		return nomeAzienda;
-	}
 	this.getId = function (){
 		return id;
 	}
@@ -82,7 +79,6 @@ function load() {
 		
 		// Set up our GMarkerOptions object
 		markerOptions = { 
-	//	icon:blueIcon ,
 			icon:gasIcon ,
 			clickable:true
 		};
@@ -99,8 +95,8 @@ function load() {
    	}
    }
    
-   function porcata(get_indirizzo, get_comune, get_provincia, get_id){
-   		
+   function pushPunto(get_indirizzo, get_comune, get_provincia, get_id){
+  		
 		var indirizzo = new Indirizzo(get_indirizzo, get_comune, get_provincia);
 		geocoder.getLocations(indirizzo.getAddress(), getCallBackFor(indirizzo,0,get_id));				
    }
@@ -132,7 +128,7 @@ function load() {
 					
 			GEvent.addListener(mark, "click", function() {
 				if(prima_cybercontadino==0){
-					alert("Seleziona prima uno o pi� cybercontadini, i punti di consegna vanno selezionati per ultimi");
+					alert("Seleziona prima uno o più cybercontadini, i punti di consegna vanno selezionati per ultimi");
 				} else {
 					
 					if(to_place[idmark]==null){
@@ -189,7 +185,7 @@ function load() {
 						} else if(count_contadini <= 3){
 							setDirections();
 						} else {
-							alert("Non puoi aggiungere altri cybercontadini all�'itinerario.");
+							alert("Non puoi aggiungere altri cybercontadini all'itinerario.");
 						}					
 					} else {
 						from_place[idmark] = null;
