@@ -18,8 +18,8 @@ import org.jboss.seam.log.Log;
 
 
 @Name("newComuneProvinciaBean")
-@Scope(ScopeType.SESSION)
-@Role(name="newComuneProvinciaResidenzaBean",scope=ScopeType.SESSION)
+@Scope(ScopeType.CONVERSATION)
+@Role(name="newComuneProvinciaResidenzaBean",scope=ScopeType.CONVERSATION)
 public class ComuneProvinciaBean{
 	
 	

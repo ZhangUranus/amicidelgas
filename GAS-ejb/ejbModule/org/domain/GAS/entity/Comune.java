@@ -29,8 +29,8 @@ import org.jboss.seam.annotations.Scope;
 @Entity
 @Table(name = "comune", catalog = "database_gas")
 @Name(value="newComuneNascita")
-@Scope(value=ScopeType.SESSION)
-@Role(name="newComuneResidenza", scope=ScopeType.SESSION)
+@Scope(value=ScopeType.CONVERSATION)
+@Role(name="newComuneResidenza", scope=ScopeType.CONVERSATION)
 
 public class Comune implements java.io.Serializable {
 

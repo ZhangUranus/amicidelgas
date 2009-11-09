@@ -18,7 +18,7 @@ import org.jboss.seam.log.Log;
 import org.jboss.seam.ScopeType;
 
 @Name(value="newControlloBean")
-@Scope(ScopeType.SESSION)
+@Scope(ScopeType.CONVERSATION)
 public class ControlloBean {
 
 	@Logger

@@ -1,29 +1,25 @@
 package org.domain.GAS.session;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
-
 import org.domain.GAS.crud.AccountHome;
 import org.domain.GAS.crud.AccountList;
 import org.domain.GAS.crud.UtenteList;
 import org.domain.GAS.entity.Account;
 import org.domain.GAS.entity.Cybercontadino;
-import org.domain.GAS.processes.ProcessoRegistrazione;
 import org.domain.GAS.processes.RegistrationConfirmation;
 import org.domain.GAS.action.RegistrationMailer;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Logger;
 import org.jboss.seam.annotations.Name;
-import org.jboss.seam.annotations.Out;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.annotations.Transactional;
 import org.jboss.seam.log.Log;
 
 @Name(value="gestioneRegistrazioniBean")
-@Scope(ScopeType.SESSION)
+@Scope(ScopeType.PAGE)
 public class GestioneRegistrazioniBean {
 
 	@Logger

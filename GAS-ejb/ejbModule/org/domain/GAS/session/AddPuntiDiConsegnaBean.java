@@ -28,8 +28,9 @@ public class AddPuntiDiConsegnaBean implements AddPuntiDiConsegna
 
     @In(value="newPuntiDiConsegna", create=true)
     private PuntiDiConsegna puntiDiConsegna;
-    @In(value="newComuneProvinciaBean", create=true)
-    private ComuneProvinciaBean comuneProvinciaBean;
+
+    @In(value="newComunePuntoConsegna", create=true)
+    private ComunePuntoConsegna comuneProvinciaBean;
 
     public void addPuntiDiConsegna()
     {
@@ -39,24 +40,25 @@ public class AddPuntiDiConsegnaBean implements AddPuntiDiConsegna
     
 	public boolean persistExtend(){
 		
-		System.out.println("NOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
-    	System.out.println(comuneProvinciaBean.getComune().getId());
+		if(comuneProvinciaBean.getComune() == null)
+			return false;
 		ComuneList comuneList = new ComuneList();
     	comuneList.setEjbql("select comune from Comune comune where comune.idcomune= "+ comuneProvinciaBean.getComune().getId());
     	Comune comune = comuneList.getResultList().get(0);
     	if(comune != null)
     	{
-    		System.out.println("NOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
-        	
     		puntiDiConsegna.setComune(comuneList.getResultList().get(0));
+    		String indirizzo = puntiDiConsegna.getIndirizzo();
+    		indirizzo = indirizzo.toLowerCase();
+    		if(indirizzo.startsWith("via ") || indirizzo.startsWith("corso ") || indirizzo.startsWith("viale ") || indirizzo.startsWith("piazza ") || indirizzo.startsWith("contrada ") || indirizzo.startsWith("frazione ") || indirizzo.startsWith("strada ") || indirizzo.startsWith("piazzale ") || indirizzo.startsWith("rotonda ") || indirizzo.startsWith("rotonde "))
+        		puntiDiConsegna.setIndirizzo(indirizzo);
+        	else
+        		puntiDiConsegna.setIndirizzo("via " + indirizzo);
     		em.persist(puntiDiConsegna);
+    		return true;
     	}
     	else
-    		System.out.println("NOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
-    	
-    	
-    	
-    	return true;
+    		return false;
 	}
 
     // add additional action methods

@@ -26,7 +26,7 @@ import org.jboss.seam.faces.FacesMessages;
 import org.jboss.seam.international.StatusMessages;
 
 @Stateful
-@Scope(value=ScopeType.SESSION)
+@Scope(value=ScopeType.CONVERSATION)
 @Name("richiestaRegistrazione")
 public class RichiestaRegistrazioneBean implements RichiestaRegistrazione
 {
@@ -74,7 +74,12 @@ public class RichiestaRegistrazioneBean implements RichiestaRegistrazione
     	comuneList.setEjbql("select comune from Comune comune where comune.idcomune= "+comuneProvinciaResidenzaBean.getComune().getId());
     	
     	utente.setComuneByIdcomune(comuneList.getResultList().get(0));
-    	
+    	String indirizzo = utente.getIndirizzo();
+		indirizzo = indirizzo.toLowerCase();
+		if(indirizzo.startsWith("via ") || indirizzo.startsWith("corso ") || indirizzo.startsWith("viale ") || indirizzo.startsWith("piazza ") || indirizzo.startsWith("contrada ") || indirizzo.startsWith("frazione ") || indirizzo.startsWith("strada ") || indirizzo.startsWith("piazzale ") || indirizzo.startsWith("rotonda ") || indirizzo.startsWith("rotonde "))
+    		utente.setIndirizzo(indirizzo);
+    	else
+    		utente.setIndirizzo("via " + indirizzo);
     	em.persist(utente);
     	if(!(patente.getTipo().equals("NO")))
     	{

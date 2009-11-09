@@ -16,7 +16,7 @@ import org.jboss.seam.annotations.bpm.EndTask;
 import org.jboss.seam.security.Credentials;
 
 @Name("inviaNotificaRegistrazioni")
-@Scope(ScopeType.SESSION)
+@Scope(ScopeType.PAGE)
 public class InviaNotificaRegistrazioni {
 	
 	@In private Credentials credentials;
