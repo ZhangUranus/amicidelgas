@@ -14,12 +14,14 @@ import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Logger;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Out;
+import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.annotations.Transactional;
 import org.jboss.seam.annotations.bpm.StartTask;
 import org.jboss.seam.annotations.bpm.EndTask;
 import org.jboss.seam.log.Log;
 
 @Name("inviaRequestReply")
+@Scope(value=ScopeType.PAGE)
 public class InviaRequestReply {
 		
 	@Logger
@@ -46,7 +48,7 @@ public class InviaRequestReply {
 	
 	@In(value="compilato", scope= ScopeType.BUSINESS_PROCESS, required=false)
 	@Out(value="compilato", scope= ScopeType.BUSINESS_PROCESS, required=false)
-	private boolean compilatoQuestionario;
+	private Boolean compilatoQuestionario;
 	
 	private Date dataCorrente;
 	
@@ -62,16 +64,17 @@ public class InviaRequestReply {
 		if(questionario == null)
 		{
 			this.setDriver(risposta);
+			return "OutQuestionario1";
 		}
 		else
 		{
-			compilatoQuestionario = true;
 			if(questionario == null)
 			{
 				return null;
 			}
 			else
 			{
+				compilatoQuestionario = true;
 				boolean ret = this.registraQuestionario();
 				if(ret)
 				{
@@ -83,9 +86,8 @@ public class InviaRequestReply {
 					return null;
 				}
 			}
-		}
-		return "OutQuestionario";
-			
+			return "OutQuestionario2";
+		}	
 	}
 	
 	@Transactional public boolean registraQuestionario()

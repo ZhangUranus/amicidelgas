@@ -6,7 +6,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
-
 import org.domain.GAS.entity.Cybercontadino;
 import org.domain.GAS.session.Message;
 import org.jboss.seam.ScopeType;
@@ -24,7 +23,7 @@ import org.jboss.seam.security.Credentials;
 import org.jbpm.taskmgmt.exe.TaskInstance;
 
 @Name("processoRegistrazione")
-@Scope(ScopeType.SESSION)
+@Scope(ScopeType.EVENT)
 public class ProcessoRegistrazione {
 	
 	@Logger
@@ -53,7 +52,7 @@ public class ProcessoRegistrazione {
 	private Date dataProposta;
 	
 	@Out(value="compilatoQuestionario", scope= ScopeType.BUSINESS_PROCESS, required =false)
-	private boolean compilatoQuestionario;
+	private Boolean compilatoQuestionario;
 	
 	@Out(value="dataQuestionario", scope= ScopeType.BUSINESS_PROCESS, required =false)
 	private Date dataQuestionario ;
@@ -82,37 +81,47 @@ public class ProcessoRegistrazione {
 	}	
 	
 	@StartTask @EndTask(transition="invia")
-	public void creaVisita()
+	public String creaVisita()
 	{
-		Calendar gc= new GregorianCalendar();
-		gc.setTime((Date) dataProposta.clone());
-		gc.add(Calendar.MINUTE, +0);
-		dataMassimaAccettazione = gc.getTime();
-		postiOccupati=0;
-		gc= new GregorianCalendar();
-		gc.setTime((Date) dataProposta.clone());
-		gc.add(Calendar.MINUTE, +1);
-		dataQuestionario = gc.getTime();
-		gc.setTime((Date) dataProposta.clone());
-		String format = "dd-MM-yyyy";
-		messageUtente= new Message();
-		messageUtente.setContent(content+"\nIn data "+(new SimpleDateFormat(format)).format(gc.getTime())
-				+" alle ore: "+gc.get(Calendar.HOUR_OF_DAY)+":"+gc.get(Calendar.MINUTE)+" .");
-		messageUtente.setMittente(mittente);
-		usernameInviati = new ArrayList<String>();
-		messageSubProcess = new Message();
-		messageSubProcess.setContent("Ora puoi compilare il questionario per dare il tuo parere "
-				+"sull'azienda che abbiamo visitato, clikkando nella sezione \"Compila Questionario\"");
-		messageSubProcess.setDestinatario(credentials.getUsername());
-		messageSubProcess.setBroadcast(false);
-		messageSubProcess.setMittente(mittente);
-		messageSubProcess.setTipo("questionario");
-		gc= new GregorianCalendar();
-		gc.setTime((Date) dataQuestionario.clone());
-		gc.add(Calendar.MINUTE, +5);
-		dataTimer = gc.getTime();
-		MediatoreCheManda = credentials.getUsername();
-		compilatoQuestionario = false;
+		Calendar g= new GregorianCalendar();
+		Date dataOra = g.getTime();
+		if(dataProposta.before(dataOra))
+			return null;
+		else
+		{
+			Calendar gc= new GregorianCalendar();
+			gc.setTime((Date) dataProposta.clone());
+			gc.add(Calendar.MINUTE, +0);
+			dataMassimaAccettazione = gc.getTime();
+			postiOccupati=0;
+			gc= new GregorianCalendar();
+			gc.setTime((Date) dataProposta.clone());
+			// dopo quanto tempo dalla visita si può iniziare a compilare il questionario
+			gc.add(Calendar.MINUTE, +1);
+			dataQuestionario = gc.getTime();
+			gc.setTime((Date) dataProposta.clone());
+			String format = "dd-MM-yyyy";
+			messageUtente= new Message();
+			messageUtente.setContent(content+"\n In data "+(new SimpleDateFormat(format)).format(gc.getTime())
+					+" alle ore: "+gc.get(Calendar.HOUR_OF_DAY)+":"+gc.get(Calendar.MINUTE)+" .");
+			messageUtente.setMittente(mittente);
+			usernameInviati = new ArrayList<String>();
+			messageSubProcess = new Message();
+			messageSubProcess.setContent("Ora puoi compilare il questionario per dare il tuo parere "
+					+"sull'azienda che abbiamo visitato, clikkando nella sezione \"Compila Questionario\"");
+			messageSubProcess.setDestinatario(credentials.getUsername());
+			messageSubProcess.setBroadcast(false);
+			messageSubProcess.setMittente(mittente);
+			messageSubProcess.setTipo("questionario");
+			gc= new GregorianCalendar();
+			gc.setTime((Date) dataQuestionario.clone());
+			// dopo quanto tempo il questionario si cancella e non si può più compilarlo
+			gc.add(Calendar.MINUTE, +5);
+			dataTimer = gc.getTime();
+			MediatoreCheManda = credentials.getUsername();
+			compilatoQuestionario = false;
+			return "ok";
+		}
 	}
 	
 	public Cybercontadino getContadinoCorrente() {

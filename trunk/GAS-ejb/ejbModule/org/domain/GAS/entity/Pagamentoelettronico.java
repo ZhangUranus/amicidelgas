@@ -27,7 +27,7 @@ import org.jboss.seam.annotations.Scope;
 @Entity
 @Table(name = "pagamentoelettronico", catalog = "database_gas")
 @Name(value="newPagamento")
-@Scope(value=ScopeType.SESSION)
+@Scope(value=ScopeType.CONVERSATION)
 public class Pagamentoelettronico implements java.io.Serializable {
 
 	/**

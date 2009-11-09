@@ -17,7 +17,7 @@ import org.richfaces.model.UploadItem;
 
 
 @Name("newFileUpload")
-@Scope(value=ScopeType.SESSION)
+@Scope(value=ScopeType.CONVERSATION)
 public class FileUpload implements Serializable
 {
     private String savePath;

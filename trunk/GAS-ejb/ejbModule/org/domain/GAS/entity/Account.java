@@ -35,7 +35,7 @@ import org.jboss.seam.annotations.security.management.UserRoles;
 @Table(name = "account", catalog = "database_gas")
 @Role(name = "currentAccount", scope = ScopeType.SESSION)
 @Name(value="newAccount")
-@Scope(value=ScopeType.SESSION)
+@Scope(value=ScopeType.CONVERSATION)
 public class Account implements java.io.Serializable {
 
 	private static final long serialVersionUID = -3377764798266168594L;

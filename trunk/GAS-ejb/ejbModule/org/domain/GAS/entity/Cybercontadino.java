@@ -37,7 +37,7 @@ import org.jboss.seam.annotations.Scope;
 @Table(name = "cybercontadino", catalog = "database_gas")
 @Role(name = "currentContadino", scope = ScopeType.SESSION)
 @Name("newCybercontadino")
-@Scope(value=ScopeType.SESSION)
+@Scope(value=ScopeType.CONVERSATION)
 public class Cybercontadino implements java.io.Serializable {
 
 	/**

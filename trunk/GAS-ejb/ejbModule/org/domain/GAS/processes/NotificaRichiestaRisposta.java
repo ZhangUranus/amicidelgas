@@ -1,13 +1,13 @@
 package org.domain.GAS.processes;
 
 import java.util.Date;
-
 import org.domain.GAS.session.Message;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Logger;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Out;
+import org.jboss.seam.annotations.Role;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.annotations.bpm.CreateProcess;
 import org.jboss.seam.faces.FacesMessages;
@@ -15,7 +15,7 @@ import org.jboss.seam.log.Log;
 import org.jboss.seam.security.Credentials;
 
 @Name("notificaRichiestaRisposta")
-@Scope(ScopeType.SESSION)
+@Scope(ScopeType.PAGE)
 public class NotificaRichiestaRisposta {
 	
 	@Logger
@@ -34,7 +34,7 @@ public class NotificaRichiestaRisposta {
 	private String tipo;
 	
 	@Out(value="compilato", scope= ScopeType.BUSINESS_PROCESS, required=false)
-	private boolean compilato;
+	private Boolean compilato;
 	
 	@Out(value="nomeMittente",scope=ScopeType.BUSINESS_PROCESS, required=false)
 	private String nomeMittente;
@@ -59,7 +59,7 @@ public class NotificaRichiestaRisposta {
 		message.setBroadcast(broadcast);
 		message.setTipo(tipo);
 		compilato = true;
-		facesMessages.add("La richiesta � stata inoltrata");
+		facesMessages.add("La richiesta è stata inoltrata");
 	}
 
 	public String getContent() {

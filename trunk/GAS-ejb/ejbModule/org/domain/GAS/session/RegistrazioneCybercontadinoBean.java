@@ -25,7 +25,8 @@ import org.jboss.seam.international.StatusMessages;
 
 @Stateful
 @Name("registrazioneCybercontadino")
-@Scope(value=ScopeType.SESSION)
+//@Scope(value=ScopeType.SESSION)
+@Scope(value=ScopeType.CONVERSATION)
 public class RegistrazioneCybercontadinoBean implements RegistrazioneCybercontadino
 {
     @PersistenceContext
@@ -84,6 +85,12 @@ public class RegistrazioneCybercontadinoBean implements RegistrazioneCybercontad
     	em.persist(codiceContadino);
     	contadino.setCodiceContadino(codiceContadino);
     	contadino.setAccount(account);
+    	String indirizzo = contadino.getIndirizzo();
+		indirizzo = indirizzo.toLowerCase();
+		if(indirizzo.startsWith("via ") || indirizzo.startsWith("corso ") || indirizzo.startsWith("viale ") || indirizzo.startsWith("piazza ") || indirizzo.startsWith("contrada ") || indirizzo.startsWith("frazione ") || indirizzo.startsWith("strada ") || indirizzo.startsWith("piazzale ") || indirizzo.startsWith("rotonda ") || indirizzo.startsWith("rotonde "))
+			contadino.setIndirizzo(indirizzo);
+    	else
+    		contadino.setIndirizzo("via " + indirizzo);
     	em.persist(contadino);
     	Role role = new Role();
     	role.setAccount(account);

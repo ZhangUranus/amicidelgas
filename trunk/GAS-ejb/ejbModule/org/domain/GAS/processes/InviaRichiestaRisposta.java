@@ -64,10 +64,11 @@ public class InviaRichiestaRisposta {
 		}
 		else
 		{
-			if(compilatoQuestionario)
+			if(compilatoQuestionario) // quando compilaDopo è null perchè il questionario non è stato compilato
 				this.inserisciFeedback(4.0f);
 			else
 				this.inserisciFeedback(2.0f);
+			
 		}
 		return "OutRiepilogoQuestionari";
 		

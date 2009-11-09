@@ -23,7 +23,7 @@ import org.jboss.seam.annotations.Scope;
 @Entity
 @Table(name = "patente", catalog = "database_gas")
 @Name(value="newPatente")
-@Scope(value=ScopeType.SESSION)
+@Scope(value=ScopeType.CONVERSATION)
 public class Patente implements java.io.Serializable {
 
 	/**

@@ -34,7 +34,7 @@ import org.jboss.seam.annotations.Role;
 @Table(name = "utente", catalog = "database_gas")
 @Role(name = "currentUser", scope = ScopeType.SESSION)
 @Name(value="newUtente")
-@Scope(value=ScopeType.SESSION)
+@Scope(value=ScopeType.CONVERSATION)
 public class Utente implements java.io.Serializable {
 
 	/**

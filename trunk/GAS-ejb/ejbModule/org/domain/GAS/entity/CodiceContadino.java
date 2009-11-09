@@ -14,7 +14,7 @@ import org.jboss.seam.annotations.Scope;
 @Entity
 @Table(name = "codicecontadino", catalog = "database_gas")
 @Name("newCodiceContadino")
-@Scope(value=ScopeType.SESSION)
+@Scope(value=ScopeType.CONVERSATION)
 public class CodiceContadino implements java.io.Serializable{
 	
 	/**
