@@ -210,7 +210,7 @@
 						<ui:define name="label">Data massima consegna</ui:define>
 						<rich:calendar id="dataMassimaCalendar" enableManualInput="true"
 							value="#{shoppingCart.dataMassima}"
-							datePattern="dd/MM/yyyy HH:mm">
+							datePattern="dd/MM/yyyy HH:mm" showApplyButton="true" >
 							<a:support event="onchange" reRender="dataMassimaField"
 								bypassUpdates="true" ajaxSingle="true" />
 						</rich:calendar>

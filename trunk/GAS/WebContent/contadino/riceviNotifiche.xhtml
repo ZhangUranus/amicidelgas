@@ -89,8 +89,8 @@
                 	<ui:define name="label">Inserire la data di consegna</ui:define>
                 		<rich:calendar id="dataVisita"
                        		required="true" requiredMessage="Inserire una data"
-                    		value="#{newItinerario.dataConsegna}" datePattern="dd/MM/yyyy HH:mm" enableManualInput="true">
-                   		<a:support event="onchange" reRender="dataConsegnaField" bypassUpdates="true" ajaxSingle="true"/>
+                    		value="#{newItinerario.dataConsegna}" datePattern="dd/MM/yyyy HH:mm" enableManualInput="true" showApplyButton="true" >
+                   		<a:support value="dataVisita" event="onchange" reRender="dataConsegnaField" bypassUpdates="true" ajaxSingle="true" />
                 		</rich:calendar>
             	</s:decorate>
             	
@@ -108,8 +108,8 @@
 		                </h:selectOneMenu>
                 </s:decorate>
 				<br/>
-				<s:decorate>
-					<h:outputText value="#{ordineBean.currentTaskContadino.variables.errorData}" style="color:red;" />
+				<s:decorate  id="errorDataField">
+					<h:outputText id="errorData" value="#{orderProcessing.errorData}" style="color:red;" />
 				</s:decorate>
 				
 			</h:form>
@@ -160,12 +160,12 @@
 			<rich:dataTable var="_itemCarrello" id="itemsDataTableOrdiniFatti"
 				value="#{ordineBean.currentMyOrder.itemQuantita}">
 				<rich:column>
-						<f:facet name="header">Nome prodotto</f:facet>
+						<f:facet name="header">Tipo prodotto</f:facet>
 						<h:outputText value="#{_itemCarrello.item.name}"/>
 				</rich:column>	
 				<rich:column>
-					<f:facet name="header">Username contadino</f:facet>
-					<h:outputText value="#{_itemCarrello.cybercontadino.account.username}"/>
+					<f:facet name="header">Azienda</f:facet>
+					<h:outputText value="#{_itemCarrello.cybercontadino.nomeAzienda}"/>
 				</rich:column>	
 				<rich:column>
 						<f:facet name="header">Quantita prodotto</f:facet>
