@@ -1,4 +1,4 @@
-package org.domain.GAS.action;
+package org.domain.GAS.processes;
 
 import java.util.Date;
 
