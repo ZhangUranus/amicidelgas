@@ -3,12 +3,8 @@ package org.domain.GAS.catalog;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.Iterator;
 import java.util.List;
-
-import org.domain.GAS.entity.Account;
 import org.domain.GAS.entity.Cybercontadino;
-import org.domain.GAS.processes.NotifyBean;
 import org.domain.GAS.processes.OrderProcessing;
 import org.domain.GAS.session.GestioneFondo;
 import org.domain.GAS.session.ItemQuantita;
@@ -16,9 +12,7 @@ import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Logger;
 import org.jboss.seam.annotations.Name;
-import org.jboss.seam.annotations.Out;
 import org.jboss.seam.annotations.Scope;
-import org.jboss.seam.annotations.intercept.BypassInterceptors;
 import org.jboss.seam.log.Log;
 
 

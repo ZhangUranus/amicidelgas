@@ -27,6 +27,11 @@ import org.jbpm.taskmgmt.exe.TaskInstance;
 @Scope(ScopeType.SESSION)
 public class MatchItinerarioOrdine implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3656873046607888259L;
+
 	@Logger
 	private Log log;
 	

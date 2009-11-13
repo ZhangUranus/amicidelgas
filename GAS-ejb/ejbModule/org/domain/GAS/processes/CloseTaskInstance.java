@@ -1,4 +1,4 @@
-package org.domain.GAS.session;
+package org.domain.GAS.processes;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -8,6 +8,11 @@ import java.util.Set;
 
 import org.domain.GAS.entity.Account;
 import org.domain.GAS.entity.Ordine;
+import org.domain.GAS.session.GestioneFeedback;
+import org.domain.GAS.session.InfoFeedback;
+import org.domain.GAS.session.TakeInHandForContadinoToCustomer;
+import org.domain.GAS.session.TakeInHandForContadinoToDriver;
+import org.domain.GAS.session.TakeInHandForDriver;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Logger;

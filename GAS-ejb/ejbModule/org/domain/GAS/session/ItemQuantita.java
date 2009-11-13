@@ -17,6 +17,10 @@ import org.jboss.seam.log.Log;
 public class ItemQuantita implements Serializable
 	{
 	
+		/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8281187892213576184L;
 		@Logger
 		private Log log;
 		private Item item;

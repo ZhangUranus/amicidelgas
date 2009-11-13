@@ -1,4 +1,4 @@
-package org.domain.GAS.processes;
+package org.domain.GAS.session;
 
 import java.util.Date;
 

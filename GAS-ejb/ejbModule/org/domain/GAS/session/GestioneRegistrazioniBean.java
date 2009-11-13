@@ -9,7 +9,6 @@ import org.domain.GAS.crud.UtenteList;
 import org.domain.GAS.entity.Account;
 import org.domain.GAS.entity.Cybercontadino;
 import org.domain.GAS.processes.RegistrationConfirmation;
-import org.domain.GAS.processes.RegistrationMailer;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Logger;
