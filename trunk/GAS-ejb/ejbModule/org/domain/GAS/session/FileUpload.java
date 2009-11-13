@@ -20,7 +20,11 @@ import org.richfaces.model.UploadItem;
 @Scope(value=ScopeType.CONVERSATION)
 public class FileUpload implements Serializable
 {
-    private String savePath;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6640400534103529204L;
+	private String savePath;
     private String filepath = System.getProperty("user.home")+"/"; 
     private String filename; 
     private String errore;

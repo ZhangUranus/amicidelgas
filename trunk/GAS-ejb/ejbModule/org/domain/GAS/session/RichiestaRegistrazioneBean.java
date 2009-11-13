@@ -12,7 +12,6 @@ import org.domain.GAS.entity.Pagamentoelettronico;
 import org.domain.GAS.entity.Patente;
 import org.domain.GAS.entity.Role;
 import org.domain.GAS.entity.Utente;
-import org.domain.GAS.processes.RegistrationMailer;
 import org.jboss.seam.annotations.Destroy;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.In;

@@ -3,9 +3,6 @@ package org.domain.GAS.catalog;
 
 import com.sun.org.apache.xalan.internal.xsltc.runtime.Hashtable;
 
-
-
-
 public class CatalogImpl {
 
 	public static Hashtable instances= new Hashtable();

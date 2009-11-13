@@ -24,6 +24,10 @@ import org.jbpm.taskmgmt.exe.TaskMgmtInstance;
 @Scope(ScopeType.BUSINESS_PROCESS)
 public class MultipleNotifyActionHandler implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5778508191868142049L;
 	@In(value="notifyMessage", scope=ScopeType.BUSINESS_PROCESS, required=false) 
 	private Message message;
 	

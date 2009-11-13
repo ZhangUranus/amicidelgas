@@ -6,6 +6,10 @@ import org.jbpm.graph.node.DecisionHandler;
 
 public class DriverHaPartecipatoAllaSpesaDecisionHandler implements DecisionHandler {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6534377781870720146L;
 	public String responsabileIsDriver;
 	public String decide(ExecutionContext executionContext) throws Exception 
 	{
