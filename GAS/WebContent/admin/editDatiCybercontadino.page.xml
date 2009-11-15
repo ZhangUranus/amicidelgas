@@ -13,5 +13,5 @@
    <param name="dir" value="#{cybercontadinoList.orderDirection}"/>
 
      
-	<restrict>#{s:hasRole('admin')}</restrict>  	
+	<restrict>#{s:hasRole('admin') or s:hasRole('mediatore')}</restrict>  	
 </page>
