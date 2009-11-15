@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Set;
-
 import org.domain.GAS.entity.Account;
 import org.domain.GAS.entity.Articolo;
 import org.domain.GAS.entity.Cybercontadino;

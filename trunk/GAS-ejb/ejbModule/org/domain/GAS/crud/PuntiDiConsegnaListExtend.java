@@ -9,6 +9,11 @@ import org.jboss.seam.annotations.Name;
 @Name("puntiDiConsegnaListExtend")
 public class PuntiDiConsegnaListExtend extends PuntiDiConsegnaList {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7886133595304164327L;
+
 	private static final String EJBQL = "select puntiDiConsegna from PuntiDiConsegna puntiDiConsegna";
 
 	private static final String[] RESTRICTIONS = {

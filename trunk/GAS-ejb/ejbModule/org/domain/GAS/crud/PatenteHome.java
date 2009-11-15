@@ -10,6 +10,11 @@ import org.jboss.seam.log.Log;
 @Name("patenteHome")
 public class PatenteHome extends EntityHome<Patente> {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5470091926124602806L;
+
 	@In(create = true)
 	UtenteHome utenteHome;
 	

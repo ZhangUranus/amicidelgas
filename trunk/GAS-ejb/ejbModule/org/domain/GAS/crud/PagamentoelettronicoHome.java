@@ -10,6 +10,11 @@ import org.jboss.seam.framework.EntityHome;
 @Name("pagamentoelettronicoHome")
 public class PagamentoelettronicoHome extends EntityHome<Pagamentoelettronico> {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 321454710535300089L;
+
 	public void setPagamentoelettronicoIdPagamentoElettronico(Integer id) {
 		setId(id);
 	}

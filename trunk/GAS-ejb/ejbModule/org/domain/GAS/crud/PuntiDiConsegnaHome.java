@@ -11,6 +11,11 @@ import org.jboss.seam.log.Log;
 @Name("puntiDiConsegnaHome")
 public class PuntiDiConsegnaHome extends EntityHome<PuntiDiConsegna> {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1519953801168287807L;
+
 	@In(create = true)
 	ComuneHome comuneHome;
 

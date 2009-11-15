@@ -11,6 +11,10 @@ import org.jboss.seam.framework.EntityHome;
 @Name("comuneHome")
 public class ComuneHome extends EntityHome<Comune> {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3767062698598004581L;
 	@In(create = true)
 	ProvincesHome provincesHome;
 

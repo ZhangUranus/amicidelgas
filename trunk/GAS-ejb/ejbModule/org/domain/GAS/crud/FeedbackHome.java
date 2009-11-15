@@ -8,6 +8,10 @@ import org.jboss.seam.framework.EntityHome;
 @Name("feedbackHome")
 public class FeedbackHome extends EntityHome<Feedback> {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 830241139755689303L;
 	@In(create = true, value = "accountHome")
 	AccountHome accountHomeByValidatore;
 	@In(create = true)

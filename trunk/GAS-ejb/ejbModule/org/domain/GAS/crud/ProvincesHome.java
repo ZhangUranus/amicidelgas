@@ -10,6 +10,11 @@ import org.jboss.seam.framework.EntityHome;
 @Name("provincesHome")
 public class ProvincesHome extends EntityHome<Provinces> {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2168082172281730167L;
+
 	public void setProvincesIdprovinces(String id) {
 		setId(id);
 	}

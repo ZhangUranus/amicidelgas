@@ -11,6 +11,11 @@ import java.util.List;
 @Name("cybercontadinoList")
 public class CybercontadinoList extends EntityQuery<Cybercontadino> {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3869969758912560416L;
+
 	private static final String EJBQL = "select cybercontadino from Cybercontadino cybercontadino";
 
 	private static final String[] RESTRICTIONS = {

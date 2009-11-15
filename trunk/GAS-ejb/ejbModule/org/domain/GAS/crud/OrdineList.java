@@ -8,6 +8,11 @@ import java.util.Arrays;
 @Name("ordineList")
 public class OrdineList extends EntityQuery<Ordine> {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6066646628895589256L;
+
 	private static final String EJBQL = "select ordine from Ordine ordine";
 
 	private static final String[] RESTRICTIONS = {};

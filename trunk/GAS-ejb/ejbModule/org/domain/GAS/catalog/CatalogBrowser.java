@@ -2,7 +2,6 @@ package org.domain.GAS.catalog;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.domain.GAS.entity.Cybercontadino;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.Name;
