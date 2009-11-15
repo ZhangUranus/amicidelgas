@@ -15,6 +15,10 @@ import org.jboss.seam.log.Log;
 @Name("utenteHome")
 public class UtenteHome extends EntityHome<Utente> {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6407996127363023539L;
 	@Logger private Log log;
 	@In(create = true, value = "comuneHome")
 	ComuneHome comuneHomeByComuneNascita;

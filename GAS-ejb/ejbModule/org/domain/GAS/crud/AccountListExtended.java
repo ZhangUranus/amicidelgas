@@ -14,6 +14,11 @@ import java.util.List;
 @Name("accountListExtended")
 public class AccountListExtended extends EntityQuery<Account> {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1894107874755486271L;
+
 	private static final String EJBQL = "select account from Account account where account.utente is not null ";
 	
 	private List<Account> resultListNotEliminato;

@@ -8,6 +8,11 @@ import java.util.Arrays;
 @Name("pagamentoelettronicoList")
 public class PagamentoelettronicoList extends EntityQuery<Pagamentoelettronico> {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8104809157948442127L;
+
 	private static final String EJBQL = "select pagamentoelettronico from Pagamentoelettronico pagamentoelettronico";
 
 	private static final String[] RESTRICTIONS = { "lower(pagamentoelettronico.tipoCarta) like concat(lower(#{pagamentoelettronicoList.pagamentoelettronico.tipoCarta}),'%')", };

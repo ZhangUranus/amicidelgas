@@ -8,6 +8,11 @@ import java.util.Arrays;
 @Name("patenteList")
 public class PatenteList extends EntityQuery<Patente> {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7790064233311692258L;
+
 	private static final String EJBQL = "select patente from Patente patente";
 
 	private static final String[] RESTRICTIONS = { "lower(patente.tipo) like concat(lower(#{patenteList.patente.tipo}),'%')", };

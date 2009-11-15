@@ -15,6 +15,11 @@ import java.util.Arrays;
 @Name("accountList")
 public class AccountList extends EntityQuery<Account> {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5215142014751622974L;
+
 	private static final String EJBQL = "select account from Account account";
 
 	private static final String[] RESTRICTIONS = {

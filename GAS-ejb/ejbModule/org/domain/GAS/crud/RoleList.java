@@ -7,7 +7,12 @@ import org.domain.GAS.entity.Role;
 @Name("roleList")
 public class RoleList extends EntityQuery<Role>
 {
-    public RoleList()
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 7702543755447571597L;
+
+	public RoleList()
     {
         setEjbql("select role from Role role");
     }

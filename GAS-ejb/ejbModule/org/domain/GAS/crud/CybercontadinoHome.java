@@ -15,6 +15,10 @@ import org.jboss.seam.log.Log;
 @Name("cybercontadinoHome")
 public class CybercontadinoHome extends EntityHome<Cybercontadino> {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8895826305006380173L;
 	@In(create = true)
 	AccountHome accountHome;
 	@In(create = true)

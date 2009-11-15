@@ -8,6 +8,11 @@ import java.util.Arrays;
 @Name("itinerarioList")
 public class ItinerarioList extends EntityQuery<Itinerario> {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7112495436295248674L;
+
 	private static final String EJBQL = "select itinerario from Itinerario itinerario";
 
 	private static final String[] RESTRICTIONS = { , };

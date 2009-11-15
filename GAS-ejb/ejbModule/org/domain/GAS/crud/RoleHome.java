@@ -10,7 +10,11 @@ import org.domain.GAS.entity.Role;
 @Name("roleHome")
 public class RoleHome extends EntityHome<Role>
 {
-    @RequestParameter Long roleId;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -5060458103650679030L;
+	@RequestParameter Long roleId;
 
     @Override
     public Object getId()

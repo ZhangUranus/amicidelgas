@@ -8,6 +8,11 @@ import java.util.Arrays;
 @Name("questionarioList")
 public class QuestionarioList extends EntityQuery<Questionario> {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8141194959009226488L;
+
 	private static final String EJBQL = "select questionario from Questionario questionario";
 
 	private static final String[] RESTRICTIONS = { "lower(questionario.commenti) like concat(lower(#{questionarioList.questionario.commenti}),'%')", };

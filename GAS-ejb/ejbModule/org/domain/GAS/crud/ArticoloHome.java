@@ -11,6 +11,10 @@ import org.jboss.seam.framework.EntityHome;
 @Name("articoloHome")
 public class ArticoloHome extends EntityHome<Articolo> {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2325464820782126054L;
 	@In(create = true)
 	CybercontadinoHome cybercontadinoHome;
 	@In(create = true)

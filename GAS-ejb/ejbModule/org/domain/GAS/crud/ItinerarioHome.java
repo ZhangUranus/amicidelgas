@@ -8,6 +8,10 @@ import org.jboss.seam.framework.EntityHome;
 @Name("itinerarioHome")
 public class ItinerarioHome extends EntityHome<Itinerario> {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5752988522415562199L;
 	@In(create = true)
 	AccountHome accountHome;
 
