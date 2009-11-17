@@ -1,0 +1,182 @@
+<html>
+<head>
+<title>TestNG:  org.domain.GAS.test.RegistrazioneCyberContadinoTest</title>
+<link href="../testng.css" rel="stylesheet" type="text/css" />
+<link href="../my-testng.css" rel="stylesheet" type="text/css" />
+
+<style type="text/css">
+.log { display: none;} 
+.stack-trace { display: none;} 
+</style>
+<script type="text/javascript">
+<!--
+function flip(e) {
+  current = e.style.display;
+  if (current == 'block') {
+    e.style.display = 'none';
+    return 0;
+  }
+  else {
+    e.style.display = 'block';
+    return 1;
+  }
+}
+
+function toggleBox(szDivId, elem, msg1, msg2)
+{
+  var res = -1;  if (document.getElementById) {
+    res = flip(document.getElementById(szDivId));
+  }
+  else if (document.all) {
+    // this is the way old msie versions work
+    res = flip(document.all[szDivId]);
+  }
+  if(elem) {
+    if(res == 0) elem.innerHTML = msg1; else elem.innerHTML = msg2;
+  }
+
+}
+
+function toggleAllBoxes() {
+  if (document.getElementsByTagName) {
+    d = document.getElementsByTagName('div');
+    for (i = 0; i < d.length; i++) {
+      if (d[i].className == 'log') {
+        flip(d[i]);
+      }
+    }
+  }
+}
+
+// -->
+</script>
+
+</head>
+<body>
+<h2 align='center'>org.domain.GAS.test.RegistrazioneCyberContadinoTest</h2><table border='1' align="center">
+<tr>
+<td>Tests passed/Failed/Skipped:</td><td>0/1/0</td>
+</tr><tr>
+<td>Started on:</td><td>Sun Nov 15 22:09:22 CET 2009</td>
+</tr>
+<tr><td>Total time:</td><td>1 seconds (1746 ms)</td>
+</tr><tr>
+<td>Included groups:</td><td></td>
+</tr><tr>
+<td>Excluded groups:</td><td></td>
+</tr>
+</table><p/>
+<small><i>(Hover the method name to see the test class name)</i></small><p/>
+<table width='100%' border='1' class='invocation-failed'>
+<tr><td colspan='3' align='center'><b>FAILED TESTS</b></td></tr>
+<tr><td><b>Test method</b></td>
+<td width="10%"><b>Time (seconds)</b></td>
+<td width="30%"><b>Exception</b></td>
+</tr>
+<tr>
+<td title='org.domain.GAS.test.RegistrazioneCyberContadinoTest.test_registrazioneCyberContadino()'>test_registrazioneCyberContadino</td>
+<td>0</td>
+<td><div><pre>java.lang.AssertionError: javax.el.PropertyNotFoundException: Target Unreachable, 'provincia' returned null on 'org.domain.GAS.session.ComuneProvinciaBean_$$_javassist_1'
+	at org.jboss.seam.mock.AbstractSeamTest$Request.onException(AbstractSeamTest.java:455)
+	at org.jboss.seam.mock.AbstractSeamTest$Request$2.doFilter(AbstractSeamTest.java:504)
+	at org.jboss.seam.servlet.SeamFilter$FilterChainImpl.doFilter(SeamFilter.java:83)
+	at org.jboss.seam.web.IdentityFilter.doFilter(IdentityFilter.java:40)
+	at org.jboss.seam.servlet.SeamFilter$FilterChainImpl.doFilter(SeamFilter.java:69)
+	at org.jboss.seam.web.MultipartFilter.doFilter(MultipartFilter.java:90)
+	at org.jboss.seam.servlet.SeamFilter$FilterChainImpl.doFilter(SeamFilter.java:69)
+	at org.jboss.seam.web.ExceptionFilter.doFilter(ExceptionFilter.java:64)
+	at org.jboss.seam.servlet.SeamFilter$FilterChainImpl.doFilter(SeamFilter.java:69)
+	at org.jboss.seam.web.RedirectFilter.doFilter(RedirectFilter.java:45)
+	at org.jboss.seam.servlet.SeamFilter$FilterChainImpl.doFilter(SeamFilter.java:69)
+	at org.ajax4jsf.webapp.BaseXMLFilter.doXmlFilter(BaseXMLFilter.java:177)
+	at org.ajax4jsf.webapp.BaseFilter.handleRequest(BaseFilter.java:267)
+	at org.ajax4jsf.webapp.BaseFilter.processUploadsAndHandleRequest(BaseFilter.java:380)
+	at org.ajax4jsf.webapp.BaseFilter.doFilter(BaseFilter.java:507)
+	at org.jboss.seam.web.Ajax4jsfFilter.doFilter(Ajax4jsfFilter.java:56)
+	at org.jboss.seam.servlet.SeamFilter$FilterChainImpl.doFilter(SeamFilter.java:69)
+	at org.jboss.seam.web.LoggingFilter.doFilter(LoggingFilter.java:58)
+	at org.jboss.seam.servlet.SeamFilter$FilterChainImpl.doFilter(SeamFilter.java:69)
+	at org.jboss.seam.web.HotDeployFilter.doFilter(HotDeployFilter.java:53)
+	at org.jboss.seam.servlet.SeamFilter$FilterChainImpl.doFilter(SeamFilter.java:69)
+	at org.jboss.seam.servlet.SeamFilter.doFilter(SeamFilter.java:158)
+	at org.jboss.seam.mock.AbstractSeamTest$Request.run(AbstractSeamTest.java:491)
+	at org.domain.GAS.test.RegistrazioneCyberContadinoTest.test_registrazioneCyberContadino(RegistrazioneCyberContadinoTest.java:74)
+Caused by: javax.el.PropertyNotFoundException: Target Unreachable, 'provincia' returned null on 'org.domain.GAS.session.ComuneProvinciaBean_$$_javassist_1'
+	at org.jboss.el.parser.AstPropertySuffix.getTarget(AstPropertySuffix.java:40)
+	at org.jboss.el.parser.AstValue.getTarget(AstValue.java:47)
+	at org.jboss.el.parser.AstValue.setValue(AstValue.java:83)
+	at org.jboss.el.ValueExpressionImpl.setValue(ValueExpressionImpl.java:249)
+	at org.jboss.seam.core.Validators.validate(Validators.java:132)
+	at org.jboss.seam.mock.AbstractSeamTest$Request.validateValue(AbstractSeamTest.java:440)
+	at org.domain.GAS.test.RegistrazioneCyberContadinoTest$1.processValidations(RegistrazioneCyberContadinoTest.java:20)
+	at org.jboss.seam.mock.AbstractSeamTest$Request.processValidationsPhase(AbstractSeamTest.java:687)
+	at org.jboss.seam.mock.AbstractSeamTest$Request.emulateJsfLifecycle(AbstractSeamTest.java:589)
+	at org.jboss.seam.mock.AbstractSeamTest$Request.access$300(AbstractSeamTest.java:177)
+	at org.jboss.seam.mock.AbstractSeamTest$Request$2.doFilter(AbstractSeamTest.java:497)
+	... 44 more
+... Removed 22 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace16021684", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace16021684'><pre>java.lang.AssertionError: javax.el.PropertyNotFoundException: Target Unreachable, 'provincia' returned null on 'org.domain.GAS.session.ComuneProvinciaBean_$$_javassist_1'
+	at org.jboss.seam.mock.AbstractSeamTest$Request.onException(AbstractSeamTest.java:455)
+	at org.jboss.seam.mock.AbstractSeamTest$Request$2.doFilter(AbstractSeamTest.java:504)
+	at org.jboss.seam.servlet.SeamFilter$FilterChainImpl.doFilter(SeamFilter.java:83)
+	at org.jboss.seam.web.IdentityFilter.doFilter(IdentityFilter.java:40)
+	at org.jboss.seam.servlet.SeamFilter$FilterChainImpl.doFilter(SeamFilter.java:69)
+	at org.jboss.seam.web.MultipartFilter.doFilter(MultipartFilter.java:90)
+	at org.jboss.seam.servlet.SeamFilter$FilterChainImpl.doFilter(SeamFilter.java:69)
+	at org.jboss.seam.web.ExceptionFilter.doFilter(ExceptionFilter.java:64)
+	at org.jboss.seam.servlet.SeamFilter$FilterChainImpl.doFilter(SeamFilter.java:69)
+	at org.jboss.seam.web.RedirectFilter.doFilter(RedirectFilter.java:45)
+	at org.jboss.seam.servlet.SeamFilter$FilterChainImpl.doFilter(SeamFilter.java:69)
+	at org.ajax4jsf.webapp.BaseXMLFilter.doXmlFilter(BaseXMLFilter.java:177)
+	at org.ajax4jsf.webapp.BaseFilter.handleRequest(BaseFilter.java:267)
+	at org.ajax4jsf.webapp.BaseFilter.processUploadsAndHandleRequest(BaseFilter.java:380)
+	at org.ajax4jsf.webapp.BaseFilter.doFilter(BaseFilter.java:507)
+	at org.jboss.seam.web.Ajax4jsfFilter.doFilter(Ajax4jsfFilter.java:56)
+	at org.jboss.seam.servlet.SeamFilter$FilterChainImpl.doFilter(SeamFilter.java:69)
+	at org.jboss.seam.web.LoggingFilter.doFilter(LoggingFilter.java:58)
+	at org.jboss.seam.servlet.SeamFilter$FilterChainImpl.doFilter(SeamFilter.java:69)
+	at org.jboss.seam.web.HotDeployFilter.doFilter(HotDeployFilter.java:53)
+	at org.jboss.seam.servlet.SeamFilter$FilterChainImpl.doFilter(SeamFilter.java:69)
+	at org.jboss.seam.servlet.SeamFilter.doFilter(SeamFilter.java:158)
+	at org.jboss.seam.mock.AbstractSeamTest$Request.run(AbstractSeamTest.java:491)
+	at org.domain.GAS.test.RegistrazioneCyberContadinoTest.test_registrazioneCyberContadino(RegistrazioneCyberContadinoTest.java:74)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:585)
+	at org.testng.internal.MethodHelper.invokeMethod(MethodHelper.java:607)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:517)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:669)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:956)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:126)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:110)
+	at org.testng.TestRunner.runWorkers(TestRunner.java:759)
+	at org.testng.TestRunner.privateRun(TestRunner.java:592)
+	at org.testng.TestRunner.run(TestRunner.java:486)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:332)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:327)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:299)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:204)
+	at org.testng.TestNG.createAndRunSuiteRunners(TestNG.java:877)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:842)
+	at org.testng.TestNG.run(TestNG.java:751)
+	at org.testng.remote.RemoteTestNG.run(RemoteTestNG.java:73)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:124)
+Caused by: javax.el.PropertyNotFoundException: Target Unreachable, 'provincia' returned null on 'org.domain.GAS.session.ComuneProvinciaBean_$$_javassist_1'
+	at org.jboss.el.parser.AstPropertySuffix.getTarget(AstPropertySuffix.java:40)
+	at org.jboss.el.parser.AstValue.getTarget(AstValue.java:47)
+	at org.jboss.el.parser.AstValue.setValue(AstValue.java:83)
+	at org.jboss.el.ValueExpressionImpl.setValue(ValueExpressionImpl.java:249)
+	at org.jboss.seam.core.Validators.validate(Validators.java:132)
+	at org.jboss.seam.mock.AbstractSeamTest$Request.validateValue(AbstractSeamTest.java:440)
+	at org.domain.GAS.test.RegistrazioneCyberContadinoTest$1.processValidations(RegistrazioneCyberContadinoTest.java:20)
+	at org.jboss.seam.mock.AbstractSeamTest$Request.processValidationsPhase(AbstractSeamTest.java:687)
+	at org.jboss.seam.mock.AbstractSeamTest$Request.emulateJsfLifecycle(AbstractSeamTest.java:589)
+	at org.jboss.seam.mock.AbstractSeamTest$Request.access$300(AbstractSeamTest.java:177)
+	at org.jboss.seam.mock.AbstractSeamTest$Request$2.doFilter(AbstractSeamTest.java:497)
+	... 44 more
+</pre></div></td>
+</tr>
+</table><p>
+</body>
+</html>
