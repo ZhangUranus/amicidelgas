@@ -1,0 +1,9 @@
+<!DOCTYPE suite SYSTEM "http://beust.com/testng/testng-1.0.dtd" >
+
+<suite name="RegistrazioneCyberContadino Tests" verbose="2" parallel="false">
+   <test name="RegistrazioneCyberContadino Test">
+     <classes>
+       <class name="org.domain.GAS.test.RegistrazioneCyberContadinoTest"/>       
+     </classes>
+   </test>	
+</suite>

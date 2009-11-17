@@ -9,7 +9,7 @@
 	<classpathentry kind="lib" path="lib/hibernate-all.jar"/>
 	<classpathentry kind="lib" path="lib/jboss-embedded-all.jar"/>
 	<classpathentry kind="lib" path="lib/core.jar"/>
-<classpathentry kind="lib" path="/GAS/WebContent"/>
+	<classpathentry kind="lib" path="/GAS/WebContent"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/GAS"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/GAS-ejb"/>
 	<classpathentry kind="output" path="bin"/>
