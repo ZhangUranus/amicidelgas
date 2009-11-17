@@ -1,0 +1,9 @@
+<!DOCTYPE suite SYSTEM "http://beust.com/testng/testng-1.0.dtd" >
+
+<suite name="NewPuntiDiConsegna Tests" verbose="2" parallel="false">
+   <test name="NewPuntiDiConsegna Test">
+     <classes>
+       <class name="org.domain.GAS.test.NewPuntiDiConsegnaTest"/>       
+     </classes>
+   </test>	
+</suite>
