@@ -20,6 +20,7 @@ import org.jboss.seam.log.Log;
 @Scope(ScopeType.SESSION)
 public class ShoppingCart {
 
+	@SuppressWarnings("unused")
 	@Logger
 	private Log log;
 	
@@ -130,6 +131,7 @@ public class ShoppingCart {
 		//controllo se il fondo � sufficiente a fare l'ordine
 		
 		dataMassimaBeforeToday=false;
+		@SuppressWarnings("unused")
 		String logInfo = orderProcessing.startOrder(selectedItem,dataMassima);
 		//log.info("*********** "+logInfo);
 		//se l'ordine nn va a buon fine devo fare il rollback e riaggiungere
