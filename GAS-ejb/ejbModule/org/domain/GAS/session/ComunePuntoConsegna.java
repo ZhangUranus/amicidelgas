@@ -32,7 +32,7 @@ public class ComunePuntoConsegna {
 	}
 
 	private List<Comune> autoCompleteList;
-	private myComuneBean comune;
+	protected myComuneBean comune;
 	private Provinces provincia;
 	private String controlloComuneNascita;
 	
