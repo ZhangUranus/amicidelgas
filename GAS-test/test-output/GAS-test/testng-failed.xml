@@ -1,0 +1,18 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite thread-count="5" skipfailedinvocationCounts="false" verbose="1" name="Failed suite [GAS-test]" junit="false" parallel="false" annotations="JDK">
+  <test name="org.domain.GAS.test.RegistrazioneCyberContadinoTest(failed)" junit="false" parallel="false" annotations="JDK">
+    <classes>
+      <class name="org.domain.GAS.test.RegistrazioneCyberContadinoTest">
+        <methods>
+          <include name="begin"/>
+          <include name="startSeam"/>
+          <include name="setupClass"/>
+          <include name="test_registrazioneCyberContadino"/>
+          <include name="end"/>
+          <include name="stopSeam"/>
+          <include name="cleanupClass"/>
+        </methods>
+      </class>
+    </classes>
+  </test>
+</suite>
