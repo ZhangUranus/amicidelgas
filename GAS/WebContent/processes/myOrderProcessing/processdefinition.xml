@@ -130,7 +130,7 @@
 				<nomeDestinatario>customer</nomeDestinatario>
 			</assignment>
 		</task>
-		<timer duedate="240 seconds" name="timer_fb_customer_to_responsabile_consegna" transition="fb_customer_to_responsabile_consegna">
+		<timer duedate="3600 seconds" name="timer_fb_customer_to_responsabile_consegna" transition="fb_customer_to_responsabile_consegna">
 			<action name="perstistAllInfo" class="org.domain.GAS.processes.PersistHandler">
 				<taskNameOrdine>fbCustomerToResponsabileConsegna</taskNameOrdine>
 				<usernameFrom>customer</usernameFrom>
@@ -148,7 +148,7 @@
 				<nomeDestinatario>responsabileConsegna</nomeDestinatario>
 			</assignment>
 		</task>
-		<timer duedate="240 seconds" name="timer_fb_responsabile_consegna_to_customer" transition="fb_responsabile_to_customer">
+		<timer duedate="3600 seconds" name="timer_fb_responsabile_consegna_to_customer" transition="fb_responsabile_to_customer">
 			<action name="perstistAllInfo" class="org.domain.GAS.processes.PersistHandler">
 				<taskNameOrdine>fbResponsabileConsegnaToCustomer</taskNameOrdine>
 				<usernameFrom>responsabileConsegna</usernameFrom>
@@ -163,7 +163,7 @@
 		<task name="fbContadinoToResponsabile">
 			<assignment pooled-actors="utenteContadino"></assignment>
 		</task>
-		<timer duedate="240 seconds" name="timer_fb_contadino_to_responsabile_consegna" transition="fb_contadino_to_responsabile_consegna">
+		<timer duedate="3600 seconds" name="timer_fb_contadino_to_responsabile_consegna" transition="fb_contadino_to_responsabile_consegna">
 			<action name="perstistAllInfo" class="org.domain.GAS.processes.PersistHandler">
 				<taskNameOrdine>fbContadinoToResponsabile</taskNameOrdine>
 				<usernameTo>responsabileConsegna</usernameTo>

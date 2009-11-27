@@ -150,30 +150,6 @@
 								value="#{_itemCarrello.quantita * _itemCarrello.item.prezzo} euro" />
 						</rich:column>
 						<rich:column>
-							<f:facet name="header">Quantita minima</f:facet>
-							<h:form>
-								<h:selectBooleanCheckbox required="true"
-									value="#{_itemCarrello.booleanIsQuantitaMinima}">
-									<a:support event="onclick" ajaxSingle="true"
-										reRendered="qParzialeField" />
-								</h:selectBooleanCheckbox>
-								<a:outputPanel ajaxRendered="true">
-									<s:decorate id="qParzialeField"
-										rendered="#{_itemCarrello.booleanIsQuantitaMinima}" template="/layout/edit.xhtml">
-										<rich:inputNumberSpinner id="qParzialeCarrello" minValue="1"
-											maxValue="#{_itemCarrello.quantita-1}" step="0"
-											style="height : 15px; width : 20px;"
-											value="#{_itemCarrello.quantitaParziale}">
-											<a:support event="onclick"
-												reRender="qParzialeCarrello"
-												ajaxSingle="true"
-												requestDelay="100" />
-										</rich:inputNumberSpinner>
-									</s:decorate>
-								</a:outputPanel>
-							</h:form>
-						</rich:column>
-						<rich:column>
 							<f:facet name="header">Raggruppa ordine</f:facet>
 							<h:form>
 								<h:selectBooleanCheckbox required="true"
