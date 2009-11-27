@@ -3,27 +3,16 @@ package org.domain.GAS.processes;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Enumeration;
-import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.Hashtable;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-import java.util.UUID;
-
 import javax.ejb.Remove;
-import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
 import org.domain.GAS.catalog.CatalogImpl;
 import org.domain.GAS.catalog.CatalogInterface;
-import org.domain.GAS.catalog.CatalogNoServiceImpl;
-import org.domain.GAS.crud.AccountHome;
-import org.domain.GAS.crud.OrdineList;
 import org.domain.GAS.entity.Account;
 import org.domain.GAS.entity.Articolo;
-import org.domain.GAS.entity.Cybercontadino;
 import org.domain.GAS.entity.Itinerario;
 import org.domain.GAS.entity.Ordine;
 import org.domain.GAS.entity.PuntiDiConsegna;
@@ -34,7 +23,6 @@ import org.domain.GAS.session.ItemQuantita;
 import org.domain.GAS.session.LoginSelectBean;
 import org.domain.GAS.session.Message;
 import org.domain.GAS.session.MyOrdine;
-import org.domain.GAS.session.OrdineBean;
 import org.domain.GAS.session.TakeInHandForCustomer;
 import org.domain.GAS.session.TakeInHandForDriver;
 import org.jboss.seam.ScopeType;
@@ -47,7 +35,6 @@ import org.jboss.seam.annotations.Transactional;
 import org.jboss.seam.annotations.bpm.BeginTask;
 import org.jboss.seam.annotations.bpm.CreateProcess;
 import org.jboss.seam.annotations.bpm.EndTask;
-import org.jboss.seam.annotations.intercept.BypassInterceptors;
 import org.jboss.seam.security.Credentials;
 
 @Name("orderProcessing")
@@ -182,10 +169,10 @@ public class OrderProcessing {
 	public String verificaDisponibilita(Itinerario itinerario, PuntiDiConsegna punto){
 		
 		//faccio il controllo sulla data di consegna
-		errorData = null;
+		setErrorData(null);
 		Date dataConsegnaTemp = itinerario.getDataConsegna();
 		if (dataConsegnaTemp.after(this.dataMassima)) {
-			errorData = "Data inserita successiva a quella massima";
+			setErrorData("Data inserita successiva a quella massima");
 			return null;
 		}
 		
@@ -428,5 +415,13 @@ public class OrderProcessing {
 
 	public void setDataMassima(Date dataMassima) {
 		this.dataMassima = dataMassima;
+	}
+
+	public void setErrorData(String errorData) {
+		this.errorData = errorData;
+	}
+
+	public String getErrorData() {
+		return errorData;
 	}
 }
