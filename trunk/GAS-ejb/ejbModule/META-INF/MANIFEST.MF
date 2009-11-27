@@ -1,9 +1,16 @@
 Manifest-Version: 1.0
 Class-Path:  antlr-runtime.jar 
- mvel14.jar 
- jboss-el.jar 
  drools-compiler.jar 
- jbpm-jpdl.jar 
  drools-core.jar 
- richfaces-api.jar 
+ jboss-el.jar 
+ jboss-seam.jar 
+ jbpm-jpdl.jar 
+ mvel14.jar 
+ hibernate-commons-annotations.jar 
+ hibernate-search.jar 
+ solr-common.jar 
+ solr-core.jar 
+ lucene-core-2.4.1.jar 
+ lucene-snowball-2.4.1.jar 
+ richfaces-api-3.3.1.GA.jar
 

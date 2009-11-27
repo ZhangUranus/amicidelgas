@@ -14,6 +14,21 @@
          <property name="hibernate.show_sql" value="false"/>
          <property name="hibernate.format_sql" value="true"/>
          <property name="jboss.entity.manager.factory.jndi.name" value="java:/GASEntityManagerFactory"/>
+         
+          <!-- use a file system based index -->
+         <property name="hibernate.search.default.directory_provider" 
+                   value="org.hibernate.search.store.FSDirectoryProvider"/>
+         <!-- directory where the indexes will be stored -->
+         <property name="hibernate.search.default.indexBase" 
+                   value="/usr/local/jboss-4.2.3.GA-hibernate/server/default/data/lucene"/>
+
+         <property name="hibernate.ejb.event.post-insert" 
+                   value="org.hibernate.search.event.FullTextIndexEventListener"/>
+         <property name="hibernate.ejb.event.post-update" 
+                   value="org.hibernate.search.event.FullTextIndexEventListener"/>
+         <property name="hibernate.ejb.event.post-delete" 
+                   value="org.hibernate.search.event.FullTextIndexEventListener"/>
+         
       </properties>
    </persistence-unit>
     
