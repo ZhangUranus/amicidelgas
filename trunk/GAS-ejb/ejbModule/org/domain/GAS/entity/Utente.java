@@ -76,6 +76,7 @@ public class Utente implements java.io.Serializable {
 	private Comune comuneByComuneNascita;
 	private Comune comuneByIdcomune;
 	private String nome;
+	private String nomeCompleto;
 	private String cognome;
 	private Date dataNascita;
 	private char sesso;
@@ -92,11 +93,12 @@ public class Utente implements java.io.Serializable {
 	public Utente(String codiceFiscale, Comune comuneByComuneNascita,
 			Comune comuneByIdcomune, String nome, String cognome,
 			Date dataNascita, char sesso, String indirizzo,
-			String recapitoTelefonico, String email) {
+			String recapitoTelefonico, String email, String nomeCompleto) {
 		this.codiceFiscale = codiceFiscale;
 		this.comuneByComuneNascita = comuneByComuneNascita;
 		this.comuneByIdcomune = comuneByIdcomune;
 		this.nome = nome;
+		this.nomeCompleto = nomeCompleto;
 		this.cognome = cognome;
 		this.dataNascita = dataNascita;
 		this.sesso = sesso;
@@ -109,11 +111,12 @@ public class Utente implements java.io.Serializable {
 			Comune comuneByIdcomune, String nome, String cognome,
 			Date dataNascita, char sesso,
 			String indirizzo, String recapitoTelefonico, String email,
-			Set<Patente> patentes, Set<Account> accounts) {
+			Set<Patente> patentes, Set<Account> accounts , String nomeCompleto) {
 		this.codiceFiscale = codiceFiscale;
 		this.comuneByComuneNascita = comuneByComuneNascita;
 		this.comuneByIdcomune = comuneByIdcomune;
 		this.nome = nome;
+		this.nomeCompleto = nomeCompleto;
 		this.cognome = cognome;
 		this.dataNascita = dataNascita;
 		this.sesso = sesso;
@@ -160,7 +163,6 @@ public class Utente implements java.io.Serializable {
 		this.comuneByIdcomune = comuneByIdcomune;
 	}
 
-	@Field(index=Index.TOKENIZED,  analyzer=@Analyzer(definition="italianSnowball"))
 	@Column(name = "Nome", nullable = false, length = 50)
 	@NotNull
 	@Length(max = 50)
@@ -171,8 +173,19 @@ public class Utente implements java.io.Serializable {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+	
+	@Field(index=Index.TOKENIZED,  analyzer=@Analyzer(definition="italianSnowball"))
+	@Column(name = "NomeCompleto", nullable = false, length = 100)
+	@NotNull
+	@Length(max = 100)
+	public String getNomeCompleto() {
+		return this.nomeCompleto;
+	}
 
-	@Field(index=Index.TOKENIZED, analyzer=@Analyzer(definition="italianSnowball"))
+	public void setNomeCompleto(String nome) {
+		this.nomeCompleto = nome;
+	}
+
 	@Column(name = "Cognome", nullable = false, length = 50)
 	@NotNull
 	@Length(max = 50)
