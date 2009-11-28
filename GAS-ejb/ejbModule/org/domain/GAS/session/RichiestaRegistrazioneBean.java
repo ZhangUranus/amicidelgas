@@ -79,7 +79,8 @@ public class RichiestaRegistrazioneBean implements RichiestaRegistrazione
     		utente.setIndirizzo(indirizzo);
     	else
     		utente.setIndirizzo("via " + indirizzo);
-    	em.persist(utente);
+    	utente.setNomeCompleto(utente.getNome()+" "+utente.getCognome());
+		em.persist(utente);
     	if(!(patente.getTipo().equals("NO")))
     	{
     		patente.setUtente(utente);
