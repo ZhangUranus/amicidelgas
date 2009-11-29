@@ -11,10 +11,10 @@ import org.domain.GAS.session.SearchUtente;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.intercept.BypassInterceptors;
 
-//@org.jboss.seam.annotations.faces.Converter
-//@Name("searchOptionConverter")
-//@BypassInterceptors
-public class SearchOptionConverter { /* implements Converter{
+@org.jboss.seam.annotations.faces.Converter
+@Name("searchOptionConverter")
+@BypassInterceptors
+public class SearchOptionConverter implements Converter{
 	
 	public SearchOptionConverter(){}
 	
@@ -34,5 +34,5 @@ public class SearchOptionConverter { /* implements Converter{
 		public String getAsString(FacesContext arg0, UIComponent arg1, Object arg2) {
 			SearchOption s= (SearchOption) arg2;
 			return s.getLabel();
-		} */
+		} 
 }
