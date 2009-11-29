@@ -14,6 +14,12 @@
         </navigation>
     </page>
 
+	<page view-id="*">
+    <navigation from-action="#{fullTextSearch.doSearch}">
+   		<redirect view-id="/customer/searchResults.xhtml"></redirect>
+ 	</navigation>
+	</page>
+	
     <exception class="org.jboss.seam.framework.EntityNotFoundException">
         <redirect view-id="/error.xhtml">
             <message severity="warn">Record not found</message>

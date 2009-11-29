@@ -34,7 +34,7 @@
       <param-name>org.richfaces.LoadScriptStrategy</param-name>
       <param-value>ALL</param-value>
    </context-param>
-
+   
    <!-- Seam -->
 
    <listener>
