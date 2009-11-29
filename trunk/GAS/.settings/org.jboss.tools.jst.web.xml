@@ -310,6 +310,18 @@
  <file-system NAME="GAS" location="%eclipse.project%" model-entity="FileSystemFolder"/>
  <file-system NAME="lib-mysql-connector-java-5.1.10-bin.jar"
   location="/usr/local/jboss-4.2.3.GA/server/default/lib/mysql-connector-java-5.1.10-bin.jar" model-entity="FileSystemJar"/>
+ <file-system NAME="lib-hibernate-core.jar"
+  location="/usr/local/jboss-4.2.3.GA-hibernate/server/default/lib/hibernate-core.jar" model-entity="FileSystemJar"/>
+ <file-system NAME="lib-jta.jar"
+  location="/usr/local/jboss-4.2.3.GA-hibernate/server/default/lib/jta.jar" model-entity="FileSystemJar"/>
+ <file-system NAME="lib-slf4j-api.jar"
+  location="/usr/local/jboss-4.2.3.GA-hibernate/server/default/lib/slf4j-api.jar" model-entity="FileSystemJar"/>
+ <file-system NAME="lib-slf4j-log4j12.jar"
+  location="/usr/local/jboss-4.2.3.GA-hibernate/server/default/lib/slf4j-log4j12.jar" model-entity="FileSystemJar"/>
+ <file-system NAME="lib-hibernate-commons-annotations.jar"
+  location="/usr/local/jboss-4.2.3.GA-hibernate/server/default/lib/hibernate-commons-annotations.jar" model-entity="FileSystemJar"/>
+ <file-system NAME="lib-hibernate-validator.jar"
+  location="/usr/local/jboss-4.2.3.GA-hibernate/server/default/lib/hibernate-validator.jar" model-entity="FileSystemJar"/>
  <web SERVLET_VERSION="2.4" model-entity="JstWeb" model-path="/web.xml">
   <module URI="/WEB-INF/faces-config.xml" model-entity="WebJSFModule"
    model-path="/faces-config.xml" src="src" web-root="WEB-ROOT"/>

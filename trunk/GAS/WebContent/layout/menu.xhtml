@@ -211,6 +211,40 @@
     	</td>
         </s:decorate> 
         <s:decorate rendered="#{identity.loggedIn}">
+        <td height="32" align="left" width="190" >
+			<h:inputText value="#{fullTextSearch.searchString}"
+				rendered="#{identity.loggedIn}" />
+			<h:commandButton action="#{fullTextSearch.doSearch}"
+				image="/img/search.gif" style="vertical-align:top"
+				rendered="#{identity.loggedIn}" />
+			<br />
+
+			<div id="searchOptionsLink"><a:commandLink action="prova"
+				value=">>mostra opzioni di ricerca"
+				onclick="showOptionsPanel(); Element.hide($('searchOptionsLink'));" />
+			</div>
+
+			<s:div id="searchOptionsPanel" style="display: none;">
+				<rich:panel style="backgroundColor:grey;">
+
+					<h:selectManyCheckbox value="#{fullTextSearch.selectedEntities}"
+						converter="searchOptionConverter">
+						<s:selectItems var="_option"
+							value="#{fullTextSearch.selectableEntities}"
+							label="#{_option.label}"></s:selectItems>
+					</h:selectManyCheckbox>
+					<a:commandLink action="prova2"
+						value="&lt;&lt;nascondi opzioni di ricerca"
+						onclick="hideOptionsPanel(); Element.show($('searchOptionsLink'));" />
+				</rich:panel>
+			</s:div>
+			<rich:effect name="showOptionsPanel" for="searchOptionsPanel"
+				type="Appear" params="duration: 0.5"></rich:effect>
+			<rich:effect name="hideOptionsPanel" for="searchOptionsPanel"
+				type="Fade" params="duration: 0.5"></rich:effect>
+		</td>
+		</s:decorate>
+        <s:decorate rendered="#{identity.loggedIn}">
     	<td height="32" >	
 	        <h:outputText style="color:red" value="LOGGED AS: #{identity.username}" rendered="#{identity.loggedIn}" />
     	</td>
