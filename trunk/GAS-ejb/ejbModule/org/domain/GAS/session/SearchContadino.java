@@ -40,13 +40,7 @@ public class SearchContadino implements SearchOption{
 		FullTextQuery query = fem
 				.createFullTextQuery(luceneQuery, Cybercontadino.class);
 		List<Cybercontadino> searchResults = (List<Cybercontadino>) query.getResultList();
-		ArrayList<Cybercontadino> contadinoSearchResults = new ArrayList<Cybercontadino>();
-
-		for (Cybercontadino u : searchResults) {
-			if (u != null)
-				contadinoSearchResults.add(u);
-		}
-		return contadinoSearchResults;
+		return searchResults;
 	}
 	
 	public boolean equals(Object o){
