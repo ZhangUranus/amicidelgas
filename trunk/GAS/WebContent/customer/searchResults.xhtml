@@ -17,7 +17,16 @@
 					value="#{empty utenteSearchResults?0:utenteSearchResults.size()}"></h:outputText></b> utenti
 					<rich:dataTable var="_utentePersona"
 					value="#{utenteSearchResults}">
+					<rich:column >
+						<f:facet name="header">Nome</f:facet>
+						<h:outputText value="#{_utentePersona.nome}" />
+					</rich:column>
 					<rich:column>
+						<f:facet name="header">Cognome</f:facet>
+						<h:outputText value="#{_utentePersona.cognome}" />
+					</rich:column>
+					<rich:column>
+						<f:facet name="header">Nome Completo</f:facet>
 						<h:outputText value="#{_utentePersona.nomeCompleto}" />
 					</rich:column>
 				</rich:dataTable>
@@ -27,7 +36,24 @@
 					value="#{empty contadinoSearchResults?0:contadinoSearchResults.size()}"></h:outputText></b> contadini
 					<rich:dataTable var="_contadini" value="#{contadinoSearchResults}">			
 					<rich:column>
+						<f:facet name="header">Nome Azienda</f:facet>
 						<h:outputText value="#{_contadini.nomeAzienda}" />
+					</rich:column>
+					<rich:column>
+						<f:facet name="header">Nome Presidente</f:facet>
+						<h:outputText value="#{_contadini.nomePresidente}" />
+					</rich:column>
+					<rich:column>
+						<f:facet name="header">Cognome Presidente</f:facet>
+						<h:outputText value="#{_contadini.cognomePresidente}" />
+					</rich:column>
+					<rich:column>
+						<f:facet name="header">Descrizione Azienda</f:facet>
+						<h:outputText value="#{_contadini.descrizioneAzienda}" />
+					</rich:column>
+					<rich:column>
+						<f:facet name="header">Indirizzo</f:facet>
+						<h:outputText value="#{_contadini.indirizzo}" />
 					</rich:column>
 				</rich:dataTable>
 			</rich:tab>
@@ -36,7 +62,16 @@
 					value="#{empty articoloSearchResults?0:articoloSearchResults.size()}"></h:outputText></b> articoli
 					<rich:dataTable var="_articoli" value="#{articoloSearchResults}">
 					<rich:column>
+						<f:facet name="header">Nome Articolo</f:facet>
+						<h:outputText value="#{_articoli.codiceEsterno}" />
+					</rich:column>
+					<rich:column>
+						<f:facet name="header">Descrizione Articolo</f:facet>
 						<h:outputText value="#{_articoli.descrizione}" />
+					</rich:column>
+					<rich:column>
+						<f:facet name="header">Prezzo</f:facet>
+						<h:outputText value="#{_articoli.prezzo}" />
 					</rich:column>
 				</rich:dataTable>
 			</rich:tab>
