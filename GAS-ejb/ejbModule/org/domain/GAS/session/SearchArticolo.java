@@ -40,13 +40,7 @@ public class SearchArticolo implements SearchOption{
 		FullTextQuery query = fem
 				.createFullTextQuery(luceneQuery, Articolo.class);
 		List<Articolo> searchResults = (List<Articolo>) query.getResultList();
-		ArrayList<Articolo> articoloSearchResults = new ArrayList<Articolo>();
-
-		for (Articolo u : searchResults) {
-			if (u != null)
-				articoloSearchResults.add(u);
-		}
-		return articoloSearchResults;
+		return searchResults;
 	}
 	
 	public boolean equals(Object o){

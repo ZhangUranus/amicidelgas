@@ -1,6 +1,6 @@
 package org.domain.GAS.session;
 
-import java.util.ArrayList;
+
 import java.util.List;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.queryParser.ParseException;
@@ -40,16 +40,6 @@ public class SearchUtente implements SearchOption {
 		FullTextQuery query = fem
 				.createFullTextQuery(luceneQuery, Utente.class);
 		List<Utente> searchResults = (List<Utente>) query.getResultList();
-		System.out.println(searchString+"   OKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK "+searchResults.size());
-		/*
-		ArrayList<Utente> utenteSearchResults = new ArrayList<Utente>();
-
-		for (Utente u : searchResults) {
-			if (u != null)
-				utenteSearchResults.add(u);
-		}
-		return utenteSearchResults;
-		*/
 		return searchResults;
 	}
 	
