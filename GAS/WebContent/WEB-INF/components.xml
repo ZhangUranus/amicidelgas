@@ -60,6 +60,9 @@
 		<property name="digestAlgorithm">SHA-1</property>
 		<property name="charset">UTF-8</property>
 	</component>
+	
+	<component name="makeIndex">
+	</component>
 
 
 	<!-- For use with jBPM pageflow or process management -->
